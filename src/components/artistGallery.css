@@ -1,0 +1,239 @@
+/* ══════════════════════════════════════════════════════════════
+   The artist page, in the app's own hand — the band the redesign
+   settled on (/redesign/artist): a quiet label, the name in
+   Paperlogy, a life line, the encyclopaedia's paragraph beside the
+   distribution, then the works in columns of their own width.
+   Tokens follow the map tab: #080808 ground, gold #d4a547, Space
+   Mono figures, hairlines, Wanted Sans small type.
+   ══════════════════════════════════════════════════════════════ */
+
+.ag {
+  --ink: rgba(244,241,234,0.96); --ink-2: rgba(244,241,234,0.62); --ink-3: rgba(244,241,234,0.40);
+  --rule: rgba(244,241,234,0.10); --hair: rgba(244,241,234,0.16);
+  --acc: #d4a547; --acc-rgb: 212,165,71;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --gap: 4px;
+  --pad: clamp(14px,3vw,28px);
+  color: var(--ink); font-family: var(--body); word-break: keep-all;
+}
+/* the sketch skin keeps its own ground and mono hand */
+.ag[data-drawing="true"] {
+  --ink: #111111; --ink-2: #4d4740; --ink-3: #6b665e; --rule: #111111; --hair: #111111;
+  --display: "Space Mono", ui-monospace, monospace; --body: "Space Mono", ui-monospace, monospace;
+}
+.ag *, .ag *::before, .ag *::after { box-sizing: border-box; }
+/* index.css dresses every button on the site; the page takes that off and each part sets its own */
+.ag button { font: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; }
+.ag button:focus { outline: none; }
+.ag button:focus-visible, .ag a:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+.ag :where(p, h1, h3, ul) { margin: 0; }
+.ag ul { list-style: none; padding: 0; }
+.ag a { color: inherit; text-decoration: none; }
+
+/* ── the band: who, what is written, and where the works are ── */
+.ag-head { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr);
+  grid-template-areas: "intro world" "about share";
+  column-gap: clamp(18px,2.4vw,40px); row-gap: 10px; align-items: start;
+  padding: clamp(18px,2.4vw,30px) var(--pad) clamp(22px,3vw,34px); border-bottom: 1px solid var(--rule); }
+.ag-head__main { grid-area: intro; min-width: 0; }
+.ag-eyebrow { display: flex; align-items: center; gap: 12px; }
+.ag-eyebrow > span { color: var(--acc); font-family: var(--num); font-size: .62rem; font-weight: 650; letter-spacing: .12em; }
+/* 긴 이름은 칸 안에서 줄을 바꾼다 — 글자 크기는 가장 긴 낱말이 칸에 들어가도록 GlobalSearchBar 가 맞춘다 */
+.ag-head h1 { margin-top: .35rem; max-width: 100%; white-space: normal; text-wrap: balance; overflow-wrap: anywhere; font-family: var(--display);
+  font-size: clamp(2rem,4.2vw,3.2rem); font-weight: 700; line-height: 1.04; letter-spacing: -0.05em; }
+.ag-head__life { margin-top: .5rem; font-family: var(--num); font-size: 10px; letter-spacing: .06em; color: var(--ink-3); }
+.ag-head__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 1rem; }
+/* a mark and a word, gold when it is on — no box */
+.ag .ag-act { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+  white-space: nowrap; transition: color .16s ease; }
+.ag .ag-act:hover { color: var(--acc); }
+.ag .ag-act.is-on { color: var(--acc); }
+.ag-note { font-family: var(--num); font-size: 10px; letter-spacing: .06em; color: var(--ink-3); }
+
+/* the encyclopaedia's paragraph, under a caption rule */
+.ag-about { grid-area: about; min-width: 0; display: grid; gap: 8px; align-content: start; }
+/* the encyclopaedia panel brings its own face (DIN Alternate); the band's own
+   type is what the redesign sets here */
+.ag .ag-about__text, .ag .ag-about__text p { font-family: var(--body); font-size: 12.5px; line-height: 1.78;
+  color: var(--ink-2); }
+.ag .ag-about__text { max-width: 52ch; }
+.ag-about__text p { margin: 0 0 .7em; }
+.ag-about__text p:last-child { margin-bottom: 0; }
+.ag-cap { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.ag-cap > span { font-family: var(--num); font-size: 9.5px; letter-spacing: .1em; color: var(--acc); white-space: nowrap; }
+.ag-cap > i { flex: 1; min-width: 12px; height: 1px; background: var(--rule); }
+.ag .ag-wiki { padding: 6px 0 6px 10px; margin: -6px 0; font-family: var(--num); font-size: 11px; line-height: 1;
+  color: var(--ink-3); transition: color .16s ease; }
+.ag .ag-wiki:hover { color: var(--acc); }
+
+/* ── the distribution ──
+   The map and the carousel are two readings of one fact, so the component's
+   wrapper steps aside and they become the band's own right-hand cells: the
+   map beside the name, the carousel beside the encyclopaedia's text. */
+.ag-dist { display: contents; }
+.ag-world { grid-area: world; min-width: 0; display: grid; gap: 8px; position: relative; isolation: isolate; }
+/* the band's only ornament: the halo the globe wears on the map tab */
+.ag-world::before { content: ""; position: absolute; z-index: -1; inset: -16% 0 -10%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255,255,255,.045), transparent); }
+.ag[data-drawing="true"] .ag-world::before { background: none; }
+.ag-cap > em { font-family: var(--num); font-style: normal; font-size: 9px; color: var(--ink-3); white-space: nowrap; }
+
+.ag-mapwrap { position: relative; }
+.ag-map { width: 100%; height: auto; display: block; user-select: none; }
+.ag-map__land path { fill: rgba(244,241,234,.045); stroke: rgba(244,241,234,.14); stroke-width: .4; vector-effect: non-scaling-stroke; }
+.ag[data-drawing="true"] .ag-map__land path { fill: rgba(17,17,17,.06); stroke: rgba(17,17,17,.45); }
+/* an anchor dot sized by count, the figure beside it — no chip, no box */
+.ag-mark { cursor: pointer; }
+.ag-mark__hit { fill: transparent; }
+.ag-mark__dot { transition: opacity .18s ease; }
+.ag-mark__halo { fill: none; stroke: rgba(var(--acc-rgb),0); stroke-width: 1; transition: stroke .2s ease; }
+/* the ground shows through a thin figure, so it is knocked out with a stroke
+   of the page colour painted behind the glyph */
+.ag-mark__n { fill: var(--ink); font-family: var(--num); font-size: 9.5px; font-weight: 700;
+  paint-order: stroke; stroke: #080808; stroke-width: 2.6px; stroke-linejoin: round; }
+.ag[data-drawing="true"] .ag-mark__n { stroke: #ffffff; }
+.ag-mark.is-on .ag-mark__halo { stroke: rgba(var(--acc-rgb),.65); }
+.ag-mark.is-on .ag-mark__n { fill: var(--acc); }
+.ag-map:hover .ag-mark:not(.is-on) .ag-mark__dot { opacity: .45; }
+/* bare marks, no box; a shadow keeps them legible over the land */
+.ag-zoom { position: absolute; right: 6px; bottom: 6px; display: grid; gap: 3px; }
+.ag .ag-zoom button { width: 22px; height: 22px; display: grid; place-items: center; color: var(--ink-2);
+  text-shadow: 0 1px 6px rgba(0,0,0,.9); font-family: var(--num); font-size: 14px; line-height: 1;
+  transition: color .16s ease; }
+.ag .ag-zoom button:hover:not(:disabled) { color: var(--acc); }
+.ag .ag-zoom button:disabled { opacity: .4; cursor: default; }
+
+.ag-share { grid-area: share; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.ag-slides { min-width: 0; overflow: hidden; touch-action: pan-y; }
+.ag-slides__strip { display: flex; width: 300%; align-items: flex-start;
+  transition: transform .38s ease-in-out; will-change: transform; }
+/* the slide is a fixed band; the list inside it scrolls, so every country and
+   every museum is reachable while the donut stays where it is */
+.ag-slide { width: 33.3333%; flex-shrink: 0; display: flex; align-items: center; gap: 16px;
+  height: 168px; overflow: hidden; }
+.ag-slide--top { align-items: stretch; }
+.ag-keys, .ag-tops { overflow-y: auto; overflow-x: hidden; scrollbar-width: none; max-height: 100%; }
+.ag-keys::-webkit-scrollbar, .ag-tops::-webkit-scrollbar { display: none; }
+
+.ag-donut { flex: none; width: 112px; height: 112px; }
+.ag-donut__seg { stroke: #080808; stroke-width: 1.5; cursor: pointer; transition: opacity .18s ease; }
+.ag-donut__rest { fill: #222; stroke: #080808; stroke-width: 1.5; }
+.ag-donut__total { fill: var(--ink); font-family: var(--num); font-size: 16px; font-weight: 700; text-anchor: middle; }
+.ag[data-drawing="true"] .ag-donut__seg, .ag[data-drawing="true"] .ag-donut__rest { stroke: #ffffff; }
+
+/* a swatch, the name, a leader, a right-aligned percent */
+.ag-keys { flex: 1; min-width: 0; display: grid; gap: 5px; align-content: start; }
+.ag-keys li { display: flex; align-items: center; gap: 7px; font-size: 10.5px; color: var(--ink-2); cursor: pointer; }
+.ag-keys li i { flex: none; width: 9px; height: 9px; border-radius: 1px; }
+.ag-keys li span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ag-keys li em { font-style: normal; color: var(--ink-3); }
+/* the leader runs inside the row, so the eye follows one line */
+.ag-keys li u { flex: 1; min-width: 10px; height: 0; align-self: center; text-decoration: none;
+  border-bottom: 1px dotted rgba(244,241,234,.18); transition: border-color .16s ease; }
+.ag-keys li.is-on u { border-bottom-color: var(--acc); border-bottom-style: solid; }
+.ag-keys li b { flex: none; min-width: 32px; text-align: right; font-family: var(--num); font-size: 11px;
+  font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.ag-keys li.is-on { color: var(--ink); }
+
+/* slide 2 — two columns, a count and a bar */
+.ag-tops { flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px 16px; align-content: start; }
+.ag-top { display: grid; gap: 3px; min-width: 0; cursor: pointer; }
+.ag-top__row { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.ag-top__row span { flex: 1; min-width: 0; font-size: 10px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ag-top__row u { text-decoration: none; color: var(--ink-3); }
+.ag-top__row b { flex: none; min-width: 22px; text-align: right; font-family: var(--num); font-size: 11px;
+  font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.ag-top__bar { height: 2px; background: var(--rule); }
+.ag-top__bar i { display: block; height: 100%; }
+.ag-top.is-on .ag-top__row span { color: var(--ink); }
+
+.ag-dots { display: flex; justify-content: center; align-items: center; gap: 5px; padding: 7px 0 0; }
+.ag .ag-dots button { width: 6px; height: 6px; border-radius: 3px; background: var(--rule); transition: all .2s ease; }
+.ag .ag-dots button.is-on { width: 20px; background: var(--acc); }
+
+/* until there are works to plot there is no map and no carousel, so the band
+   runs in one column rather than leaving its right half standing empty */
+.ag-head[data-solo="true"] { grid-template-columns: minmax(0,1fr); grid-template-areas: "intro" "about"; }
+.ag-head[data-solo="true"] .ag-about__text { max-width: 72ch; }
+
+/* ── the works ── */
+.ag-works { padding: clamp(16px,2.2vw,24px) var(--pad) 0; }
+.ag-works > header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.ag-works > header > i { flex: 1; height: 1px; background: var(--rule); }
+.ag-figures { display: flex; flex-wrap: wrap; align-items: baseline; gap: 13px; margin-right: 8px; }
+.ag-figures span { display: inline-flex; align-items: baseline; gap: 6px; }
+.ag-figures b { font-family: var(--num); font-size: 18px; font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.ag-figures em { font-style: normal; font-size: 10.5px; color: var(--ink-3); }
+.ag-figures > i { width: 1px; height: 11px; background: var(--hair); }
+/* the place the works are being shown for, and the way back to all of them */
+.ag .ag-place { display: inline-flex; align-items: baseline; gap: 6px; font-size: 11px; color: var(--acc);
+  transition: color .16s ease; }
+.ag .ag-place span { font-family: var(--num); font-size: 10px; color: var(--ink-3); }
+.ag .ag-place:hover span { color: var(--acc); }
+
+/* the quiet line that stands in for the works while they are on their way */
+.ag-wait { padding: 4px var(--pad) 26px; font-size: 12px; color: var(--ink-3); }
+/* 다른 페이지 위에 연 작가 화면을 띄울 때는 검색창을 숨긴다 */
+[data-gallery-only] { display: none !important; }
+.ag-loading { display: grid; place-items: center; padding: clamp(48px, 9vw, 110px) var(--pad); }
+
+/* each work arrives as it is dealt into its column */
+@keyframes ag-card-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.ag [data-art-card] { opacity: 0; transform: translateY(18px); animation: ag-card-in .56s ease-in-out both; }
+@media (prefers-reduced-motion: reduce) { .ag [data-art-card] { animation: none; opacity: 1; transform: none; } }
+
+/* width matched, height from the work itself — nothing cropped */
+.ag-cols { display: flex; gap: var(--gap); align-items: flex-start; }
+.ag-col { flex: 1 1 0; min-width: 0; display: grid; gap: var(--gap); align-content: start; }
+.ag-shot { position: relative; display: block; line-height: 0; cursor: zoom-in; }
+.ag-shot img { width: 100%; height: auto; display: block; }
+/* the caption rides on the work, so there is no gap under it */
+.ag-over { position: absolute; inset: auto 0 0 0; padding: 26px 10px 9px; pointer-events: none; line-height: normal;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.82) 62%); }
+.ag-over h3 { font-family: var(--display); font-size: 11.5px; font-weight: 600; line-height: 1.3; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ag-over p { margin-top: 2px; font-family: var(--num); font-size: 8px; letter-spacing: .04em; color: rgba(244,241,234,.62);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: auto; }
+.ag .ag-over a { color: inherit; border-bottom: 1px solid rgba(var(--acc-rgb),.4); pointer-events: auto;
+  transition: color .16s ease, border-color .16s ease; }
+.ag .ag-over a:hover { color: var(--acc); border-bottom-color: var(--acc); }
+/* the marks: bare, on the work, shown when the pointer is on it */
+.ag-acts { position: absolute; top: 6px; right: 6px; z-index: 2; display: grid; gap: 2px; opacity: 0; transition: opacity .18s ease; }
+.ag-shot:hover .ag-acts, .ag-shot:focus-within .ag-acts { opacity: 1; }
+.ag .ag-acts button { width: 22px; height: 21px; display: grid; place-items: center; color: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.9)); transition: color .16s ease; }
+.ag .ag-acts button:hover, .ag .ag-acts button.is-on { color: var(--acc); }
+
+/* more of them: a word and a count between two hairlines, never a pill */
+.ag-more { display: flex; align-items: center; gap: 12px; padding: 20px 0 8px; }
+.ag-more::before, .ag-more::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.ag .ag-more button { display: inline-flex; align-items: baseline; gap: 8px; font-size: 12px; color: var(--ink-2);
+  transition: color .16s ease; }
+.ag .ag-more button:hover { color: var(--acc); }
+.ag-more b { font-family: var(--num); font-size: 10px; font-weight: 700; color: var(--ink-3);
+  font-variant-numeric: tabular-nums; transition: color .16s ease; }
+.ag .ag-more button:hover b { color: var(--acc); }
+
+@media (hover: none) {
+  /* a touch screen has no hover: the marks stay out */
+  .ag-acts { opacity: 1; }
+}
+@media (max-width: 900px) {
+  .ag-head { grid-template-columns: minmax(0,1fr) minmax(0,1fr); column-gap: 18px; }
+  .ag .ag-about__text, .ag .ag-about__text p { font-size: 11.5px; line-height: 1.7; }
+}
+@media (max-width: 720px) {
+  /* one column: who, what the encyclopaedia says, then the distribution */
+  .ag-head { grid-template-columns: minmax(0,1fr); grid-template-areas: "intro" "about" "world" "share"; }
+  /* the way out sits in this corner, so a long name keeps clear of it */
+  .ag-head__main { padding-right: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { .ag * { transition: none !important; } }
+
+/* the way out: a bare mark at the card's corner */
+.ag-close { position: absolute; top: 14px; right: var(--pad); z-index: 3; width: 28px; height: 28px; display: grid;
+  place-items: center; font-family: var(--num); font-size: 15px; line-height: 1; color: var(--ink-3); transition: color .16s ease; }
+.ag .ag-close:hover { color: var(--acc); }

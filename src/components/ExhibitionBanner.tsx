@@ -182,7 +182,7 @@ const ExhibitionBanner: React.FC<ExhibitionBannerProps> = ({ onBannerClick, onCl
                   color: "#555",
                   fontWeight: 600,
                   letterSpacing: 1,
-                }}>ARMIN</div>
+                }}>COLLY</div>
               </div>
             );
           }

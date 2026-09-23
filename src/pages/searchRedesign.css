@@ -1,0 +1,186 @@
+/* ══════════════════════════════════════════════════════════════
+   Search tab — the drawer study, applied.
+   Style: the map tab's — #080808 ground, gold #d4a547, Space Mono
+   numerals, hairlines instead of boxes, padded counts, Paperlogy for
+   headings and Wanted Sans for the small type.
+
+   Everything is scoped to `.sr` so the rest of the app is untouched.
+   ══════════════════════════════════════════════════════════════ */
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css");
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+.sr {
+  --g: #080808;
+  --ink: rgba(244,241,234,0.96); --ink-2: rgba(244,241,234,0.62); --ink-3: rgba(244,241,234,0.40);
+  --rule: rgba(244,241,234,0.10); --hair: rgba(244,241,234,0.16);
+  --acc: #d4a547; --acc-rgb: 212,165,71;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.16,1,.3,1);
+  background: var(--g); color: var(--ink); font-family: var(--body); word-break: keep-all;
+}
+.sr *, .sr *::before, .sr *::after { box-sizing: border-box; }
+/* index.css styles every button on the site - 8px radius, a border, a dark
+   fill, and `button:focus { outline: 4px auto -webkit-focus-ring-color }`,
+   which draws the rounded "tray" around a chosen row. Cleared here;
+   keyboard users still get a ring through :focus-visible. */
+.sr button { font: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; }
+.sr button:focus { outline: none; }
+/* A hairline, not a slab: a 2px ring at 2px offset drew a gold box around
+   the AI switch on every tap (touch matches :focus-visible), which is the
+   boxed look this page avoids everywhere else. Keyboard users still get a
+   clear gold ring. */
+.sr button:focus-visible, .sr a:focus-visible, .sr input:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+.sr ul, .sr ol { list-style: none; margin: 0; padding: 0; }
+
+/* ── the lead ─────────────────────────────────────────────────── */
+/* The measure keeps the two lines short; the block still starts where the
+   field and the tabs under it start, not centred inside the page. */
+.sr-lead { max-width: 44rem; margin: 0 0 clamp(18px,3vw,26px); }
+.sr-lead__meta { margin: 0 0 .8rem; color: var(--acc); font-family: var(--num); font-size: .64rem; font-weight: 650; letter-spacing: .1em; }
+/* Korean has no spaces inside a phrase, so a browser will break it between
+   any two syllables. `word-break: keep-all` makes it break at word bounds. */
+/* The two lines are set with a <br> in the markup, so nothing here should
+   introduce a break of its own - no narrow measure, no balancing. */
+.sr-lead h1 { margin: 0; font-family: var(--display); font-size: clamp(1.7rem,4vw,3rem);
+  font-weight: 700; line-height: 1.14; letter-spacing: -0.05em; word-break: keep-all; }
+
+/* ── the AI switch ────────────────────────────────────────────
+   The knob says whether semantic search is on; the two tabs beside it
+   say which engine is behind it — 빠름 (SigLIP) or 정밀 (Jina). State
+   is carried by position and by an underline, never by a filled slab. */
+.sr-switch { flex: none; display: inline-flex; align-items: center; gap: 14px; }
+.sr .sr-switch__toggle { font-family: var(--num); font-size: 10.5px; font-weight: 650; letter-spacing: .08em;
+  color: var(--ink-3); transition: color .18s ease; }
+.sr .sr-switch__toggle:hover { color: var(--ink-2); }
+.sr .sr-switch__toggle { display: inline-flex; align-items: center; gap: 8px; }
+.sr-switch__rail { position: relative; width: 26px; height: 12px; border: 1px solid var(--hair); transition: border-color .22s ease; }
+.sr-switch__rail b { position: absolute; top: 1px; left: 1px; width: 10px; height: 8px; background: var(--ink-3);
+  transition: left .22s var(--ease), background .22s ease; }
+.sr-switch[data-on] .sr-switch__rail { border-color: var(--acc); }
+.sr-switch[data-on] .sr-switch__rail b { left: 13px; background: var(--acc); }
+.sr .sr-switch[data-on] .sr-switch__toggle { color: var(--acc); }
+/* The engine picker echoes the switch: where the knob slides between two
+   positions, a gold bar slides under the two labels. Its styles hang off
+   .sr-engine alone, never off .sr-switch - it sits inside the switch on
+   desktop and on the sub-line under the field on mobile, and it has to
+   read the same in both. */
+.sr-engine { position: relative; display: inline-grid; grid-auto-flow: column;
+  grid-auto-columns: 52px; align-items: center; }
+.sr .sr-engine button { padding: 0 0 6px; text-align: center;
+  font-family: var(--num); font-size: 10.5px; font-weight: 650; letter-spacing: .08em;
+  color: var(--ink-3); transition: color .2s ease; }
+.sr .sr-engine button:hover { color: var(--ink-2); }
+.sr .sr-engine button[aria-pressed="true"] { color: var(--acc); }
+.sr-engine::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: var(--rule); }
+.sr-engine__bar { position: absolute; bottom: 0; left: 0; width: 52px; height: 2px;
+  background: var(--acc); transition: transform .26s var(--ease); }
+.sr-engine[data-precise] .sr-engine__bar { transform: translateX(52px); }
+
+/* Nobody notices a hairline switch, so while it is off it shows what it
+   does: every few seconds the knob slides most of the way over and falls
+   back, the rail warms to gold behind it, and the word brightens. That
+   teaches the affordance rather than just blinking. The hint stops on
+   hover — the viewer has found it — and for good once AI is on. */
+@keyframes sr-hint-knob {
+  0%, 62%, 100% { left: 1px; background: var(--ink-3); }
+  72%, 80%      { left: 11px; background: var(--acc); }
+  90%           { left: 1px; background: var(--acc); }
+}
+@keyframes sr-hint-rail {
+  0%, 62%, 100% { border-color: var(--hair); box-shadow: 0 0 0 0 rgba(var(--acc-rgb),0); }
+  76%           { border-color: var(--acc); box-shadow: 0 0 0 3px rgba(var(--acc-rgb),.14); }
+  92%           { border-color: rgba(var(--acc-rgb),.5); box-shadow: 0 0 0 0 rgba(var(--acc-rgb),0); }
+}
+@keyframes sr-hint-word {
+  0%, 62%, 100% { color: var(--ink-3); }
+  76%, 88%      { color: var(--acc); }
+}
+.sr-switch:not([data-on]) .sr-switch__rail { animation: sr-hint-rail 4.2s var(--ease) 1.2s infinite; }
+.sr-switch:not([data-on]) .sr-switch__rail b { animation: sr-hint-knob 4.2s var(--ease) 1.2s infinite; }
+.sr .sr-switch:not([data-on]) .sr-switch__toggle { animation: sr-hint-word 4.2s var(--ease) 1.2s infinite; }
+.sr-switch:not([data-on]):hover .sr-switch__rail,
+.sr-switch:not([data-on]):hover .sr-switch__rail b,
+.sr .sr-switch:not([data-on]):hover .sr-switch__toggle { animation: none; }
+.sr .sr-switch:not([data-on]):hover .sr-switch__toggle { color: var(--ink-2); }
+
+/* the sub-line under the field: the AI hint on desktop, the engine tabs
+   on mobile where the field has no room for them */
+.sr-subline { display: flex; align-items: center; gap: 14px; padding-top: 10px; }
+.sr-subline__tag { font-family: var(--num); font-size: 8.5px; letter-spacing: .1em; color: var(--acc); }
+.sr-subline__hint { font-size: 11px; color: var(--ink-3); }
+
+/* ── recent queries: the compact line under the field ─────────
+   Sized like a caption rather than like a list, so it reads as a note
+   under the field instead of competing with the results below. */
+.sr-recent { display: flex; align-items: baseline; gap: 12px; margin: 13px 0 4px; }
+.sr-recent__tag { flex: none; font-family: var(--num); font-size: 8.5px; letter-spacing: .1em; color: var(--acc); }
+.sr-recent__run { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 16px; }
+.sr .sr-recent__run button { color: var(--ink-2); font-size: 11.5px; transition: color .16s ease; }
+.sr .sr-recent__run button:hover { color: var(--acc); }
+.sr .sr-recent__clear { flex: none; font-family: var(--num); font-size: 8.5px; letter-spacing: .06em;
+  color: var(--ink-3); transition: color .16s ease; }
+.sr .sr-recent__clear:hover { color: var(--ink-2); }
+
+/* ── trending: an index — term first, a dotted leader, figure right ── */
+.sr-live header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.sr-live header span { font-family: var(--num); font-size: 9.5px; letter-spacing: .1em; color: var(--acc); }
+.sr-live header i { flex: 1; height: 1px; background: var(--rule); }
+.sr-live header em { font-family: var(--num); font-style: normal; font-size: 8px; font-weight: 700;
+  letter-spacing: .12em; color: var(--acc); }
+.sr-index { columns: 2; column-gap: 38px; }
+.sr-index li { break-inside: avoid; }
+.sr .sr-index button { display: flex; align-items: baseline; gap: 9px; width: 100%; padding: 7px 0;
+  text-align: left; color: var(--ink-2); transition: color .16s ease; }
+.sr .sr-index button:hover { color: var(--ink); }
+.sr-index u { flex: none; min-width: 24px; text-decoration: none; font-family: var(--num); font-size: 8px;
+  font-weight: 500; letter-spacing: .04em; color: var(--ink-3); }
+.sr-index u[data-move="up"], .sr-index u[data-move="new"] { color: var(--acc); }
+.sr-index u[data-move="down"] { color: rgba(244,241,234,.26); }
+.sr-index span { flex: none; max-width: calc(100% - 78px); font-size: 13px; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.sr-index__leader { flex: 1; min-width: 12px; height: 0; border-bottom: 1px dotted rgba(244,241,234,.22);
+  transform: translateY(-4px); }
+.sr-index em { flex: none; font-family: var(--num); font-style: normal; font-size: 10px; font-weight: 700;
+  letter-spacing: .04em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.sr-index li:nth-child(-n+3) em { color: var(--acc); }
+.sr .sr-index button:hover .sr-index__leader { border-bottom-color: rgba(var(--acc-rgb),.5); }
+
+/* ── genres, folded away until asked ──────────────────────────── */
+.sr-drawer { border-top: 1px solid var(--rule); }
+.sr-drawer > li { border-bottom: 1px solid var(--rule); }
+.sr .sr-drawer__head { display: grid; grid-template-columns: auto auto 1fr auto auto; align-items: baseline;
+  gap: 13px; width: 100%; padding: 15px 2px; text-align: left; color: var(--ink-3); transition: color .16s ease; }
+.sr-drawer__head em { font-family: var(--num); font-style: normal; font-size: 10px; letter-spacing: .06em; }
+.sr-drawer__head span { font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+.sr-drawer__head i { align-self: center; height: 1px; background: var(--rule); }
+.sr-drawer__head b { font-family: var(--num); font-size: 10.5px; font-weight: 500; letter-spacing: .06em; }
+.sr-drawer__head u { font-family: var(--num); font-size: 13px; text-decoration: none; color: var(--acc); }
+.sr .sr-drawer__head:hover { color: var(--ink-2); }
+.sr .sr-drawer > li.is-open .sr-drawer__head { color: var(--ink); }
+.sr .sr-drawer > li.is-open .sr-drawer__head em, .sr .sr-drawer > li.is-open .sr-drawer__head b { color: var(--acc); }
+.sr-drawer__open { padding: 2px 0 18px 36px; columns: 2; column-gap: 34px; }
+.sr .sr-museum { display: flex; align-items: baseline; gap: 9px; width: 100%; padding: 8px 2px; text-align: left;
+  color: var(--ink-2); transition: color .16s ease; }
+.sr-museum__dot { flex: none; width: 3px; height: 3px; border-radius: 50%; background: rgba(var(--acc-rgb),.75);
+  transform: translateY(-2px); transition: box-shadow .2s var(--ease); }
+.sr .sr-museum span { flex: 1 1 auto; font-size: 13px; }
+.sr .sr-museum em { flex: none; font-family: var(--num); font-style: normal; font-size: 9.5px; letter-spacing: .06em; color: var(--ink-3); }
+.sr .sr-museum:hover { color: var(--ink); }
+.sr .sr-museum:hover .sr-museum__dot { box-shadow: 0 0 0 3px rgba(var(--acc-rgb),.18); }
+
+@media (max-width: 760px) {
+  /* The account avatar is fixed to the viewport's top-right on mobile and
+     runs over the end of the field, so the field keeps clear of it. */
+  .sr .sr-field { padding-right: 54px !important; }
+  .sr-drawer__open, .sr-index { columns: 1; }
+  .sr-drawer__open { padding-left: 22px; }
+  .sr-recent { flex-wrap: wrap; gap: 6px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sr * { transition: none !important; animation: none !important; }
+}

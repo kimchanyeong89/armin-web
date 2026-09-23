@@ -1,0 +1,64 @@
+/* ══════════════════════════════════════════════════════════════
+   The level on My Page — the laurel mark, a question mark, and the
+   level guide it opens. The guide is portalled to <body>, outside
+   My Page's own scope, so it names its fonts and colours itself;
+   the dark and light values follow My Page (Mypage.tsx pageText,
+   subText, panelBorder, the gold #D4A547 and the light #8A6B1F).
+   ══════════════════════════════════════════════════════════════ */
+.rk-info { flex: none; display: inline-flex; align-items: center; gap: 7px; color: #d4a547; }
+.rk-info[data-light] { color: #8a6b1f; }
+.rk-info__mark { display: inline-flex; }
+
+/* the site styles every button, and My Page sets its own font on them — two classes win over both */
+.rk-info .rk-info__q {
+  flex: none; display: inline-grid; place-items: center; width: 16px; height: 16px; min-width: 0; margin: 0; padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.24); border-radius: 50%; background: none; box-shadow: none;
+  color: rgba(255, 255, 255, 0.56); font: 700 10px/1 "Space Mono", ui-monospace, monospace; letter-spacing: 0;
+  cursor: help; transition: color 0.16s ease, border-color 0.16s ease;
+}
+.rk-info[data-light] .rk-info__q { border-color: rgba(0, 0, 0, 0.22); color: rgba(0, 0, 0, 0.5); }
+.rk-info .rk-info__q:hover,
+.rk-info .rk-info__q[aria-expanded="true"] { border-color: #d4a547; color: #d4a547; }
+.rk-info[data-light] .rk-info__q:hover,
+.rk-info[data-light] .rk-info__q[aria-expanded="true"] { border-color: #8a6b1f; color: #8a6b1f; }
+.rk-info .rk-info__q:focus-visible { outline: 1px solid currentColor; outline-offset: 2px; }
+
+.rk-card {
+  --gold: #d4a547; --ink: rgba(255, 255, 255, 0.9); --ink-2: rgba(255, 255, 255, 0.58); --ink-3: rgba(255, 255, 255, 0.38);
+  --rule: rgba(255, 255, 255, 0.1);
+  position: fixed; z-index: 10000; width: 256px; padding: 16px 14px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 16px;
+  background: rgba(12, 12, 11, 0.96); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  color: var(--ink); font: 400 12px/1.5 "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif;
+  text-align: left; word-break: keep-all;
+}
+.rk-card[data-light] {
+  --gold: #8a6b1f; --ink: rgba(0, 0, 0, 0.88); --ink-2: rgba(0, 0, 0, 0.56); --ink-3: rgba(0, 0, 0, 0.38); --rule: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.08); background: rgba(255, 255, 255, 0.97); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.14);
+}
+
+/* this level: the mark large, its name, the level number and the score */
+.rk-card__now { display: flex; align-items: center; gap: 12px; padding: 0 2px; color: var(--gold); }
+.rk-card__now b { display: block; font: 700 18px/1.1 Paperlogy, "Apple SD Gothic Neo", sans-serif; letter-spacing: -0.03em; color: var(--ink); }
+.rk-card__now small { display: block; margin-top: 5px; font: 700 10px/1 "Space Mono", ui-monospace, monospace; letter-spacing: 0.04em;
+  color: var(--gold); font-variant-numeric: tabular-nums; }
+
+/* what the next level needs, and how far along this one the score is */
+.rk-card__next { margin: 14px 0 0; padding: 0 2px; font-size: 12px; color: var(--ink-2); }
+.rk-card__bar { position: relative; height: 2px; margin: 8px 2px 0; background: var(--rule); }
+.rk-card__bar i { position: absolute; top: 0; bottom: 0; left: 0; background: var(--gold); }
+.rk-card__rule { margin: 12px 0 0; padding: 0 2px 10px; border-bottom: 1px solid var(--rule);
+  font: 400 10px/1.5 "Space Mono", ui-monospace, monospace; color: var(--ink-3); }
+
+/* all ten levels — the one reached is lit, the ones ahead are faint */
+.rk-card__list { list-style: none; margin: 6px 0 0; padding: 0; }
+.rk-card__list li { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  padding: 4px 6px; border-radius: 8px; color: var(--ink-2); }
+.rk-card__list li svg { color: var(--gold); }
+.rk-card__list li span { font-size: 12px; }
+.rk-card__list li em { font: 400 10px/1 "Space Mono", ui-monospace, monospace; font-style: normal; color: var(--ink-3);
+  font-variant-numeric: tabular-nums; }
+.rk-card__list li[data-state="now"] { background: color-mix(in srgb, var(--gold) 14%, transparent); color: var(--ink); }
+.rk-card__list li[data-state="now"] em { color: var(--gold); }
+.rk-card__list li[data-state="ahead"] { opacity: 0.5; }

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Sparkles, MapPin, Calendar, X,
-  Heart, Navigation, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw, BookOpen
+  MapPin, Calendar, X,
+  Heart, Navigation, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw
 } from "lucide-react";
 import WeeklyCurationTab from '../components/WeeklyCurationTab';
 import { useAuth } from '../contexts/AuthContext';
@@ -16,6 +16,7 @@ import { ProductModal } from '../components/ProductModal';
 import CommentModal from '../components/CommentModal';
 import { PlaylistModal } from '../components/PlaylistModal';
 import { ExpandableActionMenu } from '../components/ExpandableActionMenu';
+import "./aiHubRedesign.css";
 import { useLanguage } from "../contexts/LanguageContext";
 import { NO_IMAGE_PLACEHOLDER_DARK } from '../utils/noImagePlaceholder';
 import { getOptimizedImageUrl } from '../utils/imageProxy';
@@ -102,9 +103,11 @@ function normalizeArtworkIdForFirestore(value: unknown) {
 const museumCountryIndex = (() => {
   const museumToCountry = new Map<string, string>();
   const collectionToCountry = new Map<string, string>();
+  const collectionToMuseum = new Map<string, string>();
 
   for (const museum of exhibitions as unknown as Array<Record<string, unknown>>) {
     const country = String(museum?.country || '');
+    const museumName = String(museum?.name_en || museum?.name || '');
     const keys = [museum?.id, museum?.slug, museum?.name, museum?.name_en].filter(Boolean);
     for (const key of keys) {
       museumToCountry.set(normalizeMetaKey(key), country);
@@ -113,16 +116,25 @@ const museumCountryIndex = (() => {
     for (const p of ((museum?.permanentExhibitions || []) as Array<Record<string, unknown>>)) {
       const collectionKeys = [
         p?.id,
-        typeof p?.collectionFile === 'string' ? p.collectionFile.replace(/\.json$/i, '') : '',
+        typeof p?.collectionFile === 'string' ? (p.collectionFile.split('/').pop() || '').replace(/\.json$/i, '') : '', /* 주소로 적힌 것도 파일 이름만 */
       ].filter(Boolean);
       for (const cKey of collectionKeys) {
-        collectionToCountry.set(normalizeMetaKey(cKey), country);
+        const k = normalizeMetaKey(cKey);
+        collectionToCountry.set(k, country);
+        if (museumName && !collectionToMuseum.has(k)) collectionToMuseum.set(k, museumName);
       }
     }
   }
 
-  return { museumToCountry, collectionToCountry };
+  return { museumToCountry, collectionToCountry, collectionToMuseum };
 })();
+
+/* 추천 데이터 상당수는 미술관 이름(m)이 비어 있다 — 이름이 없는 컬렉션 파일에서 올라왔기 때문이다.
+   함께 실려 오는 컬렉션 id(e, 파일 이름)로 미술관 목록에서 이름을 찾는다 */
+function resolveMuseumFromCollection(collectionId: unknown) {
+  const cKey = normalizeMetaKey(collectionId);
+  return (cKey && museumCountryIndex.collectionToMuseum.get(cKey)) || '';
+}
 
 function resolveCountryFromMeta(museumName: unknown, collectionId: unknown) {
   const mKey = normalizeMetaKey(museumName);
@@ -203,6 +215,8 @@ type CurationTabProps = {
   randomLoading: boolean;
   onRefreshRandom: (count?: number, append?: boolean) => void;
   onTasteOnboardingSubmit: (selected: RecommendationCardItem[]) => Promise<void>;
+  isSignedIn: boolean;
+  onBrowseWeekly: () => void;
 };
 
 // ─── Exhibition Detail Sheet ────────────────────────────────
@@ -347,12 +361,11 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint: _fgFaint, divi
 // 좋아요 이력이 없는 첫 사용자를 위한 취향 픽커. 랜덤 작품을 3개 이상 고르면
 // 좋아요로 저장되고 취향 프로파일이 만들어져 추천이 로드된다.
 function TasteOnboarding({
-  tr, t, fg, fgLow, fgMed, divider,
+  tr, t, fgLow, fgMed, divider,
   pool, poolLoading, onShuffle, onSubmit, onBrowseRandom,
 }: {
   tr: Translator;
   t: boolean;
-  fg: string;
   fgLow: string;
   fgMed: string;
   divider: string;
@@ -396,20 +409,15 @@ function TasteOnboarding({
 
   return (
     <div style={{ padding: '24px 20px 12px', maxWidth: 620, margin: '0 auto' }}>
-      <div style={{ textAlign: 'center', marginBottom: 22 }}>
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
-          <Sparkles size={15} color="#D4A547" strokeWidth={2.1} />
-          <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '0.16em', color: '#D4A547' }}>
-            {tr({ ko: '취향 분석 시작', en: 'BUILD YOUR TASTE' })}
-          </span>
-        </div>
-        <h2 style={{ fontSize: 19, fontWeight: 700, color: fg, margin: '0 0 8px', letterSpacing: '-0.01em' }}>
-          {tr({ ko: '마음에 드는 작품을 골라주세요', en: 'Pick the artworks you love' })}
-        </h2>
-        <p style={{ fontSize: 12.5, lineHeight: 1.65, color: fgLow, margin: 0 }}>
+      {/* the page's own voice: mono gold kicker, Paperlogy heading,
+          Wanted Sans body — left-aligned like the title block above */}
+      <div className="hub-lead">
+        <p className="hub-lead__meta">{tr({ ko: 'COLLY AI · 취향 분석', en: 'COLLY AI · Taste setup' })}</p>
+        <h2>{tr({ ko: '마음에 드는 작품을 골라주세요.', en: 'Pick the artworks you love.' })}</h2>
+        <p className="hub-lead__body">
           {tr({
-            ko: '최소 3개 — 더 많이 고를수록 추천이 정확해져요.',
-            en: 'At least 3 — the more you pick, the better your recommendations.',
+            ko: '세 점부터 시작합니다. 많이 고를수록 추천이 정확해집니다.',
+            en: 'Three is the minimum. The more you pick, the closer the picks get.',
           })}
         </p>
       </div>
@@ -548,6 +556,8 @@ function CurationTab({
   randomLoading,
   onRefreshRandom,
   onTasteOnboardingSubmit,
+  isSignedIn,
+  onBrowseWeekly,
 }: CurationTabProps) {
   const isRandomMode = recommendMode === 'random';
   const isLoading = isRandomMode ? randomLoading : loading;
@@ -632,11 +642,31 @@ function CurationTab({
       if (hasLikes) {
         return <SearchWittyLoader dark={!t} />;
       }
+      // The picker writes the chosen works to the signed-in user's taste
+      // profile; without an account there is nowhere to put them, so it
+      // used to collect picks and silently drop them. Ask for sign-in.
+      if (!isSignedIn) {
+        return (
+          <div className="hub-lead hub-signin">
+            <p className="hub-lead__meta">{tr({ ko: 'COLLY AI · 로그인 필요', en: 'COLLY AI · Sign in' })}</p>
+            <h2>{tr({ ko: '추천은 로그인한 뒤부터 쌓입니다.', en: 'Your picks begin once you sign in.' })}</h2>
+            <p className="hub-lead__body">
+              {tr({
+                ko: '좋아요와 취향 기록을 계정에 저장해야 추천을 만들 수 있습니다. 로그인 없이도 주간 큐레이션은 볼 수 있습니다.',
+                en: 'Likes and taste have to live in an account before anything can be recommended. The weekly curation is open to everyone.',
+              })}
+            </p>
+            <div className="hub-signin__row">
+              <a className="hub-signin__go" href="/login">{tr({ ko: '로그인', en: 'Sign in' })} <span aria-hidden="true">↗</span></a>
+              <button type="button" onClick={onBrowseWeekly}>{tr({ ko: '주간 큐레이션 보기', en: 'See the weekly curation' })}</button>
+            </div>
+          </div>
+        );
+      }
       return (
         <TasteOnboarding
           tr={tr}
           t={t}
-          fg={fg}
           fgLow={fgLow}
           fgMed={fgMed}
           divider={divider}
@@ -673,106 +703,26 @@ function CurationTab({
         borderBottom: `1px solid ${divider}`,
         marginBottom: 24,
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
-          <div style={{ flex: 1 }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-              gap: 8,
-              padding: 4,
-              borderRadius: 10,
-              background: t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.06)',
-              border: `1px solid ${divider}`,
-            }}>
-              <button
-                onClick={() => onChangeRecommendMode('taste')}
-                style={{
-                  border: 'none',
-                  background: recommendMode === 'taste' ? '#D4A547' : 'transparent',
-                  color: recommendMode === 'taste' ? '#000' : fgLow,
-                  borderRadius: 8,
-                  padding: '10px 8px',
-                  fontSize: 11,
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  letterSpacing: '0.02em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 6,
-                }}
-              >
-                <Sparkles size={12} strokeWidth={2.1} />
-                {tr({ ko: '맞춤 추천', en: 'Taste Match' })}
-              </button>
-
-              <button
-                onClick={() => onChangeRecommendMode('random')}
-                style={{
-                  border: 'none',
-                  background: recommendMode === 'random' ? '#D4A547' : 'transparent',
-                  color: recommendMode === 'random' ? '#000' : fgLow,
-                  borderRadius: 8,
-                  padding: '10px 8px',
-                  fontSize: 11,
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  letterSpacing: '0.02em',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 6,
-                }}
-              >
-                <Shuffle size={12} strokeWidth={2.1} />
-                {tr({ ko: '랜덤 추천', en: 'Random Picks' })}
-              </button>
-            </div>
-
-            <div style={{ position: 'relative', marginTop: 8, height: 2, backgroundColor: divider }}>
-              <motion.div
-                animate={{ left: recommendMode === 'taste' ? '0%' : '50%' }}
-                transition={{ duration: 0.18, ease: 'easeOut' }}
-                style={{ position: 'absolute', top: 0, width: '50%', height: '100%', backgroundColor: '#D4A547' }}
-              />
-            </div>
+        <div className="hub-mode">
+          <div className="hub-mode__group" role="group">
+            <button type="button" className={recommendMode === 'taste' ? 'is-active' : ''} onClick={() => onChangeRecommendMode('taste')}>
+              {tr({ ko: '맞춤 추천', en: 'Taste Match' })}
+            </button>
+            <button type="button" className={recommendMode === 'random' ? 'is-active' : ''} onClick={() => onChangeRecommendMode('random')}>
+              {tr({ ko: '랜덤 추천', en: 'Random Picks' })}
+            </button>
           </div>
+          <i className="hub-mode__rule" />
+          {isRandomMode && (
+            <button type="button" className="hub-mode__reshuffle" onClick={() => onRefreshRandom(36, false)} title={tr({ ko: '다시 뽑기', en: 'Reshuffle' })}>
+              <RotateCw size={14} strokeWidth={2} />
+            </button>
+          )}
         </div>
       </div>
 
       <div style={{ padding: "0 20px" }}>
-        <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em", color: fg, display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-          {isRandomMode ? <Shuffle size={16} color={t ? "#8A6B1F" : "#D4A547"} /> : <Sparkles size={16} color={t ? "#8A6B1F" : "#D4A547"} />}
-          {isRandomMode
-            ? tr({ ko: '완전 랜덤 추천', en: 'Pure Random Picks' })
-            : tr({ ko: 'AI 취향 맞춤 추천', en: 'AI Taste Recommendations' })}
-            
-          {isRandomMode && (
-            <button
-              onClick={() => onRefreshRandom(36, false)}
-              style={{
-                marginLeft: 'auto',
-                width: 32,
-                height: 32,
-                borderRadius: 8,
-                border: `1px solid ${divider}`,
-                background: t ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)',
-                color: t ? 'rgba(0,0,0,0.74)' : '#D4A547',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                flexShrink: 0
-              }}
-              title={tr({ ko: '다시 뽑기', en: 'Reshuffle' })}
-            >
-              <RotateCw size={14} strokeWidth={2.4} color={t ? '#111' : '#D4A547'} />
-              <span style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}>↻</span>
-            </button>
-          )}
-        </h2>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: `repeat(${isMobile ? 3 : 5}, minmax(0, 1fr))`, gap: 5 }}>
           {displayArtworks.slice(0, displayedCount).map((ex, idx) => (
             <motion.div
               key={ex.id + '-' + idx}
@@ -781,6 +731,7 @@ function CurationTab({
               transition={{ delay: (idx % 12) * 0.05 }}
             >
               <div
+                className="hub-card"
                 style={{
                   display: "block", width: "100%", background: "none", border: "none", padding: 0,
                   textAlign: "left", cursor: "pointer"
@@ -791,12 +742,6 @@ function CurationTab({
                 <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden", borderRadius: 12, marginBottom: 8, backgroundColor: "#1a1a1a" }}>
                   <img src={ex.image || NO_IMAGE_PLACEHOLDER_DARK} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
-                  {typeof ex.matchScore === 'number' && (
-                      <div style={{ position: "absolute", top: 8, right: 8, backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", padding: "4px 8px", borderRadius: 999, color: Number(ex.matchPct ?? 0) >= 90 ? "#D4A547" : "#fff", fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
-                      {(Math.max(0, Math.min(1, ex.matchScore)) * 100).toFixed(0)}%
-                    </div>
-                  )}
-
                   <ExpandableActionMenu
                     isMobile={isMobile}
                     isLiked={Boolean(likedArtworkIds?.has(String(ex.id)) || likedArtworkIds?.has(normalizeArtworkIdForFirestore(ex.id)))}
@@ -815,8 +760,18 @@ function CurationTab({
                   <div style={{ fontSize: 13, fontWeight: 700, color: fg, lineHeight: 1.3, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                     {ex.title}
                   </div>
-                  <div style={{ marginTop: 4, fontSize: 11, color: fgMed, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {ex.artist || tr({ ko: '알 수 없는 작가', en: 'Unknown Artist' })}
+                  {/* the match sits with the artist now, as a figure with a
+                      gold point that draws itself into a bar on hover */}
+                  <div style={{ marginTop: 4, display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 10, minWidth: 0 }}>
+                    <div style={{ flex: "0 1 auto", fontSize: 11, color: fgMed, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      {ex.artist || tr({ ko: '알 수 없는 작가', en: 'Unknown Artist' })}
+                    </div>
+                    {typeof ex.matchScore === 'number' && (
+                      <span className="hub-read">
+                        <i className="hub-dot" aria-hidden="true"><i /></i>
+                        <em>{(Math.max(0, Math.min(1, ex.matchScore)) * 100).toFixed(0)}%</em>
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -921,8 +876,8 @@ export default function AICurationHubPage() {
     const img = String(row.i || row.image || row.imageUrl || row.url || '');
     const title = String(row.n || row.name || 'Untitled');
     const artist = String(row.a || row.artist || 'Unknown Artist');
-    const museum = String(row.m || row.museumName || row.venue || '');
     const sourceCollection = String(row.e || row.sourceCollection || row.exhibitionId || '');
+    const museum = String(row.m || row.museumName || row.venue || '') || resolveMuseumFromCollection(sourceCollection);
     const country = String(row.c || row.country || resolveCountryFromMeta(museum, sourceCollection));
     const rawUrl = String(row.u || row.sourceUrl || row.officialUrl || row.url || '');
 
@@ -1204,8 +1159,8 @@ export default function AICurationHubPage() {
              const img = String(r.i || r.image || r.imageUrl || r.url || '');
              const title = String(r.n || r.name || 'Untitled');
              const artist = String(r.a || r.artist || 'Unknown');
-             const museum = String(r.m || r.museum || r.venue || '');
              const sourceCollection = String(r.e || r.sourceCollection || '');
+             const museum = String(r.m || r.museum || r.venue || '') || resolveMuseumFromCollection(sourceCollection);
              const country = String(r.c || r.country || resolveCountryFromMeta(museum, sourceCollection));
              const rawUrl = String(r.u || r.officialUrl || r.sourceUrl || r.link || '');
              return {
@@ -1282,45 +1237,47 @@ export default function AICurationHubPage() {
   const tabProps = { t, fg, fgLow, fgMed, fgFaint, divider, imgFilter, onSelect: setSelectedEx };
 
   return (
-    <div style={{ width: "100%", height: "100dvh", overflowY: "auto", backgroundColor: bg, fontFamily: "'Space Grotesk', sans-serif", color: fg }}>
-      
-      {/* ── Header ── */}
-      <div style={{ padding: "48px 20px 0" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 6 }}>
-          <div style={{ width: 6, height: 6, backgroundColor: "#D4A547" }} />
-          <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: language === 'ko' ? 'none' : 'uppercase', color: fgFaint }}>{tr({ ko: '개인 큐레이션', en: 'Personal Curation' })}</span>
-        </div>
-        <h1 style={{ fontSize: "clamp(24px,6vw,36px)", letterSpacing: "-0.025em", color: fg, lineHeight: 1.15, marginBottom: 18, whiteSpace: 'nowrap' }}>
-          {tr({ ko: 'AI 추천', en: 'AI Recommendation' })}
-        </h1>
-      </div>
+    <div
+      className="hub"
+      style={{
+        width: "100%", height: "100dvh", overflowY: "auto", backgroundColor: bg, color: fg,
+        ["--hub-fg" as any]: fg, ["--hub-dim" as any]: fgFaint, ["--hub-line" as any]: divider,
+      } as React.CSSProperties}
+    >
+      {/* ── the title block: one left-aligned column ── */}
+      <section className="hub-statement colly-rise">
+        <p className="hub-statement__meta">AI</p>
+        <h1>{tr({ ko: '당신의 취향을 읽는 큐레이션.', en: 'Curation that reads your taste.' })}</h1>
+        <p>{tr({
+          ko: '좋아요와 컬렉션 기록을 바탕으로, 세계 미술관 소장품 가운데 지금 당신에게 맞는 작품을 골라 보여드립니다.',
+          en: 'Built from your likes and collections, picked from museum holdings around the world.',
+        })}</p>
+        <footer>
+          <span aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" />
+            </svg>
+          </span>
+          <span>{tr({ ko: '작품 세 점을 고르면 추천이 시작됩니다', en: 'Pick three works and the picks begin' })}</span>
+        </footer>
+      </section>
 
-      {/* ── Tab Switch ── */}
-      <div style={{ position: "sticky", top: 0, zIndex: 20, paddingTop: "env(safe-area-inset-top, 0px)", paddingLeft: 20, paddingRight: 20, backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
-        <div style={{ position: 'relative', display: "flex", gap: 0, borderBottom: `1px solid ${divider}` }}>
+      {/* ── the curation switch: one bordered track, split in half ── */}
+      <div style={{ position: "sticky", top: 0, zIndex: 20, padding: "10px 20px 12px", paddingTop: "calc(10px + env(safe-area-inset-top, 0px))", backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
+        <div className="hub-switch" role="tablist">
           {([
-            { id: "curation", label: tr({ ko: '나의 큐레이션', en: 'My Curation' }), icon: <Sparkles size={11} strokeWidth={2} /> },
-            { id: "weekly",   label: tr({ ko: '주간 큐레이션', en: 'Weekly' }),        icon: <BookOpen size={11} strokeWidth={2} /> },
-          ]).map(({ id, label, icon }) => {
-            const isActive = activeTab === id;
-            return (
-              <button key={id} onClick={() => setActiveTab(id as "curation" | "weekly")}
-                style={{
-                  flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                  padding: "14px 0", background: "none", border: "none",
-                  cursor: "pointer", transition: "color 0.15s",
-                  color: isActive ? fg : fgLow, fontSize: 12, fontWeight: isActive ? 600 : 400,
-                }}>
-                <span style={{ color: isActive ? (t ? "#8A6B1F" : "#D4A547") : fgFaint }}>{icon}</span>
-                {label}
-              </button>
-            );
-          })}
-          <motion.div
-            animate={{ left: activeTab === 'curation' ? '0%' : '50%' }}
-            transition={{ duration: 0.18, ease: 'easeOut' }}
-            style={{ position: 'absolute', bottom: -1, width: '50%', height: 2, backgroundColor: '#D4A547' }}
-          />
+            { id: "curation", label: tr({ ko: '나의 큐레이션', en: 'My Curation' }) },
+            { id: "weekly",   label: tr({ ko: '주간 큐레이션', en: 'Weekly' }) },
+          ]).map(({ id, label }) => (
+            <button key={id} type="button" role="tab" aria-selected={activeTab === id}
+              className={activeTab === id ? "is-active" : ""}
+              onClick={() => setActiveTab(id as "curation" | "weekly")}>
+              <span className="hub-switch__inner">
+                <i className="hub-switch__dot" aria-hidden="true" />
+                <span className="hub-switch__label">{label}</span>
+              </span>
+            </button>
+          ))}
         </div>
       </div>
 
@@ -1339,6 +1296,8 @@ export default function AICurationHubPage() {
                recommendMode={recommendMode}
                onChangeRecommendMode={setRecommendMode}
                onTasteOnboardingSubmit={handleTasteOnboardingSubmit}
+               isSignedIn={Boolean(user && !user.isAnonymous)}
+               onBrowseWeekly={() => setActiveTab('weekly')}
                randomArtworks={randomArtworks}
                randomLoading={randomLoading}
                onRefreshRandom={(count = 36, append = false) => requestRandomArtworks(count, append)}

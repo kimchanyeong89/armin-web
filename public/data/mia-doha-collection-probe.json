@@ -1,0 +1,561 @@
+{
+  "museum": "Museum of Islamic Art",
+  "collection": "Collection",
+  "website": "https://collections.qm.org.qa/en/objects?museum=museum-of-islamic-art",
+  "scraped_date": "2026-06-10",
+  "total_count": 19,
+  "source_type": "ssr-payload",
+  "category_breakdown": {
+    "manuscript": 14,
+    "painting": 5
+  },
+  "artworks": [
+    {
+      "id": "mia-doha-mia-2013-108-3",
+      "objectNumber": "MIA.2013.108.3",
+      "title": "Folio of the Pink Qur'an",
+      "artist": "Nasrid Spain",
+      "date": "1230 - 1300",
+      "year": 1230,
+      "medium": "Paper, Ink, Gold",
+      "dimensions": "33.5 × 26.2 cm",
+      "category": "manuscript",
+      "description": "This folio comes from an Andalusian Qur’an manuscript known as the ‘Pink Qur’an’, named after the colour of its paper. Each page contains five lines of text copied in dark brown ink with diacritical marks and verse markers in gold paint and diverse opaque watercolours. This manuscript is an exquisite example of how the maghrebi script had evolved. Maghrebi script has distinct features such as large round curved letters and the specific use of some diacritical marks to distinguish consonants; it is usually written in dark brown or black ink with gold illuminations and a colourful vocalisation system. The script was first developed in Al-Andalus and the Maghreb region, hence its name. This rare example of dyed pink paper was probably produced in the city of Jativa, in today south-eastern Spain, where the site of the earliest Spanish paper mill is located. The use of paper is an innovation for Andalusian manuscripts as parchment was still the most common writing support used for Qur’ans during that time in the Iberian Peninsula.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2013-108-3-e8552bac-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.108.3.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-pink-quran-mia20131083",
+      "metadata": {
+        "qmId": 3593,
+        "objectName": "Folio",
+        "period": "Nasrid",
+        "productionPlace": "Spain",
+        "techniques": [
+          "Calligraphy",
+          "Illumination",
+          "Dyeing"
+        ],
+        "titleAR": "صفحة من المصحف الوردي "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.108.3.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2013-154",
+      "objectNumber": "MIA.2013.154",
+      "title": "Folio Depicting a Camel Fight",
+      "artist": "Abdallah Sayrafi",
+      "date": "1500 - 1600",
+      "year": 1500,
+      "medium": "Paper, Marbled paper, Gouache, Gold",
+      "dimensions": "21.2 × 28.2 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2013-154-96c09c5c-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.154-layers.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-depicting-a-camel-fight-mia2013154",
+      "metadata": {
+        "qmId": 3597,
+        "objectName": "Folio",
+        "period": "Shaybanid",
+        "productionPlace": "Uzbekistan",
+        "techniques": [
+          "Painting"
+        ],
+        "titleAR": "صفحة تصور قتال جمل "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.154-layers.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-195",
+      "objectNumber": "MIA.2014.195",
+      "title": "Folio from a Safavid copy of the Shahnama of Firdausi",
+      "artist": "Firdawsi",
+      "date": "1560 - 1580",
+      "year": 1560,
+      "medium": "Paper, Gouache, Ink, Gold",
+      "dimensions": "38.5 × 26 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-195-afa8a33b-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.195-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-safavid-copy-of-the-shahnama-of-firdausi-mia2014195",
+      "metadata": {
+        "qmId": 3603,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Illumination",
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من الشاهنامه الفردوسي بالنسخة الصفوية "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.195-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-217",
+      "objectNumber": "MIA.2014.217",
+      "title": "Folio from the Big Head Shahnama",
+      "artist": "Timurid Iran",
+      "date": "1494",
+      "year": 1494,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "34.3 × 24.5 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-217-9c9177de-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.217.1__f.1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-the-big-head-shahnama-mia2014217",
+      "metadata": {
+        "qmId": 3604,
+        "objectName": "Folio",
+        "period": "Timurid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من الشاهنامه الرأس الكبير"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.217.1__f.1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-218",
+      "objectNumber": "MIA.2014.218",
+      "title": "Bifolio from a dispersed Shahnama of Firdausi",
+      "artist": "Firdawsi",
+      "date": "1467 - 1500",
+      "year": 1467,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "33 × 23 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-218-f54402c0-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.218.1__f1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/bifolio-from-a-dispersed-shahnama-of-firdausi-mia2014218",
+      "metadata": {
+        "qmId": 3605,
+        "objectName": "Folio",
+        "period": "Timurid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "صفحة مزدوجة من شاهنامه متفرقة للفردوسي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.218.1__f1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-56",
+      "objectNumber": "MIA.2014.56",
+      "title": "Illuminated Album Folio of Calligraphy",
+      "artist": "Shah Mahmud, Ayshi",
+      "date": "1553",
+      "year": 1553,
+      "medium": "Paper, Ink, Gouache, Gold, Coloured paper",
+      "dimensions": "251.5 × 34.5 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-56-a98eef45-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.56.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/illuminated-album-folio-of-calligraphy-mia201456",
+      "metadata": {
+        "qmId": 3599,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Afghanistan",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "ورقة ألبوم مزينة من الخط العربي "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.56.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-11-1999",
+      "objectNumber": "MS.11.1999",
+      "title": "Alawite last section (juz') of a 30-volume Qur'an",
+      "artist": "Abu Muhammad Sayyid ‘. Al Ghazwani, Ahmad I. Ibn Abi Ibrahim",
+      "date": "1653",
+      "year": 1653,
+      "medium": "Paper, Ink, Gold, Gouache, Leather",
+      "dimensions": "25.8 × 20.5 × 3.3 cm",
+      "category": "manuscript",
+      "description": "This Qur’an juz’ is the last section of a 30 volumes Qur’an from Morocco. It is copied on paper in dark brown ink, using the maghribi script. This script was developed in the 4th century AH / 10th century CE in North Africa and is characterised by its curved lines and large strokes. The sura headings are written in gold Kufic script, sometimes on a blue background and are marked in the margin by decorated medallions. The word Allah is also highlighted in gold throughout the manuscript and the vocalisation is rendered with red and blue ink. Individual verses are indicated by polylobed gold markers while the groups of five and ten verses are respectively separated by teardrop and circular shapes, sometimes highlighted with blue colour and inscribed with the words khams and ‘ashr. The volume ends with a colophon written in gold thuluth script set on a blue background. The manuscript was copied and illuminated by Ahmad ibn ‘Ali ibn Abi Ibrahim and the date, 1063 AH / 1653 CE, was interestingly written using European numerals as seen in other North African and Andalusian medieval manuscripts. It was dedicated to Abu Muhammad Sayyid ‘Abdallah al-Ghazwani, one of the seven Sufi saints of Marrakesh, a follower of the Jazuli order who died in 935 AH / 1529 CE. The format follows a typical vertical layout used in Spain and North Africa from the 7th century AH /13th century CE onwards, whether on parchment or paper. Several earlier examples copied on the Jativa pink paper exist and feature the same characteristics (see Marrakesh Ben Youssef library inv. 431). Such high quality volumes would have been produced for prestigious religious institutions such as madrasas and zawiyas and would have commonly been registered as endowments (awqaf or habous).",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-11-1999-7ed4d534-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.11.1999.layers.MQ.width-360_EVvUJnr.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/alawite-last-section-juz-of-a-30-volume-quran-ms111999",
+      "metadata": {
+        "qmId": 2713,
+        "objectName": "Manuscript",
+        "period": "Alawite",
+        "productionPlace": "Morocco",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": " الجزء الأخير من مصحف علوي مكون من 30 مجلداً"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.11.1999.layers.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-119-2007",
+      "objectNumber": "MS.119.2007",
+      "title": "Folio from a monumental Qur'an",
+      "artist": "Umar Al Aqta",
+      "date": "1400 - 1430",
+      "year": 1400,
+      "medium": "Paper, Ink, Gold",
+      "dimensions": "177 × 111.5 cm",
+      "category": "manuscript",
+      "description": "Written in elegant muhaqqaq script, this page is from the largest medieval Qur'an ever made, the so-called Baysunghur Qur'an. It would have required 1600 pages in total and 2700 square meters of paper to complete this Qur'an. Traditionally ascribed to the patronage of Timurid ruler Baysunghur, it is more likely to have been produced for Timur himself (r. 771-807 AH / 1370-1405 CE). The story is that it was produced by a one-armed calligrapher, Umar-e Aqta, who also spent years producing a miniature Qur'an that would fit into a ring. When he presented this proudly to Timur, the great ruler thought the small size unworthy of the Qur'an. Timur was also known for monumental architectural plans, thus miniature size might not have striken the ruler interest. Not turned down by this initial cold reaction, the calligrapher then set about producing the largest Qur'an manuscript ever seen and presented it to Timur, who this time granted the appreciation sought by the artist. A Qur'an stand in carved stone large enough to hold the manuscript was commissioned by Ulugh Beg, a grandson of Timur, and is still standing in the courtyard of the Bibi Khanum Mosque in Samarkand, where Timur established his capital.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-119-2007-2b63eb22-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.119.2007.MQ.width-360_ONRv403.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-monumental-quran-ms1192007",
+      "metadata": {
+        "qmId": 2719,
+        "objectName": "Folio",
+        "period": "Timurid",
+        "productionPlace": "Uzbekistan",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من قرآن ضخم"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.119.2007.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-158-2000",
+      "objectNumber": "MS.158.2000",
+      "title": "Folio from the Jahangir Album",
+      "artist": "Ali al-Sultani",
+      "date": "1600 - 1620",
+      "year": 1600,
+      "medium": "Paper, Gouache, Ink, Gold",
+      "dimensions": "42.5 × 26.8 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-158-2000-67fad163-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.158.2000.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-the-jahangir-album-ms1582000",
+      "metadata": {
+        "qmId": 3611,
+        "objectName": "Folio",
+        "period": "Mughal",
+        "productionPlace": "India",
+        "techniques": [
+          "Illustration",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من ألبوم جهانغير"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.158.2000.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-1",
+      "objectNumber": "MS.160.2007.1",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1400 - 1499",
+      "year": 1400,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "249 × 225 mm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-1-8c154bc0-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020071",
+      "metadata": {
+        "qmId": 3315,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-10",
+      "objectNumber": "MS.160.2007.10",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "33 × 23 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-10-64edd2d9-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.10.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms160200710",
+      "metadata": {
+        "qmId": 3618,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.10.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-11",
+      "objectNumber": "MS.160.2007.11",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "33 × 24.4 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-11-daa2948a-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.11.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms160200711",
+      "metadata": {
+        "qmId": 3619,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.11.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-2",
+      "objectNumber": "MS.160.2007.2",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1400 - 1499",
+      "year": 1400,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 22.2 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-2-236df0c8-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.2.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020072",
+      "metadata": {
+        "qmId": 3316,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.2.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-3",
+      "objectNumber": "MS.160.2007.3",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 22 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-3-e4bd6d5f-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.3.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020073",
+      "metadata": {
+        "qmId": 3612,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.3.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-4",
+      "objectNumber": "MS.160.2007.4",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 22 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-4-c2202408-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.4.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020074",
+      "metadata": {
+        "qmId": 3613,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة قرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.4.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-5",
+      "objectNumber": "MS.160.2007.5",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1400 - 1499",
+      "year": 1400,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 21.6 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-5-40d1c508-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.5.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020075",
+      "metadata": {
+        "qmId": 3317,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.5.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-6",
+      "objectNumber": "MS.160.2007.6",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24 × 21.4 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-6-6ed06df1-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.6.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020076",
+      "metadata": {
+        "qmId": 3614,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.6.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-7",
+      "objectNumber": "MS.160.2007.7",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "34.1 × 24.2 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-7-90a18e4d-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.7.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020077",
+      "metadata": {
+        "qmId": 3615,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.7.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-8",
+      "objectNumber": "MS.160.2007.8",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "32.7 × 23.7 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-8-a7a180ce-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.8.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020078",
+      "metadata": {
+        "qmId": 3616,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.8.MQ.width-4000.jpg"
+    }
+  ]
+}

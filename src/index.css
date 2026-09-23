@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
 
+/* Hana2 - the board's type, also used by the language switch. */
+@font-face { font-family: "Hana2"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2411-1@1.0/Hana2-L.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Hana2"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2411-1@1.0/Hana2-R.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Hana2"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2411-1@1.0/Hana2-M.woff2") format("woff2"); font-weight: 500 600; font-display: swap; }
+@font-face { font-family: "Hana2"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2411-1@1.0/Hana2-B.woff2") format("woff2"); font-weight: 700 900; font-display: swap; }
+
+
+
 :root {
   font-family: 'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.55;
@@ -13,6 +21,15 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Where a page's first line starts: under the phone's notch, and under the
+     KO | EN switch fixed at the top right (its row ends about 42px down).
+     The search, community and AI pages all open from this line, so the
+     titles sit on one level as the tabs switch between them. */
+  --page-top: calc(env(safe-area-inset-top, 0px) + 72px);
+}
+@media (max-width: 768px) {
+  :root { --page-top: calc(env(safe-area-inset-top, 0px) + 60px); }
 }
 
 a {
@@ -243,3 +260,22 @@ body[data-home="true"] {
 .drawing-placeholder::placeholder {
   color: rgba(17, 17, 17, 0.5) !important;
 }
+
+/* An in-map panel (nearby exhibitions, venue panel) or the community composer sets this flag. The
+   language switch is fixed above every layer, so it has to step aside rather
+   than sit on the panel's close button. */
+html[data-overlay-panel] .app-language-toggle { opacity: 0; pointer-events: none; }
+.app-language-toggle { transition: opacity .18s ease; }
+
+/* A tab's opening lines rise in one after another as the tab opens — the
+   motion the map's reading guide gives its own lines (GUIDE_MOTION and
+   GUIDE_LINE in InteractiveGlobeMap.tsx: 18px, .9s, .09s apart after .2s),
+   for the tabs whose opening is plain markup. The fill runs backwards only,
+   so a risen line keeps no transform. */
+@keyframes colly-rise { from { opacity: 0; transform: translateY(18px); } }
+.colly-rise > * { animation: colly-rise .9s cubic-bezier(.16, 1, .3, 1) .2s backwards; }
+.colly-rise > :nth-child(2) { animation-delay: .29s; }
+.colly-rise > :nth-child(3) { animation-delay: .38s; }
+.colly-rise > :nth-child(4) { animation-delay: .47s; }
+.colly-rise > :nth-child(n+5) { animation-delay: .56s; }
+@media (prefers-reduced-motion: reduce) { .colly-rise > * { animation: none; } }

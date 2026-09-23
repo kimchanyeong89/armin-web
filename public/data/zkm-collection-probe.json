@@ -1,0 +1,279 @@
+{
+  "museum": "ZKM | Center for Art and Media Karlsruhe",
+  "collection": "Collection",
+  "website": "https://zkm.de/en/collection",
+  "scraped_date": "2026-06-16",
+  "total_count": 12,
+  "source_type": "html",
+  "category_breakdown": {
+    "video": 7,
+    "drawing": 4,
+    "painting": 1
+  },
+  "artworks": [
+    {
+      "id": "zkm-key-codes-oder-der-schlussel-steckt",
+      "objectNumber": "",
+      "title": "\"key-codes\" oder \"der Schlüssel steckt...\"",
+      "artist": "Hansjörg Palm",
+      "date": "2002",
+      "year": 2002,
+      "medium": "Betacam SP, color, stereo",
+      "dimensions": "00:06:36",
+      "category": "video",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-key-codes-oder-der-schlussel-steckt-ca60ee68-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/s045101.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/key-codes-oder-der-schlussel-steckt",
+      "metadata": {
+        "zkm_slug": "key-codes-oder-der-schlussel-steckt",
+        "zkm_category": "Video"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/s045101.jpg"
+    },
+    {
+      "id": "zkm-entlastungen-pipilottis-fehler",
+      "objectNumber": "",
+      "title": "(Entlastungen) Pipilottis Fehler",
+      "artist": "Pipilotti Rist",
+      "date": "1988",
+      "year": 1988,
+      "medium": "Betacam SP, color, stereo",
+      "dimensions": "00:11:18",
+      "category": "video",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-entlastungen-pipilottis-fehler-4c00ebb1-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/s043701.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/entlastungen-pipilottis-fehler",
+      "metadata": {
+        "zkm_slug": "entlastungen-pipilottis-fehler",
+        "zkm_category": "Video"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/s043701.jpg"
+    },
+    {
+      "id": "zkm-sehe-immer-wieder-gelbe-waden-dawson-130999",
+      "objectNumber": "",
+      "title": "... sehe immer wieder gelbe Waden... Dawson 13.09.99",
+      "artist": "Ingrid Wiener",
+      "date": "1999",
+      "year": 1999,
+      "medium": "watercolor and pencil on watercolor paper",
+      "dimensions": "23 x 30 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-sehe-immer-wieder-gelbe-waden-dawson-130999-956acbc1-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2024/05/10/002402/ZKM000246763.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/sehe-immer-wieder-gelbe-waden-dawson-130999",
+      "metadata": {
+        "zkm_slug": "sehe-immer-wieder-gelbe-waden-dawson-130999",
+        "zkm_category": "Painting; Drawing"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2024/05/10/002402/ZKM000246763.jpg"
+    },
+    {
+      "id": "zkm-traume-ich-soll-einen-traum-dawson-190701",
+      "objectNumber": "",
+      "title": "... träume ich soll einen Traum... Dawson 19.07.01",
+      "artist": "Ingrid Wiener",
+      "date": "2001",
+      "year": 2001,
+      "medium": "watercolor and pencil on watercolor paper",
+      "dimensions": "24,5 x 35 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-traume-ich-soll-einen-traum-dawson-190701-a60e1aeb-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2024/05/10/002402/ZKM000246765.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/traume-ich-soll-einen-traum-dawson-190701",
+      "metadata": {
+        "zkm_slug": "traume-ich-soll-einen-traum-dawson-190701",
+        "zkm_category": "Painting; Drawing"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2024/05/10/002402/ZKM000246765.jpg"
+    },
+    {
+      "id": "zkm-und-die-erd-ist-kalt",
+      "objectNumber": "",
+      "title": "... und die Erd‘ ist kalt...",
+      "artist": "Reinhard Wanzke",
+      "date": "1994",
+      "year": 1994,
+      "medium": "Betacam SP, color, stereo",
+      "dimensions": "00:24:45",
+      "category": "video",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-und-die-erd-ist-kalt-da2ebdad-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/s046201.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/und-die-erd-ist-kalt",
+      "metadata": {
+        "zkm_slug": "und-die-erd-ist-kalt",
+        "zkm_category": "Video"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/s046201.jpg"
+    },
+    {
+      "id": "zkm-schlafe-schlecht-krefeld-240100",
+      "objectNumber": "",
+      "title": "...schlafe schlecht... Krefeld 24.01.00",
+      "artist": "Ingrid Wiener",
+      "date": "2000",
+      "year": 2000,
+      "medium": "watercolor and pencil on watercolor paper",
+      "dimensions": "23,5 x 31,5 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-schlafe-schlecht-krefeld-240100-f303cc99-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2024/05/10/002402/ZKM000246761.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/schlafe-schlecht-krefeld-240100",
+      "metadata": {
+        "zkm_slug": "schlafe-schlecht-krefeld-240100",
+        "zkm_category": "Painting; Drawing"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2024/05/10/002402/ZKM000246761.jpg"
+    },
+    {
+      "id": "zkm-error",
+      "objectNumber": "",
+      "title": "/error/",
+      "artist": "Timo Kahlen",
+      "date": "2020",
+      "year": 2020,
+      "medium": "interactive sound and film projection",
+      "dimensions": "installation dimensions variable",
+      "category": "video",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-error-2cbd02a0-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2024/01/25/133653/ZKM000242963.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/error",
+      "metadata": {
+        "zkm_slug": "error",
+        "zkm_category": "Video"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2024/01/25/133653/ZKM000242963.jpg"
+    },
+    {
+      "id": "zkm-11960",
+      "objectNumber": "",
+      "title": "1.1960",
+      "artist": "Kurd Alsleben, Cord Passow",
+      "date": "1960",
+      "year": 1960,
+      "medium": "computer-generated drawing, ink on paper, computer: EAI 231R analog computer, output: flatbed plotter",
+      "dimensions": "29,5 x 41 cm, motif: 16,5 x 20,5 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-11960-0ec3ab9f-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/ZKM000147241.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/11960",
+      "metadata": {
+        "zkm_slug": "11960",
+        "zkm_category": "Drawing; Computer-generated"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/ZKM000147241.jpg"
+    },
+    {
+      "id": "zkm-12-minute-video",
+      "objectNumber": "",
+      "title": "1/2 Minute Video",
+      "artist": "Christian Ernst",
+      "date": "1988",
+      "year": 1988,
+      "medium": "U-Matic, b/w, mono",
+      "dimensions": "00:01:11",
+      "category": "video",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-12-minute-video-2ec54233-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/i005805.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/12-minute-video",
+      "metadata": {
+        "zkm_slug": "12-minute-video",
+        "zkm_category": "Video"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/i005805.jpg"
+    },
+    {
+      "id": "zkm-12-stucke",
+      "objectNumber": "",
+      "title": "12 Stücke",
+      "artist": "Karl Kowanz",
+      "date": "1988",
+      "year": 1988,
+      "medium": "U-Matic, color, stereo",
+      "dimensions": "00:09:47",
+      "category": "video",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-12-stucke-65286158-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/i005401.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/12-stucke",
+      "metadata": {
+        "zkm_slug": "12-stucke",
+        "zkm_category": "Video"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/i005401.jpg"
+    },
+    {
+      "id": "zkm-1984",
+      "objectNumber": "",
+      "title": "1984",
+      "artist": "Joachim Stender",
+      "date": "1983",
+      "year": 1983,
+      "medium": "U-Matic, color, mono",
+      "dimensions": "00:06:02",
+      "category": "video",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-1984-86f8fae1-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/i001602.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/1984",
+      "metadata": {
+        "zkm_slug": "1984",
+        "zkm_category": "Video"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2023/02/23/101414/i001602.jpg"
+    },
+    {
+      "id": "zkm-2-quadrate-16-kreise-32-halbkreise",
+      "objectNumber": "",
+      "title": "2 quadrate 16 kreise 32 halbkreise",
+      "artist": "Bernhard Sandfort",
+      "date": "1961",
+      "year": 1961,
+      "medium": "oil on paper on wood",
+      "dimensions": "34,6 x 43,6 x 3,7 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-2-quadrate-16-kreise-32-halbkreise-45fccb82-imageUrl.webp",
+      "thumbnailUrl": "https://zkm.de/system/files/field_media_image/2024/02/15/102858/ZKM000223605.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://zkm.de/en/artworks/2-quadrate-16-kreise-32-halbkreise",
+      "metadata": {
+        "zkm_slug": "2-quadrate-16-kreise-32-halbkreise",
+        "zkm_category": "Painting"
+      },
+      "original_imageUrl": "https://zkm.de/system/files/field_media_image/2024/02/15/102858/ZKM000223605.jpg"
+    }
+  ]
+}

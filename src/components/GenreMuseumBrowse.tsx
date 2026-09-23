@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -46,18 +46,14 @@ const SHORT: Record<string, { ko: string; en: string }> = {
   "frac-centre": { ko: "Frac Centre", en: "Frac Centre" },
 };
 
-const COPY = {
-  ko: { title: "분야별로 둘러보기", sub: "관심 분야의 미술관·아카이브를 골라 컬렉션을 펼쳐보세요." },
-  en: { title: "Browse by Genre", sub: "Pick a field and open its museums and archives." },
-};
-
-const GOLD = "212,165,71";
-
 export default function GenreMuseumBrowse({ isMobile, museums }: { isMobile: boolean; museums: MuseumLike[] }) {
   const navigate = useNavigate();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const byId = useMemo(() => new Map(museums.map((m) => [m.id, m])), [museums]);
   const open = (id: string) => navigate(`/interactive/world/city/${encodeURIComponent(id)}`);
+  // Folded away until asked: one genre open at a time, none to begin with,
+  // so the ten read as a list of headings until one is chosen.
+  const [openGenre, setOpenGenre] = useState<number | null>(null);
 
   const nameOf = (id: string): string => {
     if (SHORT[id]) return SHORT[id][language];
@@ -66,105 +62,46 @@ export default function GenreMuseumBrowse({ isMobile, museums }: { isMobile: boo
     // EN: canonical `name` (name_en is unreliable). KO: name_ko, falling back to name.
     return language === "en" ? (m.name || m.name_ko || id) : (m.name_ko || m.name || id);
   };
-
-  const copy = COPY[language] || COPY.ko;
+  const countryOf = (id: string): string => String((byId.get(id) as any)?.country || "");
+  const two = (n: number) => String(n).padStart(2, "0");
 
   return (
-    <section
-      style={{
-        marginTop: isMobile ? 26 : 40,
-        paddingTop: isMobile ? 24 : 32,
-        borderTop: "1px solid rgba(255,255,255,0.08)",
-      }}
-    >
-      <div style={{ marginBottom: isMobile ? 20 : 30, padding: isMobile ? "0 2px" : 0 }}>
-        <span style={{ fontSize: 10.5, letterSpacing: 2.6, fontWeight: 600, textTransform: "uppercase", color: `rgba(${GOLD},0.78)` }}>
-          Browse by Genre
-        </span>
-        <h2 style={{ margin: "9px 0 5px", fontSize: isMobile ? 19 : 23, fontWeight: 600, color: "#f4f3f1", letterSpacing: -0.4 }}>
-          {copy.title}
-        </h2>
-        <p style={{ margin: 0, fontSize: 12.5, color: "rgba(242,242,242,0.4)", lineHeight: 1.5, fontWeight: 350 }}>
-          {copy.sub}
-        </p>
-      </div>
-
-      <div>
-        {GENRES.map((g, gi) => (
-          <div
-            key={g.en}
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "26px 1fr" : "54px 1fr",
-              gap: isMobile ? 14 : 24,
-              alignItems: "start",
-              padding: isMobile ? "17px 2px" : "21px 2px",
-              borderTop: gi === 0 ? "none" : "1px solid rgba(255,255,255,0.055)",
-            }}
-          >
-            <span
-              style={{
-                fontSize: isMobile ? 14 : 21,
-                fontWeight: 300,
-                lineHeight: 1,
-                color: `rgba(${GOLD},0.48)`,
-                fontVariantNumeric: "tabular-nums",
-                letterSpacing: 0.5,
-                paddingTop: isMobile ? 3 : 4,
-              }}
-            >
-              {String(gi + 1).padStart(2, "0")}
-            </span>
-
-            <div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: isMobile ? 11 : 13, flexWrap: "wrap" }}>
-                <span style={{ fontSize: isMobile ? 15.5 : 17, fontWeight: 600, color: "#f0efec", letterSpacing: -0.3 }}>
-                  {language === "en" ? g.en : g.ko}
-                </span>
-                {language === "ko" && (
-                  <span style={{ fontSize: 10, fontWeight: 500, letterSpacing: 1.7, textTransform: "uppercase", color: `rgba(${GOLD},0.5)` }}>{g.en}</span>
-                )}
-              </div>
-
-              <div style={{ display: "flex", flexWrap: "wrap", columnGap: isMobile ? 17 : 22, rowGap: isMobile ? 10 : 11 }}>
-                {g.ids.map((id) => (
-                  <button
-                    key={g.en + id}
-                    type="button"
-                    onClick={() => open(id)}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      padding: 0,
-                      margin: 0,
-                      cursor: "pointer",
-                      fontFamily: "inherit",
-                      fontSize: isMobile ? 13 : 13.5,
-                      fontWeight: 450,
-                      lineHeight: 1.15,
-                      color: "rgba(240,240,240,0.56)",
-                      letterSpacing: "0",
-                      transition: "color 0.22s ease, letter-spacing 0.22s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      // Minimal editorial hover: brighten to gold + a hair of letter-spacing.
-                      // (Replaces the old gold underline that read like a tray/shelf edge.)
-                      e.currentTarget.style.color = "#eccd86";
-                      e.currentTarget.style.letterSpacing = "0.02em";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.color = "rgba(240,240,240,0.56)";
-                      e.currentTarget.style.letterSpacing = "0";
-                    }}
-                  >
-                    {nameOf(id)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+    <section style={{ marginTop: isMobile ? 26 : 40 }}>
+      <ul className="sr-drawer">
+        {GENRES.map((g, gi) => {
+          const isOpen = openGenre === gi;
+          return (
+            <li key={g.en} className={isOpen ? "is-open" : ""}>
+              <button
+                type="button"
+                className="sr-drawer__head"
+                aria-expanded={isOpen}
+                onClick={() => setOpenGenre(isOpen ? null : gi)}
+              >
+                <em>{two(gi + 1)}</em>
+                <span>{language === "en" ? g.en : g.ko}</span>
+                <i />
+                <b>{two(g.ids.length)}</b>
+                <u aria-hidden="true">{isOpen ? "\u2212" : "+"}</u>
+              </button>
+              {isOpen && (
+                <div className="sr-drawer__open">
+                  {g.ids.map((id) => (
+                    <button key={g.en + id} type="button" className="sr-museum" onClick={() => open(id)}>
+                      <i className="sr-museum__dot" aria-hidden="true" />
+                      <span>{nameOf(id)}</span>
+                      <em>{countryOf(id)}</em>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <p style={{ margin: "18px 2px 0", fontFamily: "var(--num)", fontSize: 9, letterSpacing: "0.06em", color: "rgba(244,241,234,0.4)" }}>
+        {t({ ko: "장르를 열면 그 분야를 소장한 미술관이 나옵니다.", en: "Open a genre to see the museums that hold it." })}
+      </p>
     </section>
   );
 }

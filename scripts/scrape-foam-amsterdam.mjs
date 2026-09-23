@@ -11,12 +11,22 @@
 //   We harvest that from the Internet Archive (no firewall):
 //     - LIST  : every archived snapshot of /collection/all (CDX-discovered). Each snapshot renders
 //               page 1 = the 100 newest works AT THAT TIME (sort_by created_at:desc). The collection
-//               grew 44→102→171 over time, so unioning snapshots across years recovers ~156 of 171.
+//               grew 44→102→171 over time, so unioning snapshots across years recovers 156 of 171.
 //               (No ?page=2 snapshot exists in Wayback and pagination is client-side via the token
-//                we don't have, so a single snapshot caps at 100 — the cross-time union is the fix.)
+//                we don't have, so a single snapshot caps at 100 — the cross-time union is the fix.
+//                The /collection/<medium> filter pages are NOT a second surface: their SSR payload
+//                returns the same unfiltered top-100, so they add nothing.)
 //     - DETAIL: every archived snapshot of /artworks/<slug> (CDX). Same Artwork content shape; fills
-//               a handful of slugs that never appeared on a captured page-1 (~+7).
-//   Reachable union ≈ 160/171 (~95%). The ~8 unreachable works never got archived & have no token route.
+//               the slugs that never appeared on a captured page-1 (+1 over the list union → 157).
+//   RE-VERIFIED 2026-06-25: live foam.org still fully bot-blocked (429 x-vercel-mitigated on every
+//   path incl. sitemap/robots; api.storyblok.com still 401). The museum's OWN declared total is
+//   exactly 171 (pageProps.total, stable across the Jun/Sep/Dec-2025 snapshots) — all contemporary
+//   photography, all in-scope flat works. Wayback-recoverable ceiling = 157 distinct Artwork+image
+//   slugs. The remaining 14/171 either never got archived or have no token route (unrecoverable
+//   without live access). Our prior run captured 153; the ~4 it lost were transient Storyblok image
+//   403/throttle drops (see scripts/.state/foam-amsterdam-failed.ndjson) — the dl() 403 retry below
+//   recovers them; 3 of those 5 have only a ~330x436 archived thumbnail (< the 600px guard) and stay
+//   out by quality policy. So a re-run nets only ~1-4 works: 153 is essentially the Wayback ceiling.
 //
 // IMAGES: content.thumbnail.filename is a UNIQUE full-size jpeg per work on the Storyblok CDN
 //   (a.storyblok.com/f/113697/<WxH>/<hash>/<accession>.jpg) — verified HTTP 200, full-res (e.g.
@@ -277,15 +287,21 @@ function parseRecord(rec) {
 }
 
 // ---------- image: download full-size, autocrop, upload to R2 ----------
+// Storyblok CDN intermittently 403s a bare request; a Referer/Accept header + longer
+// backoff recovers it (the original run lost ~4 works to transient 403/throttle here).
 async function dl(url) {
-  for (let att = 1; att <= 3; att++) {
+  for (let att = 1; att <= 5; att++) {
     try {
-      const r = await fetch(url, { headers: { 'User-Agent': UA } });
+      const r = await fetch(url, { headers: {
+        'User-Agent': UA,
+        'Accept': 'image/avif,image/webp,image/jpeg,image/*,*/*;q=0.8',
+        'Referer': HOME + '/',
+      } });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const buf = Buffer.from(await r.arrayBuffer());
       if (buf.length < 5000) throw new Error(`tiny ${buf.length}b`);
       return buf;
-    } catch (e) { if (att === 3) throw e; await sleep(500 * att); }
+    } catch (e) { if (att === 5) throw e; await sleep(700 * att); }
   }
 }
 

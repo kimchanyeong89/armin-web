@@ -2,8 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import GlobalSearchBar from "../components/GlobalSearchBar";
 import GenreMuseumBrowse from "../components/GenreMuseumBrowse";
 import { exhibitions } from "../data/exhibitions";
+import { useLanguage } from "../contexts/LanguageContext";
+import "./searchRedesign.css";
 
 export default function SearchPage() {
+  const { t } = useLanguage();
   const [isMobileLayout, setIsMobileLayout] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.innerWidth < 768;
@@ -51,40 +54,31 @@ export default function SearchPage() {
 
   return (
     <div
+      className="sr"
       style={{
         width: "100%",
         height: "100dvh",
         overflowY: "auto",
-        background:
-          "radial-gradient(1200px 380px at 50% -240px, rgba(212,165,71,0.08), transparent 70%), #050505",
-        color: "#f2f2f2",
-        fontFamily: "'Space Grotesk', 'Pretendard', 'Apple SD Gothic Neo', sans-serif",
-        padding: isMobileLayout
-          ? "calc(10px + env(safe-area-inset-top, 0px)) 6px 110px"
-          : "calc(14px + env(safe-area-inset-top, 0px)) 12px 110px",
+        background: "#080808",
+        padding: isMobileLayout ? "var(--page-top) 14px 110px" : "var(--page-top) 28px 110px",
         boxSizing: "border-box",
       }}
     >
-      <div style={{ maxWidth: isMobileLayout ? "100%" : 1200, margin: "0 auto" }}>
-        <div
-          style={isMobileLayout ? {
-            padding: 0,
-            overflow: "visible",
-            background: "transparent",
-            border: "none",
-            borderRadius: 0,
-            boxShadow: "none",
-          } : {
-            borderRadius: 18,
-            border: "1px solid rgba(255,255,255,0.10)",
-            background: "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02) 30%, rgba(0,0,0,0.24))",
-            boxShadow: "0 24px 52px rgba(0,0,0,0.42)",
-            padding: "10px 10px 4px",
-            overflow: "hidden",
-          }}
-        >
-          <GlobalSearchBar inlineMode forceWidth="100%" museums={museums as any} />
-        </div>
+      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+        {/* The lead the drawer study opens with: the label, the line of
+            type, then the field directly under it - no card around it. */}
+        <section className="sr-lead colly-rise">
+          <p className="sr-lead__meta">{t({ ko: "검색", en: "SEARCH" })}</p>
+          {/* Broken by hand: letting width decide split "어느" from the
+              "미술관" it modifies. The comma is the meaning break. */}
+          <h1>
+            {t({ ko: "무엇이든,", en: "Anything," })}
+            <br />
+            {t({ ko: "어느 미술관에서든.", en: "in any museum." })}
+          </h1>
+        </section>
+
+        <GlobalSearchBar inlineMode forceWidth="100%" museums={museums as any} />
 
         <GenreMuseumBrowse isMobile={isMobileLayout} museums={museums as any} />
       </div>

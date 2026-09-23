@@ -1,0 +1,187 @@
+/* ══════════════════════════════════════════════════════════════
+   My Page — six compositions, one style.
+
+   The style is the home globe's and is written once here: #080808
+   ground, gold #d4a547, Space Mono numerals, hairlines, padded
+   counts, Paperlogy for headings and Wanted Sans for small type.
+   No study overrides a colour or a face.
+
+   Each study changes only the arrangement: where the cover, the
+   avatar, the profile and the tab menu sit, and how the grid runs.
+   ══════════════════════════════════════════════════════════════ */
+.my-page {
+  --g: #080808;
+  --ink: rgba(244,241,234,0.96); --ink-2: rgba(244,241,234,0.62); --ink-3: rgba(244,241,234,0.40);
+  --rule: rgba(244,241,234,0.10); --hair: rgba(244,241,234,0.16);
+  --acc: #d4a547; --acc-rgb: 212,165,71;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --cover-h: 200px; --avatar: 76px; --gap: 3px; --cols: 3;
+  --pad: clamp(12px,2.4vw,26px);
+  min-height: 100dvh; background: var(--g); color: var(--ink); font-family: var(--body);
+}
+.my-page *, .my-page *::before, .my-page *::after { box-sizing: border-box; }
+.my-page button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.my-page ul { list-style: none; margin: 0; padding: 0; }
+.my-page p, .my-page h1, .my-page h2 { margin: 0; }
+.my-page button:focus-visible, .my-page a:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+
+/* study chrome */
+.my-header { height: 54px; padding: 0 clamp(14px,3vw,28px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--rule); }
+.my-wordmark { color: var(--ink); font-family: var(--display); font-weight: 700; letter-spacing: -0.035em; text-decoration: none; }
+.my-wordmark span { color: var(--ink-3); font-size: 11px; letter-spacing: .08em; }
+.my-header-actions { display: flex; align-items: center; gap: 14px; }
+.my-header-actions a { color: var(--ink-2); font-size: 11px; text-decoration: none; }
+.my-header-actions button { color: var(--ink-2); font-size: 12px; font-weight: 600; letter-spacing: .14em; }
+.my-studybar { display: flex; align-items: center; gap: clamp(12px,1.8vw,22px); padding: 14px clamp(14px,3vw,28px) 0; overflow-x: auto; scrollbar-width: none; }
+.my-studybar::-webkit-scrollbar { display: none; }
+.my-studybar__label { flex: none; font: 650 9.5px/1 var(--num); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.my-page .my-studybar a { display: inline-flex; align-items: baseline; gap: 6px; padding-bottom: 6px; white-space: nowrap;
+  color: var(--ink-3); text-decoration: none; font-size: 12px; border-bottom: 1px solid transparent; transition: color .16s ease; }
+.my-page .my-studybar a em { font: 500 9.5px/1 var(--num); font-style: normal; letter-spacing: .06em; }
+.my-page .my-studybar a:hover { color: var(--ink-2); }
+.my-page .my-studybar a.is-active { color: var(--acc); border-bottom-color: var(--acc); }
+.my-note { margin: 10px clamp(14px,3vw,28px) 0; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+  color: var(--ink-3); font-size: 11.5px; line-height: 1.6; }
+.my-note b { font-weight: 700; color: var(--ink-2); margin-right: 6px; }
+
+/* ── the parts, written once ──────────────────────────────────── */
+.my-body { max-width: 1060px; margin: 0 auto; }
+.my-cover { position: relative; height: var(--cover-h); overflow: hidden; background: rgba(244,241,234,.05); }
+.my-cover .my-shot, .my-cover .my-shot img { height: 100%; }
+.my-shot { display: block; width: 100%; overflow: hidden; background: rgba(244,241,234,.05); }
+.my-shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.my-lower { padding: 0 var(--pad); }
+.my-profile { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+  margin-top: calc(var(--avatar) / -2); position: relative; z-index: 2; }
+.my-profile__id { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.my-avatar { display: block; width: var(--avatar); height: var(--avatar); flex: none; border-radius: 50%; overflow: hidden;
+  box-shadow: 0 0 0 4px var(--g), 0 0 0 5px rgba(var(--acc-rgb),.6); }
+.my-avatar .my-shot { height: 100%; }
+.my-profile__text { min-width: 0; padding-top: calc(var(--avatar) / 2); }
+.my-profile__text h1 { display: flex; align-items: baseline; gap: 9px; font: 700 clamp(1.15rem,2.4vw,1.6rem)/1.1 var(--display); letter-spacing: -0.035em; }
+.my-profile__text h1 em { font: 500 10px/1 var(--num); font-style: normal; letter-spacing: .06em; color: var(--acc); white-space: nowrap; }
+.my-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin-top: 7px; font-size: 11.5px; color: var(--ink-3); }
+.my-facts i { width: 1px; height: 9px; background: var(--hair); }
+.my-facts__score { font: 500 10px/1 var(--num); letter-spacing: .08em; }
+.my-facts__score b { color: var(--ink-2); }
+.my-page .my-edit { display: inline-flex; align-items: center; gap: 4px; font-size: 10.5px; color: var(--ink-3); transition: color .16s ease; }
+.my-page .my-edit:hover { color: var(--ink); }
+.my-profile__actions { flex: none; padding-top: calc(var(--avatar) / 2); }
+.my-page .my-cta { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 16px;
+  border: 1px solid var(--acc); color: var(--acc); font-size: 12px; font-weight: 600; transition: background .16s ease; }
+.my-page .my-cta:hover { background: rgba(var(--acc-rgb),.12); }
+
+/* the tab menu — a horizontal row of counts by default */
+.my-tabs { position: relative; display: grid; grid-template-columns: repeat(6, 1fr); margin-top: 22px; border-bottom: 1px solid var(--rule); }
+.my-page .my-tabs button { display: grid; gap: 4px; justify-items: center; padding: 10px 3px 11px;
+  color: var(--ink-3); border-bottom: 2px solid transparent; transition: color .16s ease, border-color .16s ease; }
+.my-tabs__no { display: none; font: 500 9px/1 var(--num); font-style: normal; letter-spacing: .06em; }
+.my-page .my-tabs button b { font: 700 16px/1 var(--num); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.my-page .my-tabs button span { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; white-space: nowrap; }
+.my-page .my-tabs button:hover { color: var(--ink-2); }
+.my-page .my-tabs button.is-active { color: var(--ink); border-bottom-color: var(--acc); }
+.my-page .my-tabs button.is-active b { color: var(--acc); }
+
+.my-grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0,1fr)); gap: var(--gap); margin-top: var(--gap); padding-bottom: 90px; }
+.my-cell { position: relative; display: block; overflow: hidden; }
+.my-cell .my-shot img { transition: transform .5s var(--ease); }
+.my-cell:hover .my-shot img { transform: scale(1.04); }
+.my-cell__no { display: none; position: absolute; left: 6px; top: 5px; z-index: 2; font: 500 9px/1 var(--num);
+  font-style: normal; letter-spacing: .06em; color: var(--acc); text-shadow: 0 1px 4px rgba(0,0,0,.85); }
+
+/* ══ 01 front — the cover takes the width, the avatar hangs off it ══ */
+/* (the rules above are this composition)                             */
+
+/* ══ 02 side — the cover stands on its side, the profile beside it ══ */
+.my-page[data-study="side"] { --cols: 4; --gap: 4px; }
+.my-page[data-study="side"] .my-side { display: grid; grid-template-columns: minmax(0,300px) minmax(0,1fr);
+  gap: clamp(18px,3vw,34px); align-items: end; padding: 0 var(--pad); }
+.my-page[data-study="side"] .my-cover { height: auto; aspect-ratio: 3 / 4; }
+.my-page[data-study="side"] .my-cover .my-shot, .my-page[data-study="side"] .my-cover .my-shot img { height: 100%; }
+.my-page[data-study="side"] .my-profile { margin-top: 0; flex-direction: column; align-items: flex-start; gap: 18px; padding-bottom: 8px; }
+.my-page[data-study="side"] .my-profile__text, .my-page[data-study="side"] .my-profile__actions { padding-top: 0; }
+.my-page[data-study="side"] .my-profile__text h1 { font-size: clamp(1.6rem,3.4vw,2.4rem); }
+.my-page[data-study="side"] .my-tabs { margin: 26px var(--pad) 0; }
+.my-page[data-study="side"] .my-grid { margin: var(--gap) var(--pad) 0; }
+
+/* ══ 03 column — the tab menu stands as a numbered rail ═══════════ */
+.my-page[data-study="column"] .my-split { display: grid; grid-template-columns: minmax(0,196px) minmax(0,1fr);
+  gap: clamp(20px,3vw,40px); align-items: start; margin-top: 24px; }
+.my-page[data-study="column"] .my-tabs { display: block; margin: 0; border-bottom: 0; border-top: 1px solid var(--rule);
+  position: sticky; top: 18px; }
+.my-page[data-study="column"] .my-tabs button { display: grid; grid-template-columns: auto minmax(0,1fr) auto;
+  align-items: baseline; gap: 10px; justify-items: start; width: 100%; padding: 13px 0 13px 12px; text-align: left;
+  border-bottom: 1px solid var(--rule); border-left: 1px solid transparent; }
+.my-page[data-study="column"] .my-tabs__no { display: block; }
+.my-page[data-study="column"] .my-tabs button span { order: 2; font-size: 13px; font-family: var(--display); font-weight: 600; letter-spacing: -0.01em; }
+.my-page[data-study="column"] .my-tabs button b { order: 3; font-size: 11px; color: var(--ink-3); }
+.my-page[data-study="column"] .my-tabs button.is-active { border-left-color: var(--acc); border-bottom-color: var(--rule); }
+.my-page[data-study="column"] .my-tabs button.is-active .my-tabs__no,
+.my-page[data-study="column"] .my-tabs button.is-active b { color: var(--acc); }
+.my-page[data-study="column"] .my-grid { margin-top: 0; }
+
+/* ══ 04 plate — the name rides the cover, tabs are a bordered switch ══ */
+.my-page[data-study="plate"] { --cover-h: 320px; --gap: 1px; }
+.my-page[data-study="plate"] .my-cover::after { content: ""; position: absolute; inset: auto 0 0 0; height: 78%;
+  background: linear-gradient(to top, rgba(0,0,0,.9), rgba(0,0,0,0)); }
+.my-cover__name { position: absolute; left: var(--pad); right: var(--pad); bottom: calc(var(--avatar) / 2 + 22px); z-index: 2; }
+.my-cover__name p { color: var(--acc); font: 650 .64rem/1.2 var(--num); letter-spacing: .06em; margin-bottom: .6rem; }
+.my-cover__name h2 { font: 700 clamp(2rem,5vw,3.2rem)/1.04 var(--display); letter-spacing: -0.05em; }
+.my-cover__readout { position: absolute; right: var(--pad); bottom: calc(var(--avatar) / 2 + 22px); z-index: 2;
+  text-align: right; font: 500 10px/1.5 var(--num); letter-spacing: .08em; color: var(--ink-3); }
+/* the name is on the cover, so the block below carries only the facts */
+.my-page[data-study="plate"] .my-profile__text h1 { font-size: 0; gap: 0; }
+.my-page[data-study="plate"] .my-profile__text h1 em { font-size: 10px; }
+.my-page[data-study="plate"] .my-tabs { border: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 24px; }
+.my-page[data-study="plate"] .my-tabs button { border-bottom: 0; padding: 13px 3px; }
+.my-page[data-study="plate"] .my-tabs button + button { border-left: 1px solid var(--rule); }
+.my-page[data-study="plate"] .my-tabs button.is-active { background: color-mix(in srgb, var(--acc) 9%, transparent); }
+
+/* ══ 05 strip — the cover is a band, the profile lies on one line ══ */
+.my-page[data-study="strip"] { --cover-h: 96px; --avatar: 56px; --cols: 5; --gap: 3px; }
+.my-page[data-study="strip"] .my-profile { align-items: center; }
+.my-page[data-study="strip"] .my-profile__text, .my-page[data-study="strip"] .my-profile__actions { padding-top: calc(var(--avatar) / 2 + 4px); }
+.my-page[data-study="strip"] .my-profile__id { align-items: center; }
+.my-page[data-study="strip"] .my-profile__text h1 { font-size: clamp(1rem,2vw,1.25rem); }
+/* the tabs run as a scrolling rail of chips */
+.my-page[data-study="strip"] .my-tabs { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; border-bottom: 0; margin-top: 18px; padding-bottom: 4px; }
+.my-page[data-study="strip"] .my-tabs::-webkit-scrollbar { display: none; }
+.my-page[data-study="strip"] .my-tabs button { flex: none; display: inline-flex; align-items: baseline; gap: 8px;
+  padding: 9px 14px; border: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.my-page[data-study="strip"] .my-tabs button b { font-size: 11px; }
+.my-page[data-study="strip"] .my-tabs button span { font-size: 11.5px; }
+.my-page[data-study="strip"] .my-tabs button.is-active { border-color: var(--acc); color: var(--ink); }
+.my-page[data-study="strip"] .my-grid { margin-top: 14px; }
+
+/* ══ 06 lead — the first cell leads at four times the size ═════════ */
+.my-page[data-study="lead"] { --gap: 3px; --cols: 4; }
+.my-page[data-study="lead"] .my-grid > li.is-lead { grid-column: span 2; grid-row: span 2; }
+.my-page[data-study="lead"] .my-cell__no { display: block; }
+.my-page[data-study="lead"] .my-tabs button { padding: 12px 3px 13px; }
+.my-page[data-study="lead"] .my-tabs button b { font-size: 14px; }
+
+@media (prefers-reduced-motion: reduce) { .my-page * { transition: none !important; } }
+
+@media (max-width: 860px) {
+  .my-page[data-study="side"] .my-side { grid-template-columns: minmax(0,1fr); }
+  .my-page[data-study="side"] .my-cover { aspect-ratio: 16 / 9; }
+  .my-page[data-study="column"] .my-split { grid-template-columns: minmax(0,1fr); }
+  .my-page[data-study="column"] .my-tabs { position: static; display: grid; grid-template-columns: repeat(3,1fr); border-top: 0; border-bottom: 1px solid var(--rule); }
+  .my-page[data-study="column"] .my-tabs button { border-left: 0; border-bottom: 1px solid var(--rule); }
+  .my-page[data-study="column"] .my-tabs button.is-active { border-bottom-color: var(--acc); }
+}
+@media (max-width: 700px) {
+  .my-page { --cover-h: 160px; --avatar: 62px; }
+  .my-page[data-study="plate"] { --cover-h: 260px; }
+  .my-page[data-study="strip"] { --cover-h: 84px; --cols: 3; }
+  .my-page[data-study="side"] { --cols: 3; }
+  .my-page[data-study="lead"] { --cols: 2; }
+  .my-profile { flex-direction: column; }
+  .my-profile__actions { padding-top: 0; align-self: flex-start; }
+  .my-page .my-tabs button span { font-size: 9px; }
+  .my-page .my-tabs button b { font-size: 14px; }
+}

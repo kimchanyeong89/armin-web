@@ -1,0 +1,328 @@
+{
+  "museum": "Canadian Centre for Architecture",
+  "collection": "Collection",
+  "website": "https://www.cca.qc.ca/en/collection",
+  "scraped_date": "2026-06-23",
+  "total_count": 15,
+  "source_type": "api",
+  "category_breakdown": {
+    "drawing": 15
+  },
+  "artworks": [
+    {
+      "id": "393424",
+      "objectNumber": "AP140.S2.SS1.D33.P3.1",
+      "title": "Perspective for Southgate Housing, Phases I and IA, Runcorn, England",
+      "artist": "James Stirling (Firm); James Stirling and Partner; James Frazer Stirling",
+      "date": "between 1967 and 1976",
+      "year": 1967,
+      "medium": "ink, graphite, and coloured pencil on translucent paper",
+      "dimensions": "sheet: 13,1 x 54,5 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393424-603cae3d-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/wSqv2_fK2YtNxQb5rU_rEs8NEQ0=/1920x490/393424.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393424",
+      "metadata": {
+        "objectId": "393424"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/wSqv2_fK2YtNxQb5rU_rEs8NEQ0=/1920x490/393424.jpg"
+    },
+    {
+      "id": "393430",
+      "objectNumber": "AP140.S2.SS1.D41.P9.3",
+      "title": "Arts Centre, University of St. Andrews, St. Andrews, Scotland: axonometric",
+      "artist": "James Stirling (Firm); James Frazer Stirling",
+      "date": "1971-1974",
+      "year": 1971,
+      "medium": "ink and traces of graphite on paper",
+      "dimensions": "sheet: 53,2 x 66,4 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393430-2bb4adbf-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/xsa6RmuazFzVClBLQLaPMx-BkZ0=/1920x1519/393430.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393430",
+      "metadata": {
+        "objectId": "393430"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/xsa6RmuazFzVClBLQLaPMx-BkZ0=/1920x1519/393430.jpg"
+    },
+    {
+      "id": "393431",
+      "objectNumber": "AP140.S2.SS1.D41.P9.4",
+      "title": "Arts Centre, University of St. Andrews, St. Andrews, Scotland: cutaway axonometric",
+      "artist": "James Stirling (Firm); James Frazer Stirling",
+      "date": "1971-1974",
+      "year": 1971,
+      "medium": "ink and traces of graphite on paper",
+      "dimensions": "sheet: 54,3 x 67,3 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393431-bc0ba6c6-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/CNzkgUgClPBzhLBOnxM-gJ-Z6qU=/1920x1585/393431.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393431",
+      "metadata": {
+        "objectId": "393431"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/CNzkgUgClPBzhLBOnxM-gJ-Z6qU=/1920x1585/393431.jpg"
+    },
+    {
+      "id": "393432",
+      "objectNumber": "AP140.S2.SS1.D41.P10.1",
+      "title": "Arts Centre, University of St. Andrews, St. Andrews, Scotland: figure ground studies",
+      "artist": "James Stirling (Firm); James Frazer Stirling",
+      "date": "1971-1974",
+      "year": 1971,
+      "medium": "ink and coloured pencil on paper",
+      "dimensions": "sheet: 40,7 x 50,4 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393432-ffd0534a-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/OQTp7kUks83Blwe4Smny3Nfa-q0=/1920x1529/393432.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393432",
+      "metadata": {
+        "objectId": "393432"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/OQTp7kUks83Blwe4Smny3Nfa-q0=/1920x1529/393432.jpg"
+    },
+    {
+      "id": "393433",
+      "objectNumber": "AP140.S2.SS1.D41.P10.2",
+      "title": "Arts Centre, University of St. Andrews, St. Andrews, Scotland: up axonometric",
+      "artist": "James Stirling (Firm); James Frazer Stirling",
+      "date": "1971-1974",
+      "year": 1971,
+      "medium": "ink and coloured pencil on paper",
+      "dimensions": "sheet: 36,5 x 38 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393433-5e7dbfc2-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/ZvdkLBIeaad_Him2YjvSf06bXEk=/1920x1869/393433.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393433",
+      "metadata": {
+        "objectId": "393433"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/ZvdkLBIeaad_Him2YjvSf06bXEk=/1920x1869/393433.jpg"
+    },
+    {
+      "id": "393434",
+      "objectNumber": "AP140.S2.SS1.D41.P10.3",
+      "title": "Arts Centre, University of St. Andrews, St. Andrews, Scotland: axonometric",
+      "artist": "James Stirling (Firm); James Frazer Stirling",
+      "date": "1971-1974",
+      "year": 1971,
+      "medium": "ink, coloured pencil and graphite on paper",
+      "dimensions": "sheet (irregular): 53 x 66,2 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393434-38b16c9f-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/7FJvCFA9mRTQVZJ_cHfMVDY0NW4=/1920x1560/393434.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393434",
+      "metadata": {
+        "objectId": "393434"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/7FJvCFA9mRTQVZJ_cHfMVDY0NW4=/1920x1560/393434.jpg"
+    },
+    {
+      "id": "393485",
+      "objectNumber": "AP140.S2.SS1.D4.P2.1",
+      "title": "Poole College of Further Education, Poole, England: Interior perspective",
+      "artist": "Léon Krier; James Frazer Stirling",
+      "date": "probably between 1970 and 1975",
+      "year": 1970,
+      "medium": "pen and black ink on paper",
+      "dimensions": "sheet: 20,8 x 29,9 cm",
+      "category": "drawing",
+      "description": "perspective features James Stirling and son Ben",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393485-eb7a9da9-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/E30AHjWbfUaN2nuqm2Z1EmuIHK4=/1920x1355/393485.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393485",
+      "metadata": {
+        "objectId": "393485"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/E30AHjWbfUaN2nuqm2Z1EmuIHK4=/1920x1355/393485.jpg"
+    },
+    {
+      "id": "393486",
+      "objectNumber": "AP140.S2.SS1.D35.P2.1",
+      "title": "Previ Proyecto Experimental de Vivienda, Lima, Peru: floor plan",
+      "artist": "James Stirling (Firm); James Frazer Stirling",
+      "date": "1968-1976",
+      "year": 1968,
+      "medium": "pen and ink, grey coloured pencil, traces of graphite on architectural reproduction (diazotype?) on draughting film, with scraping for erasure, and, at bottom right corner, with photolithograph on self-adhesive plastic film applied to verso",
+      "dimensions": "sheet (irreg.): 46.9 x 64.2 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393486-2e0948b2-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/T5CMd832dArtbdQmGuAxdu2-73Q=/1920x1418/393486.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393486",
+      "metadata": {
+        "objectId": "393486"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/T5CMd832dArtbdQmGuAxdu2-73Q=/1920x1418/393486.jpg"
+    },
+    {
+      "id": "393487",
+      "objectNumber": "AP140.S2.SS1.D35.P2.2",
+      "title": "Previ Proyecto Experimental de Vivienda, Lima, Peru: elevations",
+      "artist": "James Stirling (Firm); James Frazer Stirling",
+      "date": "1968-1976",
+      "year": 1968,
+      "medium": "pen and ink on draughting film, with scraping for erasure, and, at bottom right corner, with photolithograph on self-adhesive plastic film applied to verso",
+      "dimensions": "sheet (irreg.): 47,4 x 65 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393487-89ccd958-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/oD1vJf3kRWdeINGV7uFdMpi1NKA=/1920x1411/393487.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393487",
+      "metadata": {
+        "objectId": "393487"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/oD1vJf3kRWdeINGV7uFdMpi1NKA=/1920x1411/393487.jpg"
+    },
+    {
+      "id": "393488",
+      "objectNumber": "AP140.S2.SS1.D31.P5.2",
+      "title": "Florey Building, Queen's College, University of Oxford, Oxford, England: axonometric",
+      "artist": "James Frazer Stirling; Roy Cameron; Gunther Ismer; James Stirling (Firm)",
+      "date": "between 1970 and 1975?",
+      "year": 1970,
+      "medium": "ink, graphite, and coloured crayon on tracing paper",
+      "dimensions": "sheet (irreg.): 44,7 x 33,6 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393488-eb8e065b-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/8jSYREhKwHimDscONfgRhyDdOeI=/1920x2545/393488.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393488",
+      "metadata": {
+        "objectId": "393488"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/8jSYREhKwHimDscONfgRhyDdOeI=/1920x2545/393488.jpg"
+    },
+    {
+      "id": "393491",
+      "objectNumber": "AP140.S2.SS1.D103.P1.1",
+      "title": "Apartment Houses, Lambeth, London, England: elevations and sections",
+      "artist": "James Frazer Stirling; Leslie George Creed; Baron William Graham Holford",
+      "date": "29 December 1953",
+      "year": 1953,
+      "medium": "diazotype on paper",
+      "dimensions": "sheet: 53,4 x 73,3 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393491-d332d9a6-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/-38T867rDwBv8IOWNvW5rPXFE2k=/1920x1404/393491.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393491",
+      "metadata": {
+        "objectId": "393491"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/-38T867rDwBv8IOWNvW5rPXFE2k=/1920x1404/393491.jpg"
+    },
+    {
+      "id": "393492",
+      "objectNumber": "AP140.S2.SS1.D31.P4.1",
+      "title": "Florey Building, Queen's College, University of Oxford, Oxford, England: elevations and sketched sections and perspectives",
+      "artist": "James Frazer Stirling; Roy Cameron; Gunther Ismer; James Stirling (Firm)",
+      "date": "1966-1971",
+      "year": 1966,
+      "medium": "graphite and coloured pencil on diazotype",
+      "dimensions": "sheet: 25,6 x 33 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393492-67d4b140-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/xz8f5j6gAuP9xRapK3Efm2IZKK0=/1920x1504/393492.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393492",
+      "metadata": {
+        "objectId": "393492"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/xz8f5j6gAuP9xRapK3Efm2IZKK0=/1920x1504/393492.jpg"
+    },
+    {
+      "id": "393499",
+      "objectNumber": "AP142.S1.D29.P7.7",
+      "title": "Site plan for Nuovo cimitero San Cataldo",
+      "artist": "Aldo Rossi; Gianni Braghieri",
+      "date": "1972",
+      "year": 1972,
+      "medium": "",
+      "dimensions": "sheet: 60,3 × 71,2 cm (23 3/4 × 28 1/16 in.)",
+      "category": "drawing",
+      "description": "site plan",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393499-fa45cc51-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/KvqB5Lss976NAKOYJ0kteZ3qzd4=/1920x1281/393499.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393499",
+      "metadata": {
+        "objectId": "393499"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/KvqB5Lss976NAKOYJ0kteZ3qzd4=/1920x1281/393499.jpg"
+    },
+    {
+      "id": "393554",
+      "objectNumber": "AP140.S2.SS1.D23.P1.1",
+      "title": "Leicester University Engineering Building, Leicester, England: perspective",
+      "artist": "Stirling and Gowan; James Frazer Stirling",
+      "date": "between 1959 and 1963",
+      "year": 1959,
+      "medium": "graphite on paper",
+      "dimensions": "sheet: 39 x 39,3 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393554-9ede63e2-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/eOUjU8iMkAm7ncX8kizZfnRgN80=/1920x1913/393554.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393554",
+      "metadata": {
+        "objectId": "393554"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/eOUjU8iMkAm7ncX8kizZfnRgN80=/1920x1913/393554.jpg"
+    },
+    {
+      "id": "393555",
+      "objectNumber": "AP140.S2.SS1.D23.P1.2",
+      "title": "Leicester University Engineering Building, Leicester, England: axonometric",
+      "artist": "Stirling and Gowan; James Frazer Stirling",
+      "date": "between 1959 and 1963",
+      "year": 1959,
+      "medium": "graphite and coloured pencil on paper",
+      "dimensions": "sheet: 61,6 x 37,2 cm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/393555-88d3cd93-imageUrl.webp",
+      "thumbnailUrl": "https://www.cca.qc.ca/img-collection/ZGKVJZ6GP69RMJRAeqFmZRiLQW4=/1920x3200/393555.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.cca.qc.ca/en/search/details/collection/object/393555",
+      "metadata": {
+        "objectId": "393555"
+      },
+      "original_imageUrl": "https://www.cca.qc.ca/img-collection/ZGKVJZ6GP69RMJRAeqFmZRiLQW4=/1920x3200/393555.jpg"
+    }
+  ]
+}

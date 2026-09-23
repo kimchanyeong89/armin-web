@@ -3549,6 +3549,129 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
+        id: "mmca-2026-detective",
+        title: "MMCA 다원예술 2026: 탐정의 시간",
+        titleEn: "MMCA Multidisciplinary Arts 2026: Detective's Time",
+        description: "AI의 효율성에 대비하여, 탐정처럼 미세한 단서를 쫓으며 인간 고유의 깊고 느린 시간을 감각하는 다원예술 프로젝트.",
+        venue: "서울관",
+        startDate: "2026-04-01",
+        endDate: "2026-12-06",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202601060002024-fb3a2b22.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing",
+        sourceId: "202601060002024"
+      },
+      {
+        id: "mmca-seoul-2026-202603300002070",
+        title: "그래도 해보던 날들",
+        description: "작품과 상시워크숍을 통해 만들고, 실패하고, 반복하며 다시 시도하는 창작의 과정을 경험할 수 있는 교육 전시",
+        venue: "서울관",
+        startDate: "2026-04-17",
+        endDate: "2027-02-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202603300002070-775445c1.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202603300002070",
+        status: "ongoing",
+        sourceId: "202603300002070"
+      },
+      {
+        id: "mmca-seoul-2026-202601060002027",
+        title: "이것은 개념미술이 (아니)다",
+        description: "한국현대미술의 흐름 속에서 개념과 언어, 과정과 맥락에 주목해온 개념적 경향의 미술을 조명하는 전시",
+        venue: "서울관",
+        startDate: "2026-06-19",
+        endDate: "2026-10-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202601060002027-80391afe.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202601060002027",
+        status: "ongoing",
+        sourceId: "202601060002027"
+      },
+      {
+        id: "mmca-seoul-2026-202512310002018",
+        title: "올해의 작가상 2026",
+        description: "선정 작가 4인의 작품세계를 통해 한국 현대미술의 경향과 동시대적 담론을 제시하는 전시",
+        venue: "서울관",
+        startDate: "2026-07-24",
+        endDate: "2026-12-06",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202512310002018-f9d1a476.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202512310002018",
+        status: "ongoing",
+        sourceId: "202512310002018"
+      },
+      {
+        id: "mmca-seoul-2026-202601060002028",
+        title: "MMCA×LG OLED 시리즈 2026",
+        description: "언어를 공간화하는 미디어 설치 작업. 양극화 시대의 언어와 정치 감각을 새롭게 사유하는 전시",
+        venue: "서울관",
+        startDate: "2026-07-31",
+        endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202601060002028-385e3457.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202601060002028",
+        status: "ongoing",
+        sourceId: "202601060002028"
+      },
+      {
+        id: "mmca-seoul-2026-202601120002029",
+        title: "이대원: 당신을 슬프게 하는 것은 하나도 없다",
+        description: "국립현대미술관에서 최초로 열리는 이대원 회고전",
+        venue: "덕수궁관",
+        startDate: "2026-08-06",
+        endDate: "2026-11-08",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202601120002029-1dffff02.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202601120002029",
+        status: "ongoing",
+        sourceId: "202601120002029"
+      },
+      {
+        id: "mmca-seoul-2026-202608200002088",
+        title: "사각사각 소곤소곤",
+        description: "김준 작가와 서울특별시어린이병원 열 가족이 함께 소리를 탐색하고 기록해 작품으로 만든 전시",
+        venue: "서울관",
+        startDate: "2026-08-15",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202608200002088-f90dd637.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202608200002088",
+        status: "ongoing",
+        sourceId: "202608200002088"
+      },
+      {
+        id: "mmca-seoul-2026-202601200002041",
+        title: "서도호",
+        description: "한국을 대표하는 설치 미술가 서도호의 초기작부터 주요작, 현재 진행중인 작품을 총망라하는 대규모 전시",
+        venue: "서울관",
+        startDate: "2026-08-27",
+        endDate: "2027-02-09",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202601200002041-e7e3734b.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202601200002041",
+        status: "ongoing",
+        sourceId: "202601200002041"
+      },
+      {
+        id: "mmca-seoul-2026-202601160002037",
+        title: "읽기의 기술: 종이에서 픽셀로",
+        description: "아날로그에서 디지털로 변화하는 '읽기'의 환경 속에서 텍스트와 이미지의 관계를 새롭게 해석하는 전시",
+        venue: "서울관",
+        startDate: "2026-11-20",
+        endDate: "2027-04-04",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202601160002037-40890f01.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=2&exhId=202601160002037",
+        status: "upcoming",
+        sourceId: "202601160002037"
+      },
+      {
+        id: "mmca-seoul-2026-202601120002030",
+        title: "파리의 이방인",
+        description: "한·불 수교 140주년 기념 전시",
+        venue: "덕수궁관",
+        startDate: "2026-12-17",
+        endDate: "2027-05-09",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-seoul-2026-202601120002030-ce03a525.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=2&exhId=202601120002030",
+        status: "upcoming",
+        sourceId: "202601120002030"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "mmca-2026-hirst",
         title: "데이미언 허스트",
         titleEn: "Damien Hirst",
@@ -3557,7 +3680,7 @@ export const exhibitions = [
         endDate: "2026-06-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002023.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "mmca-2026-hirst-yba",
@@ -3568,18 +3691,7 @@ export const exhibitions = [
         endDate: "2026-06-06",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002025.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
-      },
-      {
-        id: "mmca-2026-detective",
-        title: "MMCA 다원예술 2026: 탐정의 시간",
-        titleEn: "MMCA Multidisciplinary Arts 2026: Detective's Time",
-        description: "AI의 효율성에 대비하여, 탐정처럼 미세한 단서를 쫓으며 인간 고유의 깊고 느린 시간을 감각하는 다원예술 프로젝트.",
-        startDate: "2026-04-01",
-        endDate: "2026-12-06",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002024.gif",
-        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "mmca-2026-dissolution",
@@ -3590,10 +3702,9 @@ export const exhibitions = [
         endDate: "2026-05-03",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202511280002008.gif",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
   // South Korea - National Museum of Korea
@@ -3619,16 +3730,55 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
-        id: "nmk-2026-bongjeongsa",
-        title: "깨달음으로 이끄는 부처: 안동 봉정사 괘불",
-        titleEn: "Large Buddhist Hanging Scroll from Bongjeongsa Temple, Andong",
-        description: "국립중앙박물관의 20번째 괘불전. 1710년에 제작된 봉정사 괘불은 세로 8m 이상, 가로 6m에 달하는 대형 불화로 영산회상 장면을 묘사한다.",
-        startDate: "2026-04-07",
-        endDate: "2026-06-21",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-bongjeongsa.jpg",
-        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
-        status: "ongoing"
+        id: "national-museum-korea-2026-3588283",
+        title: "분청사기·백자실 주제전시 <사계절 푸른 대나무, 도자기에 담다>",
+        description: "국립중앙박물관은 분청사기·백자실 주제전시 <사계절 푸른 대나무, 도자기에 담다>를 개최합니다. 옛사람들은 대나무를 본떠 도자기로 만들거나, 도자기에 대나무를 그려 넣었습니다. 대나무가 이상적 인간상인 군자君子의 ‘지조’와 ‘절개’를 상징한다고 여겼기 때문입니다. 이번 전시는 대나무의 특성을 기능적으로, 조형적으로 아름답게 형상화한 조선백자를 한자리에 모았습니다. 사철 푸른빛을 잃지 않는 대나무처럼, 변치 않는 아름다움을 발하는 조선백자의 매력에 흠뻑 취하시길 바랍니다.",
+        venue: "상설전시실 3층 조각·공예관 분청사기·백자실",
+        startDate: "2026-06-23",
+        endDate: "2027-01-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-3588283-6be064ff.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3588283&listType=list",
+        status: "ongoing",
+        sourceId: "3588283"
       },
+      {
+        id: "national-museum-korea-2026-3529713",
+        title: "우리들의 밥상",
+        description: "세계 곳곳에서 K-컬처가 사랑받는 지금, K-푸드도 새롭게 주목받고 있습니다. 음악과 드라마가 우리 시대를 살아가는 사람들이 만들어 온 문화예술의 결실이듯, K-푸드 역시 우리가 매일 마주해 온 평범한 밥상에 뿌리를 두고 있습니다. 밥상은 늘 우리 삶과 가까이에서 함께 변화해 왔습니다. 밥상의 기억 속에는 우리가 누구와, 어떻게, 무엇을, 왜 먹어 왔는지가 고스란히 담겨 있습니다. 한 상에 담긴 삶의 결 하나하나는 기억이자 역사이며, 우리 자신을 이해하는 실마리가 됩니다. ‘우리들의 밥상’을 들여다보는 특별전에 여러분을 초대합니다.",
+        venue: "특별전시실 2",
+        startDate: "2026-07-01",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-3529713-36b6de57.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3529713&listType=list",
+        status: "ongoing",
+        sourceId: "3529713"
+      },
+      {
+        id: "national-museum-korea-2026-3692100",
+        title: "아름다움을 나누는 마음-새로 맞이한 기증유물전 2",
+        description: "오랜 시간 소중히 간직해 온 기증자의 문화유산이 박물관에 자리하였습니다. 이곳은 박물관이 새로 맞이한 기증 유물을 소개하는 공간입니다. 한 집안, 한 사람의 기억과 애정이 담긴 문화유산은 이제 우리 모두의 문화유산으로 새로운 여정을 시작합니다. 박물관은 새로 맞이한 소장품으로 더욱 폭넓고 다양한 이야기를 선보일 수 있게 되었습니다. 새롭게 선보이는 기증 유물전의 두 번째 전시로, '글씨로 나눈 서예가와 기증자의 마음'을 전해드립니다. 서예는 누군가에게 전해줄 뜻을 세우는 일부터 시작합니다. 뜻을 가다듬어 글로 엮고, 붓을 정돈하여 글씨로 펼쳐냅니다. 그 글씨를 받은 사람은 글쓴이의 마음과 손길을 함께 느꼈습니다. 그 뜻을 우리 모두와 나누기 위해 기증을 선택한 분들이 있습니다. 윤광자尹光子(1940~) 선생",
+        venue: "기증 4실(상설전시관 2층 205호)",
+        startDate: "2026-07-27",
+        endDate: "2026-11-15",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-3692100-124781fe.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3692100&listType=list",
+        status: "ongoing",
+        sourceId: "3692100"
+      },
+      {
+        id: "national-museum-korea-2026-3672087",
+        title: "추사 김정희와 그의 동반자",
+        description: "좋아하는 것과 좋아하는 벗이 있으면 인생을 살아갈 힘이 납니다. 조선 19세기를 대표하는 학자이자 예술가 추사秋史 김정희金正喜(1786-1856)도 그랬을 것입니다. 그는 글씨를 잘 썼고, 오래된 비석에서 글자의 근원을 찾는 데 몰두했습니다. 명문가 경주 김씨 후손으로 태어나 종2품 관직에 올랐던 55세까지의 삶이나 귀양살이 10여 년 그리고 과천에서 마지막 시간까지 그와 함께한 벗이 많았습니다. 조선과 청나라 지인들과 학문과 예술의 세계를 넓히고, 학식 높은 승려와 불교 지식을 논한 그의 곁에 중인 지식인과 예술가가 늘 있었습니다. 이번 전시에서 그의 편지, 글씨와 그림으로 학문과 벗과 더불어 산 그의 인생을 살펴보고자 합니다. 이 전시로 삶을 함께하는 동반자의 소중함을 되새기는 시간이 되기를 바랍니다.",
+        venue: "상설전시관 2층 서화실",
+        startDate: "2026-08-11",
+        endDate: "2026-11-22",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-3672087-c7126127.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3672087&listType=list",
+        status: "ongoing",
+        sourceId: "3672087"
+      }
+    ],
+    pastExhibitions: [
       {
         id: "nmk-2026-conservation",
         title: "보존과학, 새로운 시작 함께하는 미래",
@@ -3638,7 +3788,18 @@ export const exhibitions = [
         endDate: "2026-06-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-conservation.jpg",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
-        status: "ongoing"
+        status: "past"
+      },
+      {
+        id: "nmk-2026-bongjeongsa",
+        title: "깨달음으로 이끄는 부처: 안동 봉정사 괘불",
+        titleEn: "Large Buddhist Hanging Scroll from Bongjeongsa Temple, Andong",
+        description: "국립중앙박물관의 20번째 괘불전. 1710년에 제작된 봉정사 괘불은 세로 8m 이상, 가로 6m에 달하는 대형 불화로 영산회상 장면을 묘사한다.",
+        startDate: "2026-04-07",
+        endDate: "2026-06-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-bongjeongsa.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
+        status: "past"
       },
       {
         id: "nmk-2026-baekja",
@@ -3649,10 +3810,9 @@ export const exhibitions = [
         endDate: "2026-06-21",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-baekja.jpg",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
-        status: "ongoing"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
   // South Korea - Jeonju National Museum
@@ -3723,7 +3883,8 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "folk-collection", name: "국립민속박물관 회화 컬렉션", name_en: "National Folk Museum Paintings", title: "국립민속박물관 회화 컬렉션", title_en: "National Folk Museum Paintings Collection", description: "국립민속박물관 소장 회화 컬렉션 (927점)", description_en: "National Folk Museum paintings collection (927 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "folk-museum.json" }
     ],
-    temporaryExhibitions: [
+    temporaryExhibitions: [],
+    pastExhibitions: [
       {
         id: "nfm-2025-childbirth",
         title: "출산, 모두의 잔치",
@@ -3731,12 +3892,10 @@ export const exhibitions = [
         description: "선사시대부터 현대까지 한국의 출산 풍습과 의례를 조명하는 특별전. 출산 관련 유물 328점을 통해 생명 탄생을 둘러싼 공동체의 기원과 축하 문화를 살펴본다.",
         startDate: "2025-12-03",
         endDate: "2026-05-10",
-        coverImage: "",
         officialUrl: "https://www.nfm.go.kr/home/exhibition/current.do",
-        status: "ongoing"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
   // South Korea - Busan Museum
@@ -3785,37 +3944,163 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
+        id: "seoul-museum-of-art-2025-1431437",
+        title: "SeMA 공용공간 프로젝트 《영원히 교차하는 춤》",
+        description: "서울시립미술관은 2025년 공용공간 프로젝트의 일환으로 동시대 조각의 지평을 넓혀 온 세계적인 예술가 에르네스토 네토를 초청합니다. 그의 신작〈바 카 바, 영원히 교차하는 춤〉은 서소문 본관 로비와 열린 공간을 가로지르는 대형 설치작업으로, 나무줄기와 밤을 연상시키는 갈색과 꽃과 낮을 상징하는 분홍색의 산업용 면직물을 크로셰 기법으로 엮은 구조물에 국내산 구아바 잎과 차나무 잎을 채워 완성되었습니다. 서울시립미술관의 커미션으로 완성된 이 작품은 직선 위주의 공간에 이질적이면서도 신선한 생명력을 불어넣으며, 중심과 끝, 안과 밖이 지속적으로 전환되는 순환과 균형의 시공간성을 구현합니다. 작품 제목 속 ‘바 카 바’는 단어의 시작과 끝이 같은 의성어로, 안과 밖을 넘나드는 리듬과 순환, 생명력의 흐름을 상징합니",
+        venue: "서소문본관",
+        startDate: "2025-08-13",
+        endDate: "2026-12-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2025-1431437-51b314d9.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1431437",
+        status: "ongoing",
+        sourceId: "1431437"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1512457",
+        title: "유휴공간 프로젝트 전시 《몸을 위한 간주곡 ― 소목장세미》",
+        description: "미술관에서 우리의 몸은 어떻게 작동할까? 작품을 응시하며 전시장을 오가는 동안, 관람객의 몸은 집중과 긴장 속에서 움직인다. 그럼에도 관람에 대해 이야기할 때 몸은 좀처럼 등장하지 않는다. 간주곡은 본래 오페라나 연극에서 막과 막 사이에 연주되며, 분위기를 전환하고 다음 장면을 준비하는 음악이다. 전시는 간주곡처럼 관람의 여정 사이에 자리하여 지친 몸을 이완하고 감각을 환기하는 시간을 마련한다. 전시 감상은 시각을 넘어 청각·촉각·후각으로 확장되면서 미술관에서 소외되기 쉬운 감각들을 자연스럽게 일깨운다. 소목장세미는 전통 소목장 기술을 현대적으로 재해석하며 다양한 영역에서 활동해 온 작가로, 일상과 신체, 공동체적 감각을 탐구해왔다. 이번 전시에서 작가는 목공 조각과 기하학적 문양에 평화, 공존과 같은 보편",
+        venue: "북서울미술관",
+        startDate: "2026-04-02",
+        endDate: "2027-05-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1512457-c225150f.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1512457",
+        status: "ongoing",
+        sourceId: "1512457"
+      },
+      {
         id: "sema-2026-gana-tech",
         title: "가나아트컬렉션: 기술의 저변 — 경계에 선 장면들",
         titleEn: "Gana Art Collection: The Undercurrent of Technology",
         description: "1970–90년대 급격한 산업화·도시화 속 미디어 환경의 변화가 한국 사회 풍경을 어떻게 형성했는지를 탐구한다. SeMA의 2026년 기관 주제 '기술'의 핵심 전시.",
+        venue: "서소문본관",
         startDate: "2026-04-16",
         endDate: "2026-11-22",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/sema-2026-gana-tech.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1509709-3a84575d.jpg",
         officialUrl: "https://sema.seoul.go.kr/kr/whatson/landing",
-        status: "ongoing"
+        status: "ongoing",
+        sourceId: "1509709"
       },
       {
         id: "sema-2026-yooyoungkuk",
         title: "유영국: 산은 내 안에 있다",
         titleEn: "Yoo Young-kuk: The Mountain Is Within Me",
         description: "한국 추상미술의 선구자 유영국(1916–2002)의 110주년 기념 역대 최대 회고전. 산과 색면으로 유명한 그의 대표작을 통해 한국 현대 추상회화의 궤적을 조망한다.",
-        startDate: "2026-05-14",
-        endDate: "2026-10-18",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/sema-2026-yooyoungkuk.jpg",
+        venue: "서소문본관",
+        startDate: "2026-05-19",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1529410-fc4e2d49.jpg",
         officialUrl: "https://sema.seoul.go.kr",
-        status: "upcoming"
+        status: "ongoing",
+        sourceId: "1529410"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1538201",
+        title: "권병준: 내 마음속에 너는",
+        description: "서울시립 북서울미술관의 연례 전시 중 하나인 어린이+ 전시에서는 기술과 예술의 접점을 오랜 시간 탐구해 온 권병준 작가의 개인전을 선보입니다. 이번 전시는 권병준 작가의 작업 세계를 바탕으로 기술과 인간, 더 나아가 비인간과 인간이 맺는 공생의 방식에 주목하며, 다채로운 존재들이 함께 공존할 수 있는 또 하나의 가능성을 살펴봅니다. 그리고 이를 통해 새로운 포용과 공유의 감각을 제안하고, 연대와 공동체의 의미를 고찰하고자 합니다. 2026년 어린이+ 전시 《권병준: 내 마음속에 너는》은 ‘어린이를 안아주는 공간’이란 개념을 시각화한 신작을 중심으로 구성되며, 어린이의 시선에 맞춘 기획을 통해 누구나 쉽게 이해하고 즐길 수 있는 경험을 제공할 예정입니다.",
+        venue: "북서울미술관",
+        startDate: "2026-06-11",
+        endDate: "2027-05-16",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1538201-15d5470a.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1538201",
+        status: "ongoing",
+        sourceId: "1538201"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1549929",
+        title: "유휴공간 전시 《보편타당한 당신 ― 심이다은》",
+        description: "소리의 역사는 언제나 경계를 허무는 과정이었다. 20세기 초 미래주의자들은 기계 문명의 굉음을 예술의 매체로 끌어들였고, 존 케이지(John Cage)는 침묵 속에서 오히려 세상의 모든 소리를 발견했다. 머레이 셰이퍼(R. Murray Schafer)는 한 발 더 나아가 도시의 소음부터 자연의 바람 소리까지, 우리를 둘러싼 모든 환경음을 ‘사운드스케이프’라는 하나의 거대한 음악으로 정립하기까지 했다. 이 흐름은 하나의 질문을 계속 밀어붙여 왔다. 과연 무엇이 들을 만한 소리인가. 오늘날 그 질문은 인간의 귀 너머로 향한다. 동물이 감지하는 주파수, 도심 속에서 조용히 지워져온 존재들의 흔적―이제 소리를 듣는 일은 인간 중심의 감각 바깥을 향한 생태적 실천이 되고 있다. 심이다은(b.1995)은 이러한 흐름",
+        venue: "북서울미술관",
+        startDate: "2026-06-25",
+        endDate: "2027-04-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1549929-2e6afc6d.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1549929",
+        status: "ongoing",
+        sourceId: "1549929"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1553791",
+        title: "마틴 파 : We Are Martin Parr",
+        description: "오늘날 우리가 광고 이미지나 SNS, 관광 스냅사진에서 매일 마주하는 강렬한 색채와 밀착된 시선은 더 이상 낯설지 않습니다. 세계적인 사진가 마틴 파(1952–2025)는 바로 이러한 동시대 시각문화의 감각을 수십 년간 집요하게 포착해 왔습니다. 그가 특유의 유머와 관찰력으로 남긴 사진들은 우리의 삶과 문화를 읽어내는 하나의 거대한 풍경이 되어 우리 곁에 숨 쉬고 있습니다. 이러한 작가의 발자취를 기리는 《마틴 파: We Are Martin Parr》는 작가 사후 아시아에서 처음 열리는 대규모 회고전입니다. 이번 전시에서는 초기 작업부터 말년에 이르는 14개 시리즈와 500여 점의 작품을 선보이며, 그가 출판한 총 90권의 사진집을 함께 소개합니다. 특히 1990년대 후반부터 2000년대 초반까지 한국을 방",
+        venue: "사진미술관",
+        startDate: "2026-07-16",
+        endDate: "2026-10-18",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1553791-1e0a10d4.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1553791",
+        status: "ongoing",
+        sourceId: "1553791"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1556711",
+        title: "2026년 한국 대표 조각가전 《조숙진: 지나가는 자리》",
+        description: "“자신이 지향하는 삶의 태도는 작품의 근본이다.” 작가노트, 1986. 《조숙진: 지나가는 자리》는 남서울미술관 ‘한국 대표 조각가’ 시리즈의 두번째 전시로, 지난 40여 년간 뉴욕을 중심으로 회화와 조각, 설치, 사진, 퍼포먼스, 공공 프로젝트, 건축에 이르기까지 다양한 형식으로 작업해 온 조숙진의 작업 태도와 존재에 대한 성찰을 조망합니다. 1960년 전라남도 광주에서 태어나 1982년 홍익대학교 미술대학원에 진학한 조숙진은 규정된 매체 문법에서 벗어나 1980년대 초부터 합판, 장판, 보드지 등 비전형적인 재료를 적극적으로 실험하며 작업을 시작했습니다. 1983년 《제10회 앙데팡당》을 시작으로 1985년 관훈미술관에서의 첫 개인전 《저 너머》, 《프론티어제전》, 1986년 《제11회 에콜 드 서울》",
+        venue: "남서울미술관",
+        startDate: "2026-07-29",
+        endDate: "2026-11-15",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1556711-67a3e672.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1556711",
+        status: "ongoing",
+        sourceId: "1556711"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1563285",
+        title: "2026 타이틀 매치 《오인환 vs. 장서영: 휴먼 에러》",
+        description: "서울시립 북서울미술관은 2026년 13회 타이틀 매치에 오인환과 장서영 작가를 초청한다. 두 작가의 작업은 주제와 형식 면에서 달라 보이지만, 인간의 존재 조건과 속성을 깊이 탐구한다는 공통점을 가진다. 2026 타이틀 매치 《오인환 vs. 장서영: 휴먼 에러》는 최첨단 기술이 인간의 창작을 대체할 수 있다는 믿음이 팽배해진 시대에 도리어 인간만이 할 수 있는 창작의 본질을 탐구한다. 전시 제목 ‘휴먼 에러’는 이에 관한 잠정적인 답변이다. ‘인간의 신체적, 정신적 불완전함 때문에 발생하는 오류 혹은 실수’를 뜻하는 용어인 휴먼 에러는 주로 산업현장에서 사고 원인을 판별할 때 사용된다. 이러한 표현은 인간을 시스템의 일부로 간주하고 기계와 같이 오류가 없는 완전무결함을 지향해야 한다는 심리를 반영한다. 이러",
+        venue: "북서울미술관",
+        startDate: "2026-08-13",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1563285-b00b2e68.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1563285",
+        status: "ongoing",
+        sourceId: "1563285"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1565012",
+        title: "서울시립 서서울미술관 미디어 작가전 《김희천: 두더지들》",
+        description: "서울시립 서서울미술관 미디어 작가전은 급격하게 변화하는 사회에 대한 예술적 관점을 제시해 온 한국 동시대 주요 미디어 작가를 집중 조명하는 서서울미술관의 기획 전시입니다. 미디어 작가전은 작가의 작업 세계를 다각도로 해석하며, 새로운 작품의 제작을 지원하고, 예술적 지식과 형태를 만들어가고자 합니다. 서서울미술관에서 처음 열리는 미디어 작가전은 동시대 기술환경과 시각문화에 대한 비평적인 관점을 제시해 온 김희천 작가를 초청하였습니다. 현대 사회에서 물리적 시스템은 데이터화 되어 디지털 환경과 연결되면서 서로를 끊임없이 갱신하고 세계를 재구성하고 있습니다. 작가는 가상이 현실의 한 층위로 작동하고, 기술이 비가시화된 세계에서 ‘나’라는 존재를 어떻게 지각할 수 있는가를 질문해 왔습니다. 영상, 게임, 건축,",
+        venue: "서서울미술관",
+        startDate: "2026-08-20",
+        endDate: "2026-11-08",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1565012-742829c1.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1565012",
+        status: "ongoing",
+        sourceId: "1565012"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1576838",
+        title: "오윤",
+        description: "《오윤》은 1980년대 민중미술을 대표하는 작가 오윤(1946–1986)의 작고 40주기를 맞아 마련한 전시로, 서울시립 미술아카이브가 수집한 오윤 컬렉션을 중심으로 그의 독창적인 작품 세계와 창작 과정을 재조명한다. 한국 근현대사의 격동과 전통문화·연희, 동학을 비롯한 전통사상, 민중시 등 당대 문학과의 관계 속에서 작품에 담긴 다층적인 서사를 읽어내는 한편, 판화 원판에 남은 판각의 흔적을 통해 오윤 판화의 조형성을 새롭게 조망한다. 이를 통해 민중의 삶을 보듬고 위로하며 미술의 역할을 고민한 오윤의 예술관을 되짚어 보고자 한다. 오윤은 1946년 부산에서 태어나 서울대 조소과를 졸업했다. 대학 재학 중인 1969년 ‘현실동인’을 결성하며 일찍이 현실과 미술의 관계를 고민했고, 1970년대에는 전돌 작업",
+        venue: "미술아카이브",
+        startDate: "2026-08-27",
+        endDate: "2027-02-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1576838-9f1eb484.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1576838",
+        status: "ongoing",
+        sourceId: "1576838"
+      },
+      {
+        id: "seoul-museum-of-art-2026-1576627",
+        title: "서울시립 서서울미술관 플레이 라운지 《어쩌면 우리에게 더 멋진 일이 있을지도 몰라》",
+        description: "서울시립 서서울미술관 플레이 라운지는 작품과 함께 자유롭게 머물며, 각자의 방식으로 미술관의 시간을 경험할 수 있는 열린 공간이다. 이번 플레이 라운지에서 소개하는 이우성의 <어쩌면 우리에게 더 멋진 일이 있을지도 몰라>(2021)는 끊임없이 밀려왔다 사라지는 파도의 모습을 1,969장의 그림으로 옮긴 애니메이션 영상이다. 서로 다른 순간을 담은 그림들은 연속된 장면 속에서 움직임을 이루고, 흩어진 순간들은 서로를 지나며 비로소 파도의 흐름으로 이어진다. 각각의 장면은 앞선 순간의 흔적을 품은 채 연이어 일렁이고, 그렇게 수많은 순간이 모여 은은한 물결을 이룬다. 파도는 한순간도 같은 모습에 머물지 않는다. 작가는 유동하는 바다의 순간을 한 장씩 그림으로 붙잡고, 연속된 이미지로 이어 정지된 회화에 움직임과",
+        venue: "서서울미술관",
+        startDate: "2026-09-01",
+        endDate: "2026-10-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1576627-6219a7cb.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/exhibition/detail?exNo=1576627",
+        status: "ongoing",
+        sourceId: "1576627"
       },
       {
         id: "sema-2026-hershman",
         title: "린 허쉬만 리슨",
         titleEn: "Lynn Hershman Leeson",
         description: "미국 미디어아트·영화 선구자 린 허쉬만 리슨의 아시아 첫 대규모 개인전. 60년 작업 세계를 아우르며 SeMA의 2026년 '기술' 주제에 응답한다.",
-        startDate: "2026-10-01",
-        endDate: "2027-02-07",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/sema-2026-hershman.jpg",
+        venue: "서소문본관",
+        startDate: "2026-10-21",
+        endDate: "2027-02-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1559068-0c899101.jpg",
         officialUrl: "https://sema.seoul.go.kr",
-        status: "upcoming"
+        status: "upcoming",
+        sourceId: "1559068"
       }
     ],
     pastExhibitions: [],
@@ -5881,12 +6166,40 @@ export const exhibitions = [
         title: "MMCA 해외 명작: 수련과 샹들리에",
         titleEn: "MMCA Masterworks: Water Lilies and Chandeliers",
         description: "국립현대미술관이 소장하고 있는 해외 명작을 소개하는 상설 전시.",
+        venue: "과천관",
         startDate: "2025-10-02",
         endDate: "2027-01-03",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202508210001995.gif",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-gwacheon-2025-202508210001995-75d3d83b.jpg",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "ongoing",
+        sourceId: "202508210001995"
       },
+      {
+        id: "mmca-gwacheon-2026-202408210001821",
+        title: "로드 무비: 1945년 이후 한·일 미술",
+        description: "1945년부터 동시대까지 80년간 이어온 한·일 미술 교류사를 조망하는 전시",
+        venue: "과천관",
+        startDate: "2026-05-14",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-gwacheon-2026-202408210001821-2a46043c.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202408210001821",
+        status: "ongoing",
+        sourceId: "202408210001821"
+      },
+      {
+        id: "mmca-gwacheon-2026-202601060002026",
+        title: "과천관 40주년 프로젝트: 빛의 상상들",
+        description: "과천관 개관 40주년을 기념하여 ‘빛‘을 주제로 한 장소특정적 설치 프로젝트",
+        venue: "과천관",
+        startDate: "2026-07-10",
+        endDate: "2027-10-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-gwacheon-2026-202601060002026-87b50600.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202601060002026",
+        status: "ongoing",
+        sourceId: "202601060002026"
+      }
+    ],
+    pastExhibitions: [
       {
         id: "mmca-gwacheon-2026-artbank",
         title: "미술은행 20주년 특별전 «돌아온 미래: 형태와 생각의 발현»",
@@ -5896,7 +6209,7 @@ export const exhibitions = [
         endDate: "2026-06-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202508060001987.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "mmca-gwacheon-2026-drawing",
@@ -5907,10 +6220,9 @@ export const exhibitions = [
         endDate: "2026-06-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202507100001975.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -5928,6 +6240,46 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
+        id: "leeum-2026-orozco",
+        title: "가브리엘 오로스코: 정원",
+        titleEn: "Gabriel Orozco: Garden",
+        description: "멕시코 작가 가브리엘 오로스코의 신규 커미션 야외 작품. 리움 야외 데크를 자연 지향적이고 공공 접근 가능한 공간으로 재구성하는 설치 프로젝트.",
+        venue: "야외 데크",
+        startDate: "2026-04-03",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-museum-2026-97-986b75f1.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
+        status: "ongoing",
+        sourceId: "97"
+      },
+      {
+        id: "leeum-museum-2026-93",
+        title: "다른 공간 안으로: 여성 작가들의 공감각적 환경 1956-1976",
+        description: "《다른 공간 안으로: 여성 작가들의 공감각적 환경 1956–1976》은 전후 현대미술사가 오랫동안 지나쳐 온 여성 작가들의 환경 작업을 체계적으로 재조명하는 국제기획전입니다. '환경(ambiente/environment)'은 관람자가 공간 안으로 걸어 들어가 빛, 소리, 색, 공기, 움직임을 온몸으로 경험하는 몰입형 예술 형식입니다. 관람자는 대상(object)을 바라보는 대신 공간 자체를 경험하며, 그 안으로 들어서는 순간 비로소 작품은 완성됩니다. 1949년 루치오 폰타나(Lucio Fontana)가 처음 선보인 '환경(ambiente)'은 이후 20여 년간 여러 작가들에게 급진적인 실험의 장이었으나, 1976년 베니스 비엔날레를 기점으로 서서히 ‘설치’라는 용어로 흡수되며 그 고유의 역사를 잃었습니다.",
+        venue: "블랙박스, 그라운드갤러리",
+        startDate: "2026-05-05",
+        endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-museum-2026-93-625e671e.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition/93",
+        status: "ongoing",
+        sourceId: "93"
+      },
+      {
+        id: "leeum-2026-koojunga",
+        title: "구정아 개인전: OUSSS",
+        titleEn: "Koo Jeong-a: OUSSS",
+        description: "구정아의 국내 최대 개인전. 자기력·향기·빛 등 비가시적 에너지 흐름을 중심으로 하는 그의 실천이 M2 갤러리를 넘어 로비, 벽면, 고미술 컬렉션 인근 공간까지 확장되며 'OUSSS'라는 개념 세계를 구현한다.",
+        venue: "M2",
+        startDate: "2026-09-05",
+        endDate: "2026-12-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-museum-2026-94-6a61b591.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
+        status: "ongoing",
+        sourceId: "94"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "leeum-2026-sehgal",
         title: "티노 세갈 개인전",
         titleEn: "Tino Sehgal",
@@ -5936,32 +6288,9 @@ export const exhibitions = [
         endDate: "2026-06-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-sehgal.jpg",
         officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
-        status: "ongoing"
-      },
-      {
-        id: "leeum-2026-orozco",
-        title: "가브리엘 오로스코: 정원",
-        titleEn: "Gabriel Orozco: Garden",
-        description: "멕시코 작가 가브리엘 오로스코의 신규 커미션 야외 작품. 리움 야외 데크를 자연 지향적이고 공공 접근 가능한 공간으로 재구성하는 설치 프로젝트.",
-        startDate: "2026-04-03",
-        endDate: "2026-09-30",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-orozco.jpg",
-        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
-        status: "ongoing"
-      },
-      {
-        id: "leeum-2026-koojunga",
-        title: "구정아 개인전: OUSSS",
-        titleEn: "Koo Jeong-a: OUSSS",
-        description: "구정아의 국내 최대 개인전. 자기력·향기·빛 등 비가시적 에너지 흐름을 중심으로 하는 그의 실천이 M2 갤러리를 넘어 로비, 벽면, 고미술 컬렉션 인근 공간까지 확장되며 'OUSSS'라는 개념 세계를 구현한다.",
-        startDate: "2026-09-05",
-        endDate: "2026-12-27",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-koojunga.jpg",
-        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
-        status: "upcoming"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -5978,6 +6307,20 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
+        id: "apma-2026-4128332",
+        title: "Sol LeWitt: Open Structure",
+        description: "[Sol LeWitt: Open Structure] 전시관람 예약",
+        venue: "미술관 1F 로비, B1 1-7전시실",
+        startDate: "2026-09-01",
+        endDate: "2027-02-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/apma-2026-4170868-cca7785d.jpg",
+        officialUrl: "https://apma.amorepacific.com/contents/exhibition/4128332/view.do",
+        status: "ongoing",
+        sourceId: "4128332"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "apma-2026-chapter5",
         title: "APMA, CHAPTER FIVE",
         titleEn: "APMA, Chapter Five — From the APMA Collection",
@@ -5986,7 +6329,7 @@ export const exhibitions = [
         endDate: "2026-08-02",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/apma-2026-chapter5.jpg",
         officialUrl: "https://apma.amorepacific.com/contents/exhibition/index.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "apma-2026-bradford",
@@ -5997,10 +6340,9 @@ export const exhibitions = [
         endDate: "2026-02-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/apma-2026-bradford.jpg",
         officialUrl: "https://apma.amorepacific.com/contents/exhibition/index.do",
-        status: "ongoing"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -6024,11 +6366,25 @@ export const exhibitions = [
         title: "취향가옥 2: Art in Life, Life in Art 2",
         titleEn: "A House of Taste 2: Art in Life, Life in Art 2",
         description: "디뮤지엄 개관 10주년 기념 대형전. 약 600점의 작품이 영화감독·차 소믈리에·출판 에디터·패션 디렉터·건축가의 상상 속 집 5곳에 배치된다. 백남준의 'Apple Tree'(1995), 이우환, 하종현, 로이 리히텐슈타인, 올라퍼 엘리아슨 등 참여.",
+        venue: "디뮤지엄",
         startDate: "2025-06-28",
         endDate: "2026-09-20",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/dmuseum-2025-home2.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/d-museum-2025-prg202506050001-1346784f.jpg",
         officialUrl: "http://www.daelimmuseum.org",
-        status: "ongoing"
+        status: "ongoing",
+        sourceId: "PRG202506050001"
+      },
+      {
+        id: "d-museum-2026-prg202607280001",
+        title: "PUBLIC ART SPACE: 김기린",
+        titleEn: "PUBLIC ART SPACE: Kim Guiline",
+        venue: "D PUBLIC PROJECT",
+        startDate: "2026-07-27",
+        endDate: "2026-11-09",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/d-museum-2026-prg202607280001-85952047.jpg",
+        officialUrl: "https://www.daelimmuseum.org/exhibition",
+        status: "ongoing",
+        sourceId: "PRG202607280001"
       }
     ],
     pastExhibitions: []
@@ -6049,6 +6405,21 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
+        id: "hoam-2026-artspectrum",
+        title: "아트 스펙트럼 2026",
+        titleEn: "Art Spectrum 2026",
+        description: "팔레 드 도쿄(유럽 최대 현대미술 센터)와 공동 기획한 아트 스펙트럼의 실험적 새 버전. 현대미술·영화·디자인·건축·실험음악을 아우르는 복합 프로그램으로, 처음으로 리움이 아닌 호암에서 개최된다.",
+        venue: "전시실 1, 2 및 외부",
+        startDate: "2026-09-01",
+        endDate: "2026-12-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-museum-2026-96-29884570.png",
+        officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
+        status: "ongoing",
+        sourceId: "96"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "hoam-2026-kimyunshin",
         title: "김윤신: 합이합일 분이분일",
         titleEn: "Kim Yun Shin: Combine to Make One, Divide to Make One",
@@ -6057,21 +6428,9 @@ export const exhibitions = [
         endDate: "2026-06-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-2026-kimyunshin.jpg",
         officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
-        status: "ongoing"
-      },
-      {
-        id: "hoam-2026-artspectrum",
-        title: "아트 스펙트럼 2026",
-        titleEn: "Art Spectrum 2026",
-        description: "팔레 드 도쿄(유럽 최대 현대미술 센터)와 공동 기획한 아트 스펙트럼의 실험적 새 버전. 현대미술·영화·디자인·건축·실험음악을 아우르는 복합 프로그램으로, 처음으로 리움이 아닌 호암에서 개최된다.",
-        startDate: "2026-09-01",
-        endDate: "2026-12-31",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-2026-artspectrum.jpg",
-        officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
-        status: "upcoming"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -6195,6 +6554,93 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
+        id: "hangaram-art-museum-2026-78392",
+        title: "스페인의 거장 고야: 이성이 잠들 때, 괴물이 깨어난다",
+        titleEn: "Francisco Goya",
+        venue: "한가람미술관 제7전시실",
+        startDate: "2026-06-26",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78392-62cb464d.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78392",
+        status: "ongoing",
+        sourceId: "78392"
+      },
+      {
+        id: "hangaram-art-museum-2026-78112",
+        title: "와일드스미스 그림책 원화展",
+        titleEn: "Brian Wildsmith Exhibition: A Master of Picture Books",
+        venue: "서울서예박물관 제2전시실",
+        startDate: "2026-07-07",
+        endDate: "2026-10-16",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78112-189ed26d.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78112",
+        status: "ongoing",
+        sourceId: "78112"
+      },
+      {
+        id: "hangaram-art-museum-2026-78093",
+        title: "자비 솔라 특별전",
+        titleEn: "Xevi Solà: One Year - Scenes in Time",
+        venue: "서울서예박물관 제1전시실",
+        startDate: "2026-07-10",
+        endDate: "2026-10-17",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78093-79c59891.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78093",
+        status: "ongoing",
+        sourceId: "78093"
+      },
+      {
+        id: "hangaram-art-museum-2026-76454",
+        title: "이완 - 나는 쓴다",
+        titleEn: "Ewan: I Write, to find myself",
+        venue: "서울서예박물관 제3전시실",
+        startDate: "2026-07-17",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-76454-47c326b3.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76454",
+        status: "ongoing",
+        sourceId: "76454"
+      },
+      {
+        id: "hangaram-2026-spain",
+        title: "스페인 미술 500년",
+        titleEn: "500 Years of Spanish Art",
+        description: "엘 그레코부터 피카소, 달리, 미로까지 스페인 미술 500년의 흐름을 조망하는 대형 기획전. 스페인 주요 미술관 소장품을 포함한 원화 100여 점을 선보인다.",
+        venue: "한가람디자인미술관 제1전시실, 제2전시실, 제3전시실",
+        startDate: "2026-09-22",
+        endDate: "2027-01-20",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77679-35d1e4cd.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77679",
+        status: "upcoming",
+        sourceId: "77679"
+      },
+      {
+        id: "hangaram-art-museum-2026-78313",
+        title: "장-프랑수아 라리유 원화 특별전",
+        titleEn: "Jean-Francois Larrieu Special Exhibition of Original Artworks",
+        venue: "한가람미술관 제7전시실",
+        startDate: "2026-10-04",
+        endDate: "2026-10-24",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78313-89621998.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78313",
+        status: "upcoming",
+        sourceId: "78313"
+      },
+      {
+        id: "hangaram-art-museum-2026-76434",
+        title: "달리·Differently·Dali",
+        titleEn: "Disability Arts Exhibition",
+        venue: "한가람미술관 제7전시실",
+        startDate: "2026-10-30",
+        endDate: "2026-11-15",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-76434-e56b58ce.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76434",
+        status: "upcoming",
+        sourceId: "76434"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "hangaram-2026-botero",
         title: "페르난도 보테로: 형태의 미학",
         titleEn: "Fernando Botero: The Aesthetics of Form",
@@ -6203,21 +6649,9 @@ export const exhibitions = [
         endDate: "2026-08-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-2026-botero.jpg",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76470",
-        status: "ongoing"
-      },
-      {
-        id: "hangaram-2026-spain",
-        title: "스페인 미술 500년",
-        titleEn: "500 Years of Spanish Art",
-        description: "엘 그레코부터 피카소, 달리, 미로까지 스페인 미술 500년의 흐름을 조망하는 대형 기획전. 스페인 주요 미술관 소장품을 포함한 원화 100여 점을 선보인다.",
-        startDate: "2026-09-22",
-        endDate: "2027-01-20",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-2026-botero.jpg",
-        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77679",
-        status: "upcoming"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
 
@@ -6240,16 +6674,46 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "ddp-2026-offcourse",
-        title: "OFF COURSE CLUB",
-        titleEn: "OFF COURSE CLUB",
-        description: "DDP 전시.",
-        startDate: "2026-04-03",
-        endDate: "2026-04-26",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-offcourse.jpg",
-        officialUrl: "https://ddp.or.kr/index.html?menuno=240",
+        id: "ddp-gallery-2026-35f08742",
+        title: "BtheB 뷰티기획전<BEAUTY, TRANSLATED>",
+        description: "아름다움은 하나의 기준으로 설명되지 않습니다. 수분과 진정, 컬러와 표현, 기술과 진단, 회복과 리추얼처럼 서로 다른 뷰티의 언어는 저마다의 방식으로 아름다움을 말합니다. 이번 전시는 그 다양한 뷰티의 언어를 하나의 공간 안에서 읽고, 해석하고, 경험하는 전시입니다. 제품을 단순히 나열하는 대신, 각기 다른 아름다움의 방식을 키워드와 문장, 장면으로 번역해 보여줍니다. Beauty cannot be explained through a single standard. Hydration and soothing, color and expression, technology and diagnosis, recovery and ritual—each language of beauty expresses beauty in it",
+        startDate: "2026-06-13",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-35f08742-102013fd.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
         status: "ongoing"
       },
+      {
+        id: "ddp-gallery-2026-0c0ec93a",
+        title: "아기상어 비밀 초대장: 비커밍 샤크",
+        description: "6월, 오직 ‘상어’만 입장 가능한 비밀 통로가 DDP에 열린다! 전세계 2억 8천만 구독자가 사랑한 캐릭터 ‘아기상어’의 세계최초 AI체험형 전시 상어로 변신해 바닷속 스페셜 게스트가 될 준비 되셨나요?",
+        startDate: "2026-06-18",
+        endDate: "2026-12-19",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-0c0ec93a-dae68855.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
+        status: "ongoing"
+      },
+      {
+        id: "ddp-gallery-2026-54d6036f",
+        title: "LALARECIPE x MeME : Happiness Recipe for Every Skin",
+        description: "B the B DOWNTOWN에서 라라레서피와 MeME 작가가 만나 뷰티와 아트를 연결한 특별한 협업 전시를 선보입니다. 이번 전시는 MeME 작가의 ‘Problem Me, Solution ME’와 라라레서피의 ‘Happiness Recipe’를 연결해, 나를 이해하고 돌보며 나만의 행복을 발견하는 과정을 감각적인 공간으로 풀어냈습니다. 팝아트와 K-Beauty가 어우러진 전시 공간은 YUZU VITA C, CHERRY GLOW & SUNSCREEN, MATCHA PDRN, BAKUCHIOL 등 총 4개의 테마존으로 구성됩니다. 각 공간에서는 다채로운 색감과 독특한 텍스처의 뷰티 제품을 직접 경험하고, MeME 작가의 대표 캐릭터와 작품을 함께 만나볼 수 있습니다. 관람객이 직접 참여하며 전시를 즐길 수 있",
+        startDate: "2026-08-01",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-54d6036f-388a01f3.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
+        status: "ongoing"
+      },
+      {
+        id: "ddp-gallery-2026-b9c83085",
+        title: "Seoul Life: Heritage Reimagined, Soban 展",
+        startDate: "2026-09-14",
+        endDate: "2026-10-08",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-b9c83085-d55d77d2.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240&siteno=2&bbsno=614&boardno=15&bbstopno=614&act=view&subno=1",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [
       {
         id: "ddp-2026-btheb",
         title: "BtheB 뷰티기획전 <Beauty For All>",
@@ -6259,7 +6723,7 @@ export const exhibitions = [
         endDate: "2026-06-07",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-btheb.jpg",
         officialUrl: "https://ddp.or.kr/index.html?menuno=240",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "ddp-2026-ultra",
@@ -6270,10 +6734,20 @@ export const exhibitions = [
         endDate: "2026-05-10",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-ultra.jpg",
         officialUrl: "https://ddp.or.kr/index.html?menuno=240",
-        status: "ongoing"
+        status: "past"
+      },
+      {
+        id: "ddp-2026-offcourse",
+        title: "OFF COURSE CLUB",
+        titleEn: "OFF COURSE CLUB",
+        description: "DDP 전시.",
+        startDate: "2026-04-03",
+        endDate: "2026-04-26",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-offcourse.jpg",
+        officialUrl: "https://ddp.or.kr/index.html?menuno=240",
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
 
@@ -6309,22 +6783,21 @@ export const exhibitions = [
     ],
     pastExhibitions: [
       {
+        id: "daelim-2025-petra",
+        title: "페트라 콜린스: fangirl",
+        titleEn: "Petra Collins: fangirl",
+        startDate: "2025-08-29",
+        endDate: "2026-02-15",
+        officialUrl: "https://www.daelimmuseum.org/exhibition/past",
+        status: "past"
+      },
+      {
         id: "daelim-2024-tanaami",
         title: "Keiichi Tanaami: I'M THE ORIGIN",
         titleEn: "Keiichi Tanaami: I'M THE ORIGIN",
         startDate: "2024-12-14",
         endDate: "2025-06-29",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/daelim-tanaami.jpg",
-        officialUrl: "https://www.daelimmuseum.org/exhibition/past",
-        status: "past"
-      },
-      {
-        id: "daelim-2025-petra",
-        title: "페트라 콜린스: fangirl",
-        titleEn: "Petra Collins: fangirl",
-        startDate: "2025-08-29",
-        endDate: "2026-02-15",
-        coverImage: "",
         officialUrl: "https://www.daelimmuseum.org/exhibition/past",
         status: "past"
       }
@@ -6348,6 +6821,65 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
+        id: "groundseesaw-2026-sungryul",
+        title: "성률 기획전: 여름을 닮은 우리",
+        titleEn: "Seongryul: Summer Like Us",
+        description: "그라운드시소 한남점 기획전. 한국 일러스트레이터 성률의 감성적 작품 세계를 선보이는 기획전.",
+        venue: "그라운드시소 한남",
+        startDate: "2026-04-30",
+        endDate: "2026-11-22",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1327-ba68f7ce.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr",
+        status: "ongoing",
+        sourceId: "1327"
+      },
+      {
+        id: "groundseesaw-2026-1345",
+        title: "이기훈 원화전: 내일의 낙원",
+        venue: "그라운드시소 이스트",
+        startDate: "2026-07-17",
+        endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1345-d82a5a5b.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr/product/detail.html?product_no=1345&cate_no=47",
+        status: "ongoing",
+        sourceId: "1345"
+      },
+      {
+        id: "groundseesaw-2026-1344",
+        title: "조은 원화전: 오늘의 정원",
+        venue: "그라운드시소 이스트",
+        startDate: "2026-07-17",
+        endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1344-f3b2eb14.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr/product/detail.html?product_no=1344&cate_no=47",
+        status: "ongoing",
+        sourceId: "1344"
+      },
+      {
+        id: "groundseesaw-2026-1352",
+        title: "브래드 월스 사진전",
+        venue: "그라운드시소 용산",
+        startDate: "2026-09-11",
+        endDate: "2027-03-01",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1352-c6545586.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr/product/detail.html?product_no=1352&cate_no=47",
+        status: "ongoing",
+        sourceId: "1352"
+      },
+      {
+        id: "groundseesaw-2026-1351",
+        title: "표기식 사진전",
+        venue: "그라운드시소 센트럴",
+        startDate: "2026-09-23",
+        endDate: "2027-03-01",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1351-62b3e117.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr/product/detail.html?product_no=1351&cate_no=47",
+        status: "upcoming",
+        sourceId: "1351"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "groundseesaw-2026-max",
         title: "맥스 시덴토프 개인전",
         titleEn: "Max Siedentopf: NOT SERIOUS",
@@ -6356,18 +6888,7 @@ export const exhibitions = [
         endDate: "2026-08-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-max.jpg",
         officialUrl: "https://www.groundseesaw.co.kr",
-        status: "ongoing"
-      },
-      {
-        id: "groundseesaw-2026-sungryul",
-        title: "성률 기획전: 여름을 닮은 우리",
-        titleEn: "Seongryul: Summer Like Us",
-        description: "그라운드시소 한남점 기획전. 한국 일러스트레이터 성률의 감성적 작품 세계를 선보이는 기획전.",
-        startDate: "2026-04-30",
-        endDate: "2026-09-27",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-sungryul.jpg",
-        officialUrl: "https://www.groundseesaw.co.kr",
-        status: "upcoming"
+        status: "past"
       },
       {
         id: "groundseesaw-2026-roomforwonder",
@@ -6378,10 +6899,8 @@ export const exhibitions = [
         endDate: "2026-06-07",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-roomforwonder.jpg",
         officialUrl: "https://www.groundseesaw.co.kr",
-        status: "ongoing"
-      }
-    ],
-    pastExhibitions: [
+        status: "past"
+      },
       {
         id: "groundseesaw-2025-himuro",
         title: "히무로 유리: 오늘의 기쁨",
@@ -7012,7 +7531,38 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "njpac-collection", name: "Collection", name_en: "Collection", title: "Nam June Paik Art Center — Collection", title_en: "Nam June Paik Art Center — Collection", description: "172점 — 사진113·회화48·드로잉8·영상3.", description_en: "172 works — photograph, painting, drawing, video.", startDate: "Permanent", endDate: "Permanent", collectionFile: "njpac-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "njpac-2026-4dd8818e",
+        title: "달들",
+        description: "본 전시 《달들》은 지구 안팎에서 달을 ‘복수적(plural) 존재’로 사유할 때 도출되는 다각적인 지점들을 백남준의 ‘행성적 사유’와 연결하고, 〈달은 가장 오래된 TV〉(1965/2000), 〈해왕성〉(1991), 〈거북〉(1993)에 대한 해석적 확장을 시도하고자 한다. 나아가 백남준의 사유와 공명하는 동시대 작가들의 작품을 통해 백남준이 바라본 우주를 새롭게 제안한다. 전시의 영문명이기도 한 ‘밝고 다양한 점들(The Bright Rainbow Dots)’은 보이저 1호가 태양계 변방에서 촬영한 지구의 모습인 ‘창백한 푸른 점(Pale Blue Dot)’을 은유하며 백남준의 행성적 사유를 잇는 고리가 된다. 태양빛을 받아 선명한 푸른 빛을 띠는 해왕성은 우주의 거리, 빛의 특성, 대기 성분에 따라 바",
+        startDate: "2026-07-16",
+        endDate: "2026-10-04",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-4dd8818e-a1eee063.png",
+        officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
+        status: "ongoing"
+      },
+      {
+        id: "njpac-2026-316787a6",
+        title: "별, 괘卦",
+        description: "전시 《별, 괘卦》는 백남준의 작품에 등장하는 별과 행성, 위성, 텔레비전, 비디오, 숫자와 문자가 어떻게 하나의 세계를 이루는지 살펴본다. ‘별’은 서로 다른 사람들이 함께 바라볼 수 있는 공유의 스케일을 열고, ‘괘’는 변화하는 세계를 시간과 방향, 움직임의 관계 속에서 읽게 하는 기호 체계로 작동한다. 이번 전시는 〈비너스〉(1990), 〈시리우스〉(1990), 〈가상의 금성으로 가는 로켓선〉(1991)을 중심으로, 오래된 하늘의 감각과 현대의 전자 신호, 동양의 사유와 서구의 기술이 백남준의 작품 안에서 어떻게 만나고 변주되는지 조명한다. 이를 통해 《별, 괘》는 우주를 재현한 이미지가 아니라, 서로 다른 매체와 기호가 새로운 관계를 만들고 관람자의 감각 속에서 다시 생성되는 “백남준의 행성”을 제안",
+        startDate: "2026-07-16",
+        endDate: "2027-02-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-316787a6-c266eb0b.jpg",
+        officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
+        status: "ongoing"
+      },
+      {
+        id: "njpac-2026-d654199f",
+        title: "NJP 라운지 2. 장윤영",
+        description: "백남준아트센터와 피에스케이홀딩스(주)는 백남준 20주기를 맞아 그의 사유를 다시 울려 퍼지게 하는 프로젝트 NJP 라운지를 추진한다. ‘NJP 라운지 2026’은 백남준의 실험정신을 오늘의 시각으로 계승하며, 미디어아트의 새로운 가능성과 대안을 모색하는 신진 작가를 선정해 신작 제작과 전시를 지원하는 커미션 프로그램이다. 프로그램은 피에스케이홀딩스 판교캠퍼스 로비의 미디어월과 백남준아트센터 로비에 신설되는 디스플레이를 활용해 기존작과 커미션 신작을 함께 선보인다. 장윤영은 시각예술을 기반으로 기술과 생태적 상상력을 융합하고, 인공지능과 인터랙티브 미디어를 통해 인간·비인간 존재의 관계를 탐색해 오고 있다. 《NJP 라운지 2. 장윤영》은 작가가 사유해 온 생명체와 환경 간 공생관계의 개념을 확장하여, 태양빛",
+        startDate: "2026-07-23",
+        endDate: "2026-11-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-d654199f-42c2c891.jpg",
+        officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: [],
     exhibitions: []
   },

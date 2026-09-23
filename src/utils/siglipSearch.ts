@@ -159,6 +159,14 @@ async function encodeWithBrowser(text: string): Promise<number[] | null> {
     });
 }
 
+/**
+ * 정밀 검색(Jina)을 켜는 순간 부른다. Jina 인코더는 비용 때문에 평소 꺼 두어 첫 검색에
+ * 모델을 올리는 시간이 든다. 사용자가 검색어를 치는 동안 미리 깨워 둔다. 실패해도 검색에는 영향이 없다.
+ */
+export function warmPreciseSearch(): void {
+    fetch(`${WORKER_URL}/warm-jina`, { method: 'POST', credentials: 'omit', mode: 'cors', keepalive: true }).catch(() => {});
+}
+
 // ─────────────────────────────────────────────────────────────
 // 메인 검색 함수
 // ─────────────────────────────────────────────────────────────
@@ -186,7 +194,9 @@ export async function searchByText(
     // engine='jina' 면 브라우저 WASM tier 건너뛰고 워커의 Jina path 강제.
     // 워커가 engine='jina' 를 받으면 한국어 native 인코더 사용.
     const wantJina = engine === 'jina';
-    const serverTimeout = wantJina ? 15_000 : 12_000;  // Jina 인코더는 ~3초 더 걸림
+    // Jina 인코더는 평소 꺼 두어(비용) 첫 요청에 모델을 올리느라 20초 가까이 걸릴 수 있다.
+    // 워커는 Jina 가 30초 안에 답하지 않으면 SigLIP 으로 넘어가므로 그보다 조금 길게 기다린다.
+    const serverTimeout = wantJina ? 35_000 : 12_000;
 
     // Tier 2 — server. Always fire (it's our reliable baseline).
     const serverPromise: Promise<SigLIPSearchResult[] | null> = (async () => {

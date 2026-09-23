@@ -3,22 +3,34 @@ Jina CLIP v2 텍스트 인코더 — Cloud Run 호스팅.
 
 Lazy loading: 컨테이너 시작 시 PORT 즉시 listen,
 모델은 첫 요청(또는 /warmup) 시 로드 — startup probe 통과 보장.
+
+인증: JINA_ENCODER_TOKEN 환경 변수가 있으면 인코딩과 워밍업은
+`Authorization: Bearer <토큰>` 이 있어야 한다. semantic-search 워커가 같은 값을 secret 으로 보낸다.
+서비스가 인터넷에 열려 있어 토큰이 없으면 누구나 4 vCPU 인코딩을 돌려 비용을 만들 수 있었다(2026-09-15 잠금).
 """
+import hmac
 import os
 import time
 from typing import Optional
 from threading import Lock
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 import torch
 from transformers import AutoModel
 
 MODEL_ID = "jinaai/jina-clip-v2"
+AUTH_TOKEN = os.environ.get("JINA_ENCODER_TOKEN", "").strip()
 
 app = FastAPI()
 _model = None
 _model_lock = Lock()
+
+
+def check_auth(authorization: Optional[str]):
+    """토큰이 설정돼 있으면 Bearer 값이 같아야 통과한다."""
+    if AUTH_TOKEN and not hmac.compare_digest(authorization or "", f"Bearer {AUTH_TOKEN}"):
+        raise HTTPException(status_code=401, detail="invalid bearer token")
 
 
 def get_model():
@@ -45,19 +57,21 @@ class EncodeRequest(BaseModel):
 @app.get("/")
 def health():
     """Health probe — 모델 로드 안 하고 즉시 응답."""
-    return {"status": "ok", "model": MODEL_ID, "loaded": _model is not None}
+    return {"status": "ok", "model": MODEL_ID, "loaded": _model is not None, "auth_required": bool(AUTH_TOKEN)}
 
 
 @app.get("/warmup")
-def warmup():
+def warmup(authorization: Optional[str] = Header(default=None)):
     """수동 워밍업 트리거 — 모델 미리 로드."""
+    check_auth(authorization)
     t0 = time.time()
     get_model()
     return {"warmed": True, "took_seconds": round(time.time() - t0, 1)}
 
 
 @app.post("/")
-def encode(req: EncodeRequest):
+def encode(req: EncodeRequest, authorization: Optional[str] = Header(default=None)):
+    check_auth(authorization)
     if req.texts:
         texts = req.texts
     elif req.text:

@@ -1,0 +1,63 @@
+/* ══════════════════════════════════════════════════════════════
+   COLLY glass — the pane the nearby-exhibitions sheet opens on, as one
+   class for the panels that open over the map: a blurred, saturated dark
+   glass with light catching its top edge and a little film grain.
+   The effects sit on z-index -1 inside the pane's own stacking context,
+   so they stay behind its content without touching how that is laid out.
+   ══════════════════════════════════════════════════════════════ */
+.colly-glass {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 28px;
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(255, 255, 255, 0.08), transparent 46%),
+    rgba(16, 16, 19, 0.86);
+  backdrop-filter: blur(44px) saturate(1.6);
+  -webkit-backdrop-filter: blur(44px) saturate(1.6);
+  box-shadow:
+    0 36px 100px rgba(0, 0, 0, 0.62),
+    inset 0 1px 0 rgba(255, 255, 255, 0.26),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+/* the light on the top lip of the pane */
+.colly-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 40%;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02) 34%, transparent 78%);
+}
+/* film grain, blended so it reads as texture rather than dirt */
+.colly-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+}
+
+/* the app's light theme: the same pane, frosted pale */
+.colly-glass[data-light] {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(250, 250, 247, 0.84);
+  box-shadow: 0 30px 80px rgba(29, 27, 22, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.colly-glass[data-light]::before { background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent 60%); }
+.colly-glass[data-light]::after { opacity: 0.03; }
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .colly-glass { background: #121214; }
+  .colly-glass[data-light] { background: #f6f6f3; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .colly-glass { background: #121214; backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .colly-glass[data-light] { background: #f6f6f3; }
+}

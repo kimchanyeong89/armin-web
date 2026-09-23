@@ -1,0 +1,326 @@
+/* ══════════════════════════════════════════════════════════════
+   My Page — five proposals for the part above the artwork grid.
+   Tokens as the redesigned tabs write them; the fonts come with the
+   live page's own mypageRedesign.css, whose card classes the grid
+   reuses, so the grid is drawn exactly as it is live.
+   Each proposal arranges the same parts after one of the app's tabs:
+     A band      — the artist page's header band
+     B stage     — the globe's composition on the map tab
+     C statement — the AI tab's title block
+     D board     — the community board
+     E panel     — the map's city panel
+   ══════════════════════════════════════════════════════════════ */
+
+.pf {
+  --g: #080808;
+  --ink: rgba(244,241,234,.96); --ink-2: rgba(244,241,234,.62); --ink-3: rgba(244,241,234,.40);
+  --rule: rgba(244,241,234,.10); --hair: rgba(244,241,234,.16); --soft: rgba(244,241,234,.06);
+  --acc: #d4a547; --acc-rgb: 212,165,71;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --pad: clamp(14px, 3vw, 28px);
+  min-height: 100dvh; background: var(--g); color: var(--ink); font-family: var(--body); word-break: keep-all;
+}
+.pf *, .pf *::before, .pf *::after { box-sizing: border-box; }
+/* index.css dresses every button on the site. This takes the dress off at
+   the weight of a bare `button`, so each part's own rule still wins — and
+   the live grid's marks keep the live page's styles untouched. */
+:where(.pf) button:where(:not(.mp-acts button)) { margin: 0; padding: 0; border: 0; border-radius: 0; background: none;
+  font: inherit; color: inherit; cursor: pointer; }
+:where(.pf) button:where(:not(.mp-acts button)):focus { outline: none; }
+:where(.pf) button:where(:not(.mp-acts button)):focus-visible, :where(.pf) a:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+.pf p, .pf h1, .pf h2, .pf figure, .pf ul { margin: 0; }
+.pf ul { padding: 0; list-style: none; }
+.pf a { color: inherit; text-decoration: none; }
+
+/* ── parts ─────────────────────────────────────────────────────── */
+
+.pf-eyebrow { font-family: var(--num); font-size: .66rem; font-weight: 650; letter-spacing: .06em; color: var(--acc);
+  font-variant-numeric: tabular-nums; }
+
+/* the cover: the owner's chosen work, cropped to the frame that holds it */
+.pf-cover { display: block; overflow: hidden; background: var(--soft); }
+.pf-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.pf-avatar { flex: none; display: block; border-radius: 50%; overflow: hidden; }
+
+/* the nickname, with the live level mark and its question mark beside it */
+.pf-name { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.pf-name h1, .pf-name h2 { min-width: 0; font-family: var(--display); font-weight: 700; line-height: 1.06;
+  letter-spacing: -0.045em; overflow-wrap: anywhere; }
+.pf-name h1 { font-size: clamp(1.7rem, 3vw, 2.4rem); }
+.pf-name h2 { font-size: 16px; letter-spacing: -0.02em; }
+
+/* the account on a ticked line */
+.pf-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12px; color: var(--ink-2); }
+.pf-meta > i { flex: none; width: 1px; height: 10px; background: var(--hair); }
+.pf-email { overflow-wrap: anywhere; }
+.pf-score { font-family: var(--num); font-size: 10.5px; letter-spacing: .06em; color: var(--ink-3); white-space: nowrap; }
+.pf-score b { font-weight: 700; color: var(--acc); }
+
+.pf-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; }
+/* the map guide's button: a circled mark and a label, one target */
+.pf .pf-cta { display: inline-flex; align-items: center; gap: .65rem; font-size: 13px; font-weight: 600; color: var(--ink);
+  transition: color .16s ease; }
+.pf .pf-cta > span { flex: none; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent); color: var(--acc);
+  transition: border-color .16s ease, background-color .16s ease; }
+.pf .pf-cta:hover > span, .pf .pf-cta:focus-visible > span { border-color: var(--acc); background: rgba(var(--acc-rgb), .12); }
+/* the board's text actions: a mark and a word, gold under the pointer */
+.pf .pf-act { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+  white-space: nowrap; transition: color .16s ease; }
+.pf .pf-act:hover, .pf .pf-act[aria-expanded="true"] { color: var(--acc); }
+.pf .pf-act--gold { color: var(--acc); }
+.pf .pf-act--gold:hover { color: #f0c878; }
+.pf-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); }
+
+/* a caption rule: gold label, note, hairline, then a figure or a control */
+.pf-cap { display: flex; align-items: center; gap: 10px; min-width: 0; min-height: 22px; }
+.pf-cap > span { font-family: var(--num); font-size: 9.5px; font-weight: 600; letter-spacing: .1em; color: var(--acc); white-space: nowrap; }
+.pf-cap > small { font-family: var(--num); font-size: 9px; letter-spacing: .04em; color: var(--ink-3); white-space: nowrap; }
+.pf-cap > i { flex: 1; min-width: 12px; height: 1px; background: var(--rule); }
+.pf-cap > em { font-family: var(--num); font-style: normal; font-size: 10px; font-weight: 700; color: var(--ink-2);
+  font-variant-numeric: tabular-nums; }
+
+/* change background — the live picker, drawn as the board draws its menus */
+.pf-picker { position: relative; flex: none; }
+.pf-picker__card { position: absolute; right: 0; top: calc(100% + 10px); z-index: 60; width: min(320px, calc(100vw - 28px));
+  max-height: min(430px, 64vh); overflow-y: auto; padding: 14px; background: #0d0d0d; border: 1px solid var(--rule);
+  box-shadow: 0 18px 40px rgba(0,0,0,.6); animation: pf-rise .26s var(--ease) both; }
+.pf-picker__card header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.pf-picker__card header span { font-family: var(--num); font-size: 9.5px; font-weight: 600; letter-spacing: .1em; color: var(--acc); }
+.pf .pf-picker__card header button { font-size: 12px; font-weight: 600; color: var(--ink-3); transition: color .16s ease; }
+.pf .pf-picker__card header button:hover, .pf .pf-picker__card header button[aria-pressed="true"] { color: var(--ink); }
+.pf-picker__pos { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 10px; margin-bottom: 12px;
+  font-size: 11.5px; color: var(--ink-2); }
+.pf-picker__pos em { font-family: var(--num); font-style: normal; font-size: 10px; }
+.pf-picker__pos input { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--acc); }
+.pf-picker__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.pf .pf-picker__grid button { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--soft); }
+.pf-picker__grid img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); opacity: .8;
+  transition: filter .2s ease, opacity .2s ease; }
+.pf-picker__grid button:hover img, .pf-picker__grid button[aria-pressed="true"] img { filter: none; opacity: 1; }
+/* the chosen work: a gold bar along its foot rather than a frame */
+.pf-picker__grid button[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--acc); }
+
+/* the six counted tabs — "cells": a figure over its label in six equal cells */
+.pf-tabs { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); border-bottom: 1px solid var(--rule); }
+.pf .pf-tabs button { position: relative; display: grid; justify-items: center; align-content: center; gap: 6px;
+  padding: 12px 4px 13px; color: var(--ink-3); transition: color .16s ease; }
+.pf .pf-tabs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--acc);
+  transform: scaleX(0); transition: transform .26s var(--ease); }
+.pf .pf-tabs button:hover { color: var(--ink-2); }
+.pf .pf-tabs button[aria-selected="true"] { color: var(--ink); }
+.pf .pf-tabs button[aria-selected="true"]::after { transform: scaleX(1); }
+.pf-tabs b { font-family: var(--num); font-size: 18px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.pf-tabs button[aria-selected="true"] b { color: var(--acc); }
+.pf-tabs span { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; white-space: nowrap; }
+/* "line": the community board's targets — the label, then its count */
+.pf-tabs--line { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
+.pf-tabs--line::-webkit-scrollbar { display: none; }
+.pf .pf-tabs--line button { flex: none; display: inline-flex; flex-direction: row-reverse; align-items: baseline; gap: 7px; padding: 14px 0 12px; }
+.pf-tabs--line b { font-size: 11px; color: var(--ink-3); }
+.pf-tabs--line span { font-size: 13px; font-weight: 600; }
+
+/* the sort: labels over a hairline, a short gold bar sliding to the chosen one */
+.pf-sort { position: relative; display: inline-flex; gap: 18px; }
+.pf .pf-sort button { padding: 0 0 8px; font-size: 12.5px; font-weight: 600; white-space: nowrap; color: var(--ink-3); transition: color .2s ease; }
+.pf .pf-sort button:hover { color: var(--ink-2); }
+.pf .pf-sort button[aria-pressed="true"] { color: var(--ink); }
+.pf-sort::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--rule); }
+.pf-sort__bar { position: absolute; left: 0; bottom: 0; z-index: 1; width: 26px; height: 2px; background: var(--acc);
+  transition: transform .26s var(--ease); }
+
+/* the tabs ride a sticky bar, as they do live; the sort and an open
+   playlist's way back sit beside or under them */
+.pf-bar { position: sticky; top: 0; z-index: 40; padding-top: env(safe-area-inset-top); background: rgba(8,8,8,.95);
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+.pf-bar--line { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0 28px;
+  padding-left: var(--pad); padding-right: var(--pad); border-bottom: 1px solid var(--rule); }
+.pf-bar--line .pf-tabs { min-width: 0; border-bottom: 0; }
+.pf-bar__end { display: flex; align-items: center; gap: 18px; margin-left: auto; padding: 10px 0; }
+/* "fill": the targets spread across the whole width, each centred in its share */
+.pf-bar--fill { padding-left: var(--pad); padding-right: var(--pad); border-bottom: 1px solid var(--rule); }
+.pf-bar--fill .pf-tabs--line { gap: 0; border-bottom: 0; }
+.pf .pf-bar--fill .pf-tabs--line button { flex: 1 0 auto; justify-content: center; padding-left: 10px; padding-right: 10px; }
+.pf-sortrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px var(--pad) 10px; }
+.pf .pf-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--num); font-size: 10.5px; font-weight: 600;
+  letter-spacing: .06em; color: var(--ink-2); transition: color .16s ease; }
+.pf .pf-back:hover { color: var(--acc); }
+
+/* My Playlists — "cards": square tiles with the name under them */
+.pf-lists { display: flex; gap: 14px; overflow-x: auto; scrollbar-width: none; }
+.pf-lists::-webkit-scrollbar { display: none; }
+.pf .pf-list { display: grid; gap: 8px; text-align: left; }
+.pf-list__shot { display: block; width: 120px; aspect-ratio: 1; overflow: hidden; background: var(--soft); }
+.pf-list__shot img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); transition: filter .3s ease; }
+.pf-list:hover .pf-list__shot img, .pf-list.is-open .pf-list__shot img { filter: none; }
+.pf-list__text { display: grid; gap: 4px; min-width: 0; }
+.pf-list__text b { font-family: var(--display); font-size: 13px; font-weight: 600; color: var(--ink); transition: color .16s ease;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pf-list:hover .pf-list__text b, .pf-list.is-open .pf-list__text b { color: var(--acc); }
+.pf-list__text small { font-family: var(--num); font-size: 9.5px; letter-spacing: .04em; color: var(--ink-3); }
+/* "rows": list rows, as the map panel and the board set theirs */
+.pf-lists--rows { display: grid; gap: 0; overflow: visible; }
+.pf .pf-lists--rows .pf-list { grid-template-columns: 72px minmax(0, 1fr); align-items: center; gap: 12px; width: 100%;
+  padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.pf-lists--rows .pf-list__shot { width: 72px; aspect-ratio: 4 / 3; }
+
+/* ── the live grid, drawn as it is on the live page ─────────────── */
+.pf-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; padding: 2px 2px 90px; }
+.pf-card { position: relative; overflow: hidden; margin-bottom: 2px; aspect-ratio: 1 / 1; background: #151515; cursor: pointer; }
+.pf-card > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pf-card__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.76) 0%, transparent 54%); pointer-events: none; }
+
+/* the owner's lines rise in, as the reading guide's do */
+@keyframes pf-rise { from { opacity: 0; transform: translateY(14px); } }
+.pf-a__who > *, .pf-b__who > *, .pf-c__statement > *, .pf-e__panel > * { animation: pf-rise .7s var(--ease) both; }
+.pf-a__who > :nth-child(2), .pf-b__who > :nth-child(2), .pf-c__statement > :nth-child(2), .pf-e__panel > :nth-child(2) { animation-delay: .06s; }
+.pf-a__who > :nth-child(3), .pf-b__who > :nth-child(3), .pf-c__statement > :nth-child(3), .pf-e__panel > :nth-child(3) { animation-delay: .12s; }
+.pf-a__who > :nth-child(n+4), .pf-b__who > :nth-child(n+4), .pf-c__statement > :nth-child(n+4), .pf-e__panel > :nth-child(n+4) { animation-delay: .18s; }
+
+/* ── A · the artist page's band ───────────────────────────────── */
+.pf-a { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); grid-template-areas: "who cover" "lists cover";
+  column-gap: clamp(18px, 2.4vw, 40px); row-gap: 28px; align-items: start; padding: clamp(22px, 3vw, 36px) var(--pad); }
+.pf-a__who { grid-area: who; display: grid; justify-items: start; gap: 14px; min-width: 0; }
+.pf-a__id { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.pf-a__lists { grid-area: lists; display: grid; gap: 12px; min-width: 0; }
+.pf-a__cover { grid-area: cover; display: grid; gap: 10px; min-width: 0; }
+.pf-a__cover .pf-cover { aspect-ratio: 16 / 10; }
+
+/* ── B · the globe's stage ───────────────────────────────────── */
+.pf-b { position: relative; isolation: isolate; overflow: hidden; display: grid; align-content: end;
+  min-height: clamp(460px, 68vh, 660px); padding: 90px var(--pad) 26px; }
+.pf-b__cover { position: absolute; inset: 0; z-index: -2; }
+.pf-b__cover img { filter: brightness(.55) saturate(.85); }
+/* the ground rises into the picture, as the map's dark rises round its globe */
+.pf-b::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(8,8,8,.4) 0%, rgba(8,8,8,.08) 34%, rgba(8,8,8,.7) 72%, var(--g) 100%); }
+.pf-b__strip { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 16px;
+  white-space: nowrap; font-size: 11.5px; color: var(--ink-2); }
+.pf-b__strip > i { width: clamp(24px, 5vw, 64px); height: 1px; background: rgba(244,241,234,.22); }
+.pf-b__strip span { display: inline-flex; align-items: baseline; gap: 6px; }
+.pf-b__strip b { font-family: var(--num); font-size: 11px; font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.pf-b__picker { position: absolute; top: 17px; right: var(--pad); }
+.pf-b__who { display: grid; justify-items: start; gap: 12px; max-width: 42rem; }
+.pf-b__name h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: .98; letter-spacing: -0.055em; }
+/* where the picture meets the page: the playlists on the left, the slideshow on the right */
+.pf-b__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 30px; }
+/* held against the right edge, even on a line of its own */
+.pf-b__foot > :last-child { margin-left: auto; }
+.pf .pf-b__line { display: inline-flex; align-items: center; gap: 10px; font-size: 13px;
+  font-weight: 600; color: var(--ink); transition: color .16s ease; }
+.pf-b__line b { font-family: var(--num); font-size: 11px; color: var(--acc); }
+.pf-b__line u { width: 56px; height: 1px; background: rgba(244,241,234,.3); transition: width .3s var(--ease); }
+.pf .pf-b__line:hover { color: var(--acc); }
+.pf-b__line:hover u { width: 80px; }
+.pf-b__lists { padding: 18px var(--pad) 24px; scroll-margin-top: 90px; }
+
+/* ── C · the AI tab ───────────────────────────────────────────── */
+.pf-c { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(20px, 4vw, 56px); align-items: center;
+  padding: clamp(32px, 5vw, 52px) var(--pad) clamp(22px, 3vw, 30px); }
+.pf-c__statement { display: grid; justify-items: start; min-width: 0; max-width: 44rem; }
+.pf-c__statement .pf-eyebrow { margin-bottom: 1.1rem; }
+.pf-c__id { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.pf-c__name h1 { font-size: clamp(2rem, 4.2vw, 3.2rem); }
+.pf-c__lede { margin-top: 1.1rem; font-size: clamp(.86rem, 1.1vw, .95rem); line-height: 1.62; color: color-mix(in srgb, var(--ink) 62%, transparent); }
+.pf-c__lede .pf-score { font-size: 11px; }
+.pf-c__statement .pf-actions { margin-top: 1.25rem; }
+.pf-c__cover { position: relative; min-width: 0; }
+.pf-c__cover .pf-cover { aspect-ratio: 4 / 3; }
+/* the control lies on the picture as a bare word, held up by a shadow */
+.pf-c__picker { position: absolute; right: 12px; bottom: 10px; }
+.pf .pf-c__picker .pf-act { color: rgba(255,255,255,.92); filter: drop-shadow(0 1px 4px rgba(0,0,0,.9)); }
+.pf .pf-c__picker .pf-act:hover, .pf .pf-c__picker .pf-act[aria-expanded="true"] { color: var(--acc); }
+.pf-c__lists { display: grid; gap: 12px; padding: 0 var(--pad) 26px; }
+
+/* ── D · the community board ─────────────────────────────────── */
+.pf-d { padding: clamp(18px, 2.6vw, 30px) var(--pad) 18px; }
+.pf-d__lead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 24px;
+  margin-bottom: clamp(14px, 2vw, 20px); }
+.pf-d__lead h1 { font-family: var(--display); font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 700; line-height: 1.04; letter-spacing: -0.05em; }
+.pf-d__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding-bottom: 7px; }
+.pf-d__cover { height: clamp(120px, 15vw, 200px); }
+.pf-d__cols, .pf-d__row { display: grid; grid-template-columns: 44px minmax(0, 1.2fr) minmax(0, 1fr) 90px 96px; gap: 14px; align-items: center; }
+.pf-d__cols { padding: 14px 0 9px; border-bottom: 1px solid var(--rule); font-family: var(--num); font-size: 9px; font-weight: 500;
+  letter-spacing: .1em; color: var(--ink-3); }
+.pf-d__cols span:nth-child(n+4) { text-align: right; }
+.pf-d__row { padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.pf-d__email { min-width: 0; font-size: 12px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pf-d__num { font-family: var(--num); font-size: 12px; font-weight: 700; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
+.pf-d__label { display: none; }
+.pf-d .pf-lists--rows { margin-top: 2px; }
+
+/* ── E · the map's city panel ────────────────────────────────── */
+.pf-e { display: grid; grid-template-columns: clamp(17.5rem, 38vw, 30rem) minmax(0, 1fr); min-height: clamp(460px, 62vh, 620px); }
+.pf-e__panel { display: grid; align-content: start; gap: 18px; min-width: 0; padding: 14px 22px 24px; background: rgb(12,12,12);
+  border-right: 1px solid rgba(var(--acc-rgb), .25); }
+.pf-e__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 32px; }
+.pf-e__crumb { font-family: var(--num); font-size: 10px; font-weight: 600; letter-spacing: .1em; color: var(--ink-2); }
+.pf-e__id { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.pf-e__who { display: grid; gap: 6px; min-width: 0; }
+.pf-e__who .pf-name h1 { font-size: 24px; letter-spacing: -0.03em; }
+.pf-e__lists { display: grid; gap: 6px; }
+/* the picture never sets the height — the panel and the min-height do */
+.pf-e__stage { position: relative; min-height: 100%; }
+.pf-e__stage img { position: absolute; inset: 0; }
+
+/* ── narrower windows ────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .pf-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pf-e { grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  .pf-e__stage { order: -1; height: 220px; min-height: 0; }
+  .pf-e__panel { border-right: 0; border-bottom: 1px solid rgba(var(--acc-rgb), .25); }
+}
+@media (max-width: 720px) {
+  .pf-a { grid-template-columns: minmax(0, 1fr); grid-template-areas: "who" "cover" "lists"; }
+  .pf-b { min-height: 0; padding-top: 70px; }
+  .pf-b__strip { left: var(--pad); transform: none; }
+  .pf-b__strip > i:first-child { display: none; }
+  .pf-c { grid-template-columns: minmax(0, 1fr); }
+  .pf-c__cover { order: -1; }
+  .pf-d__cols { display: none; }
+  .pf-d__row { grid-template-columns: 44px minmax(0, 1fr); gap: 4px 12px; }
+  .pf-d__row .pf-avatar { grid-row: span 4; align-self: start; }
+  .pf-d__num { display: inline-flex; gap: 8px; text-align: left; font-size: 11px; }
+  .pf-d__label { display: inline; font-weight: 500; color: var(--ink-3); }
+}
+@media (max-width: 560px) {
+  /* six cells don't fit a phone: they keep a readable width and scroll */
+  .pf-tabs:not(.pf-tabs--line) { grid-auto-columns: minmax(84px, 1fr); overflow-x: auto; scrollbar-width: none; }
+  .pf-tabs:not(.pf-tabs--line)::-webkit-scrollbar { display: none; }
+  .pf-list__shot { width: 104px; }
+  /* "fill" on a phone: six equal cells, the count over its label as the live
+     row sets them, so all six still span the width without scrolling */
+  .pf-bar--fill { padding-left: 0; padding-right: 0; }
+  .pf .pf-bar--fill .pf-tabs--line button { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: center; gap: 5px;
+    padding: 12px 2px 10px; }
+  .pf-bar--fill .pf-tabs--line svg { display: none; }
+  .pf-bar--fill .pf-tabs--line span { font-size: 10px; letter-spacing: -0.01em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pf *, .pf *::before, .pf *::after { animation: none !important; transition: none !important; }
+}
+
+/* ── the proposal switch ─────────────────────────────────────────
+   Study chrome, not part of any proposal: pinned where the app's tab bar
+   sits and drawn like it. */
+.pf-switch { position: fixed; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 400;
+  display: flex; align-items: center; gap: 2px; max-width: calc(100vw - 24px); padding: 4px; overflow-x: auto; scrollbar-width: none;
+  border: 1px solid rgba(244,241,234,.1); border-radius: 30px; background: rgba(20,20,18,.68);
+  -webkit-backdrop-filter: blur(26px) saturate(165%); backdrop-filter: blur(26px) saturate(165%);
+  box-shadow: 0 18px 46px rgba(0,0,0,.42); font-family: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif; }
+.pf-switch::-webkit-scrollbar { display: none; }
+.pf-switch a { flex: none; display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 12px; border-radius: 22px; white-space: nowrap;
+  color: rgba(244,241,234,.62); font-size: 12px; font-weight: 600; transition: color .16s ease, background-color .18s ease; }
+.pf-switch a b { font-family: "Space Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; }
+.pf-switch a:hover { color: #d4a547; }
+.pf-switch a.is-on { background: #d4a547; color: #11110f; }
+.pf-switch > i { flex: none; width: 1px; height: 14px; margin: 0 4px; background: rgba(244,241,234,.16); }
+.pf .pf-switch button { flex: none; padding: 8px 12px 8px 6px; font-family: "Space Mono", ui-monospace, monospace; font-size: 11px;
+  font-weight: 700; letter-spacing: .1em; color: rgba(244,241,234,.62); transition: color .16s ease; }
+.pf .pf-switch button:hover { color: #d4a547; }
+@media (max-width: 520px) { .pf-switch a span { display: none; } .pf-switch a { padding: 8px 11px; } }

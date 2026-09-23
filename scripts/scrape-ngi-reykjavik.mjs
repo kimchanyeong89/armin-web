@@ -205,8 +205,10 @@ function phaseBuild() {
     if (b.category === 'sculpture') { dropped.sculpture++; continue; }
     if (!FLAT.has(b.category)) { dropped.other++; continue; }
     if (!b.imgUrl) { dropped.no_image++; continue; }            // no displayable image → drop
-    // min-4 guarantee (title, artist, year, category). Never placeholder-fill.
-    if (!b.title || !b.artist || b.year == null || !b.category) { dropped.missing_required++; continue; }
+    // Require title + artist + category + a displayable image. `year` is NOT required:
+    // undated works (no `sarpur.year`) are still genuine in-scope flat art — leave year=null/date=''
+    // rather than dropping them (recovers ~36 Kjarval/Guðmunda/Þorvaldur paintings & drawings).
+    if (!b.title || !b.artist || !b.category) { dropped.missing_required++; continue; }
 
     const s = b.sarpur;
     artworks.push({

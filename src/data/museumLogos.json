@@ -1,0 +1,1392 @@
+{
+ "academy-museum": {
+  "src": "/images/museum-logos/academy-museum.png",
+  "w": 1600,
+  "h": 677
+ },
+ "accademia-firenze": {
+  "src": "/images/museum-logos/accademia-firenze.png",
+  "w": 1044,
+  "h": 802
+ },
+ "accademia-venice": {
+  "src": "/images/museum-logos/accademia-venice.png",
+  "w": 690,
+  "h": 210
+ },
+ "acropolis-museum": {
+  "src": "/images/museum-logos/acropolis-museum.png",
+  "w": 1589,
+  "h": 1050
+ },
+ "adachi-museum": {
+  "src": "/images/museum-logos/adachi-museum.png",
+  "w": 1595,
+  "h": 1345
+ },
+ "agnsw": {
+  "src": "/images/museum-logos/agnsw.png",
+  "w": 1600,
+  "h": 1585
+ },
+ "albertina-museum": {
+  "src": "/images/museum-logos/albertina-museum.png",
+  "w": 1575,
+  "h": 221
+ },
+ "alte-nationalgalerie": {
+  "src": "/images/museum-logos/alte-nationalgalerie.png",
+  "w": 1808,
+  "h": 368
+ },
+ "alte-pinakothek": {
+  "src": "/images/museum-logos/alte-pinakothek.png",
+  "w": 1306,
+  "h": 222
+ },
+ "apma": {
+  "src": "/images/museum-logos/apma.png",
+  "w": 593,
+  "h": 154
+ },
+ "aros-aarhus": {
+  "src": "/images/museum-logos/aros-aarhus.png",
+  "w": 1588,
+  "h": 464
+ },
+ "ars-electronica": {
+  "src": "/images/museum-logos/ars-electronica.png",
+  "w": 1570,
+  "h": 209
+ },
+ "art-institute-of-chicago": {
+  "src": "/images/museum-logos/art-institute-of-chicago.png",
+  "w": 1332,
+  "h": 646
+ },
+ "artsmia": {
+  "src": "/images/museum-logos/artsmia.png",
+  "w": 1600,
+  "h": 120
+ },
+ "ashmolean": {
+  "src": "/images/museum-logos/ashmolean.png",
+  "w": 317,
+  "h": 91
+ },
+ "astrup-fearnley": {
+  "src": "/images/museum-logos/astrup-fearnley.png",
+  "w": 1599,
+  "h": 142
+ },
+ "ateneum-collection": {
+  "src": "/images/museum-logos/ateneum-collection.png",
+  "w": 1600,
+  "h": 263
+ },
+ "azw-vienna": {
+  "src": "/images/museum-logos/azw-vienna.png",
+  "w": 1599,
+  "h": 295
+ },
+ "barnes-foundation": {
+  "src": "/images/museum-logos/barnes-foundation.png",
+  "w": 1600,
+  "h": 496
+ },
+ "belvedere-museum": {
+  "src": "/images/museum-logos/belvedere-museum.png",
+  "w": 1443,
+  "h": 405
+ },
+ "boijmans": {
+  "src": "/images/museum-logos/boijmans.png",
+  "w": 1596,
+  "h": 275
+ },
+ "bourse-de-commerce-pinault-collection": {
+  "src": "/images/museum-logos/bourse-de-commerce-pinault-collection.png",
+  "w": 1600,
+  "h": 917
+ },
+ "british-museum": {
+  "src": "/images/museum-logos/british-museum.png",
+  "w": 1600,
+  "h": 522
+ },
+ "bruecke-museum": {
+  "src": "/images/museum-logos/bruecke-museum.png",
+  "w": 2400,
+  "h": 306
+ },
+ "busan-museum": {
+  "src": "/images/museum-logos/busan-museum.png",
+  "w": 1600,
+  "h": 318
+ },
+ "busan-museum-art": {
+  "src": "/images/museum-logos/busan-museum-art.png",
+  "w": 1600,
+  "h": 206
+ },
+ "caixaforum": {
+  "src": "/images/museum-logos/caixaforum.png",
+  "w": 1598,
+  "h": 236
+ },
+ "carnavalet": {
+  "src": "/images/museum-logos/carnavalet.png",
+  "w": 1596,
+  "h": 212
+ },
+ "castello-di-rivoli": {
+  "src": "/images/museum-logos/castello-di-rivoli.png",
+  "w": 1600,
+  "h": 1373
+ },
+ "cca-montreal": {
+  "src": "/images/museum-logos/cca-montreal.png",
+  "w": 1581,
+  "h": 555
+ },
+ "centre-pompidou": {
+  "src": "/images/museum-logos/centre-pompidou.png",
+  "w": 1598,
+  "h": 169
+ },
+ "chateau-de-versailles": {
+  "src": "/images/museum-logos/chateau-de-versailles.png",
+  "w": 1302,
+  "h": 333
+ },
+ "chiba-city-art": {
+  "src": "/images/museum-logos/chiba-city-art.png",
+  "w": 410,
+  "h": 103
+ },
+ "cibdi-angouleme": {
+  "src": "/images/museum-logos/cibdi-angouleme.png",
+  "w": 1526,
+  "h": 494
+ },
+ "cite-architecture": {
+  "src": "/images/museum-logos/cite-architecture.png",
+  "w": 1600,
+  "h": 506
+ },
+ "cma": {
+  "src": "/images/museum-logos/cma.png",
+  "w": 1593,
+  "h": 214
+ },
+ "cnap-france": {
+  "src": "/images/museum-logos/cnap-france.png",
+  "w": 1595,
+  "h": 1188
+ },
+ "cooper-hewitt": {
+  "src": "/images/museum-logos/cooper-hewitt.png",
+  "w": 1580,
+  "h": 815
+ },
+ "courtauld-gallery": {
+  "src": "/images/museum-logos/courtauld-gallery.png",
+  "w": 1600,
+  "h": 208
+ },
+ "crystalbridges": {
+  "src": "/images/museum-logos/crystalbridges.png",
+  "w": 1599,
+  "h": 457
+ },
+ "d-museum": {
+  "src": "/images/museum-logos/d-museum.png",
+  "w": 1600,
+  "h": 322
+ },
+ "daelim-museum": {
+  "src": "/images/museum-logos/daelim-museum.png",
+  "w": 1593,
+  "h": 153
+ },
+ "dali-foundation": {
+  "src": "/images/museum-logos/dali-foundation.png",
+  "w": 1600,
+  "h": 355
+ },
+ "dam-frankfurt": {
+  "src": "/images/museum-logos/dam-frankfurt.png",
+  "w": 1200,
+  "h": 145
+ },
+ "ddp-gallery": {
+  "src": "/images/museum-logos/ddp-gallery.png",
+  "w": 1577,
+  "h": 795
+ },
+ "dia": {
+  "src": "/images/museum-logos/dia.png",
+  "w": 1600,
+  "h": 791
+ },
+ "dma-dallas": {
+  "src": "/images/museum-logos/dma-dallas.png",
+  "w": 1597,
+  "h": 901
+ },
+ "doria-pamphilj": {
+  "src": "/images/museum-logos/doria-pamphilj.png",
+  "w": 346,
+  "h": 390
+ },
+ "dulwich-picture-gallery": {
+  "src": "/images/museum-logos/dulwich-picture-gallery.png",
+  "w": 1203,
+  "h": 643
+ },
+ "faam-fukuoka": {
+  "src": "/images/museum-logos/faam-fukuoka.png",
+  "w": 1600,
+  "h": 287
+ },
+ "famsf-museum": {
+  "src": "/images/museum-logos/famsf-museum.png",
+  "w": 1701,
+  "h": 894
+ },
+ "filmmuseum-potsdam": {
+  "src": "/images/museum-logos/filmmuseum-potsdam.png",
+  "w": 1720,
+  "h": 282
+ },
+ "fitzwilliam": {
+  "src": "/images/museum-logos/fitzwilliam.png",
+  "w": 1596,
+  "h": 1437
+ },
+ "foam-amsterdam": {
+  "src": "/images/museum-logos/foam-amsterdam.png",
+  "w": 1597,
+  "h": 516
+ },
+ "folk-museum": {
+  "src": "/images/museum-logos/folk-museum.png",
+  "w": 1600,
+  "h": 382
+ },
+ "folkwang": {
+  "src": "/images/museum-logos/folkwang.png",
+  "w": 1594,
+  "h": 206
+ },
+ "fomu-antwerp": {
+  "src": "/images/museum-logos/fomu-antwerp.png",
+  "w": 1600,
+  "h": 692
+ },
+ "fondation-beyeler": {
+  "src": "/images/museum-logos/fondation-beyeler.png",
+  "w": 1600,
+  "h": 439
+ },
+ "fondation-louis-vuitton": {
+  "src": "/images/museum-logos/fondation-louis-vuitton.png",
+  "w": 1600,
+  "h": 79
+ },
+ "frac-centre": {
+  "src": "/images/museum-logos/frac-centre.png",
+  "w": 1600,
+  "h": 641
+ },
+ "galleria-borghese": {
+  "src": "/images/museum-logos/galleria-borghese.png",
+  "w": 1548,
+  "h": 1148
+ },
+ "garage-moscow": {
+  "src": "/images/museum-logos/garage-moscow.png",
+  "w": 1600,
+  "h": 533
+ },
+ "gem": {
+  "src": "/images/museum-logos/gem.png",
+  "w": 451,
+  "h": 434
+ },
+ "gemaeldegalerie": {
+  "src": "/images/museum-logos/gemaeldegalerie.png",
+  "w": 1536,
+  "h": 312
+ },
+ "gestaltung-zurich": {
+  "src": "/images/museum-logos/gestaltung-zurich.png",
+  "w": 1407,
+  "h": 513
+ },
+ "getty": {
+  "src": "/images/museum-logos/getty.png",
+  "w": 1585,
+  "h": 638
+ },
+ "glyptoteket": {
+  "src": "/images/museum-logos/glyptoteket.png",
+  "w": 1588,
+  "h": 291
+ },
+ "groundseesaw": {
+  "src": "/images/museum-logos/groundseesaw.png",
+  "w": 1600,
+  "h": 146
+ },
+ "guangdong-museum-of-art": {
+  "src": "/images/museum-logos/guangdong-museum-of-art.png",
+  "w": 384,
+  "h": 97
+ },
+ "guggenheim-bilbao": {
+  "src": "/images/museum-logos/guggenheim-bilbao.png",
+  "w": 1600,
+  "h": 100
+ },
+ "guggenheim-ny": {
+  "src": "/images/museum-logos/guggenheim-ny.png",
+  "w": 1600,
+  "h": 382
+ },
+ "guggenheim-venice": {
+  "src": "/images/museum-logos/guggenheim-venice.png",
+  "w": 1600,
+  "h": 608
+ },
+ "gulbenkian-museum": {
+  "src": "/images/museum-logos/gulbenkian-museum.png",
+  "w": 1576,
+  "h": 214
+ },
+ "gwangju-national-museum": {
+  "src": "/images/museum-logos/gwangju-national-museum.png",
+  "w": 1600,
+  "h": 386
+ },
+ "hamburger-kunsthalle": {
+  "src": "/images/museum-logos/hamburger-kunsthalle.png",
+  "w": 1600,
+  "h": 385
+ },
+ "hangaram-art-museum": {
+  "src": "/images/museum-logos/hangaram-art-museum.png",
+  "w": 1589,
+  "h": 152
+ },
+ "hayward-gallery": {
+  "src": "/images/museum-logos/hayward-gallery.png",
+  "w": 1600,
+  "h": 497
+ },
+ "hermitage-museum": {
+  "src": "/images/museum-logos/hermitage-museum.png",
+  "w": 1086,
+  "h": 430
+ },
+ "het-nieuwe-instituut": {
+  "src": "/images/museum-logos/het-nieuwe-instituut.png",
+  "w": 1600,
+  "h": 257
+ },
+ "high-museum": {
+  "src": "/images/museum-logos/high-museum.png",
+  "w": 1598,
+  "h": 407
+ },
+ "hirschsprung-collection": {
+  "src": "/images/museum-logos/hirschsprung-collection.png",
+  "w": 1520,
+  "h": 517
+ },
+ "hirshhorn": {
+  "src": "/images/museum-logos/hirshhorn.png",
+  "w": 1237,
+  "h": 243
+ },
+ "hkmoa": {
+  "src": "/images/museum-logos/hkmoa.png",
+  "w": 1588,
+  "h": 346
+ },
+ "hoam-museum": {
+  "src": "/images/museum-logos/hoam-museum.png",
+  "w": 1600,
+  "h": 200
+ },
+ "huis-marseille": {
+  "src": "/images/museum-logos/huis-marseille.png",
+  "w": 1600,
+  "h": 128
+ },
+ "humboldt-forum": {
+  "src": "/images/museum-logos/humboldt-forum.png",
+  "w": 1596,
+  "h": 558
+ },
+ "hungarian-ng": {
+  "src": "/images/museum-logos/hungarian-ng.png",
+  "w": 1598,
+  "h": 256
+ },
+ "huntington-library": {
+  "src": "/images/museum-logos/huntington-library.png",
+  "w": 1598,
+  "h": 134
+ },
+ "icp-ny": {
+  "src": "/images/museum-logos/icp-ny.png",
+  "w": 1884,
+  "h": 780
+ },
+ "istanbul-modern": {
+  "src": "/images/museum-logos/istanbul-modern.png",
+  "w": 1517,
+  "h": 1517
+ },
+ "jeju-contemporary-art-museum": {
+  "src": "/images/museum-logos/jeju-contemporary-art-museum.png",
+  "w": 1464,
+  "h": 348
+ },
+ "jeju-museum-art": {
+  "src": "/images/museum-logos/jeju-museum-art.png",
+  "w": 1575,
+  "h": 272
+ },
+ "jeonju-national-museum": {
+  "src": "/images/museum-logos/jeonju-national-museum.png",
+  "w": 1600,
+  "h": 272
+ },
+ "jeu-de-paume": {
+  "src": "/images/museum-logos/jeu-de-paume.png",
+  "w": 1600,
+  "h": 157
+ },
+ "jngfa-amman": {
+  "src": "/images/museum-logos/jngfa-amman.png",
+  "w": 1598,
+  "h": 310
+ },
+ "k20-k21": {
+  "src": "/images/museum-logos/k20-k21.png",
+  "w": 1564,
+  "h": 972
+ },
+ "kanazawa-21": {
+  "src": "/images/museum-logos/kanazawa-21.png",
+  "w": 1592,
+  "h": 836
+ },
+ "kiasma-collection": {
+  "src": "/images/museum-logos/kiasma-collection.png",
+  "w": 1600,
+  "h": 377
+ },
+ "kim-tschang-yeul-art-museum": {
+  "src": "/images/museum-logos/kim-tschang-yeul-art-museum.png",
+  "w": 1600,
+  "h": 667
+ },
+ "korea-manhwa": {
+  "src": "/images/museum-logos/korea-manhwa.png",
+  "w": 1555,
+  "h": 350
+ },
+ "kremlin-museum": {
+  "src": "/images/museum-logos/kremlin-museum.png",
+  "w": 1598,
+  "h": 354
+ },
+ "kroller-muller-museum": {
+  "src": "/images/museum-logos/kroller-muller-museum.png",
+  "w": 1600,
+  "h": 431
+ },
+ "kunsthaus-zurich": {
+  "src": "/images/museum-logos/kunsthaus-zurich.png",
+  "w": 1599,
+  "h": 99
+ },
+ "kunsthistorisches-museum-vienna": {
+  "src": "/images/museum-logos/kunsthistorisches-museum-vienna.png",
+  "w": 1585,
+  "h": 795
+ },
+ "kunstmuseum-basel": {
+  "src": "/images/museum-logos/kunstmuseum-basel.png",
+  "w": 1325,
+  "h": 121
+ },
+ "kupferstichkabinett": {
+  "src": "/images/museum-logos/kupferstichkabinett.png",
+  "w": 1808,
+  "h": 368
+ },
+ "kyoto-national-museum": {
+  "src": "/images/museum-logos/kyoto-national-museum.png",
+  "w": 1600,
+  "h": 420
+ },
+ "la-piscine": {
+  "src": "/images/museum-logos/la-piscine.png",
+  "w": 1600,
+  "h": 413
+ },
+ "lacma": {
+  "src": "/images/museum-logos/lacma.png",
+  "w": 1577,
+  "h": 588
+ },
+ "leeum-museum": {
+  "src": "/images/museum-logos/leeum-museum.png",
+  "w": 1600,
+  "h": 390
+ },
+ "leopold-museum": {
+  "src": "/images/museum-logos/leopold-museum.png",
+  "w": 1598,
+  "h": 426
+ },
+ "letterform-archive": {
+  "src": "/images/museum-logos/letterform-archive.png",
+  "w": 1600,
+  "h": 363
+ },
+ "long-museum": {
+  "src": "/images/museum-logos/long-museum.png",
+  "w": 1344,
+  "h": 324
+ },
+ "louisiana-museum": {
+  "src": "/images/museum-logos/louisiana-museum.png",
+  "w": 1508,
+  "h": 204
+ },
+ "macval": {
+  "src": "/images/museum-logos/macval.png",
+  "w": 1425,
+  "h": 270
+ },
+ "mad-paris": {
+  "src": "/images/museum-logos/mad-paris.png",
+  "w": 1000,
+  "h": 1599
+ },
+ "mah-geneva": {
+  "src": "/images/museum-logos/mah-geneva.png",
+  "w": 1084,
+  "h": 360
+ },
+ "maison-europeenne-de-la-photographie": {
+  "src": "/images/museum-logos/maison-europeenne-de-la-photographie.png",
+  "w": 1600,
+  "h": 430
+ },
+ "mak-vienna": {
+  "src": "/images/museum-logos/mak-vienna.png",
+  "w": 1600,
+  "h": 330
+ },
+ "malba": {
+  "src": "/images/museum-logos/malba.png",
+  "w": 1600,
+  "h": 292
+ },
+ "mali-lima": {
+  "src": "/images/museum-logos/mali-lima.png",
+  "w": 1602,
+  "h": 1035
+ },
+ "mam-cdmx": {
+  "src": "/images/museum-logos/mam-cdmx.png",
+  "w": 1590,
+  "h": 363
+ },
+ "manchester-art-gallery": {
+  "src": "/images/museum-logos/manchester-art-gallery.png",
+  "w": 1674,
+  "h": 624
+ },
+ "masi-lugano": {
+  "src": "/images/museum-logos/masi-lugano.png",
+  "w": 900,
+  "h": 171
+ },
+ "masp": {
+  "src": "/images/museum-logos/masp.png",
+  "w": 1598,
+  "h": 418
+ },
+ "mathaf-doha": {
+  "src": "/images/museum-logos/mathaf-doha.png",
+  "w": 1600,
+  "h": 859
+ },
+ "mauritshuis": {
+  "src": "/images/museum-logos/mauritshuis.png",
+  "w": 1600,
+  "h": 227
+ },
+ "mbam": {
+  "src": "/images/museum-logos/mbam.png",
+  "w": 1600,
+  "h": 279
+ },
+ "mca-australia": {
+  "src": "/images/museum-logos/mca-australia.png",
+  "w": 2016,
+  "h": 987
+ },
+ "met-ny": {
+  "src": "/images/museum-logos/met-ny.png",
+  "w": 1600,
+  "h": 1594
+ },
+ "mfa-boston": {
+  "src": "/images/museum-logos/mfa-boston.png",
+  "w": 1533,
+  "h": 378
+ },
+ "mfab": {
+  "src": "/images/museum-logos/mfab.png",
+  "w": 1600,
+  "h": 387
+ },
+ "mfah": {
+  "src": "/images/museum-logos/mfah.png",
+  "w": 1600,
+  "h": 518
+ },
+ "mia-doha": {
+  "src": "/images/museum-logos/mia-doha.png",
+  "w": 1600,
+  "h": 601
+ },
+ "mimoca": {
+  "src": "/images/museum-logos/mimoca.png",
+  "w": 1600,
+  "h": 250
+ },
+ "mkg-hamburg": {
+  "src": "/images/museum-logos/mkg-hamburg.png",
+  "w": 1600,
+  "h": 279
+ },
+ "mmca-gwacheon": {
+  "src": "/images/museum-logos/mmca-gwacheon.png",
+  "w": 1599,
+  "h": 373
+ },
+ "mmca-seoul": {
+  "src": "/images/museum-logos/mmca-seoul.png",
+  "w": 1599,
+  "h": 373
+ },
+ "mnba-santiago": {
+  "src": "/images/museum-logos/mnba-santiago.png",
+  "w": 1638,
+  "h": 576
+ },
+ "mnk-krakow": {
+  "src": "/images/museum-logos/mnk-krakow.png",
+  "w": 1600,
+  "h": 277
+ },
+ "moca-busan": {
+  "src": "/images/museum-logos/moca-busan.png",
+  "w": 903,
+  "h": 249
+ },
+ "moderna-museet": {
+  "src": "/images/museum-logos/moderna-museet.png",
+  "w": 1600,
+  "h": 173
+ },
+ "moma-collection": {
+  "src": "/images/museum-logos/moma-collection.png",
+  "w": 1600,
+  "h": 406
+ },
+ "momas-saitama": {
+  "src": "/images/museum-logos/momas-saitama.png",
+  "w": 1122,
+  "h": 219
+ },
+ "moravian-gallery": {
+  "src": "/images/museum-logos/moravian-gallery.png",
+  "w": 1588,
+  "h": 139
+ },
+ "mori-collection": {
+  "src": "/images/museum-logos/mori-collection.png",
+  "w": 838,
+  "h": 1304
+ },
+ "mplus": {
+  "src": "/images/museum-logos/mplus.png",
+  "w": 1599,
+  "h": 731
+ },
+ "mucem": {
+  "src": "/images/museum-logos/mucem.png",
+  "w": 1590,
+  "h": 358
+ },
+ "munchmuseet": {
+  "src": "/images/museum-logos/munchmuseet.png",
+  "w": 1600,
+  "h": 435
+ },
+ "musee-armee": {
+  "src": "/images/museum-logos/musee-armee.png",
+  "w": 1600,
+  "h": 1600
+ },
+ "musee-chagall": {
+  "src": "/images/museum-logos/musee-chagall.png",
+  "w": 1280,
+  "h": 405
+ },
+ "musee-conde": {
+  "src": "/images/museum-logos/musee-conde.png",
+  "w": 1600,
+  "h": 693
+ },
+ "musee-dart-moderne-de-paris": {
+  "src": "/images/museum-logos/musee-dart-moderne-de-paris.png",
+  "w": 1600,
+  "h": 258
+ },
+ "musee-de-grenoble": {
+  "src": "/images/museum-logos/musee-de-grenoble.png",
+  "w": 1564,
+  "h": 912
+ },
+ "musee-de-lorangerie": {
+  "src": "/images/museum-logos/musee-de-lorangerie.png",
+  "w": 1600,
+  "h": 960
+ },
+ "musee-des-beaux-arts-de-bordeaux": {
+  "src": "/images/museum-logos/musee-des-beaux-arts-de-bordeaux.png",
+  "w": 1798,
+  "h": 264
+ },
+ "musee-des-beaux-arts-de-lyon": {
+  "src": "/images/museum-logos/musee-des-beaux-arts-de-lyon.png",
+  "w": 940,
+  "h": 940
+ },
+ "musee-dorsay": {
+  "src": "/images/museum-logos/musee-dorsay.png",
+  "w": 927,
+  "h": 1600
+ },
+ "musee-du-louvre": {
+  "src": "/images/museum-logos/musee-du-louvre.png",
+  "w": 1600,
+  "h": 295
+ },
+ "musee-fabre": {
+  "src": "/images/museum-logos/musee-fabre.png",
+  "w": 1600,
+  "h": 550
+ },
+ "musee-granet": {
+  "src": "/images/museum-logos/musee-granet.png",
+  "w": 1146,
+  "h": 1311
+ },
+ "musee-guimet": {
+  "src": "/images/museum-logos/musee-guimet.png",
+  "w": 1600,
+  "h": 370
+ },
+ "musee-jacquemart-andre": {
+  "src": "/images/museum-logos/musee-jacquemart-andre.png",
+  "w": 1600,
+  "h": 755
+ },
+ "musee-marmottan-monet": {
+  "src": "/images/museum-logos/musee-marmottan-monet.png",
+  "w": 1578,
+  "h": 889
+ },
+ "musee-matisse-nice": {
+  "src": "/images/museum-logos/musee-matisse-nice.png",
+  "w": 1500,
+  "h": 420
+ },
+ "musee-picasso-paris": {
+  "src": "/images/museum-logos/musee-picasso-paris.png",
+  "w": 1746,
+  "h": 1778
+ },
+ "musee-rodin": {
+  "src": "/images/museum-logos/musee-rodin.png",
+  "w": 1530,
+  "h": 735
+ },
+ "musee-toulouse-lautrec": {
+  "src": "/images/museum-logos/musee-toulouse-lautrec.png",
+  "w": 1600,
+  "h": 950
+ },
+ "museo-archeologico-napoli": {
+  "src": "/images/museum-logos/museo-archeologico-napoli.png",
+  "w": 1547,
+  "h": 683
+ },
+ "museo-botero": {
+  "src": "/images/museum-logos/museo-botero.png",
+  "w": 519,
+  "h": 192
+ },
+ "museo-del-novecento-milan": {
+  "src": "/images/museum-logos/museo-del-novecento-milan.png",
+  "w": 1376,
+  "h": 756
+ },
+ "museo-egizio": {
+  "src": "/images/museum-logos/museo-egizio.png",
+  "w": 1600,
+  "h": 446
+ },
+ "museo-frida-kahlo": {
+  "src": "/images/museum-logos/museo-frida-kahlo.png",
+  "w": 1716,
+  "h": 1674
+ },
+ "museo-jumex": {
+  "src": "/images/museum-logos/museo-jumex.png",
+  "w": 1592,
+  "h": 160
+ },
+ "museo-reina-sofia": {
+  "src": "/images/museum-logos/museo-reina-sofia.png",
+  "w": 1558,
+  "h": 800
+ },
+ "museo-thyssen-bornemisza": {
+  "src": "/images/museum-logos/museo-thyssen-bornemisza.png",
+  "w": 1592,
+  "h": 70
+ },
+ "museu-picasso-barcelona": {
+  "src": "/images/museum-logos/museu-picasso-barcelona.png",
+  "w": 1304,
+  "h": 690
+ },
+ "museum-kampa": {
+  "src": "/images/museum-logos/museum-kampa.png",
+  "w": 1563,
+  "h": 1600
+ },
+ "museum-ludwig": {
+  "src": "/images/museum-logos/museum-ludwig.png",
+  "w": 1597,
+  "h": 567
+ },
+ "museum-wales": {
+  "src": "/images/museum-logos/museum-wales.png",
+  "w": 1489,
+  "h": 513
+ },
+ "nam-athens": {
+  "src": "/images/museum-logos/nam-athens.png",
+  "w": 1600,
+  "h": 64
+ },
+ "namoc": {
+  "src": "/images/museum-logos/namoc.png",
+  "w": 615,
+  "h": 201
+ },
+ "nanjing-museum": {
+  "src": "/images/museum-logos/nanjing-museum.png",
+  "w": 624,
+  "h": 162
+ },
+ "nasjonalmuseet": {
+  "src": "/images/museum-logos/nasjonalmuseet.png",
+  "w": 1600,
+  "h": 215
+ },
+ "national-gallery": {
+  "src": "/images/museum-logos/national-gallery.png",
+  "w": 1600,
+  "h": 639
+ },
+ "national-gallery-prague": {
+  "src": "/images/museum-logos/national-gallery-prague.png",
+  "w": 1430,
+  "h": 624
+ },
+ "national-gallery-singapore": {
+  "src": "/images/museum-logos/national-gallery-singapore.png",
+  "w": 1600,
+  "h": 1294
+ },
+ "national-museum-korea": {
+  "src": "/images/museum-logos/national-museum-korea.png",
+  "w": 1585,
+  "h": 379
+ },
+ "national-museum-of-china": {
+  "src": "/images/museum-logos/national-museum-of-china.png",
+  "w": 531,
+  "h": 188
+ },
+ "national-palace-museum-taipei": {
+  "src": "/images/museum-logos/national-palace-museum-taipei.png",
+  "w": 1557,
+  "h": 316
+ },
+ "national-portrait-gallery": {
+  "src": "/images/museum-logos/national-portrait-gallery.png",
+  "w": 1600,
+  "h": 803
+ },
+ "nationalmuseum-se": {
+  "src": "/images/museum-logos/nationalmuseum-se.png",
+  "w": 1566,
+  "h": 183
+ },
+ "nationalmuseum-sweden": {
+  "src": "/images/museum-logos/nationalmuseum-sweden.png",
+  "w": 1566,
+  "h": 183
+ },
+ "neue-nationalgalerie": {
+  "src": "/images/museum-logos/neue-nationalgalerie.png",
+  "w": 1808,
+  "h": 368
+ },
+ "neue-pinakothek": {
+  "src": "/images/museum-logos/neue-pinakothek.png",
+  "w": 1359,
+  "h": 222
+ },
+ "neue-sammlung": {
+  "src": "/images/museum-logos/neue-sammlung.png",
+  "w": 1553,
+  "h": 874
+ },
+ "nfaj": {
+  "src": "/images/museum-logos/nfaj.png",
+  "w": 1600,
+  "h": 281
+ },
+ "nga": {
+  "src": "/images/museum-logos/nga.png",
+  "w": 1600,
+  "h": 150
+ },
+ "ngi-dublin": {
+  "src": "/images/museum-logos/ngi-dublin.png",
+  "w": 1600,
+  "h": 289
+ },
+ "ngi-reykjavik": {
+  "src": "/images/museum-logos/ngi-reykjavik.png",
+  "w": 1593,
+  "h": 416
+ },
+ "ngv": {
+  "src": "/images/museum-logos/ngv.png",
+  "w": 1599,
+  "h": 769
+ },
+ "nich-tnm": {
+  "src": "/images/museum-logos/nich-tnm.png",
+  "w": 1600,
+  "h": 259
+ },
+ "niepce-chalon": {
+  "src": "/images/museum-logos/niepce-chalon.png",
+  "w": 966,
+  "h": 78
+ },
+ "njpac": {
+  "src": "/images/museum-logos/njpac.png",
+  "w": 1272,
+  "h": 171
+ },
+ "nmec": {
+  "src": "/images/museum-logos/nmec.png",
+  "w": 1600,
+  "h": 1444
+ },
+ "nmfa-manila": {
+  "src": "/images/museum-logos/nmfa-manila.png",
+  "w": 1600,
+  "h": 1152
+ },
+ "nmwa-collection": {
+  "src": "/images/museum-logos/nmwa-collection.png",
+  "w": 1600,
+  "h": 1199
+ },
+ "ntmofa": {
+  "src": "/images/museum-logos/ntmofa.png",
+  "w": 1740,
+  "h": 314
+ },
+ "palace-museum-intl": {
+  "src": "/images/museum-logos/palace-museum-intl.png",
+  "w": 1600,
+  "h": 497
+ },
+ "palais-de-tokyo": {
+  "src": "/images/museum-logos/palais-de-tokyo.png",
+  "w": 1355,
+  "h": 1358
+ },
+ "palais-des-beaux-arts-de-lille": {
+  "src": "/images/museum-logos/palais-des-beaux-arts-de-lille.png",
+  "w": 1535,
+  "h": 409
+ },
+ "pera-museum": {
+  "src": "/images/museum-logos/pera-museum.png",
+  "w": 1579,
+  "h": 228
+ },
+ "petit-palais": {
+  "src": "/images/museum-logos/petit-palais.png",
+  "w": 1600,
+  "h": 397
+ },
+ "philadelphia": {
+  "src": "/images/museum-logos/philadelphia.png",
+  "w": 1600,
+  "h": 1600
+ },
+ "pinacoteca-ambrosiana": {
+  "src": "/images/museum-logos/pinacoteca-ambrosiana.png",
+  "w": 1584,
+  "h": 1337
+ },
+ "pinacoteca-brera": {
+  "src": "/images/museum-logos/pinacoteca-brera.png",
+  "w": 1598,
+  "h": 473
+ },
+ "pinacoteca-sp": {
+  "src": "/images/museum-logos/pinacoteca-sp.png",
+  "w": 456,
+  "h": 131
+ },
+ "pinakothek-der-moderne": {
+  "src": "/images/museum-logos/pinakothek-der-moderne.png",
+  "w": 1600,
+  "h": 722
+ },
+ "pitti-palace": {
+  "src": "/images/museum-logos/pitti-palace.png",
+  "w": 1596,
+  "h": 230
+ },
+ "poster-house": {
+  "src": "/images/museum-logos/poster-house.png",
+  "w": 1436,
+  "h": 410
+ },
+ "power-station-of-art": {
+  "src": "/images/museum-logos/power-station-of-art.png",
+  "w": 1592,
+  "h": 490
+ },
+ "powerhouse-sydney": {
+  "src": "/images/museum-logos/powerhouse-sydney.png",
+  "w": 1596,
+  "h": 245
+ },
+ "prado": {
+  "src": "/images/museum-logos/prado.png",
+  "w": 1597,
+  "h": 107
+ },
+ "pushkin-museum": {
+  "src": "/images/museum-logos/pushkin-museum.png",
+  "w": 1600,
+  "h": 992
+ },
+ "qagoma": {
+  "src": "/images/museum-logos/qagoma.png",
+  "w": 1597,
+  "h": 254
+ },
+ "rijksmuseum": {
+  "src": "/images/museum-logos/rijksmuseum.png",
+  "w": 1600,
+  "h": 192
+ },
+ "royal-academy": {
+  "src": "/images/museum-logos/royal-academy.png",
+  "w": 1600,
+  "h": 565
+ },
+ "sakip-sabanci": {
+  "src": "/images/museum-logos/sakip-sabanci.png",
+  "w": 1600,
+  "h": 937
+ },
+ "salar-jung": {
+  "src": "/images/museum-logos/salar-jung.png",
+  "w": 1652,
+  "h": 1712
+ },
+ "sam-singapore": {
+  "src": "/images/museum-logos/sam-singapore.png",
+  "w": 1596,
+  "h": 407
+ },
+ "sammlung-schack": {
+  "src": "/images/museum-logos/sammlung-schack.png",
+  "w": 1455,
+  "h": 222
+ },
+ "scottish-national-gallery": {
+  "src": "/images/museum-logos/scottish-national-gallery.png",
+  "w": 980,
+  "h": 352
+ },
+ "scottish-national-gallery-of-modern-art": {
+  "src": "/images/museum-logos/scottish-national-gallery-of-modern-art.png",
+  "w": 924,
+  "h": 352
+ },
+ "scottish-national-portrait-gallery": {
+  "src": "/images/museum-logos/scottish-national-portrait-gallery.png",
+  "w": 964,
+  "h": 352
+ },
+ "seoul-museum-of-art": {
+  "src": "/images/museum-logos/seoul-museum-of-art.png",
+  "w": 1586,
+  "h": 1413
+ },
+ "serpentine-gallery": {
+  "src": "/images/museum-logos/serpentine-gallery.png",
+  "w": 1598,
+  "h": 356
+ },
+ "sfmoma": {
+  "src": "/images/museum-logos/sfmoma.png",
+  "w": 1498,
+  "h": 564
+ },
+ "shanghai-museum": {
+  "src": "/images/museum-logos/shanghai-museum.png",
+  "w": 1599,
+  "h": 437
+ },
+ "shenzhen-museum": {
+  "src": "/images/museum-logos/shenzhen-museum.png",
+  "w": 588,
+  "h": 150
+ },
+ "sinebrychoff-collection": {
+  "src": "/images/museum-logos/sinebrychoff-collection.png",
+  "w": 1579,
+  "h": 363
+ },
+ "skagens-museum": {
+  "src": "/images/museum-logos/skagens-museum.png",
+  "w": 1600,
+  "h": 120
+ },
+ "smithsonian-american-art-museum": {
+  "src": "/images/museum-logos/smithsonian-american-art-museum.png",
+  "w": 1536,
+  "h": 456
+ },
+ "smithsonian-national-portrait-gallery": {
+  "src": "/images/museum-logos/smithsonian-national-portrait-gallery.png",
+  "w": 1572,
+  "h": 928
+ },
+ "smk-collection": {
+  "src": "/images/museum-logos/smk-collection.png",
+  "w": 1596,
+  "h": 898
+ },
+ "sng-bratislava": {
+  "src": "/images/museum-logos/sng-bratislava.png",
+  "w": 1504,
+  "h": 576
+ },
+ "soane-museum": {
+  "src": "/images/museum-logos/soane-museum.png",
+  "w": 1583,
+  "h": 603
+ },
+ "sorolla": {
+  "src": "/images/museum-logos/sorolla.png",
+  "w": 1546,
+  "h": 395
+ },
+ "staatsgalerien": {
+  "src": "/images/museum-logos/staatsgalerien.png",
+  "w": 1592,
+  "h": 133
+ },
+ "staedel-museum": {
+  "src": "/images/museum-logos/staedel-museum.png",
+  "w": 488,
+  "h": 1096
+ },
+ "state-russian-museum": {
+  "src": "/images/museum-logos/state-russian-museum.png",
+  "w": 1570,
+  "h": 174
+ },
+ "stedelijk-museum": {
+  "src": "/images/museum-logos/stedelijk-museum.png",
+  "w": 1600,
+  "h": 234
+ },
+ "tate-britain": {
+  "src": "/images/museum-logos/tate-britain.png",
+  "w": 1582,
+  "h": 622
+ },
+ "tate-liverpool": {
+  "src": "/images/museum-logos/tate-liverpool.png",
+  "w": 1582,
+  "h": 622
+ },
+ "tate-modern": {
+  "src": "/images/museum-logos/tate-modern.png",
+  "w": 1582,
+  "h": 622
+ },
+ "tate-st-ives": {
+  "src": "/images/museum-logos/tate-st-ives.png",
+  "w": 1582,
+  "h": 622
+ },
+ "tepapa-collection": {
+  "src": "/images/museum-logos/tepapa-collection.png",
+  "w": 1077,
+  "h": 1600
+ },
+ "tfam": {
+  "src": "/images/museum-logos/tfam.png",
+  "w": 747,
+  "h": 114
+ },
+ "thebroad": {
+  "src": "/images/museum-logos/thebroad.png",
+  "w": 1592,
+  "h": 369
+ },
+ "tobikan-collection": {
+  "src": "/images/museum-logos/tobikan-collection.png",
+  "w": 2073,
+  "h": 402
+ },
+ "today-art-museum": {
+  "src": "/images/museum-logos/today-art-museum.png",
+  "w": 1313,
+  "h": 1600
+ },
+ "tokyo-fuji-art": {
+  "src": "/images/museum-logos/tokyo-fuji-art.png",
+  "w": 1600,
+  "h": 212
+ },
+ "tretyakov-gallery": {
+  "src": "/images/museum-logos/tretyakov-gallery.png",
+  "w": 1393,
+  "h": 342
+ },
+ "uffizi": {
+  "src": "/images/museum-logos/uffizi.png",
+  "w": 1598,
+  "h": 329
+ },
+ "vam": {
+  "src": "/images/museum-logos/vam.png",
+  "w": 1564,
+  "h": 895
+ },
+ "vangogh-museum": {
+  "src": "/images/museum-logos/vangogh-museum.png",
+  "w": 1141,
+  "h": 1140
+ },
+ "vatican-museums": {
+  "src": "/images/museum-logos/vatican-museums.png",
+  "w": 1036,
+  "h": 1598
+ },
+ "vnfam-hanoi": {
+  "src": "/images/museum-logos/vnfam-hanoi.png",
+  "w": 1659,
+  "h": 672
+ },
+ "walker-art-center": {
+  "src": "/images/museum-logos/walker-art-center.png",
+  "w": 1600,
+  "h": 287
+ },
+ "walker-art-gallery": {
+  "src": "/images/museum-logos/walker-art-gallery.png",
+  "w": 1596,
+  "h": 471
+ },
+ "wallace-collection": {
+  "src": "/images/museum-logos/wallace-collection.png",
+  "w": 1599,
+  "h": 675
+ },
+ "wawel-royal-castle": {
+  "src": "/images/museum-logos/wawel-royal-castle.png",
+  "w": 549,
+  "h": 1600
+ },
+ "wellcome-collection": {
+  "src": "/images/museum-logos/wellcome-collection.png",
+  "w": 1600,
+  "h": 533
+ },
+ "whitechapel": {
+  "src": "/images/museum-logos/whitechapel.png",
+  "w": 1597,
+  "h": 181
+ },
+ "whitney-museum": {
+  "src": "/images/museum-logos/whitney-museum.png",
+  "w": 1600,
+  "h": 268
+ },
+ "wilanow-poster": {
+  "src": "/images/museum-logos/wilanow-poster.png",
+  "w": 1600,
+  "h": 325
+ },
+ "zeitz-mocaa": {
+  "src": "/images/museum-logos/zeitz-mocaa.png",
+  "w": 511,
+  "h": 180
+ },
+ "zhejiang-art-museum": {
+  "src": "/images/museum-logos/zhejiang-art-museum.png",
+  "w": 402,
+  "h": 255
+ },
+ "zkm": {
+  "src": "/images/museum-logos/zkm.png",
+  "w": 1232,
+  "h": 1032
+ }
+}

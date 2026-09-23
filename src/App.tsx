@@ -14,15 +14,20 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AnimatePresence, motion } from "framer-motion";
 import BottomPageNavigator, { MAIN_TABS, resolveMainTabIndex } from "./components/BottomPageNavigator";
 import LanguageToggle from "./components/LanguageToggle";
-import { LogOut, ShoppingCart, User } from "lucide-react";
+// LogOut is unused here and was already unused before this change; left in place.
+import { LogOut } from "lucide-react";
 import { SHOW_SALES_UI } from "./config/features";
 import ProfileAvatar from "./components/ProfileAvatar";
+import QuickIcon from "./components/QuickIcon";
+import "./quickMenu.css";
 import { createFirebaseWebPort } from "./adapters/firebaseWebAdapter";
 import type { ProfileImageCrop } from "./types/Profile";
 import { isMobileAppContainer } from "./utils/mobileAppAuth";
 import { CartProvider, useCart } from "./contexts/CartContext";
 import { auth } from "./firebase";
 import { ensureSharedSearchWorkerLoaded } from "./utils/searchWorkerRuntime";
+import { resolveMobileChromeTweak } from "./components/mobileChromeTweaks";
+import MobileChromeTweakSwitcher from "./components/MobileChromeTweakSwitcher";
 
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -39,13 +44,18 @@ const TateModernPermanentPage = lazy(() => import("./pages/TateModernPermanentPa
 const PaymentSuccessPage = lazy(() => import("./pages/PaymentSuccessPage").then(module => ({ default: module.PaymentSuccessPage })));
 const OnboardingPage = lazy(() => import("./pages/OnboardingPage"));
 const LoginCallbackPage = lazy(() => import("./pages/LoginCallbackPage"));
-const CommunityPage = lazy(() => import("./pages/community/CommunityPage"));
-const WritePostPage = lazy(() => import("./pages/community/WritePostPage"));
-const PostDetailPage = lazy(() => import("./pages/community/PostDetailPage"));
+/* the redesigned community (src/pages/community/atlas); the previous pages
+   still sit beside it in src/pages/community — point these back to undo */
+const CommunityPage = lazy(() => import("./pages/community/atlas/AtlasFeedPage"));
+const WritePostPage = lazy(() => import("./pages/community/atlas/AtlasWritePage"));
+const PostDetailPage = lazy(() => import("./pages/community/atlas/AtlasPostPage"));
+const SharedPlaylistPage = lazy(() => import("./pages/community/atlas/AtlasPlaylistPage"));
 const ExhibitionsNearMePage = lazy(() => import("./pages/ExhibitionsNearMePage"));
 const AICurationHubPage = lazy(() => import("./pages/AICurationHubPage"));
+const GlobalSearchBar = lazy(() => import("./components/GlobalSearchBar"));
 const SearchPage = lazy(() => import("./pages/SearchPage"));
 const CartPage = lazy(() => import("./pages/CartPage"));
+const PolicyPage = lazy(() => import("./pages/PolicyPage"));
 
 // Drawing-concept loader — unified across all routes
 const PageLoader = () => <DrawingLoader visible={true} />;
@@ -84,10 +94,13 @@ const routeSlideVariants = {
 
 const MAP_PATH_STORAGE_KEY = "armin:last-map-path";
 
-// REVIEW AID: while we design the intro it shows on every home load IN THE WEB (easy to review).
-// It is HIDDEN inside the iOS/native app (the React-Native WebView) for now. Set this to false
-// later to restore first-visit-only on the web.
+// Intro now plays only for SIGNED-OUT visitors (gated by `introAllowed` in AppContent).
+// REVIEW_MODE=true → a signed-out visitor sees it on every home load; set false for first-visit-only.
+// Always HIDDEN inside the iOS/native app (the React-Native WebView).
 const INTRO_REVIEW_MODE: boolean = true;
+// Paused for now (2026-09-12): nobody sees the intro unless `?intro=1` asks for it.
+// Set back to true to restore the behaviour above.
+const INTRO_ENABLED: boolean = false;
 const firebaseWebPort = createFirebaseWebPort();
 
 function RequireSignedIn({ children }: { children: React.ReactElement }) {
@@ -112,6 +125,7 @@ function RequireSignedIn({ children }: { children: React.ReactElement }) {
 function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
+  const mobileChromeTweak = resolveMobileChromeTweak(new URLSearchParams(location.search).get("tweak"));
   const { user, loading: authLoading } = useAuth();
   const { language, t } = useLanguage();
   const { itemCount } = useCart();
@@ -136,6 +150,7 @@ function AppContent() {
       const introParam = new URLSearchParams(window.location.search).get('intro');
       if (introParam === '1') return true;
       if (introParam === '0') return false;
+      if (!INTRO_ENABLED) return false;
       // Hidden inside the iOS/native app for now; the WEB still shows it (for review).
       if (isMobileAppContainer()) return false;
       if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
@@ -207,7 +222,7 @@ function AppContent() {
 
   useEffect(() => {
     // Warm up primary tab pages so first tab switch feels instant.
-    void import("./pages/community/CommunityPage");
+    void import("./pages/community/atlas/AtlasFeedPage");
     void import("./components/Mypage");
     void import("./pages/AICurationHubPage");
     void import("./pages/SearchPage");
@@ -273,6 +288,10 @@ function AppContent() {
   const [profileLiveX, setProfileLiveX] = useState<number | null>(null);
   const profileDragRef = useRef<{ startX: number; startY: number; startDragX: number; startDragY: number } | null>(null);
   const profileIsDragging = useRef(false);
+  // Dragging the button used to fire its click on release, so nudging it a few
+  // pixels opened the menu. Set once the pointer travels past a few px and read
+  // (then cleared) by the click handler.
+  const profileMovedRef = useRef(false);
   const profileBtnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
@@ -282,6 +301,8 @@ function AppContent() {
       const H = window.innerHeight || 800;
       const btnSize = profileBtnRef.current?.offsetWidth || 46;
       const dy = clientY - profileDragRef.current.startY;
+      const dxRaw = clientX - profileDragRef.current.startX;
+      if (Math.hypot(dxRaw, dy) > 4) profileMovedRef.current = true;
       let newY = profileDragRef.current.startDragY + dy;
       newY = Math.max(0, Math.min(newY, H - btnSize));
       setProfileDragY(newY);
@@ -432,7 +453,34 @@ function AppContent() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const activeTabIndex = resolveMainTabIndex(location.pathname);
+  /* 작가 화면을 다른 페이지 위에 열면(state.backgroundLocation) 주소만 작가 화면이 되고,
+     페이지·탭·전환 키는 아래 페이지를 따른다 — 아래 페이지가 떨어지지 않아 닫으면 보던 자리 그대로다 */
+  const backgroundLocation = (location.state as { backgroundLocation?: typeof location } | null)?.backgroundLocation;
+  const galleryOverPage = !!backgroundLocation && location.pathname.startsWith('/artist-gallery/');
+  const pageLocation = galleryOverPage && backgroundLocation ? backgroundLocation : location;
+  const pageLocationRef = useRef(pageLocation);
+  pageLocationRef.current = pageLocation;
+
+  /* 작가 화면을 품지 않은 페이지(AI 탭·마이페이지·전시 화면)에서 온 요청은 여기서 받는다.
+     지도·검색처럼 작가 화면을 품은 곳은 먼저 그 자리에서 열고 detail.handled 로 알려 준다 */
+  useEffect(() => {
+    const open = (e: Event) => {
+      const detail = (e as CustomEvent)?.detail as { artist?: string; handled?: boolean } | undefined;
+      const artist = String(detail?.artist || '').trim();
+      if (!artist) return;
+      queueMicrotask(() => {
+        if (e.defaultPrevented || detail?.handled) return;
+        const slug = artist.replace(/[()]/g, '').replace(/[\s_]+/g, '-').replace(/-+/g, '-').toLowerCase();
+        navigate(`/artist-gallery/${encodeURIComponent(slug)}?name=${encodeURIComponent(artist)}`, {
+          state: { backgroundLocation: pageLocationRef.current },
+        });
+      });
+    };
+    window.addEventListener('open-artist-gallery', open);
+    return () => window.removeEventListener('open-artist-gallery', open);
+  }, [navigate]);
+
+  const activeTabIndex = resolveMainTabIndex(pageLocation.pathname);
   const isCartRoute = location.pathname === "/cart";
   const isBottomNavVisible = activeTabIndex !== null || isCartRoute;
   const isDesktopViewport = viewportWidth > 768;
@@ -509,6 +557,10 @@ function AppContent() {
   };
 
   const isAuthedUser = !!user && !user.isAnonymous;
+  // Intro plays only for SIGNED-OUT visitors, and only once auth has resolved (no flash for logged-in users).
+  // `?intro=1` is a hard override that force-plays it for anyone (review / demo / sharing).
+  const introForced = (() => { try { return new URLSearchParams(window.location.search).get('intro') === '1'; } catch { return false; } })();
+  const introAllowed = showIntro && (introForced || (!authLoading && !isAuthedUser));
 
   // Tabs the cinematic intro cross-fades through. `kind` selects a built design-mockup
   // (rendered in CinematicIntro's TabMock) — no screenshots, so nothing crops or overlaps.
@@ -529,6 +581,27 @@ function AppContent() {
   const isMobileShell = isMobileAppContainer();
   const isDesktopQuickMenu = !isMobileShell && viewportWidth >= 1024;
   const floatingButtonSize = isMobileShell ? 40 : (isDesktopQuickMenu ? 54 : 46);
+  // Floating quick menu — circles, as before, but in the map tab's language:
+  // a hairline on a flat ground rather than blurred glass, gold only where it
+  // means something, and hairline marks instead of lucide's heavier icons.
+  // Hover, the open ring and the opening stagger live in quickMenu.css.
+  const quickHair = isLightTheme ? 'rgba(0,0,0,0.16)' : 'rgba(244,241,234,0.18)';
+  // Only geometry is set inline. The colours travel as custom properties so
+  // quickMenu.css owns the states - an inline `border` would outrank any
+  // :hover rule no matter how specific, and the gold edge would never show.
+  const quickChip: React.CSSProperties = {
+    width: floatingButtonSize,
+    height: floatingButtonSize,
+    padding: 0,
+    boxSizing: 'border-box',
+    cursor: 'pointer',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    ['--chip-hair' as string]: quickHair,
+    ['--chip-ground' as string]: isLightTheme ? '#faf9f6' : '#0d0d0d',
+    ['--chip-ink' as string]: isLightTheme ? '#141414' : 'rgba(244,241,234,0.92)',
+  };
   const floatingRight = isMobileShell ? 14 : (isDesktopQuickMenu ? 24 : 18);
   const floatingButtonGap = isMobileShell ? 8 : (isDesktopQuickMenu ? 12 : 10);
   const floatingStep = floatingButtonSize + floatingButtonGap;
@@ -556,18 +629,6 @@ function AppContent() {
   const floatingActionTop2 = _draggedY !== undefined
     ? `${Math.max(0, _draggedY - floatingStep * 2)}px`         // Logout: 2 steps above profile
     : floatingTopBase;
-  const floatingActionTop3 = _draggedY !== undefined
-    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep)}px`   // Cart: 1 step below
-    : `calc(${floatingTopBase} + ${floatingStep * 3}px)`;
-  const floatingActionTop4 = _draggedY !== undefined
-    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 2)}px` // Theme: 2 steps below
-    : `calc(${floatingTopBase} + ${floatingStep * 4}px)`;
-  const floatingActionTop5 = _draggedY !== undefined
-    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 3)}px` // Logout: 3 steps below
-    : `calc(${floatingTopBase} + ${floatingStep * 5}px)`;
-  const floatingActionBottom1 = `calc(${floatingBottomBase} + ${floatingStep}px)`;
-  const floatingActionBottom2 = `calc(${floatingBottomBase} + ${floatingStep * 2}px)`;
-  const floatingActionBottom3 = `calc(${floatingBottomBase} + ${floatingStep * 3}px)`;
 
   // Horizontal anchor for the floating button stack. Desktop quick-menu
   // mode keeps a fixed right anchor (bottom-right corner cluster). On
@@ -586,6 +647,11 @@ function AppContent() {
     : 'left 0.36s cubic-bezier(0.22, 1, 0.36, 1)';
 
   const handleProfileMainClick = async () => {
+    // A drag that ends over the button still fires a click; ignore that one.
+    if (profileMovedRef.current) {
+      profileMovedRef.current = false;
+      return;
+    }
     if (!isAuthedUser) {
       setIsFloatingActionsOpen(false);
       navigate('/login', { state: { from: `${location.pathname}${location.search}` } });
@@ -608,8 +674,8 @@ function AppContent() {
   const appShellBackground = isLightTheme ? '#f5f5f5' : '#050505';
   // Keep interactive globe mounted across /interactive <-> /interactive/:country/:city/:exhibition
   // transitions so map drill state/panel state doesn't reset when closing the modal.
-  const isInteractiveRoute = location.pathname === '/interactive' || location.pathname.startsWith('/interactive/');
-  const routeKey = isInteractiveRoute ? '/interactive' : `${location.pathname}${location.search}`;
+  const isInteractiveRoute = pageLocation.pathname === '/interactive' || pageLocation.pathname.startsWith('/interactive/');
+  const routeKey = isInteractiveRoute ? '/interactive' : `${pageLocation.pathname}${pageLocation.search}`;
 
   const LegacyArtistRedirect = () => {
     const { id } = useParams<{ id: string }>();
@@ -631,7 +697,7 @@ function AppContent() {
       <OnboardingGuard />
       <TransitionBadge show={transitioning} />
 
-      {showIntro && (
+      {introAllowed && (
         <CinematicIntro
           onDone={() => {
             try { localStorage.setItem('armin:intro-seen', 'true'); } catch { /* ignore */ }
@@ -658,7 +724,7 @@ function AppContent() {
                   React Native WebView shows up as iOS reloading the app
                   back to the Expo "Opening project..." menu). */}
               <ErrorBoundary label="Page">
-              <Routes location={location}>
+              <Routes location={pageLocation}>
                 <Route element={<HomePage exhibitions={exhibitions} isOverlayOpen={false} />}>
                   <Route path="/" element={null} />
                   <Route path="/interactive" element={null} />
@@ -669,9 +735,13 @@ function AppContent() {
                 <Route path="/community" element={<CommunityPage />} />
                 <Route path="/community/write" element={<WritePostPage />} />
                 <Route path="/community/post/:id" element={<PostDetailPage />} />
+                <Route path="/community/playlist/:id" element={<SharedPlaylistPage />} />
                 <Route path="/ai" element={<AICurationHubPage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/cart" element={<CartPage />} />
+                <Route path="/privacy" element={<PolicyPage doc="privacy" />} />
+                <Route path="/terms" element={<PolicyPage doc="terms" />} />
+                <Route path="/support" element={<PolicyPage doc="support" />} />
                 <Route path="/mypage" element={<RequireSignedIn><MyPage /></RequireSignedIn>} />
                 <Route path="/exhibitions" element={<ExhibitionsNearMePage exhibitions={exhibitions} />} />
                 <Route path="/artist/:id" element={<LegacyArtistRedirect />} />
@@ -695,9 +765,16 @@ function AppContent() {
         </AnimatePresence>
       </div>
 
+      {/* 다른 페이지 위에 연 작가 화면 — 검색창은 숨기고 작가 화면만 띄운다 */}
+      {galleryOverPage && (
+        <Suspense fallback={null}>
+          <GlobalSearchBar galleryOnly />
+        </Suspense>
+      )}
+
       <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} mapMode={mapMode} />
 
-      {isFloatingControlsVisible && !showIntro && (
+      {isFloatingControlsVisible && !introAllowed && (
         <>
           <AnimatePresence>
             {isFloatingActionsOpen && (
@@ -716,241 +793,109 @@ function AppContent() {
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: 6,
-                      padding: '6px',
-                      borderRadius: 999,
-                      border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.20)',
-                      background: isLightTheme ? 'rgba(255,255,255,0.94)' : 'rgba(18,18,18,0.92)',
-                      boxShadow: isLightTheme
-                        ? '0 10px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.58)'
-                        : '0 14px 28px rgba(0,0,0,0.52), inset 0 1px 0 rgba(255,255,255,0.08)',
-                      backdropFilter: 'blur(14px)',
-                      WebkitBackdropFilter: 'blur(14px)',
+                      padding: 6,
+                      borderRadius: 2,
+                      border: `1px solid ${quickHair}`,
+                      background: isLightTheme ? '#faf9f6' : '#0d0d0d',
+                      boxShadow: isLightTheme ? '0 4px 14px rgba(0,0,0,0.10)' : '0 6px 18px rgba(0,0,0,0.45)',
                     }}
                   >
                     <button
                       onClick={handleQuickLogout}
                       style={{
-                        border: isLightTheme ? '1px solid rgba(180,30,30,0.18)' : '1px solid rgba(255,80,80,0.22)',
+                        border: `1px solid ${isLightTheme ? 'rgba(176,28,28,0.30)' : 'rgba(232,96,96,0.30)'}`,
                         height: 36,
-                        borderRadius: 999,
+                        borderRadius: 2,
                         padding: '0 14px',
                         cursor: 'pointer',
                         display: 'inline-flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: 7,
-                        background: isLightTheme ? 'rgba(200,30,30,0.07)' : 'rgba(255,60,60,0.10)',
-                        color: isLightTheme ? '#b01c1c' : '#ff7070',
-                        fontSize: 11,
+                        background: 'none',
+                        color: isLightTheme ? '#b01c1c' : '#e86060',
+                        fontFamily: "'Space Mono', ui-monospace, monospace",
+                        fontSize: 10,
                         fontWeight: 700,
-                        letterSpacing: '0.06em',
+                        letterSpacing: '0.1em',
                       }}
                       title={t({ ko: '로그아웃', en: 'Logout' })}
                     >
-                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0 }}>
-                        <path d="M5 2H2.5A1.5 1.5 0 0 0 1 3.5v6A1.5 1.5 0 0 0 2.5 11H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                        <path d="M8.5 4.5L11 6.5L8.5 8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <line x1="11" y1="6.5" x2="5" y2="6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                      </svg>
+                      <QuickIcon name="logout" size={14} />
                       {t({ ko: 'LOGOUT', en: 'LOGOUT' })}
                     </button>
                   </motion.div>
                 ) : null}
 
-                {SHOW_SALES_UI && (
-                <motion.button
-                  initial={{ opacity: 0, y: -10, scale: 0.86 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  onClick={() => {
-                    navigate('/cart');
-                    setIsFloatingActionsOpen(false);
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.94 }}
-                  style={{
-                    position: 'fixed',
-                    ...floatingHorizontalStyle,
-                    transition: floatingHorizontalTransition,
-                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop3,
-                    bottom: isDesktopQuickMenu ? floatingActionBottom1 : 'auto',
-                    zIndex: 250012,
-                    width: floatingButtonSize,
-                    height: floatingButtonSize,
-                    padding: 0,
-                    boxSizing: 'border-box',
-                    borderRadius: '50%',
-                    border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
-                    background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
-                    color: isLightTheme ? '#111111' : '#ffffff',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: isLightTheme
-                      ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
-                      : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                  }}
-                  title={t({ ko: '장바구니', en: 'Cart' })}
-                >
-                  <span style={{ position: 'relative', display: 'inline-flex' }}>
-                    <ShoppingCart size={isMobileShell ? 18 : 20} strokeWidth={2.2} />
-                    {itemCount > 0 && (
-                      <span
-                        style={{
-                          position: 'absolute',
-                          top: -8,
-                          right: -10,
-                          minWidth: 18,
-                          height: 18,
-                          borderRadius: 999,
-                          background: '#D4A547',
-                          color: '#111',
-                          fontSize: 10,
-                          fontWeight: 800,
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          padding: '0 4px',
-                        }}
-                      >
-                        {itemCount > 99 ? '99+' : itemCount}
-                      </span>
-                    )}
-                  </span>
-                </motion.button>
-                )}
-
-                <motion.button
-                  initial={{ opacity: 0, y: -10, scale: 0.86 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-                  onClick={() => {
-                    toggleGlobalTheme();
-                    setIsFloatingActionsOpen(false);
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.94 }}
-                  style={{
-                    position: 'fixed',
-                    ...floatingHorizontalStyle,
-                    transition: floatingHorizontalTransition,
-                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop4,
-                    bottom: isDesktopQuickMenu ? floatingActionBottom2 : 'auto',
-                    zIndex: 250012,
-                    width: floatingButtonSize,
-                    height: floatingButtonSize,
-                    padding: 0,
-                    boxSizing: 'border-box',
-                    borderRadius: '50%',
-                    border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
-                    background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
-                    color: isLightTheme ? '#111111' : '#ffffff',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    boxShadow: isLightTheme
-                      ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
-                      : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                  }}
-                  title={isLightTheme ? t({ ko: '다크 모드로 전환', en: 'Switch to dark mode' }) : t({ ko: '라이트 모드로 전환', en: 'Switch to light mode' })}
-                >
-                  <span style={{ position: 'relative', width: 20, height: 20, display: 'block' }}>
-                    <svg
-                      width={20} height={20} viewBox="0 0 20 20"
+                {/* The actions, derived from one list. They used to be three
+                    hand-placed buttons pinned to slots 3/4/5, which left the
+                    first slot visibly empty whenever the cart was hidden by
+                    SHOW_SALES_UI. Now the slot is the index in this list, so a
+                    hidden action leaves no gap. Each carries a Space Mono
+                    label: at 20px a hairline mark alone is a guess. */}
+                {([
+                  ...(SHOW_SALES_UI ? [{
+                    key: 'cart', icon: 'cart' as const,
+                    label: t({ ko: '장바구니', en: 'CART' }),
+                    title: t({ ko: '장바구니', en: 'Cart' }),
+                    danger: false,
+                    onPick: () => { navigate('/cart'); setIsFloatingActionsOpen(false); },
+                    badge: itemCount > 0 ? (itemCount > 99 ? '99+' : String(itemCount)) : null,
+                  }] : []),
+                  {
+                    key: 'theme', icon: 'theme' as const,
+                    label: isLightTheme ? t({ ko: '라이트', en: 'LIGHT' }) : t({ ko: '다크', en: 'DARK' }),
+                    title: isLightTheme ? t({ ko: '다크 모드로 전환', en: 'Switch to dark mode' }) : t({ ko: '라이트 모드로 전환', en: 'Switch to light mode' }),
+                    danger: false,
+                    onPick: () => { toggleGlobalTheme(); setIsFloatingActionsOpen(false); },
+                    badge: null,
+                  },
+                  ...(!isDesktopQuickMenu ? [{
+                    key: 'logout', icon: 'logout' as const,
+                    label: t({ ko: '로그아웃', en: 'LOGOUT' }),
+                    title: t({ ko: '로그아웃', en: 'Logout' }),
+                    danger: true,
+                    onPick: handleQuickLogout,
+                    badge: null,
+                  }] : []),
+                ]).map((action, i) => {
+                  const step = i + 1;
+                  const stackedTop = _draggedY !== undefined
+                    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * step)}px`
+                    : `calc(${floatingTopBase} + ${floatingStep * (step + 2)}px)`;
+                  return (
+                    <motion.button
+                      key={action.key}
+                      initial={{ opacity: 0, scale: 0.2 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.2 }}
+                      transition={{ type: 'spring', stiffness: 460, damping: 24, delay: 0.04 * step }}
+                      onClick={action.onPick}
+                      whileTap={{ scale: 0.94 }}
+                      className={`quick-chip quick-chip--action${action.danger ? ' quick-chip--danger' : ''}`}
+                      data-side={isDesktopQuickMenu ? 'right' : profileDragSide}
                       style={{
-                        position: 'absolute', inset: 0,
-                        opacity: isLightTheme ? 1 : 0,
-                        transform: isLightTheme ? 'rotate(0deg) scale(1)' : 'rotate(60deg) scale(0.6)',
-                        transition: 'opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1)',
+                        position: 'fixed',
+                        ...floatingHorizontalStyle,
+                        transition: floatingHorizontalTransition,
+                        top: isDesktopQuickMenu ? 'auto' : stackedTop,
+                        bottom: isDesktopQuickMenu ? `calc(${floatingBottomBase} + ${floatingStep * step}px)` : 'auto',
+                        zIndex: 250012,
+                        ...quickChip,
+                        ['--quick-delay' as string]: `${0.04 * step}s`,
+                        ...(action.danger ? {
+                          ['--chip-hair' as string]: isLightTheme ? 'rgba(176,28,28,0.34)' : 'rgba(232,96,96,0.34)',
+                          ['--chip-ink' as string]: isLightTheme ? '#b01c1c' : '#e86060',
+                        } : {}),
                       }}
+                      title={action.title}
                     >
-                      <circle cx={10} cy={10} r={3.6} fill="#D4A547" />
-                      {[0, 45, 90, 135, 180, 225, 270, 315].map((ang, i) => {
-                        const r = Math.PI / 180;
-                        const a = ang * r;
-                        const half = 0.38;
-                        const ox = 10;
-                        const oy = 10;
-                        const ir = 5.2;
-                        const or = 8.6;
-                        return (
-                          <polygon
-                            key={i}
-                            fill="#D4A547"
-                            points={[
-                              `${ox + ir * Math.sin(a - half)},${oy - ir * Math.cos(a - half)}`,
-                              `${ox + or * Math.sin(a)},${oy - or * Math.cos(a)}`,
-                              `${ox + ir * Math.sin(a + half)},${oy - ir * Math.cos(a + half)}`,
-                            ].join(' ')}
-                          />
-                        );
-                      })}
-                    </svg>
-                    <svg
-                      width={20} height={20} viewBox="0 0 20 20" fill="none"
-                      style={{
-                        position: 'absolute', inset: 0,
-                        opacity: isLightTheme ? 0 : 1,
-                        transform: isLightTheme ? 'rotate(-60deg) scale(0.6)' : 'rotate(0deg) scale(1)',
-                        transition: 'opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1)',
-                      }}
-                    >
-                      <path d="M15.5 10.5A6.5 6.5 0 0 1 9 4a6.5 6.5 0 1 0 6.5 6.5z" fill="#D4A547" />
-                    </svg>
-                  </span>
-                </motion.button>
-
-                {/* ── LOGOUT — bottom of mobile stack (desktop uses pill) ── */}
-                {!isDesktopQuickMenu && <motion.button
-                  initial={{ opacity: 0, y: -10, scale: 0.86 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-                  onClick={handleQuickLogout}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.94 }}
-                  style={{
-                    position: 'fixed',
-                    ...floatingHorizontalStyle,
-                    transition: floatingHorizontalTransition,
-                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop5,
-                    bottom: isDesktopQuickMenu ? floatingActionBottom3 : 'auto',
-                    zIndex: 250012,
-                    width: floatingButtonSize,
-                    height: floatingButtonSize,
-                    padding: 0,
-                    boxSizing: 'border-box',
-                    borderRadius: '50%',
-                    border: isLightTheme ? '1px solid rgba(180,30,30,0.28)' : '1px solid rgba(255,80,80,0.28)',
-                    background: isLightTheme ? 'rgba(200,30,30,0.08)' : 'rgba(30,10,10,0.88)',
-                    color: isLightTheme ? '#b01c1c' : '#ff8080',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: isLightTheme
-                      ? '0 8px 22px rgba(180,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.55)'
-                      : '0 12px 26px rgba(120,0,0,0.32), inset 0 1px 0 rgba(255,100,100,0.10)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                  }}
-                  title={t({ ko: '로그아웃', en: 'Logout' })}
-                >
-                  {/* Exit/door SVG icon */}
-                  <svg width={isMobileShell ? 17 : 19} height={isMobileShell ? 17 : 19} viewBox="0 0 18 18" fill="none">
-                    <path d="M6.5 3H3.5A1.5 1.5 0 0 0 2 4.5v9A1.5 1.5 0 0 0 3.5 15H6.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-                    <path d="M11.5 5.5L15 9L11.5 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-                    <line x1="15" y1="9" x2="7" y2="9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-                  </svg>
-                </motion.button>}
+                      <span className="quick-chip__label">{action.label}</span>
+                      <QuickIcon name={action.icon} size={isMobileShell ? 18 : 20} />
+                      {action.badge && <span className="quick-chip__badge">{action.badge}</span>}
+                    </motion.button>
+                  );
+                })}
               </>
             )}
           </AnimatePresence>
@@ -962,14 +907,7 @@ function AppContent() {
             animate={{
               opacity: 1,
               y: 0,
-              scale: isFloatingActionsOpen ? 1.04 : 1,
-              boxShadow: isFloatingActionsOpen
-                ? (isLightTheme
-                  ? '0 10px 28px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.6)'
-                  : '0 14px 30px rgba(0,0,0,0.56), inset 0 1px 0 rgba(255,255,255,0.12)')
-                : (isLightTheme
-                  ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
-                  : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)'),
+              scale: isFloatingActionsOpen ? 1.03 : 1,
             }}
             transition={{ duration: 0.24, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(e) => {
@@ -981,6 +919,7 @@ function AppContent() {
                 startDragY: profileDragY >= 0 ? profileDragY : (rect?.top ?? 100),
               };
               profileIsDragging.current = true;
+              profileMovedRef.current = false;
               e.preventDefault();
             }}
             onTouchStart={(e) => {
@@ -994,7 +933,9 @@ function AppContent() {
                 startDragY: profileDragY >= 0 ? profileDragY : (rect?.top ?? 100),
               };
               profileIsDragging.current = true;
+              profileMovedRef.current = false;
             }}
+            className={`quick-chip quick-chip--avatar${isFloatingActionsOpen ? ' quick-chip--open' : ''}`}
             style={{
               position: 'fixed',
               ...floatingHorizontalStyle,
@@ -1002,24 +943,12 @@ function AppContent() {
               top: isDesktopQuickMenu ? 'auto' : floatingProfileTopCSS,
               bottom: isDesktopQuickMenu ? floatingBottomBase : 'auto',
               zIndex: 250012,
-              width: floatingButtonSize,
-              height: floatingButtonSize,
-              padding: 0,
-              boxSizing: 'border-box',
-              borderRadius: '50%',
-              border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
-              background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
-              color: isLightTheme ? '#111111' : '#ffffff',
+              ...quickChip,
               cursor: profileIsDragging.current ? 'grabbing' : 'grab',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              fontFamily: "'Space Mono', ui-monospace, monospace",
               fontSize: 12,
-              fontWeight: 800,
-              letterSpacing: '0.02em',
-              overflow: 'hidden',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
+              fontWeight: 700,
+              letterSpacing: '0.04em',
               touchAction: 'none',
               userSelect: 'none',
               WebkitUserSelect: 'none',
@@ -1031,6 +960,7 @@ function AppContent() {
                 src={effectiveProfilePhoto}
                 crop={effectiveProfileCrop}
                 size={floatingButtonSize}
+                radius={2}
                 alt="Profile"
                 fallback={null}
                 background={isLightTheme ? '#e9e9e9' : 'rgba(255,255,255,0.15)'}
@@ -1038,37 +968,40 @@ function AppContent() {
             ) : isAuthedUser ? (
               profileInitial
             ) : (
-              <User size={24} strokeWidth={3} />
+              <QuickIcon name="user" size={isMobileShell ? 20 : 22} />
             )}
           </motion.button>
 
         </>
       )}
 
-      {isBottomNavVisible && !showIntro && (
+      {isBottomNavVisible && !introAllowed && (
         <BottomPageNavigator
           activeIndex={activeTabIndex ?? lastNonNullTabIndexRef.current}
           onChange={handleBottomNavChange}
           lightMode={isLightTheme}
+          mobileChromeTweak={mobileChromeTweak}
         />
       )}
 
-      {/* Floating language switch — reachable on every route EXCEPT /search,
-          where it lives inside the search bar instead so the two don't stack in
-          the corner. Sits below the profile cluster (z 250012) and full-screen
-          overlays so it never covers their close buttons, yet above page content. */}
-      {!location.pathname.startsWith('/search') && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 'max(12px, calc(env(safe-area-inset-top, 0px) + 10px))',
-            right: 14,
-            zIndex: 199900,
-          }}
-        >
-          <LanguageToggle light={isLightTheme} />
-        </div>
+      {isInteractiveRoute && mobileChromeTweak && (
+        <MobileChromeTweakSwitcher value={mobileChromeTweak} />
       )}
+
+      {/* Floating language switch — reachable on every route, top right. Sits
+          below the profile cluster (z 250012) and full-screen overlays so it
+          never covers their close buttons, yet above page content. */}
+      <div
+        className="app-language-toggle"
+        style={{
+          position: 'fixed',
+          top: 'max(12px, calc(env(safe-area-inset-top, 0px) + 10px))',
+          right: 14,
+          zIndex: 199900,
+        }}
+      >
+        <LanguageToggle light={isLightTheme} />
+      </div>
     </div>
   );
 }

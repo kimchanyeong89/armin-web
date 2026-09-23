@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { getFirestore, collection, addDoc, getDocs, doc, setDoc, query, orderBy, serverTimestamp } from "firebase/firestore";
+import { refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
 import { useAuth } from "../contexts/AuthContext";
 
 const normalizeArtworkIdForFirestore = (value: unknown): string => String(value ?? "").trim().replace(/\//g, "__");
@@ -134,6 +135,11 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
         if (itemImg) {
           await setDoc(doc(db, `users/${user.uid}/playlists/${playlistId}`), { coverImage: itemImg }, { merge: true });
         }
+      }
+
+      /* a shared playlist's public copy takes the new work too */
+      if (playlists.some((pl) => pl.id === playlistId && pl.shared === true)) {
+        void refreshSharedPlaylist(user.uid, playlistId).catch(() => {});
       }
 
       onClose();

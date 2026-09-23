@@ -9,6 +9,8 @@ type ProfileAvatarProps = {
   alt?: string;
   fallback?: React.ReactNode;
   background?: string;
+  /** Circle by default; pass a px value for a square-cornered avatar. */
+  radius?: number | string;
 };
 
 function toNumber(value: unknown, fallback: number) {
@@ -40,6 +42,7 @@ export default function ProfileAvatar({
   alt = "Profile",
   fallback,
   background = "#D4A547",
+  radius = "50%",
 }: ProfileAvatarProps) {
   const safeSize = Math.max(12, size);
 
@@ -99,7 +102,7 @@ export default function ProfileAvatar({
       style={{
         width: safeSize,
         height: safeSize,
-        borderRadius: "50%",
+        borderRadius: radius,
         overflow: "hidden",
         position: "relative",
         background,
@@ -129,7 +132,7 @@ export default function ProfileAvatar({
                 width: maskSize,
                 height: maskSize,
                 transform: "translate(-50%, -50%)",
-                borderRadius: "50%",
+                borderRadius: radius,
                 overflow: "hidden",
                 background,
               }}

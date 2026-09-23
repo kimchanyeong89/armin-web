@@ -1,12 +1,20 @@
 #!/bin/bash
 # Cloud Run 일괄 배포 스크립트
 # 사용:
-#   cd scripts/modal_embed/cloudrun && bash deploy.sh
+#   cd scripts/modal_embed/cloudrun && JINA_ENCODER_TOKEN=<토큰> bash deploy.sh
+#
+# 토큰은 semantic-search 워커 secret JINA_ENCODER_TOKEN 과 같은 값이다(workers/semantic-search/.env).
+# 정밀 검색은 드물게 쓰여 평소엔 꺼 두고(min 0), 요금 상한을 위해 최대 1대만 띄운다.
 
 set -e
 SERVICE=jina-text-encoder
 REGION=asia-northeast3   # 서울. us-central1로 바꾸려면 여기 변경.
 PROJECT=$(gcloud config get-value project 2>/dev/null)
+
+if [ -z "$JINA_ENCODER_TOKEN" ]; then
+  echo "JINA_ENCODER_TOKEN 이 필요합니다 (workers/semantic-search/.env 참고)." >&2
+  exit 1
+fi
 
 echo "프로젝트: $PROJECT"
 echo "서비스:   $SERVICE"
@@ -28,12 +36,13 @@ gcloud run deploy "$SERVICE" \
   --memory 8Gi \
   --cpu 4 \
   --cpu-boost \
-  --min-instances 1 \
-  --max-instances 5 \
+  --min-instances 0 \
+  --max-instances 1 \
   --port 8080 \
   --timeout 120 \
   --concurrency 4 \
   --allow-unauthenticated \
+  --set-env-vars "JINA_ENCODER_TOKEN=$JINA_ENCODER_TOKEN" \
   --execution-environment gen2
 
 # 3. URL 출력
@@ -43,4 +52,4 @@ echo "✓ 배포 완료"
 echo "URL: $URL"
 echo
 echo "테스트:"
-echo "  curl -X POST $URL -H 'Content-Type: application/json' -d '{\"text\":\"고요한 풍경\"}'"
+echo "  curl -X POST $URL -H 'Content-Type: application/json' -H 'Authorization: Bearer <토큰>' -d '{\"text\":\"고요한 풍경\"}'"

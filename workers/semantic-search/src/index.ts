@@ -1,4 +1,19 @@
 import { buildFtsQuery, SEARCH_TEXT_SQL, SEARCH_TEXT_MAX_LIMIT } from './searchText';
+import {
+    exhibitionPercents,
+    kMeans,
+    museumMatches,
+    normalize,
+    openExhibitions,
+    openMuseums,
+    packInt8,
+    unpackInt8,
+    type ExhibitionBundle,
+    type MuseumBundle,
+    type OpenExhibitions,
+    type OpenMuseums,
+    type PackedVectors,
+} from './taste';
 /**
  * Armin Semantic Search Worker — SigLIP 768D 버전
  *
@@ -9,18 +24,31 @@ import { buildFtsQuery, SEARCH_TEXT_SQL, SEARCH_TEXT_MAX_LIMIT } from './searchT
  *  - POST /upsert           : 768D 벡터 업로드
  *  - POST /recommend-by-id  : ID 기반 유사 작품 추천
  *  - POST /taste-profile    : 사용자 취향 프로파일 생성/업데이트 (K-Means)
+ *  - POST /taste-scores     : 좋아요 목록 → 지금 전시별 취향 일치 %, 취향 작품이 몰린 상설 미술관
  *  - POST /recommend        : 취향 기반 개인화 추천
  *  - POST /check-ids        : ID 존재 여부 확인
  *  - POST /delete-ids       : Vectorize에서 벡터 삭제
+ *  - POST /vectors-by-ids   : (관리용) 작품 벡터 조회 — 취향 데이터 빌드용
+ *  - PUT  /taste-data       : (관리용) 전시·미술관 취향 데이터 교체
+ *  - POST /warm-jina        : 정밀 검색을 켤 때 Jina 인코더 미리 깨우기
+ *  - GET  /budget-status    : (관리용) 오늘 요금 상한 카운터
  *  - GET  /status           : 서비스 상태 확인
+ *
+ * 요금 상한: AI 검색·추천·취향 라우트는 IP별 속도 제한과 하루 총량(DailyBudget)을 먼저 거친다.
  */
 
 interface Env {
     VECTORIZE: VectorizeIndex;
     /** Jina CLIP v2 1024D 인덱스. 마이그레이션 중. */
     VECTORIZE_JINA?: VectorizeIndex;
-    /** Modal에 배포된 Jina v2 텍스트 인코더 URL. 미설정 시 기본값 사용. */
+    /** Cloud Run 의 Jina v2 텍스트 인코더 URL. 없으면 정밀 검색은 SigLIP 으로 넘어간다. */
     JINA_TEXT_ENCODER_URL?: string;
+    /** Bearer token the Jina encoder requires (the same value as its JINA_ENCODER_TOKEN env). */
+    JINA_ENCODER_TOKEN?: string;
+    /** Worldwide daily counter for metered routes (class DailyBudget). */
+    DAILY_BUDGET?: DurableObjectNamespace;
+    /** Per-IP rate limit for metered routes; the limit itself is set in wrangler.toml. */
+    RATE_LIMITER?: RateLimit;
     HF_TOKEN: string;
     TASTE_KV: KVNamespace;
     /** D1 database for keyword text search (FTS5 on artwork name/artist/museum).
@@ -35,6 +63,9 @@ interface Env {
     SIGLIP_ENDPOINT_URL?: string;
     /** Optional: bearer token for the self-hosted encoder (if it requires auth). */
     SIGLIP_ENDPOINT_TOKEN?: string;
+    /** Shared secret for maintenance routes (/vectors-by-ids), sent as `x-admin-token`.
+     *  Configure via:  npx wrangler secret put ADMIN_TOKEN */
+    ADMIN_TOKEN?: string;
     /** Cloudflare Workers AI binding — used to translate non-English queries
      *  (Korean / Japanese / Chinese / etc.) into English before SigLIP encoding,
      *  because the deployed SigLIP base model is English-only. */
@@ -57,7 +88,7 @@ interface D1Database {
 }
 
 interface KVNamespace {
-    get(key: string): Promise<string | null>;
+    get(key: string, options?: { cacheTtl?: number }): Promise<string | null>;
     put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
     delete(key: string): Promise<void>;
 }
@@ -87,14 +118,18 @@ interface ExecutionContext {
 
 interface TasteProfile {
     centroids: number[][];
+    /** Share of the sampled likes behind each centroid (version 2+). */
+    weights?: number[];
     k: number;
     updatedAt: number;
     likedCount: number;
+    /** Fingerprint of the like list the profile was built from (version 2+), to tell when it is stale. */
+    likedHash?: string;
+    version?: number;
 }
 
 const VECTOR_DIM = 768;
 const MODEL_ID   = 'google/siglip-base-patch16-224';
-const TASTE_KV_TTL = 60 * 60 * 24 * 30; // 30일
 const QUERY_CACHE_TTL = 60 * 60 * 24 * 7; // 쿼리 벡터 캐시 7일
 const QUERY_CACHE_PREFIX = 'qcache:v2:'; // bump suffix to invalidate cache
 const TRANSLATION_CACHE_TTL = 60 * 60 * 24 * 90; // 번역 캐시 90일 (의미가 거의 안 변함)
@@ -516,73 +551,13 @@ async function encodeTextWithSigLIP(text: string, env: Env): Promise<number[] | 
 }
 
 // ============================================================
-// K-Means 클러스터링 (취향 군집 분석)
+// 취향 군집 (좋아요 → K개 군집 중심). 군집 계산 자체는 taste.ts 의 kMeans.
 // Center Space Trap 방지: 단일 평균 대신 K개 군집 중심 유지
 // ============================================================
 
 function l2Normalize(v: number[]): number[] {
     const norm = Math.sqrt(v.reduce((s, x) => s + x * x, 0));
     return norm > 0 ? v.map(x => x / norm) : v;
-}
-
-function cosineSim(a: number[], b: number[]): number {
-    return a.reduce((s, v, i) => s + v * b[i], 0);
-}
-
-function vectorMean(vecs: number[][]): number[] {
-    if (vecs.length === 0) return new Array(VECTOR_DIM).fill(0);
-    const sum = vecs[0].map((_, j) => vecs.reduce((s, v) => s + v[j], 0) / vecs.length);
-    return l2Normalize(sum);
-}
-
-/**
- * K-Means 클러스터링
- * @param vectors   - 입력 벡터 배열 (각 768D, L2 정규화됨)
- * @param k         - 군집 수
- * @param maxIter   - 최대 반복 횟수
- * @returns k개의 L2 정규화된 centroid 벡터
- */
-function kMeans(vectors: number[][], k: number, maxIter: number = 50): number[][] {
-    if (vectors.length === 0) return [];
-    k = Math.min(k, vectors.length);
-    if (k === 1) return [vectorMean(vectors)];
-
-    // Forgy 초기화: 첫 번째는 랜덤, 나머지는 기존 centroid와 가장 먼 것 선택 (K-Means++ 유사)
-    const indices = new Set<number>();
-    indices.add(Math.floor(Math.random() * vectors.length));
-    while (indices.size < k) {
-        let maxDist = -1, farthest = 0;
-        for (let i = 0; i < vectors.length; i++) {
-            if (indices.has(i)) continue;
-            const minSim = Math.min(...Array.from(indices).map(j => cosineSim(vectors[i], vectors[j])));
-            if (minSim > maxDist) { maxDist = minSim; farthest = i; }
-        }
-        indices.add(farthest);
-    }
-    let centroids = Array.from(indices).map(i => [...vectors[i]]);
-
-    for (let iter = 0; iter < maxIter; iter++) {
-        const clusters: number[][][] = Array.from({ length: k }, () => []);
-
-        for (const vec of vectors) {
-            let bestK = 0, bestSim = -Infinity;
-            for (let ci = 0; ci < k; ci++) {
-                const sim = cosineSim(vec, centroids[ci]);
-                if (sim > bestSim) { bestSim = sim; bestK = ci; }
-            }
-            clusters[bestK].push(vec);
-        }
-
-        const newCentroids = clusters.map((cluster, i) =>
-            cluster.length > 0 ? vectorMean(cluster) : centroids[i]
-        );
-
-        // 수렴 확인
-        if (centroids.every((c, i) => cosineSim(c, newCentroids[i]) > 0.9999)) break;
-        centroids = newCentroids;
-    }
-
-    return centroids;
 }
 
 // ── 취향 군집(K-Means) 설정 ──────────────────────────────────────────
@@ -599,6 +574,318 @@ const TASTE_ID_SCAN_CAP = 400;                            // Vectorize에서 시
  */
 function chooseK(likedCount: number): number {
     return Math.max(1, Math.min(MAX_TASTE_K, Math.ceil(likedCount / TASTE_K_PER_LIKES)));
+}
+
+/** Vectorize getByIds returns at most 20 records per call; a longer id list fails the whole call. */
+const VECTORIZE_GET_BATCH = 20;
+
+function fnv1a(text: string): number {
+    let h = 2166136261;
+    for (let i = 0; i < text.length; i++) h = Math.imul(h ^ text.charCodeAt(i), 16777619);
+    return h >>> 0;
+}
+
+async function sha1Hex(text: string): Promise<string> {
+    const digest = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
+/** The like list's fingerprint: the same likes in any order give the same hash. */
+function likedHashOf(likedIds: string[]): Promise<string> {
+    return sha1Hex(Array.from(new Set(likedIds.map(String))).sort().join('\n'));
+}
+
+/** Vectors for ids already in their Vectorize form, 20 per call and four calls at a time, stopping once `enough` are found. */
+async function vectorsForLookupIds(env: Env, lookupIds: string[], enough = Infinity): Promise<{ found: Map<string, number[]>; failedCalls: number }> {
+    const batches: string[][] = [];
+    for (let i = 0; i < lookupIds.length; i += VECTORIZE_GET_BATCH) batches.push(lookupIds.slice(i, i + VECTORIZE_GET_BATCH));
+
+    const found = new Map<string, number[]>();
+    let failedCalls = 0;
+    for (let i = 0; i < batches.length && found.size < enough; i += 4) {
+        const results = await Promise.all(batches.slice(i, i + 4).map((batch) =>
+            env.VECTORIZE.getByIds(batch).catch(() => {
+                failedCalls++;
+                return [] as VectorRecord[];
+            })));
+        for (const records of results) {
+            for (const r of records) if (r.values?.length === VECTOR_DIM) found.set(r.id, r.values);
+        }
+    }
+    return { found, failedCalls };
+}
+
+// ── 좋아요한 작품의 벡터를 사용자별로 보관 ──────────────────────────
+// 하트를 하나 더 누를 때마다 지금까지의 좋아요 전부를 Vectorize 에서 다시 받아왔다. 좋아요 40개짜리
+// 사용자가 한 번 더 누를 때마다 40개를 받는 셈이라, 번째 띄우기 비용의 가장 큰 조각이었다.
+// 받은 벡터를 1바이트로 줄여 KV 에 두면(192점에 147KB) 새로 누른 하나만 받으면 된다.
+const likedVectorKey = (userId: string) => `taste-vec:${userId}`;
+
+async function loadKeptVectors(env: Env, userId: string): Promise<Map<string, Float32Array>> {
+    const out = new Map<string, Float32Array>();
+    try {
+        const raw = await env.TASTE_KV.get(likedVectorKey(userId));
+        if (!raw) return out;
+        const kept = JSON.parse(raw) as { ids: string[]; vectors: PackedVectors };
+        const flat = unpackInt8(kept.vectors);
+        kept.ids.forEach((id, i) => out.set(id, flat.subarray(i * VECTOR_DIM, (i + 1) * VECTOR_DIM)));
+    } catch {
+        // 깨진 기록은 없는 것과 같이 다룬다 — 다시 받아오면 된다.
+    }
+    return out;
+}
+
+async function saveKeptVectors(env: Env, userId: string, vectors: Map<string, Float32Array>): Promise<void> {
+    const ids = Array.from(vectors.keys()).slice(0, TASTE_ID_SCAN_CAP);
+    if (!ids.length) return;
+    try {
+        await env.TASTE_KV.put(likedVectorKey(userId), JSON.stringify({
+            ids,
+            vectors: packInt8(ids.map((id) => vectors.get(id)!)),
+        }));
+    } catch (err) {
+        console.warn('liked-vector cache put failed:', err);
+    }
+}
+
+/**
+ * SigLIP vectors for a like list, 20 ids per Vectorize call. Asking for 30 at a time
+ * used to fail every call silently, so anyone with more than 20 likes had no profile.
+ *
+ * The ids are taken in a fixed pseudo-random order: a long history is sampled from end
+ * to end rather than from its first page, and the same likes always give the same sample.
+ *
+ * Only the ids this user has no kept vector for are fetched; with a userId the merged set
+ * is kept again, so the next heart costs one lookup instead of the whole list.
+ */
+async function likedVectors(env: Env, userId: string | null, likedIds: string[]): Promise<{ vectors: Float32Array[]; failedCalls: number }> {
+    const ids = Array.from(new Set(likedIds.map(String).filter(Boolean)))
+        .sort((a, b) => fnv1a(a) - fnv1a(b) || (a < b ? -1 : 1))
+        .slice(0, TASTE_ID_SCAN_CAP);
+    const lookups = await Promise.all(ids.map((id) => effectiveVectorId(id)));
+
+    const kept = userId ? await loadKeptVectors(env, userId) : new Map<string, Float32Array>();
+    const missing = lookups.filter((id) => !kept.has(id));
+    const wanted = TASTE_SAMPLE_CAP - lookups.filter((id) => kept.has(id)).length;
+    let failedCalls = 0;
+    let fetched = 0;
+    if (missing.length && wanted > 0) {
+        const got = await vectorsForLookupIds(env, missing, wanted);
+        failedCalls = got.failedCalls;
+        fetched = got.found.size;
+        for (const [id, values] of got.found) kept.set(id, normalize(Float32Array.from(values)));
+    }
+
+    const vectors: Float32Array[] = [];
+    for (const id of lookups) {
+        const v = kept.get(id);
+        if (v && vectors.length < TASTE_SAMPLE_CAP) vectors.push(v);
+    }
+    if (userId && fetched) {
+        // 지금 좋아요한 것을 앞에 둔다 — 상한을 넘으면 오래된 기록부터 밀려난다.
+        const merged = new Map<string, Float32Array>();
+        for (const id of lookups) { const v = kept.get(id); if (v) merged.set(id, v); }
+        for (const [id, v] of kept) if (!merged.has(id)) merged.set(id, v);
+        await saveKeptVectors(env, userId, merged);
+    }
+    return { vectors, failedCalls };
+}
+
+/** Taste clusters for a like list, or no profile when none of the likes has a vector. */
+async function computeTasteProfile(env: Env, userId: string | null, likedIds: string[]): Promise<{ profile: TasteProfile | null; failedCalls: number }> {
+    const { vectors, failedCalls } = await likedVectors(env, userId, likedIds);
+    if (!vectors.length) return { profile: null, failedCalls };
+    const { centroids, weights } = kMeans(vectors, chooseK(vectors.length));
+    return {
+        failedCalls,
+        profile: {
+            centroids: centroids.map((c) => Array.from(c, (x) => Math.round(x * 1e6) / 1e6)),
+            weights: weights.map((w) => Math.round(w * 1e4) / 1e4),
+            k: centroids.length,
+            updatedAt: Date.now(),
+            likedCount: vectors.length,
+            likedHash: await likedHashOf(likedIds),
+            version: 2,
+        },
+    };
+}
+
+/**
+ * Kept without an expiry. The likes in Firestore are the source and this is their
+ * summary; /taste-scores rebuilds it whenever the like list changes, so it never goes stale.
+ */
+async function saveTasteProfile(env: Env, userId: string, profile: TasteProfile): Promise<void> {
+    await env.TASTE_KV.put(`taste:${userId}`, JSON.stringify(profile));
+}
+
+async function loadTasteProfile(env: Env, userId: string): Promise<TasteProfile | null> {
+    const raw = await env.TASTE_KV.get(`taste:${userId}`);
+    if (!raw) return null;
+    try {
+        return JSON.parse(raw) as TasteProfile;
+    } catch {
+        return null;
+    }
+}
+
+// ── 전시·상설 미술관 취향 데이터 ─────────────────────────────────────────
+// scripts/taste/build-taste-data.mjs 가 PUT /taste-data 로 올린다. 올릴 때마다 새 키에 쓰고
+// 매니페스트가 가리키는 키만 바꾼다. 매니페스트는 요청에서 몇 분 캐시되므로 직전 버전 하나를
+// 남겨 두어, 옛 매니페스트를 읽은 요청도 데이터를 찾게 한다.
+const TASTE_DATA_MANIFEST = 'taste-data:manifest';
+type TasteDataKind = 'exhibitions' | 'museums';
+
+interface TasteDataManifest {
+    current: Partial<Record<TasteDataKind, string>>;
+    previous: Partial<Record<TasteDataKind, string>>;
+}
+
+async function readTasteDataManifest(env: Env, cacheTtl?: number): Promise<TasteDataManifest> {
+    const raw = await env.TASTE_KV.get(TASTE_DATA_MANIFEST, cacheTtl ? { cacheTtl } : undefined);
+    const parsed = (raw ? JSON.parse(raw) : {}) as Partial<TasteDataManifest>;
+    return { current: parsed.current ?? {}, previous: parsed.previous ?? {} };
+}
+
+/** Unpacks an uploaded bundle; throws when it does not hold together, so a broken upload is refused. */
+function openTasteBundle(kind: TasteDataKind, bundle: unknown): OpenExhibitions | OpenMuseums {
+    return kind === 'exhibitions' ? openExhibitions(bundle as ExhibitionBundle) : openMuseums(bundle as MuseumBundle);
+}
+
+/** Bundles already unpacked in this isolate, one per kind, reused until the manifest names another key. */
+const openedTasteData = new Map<TasteDataKind, { key: string; data: OpenExhibitions | OpenMuseums }>();
+
+function loadTasteData(env: Env, kind: 'exhibitions', key: string | undefined): Promise<OpenExhibitions | null>;
+function loadTasteData(env: Env, kind: 'museums', key: string | undefined): Promise<OpenMuseums | null>;
+async function loadTasteData(env: Env, kind: TasteDataKind, key: string | undefined): Promise<OpenExhibitions | OpenMuseums | null> {
+    if (!key) return null;
+    const opened = openedTasteData.get(kind);
+    if (opened?.key === key) return opened.data;
+    // A versioned key never changes, so the edge may keep it for long.
+    const raw = await env.TASTE_KV.get(key, { cacheTtl: 3600 });
+    if (!raw) return null;
+    const data = openTasteBundle(kind, JSON.parse(raw));
+    openedTasteData.set(kind, { key, data });
+    return data;
+}
+
+/** Maintenance routes need the ADMIN_TOKEN secret in `x-admin-token`; without the secret they stay closed. */
+/** A search as one line on the trending board: lower-case, letters and digits of any script, single spaces. */
+function searchKey(term: string): string {
+    return term.toLowerCase().normalize('NFC').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+}
+
+function isAdminRequest(request: Request, env: Env): boolean {
+    const given = new TextEncoder().encode(request.headers.get('x-admin-token') ?? '');
+    const expected = new TextEncoder().encode(env.ADMIN_TOKEN ?? '');
+    return expected.byteLength > 0 && given.byteLength === expected.byteLength && crypto.subtle.timingSafeEqual(given, expected);
+}
+
+// ── 요금 상한: IP별 속도 제한 + 전 세계 하루 총량 ─────────────────────────
+// Cloudflare 예산 알림도 구글 예산도 청구를 멈추지 않는다(알림 메일뿐). 그래서 돈이 드는 공개 라우트는
+// 워커가 직접 막는다. IP별 제한은 한 곳에서 몰아 쓰는 것을, 하루 총량은 여러 IP 로 나눠 두드려도
+// 한 달 청구가 정해진 선을 넘지 않게 하는 것을 맡는다. 관리 토큰이 있는 요청(빌드 스크립트)은 세지 않는다.
+const METERED_ROUTES = new Set([
+    '/search-by-text', '/search-by-text-jina', '/search-by-vector', '/encode',
+    '/recommend', '/recommend-by-id', '/taste-profile', '/taste-scores', '/warm-jina',
+]);
+/**
+ * Metered requests allowed per day (Korea time) across the whole world, and a second, much
+ * tighter allowance for the routes that wake the Jina encoder. One precise search runs a
+ * 4 vCPU instance for seconds, so it costs about forty times a cached lookup; counting
+ * requests alone would let a few hundred of them outspend a whole day of ordinary use.
+ *
+ * Sized for the first target of ~1,000 people a day (about 30 requests each) inside
+ * roughly $30 a month, of which about $20 is fixed (Workers base + the vector index).
+ */
+const DAILY_REQUEST_BUDGET = 30000;
+const DAILY_JINA_BUDGET = 300;
+const JINA_ROUTES = new Set(['/search-by-text-jina', '/warm-jina']);
+
+/** A 429 response when this address is asking too often, otherwise null. */
+async function ipLimited(request: Request, env: Env): Promise<Response | null> {
+    if (!env.RATE_LIMITER) return null;
+    let limited = false;
+    try {
+        limited = !(await env.RATE_LIMITER.limit({ key: request.headers.get('cf-connecting-ip') ?? 'unknown' })).success;
+    } catch (err: any) {
+        // 속도 제한 기능이 잠깐 안 되면 막지 않는다 (하루 총량 카운터와 같은 선택).
+        console.warn(`[rate-limit] unavailable: ${err?.message}`);
+    }
+    if (!limited) return null;
+    return Response.json(
+        { error: 'rate_limited', message: '요청이 너무 잦아요. 잠시 후 다시 시도해 주세요.' },
+        { status: 429, headers: { ...corsHeaders, 'Retry-After': '60' } },
+    );
+}
+
+/** A 429 response when this request is over a limit, otherwise null. */
+async function meterRequest(request: Request, env: Env): Promise<Response | null> {
+    if (isAdminRequest(request, env)) return null;
+    const perIp = await ipLimited(request, env);
+    if (perIp) return perIp;
+    if (env.DAILY_BUDGET) {
+        try {
+            const counter = env.DAILY_BUDGET.get(env.DAILY_BUDGET.idFromName('global'));
+            const buckets = [`all:${DAILY_REQUEST_BUDGET}`];
+            if (JINA_ROUTES.has(new URL(request.url).pathname)) buckets.push(`jina:${DAILY_JINA_BUDGET}`);
+            const res = await counter.fetch(`https://daily-budget/consume?${buckets.map((b) => `b=${b}`).join('&')}`);
+            const { allowed, full, retryAfter } = await res.json() as { allowed: boolean; full?: string; retryAfter: number };
+            if (!allowed) {
+                return Response.json(
+                    {
+                        error: 'daily_limit',
+                        message: full === 'jina'
+                            ? '오늘 처리할 수 있는 정밀 검색이 모두 찼어요. 빠른 검색은 그대로 쓸 수 있어요.'
+                            : '오늘 처리할 수 있는 AI 요청이 모두 찼어요. 한국 시간 자정 뒤에 다시 시도해 주세요.',
+                    },
+                    { status: 429, headers: { ...corsHeaders, 'Retry-After': String(retryAfter) } },
+                );
+            }
+        } catch (err: any) {
+            // 카운터가 잠깐 응답하지 않으면 막지 않고 통과시킨다. 상한보다 서비스가 멈추지 않는 쪽을 택한다.
+            console.warn(`[daily-budget] counter unavailable: ${err?.message}`);
+        }
+    }
+    return null;
+}
+
+/**
+ * One counter for the whole world, reset at midnight Korea time. It keeps the classic
+ * fetch interface rather than RPC, so the worker's 2024-01-01 compatibility date still works.
+ */
+export class DailyBudget {
+    constructor(private readonly state: DurableObjectState) {}
+
+    async fetch(request: Request): Promise<Response> {
+        const url = new URL(request.url);
+        // Each `b` is "bucket:limit". A request counts against every bucket it names and is
+        // refused when any one of them is full, so one counter can hold both the whole-day
+        // allowance and the tighter one for the expensive routes.
+        const asked = url.searchParams.getAll('b')
+            .map((b) => b.split(':'))
+            .map(([name, limit]) => ({ name, limit: Number(limit) }))
+            .filter((b) => b.name && Number.isFinite(b.limit));
+        const koreaNow = Date.now() + 9 * 3600_000;
+        const day = new Date(koreaNow).toISOString().slice(0, 10);
+        const retryAfter = Math.ceil((86_400_000 - (koreaNow % 86_400_000)) / 1000);
+        const saved = await this.state.storage.get<{ day: string; used: Record<string, number> }>('budget');
+        const used: Record<string, number> = saved?.day === day ? { ...saved.used } : {};
+        if (url.pathname === '/status') {
+            return Response.json({ day, used, limits: { all: DAILY_REQUEST_BUDGET, jina: DAILY_JINA_BUDGET }, retryAfter });
+        }
+        const full = asked.find((b) => (used[b.name] ?? 0) >= b.limit);
+        if (full) return Response.json({ allowed: false, full: full.name, used, retryAfter });
+        for (const b of asked) used[b.name] = (used[b.name] ?? 0) + 1;
+        await this.state.storage.put('budget', { day, used });
+        return Response.json({ allowed: true, used, retryAfter });
+    }
+}
+
+/** Headers for the Jina text encoder on Cloud Run, which takes a bearer token like the SigLIP one. */
+function jinaEncoderHeaders(env: Env): Record<string, string> {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    if (env.JINA_ENCODER_TOKEN) headers['Authorization'] = `Bearer ${env.JINA_ENCODER_TOKEN}`;
+    return headers;
 }
 
 // ============================================================
@@ -727,55 +1014,36 @@ async function queryWithMetadata(
 // ============================================================
 export default {
     /**
-     * 매 4분마다 인코더 두 개를 모두 warm 유지 → cold start 회피.
-     *  - Jina (Cloud Run/Modal, min=0): /warmup
-     *  - SigLIP (self-host, SIGLIP_ENDPOINT_URL): 실제 /encode 한 번.
+     * 매 4분마다 SigLIP 인코더를 warm 유지 → 기본 "빠름" 검색의 cold start 회피.
+     * SigLIP(self-host, SIGLIP_ENDPOINT_URL)은 실제 /encode 한 번으로 모델까지 데운다.
      *
-     * 이전엔 Jina만 warm 시켰다. 그래서 SigLIP(기본 "빠름" 엔진)은 idle 시
+     * 예전엔 Jina만 warm 시켰다. 그래서 SigLIP(기본 "빠름" 엔진)은 idle 시
      * 컨테이너가 잠들고, 첫 검색이 30~60초 cold start → 클라이언트 12초 타임아웃을
-     * 넘겨 "결과 없음"으로 보였다. Jina(정밀)는 warm이라 정상 동작 → "정밀만 됨"
-     * 증상의 원인. 두 인코더를 함께 데워 SigLIP도 항상 빠르게 응답하도록 한다.
-     * CF Workers scheduled = 무료 무제한이라 비용 0.
+     * 넘겨 "결과 없음"으로 보였다. 그 뒤로 두 인코더를 함께 데웠다.
+     * 2026-09-15부터 Jina(정밀)는 데우지 않는다. 한 주 요청 약 2,500건이 거의 전부 워밍이었을 만큼
+     * 드물게 쓰여서, 앱이 정밀 검색을 켜는 순간 /warm-jina 로 깨운다.
      */
     async scheduled(_event: ScheduledEvent, env: Env, _ctx: ExecutionContext): Promise<void> {
-        const warmJina = async () => {
-            const url = env.JINA_TEXT_ENCODER_URL;
-            if (!url) return;
-            try {
-                const ctl = new AbortController();
-                const timer = setTimeout(() => ctl.abort(), 25000);
-                const r = await fetch(`${url}/warmup`, { signal: ctl.signal });
-                clearTimeout(timer);
-                console.log(`[warmup:jina] HTTP ${r.status}`);
-            } catch (err: any) {
-                console.warn(`[warmup:jina] failed: ${err.message}`);
-            }
-        };
-
         // A real /encode keeps the model hot (a bare health check may not touch
         // the model), which is what the search path actually needs warm.
-        const warmSigLIP = async () => {
-            const base = env.SIGLIP_ENDPOINT_URL;
-            if (!base) return;
-            try {
-                const headers: Record<string, string> = { 'Content-Type': 'application/json' };
-                if (env.SIGLIP_ENDPOINT_TOKEN) headers['Authorization'] = `Bearer ${env.SIGLIP_ENDPOINT_TOKEN}`;
-                const ctl = new AbortController();
-                const timer = setTimeout(() => ctl.abort(), 25000);
-                const r = await fetch(`${base.replace(/\/+$/, '')}/encode`, {
-                    method: 'POST',
-                    headers,
-                    body: JSON.stringify({ text: 'warm' }),
-                    signal: ctl.signal,
-                });
-                clearTimeout(timer);
-                console.log(`[warmup:siglip] HTTP ${r.status}`);
-            } catch (err: any) {
-                console.warn(`[warmup:siglip] failed: ${err.message}`);
-            }
-        };
-
-        await Promise.all([warmJina(), warmSigLIP()]);
+        const base = env.SIGLIP_ENDPOINT_URL;
+        if (!base) return;
+        try {
+            const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+            if (env.SIGLIP_ENDPOINT_TOKEN) headers['Authorization'] = `Bearer ${env.SIGLIP_ENDPOINT_TOKEN}`;
+            const ctl = new AbortController();
+            const timer = setTimeout(() => ctl.abort(), 25000);
+            const r = await fetch(`${base.replace(/\/+$/, '')}/encode`, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify({ text: 'warm' }),
+                signal: ctl.signal,
+            });
+            clearTimeout(timer);
+            console.log(`[warmup:siglip] HTTP ${r.status}`);
+        } catch (err: any) {
+            console.warn(`[warmup:siglip] failed: ${err.message}`);
+        }
     },
 
     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -786,6 +1054,11 @@ export default {
         const url = new URL(request.url);
 
         try {
+            // 돈이 드는 공개 라우트는 속도 제한과 하루 총량을 먼저 통과해야 한다 (meterRequest).
+            if (request.method === 'POST' && METERED_ROUTES.has(url.pathname)) {
+                const refusal = await meterRequest(request, env);
+                if (refusal) return refusal;
+            }
 
             // ──────────────────────────────────────────────
             // POST /search-by-text
@@ -806,10 +1079,9 @@ export default {
                 const trimmed = text.trim();
 
                 // ── Jina path (auto/jina) ──
-                // 인코더는 외부(Modal). 5초 timeout. 실패 시 SigLIP로 fallback.
-                if (engine !== 'siglip' && env.VECTORIZE_JINA) {
-                    const encoderUrl = env.JINA_TEXT_ENCODER_URL
-                        || 'https://kimchanyeong89--jina-text-encoder-textencoder-encode.modal.run';
+                // 인코더는 Cloud Run(토큰 필요, 평소 꺼져 있음). 30초 안에 답이 없으면 SigLIP 로 fallback.
+                if (engine !== 'siglip' && env.VECTORIZE_JINA && env.JINA_TEXT_ENCODER_URL) {
+                    const encoderUrl = env.JINA_TEXT_ENCODER_URL;
 
                     // 1) 검색 결과 통째 캐시 (인코더 + Vectorize 둘 다 건너뜀)
                     const resultsCacheKey = `jina:res:${trimmed}:${Math.min(limit, 100)}`;
@@ -832,18 +1104,19 @@ export default {
                             // 30초 — Cloud Run cold start (min=0) 시 ~20초 모델 로드 허용.
                             // warm 상태면 보통 1-3초.
                             const timer = setTimeout(() => ctl.abort(), 30000);
-                            const enc = await fetch(encoderUrl, {
+                            const encoding = fetch(encoderUrl, {
                                 method: 'POST',
-                                headers: { 'Content-Type': 'application/json' },
+                                headers: jinaEncoderHeaders(env),
                                 body: JSON.stringify({ text: trimmed }),
                                 signal: ctl.signal,
-                            });
-                            clearTimeout(timer);
-                            if (enc.ok) {
-                                const data = await enc.json() as { vectors?: number[][] };
-                                vec = data.vectors?.[0] ?? null;
-                                if (vec) ctx.waitUntil(putCachedVector(env, cacheKey, vec));
-                            }
+                            })
+                                .then(async (enc) => (enc.ok ? ((await enc.json()) as { vectors?: number[][] }).vectors?.[0] ?? null : null))
+                                .catch(() => null)
+                                .finally(() => clearTimeout(timer));
+                            // 인코더는 평소 꺼져 있어(비용) 깨는 데 20초쯤 걸린다. 8초 안에 답이 없으면 사용자를 세워 두지 않고
+                            // 아래 SigLIP 결과를 먼저 준다. 인코딩은 뒤에서 끝까지 이어져 벡터가 캐시에 남고, 인코더도 깨어 있게 된다.
+                            vec = await Promise.race([encoding, new Promise<null>((resolve) => setTimeout(() => resolve(null), 8000))]);
+                            ctx.waitUntil(encoding.then((v) => (v ? putCachedVector(env, cacheKey, v) : undefined)));
                         }
                         if (vec) {
                             const safeTopK = Math.min(limit, 100);
@@ -967,15 +1240,17 @@ export default {
                     return Response.json({ error: 'text must be at least 2 characters' }, { status: 400, headers: corsHeaders });
                 }
                 const trimmed = text.trim();
-                const encoderUrl = env.JINA_TEXT_ENCODER_URL
-                    || 'https://kimchanyeong89--jina-text-encoder-textencoder-encode.modal.run';
+                const encoderUrl = env.JINA_TEXT_ENCODER_URL;
+                if (!encoderUrl) {
+                    return Response.json({ error: 'JINA_TEXT_ENCODER_URL not configured' }, { status: 503, headers: corsHeaders });
+                }
 
-                // 1) Modal text encoder 호출 → 1024D vector
+                // 1) Jina 텍스트 인코더(Cloud Run, 토큰) 호출 → 1024D vector
                 let vector: number[];
                 try {
                     const enc = await fetch(encoderUrl, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: jinaEncoderHeaders(env),
                         body: JSON.stringify({ text: trimmed }),
                     });
                     if (!enc.ok) {
@@ -1197,6 +1472,12 @@ export default {
                 const { id, limit = 6 } = await request.json() as { id: string; limit?: number };
                 if (!id) return Response.json({ error: 'ID is required' }, { status: 400, headers: corsHeaders });
 
+                // 같은 작품의 닮은 작품은 누가 물어도 답이 같다. 작품 상세를 열 때마다 불리는 라우트라,
+                // 캐시가 없으면 인기 작품 하나가 볼 때마다 벡터 검색을 다시 돌린다.
+                const recCacheKey = `rec-by-id:${id}:${limit}`;
+                const cachedRec = await getCachedSearchResults(env, recCacheKey);
+                if (cachedRec) return Response.json({ results: cachedRec, cached: true }, { headers: corsHeaders });
+
                 try {
                     // Translate long original IDs to their internal short alias.
                     // For ≤64-byte IDs this is a no-op (returns input unchanged).
@@ -1218,14 +1499,15 @@ export default {
                         return true;
                     });
                     const matches = diversify(candidates, limit);
-                    return Response.json({
-                        results: matches.map((m) => {
-                            const md = m.metadata || {};
-                            const original = typeof md.o === 'string' ? md.o : '';
-                            const { o, ...rest } = md as any;
-                            return { id: original || m.id, score: m.score, ...rest };
-                        })
-                    }, { headers: corsHeaders });
+                    const results = matches.map((m) => {
+                        const md = m.metadata || {};
+                        const original = typeof md.o === 'string' ? md.o : '';
+                        const { o, ...rest } = md as any;
+                        return { id: original || m.id, score: m.score, ...rest };
+                    });
+                    // 빈 답은 넣지 않는다 — 임베딩이 나중에 들어오면 바로 반영되어야 한다.
+                    if (results.length) ctx.waitUntil(putCachedSearchResults(env, recCacheKey, results));
+                    return Response.json({ results }, { headers: corsHeaders });
                 } catch (err: any) {
                     return Response.json({ results: [] }, { headers: corsHeaders });
                 }
@@ -1247,48 +1529,66 @@ export default {
                     return Response.json({ error: 'likedIds array required' }, { status: 400, headers: corsHeaders });
                 }
 
-                // Vectorize에서 하트 작품 벡터 fetch (배치로)
-                // 많은 하트 중 앞쪽이 임베딩 없을 수 있어 셔플 후 시도
-                const shuffledIds = [...likedIds].sort(() => Math.random() - 0.5);
-                const BATCH = 30; // Vectorize getByIds 배치 크기
-                const allVecs: number[][] = [];
-                for (let i = 0; i < Math.min(shuffledIds.length, TASTE_ID_SCAN_CAP); i += BATCH) {
-                    const batch = shuffledIds.slice(i, i + BATCH);
-                    try {
-                        const fetched = await env.VECTORIZE.getByIds(batch);
-                        for (const rec of fetched) {
-                            if (rec.values && rec.values.length === VECTOR_DIM) {
-                                allVecs.push(rec.values);
-                            }
-                        }
-                    } catch {
-                        // 배치 오류 시 스킵
-                    }
-                    if (allVecs.length >= TASTE_SAMPLE_CAP) break; // 표본 상한 도달 시 조기 종료
+                // 좋아요를 누르면 검색바(/taste-profile)와 취향 점수(/taste-scores)가 함께 부른다.
+                // 좋아요 목록이 그대로면 저장된 프로필을 다시 만들지 않는다.
+                const stored = await loadTasteProfile(env, userId);
+                if (stored?.weights && stored.likedHash === await likedHashOf(likedIds)) {
+                    return Response.json({ success: true, k: stored.k, likedCount: stored.likedCount, failedCalls: 0, unchanged: true }, { headers: corsHeaders });
                 }
 
-                if (allVecs.length === 0) {
-                    return Response.json({ error: 'No vectors found for likedIds' }, { status: 404, headers: corsHeaders });
+                const { profile, failedCalls } = await computeTasteProfile(env, userId, likedIds);
+                if (!profile) {
+                    return Response.json({ error: 'No vectors found for likedIds', failedCalls }, { status: 404, headers: corsHeaders });
+                }
+                // 조회가 일부 실패해 만든 프로필은 저장하지 않는다 (/taste-scores 와 같은 규칙).
+                if (failedCalls === 0) await saveTasteProfile(env, userId, profile);
+
+                return Response.json({ success: true, k: profile.k, likedCount: profile.likedCount, failedCalls }, { headers: corsHeaders });
+            }
+
+            // ──────────────────────────────────────────────
+            // POST /taste-scores
+            // 좋아요 목록 → 지금 전시마다 취향 일치(1~99)와, 취향 작품이 몰린 상설 미술관(배수).
+            // Body: { userId: string, likedIds: string[] }
+            // 저장된 프로필이 이 좋아요 목록으로 만든 것이 아니면(likedHash) 다시 만들어 저장한다.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/taste-scores' && request.method === 'POST') {
+                const { userId, likedIds } = await request.json() as { userId?: string; likedIds?: string[] };
+                if (!userId || typeof userId !== 'string' || !Array.isArray(likedIds)) {
+                    return Response.json({ error: 'userId and likedIds array required' }, { status: 400, headers: corsHeaders });
+                }
+                const noScores = { exhibitions: {}, museums: [], likedCount: 0 };
+                if (likedIds.length === 0) return Response.json(noScores, { headers: corsHeaders });
+
+                const likedHash = await likedHashOf(likedIds);
+                let profile = await loadTasteProfile(env, userId);
+                if (!profile?.weights || profile.likedHash !== likedHash) {
+                    const built = await computeTasteProfile(env, userId, likedIds);
+                    profile = built.profile;
+                    // 조회가 일부 실패해 만든 프로필은 저장하지 않는다. 같은 해시로 굳으면 다시 만들 기회가 없다.
+                    if (profile && built.failedCalls === 0) ctx.waitUntil(saveTasteProfile(env, userId, profile));
+                }
+                if (!profile?.centroids.length || !profile.weights) {
+                    return Response.json({ ...noScores, reason: 'no_vectors' }, { headers: corsHeaders });
                 }
 
-                // K 결정 + K-Means
-                const k = chooseK(allVecs.length);
-                const centroids = kMeans(allVecs, k);
-
-                const profile: TasteProfile = {
-                    centroids,
-                    k,
-                    updatedAt: Date.now(),
-                    likedCount: allVecs.length,
-                };
-
-                if (env.TASTE_KV) {
-                    await env.TASTE_KV.put(`taste:${userId}`, JSON.stringify(profile), {
-                        expirationTtl: TASTE_KV_TTL,
-                    });
+                const manifest = await readTasteDataManifest(env, 300);
+                const [exhibitionData, museumData] = await Promise.all([
+                    loadTasteData(env, 'exhibitions', manifest.current.exhibitions),
+                    loadTasteData(env, 'museums', manifest.current.museums),
+                ]);
+                const taste = { centroids: profile.centroids.map((c) => Float32Array.from(c)), weights: profile.weights };
+                const exhibitions: Record<string, number> = {};
+                if (exhibitionData) {
+                    const percents = exhibitionPercents(taste, profile.likedCount, exhibitionData);
+                    exhibitionData.items.forEach((item, i) => { exhibitions[item.id] = percents[i]; });
                 }
-
-                return Response.json({ success: true, k, likedCount: allVecs.length }, { headers: corsHeaders });
+                return Response.json({
+                    exhibitions,
+                    museums: museumData ? museumMatches(taste, profile.likedCount, museumData) : [],
+                    likedCount: profile.likedCount,
+                    dataVersions: { exhibitions: exhibitionData?.version ?? null, museums: museumData?.version ?? null },
+                }, { headers: corsHeaders });
             }
 
             // ──────────────────────────────────────────────
@@ -1310,32 +1610,12 @@ export default {
                     return Response.json({ error: 'userId required' }, { status: 400, headers: corsHeaders });
                 }
 
-                // KV에서 취향 프로파일 로드
-                let profile: TasteProfile | null = null;
-                if (env.TASTE_KV) {
-                    const raw = await env.TASTE_KV.get(`taste:${userId}`);
-                    if (raw) {
-                        try { profile = JSON.parse(raw); } catch { /* 손상된 데이터 무시 */ }
-                    }
-                }
+                let profile = await loadTasteProfile(env, userId);
 
-                // 프로파일 없으면 즉석 계산 (첫 요청 대응 — 셔플로 벡터 없는 IDs 우회)
+                // 저장된 프로파일이 없으면 즉석으로만 계산한다. 이 호출은 좋아요의 일부(시드)만
+                // 보내므로, 저장하면 사용자의 전체 취향을 일부로 덮어쓰게 된다.
                 if (!profile && likedIds?.length >= 1) {
-                    const shuffled = [...likedIds].sort(() => Math.random() - 0.5);
-                    const vecs: number[][] = [];
-                    for (let i = 0; i < Math.min(shuffled.length, TASTE_ID_SCAN_CAP); i += 30) {
-                        try {
-                            const batch = await env.VECTORIZE.getByIds(shuffled.slice(i, i + 30));
-                            for (const rec of batch) {
-                                if (rec.values?.length === VECTOR_DIM) vecs.push(rec.values);
-                            }
-                        } catch { /* skip */ }
-                        if (vecs.length >= TASTE_SAMPLE_CAP) break; // 표본 상한 도달 시 조기 종료
-                    }
-                    if (vecs.length > 0) {
-                        const k = chooseK(vecs.length);
-                        profile = { centroids: kMeans(vecs, k), k, updatedAt: Date.now(), likedCount: vecs.length };
-                    }
+                    profile = (await computeTasteProfile(env, userId, likedIds)).profile;
                 }
 
                 if (!profile || !profile.centroids?.length) {
@@ -1347,11 +1627,19 @@ export default {
                 // centroid마다 스케일이 다르다(밀집 군집=고점수, 느슨한 군집=저점수).
                 // 그대로 정렬하면 가장 밀집된 한 군집이 상위를 독식한다.
                 // → 군집별 리스트를 따로 보관해 라운드로빈으로 인터리브한다.
+                // 비중이 큰 군집 8개만 검색한다. 군집마다 벡터 검색이 한 번씩이라, 좋아요가 많아
+                // 군집이 24개까지 늘어난 사용자는 추천 한 번에 벡터 검색을 24번 하고 있었다.
+                const maxClusters = 8;
+                const weights = profile.weights ?? [];
+                const clusters = profile.centroids
+                    .map((_, ci) => ci)
+                    .sort((a, b) => (weights[b] ?? 0) - (weights[a] ?? 0))
+                    .slice(0, maxClusters);
                 const likedSet = new Set(likedIds ?? []);
-                const perK     = Math.ceil((limit * 3) / profile.centroids.length);
+                const perK     = Math.ceil((limit * 3) / clusters.length);
                 const perCentroid: VectorMatch[][] = [];
 
-                for (let ci = 0; ci < profile.centroids.length; ci++) {
+                for (const ci of clusters) {
                     let searchVec = profile.centroids[ci];
 
                     // 테마 벡터 혼합 (주간 전시 모드)
@@ -1364,7 +1652,8 @@ export default {
 
                     try {
                         const res = await env.VECTORIZE.query(searchVec, {
-                            topK: Math.min(perK + Math.min(likedIds?.length ?? 0, 200), 100),
+                            // 메타데이터를 함께 받으면 Vectorize 는 topK 50까지만 허용한다(넘으면 예외 → 이 군집이 빈 결과).
+                            topK: Math.min(perK + Math.min(likedIds?.length ?? 0, 200), 50),
                             returnMetadata: true,
                         });
                         const list = res.matches
@@ -1407,6 +1696,56 @@ export default {
             // Returns artworks whose name / artist / museum matches the query
             // tokens.  Server-side replacement for the 170MB client-side text
             // index — first results in <200ms, no chunk download required.
+            // ──────────────────────────────────────────────
+            // POST /search-hit   { term }
+            // GET  /trending
+            // ──────────────────────────────────────────────
+            // The "trending now" board. A search counts once it has shown
+            // results (the app decides that), and the board is the eight
+            // most-searched terms of the past week, each with where it stood
+            // the week before. Days are Korea time, as the daily budget's are.
+            if (url.pathname === '/search-hit' && request.method === 'POST') {
+                if (!env.DB) return Response.json({ ok: false }, { status: 503, headers: corsHeaders });
+                const perIp = await ipLimited(request, env);
+                if (perIp) return perIp;
+                let body: { term?: string };
+                try { body = await request.json() as any; }
+                catch { return Response.json({ error: 'Invalid JSON' }, { status: 400, headers: corsHeaders }); }
+                const term = String(body?.term || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+                const key = searchKey(term);
+                if (key.length < 2) return Response.json({ ok: false }, { headers: corsHeaders });
+                const day = new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10);
+                ctx.waitUntil(
+                    env.DB.prepare(
+                        'INSERT INTO search_hits (key, day, term, count) VALUES (?1, ?2, ?3, 1) ' +
+                        'ON CONFLICT(key, day) DO UPDATE SET count = count + 1, term = ?3',
+                    ).bind(key, day, term).run().catch((err: any) => console.warn(`[search-hit] ${err?.message}`)),
+                );
+                return Response.json({ ok: true }, { headers: corsHeaders });
+            }
+
+            if (url.pathname === '/trending' && request.method === 'GET') {
+                if (!env.DB) return Response.json({ terms: [] }, { headers: corsHeaders });
+                const dayOf = (daysAgo: number) => new Date(Date.now() + 9 * 3600_000 - daysAgo * 86_400_000).toISOString().slice(0, 10);
+                const top = (from: string, to: string, limit: number) => env.DB!.prepare(
+                    'SELECT key, MAX(term) AS term, SUM(count) AS hits FROM search_hits ' +
+                    'WHERE day BETWEEN ?1 AND ?2 GROUP BY key ORDER BY hits DESC, key LIMIT ?3',
+                ).bind(from, to, limit).all() as Promise<{ results?: Array<{ key: string; term: string; hits: number }> }>;
+                try {
+                    const [week, before] = await Promise.all([top(dayOf(6), dayOf(0), 8), top(dayOf(13), dayOf(7), 30)]);
+                    const previousRank = new Map((before.results || []).map((row, i) => [row.key, i + 1]));
+                    const terms = (week.results || []).map((row, i) => ({
+                        term: row.term,
+                        hits: Number(row.hits) || 0,
+                        rank: i + 1,
+                        previousRank: previousRank.get(row.key) ?? null,
+                    }));
+                    return Response.json({ terms }, { headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=60' } });
+                } catch (err: any) {
+                    return Response.json({ terms: [], error: err?.message || String(err) }, { status: 500, headers: corsHeaders });
+                }
+            }
+
             if (url.pathname === '/search-text' && request.method === 'POST') {
                 if (!env.DB) {
                     return Response.json(
@@ -1562,6 +1901,66 @@ export default {
             }
 
             // ──────────────────────────────────────────────
+            // POST /vectors-by-ids   (관리용: x-admin-token)
+            // 취향 데이터 빌드 스크립트가 로컬에 없는 작품의 SigLIP 벡터를 받아 간다.
+            // Body: { ids: string[] } (1~200개) → { vectors: { [id]: number[] }, failedCalls }
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/vectors-by-ids' && request.method === 'POST') {
+                if (!isAdminRequest(request, env)) {
+                    return Response.json({ error: 'unauthorized' }, { status: 401, headers: corsHeaders });
+                }
+                const { ids } = await request.json() as { ids?: string[] };
+                if (!Array.isArray(ids) || ids.length === 0 || ids.length > 200) {
+                    return Response.json({ error: 'ids array of 1-200 required' }, { status: 400, headers: corsHeaders });
+                }
+                const originals = ids.map(String);
+                const lookups = await Promise.all(originals.map((id) => effectiveVectorId(id)));
+                const { found, failedCalls } = await vectorsForLookupIds(env, lookups);
+                const vectors: Record<string, number[]> = {};
+                lookups.forEach((lookup, i) => {
+                    const values = found.get(lookup);
+                    if (values) vectors[originals[i]] = values.map((x) => Math.round(x * 1e6) / 1e6);
+                });
+                return Response.json({ vectors, failedCalls }, { headers: corsHeaders });
+            }
+
+            // ──────────────────────────────────────────────
+            // PUT /taste-data?kind=exhibitions|museums   (관리용: x-admin-token)
+            // 빌드 스크립트가 만든 묶음을 버전 키에 쓰고 매니페스트를 바꾼다. 열어 보아 깨진 묶음은 거절한다.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/taste-data' && request.method === 'PUT') {
+                if (!isAdminRequest(request, env)) {
+                    return Response.json({ error: 'unauthorized' }, { status: 401, headers: corsHeaders });
+                }
+                const kind = url.searchParams.get('kind');
+                if (kind !== 'exhibitions' && kind !== 'museums') {
+                    return Response.json({ error: 'kind must be exhibitions or museums' }, { status: 400, headers: corsHeaders });
+                }
+                const raw = await request.text();
+                let version: string;
+                try {
+                    const bundle = JSON.parse(raw) as { version?: unknown };
+                    if (typeof bundle.version !== 'string' || !/^[\w.-]{1,64}$/.test(bundle.version)) throw new Error('version missing or malformed');
+                    openTasteBundle(kind, bundle);
+                    version = bundle.version;
+                } catch (err: any) {
+                    return Response.json({ error: `invalid bundle: ${err.message}` }, { status: 400, headers: corsHeaders });
+                }
+
+                const key = `taste-data:${kind}:${version}`;
+                await env.TASTE_KV.put(key, raw);
+                const manifest = await readTasteDataManifest(env);
+                const retired = manifest.previous[kind];
+                if (manifest.current[kind] !== key) {
+                    manifest.previous[kind] = manifest.current[kind];
+                    manifest.current[kind] = key;
+                    await env.TASTE_KV.put(TASTE_DATA_MANIFEST, JSON.stringify(manifest));
+                    if (retired && retired !== key && retired !== manifest.previous[kind]) ctx.waitUntil(env.TASTE_KV.delete(retired));
+                }
+                return Response.json({ success: true, key, bytes: raw.length }, { headers: corsHeaders });
+            }
+
+            // ──────────────────────────────────────────────
             // POST /check-ids
             // ──────────────────────────────────────────────
             if (url.pathname === '/check-ids' && request.method === 'POST') {
@@ -1703,6 +2102,39 @@ export default {
             }
 
             // ──────────────────────────────────────────────
+            // POST /warm-jina
+            // 앱이 정밀 검색을 켜는 순간 부른다. 평소 꺼져 있는 Jina 인코더를 미리 깨워 첫 검색의 대기를 줄인다.
+            // 요금 상한(속도 제한·하루 총량)을 거친다.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/warm-jina' && request.method === 'POST') {
+                const encoderUrl = env.JINA_TEXT_ENCODER_URL;
+                if (encoderUrl) {
+                    ctx.waitUntil(
+                        fetch(`${encoderUrl.replace(/\/+$/, '')}/warmup`, { headers: jinaEncoderHeaders(env) })
+                            .then((r) => console.log(`[warm-jina] HTTP ${r.status}`))
+                            .catch((err) => console.warn(`[warm-jina] failed: ${err?.message}`)),
+                    );
+                }
+                return Response.json({ warming: !!encoderUrl }, { headers: corsHeaders });
+            }
+
+            // ──────────────────────────────────────────────
+            // GET /budget-status   (관리용: x-admin-token)
+            // 오늘(한국 시간) 요금 상한 카운터가 얼마나 찼는지.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/budget-status' && request.method === 'GET') {
+                if (!isAdminRequest(request, env)) {
+                    return Response.json({ error: 'unauthorized' }, { status: 401, headers: corsHeaders });
+                }
+                if (!env.DAILY_BUDGET) {
+                    return Response.json({ error: 'DAILY_BUDGET not configured' }, { status: 503, headers: corsHeaders });
+                }
+                const counter = env.DAILY_BUDGET.get(env.DAILY_BUDGET.idFromName('global'));
+                const res = await counter.fetch('https://daily-budget/status');
+                return Response.json({ ...(await res.json() as object), rateLimiter: Boolean(env.RATE_LIMITER) }, { headers: corsHeaders });
+            }
+
+            // ──────────────────────────────────────────────
             // GET /status
             // ──────────────────────────────────────────────
             if (url.pathname === '/status') {
@@ -1716,13 +2148,13 @@ export default {
                     selfHostConfigured: !!env.SIGLIP_ENDPOINT_URL,
                     queryCache: env.TASTE_KV ? `KV (TTL ${QUERY_CACHE_TTL}s)` : 'disabled',
                     vectorize: 'armin-art-search-768',
-                    features: ['search-text', 'search-by-text', 'search-by-vector', 'encode', 'taste-profile', 'recommend'],
+                    features: ['search-text', 'search-by-text', 'search-by-vector', 'encode', 'taste-profile', 'taste-scores', 'recommend'],
                     d1Enabled: !!env.DB,
                 }, { headers: corsHeaders });
             }
 
             return Response.json(
-                { error: 'Not found. Endpoints: /search-text, /search-by-text, /search-by-vector, /encode, /upsert, /encode-and-upsert, /refresh-metadata, /recommend-by-id, /taste-profile, /recommend, /check-ids, /delete-ids, /status' },
+                { error: 'Not found. Endpoints: /search-text, /search-by-text, /search-by-vector, /encode, /upsert, /encode-and-upsert, /refresh-metadata, /recommend-by-id, /taste-profile, /taste-scores, /recommend, /check-ids, /delete-ids, /status' },
                 { status: 404, headers: corsHeaders }
             );
 

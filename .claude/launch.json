@@ -4,26 +4,148 @@
     {
       "name": "Dev Server",
       "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
-      "runtimeArgs": ["/Users/kietzsche/armin-web-main/node_modules/.bin/vite", "--port", "5190", "--strictPort"],
+      "runtimeArgs": [
+        "/Users/kietzsche/armin-web-main/node_modules/.bin/vite",
+        "--port",
+        "5190",
+        "--strictPort"
+      ],
       "port": 5190
     },
     {
       "name": "Preview",
       "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
-      "runtimeArgs": ["/Users/kietzsche/armin-web-main/node_modules/.bin/vite", "preview"],
+      "runtimeArgs": [
+        "/Users/kietzsche/armin-web-main/node_modules/.bin/vite",
+        "preview"
+      ],
       "port": 4173
     },
     {
       "name": "Typography Preview",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "5191", "--directory", "/Users/kietzsche/armin-web-main/.claude/preview", "--bind", "127.0.0.1"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5191",
+        "--directory",
+        "/Users/kietzsche/armin-web-main/.claude/preview",
+        "--bind",
+        "127.0.0.1"
+      ],
       "port": 5191
+    },
+    {
+      "name": "Intro Proposals",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5192",
+        "--directory",
+        "/Users/kietzsche/armin-web-main",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 5192
+    },
+    {
+      "name": "Mateo Crexai Web",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5193",
+        "--directory",
+        "/Users/kietzsche/armin-web-main/mateo-crexai-web",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 5193
+    },
+    {
+      "name": "Mateo AI Site",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "--yes",
+        "http-server",
+        "/Users/kietzsche/.gemini/antigravity-ide/scratch/mateo-ai",
+        "-p",
+        "5194",
+        "-a",
+        "127.0.0.1",
+        "-c-1",
+        "--silent"
+      ],
+      "port": 5194
+    },
+    {
+      "name": "AI Studio Homepages",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5195",
+        "--directory",
+        "/Users/kietzsche/Documents/Codex/2026-07-01/new-chat/outputs/ai-video-studio-homepages",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 5195
+    },
+    {
+      "name": "AI Video QC",
+      "runtimeExecutable": "/Users/kietzsche/ai-video-qc-studio/.venv/bin/python",
+      "runtimeArgs": [
+        "/Users/kietzsche/ai-video-qc-studio/scripts/run_local.py",
+        "--no-browser",
+        "--port",
+        "8766"
+      ],
+      "port": 8766,
+      "autoPort": false
     },
     {
       "name": "Pongdang",
       "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
-      "runtimeArgs": ["/Users/kietzsche/pongdang/node_modules/.bin/vite", "/Users/kietzsche/pongdang", "--port", "5182", "--strictPort"],
+      "runtimeArgs": [
+        "/Users/kietzsche/pongdang/node_modules/.bin/vite",
+        "/Users/kietzsche/pongdang",
+        "--port",
+        "5182",
+        "--strictPort"
+      ],
       "port": 5182
+    },
+    {
+      "name": "Redesign Proposals",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5197",
+        "--directory",
+        "/private/tmp/claude-501/-Users-kietzsche-armin-web-main/8ad10f35-1e68-49e9-b734-9125e745ad28/scratchpad/stage",
+        "--bind",
+        "127.0.0.1"
+      ],
+      "port": 5197
+    },
+    {
+      "name": "Mateo 3D Console",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "--yes",
+        "http-server",
+        "/Users/kietzsche/.gemini/antigravity-ide/scratch/mateo-3d",
+        "-p",
+        "5196",
+        "-a",
+        "127.0.0.1",
+        "-c-1",
+        "--silent"
+      ],
+      "port": 5196
     }
   ]
 }

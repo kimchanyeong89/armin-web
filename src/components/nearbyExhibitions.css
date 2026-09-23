@@ -1,0 +1,371 @@
+/* ══════════════════════════════════════════════════════════════
+   Nearby exhibitions sheet.
+
+   The genie is done in CSS, not framer-motion: the motion library drives
+   frames from requestAnimationFrame, and inside the globe layer that loop can
+   stall, leaving the sheet frozen at its start pose (scaleY 0.18) - which is
+   what made every card look like a thin strip. A keyframe animation plays on
+   its own.
+
+   macOS sucks a window into a point and unfolds it. `clip-path` does the
+   narrow-neck part, the transform does the rise and stretch.
+   ══════════════════════════════════════════════════════════════ */
+/* The sheet slides up and settles - no genie warp. A translucent panel over a
+   blurred map reads as "lifted from the surface"; the overshoot-free easing
+   keeps it calm rather than bouncy. */
+@keyframes ne-rise {
+  from { opacity: 0; transform: translateY(26px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes ne-card-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ne-sheet {
+  transform-origin: bottom center;
+  animation: ne-rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+/* Cards follow the sheet in a short stagger, so the panel reads as filling in
+   rather than appearing whole. */
+.ne-card { animation: ne-card-in 340ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.ne-card:nth-child(1), .ne-card:nth-child(2), .ne-card:nth-child(3) { animation-delay: 120ms; }
+.ne-card:nth-child(4), .ne-card:nth-child(5), .ne-card:nth-child(6) { animation-delay: 175ms; }
+.ne-card:nth-child(n+7) { animation-delay: 225ms; }
+
+/* A <button> with `overflow: hidden` stops sizing to its own content - the
+   card collapsed to a single line height (18px) while holding 196px of
+   content. The clipping lives on an inner wrapper so the button can grow.
+   Verified: overflow hidden -> 18px, overflow visible -> 215px. */
+.ne-card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.ne-card-inner {
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgba(242, 239, 230, 0.10);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color .16s ease, background .16s ease;
+}
+.ne-card:hover .ne-card-inner { border-color: #d4a54788; background: rgba(255, 255, 255, 0.06); }
+.ne-card:focus-visible .ne-card-inner { outline: 2px solid #d4a547; outline-offset: 2px; }
+.ne-cover { display: block; width: 100%; height: 118px; object-fit: cover; background: rgba(255,255,255,0.05); }
+.ne-body { display: block; padding: 10px 11px 12px; }
+.ne-title {
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  font-size: 13px; font-weight: 700; line-height: 1.35;
+}
+.ne-venue {
+  display: block; margin-top: 4px; font-size: 11.5px; color: rgba(242,239,230,0.60);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ne-foot { display: flex; align-items: center; gap: 7px; margin-top: 5px; }
+.ne-period {
+  font-size: 10.5px; color: rgba(242,239,230,0.42);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ne-dday {
+  flex: none; margin-left: auto; font-size: 10px; font-weight: 700;
+  color: #0a0a0a; background: #d4a547; border-radius: 4px; padding: 1px 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ne-sheet, .ne-card { animation: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Entry studies (?nf=). The trigger's FORM changes per study - the earlier
+   round only restyled a bar's border, and every version still read as the
+   same object. The sheet keeps one quiet frame throughout.
+   ══════════════════════════════════════════════════════════════ */
+.ne-sheet {
+  border-radius: 0 !important;
+  border: 1px solid rgba(212, 165, 71, 0.28) !important;
+}
+.ne-head {
+  display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+  border-bottom: 1px solid rgba(212, 165, 71, 0.22); flex: none;
+}
+.ne-head-kicker {
+  font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: .22em;
+  text-transform: uppercase; color: rgba(212, 165, 71, .78);
+}
+.ne-head-title { font-size: 14px; font-weight: 700; letter-spacing: -0.02em; }
+.ne-head-count {
+  margin-left: auto; font-family: "Space Mono", monospace; font-size: 10px;
+  letter-spacing: .14em; color: rgba(242, 239, 230, .45);
+}
+.ne-head-close { border: 0; background: transparent; cursor: pointer; padding: 4px; display: inline-flex; color: rgba(242, 239, 230, .6); }
+.ne-head-close:hover { color: #d4a547; }
+
+/* Shared trigger reset: the anchor inline style only places it. */
+.ne-t-film, .ne-t-caption, .ne-t-stack, .ne-t-pulse {
+  cursor: pointer; text-align: left; color: #f2efe6;
+  font-family: Hana2, "Apple SD Gothic Neo", sans-serif;
+  border: 0; background: transparent; padding: 0;
+}
+
+/* 00 HYBRID — a morphing trigger. At rest it is the caption instrument
+   line (dot · label · count · rule · arrow, no chrome). On hover/focus it
+   swells into the droplet-glass capsule and the three tickets fan out.
+   NOTE: hover states are frozen in the hidden automation pane — check the
+   morph in a real browser. */
+.ne-t-hybrid {
+  left: clamp(14px, 4vw, 40px) !important; right: auto !important;
+  width: max-content;
+  display: inline-flex; align-items: center; gap: 0;
+  padding: 9px 14px !important;
+  border-radius: 24px;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+  transition: gap .34s cubic-bezier(.34,1.3,.4,1), padding .34s cubic-bezier(.34,1.3,.4,1),
+    border-color .28s ease, background-color .28s ease, box-shadow .28s ease;
+}
+.ne-t-hybrid:hover, .ne-t-hybrid:focus-visible {
+  gap: 16px;
+  padding: 11px 24px 11px 13px !important;
+  border-color: rgba(255,255,255,.18);
+  background:
+    radial-gradient(130% 100% at 10% 0%, rgba(255,255,255,.09), transparent 44%),
+    rgba(16,16,19,.5);
+  backdrop-filter: blur(34px) saturate(1.7);
+  -webkit-backdrop-filter: blur(34px) saturate(1.7);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.55),
+    inset 0 1px 0 rgba(255,255,255,.26),
+    inset 0 -12px 24px rgba(255,255,255,.03);
+}
+
+/* The fan: collapsed to nothing at rest, tickets spread on hover. */
+.ne-t-hybrid .ne-t-stack-fan {
+  /* height collapses too, so the resting line stays one line tall */
+  width: 0; height: 18px; flex: none; opacity: 0;
+  transform: translateX(-6px) scale(.86); transform-origin: left center;
+  transition: width .34s cubic-bezier(.34,1.3,.4,1), height .34s cubic-bezier(.34,1.3,.4,1),
+    opacity .2s ease, transform .34s cubic-bezier(.34,1.3,.4,1);
+}
+.ne-t-hybrid:hover .ne-t-stack-fan, .ne-t-hybrid:focus-visible .ne-t-stack-fan {
+  width: 66px; height: 56px; opacity: 1; transform: none;
+}
+.ne-t-hybrid .ne-t-stack-img { width: 38px; height: 52px; }
+.ne-t-hybrid .ne-t-stack-img { transition: transform .4s cubic-bezier(.34,1.45,.4,1); }
+.ne-t-hybrid .ne-t-stack-img--0 { transform: rotate(-2deg) translateY(4px); }
+.ne-t-hybrid .ne-t-stack-img--1 { transform: rotate(0deg) translate(3px, 4px); transition-delay: .04s; }
+.ne-t-hybrid .ne-t-stack-img--2 { transform: rotate(2deg) translate(6px, 4px); transition-delay: .08s; }
+.ne-t-hybrid:hover .ne-t-stack-img--0, .ne-t-hybrid:focus-visible .ne-t-stack-img--0 { transform: rotate(-7deg) translateX(0); }
+.ne-t-hybrid:hover .ne-t-stack-img--1, .ne-t-hybrid:focus-visible .ne-t-stack-img--1 { transform: rotate(1deg) translate(9px, -1px); }
+.ne-t-hybrid:hover .ne-t-stack-img--2, .ne-t-hybrid:focus-visible .ne-t-stack-img--2 { transform: rotate(8deg) translate(18px, 0); }
+
+/* The line: the caption voice, always present. */
+.ne-t-hybrid-text { display: block; position: relative; z-index: 1; }
+.ne-t-hybrid-line { display: flex; align-items: center; gap: 8px; }
+.ne-t-hybrid-line b { font-size: 14px; font-weight: 700; letter-spacing: -0.015em; color: rgba(242,239,230,.96); text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+.ne-t-hybrid-line em { font-style: normal; font-family: "Space Mono", monospace; font-size: 11.5px; letter-spacing: .06em; color: #d4a547; font-weight: 700; }
+.ne-t-hybrid-line svg {
+  color: #d4a547; flex: none; width: 13px;
+  transition: width .26s cubic-bezier(.16,1,.3,1), opacity .18s ease, transform .26s ease;
+}
+.ne-t-hybrid .ne-t-caption-rule { transition: width .26s cubic-bezier(.16,1,.3,1), opacity .18s ease, margin-left .26s ease; }
+.ne-t-hybrid:hover .ne-t-caption-rule, .ne-t-hybrid:focus-visible .ne-t-caption-rule {
+  width: 0; opacity: 0; margin-left: -8px; /* -8px swallows the flex gap */
+}
+.ne-t-hybrid:hover .ne-t-hybrid-line svg, .ne-t-hybrid:focus-visible .ne-t-hybrid-line svg {
+  width: 0; opacity: 0; transform: translateX(-4px); margin-left: -8px;
+}
+
+/* The sub line: revealed only in the open capsule. */
+.ne-t-hybrid-sub {
+  display: block; max-height: 0; opacity: 0; overflow: hidden; margin-top: 0;
+  font-size: 10.5px; letter-spacing: .02em; color: rgba(242,239,230,.64);
+  transform: translateY(3px);
+  transition: max-height .32s cubic-bezier(.16,1,.3,1), opacity .22s ease .08s,
+    margin-top .32s cubic-bezier(.16,1,.3,1), transform .32s cubic-bezier(.16,1,.3,1) .08s;
+}
+.ne-t-hybrid:hover .ne-t-hybrid-sub, .ne-t-hybrid:focus-visible .ne-t-hybrid-sub {
+  max-height: 16px; opacity: 1; margin-top: 3px; transform: none;
+}
+
+/* 01 FILMSTRIP/* 01 FILMSTRIP/* 01 FILMSTRIP — the content is the control. A strip of tonight's posters
+   with a caption line; no box around it at all. */
+.ne-t-film { left: 50% !important; right: auto !important; transform: translateX(-50%); width: min(520px, calc(100vw - 28px)); }
+.ne-t-film-caption { display: flex; align-items: baseline; gap: 8px; padding: 0 2px 8px; }
+.ne-t-film-kicker { font-family: "Space Mono", monospace; font-size: 9px; letter-spacing: .24em; color: rgba(212,165,71,.85); }
+.ne-t-film-caption b { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; }
+.ne-t-film-caption em { font-style: normal; font-family: "Space Mono", monospace; font-size: 11px; color: #d4a547; }
+.ne-t-film-strip {
+  display: flex; gap: 4px; overflow: hidden;
+  border-top: 1px solid rgba(212,165,71,.5); padding-top: 5px;
+}
+.ne-t-film-strip img { width: 72px; height: 50px; object-fit: cover; display: block; flex: none; filter: saturate(.8) brightness(.9); transition: filter .2s ease; }
+.ne-t-film:hover .ne-t-film-strip img { filter: none; }
+
+/* 02 CAPTION — a bare instrument line, the voice of the coordinate readout. */
+.ne-t-caption {
+  left: clamp(14px, 4vw, 40px) !important; right: auto !important;
+  /* Absolutely-positioned shrink-to-fit collapsed these to a few px and the
+     Korean label broke one character per line - pin the intrinsic width.
+     (No vw-based max-width: it resolves to 0 in hidden panes, and these
+     triggers are narrower than any phone anyway.) */
+  width: max-content;
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: "Space Mono", monospace; font-size: 11px; letter-spacing: .12em;
+  color: rgba(242,239,230,.85); padding: 8px 0; text-shadow: 0 1px 8px rgba(0,0,0,.8);
+}
+.ne-t-caption-dot { width: 6px; height: 6px; border-radius: 50%; background: #d4a547; box-shadow: 0 0 8px rgba(212,165,71,.8); }
+.ne-t-caption-label { text-transform: none; }
+.ne-t-caption-count { color: #d4a547; font-weight: 700; }
+.ne-t-caption-rule { width: 44px; height: 1px; background: rgba(212,165,71,.5); }
+.ne-t-caption:hover { color: #fff; }
+.ne-t-caption:hover .ne-t-caption-rule { background: #d4a547; }
+
+/* 03 STACK — three fanned posters set down on the map like tickets. */
+.ne-t-stack {
+  left: clamp(14px, 4vw, 40px) !important; right: auto !important;
+  width: max-content;
+  display: inline-flex; align-items: center; gap: 14px;
+}
+.ne-t-stack-fan { position: relative; width: 64px; height: 64px; flex: none; }
+.ne-t-stack-img { position: absolute; bottom: 0; left: 0; object-fit: cover; border: 1px solid rgba(212,165,71,.55); box-shadow: 0 6px 18px rgba(0,0,0,.55); background: #111; }
+.ne-t-stack-img--0 { transform: rotate(-8deg) translateX(-2px); }
+.ne-t-stack-img--1 { transform: rotate(2deg) translate(10px, -2px); }
+.ne-t-stack-img--2 { transform: rotate(11deg) translate(22px, 1px); }
+.ne-t-stack:hover .ne-t-stack-img--0 { transform: rotate(-11deg) translate(-4px, -2px); }
+.ne-t-stack:hover .ne-t-stack-img--2 { transform: rotate(14deg) translate(26px, -1px); }
+.ne-t-stack-img { transition: transform .22s cubic-bezier(.16,1,.3,1); }
+.ne-t-stack-text b { display: block; font-size: 13.5px; font-weight: 700; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+.ne-t-stack-text i { display: block; font-style: normal; margin-top: 3px; font-size: 11px; color: rgba(242,239,230,.55); }
+
+/* 04 PULSE — the selected-city locator promoted to a control. */
+.ne-t-pulse {
+  left: clamp(14px, 4vw, 40px) !important; right: auto !important;
+  width: max-content;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.ne-t-pulse-ring {
+  position: relative; width: 42px; height: 42px; border-radius: 50%; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #d4a547; border: 1px solid rgba(212,165,71,.7); background: rgba(10,10,10,.55);
+}
+.ne-t-pulse-ring::after {
+  content: ""; position: absolute; inset: -1px; border-radius: 50%;
+  border: 1px solid rgba(212,165,71,.7); animation: ne-pulse 2.4s ease-out infinite;
+}
+@keyframes ne-pulse {
+  0% { transform: scale(1); opacity: .8; }
+  70%, 100% { transform: scale(1.75); opacity: 0; }
+}
+.ne-t-pulse-text b { display: block; font-size: 13.5px; font-weight: 700; text-shadow: 0 1px 8px rgba(0,0,0,.8); }
+.ne-t-pulse-text b em { font-style: normal; color: #d4a547; }
+.ne-t-pulse-text i { display: block; font-style: normal; margin-top: 3px; font-size: 11px; color: rgba(242,239,230,.55); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ne-t-pulse-ring::after { animation: none; }
+  .ne-t-stack-img { transition: none; }
+  .ne-t-hybrid, .ne-t-hybrid .ne-t-stack-fan, .ne-t-hybrid-sub,
+  .ne-t-hybrid .ne-t-caption-rule, .ne-t-hybrid-line svg { transition: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Opened-sheet frames (?sf=) — LIQUID GLASS
+   iOS material recipe, three layers deep on every variant:
+     1. the pane: backdrop blur + saturation, generous radius
+     2. the light: a specular top edge (::before) so the glass has a source
+     3. the body: film grain (::after, SVG turbulence) so it has substance
+   Corner radius is continuous-curve-adjacent (28-36px) per the ask.
+   ══════════════════════════════════════════════════════════════ */
+.ne-sheet::before {
+  /* specular edge: light catching the top lip of the pane */
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 46%;
+  pointer-events: none; z-index: 3;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255,255,255,.14), rgba(255,255,255,.035) 34%, transparent 78%);
+  -webkit-mask: linear-gradient(#000, transparent);
+          mask: linear-gradient(#000, transparent);
+}
+.ne-sheet::after {
+  /* film grain: fine SVG turbulence, blended so it reads as texture not dirt */
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .045; mix-blend-mode: overlay;
+}
+.ne-head { border-bottom: 1px solid rgba(255,255,255,.09); }
+
+/* 01 FROST — the canonical iOS pane: cool, bright, quiet. */
+.ne-sf-frost {
+  border-radius: 30px !important;
+  border: 1px solid rgba(255,255,255,.16) !important;
+  background: rgba(22,22,24,.52) !important;
+  backdrop-filter: blur(46px) saturate(1.7) !important;
+  -webkit-backdrop-filter: blur(46px) saturate(1.7) !important;
+  box-shadow: 0 32px 90px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.22) !important;
+}
+
+/* 02 DROPLET — wetter: deeper radius, a caustic bloom in the corner, the
+   rim glowing like light through a water drop. */
+.ne-sf-droplet {
+  border-radius: 36px !important;
+  border: 1px solid rgba(255,255,255,.2) !important;
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(255,255,255,.10), transparent 46%),
+    rgba(18,18,22,.5) !important;
+  backdrop-filter: blur(52px) saturate(1.85) !important;
+  -webkit-backdrop-filter: blur(52px) saturate(1.85) !important;
+  box-shadow:
+    0 36px 100px rgba(0,0,0,.62),
+    inset 0 1px 0 rgba(255,255,255,.3),
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    inset 0 -18px 34px rgba(255,255,255,.04) !important;
+}
+
+/* 03 SMOKE — smoked glass with a warm COLLY tint; the darkest, calmest one. */
+.ne-sf-smoke {
+  border-radius: 28px !important;
+  border: 1px solid rgba(212,165,71,.22) !important;
+  background:
+    linear-gradient(to bottom, rgba(212,165,71,.05), transparent 30%),
+    rgba(10,10,10,.66) !important;
+  backdrop-filter: blur(38px) saturate(1.3) brightness(.92) !important;
+  -webkit-backdrop-filter: blur(38px) saturate(1.3) brightness(.92) !important;
+  box-shadow: 0 30px 84px rgba(0,0,0,.7), inset 0 1px 0 rgba(212,165,71,.22) !important;
+}
+.ne-sf-smoke::after { opacity: .07; }
+
+/* 04 PRISM — a faint iridescent rim, as if the edge splits the light. */
+.ne-sf-prism {
+  border-radius: 32px !important;
+  border: 1px solid transparent !important;
+  background:
+    linear-gradient(rgba(20,20,23,.55), rgba(20,20,23,.55)) padding-box,
+    conic-gradient(from 210deg, rgba(212,165,71,.55), rgba(255,255,255,.14), rgba(122,162,247,.28), rgba(212,165,71,.55)) border-box !important;
+  backdrop-filter: blur(46px) saturate(1.65) !important;
+  -webkit-backdrop-filter: blur(46px) saturate(1.65) !important;
+  box-shadow: 0 34px 92px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.2) !important;
+}
+
+/* 05 VELVET — matte glass: the blur without the shine. Grain carries it. */
+.ne-sf-velvet {
+  border-radius: 28px !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  background: rgba(26,24,21,.6) !important;
+  backdrop-filter: blur(34px) saturate(1.25) !important;
+  -webkit-backdrop-filter: blur(34px) saturate(1.25) !important;
+  box-shadow: 0 28px 80px rgba(0,0,0,.58) !important;
+}
+.ne-sf-velvet::before { background: linear-gradient(to bottom, rgba(255,255,255,.06), transparent 60%); }
+.ne-sf-velvet::after { opacity: .085; }
+
+/* The list inside follows the soft-corner language. */
+.ne-sheet .ne-card-inner { border-radius: 14px; }
+.ne-sheet .ne-head { padding-top: 14px; }

@@ -1,0 +1,1186 @@
+.globe-lab,
+.globe-lab-index,
+.globe-lab-not-found {
+  box-sizing: border-box;
+  min-height: 100dvh;
+}
+
+.globe-lab *,
+.globe-lab-index *,
+.globe-lab-not-found * {
+  box-sizing: border-box;
+}
+
+.globe-lab a,
+.globe-lab button,
+.globe-lab-index a,
+.globe-lab-index button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.globe-lab a:focus-visible,
+.globe-lab button:focus-visible,
+.globe-lab-index a:focus-visible,
+.globe-lab-index button:focus-visible {
+  outline: 3px solid var(--lab-focus, #2457d6);
+  outline-offset: 3px;
+}
+
+.globe-lab-skip {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 60;
+  min-height: 2.75rem;
+  padding: 0.75rem 1rem;
+  transform: translateY(-160%);
+  background: #fff;
+  color: #111;
+  font: 700 0.8rem/1.2 "Space Grotesk", sans-serif;
+  text-decoration: none;
+}
+
+.globe-lab-skip:focus {
+  transform: translateY(0);
+}
+
+.globe-lab-wordmark {
+  color: inherit;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Comparison index */
+.globe-lab-index {
+  --lab-focus: #153ea5;
+  padding: 1.25rem clamp(1rem, 3vw, 3rem) 4rem;
+  overflow-x: hidden;
+  background: #dfe4dd;
+  color: #17201c;
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif;
+}
+
+.globe-lab-index__header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  min-height: 4rem;
+  border-bottom: 1px solid rgba(23, 32, 28, 0.2);
+  font-size: 0.78rem;
+}
+
+.globe-lab-index__header > span {
+  letter-spacing: 0.04em;
+}
+
+.globe-lab-index__header > a:last-child {
+  justify-self: end;
+  color: inherit;
+  text-underline-offset: 0.25rem;
+}
+
+.globe-lab-index main {
+  max-width: 96rem;
+  margin: 0 auto;
+}
+
+.globe-lab-index__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(15rem, 0.45fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  align-items: end;
+  padding: clamp(3.5rem, 9vh, 7rem) 0 clamp(2.75rem, 7vh, 5rem);
+}
+
+.globe-lab-index__intro > p:first-child {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #425049;
+  font: 700 0.72rem/1.2 "Space Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.globe-lab-index__intro h1 {
+  max-width: 10ch;
+  margin: 0;
+  font-size: clamp(3.5rem, 8.2vw, 8.5rem);
+  font-weight: 600;
+  letter-spacing: -0.075em;
+  line-height: 0.85;
+  text-wrap: balance;
+}
+
+.globe-lab-index__intro > p:last-child {
+  max-width: 31rem;
+  margin: 0 0 0.45rem;
+  color: #425049;
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.globe-lab-index__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: minmax(15rem, auto);
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.globe-lab-index__grid li:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+.globe-lab-index__grid li:nth-child(2) { grid-column: span 5; }
+.globe-lab-index__grid li:nth-child(3) { grid-column: span 5; }
+.globe-lab-index__grid li:nth-child(4) { grid-column: span 5; }
+.globe-lab-index__grid li:nth-child(5) { grid-column: span 7; }
+
+.globe-lab-index__grid a {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: 1fr auto auto auto;
+  gap: 0.8rem 1rem;
+  min-height: 100%;
+  overflow: hidden;
+  padding: clamp(1.25rem, 2.4vw, 2.35rem);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.globe-lab-index__grid a:hover {
+  transform: translateY(-0.35rem);
+}
+
+.globe-lab-index__grid a:active {
+  transform: translateY(-0.05rem) scale(0.99);
+}
+
+.globe-lab-index__grid small {
+  align-self: end;
+  font: 700 0.68rem/1.3 "Space Mono", monospace;
+  letter-spacing: 0.04em;
+}
+
+.globe-lab-index__grid strong {
+  grid-column: 1 / -1;
+  font-size: clamp(1.6rem, 3vw, 3.5rem);
+  font-weight: 600;
+  letter-spacing: -0.055em;
+  line-height: 0.96;
+}
+
+.globe-lab-index__grid a > span:not(.globe-lab-index__preview) {
+  max-width: 40ch;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.globe-lab-index__open {
+  align-self: end;
+  justify-self: end;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.globe-lab-index__open > span {
+  display: inline-grid;
+  place-items: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  margin-left: 0.35rem;
+  border-radius: 50%;
+  background: currentColor;
+  color: var(--preview-bg);
+  transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.globe-lab-index__grid a:hover .globe-lab-index__open > span {
+  transform: translate(0.12rem, -0.12rem);
+}
+
+.globe-lab-index__preview {
+  position: relative;
+  grid-column: 1 / -1;
+  align-self: stretch;
+  min-height: 9rem;
+  overflow: hidden;
+}
+
+.globe-lab-index__preview::before,
+.globe-lab-index__preview::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.globe-lab-index__preview::before {
+  width: min(21rem, 55%);
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in srgb, currentColor 38%, transparent);
+  background:
+    radial-gradient(circle at 34% 34%, color-mix(in srgb, var(--preview-accent) 30%, transparent), transparent 6%),
+    radial-gradient(circle at 64% 48%, color-mix(in srgb, currentColor 13%, transparent), transparent 32%);
+  box-shadow: inset 0 0 0 1.1rem color-mix(in srgb, var(--preview-bg) 84%, transparent);
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.globe-lab-index__preview::after {
+  width: min(21rem, 55%);
+  aspect-ratio: 1;
+  background: repeating-linear-gradient(90deg, transparent 0 17%, color-mix(in srgb, currentColor 18%, transparent) 17.2% 17.5%, transparent 17.7% 34%);
+  clip-path: circle(50%);
+  opacity: 0.65;
+}
+
+.globe-lab-index__grid a:hover .globe-lab-index__preview::before {
+  transform: translate(-50%, -50%) rotate(8deg) scale(1.04);
+}
+
+.globe-lab-index__card--editorial-atlas a {
+  --preview-bg: #dfe3d8;
+  --preview-accent: #b93120;
+  background: var(--preview-bg);
+  color: #1d315f;
+  box-shadow: inset 0 0 0 1px rgba(29, 49, 95, 0.16);
+}
+
+.globe-lab-index__card--signal-observatory a {
+  --preview-bg: #07110f;
+  --preview-accent: #ff8a5b;
+  background: var(--preview-bg);
+  color: #ffb092;
+  box-shadow: inset 0 0 0 1px rgba(255, 138, 91, 0.2);
+}
+
+.globe-lab-index__card--nocturne a {
+  --preview-bg: #090708;
+  --preview-accent: #d7b56d;
+  background: var(--preview-bg);
+  color: #eadbbd;
+  box-shadow: inset 0 0 0 1px rgba(215, 181, 109, 0.2);
+}
+
+.globe-lab-index__card--colly-evolved a {
+  --preview-bg: #0c0c0a;
+  --preview-accent: #d7aa55;
+  background: var(--preview-bg);
+  color: #eee9df;
+  box-shadow: inset 0 0 0 1px rgba(238, 233, 223, 0.14);
+}
+
+.globe-lab-index__card--accessible-atlas a {
+  --preview-bg: #edf1ee;
+  --preview-accent: #d95d24;
+  background: var(--preview-bg);
+  color: #123b56;
+  box-shadow: inset 0 0 0 1px rgba(18, 59, 86, 0.18);
+}
+
+/* Shared candidate frame */
+.globe-lab {
+  --lab-bg: #0c0c0a;
+  --lab-fg: #eee9df;
+  --lab-muted: rgba(238, 233, 223, 0.62);
+  --lab-accent: #d7aa55;
+  --lab-panel: rgba(12, 12, 10, 0.9);
+  --lab-focus: #f2c978;
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--lab-bg);
+  color: var(--lab-fg);
+  font-family: "Space Grotesk", "Avenir Next", "Noto Sans KR", sans-serif;
+  isolation: isolate;
+}
+
+.globe-lab::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 32;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    radial-gradient(circle at 15% 30%, currentColor 0 0.035rem, transparent 0.045rem),
+    radial-gradient(circle at 78% 70%, currentColor 0 0.025rem, transparent 0.035rem);
+  background-size: 1.9rem 1.9rem, 2.3rem 2.3rem;
+  mix-blend-mode: soft-light;
+}
+
+.globe-lab__header {
+  position: absolute;
+  top: max(1.15rem, env(safe-area-inset-top));
+  left: max(1.25rem, env(safe-area-inset-left));
+  right: max(1.25rem, env(safe-area-inset-right));
+  z-index: 40;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  align-items: center;
+  min-height: 3.5rem;
+  color: var(--lab-fg);
+}
+
+.globe-lab__header > p {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--lab-muted);
+  font-size: 0.76rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.globe-lab__header nav {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.globe-lab__header nav a,
+.globe-lab__header > button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.8rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: 700 0.72rem/1 "Space Grotesk", sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1), background-color 220ms cubic-bezier(0.16, 1, 0.3, 1), transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.globe-lab__header nav a:hover,
+.globe-lab__header > button:hover {
+  background: color-mix(in srgb, var(--lab-accent) 14%, transparent);
+  color: var(--lab-accent);
+}
+
+.globe-lab__header nav a:active,
+.globe-lab__header > button:active {
+  transform: scale(0.97);
+}
+
+.globe-lab__statement {
+  position: absolute;
+  z-index: 18;
+  top: 18%;
+  left: clamp(1.5rem, 5vw, 5.5rem);
+  width: min(31rem, 34vw);
+  pointer-events: none;
+}
+
+.globe-lab__statement small {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--lab-accent);
+  font: 700 0.68rem/1.25 "Space Mono", monospace;
+  letter-spacing: 0.04em;
+}
+
+.globe-lab__statement h1 {
+  margin: 0;
+  font-size: clamp(2.7rem, 5.2vw, 6.5rem);
+  font-weight: 560;
+  letter-spacing: -0.065em;
+  line-height: 0.9;
+  text-wrap: balance;
+  scroll-margin-top: 6rem;
+}
+
+.globe-lab__statement > p {
+  max-width: 34rem;
+  margin: 1.4rem 0 0;
+  color: var(--lab-muted);
+  font-size: clamp(0.95rem, 1.1vw, 1.12rem);
+  line-height: 1.58;
+  text-wrap: pretty;
+}
+
+.globe-lab__statement footer {
+  margin-top: 1.7rem;
+  color: var(--lab-muted);
+  font-size: 0.75rem;
+}
+
+.globe-lab__map {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  min-width: 0;
+  overflow: hidden;
+  outline: 3px solid transparent;
+  outline-offset: -3px;
+}
+
+.globe-lab__map:focus-visible {
+  outline-color: var(--lab-focus);
+}
+
+.globe-lab__map .ig-container {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  background: var(--lab-bg) !important;
+  color: var(--lab-fg) !important;
+}
+
+.globe-lab__map .ig-globe-canvas:focus-visible {
+  outline: 3px solid var(--lab-focus);
+  outline-offset: -5px;
+}
+
+.globe-lab__map .ig-bottom-center-hint {
+  display: none !important;
+}
+
+.globe-lab__map .ig-header {
+  top: calc(env(safe-area-inset-top, 0px) + 5.2rem) !important;
+  left: max(1rem, env(safe-area-inset-left)) !important;
+  z-index: 26 !important;
+  pointer-events: auto;
+}
+
+.globe-lab__map .ig-header button {
+  min-height: 2.75rem;
+  padding: 0 0.75rem !important;
+  border: 1px solid color-mix(in srgb, var(--lab-fg) 22%, transparent) !important;
+  background: var(--lab-panel) !important;
+  pointer-events: auto;
+}
+
+.globe-lab__map .ig-header button span,
+.globe-lab__map .ig-header button + div {
+  color: var(--lab-fg) !important;
+}
+
+.globe-lab__map .ig-spinner {
+  width: 5rem;
+  height: 0.2rem;
+  overflow: hidden;
+  border: 0 !important;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--lab-fg) 12%, transparent);
+  animation: globe-lab-loading 1.4s cubic-bezier(0.65, 0, 0.35, 1) infinite alternate;
+  transform-origin: left center;
+}
+
+.globe-lab__map .ig-region-pills {
+  z-index: 24 !important;
+}
+
+.globe-lab__map .ig-region-pills button {
+  min-height: 2.4rem;
+  border-radius: 0 !important;
+  font-size: 0.65rem !important;
+  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1), background-color 220ms cubic-bezier(0.16, 1, 0.3, 1), border-color 220ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.globe-lab__map .ig-region-pills button:focus-visible {
+  outline: 3px solid var(--lab-focus) !important;
+  outline-offset: 2px;
+}
+
+.globe-lab__map .ig-coords-box {
+  color: var(--lab-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.globe-lab__map .ig-venue-panel {
+  border-color: color-mix(in srgb, var(--lab-fg) 18%, transparent) !important;
+  box-shadow: 0 1.8rem 5rem color-mix(in srgb, var(--lab-bg) 68%, transparent) !important;
+}
+
+.globe-lab__rail {
+  position: absolute;
+  top: 25%;
+  right: 1.5rem;
+  bottom: 18%;
+  z-index: 14;
+  display: grid;
+  grid-template-rows: auto 1fr auto 1fr auto;
+  justify-items: center;
+  color: var(--lab-muted);
+  font: 500 0.58rem/1 "Space Mono", monospace;
+  pointer-events: none;
+}
+
+.globe-lab__rail i {
+  width: 1px;
+  background: color-mix(in srgb, var(--lab-fg) 18%, transparent);
+}
+
+/* Editorial Atlas: asymmetric cool-paper plate */
+.globe-lab--editorial-atlas {
+  --lab-bg: #dfe3d8;
+  --lab-fg: #1d315f;
+  --lab-muted: rgba(29, 49, 95, 0.68);
+  --lab-accent: #b93120;
+  --lab-panel: rgba(223, 227, 216, 0.94);
+  --lab-focus: #8f2317;
+  color-scheme: light;
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif;
+}
+
+.globe-lab--editorial-atlas::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 17;
+  width: clamp(0.45rem, 0.7vw, 0.8rem);
+  background: var(--lab-accent);
+  pointer-events: none;
+}
+
+.globe-lab--editorial-atlas .globe-lab__header {
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(29, 49, 95, 0.25);
+}
+
+.globe-lab--editorial-atlas .ig-container {
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif !important;
+}
+
+.globe-lab--editorial-atlas .globe-lab__statement {
+  top: 20%;
+  width: min(30rem, 27vw);
+}
+
+.globe-lab--editorial-atlas .globe-lab__statement h1 {
+  max-width: 9ch;
+  font-family: "Iowan Old Style", "AppleMyungjo", "Noto Serif KR", serif;
+  font-size: clamp(3.3rem, 6vw, 7.4rem);
+  font-weight: 500;
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.globe-lab--editorial-atlas .globe-lab__map {
+  left: 32%;
+}
+
+.globe-lab--editorial-atlas .ig-region-pills button {
+  border-color: rgba(29, 49, 95, 0.26) !important;
+  background: rgba(223, 227, 216, 0.86) !important;
+  color: #1d315f !important;
+  backdrop-filter: none !important;
+}
+
+.globe-lab--editorial-atlas .ig-region-pills button:hover {
+  background: #1d315f !important;
+  color: #dfe3d8 !important;
+}
+
+/* Signal Observatory: calibrated night instrument */
+.globe-lab--signal-observatory {
+  --lab-bg: #07110f;
+  --lab-fg: #d6e7e1;
+  --lab-muted: rgba(214, 231, 225, 0.6);
+  --lab-accent: #ff8a5b;
+  --lab-panel: rgba(7, 17, 15, 0.92);
+  --lab-focus: #ff8a5b;
+  color-scheme: dark;
+  font-family: "Space Mono", monospace;
+}
+
+.globe-lab--signal-observatory::before {
+  content: "";
+  position: absolute;
+  inset: 4.9rem 1.25rem 1.25rem;
+  z-index: 13;
+  border: 1px solid rgba(66, 217, 208, 0.14);
+  background-image:
+    linear-gradient(rgba(66, 217, 208, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(66, 217, 208, 0.035) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  pointer-events: none;
+}
+
+.globe-lab--signal-observatory .globe-lab__header {
+  font-family: "Space Mono", monospace;
+}
+
+.globe-lab--signal-observatory .ig-container {
+  font-family: "Space Mono", monospace !important;
+}
+
+.globe-lab--signal-observatory .globe-lab-wordmark {
+  color: var(--lab-accent);
+  font-family: "Space Mono", monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+}
+
+.globe-lab--signal-observatory .globe-lab__statement {
+  top: auto;
+  bottom: 3.2rem;
+  width: min(27rem, 32vw);
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--lab-accent);
+}
+
+.globe-lab--signal-observatory .globe-lab__statement h1 {
+  max-width: 13ch;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2rem, 3.5vw, 4.2rem);
+  font-weight: 560;
+  letter-spacing: -0.06em;
+  line-height: 0.94;
+}
+
+.globe-lab--signal-observatory .globe-lab__statement > p {
+  max-width: 31rem;
+  font-size: 0.85rem;
+}
+
+.globe-lab--signal-observatory .globe-lab__map .ig-region-pills {
+  top: calc(env(safe-area-inset-top, 0px) + 78px) !important;
+}
+
+.globe-lab--signal-observatory .ig-region-pills button {
+  border-color: rgba(255, 138, 91, 0.28) !important;
+  background: rgba(7, 17, 15, 0.9) !important;
+  color: #d6e7e1 !important;
+  backdrop-filter: none !important;
+}
+
+.globe-lab--signal-observatory .ig-region-pills button:hover {
+  border-color: #ff8a5b !important;
+  color: #ff8a5b !important;
+}
+
+.globe-lab--signal-observatory .ig-top-center-hint {
+  top: auto !important;
+  right: 2rem;
+  bottom: 2rem;
+  left: auto !important;
+  transform: none !important;
+}
+
+/* Nocturne: editorial luxury in a machined frame */
+.globe-lab--nocturne {
+  --lab-bg: #090708;
+  --lab-fg: #eadbbd;
+  --lab-muted: rgba(234, 219, 189, 0.62);
+  --lab-accent: #d7b56d;
+  --lab-panel: rgba(18, 11, 13, 0.94);
+  --lab-focus: #f1ce82;
+  color-scheme: dark;
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif;
+}
+
+.globe-lab--nocturne .globe-lab__header {
+  top: max(1.75rem, env(safe-area-inset-top));
+  left: max(2.25rem, env(safe-area-inset-left));
+  right: max(2.25rem, env(safe-area-inset-right));
+  min-height: 3.75rem;
+  padding: 0.25rem 0.45rem 0.25rem 1.25rem;
+  border-radius: 999px;
+  background: rgba(15, 10, 11, 0.92);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(215, 181, 109, 0.16),
+    0 0 0 0.45rem rgba(215, 181, 109, 0.035);
+}
+
+.globe-lab--nocturne .ig-container {
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif !important;
+}
+
+.globe-lab--nocturne .globe-lab__header nav a,
+.globe-lab--nocturne .globe-lab__header > button {
+  border-radius: 999px;
+}
+
+.globe-lab--nocturne .globe-lab__map {
+  inset: 1.25rem;
+  border-radius: 2rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 0 1px rgba(215, 181, 109, 0.18),
+    0 0 0 0.55rem rgba(215, 181, 109, 0.035),
+    0 2.5rem 8rem rgba(44, 5, 16, 0.42);
+}
+
+.globe-lab--nocturne .globe-lab__statement {
+  top: auto;
+  bottom: 4.5rem;
+  left: clamp(2.75rem, 6vw, 7rem);
+  width: min(40rem, 44vw);
+}
+
+.globe-lab--nocturne .globe-lab__statement h1 {
+  max-width: 11ch;
+  font-family: "Iowan Old Style", "AppleMyungjo", "Noto Serif KR", serif;
+  font-size: clamp(3rem, 5vw, 6.3rem);
+  font-weight: 400;
+  letter-spacing: -0.06em;
+  line-height: 0.92;
+  text-shadow: 0 0.8rem 3rem rgba(52, 8, 20, 0.5);
+}
+
+.globe-lab--nocturne .ig-region-pills {
+  top: calc(env(safe-area-inset-top, 0px) + 96px) !important;
+}
+
+.globe-lab--nocturne .ig-region-pills button {
+  border-color: rgba(215, 181, 109, 0.18) !important;
+  border-radius: 999px !important;
+  background: rgba(15, 10, 11, 0.92) !important;
+  color: #eadbbd !important;
+  backdrop-filter: none !important;
+}
+
+.globe-lab--nocturne .ig-venue-panel {
+  border-radius: 1.75rem !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 0 1px rgba(215, 181, 109, 0.18),
+    0 0 0 0.45rem rgba(215, 181, 109, 0.035),
+    0 2rem 6rem rgba(44, 5, 16, 0.55) !important;
+}
+
+/* COLLY Evolved: familiar hierarchy, quieter controls */
+.globe-lab--colly-evolved {
+  --lab-bg: #0c0c0a;
+  --lab-fg: #eee9df;
+  --lab-muted: rgba(238, 233, 223, 0.62);
+  --lab-accent: #d7aa55;
+  --lab-panel: rgba(12, 12, 10, 0.92);
+  --lab-focus: #efc976;
+  color-scheme: dark;
+}
+
+.globe-lab--colly-evolved .globe-lab__header {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(238, 233, 223, 0.12);
+}
+
+.globe-lab--colly-evolved .ig-container {
+  font-family: "Space Grotesk", "Avenir Next", "Noto Sans KR", sans-serif !important;
+}
+
+.globe-lab--colly-evolved .globe-lab__statement {
+  top: auto;
+  bottom: 3.25rem;
+  width: min(29rem, 34vw);
+}
+
+.globe-lab--colly-evolved .globe-lab__statement h1 {
+  max-width: 12ch;
+  font-size: clamp(2.5rem, 4vw, 5rem);
+}
+
+.globe-lab--colly-evolved .ig-region-pills button {
+  border-color: rgba(238, 233, 223, 0.15) !important;
+  background: rgba(12, 12, 10, 0.8) !important;
+  color: rgba(238, 233, 223, 0.78) !important;
+  backdrop-filter: none !important;
+}
+
+.globe-lab--colly-evolved .ig-region-pills button:hover {
+  border-color: rgba(215, 170, 85, 0.6) !important;
+  color: #d7aa55 !important;
+}
+
+/* Accessible Atlas: explicit, touch-first, high-contrast */
+.globe-lab--accessible-atlas {
+  --lab-bg: #edf1ee;
+  --lab-fg: #0b2e44;
+  --lab-muted: #35566a;
+  --lab-accent: #b44218;
+  --lab-panel: rgba(255, 255, 255, 0.96);
+  --lab-focus: #075b8c;
+  color-scheme: light;
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif;
+}
+
+.globe-lab--accessible-atlas .globe-lab__header {
+  top: max(1rem, env(safe-area-inset-top));
+  min-height: 4rem;
+  padding: 0.35rem 0.5rem 0.35rem 1.1rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0.7rem 2.4rem rgba(18, 59, 86, 0.11);
+}
+
+.globe-lab--accessible-atlas .ig-container {
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif !important;
+}
+
+.globe-lab--accessible-atlas .globe-lab__header nav {
+  gap: 0.5rem;
+}
+
+.globe-lab--accessible-atlas .globe-lab__header nav a,
+.globe-lab--accessible-atlas .globe-lab__header > button {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  border-radius: 0.65rem;
+  background: #f0f5f7;
+  color: #0b2e44;
+}
+
+.globe-lab--accessible-atlas .globe-lab__header nav a:hover,
+.globe-lab--accessible-atlas .globe-lab__header > button:hover {
+  background: #0b2e44;
+  color: #fff;
+}
+
+.globe-lab--accessible-atlas .globe-lab__statement {
+  top: 20%;
+  left: clamp(1.5rem, 3vw, 3.5rem);
+  width: min(28rem, 29vw);
+  padding: clamp(1.25rem, 2vw, 2rem);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 1.2rem 3.8rem rgba(18, 59, 86, 0.1);
+}
+
+.globe-lab--accessible-atlas .globe-lab__statement h1 {
+  max-width: 12ch;
+  font-size: clamp(2.6rem, 4vw, 4.8rem);
+  line-height: 0.98;
+}
+
+.globe-lab--accessible-atlas .globe-lab__statement > p {
+  color: #35566a;
+  font-size: 1rem;
+}
+
+.globe-lab--accessible-atlas .globe-lab__statement footer {
+  color: #0b2e44;
+  font-weight: 650;
+}
+
+.globe-lab--accessible-atlas .globe-lab__map {
+  inset: 6rem 1.5rem 1.5rem 34%;
+  border-radius: 1.15rem;
+  background: #f8faf9;
+  box-shadow: 0 1.4rem 4rem rgba(18, 59, 86, 0.12), inset 0 0 0 1px rgba(18, 59, 86, 0.14);
+}
+
+.globe-lab--accessible-atlas .ig-region-pills {
+  top: 1rem !important;
+}
+
+.globe-lab--accessible-atlas .ig-region-pills button {
+  min-height: 2.75rem !important;
+  padding: 0 1rem !important;
+  border: 2px solid rgba(18, 59, 86, 0.2) !important;
+  border-radius: 0.65rem !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: #0b2e44 !important;
+  font-family: "Avenir Next", "Noto Sans KR", sans-serif !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+  backdrop-filter: none !important;
+}
+
+.globe-lab--accessible-atlas .ig-region-pills button:hover {
+  border-color: #0b2e44 !important;
+  background: #0b2e44 !important;
+  color: #fff !important;
+}
+
+.globe-lab--accessible-atlas .ig-top-center-hint {
+  top: 4.9rem !important;
+}
+
+.globe-lab--accessible-atlas .ig-coords-box {
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.55rem;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.globe-lab__map .ig-region-pills button[aria-pressed="true"] {
+  border-color: var(--lab-accent) !important;
+  background: var(--lab-accent) !important;
+  color: var(--lab-bg) !important;
+}
+
+.globe-lab-not-found {
+  display: grid;
+  place-content: center;
+  gap: 1rem;
+  background: #0c0c0a;
+  color: #eee9df;
+  font-family: "Space Grotesk", sans-serif;
+  text-align: center;
+}
+
+.globe-lab-not-found a {
+  color: #d7aa55;
+}
+
+@keyframes globe-lab-loading {
+  from { transform: scaleX(0.15); opacity: 0.4; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .globe-lab__header {
+    animation: globe-lab-enter 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .globe-lab__statement small,
+  .globe-lab__statement h1,
+  .globe-lab__statement > p,
+  .globe-lab__statement footer {
+    animation: globe-lab-enter 850ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .globe-lab__statement h1 { animation-delay: 80ms; }
+  .globe-lab__statement > p { animation-delay: 150ms; }
+  .globe-lab__statement footer { animation-delay: 220ms; }
+}
+
+@keyframes globe-lab-enter {
+  from { opacity: 0; transform: translateY(1.25rem); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .globe-lab-index__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .globe-lab-index__intro > p:first-child {
+    grid-column: auto;
+  }
+
+  .globe-lab-index__grid li:nth-child(n) {
+    grid-column: span 6;
+    grid-row: auto;
+  }
+
+  .globe-lab__statement {
+    width: min(27rem, 42vw);
+  }
+
+  .globe-lab--editorial-atlas .globe-lab__map {
+    left: 25%;
+  }
+
+  .globe-lab--accessible-atlas .globe-lab__map {
+    left: 38%;
+  }
+}
+
+@media (max-width: 767px) {
+  .globe-lab-index {
+    padding: 0.75rem 0.75rem 2rem;
+  }
+
+  .globe-lab-index__header {
+    grid-template-columns: 1fr auto;
+    min-height: 3.5rem;
+  }
+
+  .globe-lab-index__header > span {
+    display: none;
+  }
+
+  .globe-lab-index__intro {
+    gap: 1.5rem;
+    padding: 3rem 0 2.5rem;
+  }
+
+  .globe-lab-index__intro h1 {
+    max-width: 11ch;
+    font-size: clamp(3rem, 16vw, 5.1rem);
+  }
+
+  .globe-lab-index__grid {
+    display: block;
+  }
+
+  .globe-lab-index__grid li + li {
+    margin-top: 0.75rem;
+  }
+
+  .globe-lab-index__grid a {
+    min-height: 29rem;
+  }
+
+  .globe-lab-index__preview {
+    min-height: 11rem;
+  }
+
+  .globe-lab::after,
+  .globe-lab__rail,
+  .globe-lab__statement > p,
+  .globe-lab__statement footer,
+  .globe-lab__statement small {
+    display: none;
+  }
+
+  .globe-lab__header,
+  .globe-lab--nocturne .globe-lab__header,
+  .globe-lab--accessible-atlas .globe-lab__header {
+    top: max(0.55rem, env(safe-area-inset-top));
+    left: max(0.65rem, env(safe-area-inset-left));
+    right: max(0.65rem, env(safe-area-inset-right));
+    grid-template-columns: auto 1fr auto auto;
+    gap: 0.25rem;
+    min-height: 3.25rem;
+    padding: 0.2rem 0.25rem 0.2rem 0.75rem;
+    border: 0;
+    border-radius: 0.75rem;
+    background: var(--lab-panel);
+    box-shadow: 0 0.75rem 2.5rem color-mix(in srgb, var(--lab-bg) 35%, transparent);
+  }
+
+  .globe-lab__header > p {
+    padding-left: 0.4rem;
+    font-size: 0.68rem;
+  }
+
+  .globe-lab__header nav {
+    gap: 0.2rem;
+  }
+
+  .globe-lab__header nav a,
+  .globe-lab__header > button,
+  .globe-lab--accessible-atlas .globe-lab__header nav a,
+  .globe-lab--accessible-atlas .globe-lab__header > button {
+    min-width: 2.75rem;
+    min-height: 2.75rem;
+    padding: 0 0.55rem;
+    background: transparent;
+  }
+
+  .globe-lab__header nav a:nth-child(2) {
+    display: none;
+  }
+
+  .globe-lab__statement,
+  .globe-lab--editorial-atlas .globe-lab__statement,
+  .globe-lab--signal-observatory .globe-lab__statement,
+  .globe-lab--nocturne .globe-lab__statement,
+  .globe-lab--colly-evolved .globe-lab__statement,
+  .globe-lab--accessible-atlas .globe-lab__statement {
+    top: calc(max(0.55rem, env(safe-area-inset-top)) + 4.1rem);
+    right: 1rem;
+    bottom: auto;
+    left: 1rem;
+    width: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .globe-lab__statement h1,
+  .globe-lab--editorial-atlas .globe-lab__statement h1,
+  .globe-lab--signal-observatory .globe-lab__statement h1,
+  .globe-lab--nocturne .globe-lab__statement h1,
+  .globe-lab--colly-evolved .globe-lab__statement h1,
+  .globe-lab--accessible-atlas .globe-lab__statement h1 {
+    max-width: 18ch;
+    font-family: inherit;
+    font-size: clamp(1.55rem, 7vw, 2rem);
+    font-weight: 620;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    text-shadow: none;
+  }
+
+  .globe-lab__map,
+  .globe-lab--editorial-atlas .globe-lab__map,
+  .globe-lab--signal-observatory .globe-lab__map,
+  .globe-lab--colly-evolved .globe-lab__map,
+  .globe-lab--accessible-atlas .globe-lab__map {
+    inset: calc(max(0.55rem, env(safe-area-inset-top)) + 9.25rem) 0 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .globe-lab--nocturne .globe-lab__map {
+    inset: calc(max(0.55rem, env(safe-area-inset-top)) + 9.25rem) 0.6rem 0.6rem;
+    border-radius: 1.15rem;
+    box-shadow: 0 0 0 1px rgba(215, 181, 109, 0.18), 0 0 0 0.3rem rgba(215, 181, 109, 0.035);
+  }
+
+  .globe-lab--signal-observatory::before {
+    inset: calc(max(0.55rem, env(safe-area-inset-top)) + 9.35rem) 0.4rem 0.4rem;
+    background-size: 2.8rem 2.8rem;
+  }
+
+  .globe-lab__map .ig-region-pills,
+  .globe-lab--signal-observatory .globe-lab__map .ig-region-pills,
+  .globe-lab--nocturne .ig-region-pills,
+  .globe-lab--accessible-atlas .ig-region-pills {
+    top: 0.75rem !important;
+    left: 0.5rem !important;
+    width: calc(100% - 1rem);
+    max-width: none !important;
+    padding: 0.2rem !important;
+    transform: none !important;
+  }
+
+  .globe-lab__map .ig-region-pills button,
+  .globe-lab--accessible-atlas .ig-region-pills button {
+    min-height: 2.75rem !important;
+    padding-inline: 0.85rem !important;
+  }
+
+  .globe-lab__map .ig-coords-box {
+    right: 0.8rem;
+    bottom: calc(0.8rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .globe-lab__map .ig-header {
+    top: 4.4rem !important;
+    left: 0.75rem !important;
+  }
+
+  .globe-lab__map .ig-venue-panel {
+    top: auto !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: 76dvh;
+    border-radius: 1.25rem 1.25rem 0 0 !important;
+  }
+
+  .globe-lab--accessible-atlas .ig-top-center-hint {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-lab *,
+  .globe-lab-index * {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .globe-lab__header,
+  .globe-lab__statement,
+  .globe-lab__map .ig-region-pills button {
+    box-shadow: 0 0 0 2px currentColor;
+  }
+}

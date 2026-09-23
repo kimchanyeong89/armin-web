@@ -1,0 +1,97 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "version": "1.0.0",
+    "release": {
+      "automaticRelease": true
+    },
+    "info": {
+      "ko": {
+        "title": "콜리",
+        "subtitle": "세계의 미술관을 지구본에서",
+        "description": "콜리는 전 세계 미술관의 전시와 소장품을 한 화면에서 찾아보는 앱입니다.\n\n■ 지구본\n300개 미술관을 지구본에 얹었습니다. 돌려서 도시를 고르면 그곳의 미술관과 지금 열리는 전시가 나옵니다.\n\n■ 가까운 전시\n위치를 허락하면 갈 수 있는 전시를 가까운 순서로 보여 줍니다. 전시 기간과 관람료, 휴관일을 함께 적습니다.\n\n■ 작품과 플레이리스트\n마음에 든 작품에 좋아요를 누르고, 주제별로 플레이리스트를 만들어 모읍니다. 만든 플레이리스트는 링크로 나눌 수 있습니다.\n\n■ 큐레이션\n주제로 묶은 큐레이션에서 평소 찾지 않던 작품을 만납니다.\n\n■ 커뮤니티\n전시를 보고 온 이야기를 적고 다른 사람의 기록을 읽습니다. 규칙에 어긋난 글은 신고할 수 있고, 보고 싶지 않은 사람은 차단할 수 있습니다.\n\n■ 검색\n작가 이름이나 작품 제목, 미술관 이름으로 찾습니다.\n\n전시와 작품은 로그인하지 않아도 볼 수 있습니다. 좋아요와 플레이리스트, 커뮤니티 글은 Apple, Google, 네이버 계정으로 로그인한 뒤에 쓸 수 있고, 계정은 앱 안에서 언제든 삭제할 수 있습니다.\n\n전시 일정과 관람료는 미술관 사정으로 바뀝니다. 방문 전에 미술관 공지를 한 번 더 확인해 주세요.\n\n문의 kietzland@gmail.com",
+        "keywords": [
+          "미술관",
+          "전시",
+          "갤러리",
+          "미술",
+          "작품",
+          "전시회",
+          "아트",
+          "예술",
+          "큐레이션",
+          "전시정보",
+          "미술관지도",
+          "도슨트"
+        ],
+        "promoText": "지구본을 돌려 300개 미술관의 전시와 소장품을 찾아봅니다.",
+        "marketingUrl": "https://armin-web.pages.dev",
+        "supportUrl": "https://armin-web.pages.dev/support",
+        "privacyPolicyUrl": "https://armin-web.pages.dev/privacy"
+      },
+      "en-US": {
+        "title": "COLLY 콜리",
+        "subtitle": "The world's museums on a globe",
+        "description": "COLLY brings the exhibitions and collections of museums worldwide into one screen.\n\n■ Globe\n300 museums sit on a globe. Spin it, pick a city, and see the museums there and what is on show right now.\n\n■ Exhibitions near you\nAllow location and exhibitions are listed nearest first, with dates, admission and closing days.\n\n■ Artworks and playlists\nLike the works that stay with you and gather them into playlists by theme. A playlist can be shared with a link.\n\n■ Curations\nThemed curations bring you works you would not have searched for.\n\n■ Community\nWrite what you saw and read what others wrote. Objectionable posts can be reported, and anyone you would rather not read can be blocked.\n\n■ Search\nFind by artist, title of a work, or museum name.\n\nExhibitions and artworks are open without an account. Likes, playlists and community posts need a sign-in with Apple, Google or Naver, and the account can be deleted inside the app at any time.\n\nMuseum schedules and admission change. Check the museum's own notice before you go.\n\nContact kietzland@gmail.com",
+        "keywords": [
+          "museum",
+          "exhibition",
+          "gallery",
+          "art",
+          "artwork",
+          "curation",
+          "artist",
+          "painting",
+          "art map",
+          "museums"
+        ],
+        "promoText": "Spin the globe and find what 300 museums are showing right now.",
+        "marketingUrl": "https://armin-web.pages.dev",
+        "supportUrl": "https://armin-web.pages.dev/support",
+        "privacyPolicyUrl": "https://armin-web.pages.dev/privacy"
+      }
+    },
+    "advisory": {
+      "ageRatingOverride": "NONE",
+      "alcoholTobaccoOrDrugUseOrReferences": "NONE",
+      "contests": "NONE",
+      "gambling": false,
+      "gamblingSimulated": "NONE",
+      "horrorOrFearThemes": "NONE",
+      "kidsAgeBand": null,
+      "koreaAgeRatingOverride": "NONE",
+      "lootBox": false,
+      "matureOrSuggestiveThemes": "NONE",
+      "medicalOrTreatmentInformation": "NONE",
+      "profanityOrCrudeHumor": "NONE",
+      "sexualContentGraphicAndNudity": "NONE",
+      "sexualContentOrNudity": "NONE",
+      "unrestrictedWebAccess": false,
+      "violenceCartoonOrFantasy": "NONE",
+      "violenceRealistic": "NONE",
+      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
+      "advertising": false,
+      "ageAssurance": false,
+      "ageRatingOverrideV2": "NONE",
+      "developerAgeRatingInfoUrl": null,
+      "gunsOrOtherWeapons": "NONE",
+      "healthOrWellnessTopics": false,
+      "messagingAndChat": false,
+      "parentalControls": false,
+      "userGeneratedContent": true
+    },
+    "copyright": "2026 kimchanyeong",
+    "categories": [
+      "LIFESTYLE",
+      "EDUCATION"
+    ],
+    "review": {
+      "firstName": "Chanyeong",
+      "lastName": "Kim",
+      "email": "kietzland@gmail.com",
+      "phone": "+82 10-9443-9374",
+      "demoRequired": false,
+      "notes": "PURPOSE AND AUDIENCE\nCOLLY is a free guide to art museums worldwide, for people who visit exhibitions or browse collections. It places 300 museums on a globe; picking a city shows that city's museums and current exhibitions, with dates, admission and closing days. Signed-in users like artworks, gather them into playlists, read themed curations, and write about exhibitions they visited in the community.\n\nHOW TO ACCESS THE MAIN FEATURES\n1. The globe, exhibitions, artworks, curations and search all work without an account.\n2. Account features: tap the person icon (bottom right) -> Sign in with Apple. Any Apple ID works; no demo account is needed.\n3. Community: bottom tab -> 커뮤니티. Tap a post to read; the pencil button writes one.\n4. Reporting and blocking: on a post or a comment tap the \"...\" button -> 신고 (Report) or 이 사용자 차단 (Block user). Blocked authors' posts and comments disappear from your feed. Abusive words are filtered before a post or comment is accepted. Terms with a zero-tolerance policy: https://armin-web.pages.dev/terms\n5. Account deletion: bottom tab -> 마이페이지 -> scroll to the bottom -> 계정 삭제 -> 계정 지우기. Profile, likes, playlists, saved curations, cart, community posts and comments are deleted from the server.\n\nEXTERNAL SERVICES\n- Firebase Authentication, Firestore, Analytics (Google): sign-in, data storage, usage statistics\n- Cloudflare Pages and Workers: web app hosting and search\nSign in with Apple, Google Sign-In and Naver Login are the three ways to sign in.\n\nPAYMENTS\nThe app has no in-app purchases and no subscriptions. A print-ordering feature exists in the code but is turned off in this version.\n\nREGIONS\nThe interface is Korean and English; museum and exhibition data is worldwide.\n\nTHIRD-PARTY MATERIAL\nExhibition information is compiled from what museums publish. Artwork images come from museum open-access collections and are shown for viewing inside the app, with the holding museum credited on each work."
+    }
+  }
+}

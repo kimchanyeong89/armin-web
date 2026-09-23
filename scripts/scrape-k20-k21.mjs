@@ -215,8 +215,27 @@ async function main() {
   console.log(`[k20] after type filter: ${candidates.length} candidates  ${JSON.stringify(typeCount)}`);
   if (LIMIT) candidates = candidates.slice(0, LIMIT);
 
-  // 3. Process each
+  // 2b. Resumability: keep records already captured in a prior run, only fetch new IDs.
+  //     The "Masterpieces" portal grows over time ("New works are added regularly"),
+  //     so a re-run should incrementally pick up just the additions, not re-fetch all 392.
+  const outPath = path.join(REPO_ROOT, OUT_JSON);
   const artworks = [];
+  const haveIds = new Set();
+  if (!LIMIT && fs.existsSync(outPath)) {
+    try {
+      const prev = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+      for (const a of prev.artworks || []) {
+        const rid = String(a.metadata?.k20RecordId ?? a.id.replace(/^k20k21-/, ''));
+        if (!haveIds.has(rid)) { haveIds.add(rid); artworks.push(a); }
+      }
+      console.log(`[k20] resume: ${artworks.length} records already captured — will only fetch new IDs`);
+    } catch { /* corrupt/old file → full scrape */ }
+  }
+  const before = candidates.length;
+  candidates = candidates.filter(c => !haveIds.has(c.id));
+  if (haveIds.size) console.log(`[k20] ${before - candidates.length} skipped (already captured), ${candidates.length} to fetch`);
+
+  // 3. Process each
   const failed = [];
   const skipped = [];
   let done = 0;

@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState, useRef } from "react";
+import { RankInfo } from "./RankInfo";
+import "./mypageRedesign.css";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -12,11 +14,11 @@ import {
   getDocs,
   onSnapshot,
   query,
-  where,
-  getCountFromServer,
   orderBy,
 } from "firebase/firestore";
 import {
+  ArrowLeft,
+  ArrowRight,
   BookmarkPlus,
   Heart,
   ListMusic,
@@ -28,9 +30,11 @@ import {
   Calendar,
   Palette,
   Bookmark,
+  Share2,
 } from "lucide-react";
 
 import { useSavedCurations } from "../hooks/useSavedCurations";
+import RatingEmblems from "./Ratings/RatingEmblems";
 
 import { ProductModal } from "./ProductModal";
 import { SHOW_SALES_UI } from "../config/features";
@@ -42,13 +46,45 @@ import { getOptimizedImageUrl } from "../utils/imageProxy";
 import CommentModal from "./CommentModal";
 import Slideshow from "./Slideshow";
 import { PlaylistModal } from "./PlaylistModal";
-import ProfileAvatar from "./ProfileAvatar";
+import { RankAvatar } from "./RankAvatar";
+import { prettifyArtistName } from "../utils/canonicalArtist";
+import {
+  ArtistInitial,
+  MuseumArt,
+  SavedArt,
+  artistPortrait,
+  collectionCover,
+  isRunningShow,
+  museumName,
+  museumRecord,
+  standingCollectionOf,
+  useArtistPortraits,
+  useCollectionCovers,
+  ArtistWorkCount,
+} from "../features/mypage/savedItemArt";
+import PlaylistShareSheet from "./PlaylistShareSheet";
+import { refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
 import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
+import { readPostCount, syncPublicProfile } from "../features/community/publicProfile";
+import { rankForScore, userActivityScore } from "../utils/communityRank";
 import type { ProfileImageCrop } from "../types/Profile";
 import { ensureSharedSearchWorkerLoaded } from "../utils/searchWorkerRuntime";
+import DeleteAccountSection from "../features/account/DeleteAccountSection";
 
 type ViewMode = "artworks" | "exhibitions" | "museums" | "artists" | "playlists" | "curations";
+const MYPAGE_RETURN_KEY = "mypage:return";
 type SortMode = "recent" | "oldest" | "newest";
+
+/** A count as the redesigned tabs set their figures: two digits under a hundred. */
+const figure = (n: number) => (n < 100 ? String(n).padStart(2, "0") : n.toLocaleString());
+
+/** A playlist's year for sorting: the mean of the years its works carry, 0 when none do. */
+const averageYear = (items: any[]) => {
+  const years = items
+    .map((item) => Number(String(item?.year ?? "").match(/\d{3,4}/)?.[0]))
+    .filter((year) => year > 0);
+  return years.length ? Math.round(years.reduce((sum, year) => sum + year, 0) / years.length) : 0;
+};
 const SHOW_ARTWORK_COMMENTS = false;
 
 // Persona name lookup for Saved Curations cards. Kept in sync by hand with
@@ -58,16 +94,6 @@ const CURATION_PERSONA_NAMES: Record<string, { en: string; ko: string }> = {
   "marco-rinaldi": { en: "Marco Rinaldi", ko: "마르코 리날디" },
   "anika-voss":    { en: "Anika Voss",    ko: "아니카 보스" },
 };
-
-const RANKS = [
-  { name: "Observer", threshold: 0, short: "Lv.1" },
-  { name: "Seeker", threshold: 5, short: "Lv.2" },
-  { name: "Collector", threshold: 15, short: "Lv.3" },
-  { name: "Curator", threshold: 30, short: "Lv.4" },
-  { name: "Gallerist", threshold: 60, short: "Lv.5" },
-  { name: "Patron", threshold: 100, short: "Lv.6" },
-  { name: "Visionary", threshold: 200, short: "Lv.7" },
-];
 
 // Pre-built map: permanentExhibition.id → collectionFile stem
 // This resolves cases where exhibitionId saved in Firebase is the pe.id ("tm-perm-1")
@@ -1092,11 +1118,17 @@ const MyPageImage = React.memo(({ item, width = 600, style, disableBlur = true }
 const MyPage: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const [loading, setLoading] = useState(true);
   const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
   const [likedExhibitions, setLikedExhibitions] = useState<any[]>([]);
+  // Exhibitions bookmarked from the map's "현재 진행중인 전시" sheet.
+  const [savedExhibitions, setSavedExhibitions] = useState<any[]>([]);
+  const allExhibitions = useMemo(() => {
+    const seen = new Set(likedExhibitions.map((e: any) => String(e.id)));
+    return [...likedExhibitions, ...savedExhibitions.filter((e: any) => !seen.has(String(e.id)))];
+  }, [likedExhibitions, savedExhibitions]);
   const [likedMuseums, setLikedMuseums] = useState<any[]>([]);
   const [likedArtists, setLikedArtists] = useState<any[]>([]);
 
@@ -1113,12 +1145,28 @@ const MyPage: React.FC = () => {
   const [playlistArtwork, setPlaylistArtwork] = useState<any>(null);
   const [activePlaylist, setActivePlaylist] = useState<any>(null);
   const [activePlaylistItems, setActivePlaylistItems] = useState<any[]>([]);
+  /* the playlist whose share sheet is open */
+  const [sharingPlaylistId, setSharingPlaylistId] = useState<string | null>(null);
 
   const [userScore, setUserScore] = useState(0);
-  const [userRank, setUserRank] = useState(RANKS[0]);
 
-  const [viewMode, setViewMode] = useState<ViewMode>("artworks");
-  const [sortMode, setSortMode] = useState<SortMode>("recent");
+  /* Coming back to My Page — from an artist page by its close mark or by the
+     browser's Back — lands on the tab and the place the reader left, not on
+     the first tab at the top. The page is rebuilt on return, so it is kept
+     in the session. */
+  const returnTo = useMemo(() => {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(MYPAGE_RETURN_KEY) || "null");
+      if (saved && Date.now() - Number(saved.at || 0) < 30 * 60 * 1000) {
+        return saved as { tab: ViewMode; sort: SortMode; scrollTop: number; count: number };
+      }
+    } catch {
+      // ignore
+    }
+    return null;
+  }, []);
+  const [viewMode, setViewMode] = useState<ViewMode>(() => returnTo?.tab ?? "artworks");
+  const [sortMode, setSortMode] = useState<SortMode>(() => returnTo?.sort ?? "recent");
   const [unlikedItems, setUnlikedItems] = useState<Set<string>>(new Set());
 
   // Live subscription to users/{uid}/saved_curations (newest-first).
@@ -1134,7 +1182,6 @@ const MyPage: React.FC = () => {
   });
   const [liveProfilePhoto, setLiveProfilePhoto] = useState<string | null>(null);
   const [liveProfileCrop, setLiveProfileCrop] = useState<ProfileImageCrop | null>(null);
-  const [isHeroHovered, setIsHeroHovered] = useState(false);
   const [isHeroPickerOpen, setIsHeroPickerOpen] = useState(false);
   const [selectedHeroArtworkId, setSelectedHeroArtworkId] = useState<string | null>(null);
   const [draftHeroArtworkId, setDraftHeroArtworkId] = useState<string | null>(null);
@@ -1168,6 +1215,7 @@ const MyPage: React.FC = () => {
   // Reset scroll to top on mount/remount (e.g. returning from another tab or modal).
   // Without this, the scroll container may retain a stale scrollTop that hides the hero.
   useEffect(() => {
+    if (returnTo?.scrollTop) return;
     // Use rAF to ensure the ref is attached after React commits the DOM
     const raf = requestAnimationFrame(() => {
       const el = scrollContainerRef.current;
@@ -1249,6 +1297,10 @@ const MyPage: React.FC = () => {
       );
 
       setPlaylists(loaded);
+      /* a shared playlist's public copy catches up with works added elsewhere */
+      loaded
+        .filter((playlist) => playlist.shared === true)
+        .forEach((playlist) => void refreshSharedPlaylist(user.uid, playlist.id).catch(() => {}));
     } catch (error) {
       console.error("Error fetching playlists", error);
     }
@@ -1298,6 +1350,11 @@ const MyPage: React.FC = () => {
       collection(db, `users/${user.uid}/liked_exhibitions`),
       (snap) => setLikedExhibitions(snap.docs.map((record) => ({ id: record.id, ...record.data() }))),
     );
+    const unsubSavedExhibitions = onSnapshot(
+      collection(db, `users/${user.uid}/saved_exhibitions`),
+      (snap) => setSavedExhibitions(snap.docs.map((record) => ({ id: record.id, _saved: true, ...record.data() }))),
+      () => {},
+    );
     const unsubMuseums = onSnapshot(
       collection(db, `users/${user.uid}/liked_museums`),
       (snap) => setLikedMuseums(snap.docs.map((record) => ({ id: record.id, ...record.data() }))),
@@ -1316,6 +1373,7 @@ const MyPage: React.FC = () => {
     return () => {
       unsubArtworks();
       unsubExhibitions();
+      unsubSavedExhibitions();
       unsubMuseums();
       unsubArtists();
     };
@@ -1325,34 +1383,27 @@ const MyPage: React.FC = () => {
     if (!user || loading) return;
 
     const calculateScore = async () => {
-      const db = getFirestore();
-      let score = 0;
-
-      score += likedArtworks.length;
-      score += likedExhibitions.length * 2;
-
-      try {
-        const postsQuery = query(collection(db, "community"), where("authorId", "==", user.uid));
-        const postsSnapshot = await getCountFromServer(postsQuery);
-        score += postsSnapshot.data().count * 5;
-      } catch (error) {
-        console.warn("Could not fetch community stats for score", error);
-      }
+      /* posts are counted on the server; the formula is the one the community card uses */
+      const posts = await readPostCount(user.uid);
+      const score = userActivityScore({
+        likedArtworks: likedArtworks.length,
+        likedExhibitions: likedExhibitions.length,
+        posts,
+      });
 
       setUserScore(score);
-
-      let currentRank = RANKS[0];
-      for (let i = RANKS.length - 1; i >= 0; i -= 1) {
-        if (score >= RANKS[i].threshold) {
-          currentRank = RANKS[i];
-          break;
-        }
-      }
-      setUserRank(currentRank);
+      /* the community shows this same level beside the user's posts */
+      syncPublicProfile(user, score).catch(() => {});
     };
 
     calculateScore();
   }, [user, loading, likedArtworks.length, likedExhibitions.length]);
+
+  /* a new photo, crop or nickname reaches the community card straight away */
+  useEffect(() => {
+    if (!user || user.isAnonymous) return;
+    syncPublicProfile(user).catch(() => {});
+  }, [user, username, liveProfilePhoto, liveProfileCrop]);
 
   useEffect(() => {
     if (!user || user.isAnonymous) {
@@ -1655,15 +1706,11 @@ const MyPage: React.FC = () => {
   };
 
   const pageBg = isLightTheme ? "#FAFAFA" : "#080808";
-  const panelBg = isLightTheme ? "rgba(255,255,255,0.84)" : "rgba(8,8,8,0.84)";
-  const panelBorder = isLightTheme ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.10)";
   const pageText = isLightTheme ? "rgba(0,0,0,0.88)" : "rgba(255,255,255,0.88)";
   const subText = isLightTheme ? "rgba(0,0,0,0.56)" : "rgba(255,255,255,0.56)";
   const faintText = isLightTheme ? "rgba(0,0,0,0.36)" : "rgba(255,255,255,0.36)";
   const divider = isLightTheme ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
   const lime = "#D4A547";
-  const heroControlTop = "calc(env(safe-area-inset-top, 0px) - 4px)";
-  const heroPickerTop = "calc(env(safe-area-inset-top, 0px) + 34px)";
 
   const heroImageOptions = useMemo(() => {
     const sanitizeHeroImage = (value: unknown): string => {
@@ -1768,6 +1815,48 @@ const MyPage: React.FC = () => {
     return () => node.removeEventListener("scroll", handleScroll);
   }, [isHeroPickerOpen]);
 
+  /* the picker also closes on Escape or a press outside it */
+  const heroPickerRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!isHeroPickerOpen) return;
+    const away = (event: PointerEvent) => {
+      if (!heroPickerRef.current?.contains(event.target as Node)) setIsHeroPickerOpen(false);
+    };
+    const esc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsHeroPickerOpen(false);
+    };
+    document.addEventListener("pointerdown", away);
+    document.addEventListener("keydown", esc);
+    return () => {
+      document.removeEventListener("pointerdown", away);
+      document.removeEventListener("keydown", esc);
+    };
+  }, [isHeroPickerOpen]);
+
+  /* the sort's gold bar stands under the chosen label; the labels differ in
+     width, so its place is measured */
+  /* the pictures the saved-item cards stand on: fetched once, and only for the tab that needs them */
+  const collectionCovers = useCollectionCovers(viewMode === "exhibitions");
+  const artistPortraits = useArtistPortraits(viewMode === "artists");
+
+  const sortRowRef = useRef<HTMLDivElement | null>(null);
+  /* the bar is the chosen label's own width, so it reads as that word's underline */
+  const [sortBar, setSortBar] = useState({ x: 0, w: 0 });
+  useLayoutEffect(() => {
+    const measure = () => {
+      const on = sortRowRef.current?.querySelector<HTMLButtonElement>('button[aria-pressed="true"]');
+      if (on && on.offsetWidth > 0) setSortBar({ x: on.offsetLeft, w: on.offsetWidth });
+    };
+    measure();
+    void document.fonts?.ready.then(measure);
+    /* the row is laid out again when the page fills in or the width changes */
+    const row = sortRowRef.current;
+    if (!row) return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(row);
+    return () => observer.disconnect();
+  }, [sortMode, language, loading]);
+
   useEffect(() => {
     if (!draftHeroArtworkId) return;
     const exists = heroImageOptions.some((item) => item.id === draftHeroArtworkId);
@@ -1785,24 +1874,32 @@ const MyPage: React.FC = () => {
 
   const tabs = useMemo(
     () => [
-      { id: "artworks" as const, label: "Artworks", icon: Palette, count: likedArtworks.length },
-      { id: "exhibitions" as const, label: "Exhibitions", icon: Calendar, count: likedExhibitions.length },
-      { id: "museums" as const, label: "Museums", icon: MapPin, count: likedMuseums.length },
-      { id: "artists" as const, label: "Artists", icon: User, count: likedArtists.length },
-      { id: "playlists" as const, label: "Playlists", icon: ListMusic, count: playlists.length },
-      { id: "curations" as const, label: "Curations", icon: Bookmark, count: savedCurations.length },
+      { id: "artworks" as const, ko: "작품", en: "Artworks", icon: Palette, count: likedArtworks.length },
+      { id: "exhibitions" as const, ko: "전시", en: "Exhibitions", icon: Calendar, count: allExhibitions.length },
+      { id: "museums" as const, ko: "미술관", en: "Museums", icon: MapPin, count: likedMuseums.length },
+      { id: "artists" as const, ko: "작가", en: "Artists", icon: User, count: likedArtists.length },
+      { id: "playlists" as const, ko: "플레이리스트", en: "Playlists", icon: ListMusic, count: playlists.length },
+      { id: "curations" as const, ko: "큐레이션", en: "Curations", icon: Bookmark, count: savedCurations.length },
     ],
-    [likedArtworks.length, likedExhibitions.length, likedMuseums.length, likedArtists.length, playlists.length, savedCurations.length],
+    [likedArtworks.length, allExhibitions.length, likedMuseums.length, likedArtists.length, playlists.length, savedCurations.length],
+  );
+
+  /* playlists sort as the other tabs' items do: by when each was made, and by
+     the years of the works it holds */
+  const playlistItems = useMemo(
+    () => playlists.map((playlist) => ({ ...playlist, likedAt: playlist.createdAt, year: averageYear(playlist.items || []) })),
+    [playlists],
   );
 
   const currentItems = useMemo(() => {
     if (activePlaylist) return activePlaylistItems;
     if (viewMode === "artworks") return likedArtworks;
-    if (viewMode === "exhibitions") return likedExhibitions;
+    if (viewMode === "exhibitions") return allExhibitions;
     if (viewMode === "museums") return likedMuseums;
     if (viewMode === "artists") return likedArtists;
+    if (viewMode === "playlists") return playlistItems;
     return [];
-  }, [activePlaylist, activePlaylistItems, likedArtworks, likedExhibitions, likedMuseums, likedArtists, viewMode]);
+  }, [activePlaylist, activePlaylistItems, likedArtworks, allExhibitions, likedMuseums, likedArtists, playlistItems, viewMode]);
 
   const toMillis = (value: any) => {
     if (!value) return 0;
@@ -1827,6 +1924,34 @@ const MyPage: React.FC = () => {
 
   const [displayedCount, setDisplayedCount] = useState(initialBatchSize);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const leaving = useRef({ tab: viewMode, sort: sortMode, scrollTop: 0, count: displayedCount });
+  leaving.current = { ...leaving.current, tab: viewMode, sort: sortMode, count: displayedCount };
+  useEffect(() => () => {
+    try {
+      sessionStorage.setItem(MYPAGE_RETURN_KEY, JSON.stringify({ ...leaving.current, at: Date.now() }));
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  const pendingScroll = useRef(returnTo?.scrollTop ?? 0);
+  useEffect(() => {
+    const target = pendingScroll.current;
+    const el = scrollContainerRef.current;
+    if (!target || !el || loading || sortedItems.length === 0) return;
+    /* the list is dealt in batches: deal as many as there were before scrolling */
+    const wanted = Math.min(returnTo?.count ?? 0, sortedItems.length);
+    if (displayedCount < wanted) {
+      setDisplayedCount(wanted);
+      return;
+    }
+    const raf = requestAnimationFrame(() => {
+      el.scrollTop = target;
+      pendingScroll.current = 0;
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [loading, sortedItems.length, displayedCount, returnTo]);
 
   useEffect(() => {
     setDisplayedCount(initialBatchSize);
@@ -1864,6 +1989,13 @@ const MyPage: React.FC = () => {
     if (mode === "exhibitions") {
       const targetId = item.exhibitionId || item.id;
       if (targetId) navigate(`/?exhibition=${encodeURIComponent(targetId)}`);
+      return;
+    }
+
+    if (mode === "artists") {
+      const name = String(item.artist || item.name || "").trim();
+      /* App 이 작가 화면을 마이페이지 위에 얹는다 — 닫으면 보던 탭과 자리 그대로다 */
+      if (name) window.dispatchEvent(new CustomEvent("open-artist-gallery", { detail: { artist: name }, cancelable: true }));
       return;
     }
 
@@ -1909,6 +2041,7 @@ const MyPage: React.FC = () => {
   };
 
   const displayName = profileData.nickname || username || user?.displayName || "Art Explorer";
+  const sharingPlaylist = playlists.find((playlist) => playlist.id === sharingPlaylistId) || null;
 
   const saveHeroBackgroundPreference = async () => {
     const nextHeroId = draftHeroArtworkId || null;
@@ -2029,39 +2162,28 @@ const MyPage: React.FC = () => {
           }}
         />
 
-        <div
-          style={{
-            position: "absolute",
-            right: isMobile ? 6 : 7,
-            bottom: isMobile ? 6 : 10,
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: isMobile ? 6 : 8,
-            zIndex: 2,
-          }}
-        >
+        {/* like on top, save-to-playlist directly under it, at the
+            picture's upper right - smaller, and set close together */}
+        <div className="mp-acts">
+          <button
+            onClick={(event) => {
+              event.stopPropagation();
+              if (isUnliked) handleRelike(normalized, itemType);
+              else handleUnlike(itemId, itemType);
+            }}
+            title={isUnliked ? "Like again" : "Unlike"}
+          >
+            <Heart size={12} strokeWidth={2.2} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
+          </button>
+
           <button
             onClick={(event) => {
               event.stopPropagation();
               setPlaylistArtwork(normalized);
             }}
-            style={{
-              width: isMobile ? 28 : 30,
-              height: isMobile ? 28 : 30,
-              borderRadius: "50%",
-              border: "none",
-              background: "rgba(0,0,0,0.56)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-            }}
             title="Save to Playlist"
           >
-            <BookmarkPlus size={isMobile ? 12 : 14} strokeWidth={2.2} />
+            <BookmarkPlus size={12} strokeWidth={2.2} />
           </button>
 
           {SHOW_SALES_UI && (
@@ -2070,98 +2192,91 @@ const MyPage: React.FC = () => {
               event.stopPropagation();
               setProductArtwork(normalized);
             }}
-            style={{
-              width: isMobile ? 28 : 30,
-              height: isMobile ? 28 : 30,
-              borderRadius: "50%",
-              border: "none",
-              background: "rgba(0,0,0,0.56)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-            }}
             title="Purchase Product"
           >
-            <ShoppingBag size={isMobile ? 12 : 14} strokeWidth={2.1} />
+            <ShoppingBag size={12} strokeWidth={2.1} />
           </button>
           )}
-
-          <button
-            onClick={(event) => {
-              event.stopPropagation();
-              if (isUnliked) handleRelike(normalized, itemType);
-              else handleUnlike(itemId, itemType);
-            }}
-            style={{
-              width: isMobile ? 28 : 30,
-              height: isMobile ? 28 : 30,
-              borderRadius: "50%",
-              border: "none",
-              background: "rgba(0,0,0,0.56)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-            }}
-            title={isUnliked ? "Like again" : "Unlike"}
-          >
-            <Heart size={isMobile ? 13 : 15} strokeWidth={2.2} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
-          </button>
         </div>
 
-        {!isMobile && (
-          <div style={{ position: "absolute", left: 8, right: 40, bottom: 8, color: "#fff", pointerEvents: "none" }}>
-            <div
-              style={{
-                fontSize: 11,
-                fontWeight: 600,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {normalized.title}
-            </div>
-            <div
-              style={{
-                marginTop: 2,
-                fontSize: 10,
-                opacity: 0.88,
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-              }}
-            >
-              {normalized.artist || normalized.museumName}
-            </div>
-          </div>
-        )}
+        {/* the work names itself at all times, lower left, in the AI
+            tab's pairing: Paperlogy for the title, Wanted Sans under it */}
+        <div className="mp-name-line">
+          <b>{normalized.title}</b>
+          <small>{normalized.artist || normalized.museumName}</small>
+        </div>
       </div>
     );
   };
 
+  /* What a saved item shows: a running show its own poster, a standing
+     collection the first work in it, a museum its own logo, an artist their
+     portrait — the chains live in features/mypage/savedItemArt. */
   const renderSimpleCard = (rawItem: any, index: number) => {
-    const normalized = {
-      ...rawItem,
-      image: getPrimaryImageCandidate(rawItem),
-      title: rawItem.title || rawItem.name || rawItem.n || "Untitled",
-      subtitle: rawItem.artist || rawItem.museumName || rawItem.location || "",
-    };
-
-
+    const ko = language === "ko";
     const itemType = resolveItemType(viewMode);
-    const itemId = getItemId(normalized, viewMode);
+    const itemId = getItemId(rawItem, viewMode);
     const isUnliked = unlikedItems.has(itemId);
+    const markColor = isLightTheme ? "rgba(0,0,0,0.74)" : "rgba(255,255,255,0.82)";
+
+    let kicker = "";
+    let kickerColor: string = subText;
+    let title = "";
+    let subtitle = "";
+    let subtitleNode: React.ReactNode = null;
+    let sources: Array<string | undefined> = [];
+    let artistName: string | undefined;
+    let objectPosition: string | undefined;
+    let fallback: React.ReactNode = null;
+    /* an artist card is round, and its name carries the card */
+    let roundArt = false;
+
+    if (viewMode === "exhibitions") {
+      const standing = standingCollectionOf(rawItem);
+      const museum = museumRecord(standing?.museumId || rawItem.museumId || rawItem.slug);
+      const house = museumName(museum, ko, standing?.museumName || rawItem.museumName || rawItem.venue || "");
+      if (standing) {
+        kicker = t({ ko: "상설", en: "PERMANENT" });
+        kickerColor = lime;
+        title = t({ ko: "소장품", en: "Collection" });
+        subtitle = house;
+        sources = [collectionCover(collectionCovers, standing.collectionFile), rawItem.image, museum?.representativeImage];
+      } else {
+        kicker = isRunningShow(rawItem) ? t({ ko: "일시", en: "TEMPORARY" }) : "";
+        title = rawItem.title || rawItem.name || t({ ko: "전시", en: "Exhibition" });
+        subtitle = rawItem.venue || house;
+        sources = [rawItem.image, museum?.representativeImage];
+      }
+      fallback = <MuseumArt museumId={museum?.id} name={house || title} color={markColor} accent={lime} />;
+    } else if (viewMode === "museums") {
+      const museum = museumRecord(rawItem.museumId || rawItem.slug || rawItem.id);
+      const logoId = museum?.id || rawItem.museumId || rawItem.slug || rawItem.id;
+      title = museumName(museum, ko, rawItem.name || "") || String(rawItem.museumId || rawItem.id || "");
+      subtitle = rawItem.location || museum?.location || "";
+      /* a museum is its own mark: the logo, or its name set as the wordmark for
+         the few without one — never a picture of a work that was saved with it */
+      sources = [];
+      fallback = <MuseumArt museumId={logoId} name={title} color={markColor} accent={lime} />;
+    } else {
+      artistName = String(rawItem.artist || rawItem.name || "");
+      title = prettifyArtistName(artistName) || artistName;
+      const works = Number(rawItem.count || 0);
+      subtitle = works
+        ? `${works.toLocaleString()} ${t({ ko: "작품", en: works === 1 ? "work" : "works" })}`
+        : t({ ko: "작가", en: "Artist" });
+      /* the number saved with the like went stale as collections grew; count now */
+      subtitleNode = <ArtistWorkCount name={artistName} saved={works} ko={ko} />;
+      sources = [artistPortrait(artistPortraits, artistName, isMobile ? 320 : 480), rawItem.image];
+      /* a portrait is framed for the face, not the middle of the plate */
+      objectPosition = "center 28%";
+      fallback = <ArtistInitial name={title} color={markColor} accent={lime} />;
+      roundArt = true;
+    }
 
     return (
       <div
         key={`${viewMode}-${itemId}-${index}`}
-        onClick={() => openItem(normalized, viewMode)}
+        onClick={() => openItem(rawItem, viewMode)}
         style={{
           position: "relative",
           borderRadius: 10,
@@ -2171,22 +2286,60 @@ const MyPage: React.FC = () => {
           cursor: "pointer",
         }}
       >
-        <div style={{ aspectRatio: "4 / 5", background: isLightTheme ? "#f0f0f0" : "#1a1a1a" }}>
-          <MyPageImage item={normalized} width={isMobile ? 240 : 400} disableBlur />
+        <div
+          style={{
+            aspectRatio: "4 / 5",
+            display: "grid",
+            placeItems: "center",
+            overflow: "hidden",
+            background: roundArt ? "transparent" : isLightTheme ? "#f1f1f1" : "#151515",
+          }}
+        >
+          {roundArt ? (
+            <span
+              style={{
+                display: "grid",
+                placeItems: "center",
+                width: "64%",
+                aspectRatio: "1",
+                borderRadius: "50%",
+                overflow: "hidden",
+                background: isLightTheme ? "#ececec" : "#1b1b1b",
+              }}
+            >
+              <SavedArt
+                sources={sources}
+                artistName={artistName}
+                alt={title}
+                width={isMobile ? 240 : 400}
+                objectPosition={objectPosition}
+                fallback={fallback}
+              />
+            </span>
+          ) : (
+            <SavedArt
+              sources={sources}
+              artistName={artistName}
+              alt={title}
+              width={isMobile ? 240 : 400}
+              objectPosition={objectPosition}
+              fallback={fallback}
+            />
+          )}
         </div>
 
         <button
           onClick={(event) => {
             event.stopPropagation();
-            if (isUnliked) handleRelike(normalized, itemType);
+            if (isUnliked) handleRelike(rawItem, itemType);
             else handleUnlike(itemId, itemType);
           }}
           style={{
             position: "absolute",
             top: 8,
             right: 8,
-            width: isMobile ? 28 : 28,
-            height: isMobile ? 28 : 28,
+            width: 28,
+            height: 28,
             borderRadius: "50%",
             border: "none",
             background: "rgba(0,0,0,0.56)",
@@ -2198,33 +2351,151 @@ const MyPage: React.FC = () => {
             padding: 0,
           }}
         >
-          <Heart size={isMobile ? 13 : 13} strokeWidth={2.1} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
+          <Heart size={13} strokeWidth={2.1} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
         </button>
 
-        <div style={{ padding: "8px 9px" }}>
+        <div style={{ padding: roundArt ? "4px 9px 12px" : "8px 9px", textAlign: roundArt ? "center" : "left" }}>
+          {kicker && (
+            <div
+              style={{
+                fontFamily: "'Space Mono', monospace",
+                fontSize: 9,
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                color: kickerColor,
+                marginBottom: 3,
+              }}
+            >
+              {kicker}
+            </div>
+          )}
           <div
+            className={roundArt ? "mp-name" : undefined}
             style={{
-              fontSize: 12,
-              fontWeight: 600,
+              fontSize: roundArt ? (isMobile ? 13 : 15) : 12,
+              fontWeight: roundArt ? 700 : 600,
+              lineHeight: 1.25,
               color: pageText,
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
             }}
           >
-            {normalized.title}
+            {title}
           </div>
           <div
             style={{
-              marginTop: 2,
+              marginTop: roundArt ? 4 : 2,
               fontSize: 10,
+              fontFamily: roundArt ? "'Space Mono', monospace" : undefined,
+              letterSpacing: roundArt ? "0.04em" : undefined,
               color: subText,
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
             }}
           >
-            {normalized.subtitle}
+            {subtitleNode ?? subtitle}
+          </div>
+          {viewMode === "exhibitions" && itemId && (
+            <div style={{ marginTop: 6 }}>
+              <RatingEmblems
+                subject={{ kind: "exhibition", id: itemId }}
+                title={title}
+                subtitle={subtitle}
+                size={12}
+                color={subText}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  /* a playlist drawn as the exhibition and museum cards are: its cover, name
+     and count, with sharing and the slideshow as round marks on the cover */
+  const renderPlaylistCard = (playlist: any) => {
+    const count = playlist.items?.length || 0;
+    const open = () => {
+      setViewMode("artworks");
+      setActivePlaylist(playlist);
+      setActivePlaylistItems(playlist.items || []);
+    };
+    const mark: React.CSSProperties = {
+      width: 28,
+      height: 28,
+      borderRadius: "50%",
+      border: "none",
+      background: "rgba(0,0,0,0.56)",
+      color: "#fff",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      cursor: "pointer",
+      padding: 0,
+    };
+
+    return (
+      <div
+        key={playlist.id}
+        role="button"
+        tabIndex={0}
+        onClick={open}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            open();
+          }
+        }}
+        style={{
+          position: "relative",
+          borderRadius: 10,
+          overflow: "hidden",
+          border: `1px solid ${divider}`,
+          background: isLightTheme ? "#fff" : "rgba(255,255,255,0.03)",
+          cursor: "pointer",
+        }}
+      >
+        <div style={{ aspectRatio: "4 / 5", background: isLightTheme ? "#f0f0f0" : "#1a1a1a" }}>
+          {playlist.coverImage ? <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 240 : 400} disableBlur /> : null}
+        </div>
+
+        <div style={{ position: "absolute", top: 8, right: 8, zIndex: 2, display: "grid", gap: 6 }}>
+          <button
+            type="button"
+            title={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
+            aria-label={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
+            onClick={(event) => {
+              event.stopPropagation();
+              setSharingPlaylistId(playlist.id);
+            }}
+            style={mark}
+          >
+            <Share2 size={13} strokeWidth={2.1} color={playlist.shared ? lime : "#fff"} />
+          </button>
+          <button
+            type="button"
+            title={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
+            aria-label={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
+            onClick={(event) => {
+              event.stopPropagation();
+              open();
+              setShowSlideshow(true);
+            }}
+            style={mark}
+          >
+            <Play size={13} strokeWidth={2.1} />
+          </button>
+        </div>
+
+        <div style={{ padding: "8px 9px" }}>
+          <div style={{ fontSize: 12, fontWeight: 600, color: pageText, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {playlist.name}
+          </div>
+          <div style={{ marginTop: 2, fontSize: 10, color: subText, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+            {figure(count)} {t({ ko: "작품", en: count === 1 ? "work" : "works" })}
+            {playlist.shared && <span style={{ color: lime }}> · {t({ ko: "공개", en: "Public" })}</span>}
           </div>
         </div>
       </div>
@@ -2234,6 +2505,7 @@ const MyPage: React.FC = () => {
   const handleScroll = () => {
     const el = scrollContainerRef.current;
     if (!el) return;
+    leaving.current.scrollTop = el.scrollTop;
     
     // Start loading early and in smaller chunks for smoother visual cadence.
     if (el.scrollHeight - el.scrollTop - el.clientHeight < 1800) {
@@ -2246,6 +2518,7 @@ const MyPage: React.FC = () => {
 
   return (
     <div
+      className={isLightTheme ? "mp is-light" : "mp"}
       ref={scrollContainerRef}
       onScroll={handleScroll}
       style={{
@@ -2261,548 +2534,269 @@ const MyPage: React.FC = () => {
         background: pageBg,
         color: pageText,
         fontFamily: "'Space Grotesk', 'Apple SD Gothic Neo', sans-serif",
+        /* the top's stylesheet takes its colours from the theme */
+        ["--mp-ground" as string]: pageBg,
+        ["--mp-ink" as string]: pageText,
+        ["--mp-ink-2" as string]: subText,
+        ["--mp-ink-3" as string]: faintText,
+        ["--mp-rule" as string]: divider,
       }}
     >
-      <div
-        style={{
-          position: "relative",
-          height: isMobile ? "calc(258px + env(safe-area-inset-top, 0px))" : 340,
-          overflow: "hidden",
-        }}
-        onMouseEnter={() => setIsHeroHovered(true)}
-        onMouseLeave={() => {
-          setIsHeroHovered(false);
-          if (!isMobile) setIsHeroPickerOpen(false);
-        }}
-      >
+      {/* The top of the page is the globe's stage (proposal B). The cover fills a
+          dark field the way the globe fills the map tab, turned down so the words
+          read over it; the collection's totals sit between two hairlines at the
+          top and the background control beside the language switch. The owner
+          stands at the foot, and where the picture meets the page the playlists
+          lead off on the left and the slideshow waits at the far right. */}
+      <section className={isHeroPickerOpen ? "mp-stage is-picking" : "mp-stage"}>
         <img
-          src={getOptimizedImageUrl(heroImage, 1400)}
+          className="mp-stage__cover"
+          src={getOptimizedImageUrl(heroImage, 1600)}
           alt=""
-          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `50% ${previewHeroFocusY}%` }}
+          style={{ objectPosition: `50% ${previewHeroFocusY}%` }}
         />
-
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: isLightTheme
-              ? "linear-gradient(to bottom, rgba(255,255,255,0.12) 0%, rgba(250,250,250,0.40) 55%, rgba(250,250,250,0.98) 100%)"
-              : "linear-gradient(to bottom, rgba(0,0,0,0.14) 0%, rgba(0,0,0,0.56) 58%, rgba(8,8,8,0.98) 100%)",
-          }}
-        />
+        <p className="mp-stage__strip">
+          <i aria-hidden="true" />
+          <span><b>{figure(likedArtworks.length)}</b>{t({ ko: "작품", en: "Artworks" })}</span>
+          <span><b>{figure(likedMuseums.length)}</b>{t({ ko: "미술관", en: "Museums" })}</span>
+          <i aria-hidden="true" />
+        </p>
 
         {heroImageOptions.length > 0 && (
-          <>
+          <div className="mp-picker" ref={heroPickerRef}>
             <button
+              type="button"
+              className="mp-act"
+              aria-expanded={isHeroPickerOpen}
               onClick={() => setIsHeroPickerOpen((prev) => !prev)}
-              style={{
-                position: "absolute",
-                top: heroControlTop,
-                right: 8,
-                width: 34,
-                height: 34,
-                borderRadius: "50%",
-                border: panelBorder,
-                background: panelBg,
-                color: pageText,
-                backdropFilter: isMobile ? "none" : "blur(10px)",
-                WebkitBackdropFilter: isMobile ? "none" : "blur(10px)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 0,
-                cursor: "pointer",
-                zIndex: 260100,
-                opacity: isMobile || isHeroHovered || isHeroPickerOpen ? 1 : 0,
-                pointerEvents: isMobile || isHeroHovered || isHeroPickerOpen ? "auto" : "none",
-                transition: "opacity 0.18s ease",
-              }}
-              title={t({ ko: "배경 변경", en: "Change background" })}
             >
-              <Palette size={15} strokeWidth={2.2} />
+              <Palette size={12} strokeWidth={2} aria-hidden="true" />
+              <span className="mp-picker__label">{t({ ko: "배경 변경", en: "Change background" })}</span>
             </button>
-          </>
+            {isHeroPickerOpen && (
+              <div className="mp-picker__card" role="dialog" aria-label={t({ ko: "하트 작품 배경", en: "Heart List Backgrounds" })}>
+                <header>
+                  <span>{t({ ko: "하트 작품 배경", en: "Heart List Backgrounds" })}</span>
+                  <button type="button" aria-pressed={draftHeroArtworkId === null} onClick={() => setDraftHeroArtworkId(null)}>
+                    {t({ ko: "자동", en: "Auto" })}
+                  </button>
+                </header>
+                <label className="mp-picker__pos">
+                  <span>{t({ ko: "배경 위치", en: "Background position" })}</span>
+                  <em>{clampHeroFocusY(draftHeroFocusY)}%</em>
+                  <input
+                    type="range"
+                    min={15}
+                    max={85}
+                    step={1}
+                    value={clampHeroFocusY(draftHeroFocusY)}
+                    onChange={(event) => setDraftHeroFocusY(Number(event.currentTarget.value))}
+                  />
+                </label>
+                <div className="mp-picker__grid">
+                  {heroImageOptions.slice(0, 120).map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      aria-pressed={draftHeroArtworkId === option.id}
+                      title={option.artist ? `${option.title} - ${option.artist}` : option.title}
+                      onClick={() => setDraftHeroArtworkId(option.id)}
+                    >
+                      <MyPageImage item={option.previewItem} width={220} disableBlur />
+                    </button>
+                  ))}
+                </div>
+                <footer>
+                  <button
+                    type="button"
+                    className="mp-act"
+                    onClick={() => {
+                      setDraftHeroArtworkId(selectedHeroArtworkId);
+                      setDraftHeroFocusY(heroFocusY);
+                      setIsHeroPickerOpen(false);
+                    }}
+                  >
+                    {t({ ko: "취소", en: "Cancel" })}
+                  </button>
+                  <button type="button" className="mp-act mp-act--gold" onClick={saveHeroBackgroundPreference} disabled={isSavingHeroPrefs}>
+                    {isSavingHeroPrefs ? t({ ko: "저장 중...", en: "Saving..." }) : t({ ko: "저장", en: "Save" })}
+                  </button>
+                </footer>
+              </div>
+            )}
+          </div>
         )}
 
-      </div>
-
-      {isHeroPickerOpen && heroImageOptions.length > 0 && (
-        <div
-          style={{
-            position: "fixed",
-            top: heroPickerTop,
-            right: 12,
-            width: isMobile ? "min(92vw, 360px)" : 360,
-            maxHeight: isMobile ? "50vh" : 380,
-            overflowY: "auto",
-            padding: 10,
-            borderRadius: 12,
-            border: panelBorder,
-            background: panelBg,
-            backdropFilter: isMobile ? "none" : "blur(16px)",
-            WebkitBackdropFilter: isMobile ? "none" : "blur(16px)",
-            boxShadow: isLightTheme ? "0 16px 28px rgba(0,0,0,0.16)" : "0 18px 30px rgba(0,0,0,0.42)",
-            zIndex: 260101,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: pageText }}>{t({ ko: "하트 작품 배경", en: "Heart List Backgrounds" })}</span>
-            <button
-              onClick={() => setDraftHeroArtworkId(null)}
-              style={{
-                border: panelBorder,
-                borderRadius: 999,
-                background: "transparent",
-                color: subText,
-                height: 22,
-                padding: "0 8px",
-                fontSize: 10,
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-            >
-              {t({ ko: "자동", en: "Auto" })}
+        {/* the owner's lines rise in as the tab opens, as every tab's opening lines do */}
+        <div className="mp-stage__who colly-rise">
+          {/* the photo wears the level's laurel; the question mark beside it opens the level guide */}
+          <div className="mp-stage__rank">
+            <RankAvatar
+              rank={rankForScore(userScore)}
+              name={displayName}
+              src={displayPhotoURL || null}
+              crop={effectiveProfileCrop}
+              size={isMobile ? 52 : 56}
+            />
+            <RankInfo score={userScore} size={isMobile ? 24 : 28} light={isLightTheme} showMark={false} />
+          </div>
+          <div className="mp-stage__name">
+            <h1 className="mp-name">{displayName}</h1>
+          </div>
+          <p className="mp-meta">
+            {user?.email && (
+              <>
+                <span className="mp-email">{user.email}</span>
+                <i aria-hidden="true" />
+              </>
+            )}
+            <span className="mp-score">{t({ ko: "점수", en: "Score" })} <b>{userScore.toLocaleString()}</b></span>
+          </p>
+          <div className="mp-actions">
+            <button type="button" className="mp-act" onClick={() => navigate("/onboarding")} title={t({ ko: "프로필 편집", en: "Edit profile" })}>
+              <Pencil size={12} strokeWidth={2} aria-hidden="true" />
+              {t({ ko: "편집", en: "Edit" })}
             </button>
           </div>
+        </div>
 
-          <div style={{ marginBottom: 10 }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: subText, letterSpacing: "0.02em" }}>
-                {t({ ko: "배경 위치", en: "Background position" })}
-              </span>
-              <span style={{ fontSize: 10, color: pageText }}>{clampHeroFocusY(draftHeroFocusY)}%</span>
-            </div>
-            <input
-              type="range"
-              min={15}
-              max={85}
-              step={1}
-              value={clampHeroFocusY(draftHeroFocusY)}
-              onChange={(event) => setDraftHeroFocusY(Number(event.currentTarget.value))}
-              style={{ width: "100%", accentColor: lime }}
-            />
-          </div>
+        <div className="mp-stage__foot">
+          <button
+            type="button"
+            className="mp-stage__line"
+            onClick={() => document.getElementById("mp-lists")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+          >
+            <i className="mp-dot" aria-hidden="true" />
+            <span>{t({ ko: "플레이리스트", en: "My Playlists" })}</span>
+            <b>{figure(playlists.length)}</b>
+            <u aria-hidden="true" />
+            <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
+          </button>
+          {/* the slideshow as its circled mark alone */}
+          <button
+            type="button"
+            className="mp-cta"
+            onClick={() => setShowSlideshow(true)}
+            title={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
+            aria-label={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
+          >
+            <span aria-hidden="true"><Play size={12} strokeWidth={2.2} /></span>
+          </button>
+        </div>
+      </section>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 8 }}>
-            {heroImageOptions.slice(0, 120).map((option) => {
-              const isSelected = draftHeroArtworkId === option.id;
+      {/* My Playlists: each list's cover, its name and how many works it holds.
+          Pressing one opens it in the grid; pressing it again closes it. The
+          round mark on its cover shares it. */}
+      <section className="mp-lists" id="mp-lists">
+        {playlists.length > 0 ? (
+          <ul>
+            {playlists.map((playlist) => {
+              const open = activePlaylist?.id === playlist.id;
               return (
-                <button
-                  key={option.id}
-                  onClick={() => {
-                    setDraftHeroArtworkId(option.id);
-                  }}
-                  style={{
-                    border: isSelected ? `1px solid ${lime}` : `1px solid ${divider}`,
-                    borderRadius: 9,
-                    padding: 0,
-                    overflow: "hidden",
-                    background: "transparent",
-                    cursor: "pointer",
-                    position: "relative",
-                  }}
-                  title={option.artist ? `${option.title} - ${option.artist}` : option.title}
-                >
-                  <div style={{ width: "100%", aspectRatio: "4 / 3", background: isLightTheme ? "#e8e8e8" : "#171717" }}>
-                    <MyPageImage item={option.previewItem} width={220} disableBlur />
-                  </div>
-                  {isSelected && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        border: `2px solid ${lime}`,
-                        borderRadius: 9,
-                        pointerEvents: "none",
-                      }}
-                    />
-                  )}
-                </button>
+                <li key={playlist.id} className={open ? "mp-list is-open" : "mp-list"}>
+                  <button
+                    type="button"
+                    className="mp-list__open"
+                    aria-pressed={open}
+                    onClick={() => {
+                      if (open) {
+                        setActivePlaylist(null);
+                        return;
+                      }
+                      setViewMode("artworks");
+                      setActivePlaylist(playlist);
+                      setActivePlaylistItems(playlist.items || []);
+                    }}
+                  >
+                    <span className="mp-list__shot">
+                      {playlist.coverImage ? <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 220 : 300} disableBlur /> : null}
+                    </span>
+                    <span className="mp-list__text">
+                      <b>{playlist.name}</b>
+                      <small>
+                        {figure(playlist.items?.length || 0)} {t({ ko: "작품", en: "works" })}
+                        {playlist.shared && <em> · {t({ ko: "공개", en: "Public" })}</em>}
+                      </small>
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    className="mp-list__share"
+                    data-on={playlist.shared || undefined}
+                    title={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
+                    aria-label={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
+                    onClick={() => setSharingPlaylistId(playlist.id)}
+                  >
+                    <Share2 size={12} strokeWidth={2.2} aria-hidden="true" />
+                  </button>
+                </li>
               );
             })}
-          </div>
+          </ul>
+        ) : (
+          <p className="mp-lists__empty">{t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}</p>
+        )}
+      </section>
 
-          <div
-            style={{
-              position: "sticky",
-              bottom: -10,
-              marginTop: 10,
-              paddingTop: 10,
-              paddingBottom: 2,
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: 8,
-              background: panelBg,
-            }}
-          >
+      {/* The six counted tabs spread over the whole width and stick to the top,
+          their background covering the status-bar band too. */}
+      <nav className="mp-tabs" role="tablist" aria-label={t({ ko: "나의 기록", en: "My collections" })}>
+        {tabs.map((tab) => {
+          const active = viewMode === tab.id;
+          return (
             <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={active}
               onClick={() => {
-                setDraftHeroArtworkId(selectedHeroArtworkId);
-                setDraftHeroFocusY(heroFocusY);
-                setIsHeroPickerOpen(false);
-              }}
-              style={{
-                border: panelBorder,
-                borderRadius: 999,
-                background: "transparent",
-                color: subText,
-                height: 28,
-                padding: "0 10px",
-                fontSize: 11,
-                fontWeight: 700,
-                cursor: "pointer",
+                setViewMode(tab.id);
+                setActivePlaylist(null);
               }}
             >
-              {t({ ko: "취소", en: "Cancel" })}
+              <b>{figure(tab.count)}</b>
+              <span>
+                <tab.icon size={12} strokeWidth={active ? 2.2 : 1.8} aria-hidden="true" />
+                {t({ ko: tab.ko, en: tab.en })}
+              </span>
             </button>
-            <button
-              onClick={saveHeroBackgroundPreference}
-              disabled={isSavingHeroPrefs}
-              style={{
-                border: "none",
-                borderRadius: 999,
-                background: lime,
-                color: "#000",
-                height: 28,
-                padding: "0 12px",
-                fontSize: 11,
-                fontWeight: 800,
-                cursor: isSavingHeroPrefs ? "default" : "pointer",
-                opacity: isSavingHeroPrefs ? 0.7 : 1,
-              }}
-            >
-              {isSavingHeroPrefs ? t({ ko: "저장 중...", en: "Saving..." }) : t({ ko: "저장", en: "Save" })}
-            </button>
-          </div>
-        </div>
-      )}
+          );
+        })}
+      </nav>
 
-      <div style={{ padding: isMobile ? "0 10px" : "0 24px", marginTop: -34, position: "relative", zIndex: 3 }}>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "flex-start",
-            justifyContent: "space-between",
-            gap: 12,
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }}>
-              <div
-                style={{
-                  width: isMobile ? 58 : 72,
-                  height: isMobile ? 58 : 72,
-                  borderRadius: "50%",
-                  overflow: "hidden",
-                  background: "transparent",
-                  flexShrink: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: `0 0 0 4px ${isLightTheme ? "#fafafa" : "#080808"}`,
-                }}
-              >
-                <ProfileAvatar
-                  src={displayPhotoURL || null}
-                  crop={effectiveProfileCrop}
-                  size={isMobile ? 58 : 72}
-                  alt="Profile"
-                  background={lime}
-                  fallback={<span style={{ color: "#000", fontWeight: 700, fontSize: isMobile ? 15 : 18 }}>{displayName.slice(0, 2).toUpperCase()}</span>}
-                />
-              </div>
-            </div>
-
-            <div style={{ minWidth: 0 }}>
-              <div
-                style={{
-                  fontSize: isMobile ? 18 : 26,
-                  fontWeight: 700,
-                  color: pageText,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 7,
-                }}
-              >
-                {displayName}
-                <span
-                  style={{
-                    fontSize: isMobile ? 10 : 11,
-                    fontWeight: 700,
-                    borderRadius: 999,
-                    background: "rgba(212,165,71,0.14)",
-                    border: `1px solid ${isLightTheme ? "rgba(138,107,31,0.24)" : "rgba(212,165,71,0.24)"}`,
-                    color: isLightTheme ? "#8A6B1F" : lime,
-                    padding: "3px 7px",
-                    letterSpacing: "0.04em",
-                  }}
-                >
-                  {userRank.short} {userRank.name}
-                </span>
-              </div>
-
-              <div
-                style={{
-                  marginTop: 3,
-                  fontSize: isMobile ? 11 : 12,
-                  color: subText,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "flex-start",
-                  gap: 6,
-                }}
-              >
-                <div
-                  style={{
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    maxWidth: isMobile ? 180 : 260,
-                  }}
-                >
-                  {user?.email}
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span>Score: {userScore}</span>
-                  <button
-                    onClick={() => navigate('/onboarding')}
-                    style={{
-                      border: panelBorder,
-                      borderRadius: 999,
-                      background: panelBg,
-                      color: pageText,
-                      height: 24,
-                      padding: "0 9px",
-                      fontSize: 10,
-                      fontWeight: 700,
-                      letterSpacing: "0.02em",
-                      cursor: "pointer",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 4,
-                      backdropFilter: "blur(10px)",
-                      WebkitBackdropFilter: "blur(10px)",
-                    }}
-                    title={t({ ko: "프로필 편집", en: "Edit profile" })}
-                  >
-                    <Pencil size={10} />
-                    {t({ ko: "편집", en: "Edit" })}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: isMobile ? "flex-end" : "stretch",
-              gap: 7,
-              flexShrink: 0,
-              width: isMobile ? "auto" : 240,
-              maxWidth: "100%",
-              marginTop: isMobile ? 14 : 6,
-            }}
-          >
-            <button
-              onClick={() => setShowSlideshow(true)}
-              style={{
-                border: "none",
-                borderRadius: isMobile ? "50%" : 999,
-                background: lime,
-                color: "#000",
-                height: isMobile ? 34 : 40,
-                width: isMobile ? 34 : "auto",
-                minWidth: isMobile ? 34 : 132,
-                padding: isMobile ? 0 : "0 14px 0 12px",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: isMobile ? 0 : 7,
-              }}
-                title={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
-            >
-              <Play size={isMobile ? 13 : 14} strokeWidth={2.4} />
-              {!isMobile && (
-                <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.03em" }}>
-                  {t({ ko: "SLIDESHOW", en: "SLIDESHOW" })}
-                </span>
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {!activePlaylist && (
-        <div style={{ padding: isMobile ? "16px 10px 0" : "18px 24px 0" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: pageText }}>
-            <span style={{ fontSize: isMobile ? 16 : 20, fontWeight: 500, letterSpacing: "-0.03em" }}>My Playlists</span>
-            <span style={{ fontSize: isMobile ? 12 : 14, color: subText }}>{playlists.length}</span>
-          </div>
-
-          {playlists.length > 0 ? (
-            <div
-              style={{
-                display: "flex",
-                gap: 12,
-                overflowX: "auto",
-                padding: "12px 0 10px",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-            >
-              {playlists.map((playlist) => (
-                <button
-                  key={playlist.id}
-                  onClick={() => {
-                    setViewMode("artworks");
-                    setActivePlaylist(playlist);
-                    setActivePlaylistItems(playlist.items || []);
-                  }}
-                  style={{
-                    border: "none",
-                    background: "transparent",
-                    padding: 0,
-                    minWidth: 84,
-                    textAlign: "left",
-                    cursor: "pointer",
-                    color: pageText,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 84,
-                      height: 84,
-                      borderRadius: 12,
-                      overflow: "hidden",
-                      background: isLightTheme ? "#ececec" : "#191919",
-                      border: `1px solid ${divider}`,
-                    }}
-                  >
-                    {playlist.coverImage ? (
-                      <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 180 : 300} disableBlur />
-                    ) : null}
-                  </div>
-
-                  <div
-                    style={{
-                      marginTop: 6,
-                      fontSize: 11,
-                      color: pageText,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {playlist.name}
-                  </div>
-                  <div style={{ marginTop: 1, fontSize: 10, color: subText }}>{playlist.items?.length || 0} items</div>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <div style={{ marginTop: 10, fontSize: 12, color: subText }}>No playlists yet.</div>
-          )}
-        </div>
-      )}
-
-      <div style={{ marginTop: 0, borderTop: `1px solid ${divider}` }} />
-
-      <div
-        style={{
-          position: "sticky",
-          // Stick to the very top of the viewport so the bar's background
-          // covers the status-bar / notch area too. The actual tab content
-          // sits below the safe-area inset via padding-top — without this
-          // the safe-area band is transparent and page content (artwork
-          // thumbnails, hero image) bleeds through behind the status bar.
-          top: 0,
-          paddingTop: "env(safe-area-inset-top, 0px)",
-          zIndex: 5,
-          background: isLightTheme ? "rgba(250,250,250,0.95)" : "rgba(8,8,8,0.95)",
-          backdropFilter: isMobile ? "none" : "blur(20px)",
-          WebkitBackdropFilter: isMobile ? "none" : "blur(20px)",
-          borderBottom: `1px solid ${divider}`,
-        }}
-      >
-        <div style={{ display: "flex" }}>
-          {tabs.map((tab) => {
-            const active = viewMode === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setViewMode(tab.id);
-                  setActivePlaylist(null);
-                }}
-                style={{
-                  flex: 1,
-                  appearance: "none",
-                  WebkitAppearance: "none",
-                  borderRadius: 0,
-                  border: "none",
-                  background: "none",
-                  padding: isMobile ? "12px 3px 9px" : "8px 3px 9px",
-                  cursor: "pointer",
-                  borderBottom: `2px solid ${active ? lime : "transparent"}`,
-                  color: active ? pageText : faintText,
-                }}
-              >
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 16, fontWeight: 700, lineHeight: 1 }}>{tab.count}</div>
-                <div style={{ marginTop: 3, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}>
-                  <tab.icon size={10} strokeWidth={active ? 2.4 : 1.9} color={active ? (isLightTheme ? "#8A6B1F" : lime) : faintText} />
-                  <span style={{ fontSize: 10, fontWeight: active ? 600 : 400 }}>{tab.label}</span>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div style={{ padding: "8px 12px 6px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      {/* an open playlist's way back on the left; the sort on the right, a short
+          gold bar sliding to the chosen label as the community sort's does */}
+      <div className="mp-sortrow">
         {activePlaylist ? (
-          <button
-            onClick={() => setActivePlaylist(null)}
-            style={{ border: "none", background: "none", color: subText, cursor: "pointer", fontSize: 12, padding: 0 }}
-          >
-            ← {activePlaylist.name}
-          </button>
+          <span className="mp-sortrow__list">
+            <button type="button" className="mp-back" onClick={() => setActivePlaylist(null)}>
+              <ArrowLeft size={12} strokeWidth={2} aria-hidden="true" />
+              <span>{activePlaylist.name}</span>
+            </button>
+            <button
+              type="button"
+              className={activePlaylist.shared ? "mp-act mp-act--gold" : "mp-act"}
+              onClick={() => setSharingPlaylistId(activePlaylist.id)}
+            >
+              <Share2 size={12} strokeWidth={2} aria-hidden="true" />
+              {activePlaylist.shared ? t({ ko: "공개 중", en: "Public" }) : t({ ko: "공유", en: "Share" })}
+            </button>
+          </span>
         ) : (
           <span />
         )}
-
-        <div style={{ display: "flex", gap: 6 }}>
-          {(["recent", "oldest", "newest"] as const).map((mode) => {
-            const active = sortMode === mode;
-            return (
-              <button
-                key={mode}
-                onClick={() => setSortMode(mode)}
-                style={{
-                  border: "none",
-                  borderRadius: 999,
-                  padding: "5px 10px",
-                  cursor: "pointer",
-                  fontSize: 11,
-                  fontWeight: active ? 600 : 400,
-                  background: active ? (isLightTheme ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.13)") : "transparent",
-                  color: active ? pageText : faintText,
-                }}
-              >
-                {mode === "recent"
-                  ? t({ ko: "최신", en: "Latest" })
-                  : mode === "oldest"
-                    ? t({ ko: "오래된 순", en: "Oldest" })
-                    : t({ ko: "최신 연도", en: "Newest" })}
-              </button>
-            );
-          })}
+        <div ref={sortRowRef} className="mp-sort" role="group" aria-label={t({ ko: "정렬", en: "Sort" })}>
+          {(["recent", "oldest", "newest"] as const).map((mode) => (
+            <button key={mode} type="button" aria-pressed={sortMode === mode} onClick={() => setSortMode(mode)}>
+              {mode === "recent"
+                ? t({ ko: "최근 저장", en: "Saved" })
+                : mode === "oldest"
+                  ? t({ ko: "오래된", en: "Oldest" })
+                  : t({ ko: "최신", en: "Newest" })}
+            </button>
+          ))}
+          <i className="mp-sort__bar" style={{ transform: `translateX(${sortBar.x}px)`, width: sortBar.w || undefined }} aria-hidden="true" />
         </div>
       </div>
 
@@ -2922,6 +2916,15 @@ const MyPage: React.FC = () => {
                         </span>
                       ) : null}
                     </div>
+                    <RatingEmblems
+                      subject={{ kind: "curation", id: c.curation_id }}
+                      title={title}
+                      subtitle={c.type === "special"
+                        ? t({ ko: "스페셜 큐레이션", en: "Special curation" })
+                        : t({ ko: "주간 큐레이션", en: "Weekly curation" })}
+                      size={14}
+                      color={subText}
+                    />
                   </div>
                 </div>
               );
@@ -2929,87 +2932,23 @@ const MyPage: React.FC = () => {
           </div>
         )
       ) : viewMode === "playlists" && !activePlaylist ? (
-        <div style={{ padding: "8px 12px 96px", display: "flex", flexDirection: "column", gap: 10 }}>
-          {playlists.length === 0 ? (
-            <div style={{ padding: "40px 20px", textAlign: "center", color: subText }}>No playlists yet.</div>
-          ) : (
-            playlists.map((playlist) => (
-              <div
-                key={playlist.id}
-                style={{
-                  borderRadius: 12,
-                  border: `1px solid ${divider}`,
-                  background: isLightTheme ? "#fff" : "rgba(255,255,255,0.03)",
-                  padding: 10,
-                  display: "flex",
-                  gap: 10,
-                  alignItems: "center",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  setViewMode("artworks");
-                  setActivePlaylist(playlist);
-                  setActivePlaylistItems(playlist.items || []);
-                }}
-              >
-                <div
-                  style={{
-                    width: 58,
-                    height: 58,
-                    borderRadius: 8,
-                    overflow: "hidden",
-                    flexShrink: 0,
-                    background: isLightTheme ? "#efefef" : "#1a1a1a",
-                  }}
-                >
-                  {playlist.coverImage ? (
-                    <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 160 : 220} disableBlur />
-                  ) : null}
-                </div>
-
-                <div style={{ minWidth: 0, flex: 1 }}>
-                  <div
-                    style={{
-                      fontSize: 13,
-                      fontWeight: 700,
-                      color: pageText,
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {playlist.name}
-                  </div>
-                  <div style={{ marginTop: 2, fontSize: 11, color: subText }}>{playlist.items?.length || 0} items</div>
-                </div>
-
-                <button
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setShowSlideshow(true);
-                    setActivePlaylist(playlist);
-                    setActivePlaylistItems(playlist.items || []);
-                  }}
-                  style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: "50%",
-                    border: "none",
-                    background: lime,
-                    color: "#000",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    padding: 0,
-                  }}
-                >
-                  <Play size={13} strokeWidth={2.3} />
-                </button>
-              </div>
-            ))
-          )}
-        </div>
+        sortedItems.length === 0 ? (
+          <div style={{ padding: "48px 20px 90px", textAlign: "center", color: subText }}>
+            {t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}
+          </div>
+        ) : (
+          /* the same grid as the exhibition and museum cards, in the same sort */
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
+              gap: 8,
+              padding: "2px 10px 96px",
+            }}
+          >
+            {sortedItems.map((playlist) => renderPlaylistCard(playlist))}
+          </div>
+        )
       ) : sortedItems.length === 0 ? (
         <div style={{ padding: "48px 20px 90px", textAlign: "center", color: subText }}>
           No {activePlaylist ? "items in this playlist" : viewMode} saved yet.
@@ -3038,8 +2977,24 @@ const MyPage: React.FC = () => {
         </div>
       )}
 
+      <DeleteAccountSection light={isLightTheme} />
+
       {showSlideshow && (
         <Slideshow artworks={activePlaylist ? activePlaylistItems : likedArtworks} onClose={() => setShowSlideshow(false)} />
+      )}
+
+      {sharingPlaylist && user && (
+        <PlaylistShareSheet
+          uid={user.uid}
+          playlist={sharingPlaylist}
+          light={isLightTheme}
+          onClose={() => setSharingPlaylistId(null)}
+          onChange={(shared) => {
+            const id = sharingPlaylist.id;
+            setPlaylists((prev) => prev.map((playlist) => (playlist.id === id ? { ...playlist, shared } : playlist)));
+            setActivePlaylist((prev: any) => (prev?.id === id ? { ...prev, shared } : prev));
+          }}
+        />
       )}
 
       {galleryArtwork && (

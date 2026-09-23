@@ -1,0 +1,30 @@
+{
+  "museum": "Charles M. Schulz Museum and Research Center",
+  "slug": "schulz",
+  "probe_date": "2026-06-16",
+  "platform": "PastPerfect Online (third-party hosted, museum subdomain)",
+  "catalog_url": "https://schulzmuseum.pastperfectonline.com/",
+  "entry_path": "schulzmuseum.org/collection/ -> /terms-conditions/ -> /digital-collection/ (iframe to PastPerfect)",
+  "record_types": {
+    "webobject": "Objects = original Peanuts strips/cartoon art (in-scope flat art)",
+    "archive": "Archives = proclamations, letters, documents",
+    "library": "Library = printed magazines/books (reproductions, out of scope)",
+    "photo": "Photos"
+  },
+  "object_search_total_example": "3817 results for 'comic strip'",
+  "metadata_parseable": true,
+  "metadata_fields_seen": ["Object ID","Collection","Title","Artist","Object Name","Date","Dimensions","Signed Name","Signature Location","Medium","Subjects","Description"],
+  "example_strip": {
+    "url": "https://schulzmuseum.pastperfectonline.com/webobject/AA8A8161-C10C-4F65-A470-515623272259",
+    "title": "Yes, You'd Better",
+    "artist": "Schulz, Charles M.",
+    "objectName": "Strip, Cartoon",
+    "dimensions": "H-7 W-20.75 inches",
+    "medium": "paper/pencil/ink/screen tone",
+    "collection": "Jean F. Schulz Loan Collection"
+  },
+  "image_finding": "BLOCKER: public images capped at 450px long edge. thumbs/ = ~210px; dropping thumbs/ = full display image but max 450px. No fullsize/original/large/web variant (all 404). No IIIF/API/OAI.",
+  "image_samples_dims": ["450x150 (daily strip)","450x314 (sunday)","450x319","450x322","294x450 (proclamation)","356x450 (magazine)"],
+  "copyright": "PEANUTS (c) Peanuts Worldwide LLC. Terms restrict to personal/educational/non-commercial fair use; commercial reproduction prohibited without rights-holder permission. High-res masters are reproduction-fee-gated.",
+  "verdict": "viable:false — images too small (<=450px, below 600px scope threshold) AND copyright-locked"
+}

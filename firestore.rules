@@ -144,7 +144,11 @@ service cloud.firestore {
       match /comments/{commentId} {
         allow read: if true;
         allow create: if request.auth != null;
-        allow delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+        // 댓글 주인, 그리고 글 주인(신고받은 댓글을 내릴 수 있어야 한다).
+        allow delete: if request.auth != null && (
+          resource.data.authorId == request.auth.uid ||
+          get(/databases/$(database)/documents/community_posts/$(postId)).data.authorId == request.auth.uid
+        );
         allow update: if request.auth != null && resource.data.authorId == request.auth.uid;
       }
 
@@ -153,6 +157,105 @@ service cloud.firestore {
         allow read: if true;
         allow write: if request.auth != null && request.auth.uid == userId;
       }
+    }
+
+    // A user's public card: the name, photo and level the community shows
+    // beside their posts. Anyone may read it; only its owner writes it.
+    match /public_profiles/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId
+        && request.resource.data.keys().hasOnly(['name', 'photoURL', 'photoCrop', 'rank', 'updatedAt']);
+    }
+
+    // A playlist its owner made public: a copy of its name, cover and works that
+    // anyone with the link, and the community's playlist shelf, may read. Only
+    // the owner writes it; making the playlist private again deletes it.
+    function validSharedPlaylist() {
+      let p = request.resource.data;
+      return p.keys().hasOnly(['ownerUid', 'name', 'coverImage', 'itemCount', 'items', 'updatedAt'])
+        && p.ownerUid == request.auth.uid
+        && p.name is string && p.name.size() <= 200
+        && p.coverImage is string && p.coverImage.size() <= 4096
+        && p.itemCount is int && p.itemCount >= 0
+        && p.items is list && p.items.size() <= 300
+        && p.updatedAt == request.time;
+    }
+    match /public_playlists/{playlistId} {
+      allow read: if true;
+      allow create: if request.auth != null && validSharedPlaylist();
+      allow update: if request.auth != null && resource.data.ownerUid == request.auth.uid && validSharedPlaylist();
+      allow delete: if request.auth != null && (resource == null || resource.data.ownerUid == request.auth.uid);
+    }
+
+    // Ratings (0.5 to 5 in half points) and one-line reviews.
+    // ratings/{subject}/reviews/{uid}: one review per user per subject.
+    // rating_stats/{subject}: running totals that every average is read from.
+    // A subject is "exhibition:<id>" or "curation:<id>".
+    // Anyone may read both. A signed-in user may write only their own review, and
+    // only together with a stats write whose change equals that review's change.
+    function isRatingSubject(subject) {
+      return subject.matches('^(exhibition|curation):[^/]{1,300}$');
+    }
+    function reviewAt(subject, uid) {
+      return /databases/$(database)/documents/ratings/$(subject)/reviews/$(uid);
+    }
+    function statsAt(subject) {
+      return /databases/$(database)/documents/rating_stats/$(subject);
+    }
+    function statsMatchReviewChange(subject, uid) {
+      let had = exists(reviewAt(subject, uid));
+      let has = existsAfter(reviewAt(subject, uid));
+      let before = exists(statsAt(subject)) ? get(statsAt(subject)).data : {'ratingSum': 0, 'totalRatings': 0};
+      let after = request.resource.data;
+      return after.keys().hasOnly(['ratingSum', 'totalRatings', 'updatedAt'])
+        && after.updatedAt == request.time
+        && after.totalRatings == before.totalRatings + (has ? 1 : 0) - (had ? 1 : 0)
+        && after.ratingSum == before.ratingSum
+          + (has ? getAfter(reviewAt(subject, uid)).data.rating : 0)
+          - (had ? get(reviewAt(subject, uid)).data.rating : 0);
+    }
+    function validReview(uid) {
+      let r = request.resource.data;
+      return r.keys().hasOnly(['uid', 'rating', 'text', 'name', 'rank', 'createdAt', 'updatedAt'])
+        && r.uid == uid
+        && r.rating is number && r.rating >= 0.5 && r.rating <= 5
+        && math.floor(r.rating * 2) == r.rating * 2
+        && r.text is string && r.text.size() <= 60
+        && r.name is string && r.name.size() <= 40
+        && r.rank is string && r.rank.size() <= 32
+        && r.updatedAt == request.time
+        && r.createdAt == (resource == null ? request.time : resource.data.createdAt);
+    }
+
+    match /rating_stats/{subject} {
+      allow read: if true;
+      allow create, update: if request.auth != null && isRatingSubject(subject)
+        && statsMatchReviewChange(subject, request.auth.uid);
+    }
+
+    match /ratings/{subject}/reviews/{uid} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == uid && isRatingSubject(subject)
+        && validReview(uid) && getAfter(statsAt(subject)).data.updatedAt == request.time;
+      allow delete: if request.auth != null && request.auth.uid == uid
+        && getAfter(statsAt(subject)).data.updatedAt == request.time;
+    }
+
+    // 계정을 지울 때, 내가 어디에 무엇을 남겼는지 컬렉션 그룹으로 찾는다.
+    // 아래 문서들은 이미 각자의 자리에서 공개로 읽히므로 새로 열리는 것은 없다.
+    match /{path=**}/comments/{commentId} { allow read: if true; }
+    match /{path=**}/likes/{likeId} { allow read: if true; }
+    match /{path=**}/reviews/{reviewId} { allow read: if true; }
+
+    // 신고 — 누구든 보낼 수 있고, 운영자만 콘솔에서 본다.
+    match /reports/{reportId} {
+      allow create: if request.auth != null && request.resource.data.reporterId == request.auth.uid;
+      allow read, update, delete: if false;
+    }
+
+    // 차단 목록은 본인만 읽고 쓴다.
+    match /users/{userId}/blocked/{blockedUid} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
     // Other collections default: no public access

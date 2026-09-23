@@ -1,0 +1,541 @@
+{
+  "museum": "Singapore Art Museum",
+  "collection": "Collection",
+  "website": "https://www.singaporeartmuseum.sg/",
+  "scraped_date": "2026-06-10",
+  "total_count": 20,
+  "source_type": "gov-portal-json-api (roots.gov.sg / National Heritage Board)",
+  "category_breakdown": {
+    "painting": 17,
+    "photograph": 3
+  },
+  "artworks": [
+    {
+      "id": "sam-singapore-1021623",
+      "objectNumber": "1991-00920",
+      "title": "A Boy from the Temple",
+      "artist": "Teo Eng Seng",
+      "date": "1984 -1991",
+      "year": 1984,
+      "medium": "Paperdyesculpt",
+      "dimensions": "Image size: 116 x 136 cm Frame size: 118 x 138 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1021623-8ff3a07e-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/284265d9-0331-4b8e-8cb5-8f156849aa92/1021623.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1021623",
+      "metadata": {
+        "roots_doc_id": "CED354C4-4391-48DA-8495-1C8828A893B8",
+        "accession_no": "1991-00920",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/284265d9-0331-4b8e-8cb5-8f156849aa92/1021623.jpg"
+    },
+    {
+      "id": "sam-singapore-1025046",
+      "objectNumber": "2010-04978",
+      "title": "308",
+      "artist": "Frank Callaghan",
+      "date": "2009",
+      "year": 2009,
+      "medium": "Archival Inkjet Print",
+      "dimensions": "Image size: H68.6 x W101.6 cmEd. 3 of 5 Frame size: H73.5x W107.5 x D2 cm",
+      "category": "photograph",
+      "description": "Born in 1980 in England, Frank Callaghan spent his childhood in Baguio, Philippines. After studying finance and management at the Wharton School of Business, University of Pennsylvania, USA, he decided to pursue photography full-time; he has held solo and group exhibitions in the Philippines and the region.Saturated with colour and awash in the unnatural glow of electrical lighting, ‘308’ is one of a number of night-time images of shanty towns and low-cost housing in Manila. The photographs are frank portrayals of the city’s prevalent poverty. However, elements of make-shift construction, overcrowding and poor sanitation – so ugly under the glare of the daytime sun – take on an uncanny beauty and otherworldly aesthetic through Callaghan’s lens. In a city infamous for its bustle, crowds and thronging noise, Callaghan has sought, in his own words, to capture its “unintentional beauty”, a beauty revealed in such rare moments of stillness and quiet.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1025046-868abfb7-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/27e72c25-9a45-4a97-a31d-a2fc95abb251/1025046.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1025046",
+      "metadata": {
+        "roots_doc_id": "6BD6AC42-0AA8-42A6-B266-92BED406E8D8",
+        "accession_no": "2010-04978",
+        "nlb_type": [
+          "Photograph"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/27e72c25-9a45-4a97-a31d-a2fc95abb251/1025046.jpg"
+    },
+    {
+      "id": "sam-singapore-1025608",
+      "objectNumber": "2010-04977",
+      "title": "101",
+      "artist": "Frank Callaghan",
+      "date": "2009",
+      "year": 2009,
+      "medium": "Archival Inkjet Print",
+      "dimensions": "Image size: H68.6 x W101.6 cmEd. 2 of 5 Frame size: H73.5x W107.5 x D2 cm",
+      "category": "photograph",
+      "description": "Born in 1980 in England, Frank Callaghan spent his childhood in Baguio, Philippines. After studying finance and management at the Wharton School of Business, University of Pennsylvania, USA, he decided to pursue photography full-time; he has held solo and group exhibitions in the Philippines and the region.Saturated with colour and awash in the unnatural glow of electrical lighting, ‘101’ is one of a number of night-time images of shanty towns and low-cost housing in Manila. The photographs are frank portrayals of the city’s prevalent poverty. However, elements of make-shift construction, overcrowding and poor sanitation – so ugly under the glare of the daytime sun – take on an uncanny beauty and otherworldly aesthetic through Callaghan’s lens. In a city infamous for its bustle, crowds and thronging noise, Callaghan has sought, in his own words, to capture its “unintentional beauty”, a beauty revealed in such rare moments of stillness and quiet.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1025608-3c9cf3df-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/8f94c5f5-82a9-4318-8ef5-de010c390547/1025608.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1025608",
+      "metadata": {
+        "roots_doc_id": "DE6A8897-BA8A-44A3-A26C-147BC2364C9F",
+        "accession_no": "2010-04977",
+        "nlb_type": [
+          "Photograph"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/8f94c5f5-82a9-4318-8ef5-de010c390547/1025608.jpg"
+    },
+    {
+      "id": "sam-singapore-1025926",
+      "objectNumber": "1994-05550",
+      "title": "Adam and Eve and the Acid Rain",
+      "artist": "Eddie Hara",
+      "date": "1993",
+      "year": 1993,
+      "medium": "Acrylic on canvas",
+      "dimensions": "Image size: 63.5 x 79 cm Frame size: 72.5 x 87.8 cm",
+      "category": "painting",
+      "description": "Born in 1957 in Salatiga, central Java, Eddie Hara studied at the Institut Seni Indonesia, Yogyakarta and in Holland in the late 1980s and early 1990s. Images in Hara's paintings are said to be mostly inspired by Javanese culture. The naive and idiosyncratic figures of human and animal forms on his canvases convey humour and wit, while the bright colours of his palette bring a mood of joyful effervescence, even though his themes are at times of a serious nature, engaging, albeit, in an oblique way.Here, the male-Adam and female-Eve figures and the respective gendered icons of the linga and the yoni of Hindu-Javanese metaphysical origins, which are depicted on either sides of the canvas, have their positions mediated by the central image of the serpent. The serpent is curled under what may well be a shower of acid rain.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1025926-5df817a0-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/64a7ea73-d6a1-4906-b684-45308f4e6d09/1025926.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1025926",
+      "metadata": {
+        "roots_doc_id": "B16F9767-B279-4451-BB3C-B1B01BB0F50F",
+        "accession_no": "1994-05550",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/64a7ea73-d6a1-4906-b684-45308f4e6d09/1025926.jpg"
+    },
+    {
+      "id": "sam-singapore-1026909",
+      "objectNumber": "2001-02490",
+      "title": "A Toast",
+      "artist": "Su Xinping",
+      "date": "1999",
+      "year": 1999,
+      "medium": "Oil on canvas",
+      "dimensions": "Image size: 180 x 231 cm Frame size: 190.2 x 239.2 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1026909-892324d7-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/ca51daba-0bfb-4205-a2c3-c60ec21ec11c/1026909.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1026909",
+      "metadata": {
+        "roots_doc_id": "811AD325-A13F-4532-BAB5-7C8426573D07",
+        "accession_no": "2001-02490",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/ca51daba-0bfb-4205-a2c3-c60ec21ec11c/1026909.jpg"
+    },
+    {
+      "id": "sam-singapore-1028220",
+      "objectNumber": "2010-04979",
+      "title": "501",
+      "artist": "Frank Callaghan",
+      "date": "2009",
+      "year": 2009,
+      "medium": "Archival Inkjet Print",
+      "dimensions": "Image size: H68.6 x W101.6 cmEd. 1 of 5 Frame size: H73.5x W107.5 x D2 cm",
+      "category": "photograph",
+      "description": "Born in 1980 in England, Frank Callaghan spent his childhood in Baguio, Philippines. After studying finance and management at the Wharton School of Business, University of Pennsylvania, USA, he decided to pursue photography full-time; he has held solo and group exhibitions in the Philippines and the region.Saturated with colour and awash in the unnatural glow of electrical lighting, ‘501’ is one of a number of night-time images of shanty towns and low-cost housing in Manila. The photographs are frank portrayals of the city’s prevalent poverty. However, elements of make-shift construction, overcrowding and poor sanitation – so ugly under the glare of the daytime sun – take on an uncanny beauty and otherworldly aesthetic through Callaghan’s lens. In a city infamous for its bustle, crowds and thronging noise, Callaghan has sought, in his own words, to capture its “unintentional beauty”, a beauty revealed in such rare moments of stillness and quiet.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1028220-d5dc57db-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/09982f6b-4588-41ae-96be-ca50a6ae2f1e/1028220.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1028220",
+      "metadata": {
+        "roots_doc_id": "36CB9DF3-E104-44A1-B139-06A4C521D946",
+        "accession_no": "2010-04979",
+        "nlb_type": [
+          "Photograph"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/09982f6b-4588-41ae-96be-ca50a6ae2f1e/1028220.jpg"
+    },
+    {
+      "id": "sam-singapore-1028240",
+      "objectNumber": "1996-00523",
+      "title": "A Serenade of Broken Dreams",
+      "artist": "Santiago Bose",
+      "date": "1995",
+      "year": 1995,
+      "medium": "Mixed media",
+      "dimensions": "Image size: 107.6 x 107.8 cm Frame size: 115.2 x 115.4 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1028240-0665a4a2-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/32e50546-3e63-459d-8207-ed553dba6761/1028240.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1028240",
+      "metadata": {
+        "roots_doc_id": "74F9A6E1-CB5A-4ADB-9CAA-E1F4EA7E7EF5",
+        "accession_no": "1996-00523",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/32e50546-3e63-459d-8207-ed553dba6761/1028240.jpg"
+    },
+    {
+      "id": "sam-singapore-1031627",
+      "objectNumber": "2003-03030",
+      "title": "Abstract",
+      "artist": "Lim Tze Peng",
+      "date": "2002",
+      "year": 2002,
+      "medium": "Oil on canvas",
+      "dimensions": "Image size: 66.2 x 81.3 cm",
+      "category": "painting",
+      "description": "Born in 1923, Lim Tze Peng is largely a self-taught artist. In his oeuvre, ink paintings and calligraphic works feature prominently, although there is a small number of oils, watercolours and drawings. He created a unique style of ink painting using rich brush and tonal details, and this approach is often regarded as a manifestation of the Nanyang Style in the ink medium. Lim, a school principal until his retirement in the early 1980s, was awarded the Cultural Medallion by the Singapore government in 2003.Although abstract works are a rarity in Lim’s oeuvre, hints of abstraction began to show up in his paintings around the turn of the century. In the work titled ‘Abstract’, the cluster of boats is still clearly identifiable even as the lines intersect and overlap.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1031627-e5e6ff8e-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/e611e577-59c5-4757-9ecc-ab149765ad64/1031627.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1031627",
+      "metadata": {
+        "roots_doc_id": "86248B8F-50B5-4D00-B27F-8B889DCE435D",
+        "accession_no": "2003-03030",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/e611e577-59c5-4757-9ecc-ab149765ad64/1031627.jpg"
+    },
+    {
+      "id": "sam-singapore-1032327",
+      "objectNumber": "P-1328",
+      "title": "A Boring Picture #7",
+      "artist": "Wong Shih Yaw",
+      "date": "1990",
+      "year": 1990,
+      "medium": "Mixed media on canvas",
+      "dimensions": "Image size: 176 cm x229",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1032327-9cba1620-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/ecca452e-659b-4716-b81b-0e3504ba430a/1032327.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1032327",
+      "metadata": {
+        "roots_doc_id": "841EC1EE-009C-48A4-B6B3-97F5BF2A62D3",
+        "accession_no": "P-1328",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/ecca452e-659b-4716-b81b-0e3504ba430a/1032327.jpg"
+    },
+    {
+      "id": "sam-singapore-1033045",
+      "objectNumber": "P-1327",
+      "title": "A Boring Picture #1",
+      "artist": "Wong Shih Yaw",
+      "date": "1990",
+      "year": 1990,
+      "medium": "Mixed media on canvas",
+      "dimensions": "Image size: 64 x 52 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1033045-5cdb7e0f-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/6d6f2d8d-f0a6-44b3-80a8-01bda46f2450/1033045.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1033045",
+      "metadata": {
+        "roots_doc_id": "0E4F5F4B-247D-4A1E-AE31-80A99AE749F1",
+        "accession_no": "P-1327",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/6d6f2d8d-f0a6-44b3-80a8-01bda46f2450/1033045.jpg"
+    },
+    {
+      "id": "sam-singapore-1101739",
+      "objectNumber": "2007-53009",
+      "title": "091101 (New York)",
+      "artist": "Bembol De La Cruz",
+      "date": "2007",
+      "year": 2007,
+      "medium": "Oil on canvas",
+      "dimensions": "Image size: H152.5 x W122.4 x D4.6 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1101739-129c8926-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/cf1dc42e-3fe5-48f0-93b1-5df15192c1fc/1101739.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1101739",
+      "metadata": {
+        "roots_doc_id": "8B0FFAEC-77DC-4B00-A962-F65D40A66826",
+        "accession_no": "2007-53009",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/cf1dc42e-3fe5-48f0-93b1-5df15192c1fc/1101739.jpg"
+    },
+    {
+      "id": "sam-singapore-1102213",
+      "objectNumber": "2007-53008",
+      "title": "101202 (Bali)",
+      "artist": "Bembol De La Cruz",
+      "date": "2007",
+      "year": 2007,
+      "medium": "Oil on canvas",
+      "dimensions": "Image size: H152.5 x W122.4 x D4.6 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1102213-57cc63d8-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/d609f9ec-742d-416d-bd21-0fddbd357df2/1102213.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1102213",
+      "metadata": {
+        "roots_doc_id": "6AC1E092-139D-4E45-AFCE-F2A66A097B4A",
+        "accession_no": "2007-53008",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/d609f9ec-742d-416d-bd21-0fddbd357df2/1102213.jpg"
+    },
+    {
+      "id": "sam-singapore-1102770",
+      "objectNumber": "2007-53010",
+      "title": "080406 (Lebanon)",
+      "artist": "Bembol De La Cruz",
+      "date": "2007",
+      "year": 2007,
+      "medium": "Oil on canvas",
+      "dimensions": "Image size: H152.3 x W122.2 x D4.6 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1102770-32ab4c97-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/d9caa56d-1518-438f-a4aa-19d06561028b/1102770.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1102770",
+      "metadata": {
+        "roots_doc_id": "E46F4E30-0805-411E-B5F4-B520D00D0D6E",
+        "accession_no": "2007-53010",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/d9caa56d-1518-438f-a4aa-19d06561028b/1102770.jpg"
+    },
+    {
+      "id": "sam-singapore-1148540",
+      "objectNumber": "2007-53011",
+      "title": "070705 (London)",
+      "artist": "Bembol De La Cruz",
+      "date": "2007",
+      "year": 2007,
+      "medium": "Oil on canvas",
+      "dimensions": "Image size: H152.5 x W122.2 x D4.6 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1148540-2c807211-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/1097cadc-6a20-480b-86f1-f39e432f7d1f/1148540.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1148540",
+      "metadata": {
+        "roots_doc_id": "0F8BE725-7E4A-42CE-A890-976ED6E44D7E",
+        "accession_no": "2007-53011",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/1097cadc-6a20-480b-86f1-f39e432f7d1f/1148540.jpg"
+    },
+    {
+      "id": "sam-singapore-1217323",
+      "objectNumber": "2009-01361",
+      "title": "Abstract II",
+      "artist": "Ho Huu Thu",
+      "date": "1999",
+      "year": 1999,
+      "medium": "Plumice lacquer; Lacquer on board",
+      "dimensions": "Image size: H189 x W122 x W4.2 cm Image size: H63 x W122 x D4.2 cm (each)",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1217323-7a5c97d1-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/5ea82d1f-16f9-4bcf-97b7-95591143bdea/1217323.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1217323",
+      "metadata": {
+        "roots_doc_id": "3CB94F82-358D-4D42-BB0C-53F004F37E86",
+        "accession_no": "2009-01361",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/5ea82d1f-16f9-4bcf-97b7-95591143bdea/1217323.jpg"
+    },
+    {
+      "id": "sam-singapore-1227036",
+      "objectNumber": "2009-02240",
+      "title": "1-36",
+      "artist": "Gary Ross Pastrana",
+      "date": "2008",
+      "year": 2008,
+      "medium": "Collage on indvidual index cards; Collage on index cards",
+      "dimensions": "Image size: 113 x 82.7 cm Image size: H117.0 x W86.7 x D5.3 cm (Mount)",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1227036-41dc723e-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/22f218db-9932-4281-b635-a563f4cce7b2/1227036.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1227036",
+      "metadata": {
+        "roots_doc_id": "A7420092-DB18-454A-B292-83891DD604C5",
+        "accession_no": "2009-02240",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/22f218db-9932-4281-b635-a563f4cce7b2/1227036.jpg"
+    },
+    {
+      "id": "sam-singapore-1227792",
+      "objectNumber": "2009-02241",
+      "title": "89-124",
+      "artist": "Gary Ross Pastrana",
+      "date": "2008",
+      "year": 2008,
+      "medium": "Collage on individual index cards; Collage on index cards",
+      "dimensions": "Image size: 113 x 82.7 cm Image size: H117.0 x W86.7 x D5.3 cm (Mount)",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1227792-51aec366-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/fca743c1-c048-4300-ba2e-f3c426e9d7b7/1227792.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1227792",
+      "metadata": {
+        "roots_doc_id": "AC1A801B-1A77-4F4A-B564-13356F4BA5BE",
+        "accession_no": "2009-02241",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": []
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/fca743c1-c048-4300-ba2e-f3c426e9d7b7/1227792.jpg"
+    },
+    {
+      "id": "sam-singapore-1467008",
+      "objectNumber": "2020-00499",
+      "title": "A Chronicle of the Land and People of the Cordilleras",
+      "artist": "Kawayan de Guia",
+      "date": "2018",
+      "year": 2018,
+      "medium": "assembling (additive and joining process); painting (image-making); mixed media",
+      "dimensions": "Frame size: 263.8 x 606.8 x 18.0 cm( inclusive of horn)",
+      "category": "painting",
+      "description": "Summoning the past and the present, Kawayan de Guia’s dense triptych proffers a critical and poignant narrative about the city of Baguio and the Cordilleras, in northern Philippines. In so doing, the work enfolds in Philippine art history, the country’s colonial past and legacies under American rule, as well as the indigenous practices and traditions of the cordilleras and its peoples. As the artist describes it, Baguio is, “a place where American air-conditioned dreams meet the ancient ways of the mountain people of the Cordilleras.”In a similar vein, the work is a bricolage of myriad images and materials. For example, in the left panel, there is a colonial green-and-white house under construction. This was a typical type of architecture in Baguio that came from the famous “Teacher’s Camp”, the training centre for Filipino teachers. In the central panel, the yellow image in the circle comes from the popular cooking oil brand, Baguio Oil. Personal and family histories also feature: de Guia’s grandmother – Baguio’s first and only female mayor – is depicted in the photograph taken at her induction in 1946. In the right panel, sits a hornbill, which represents death in cordilleran folklore, and for the artist, signifies a time of change and death of the old ways. Affixed into the work are also materials such as dried rice, wooden carvings and animal bones. Deeply embedded in his home of Baguio and the Cordilleras, Kawayan de Guia (b. 1979, Baguio) works across painting, installation and sculpture. His critical and ironic works proffer ironic commentary on issues such as colonial history, trade and exchange. His pieces often incorporate found and organic material from a wide range of sources (film reels, talismans, old artworks), as well as drawing from the indigenous culture and material of the Cordilleras.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1467008-645b3dea-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/0f5722e8-05b7-4a5e-b999-c44e045cc451/1467008.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1467008",
+      "metadata": {
+        "roots_doc_id": "2280998D-88F9-4A6C-986C-D42B3F7CAB6D",
+        "accession_no": "2020-00499",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": [
+          "paintings (visual works)"
+        ]
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/0f5722e8-05b7-4a5e-b999-c44e045cc451/1467008.jpg"
+    },
+    {
+      "id": "sam-singapore-1472625",
+      "objectNumber": "2020-00013",
+      "title": "A Bali Girl with Her Fan (from The Bali Project)",
+      "artist": "Kai Lam Jeremy Hiah Tien Wei",
+      "date": "2001–2019",
+      "year": 2001,
+      "medium": "printing (process); ink; cotton (fiber); aluminium (metal); paper (fiber product)",
+      "dimensions": "Image size: 129.0 x 71.0 cm Frame size: 130.0 x 72.0 x 3.5 cm",
+      "category": "painting",
+      "description": "Discussions of modern Singapore’s art history tend to begin with the “Nanyang Style” – a term widely associated with the paintings of a group of Chinese immigrant artists who worked in British Malaya (present-day Singapore and Malaysia) around the 1950s. Four of them in particular occupy a special place in this narrative: they are Chen Chong Swee (1910-1986), Chen Wen Hsi (1906-1991), Cheong Soo Pieng (1917-1983) and Liu Kang (1911-2004), who, inspired by the exuberant paintings of Adrien-Jean Le Mayeur, had embarked on a trip to the tropical island of Bali in 1952 in search of a new visual expression. Enamoured by the rhythms and colours of the exotic tropics, the new cultures they encountered proved catalytic for their artistic development as they began to incorporate elements of Balinese culture into their compositions: the lush landscapes, the communal practices of Balinese inhabitants and elements of the local architecture. The resulting works were displayed a year later in an exhibition titled “Paintings from Bali” at the British Council in Singapore, and garnered critical reception for what was perceived to be an inventive integration of Chinese pictorial traditions and Western aesthetic traditions in the depiction of regional subject matter. The success of the 1952 Bali trip and the ensuing exhibition would prove impactful on the generation that followed, as younger artists were likewise inspired to absorb Southeast Asian material culture into their artistic vocabularies. For subsequent commentators including art historians T.K. Sabapathy and Redza Piyadasa, this excursion southward was viewed to some extent as an originary moment for Singapore modern art. The Nanyang Style’s subsequently swift and unchallenged absorption into the national art historical narrative piqued the interest of a group of young Singaporean Chinese artists from The Artists Village some 49 years later, forming the conceptual backbone of an endeavour they would duly call “The Bali Project”. Almost half a decade after the pioneers’ l",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1472625-a4aa97b9-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/7811d84b-6ce3-4d4c-a44b-dacaeebfb13e/1472625.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1472625",
+      "metadata": {
+        "roots_doc_id": "2CA161C8-89F2-49E8-BA71-FD3E4FE0E207",
+        "accession_no": "2020-00013",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": [
+          "digital fine art prints",
+          "digital photographic prints"
+        ]
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/7811d84b-6ce3-4d4c-a44b-dacaeebfb13e/1472625.jpg"
+    },
+    {
+      "id": "sam-singapore-1566796",
+      "objectNumber": "2023-00749",
+      "title": "2.2.1861",
+      "artist": "Danh Vo",
+      "date": "2009",
+      "year": 2009,
+      "medium": "calligraphy (process); paper (fiber product); ink; wood (plant material); cardboard",
+      "dimensions": "Frame size: 34.0 x 25.2 x 2.3 cm",
+      "category": "painting",
+      "description": "2.2.1861 takes the form of a handwritten letter by Phung Võ, the artist’s father and a skilled calligrapher. The text is copied word-for-word from the last letter the French missionary Jean-Théophane Vénard wrote. Vénard was executed in Tonkin, Vietnam, and was only recognized as a saint by the Catholic church more than a hundred years after his death. The title of the work references Vénard’s execution date. As a fervent Catholic himself, the artist’s father sees this as a devotional and meditative act, despite not being able to speak or read English and French. The artist’s father copies the letter meticulously several times a week without fail, and has set out to continue doing so until his passing.This work also draws on the transformative potential of wood, and how it might serve as a carrier for latent historiographies. The material’s storied pasts demonstrate Võ’s interest in converging different scales of influence: in this case, how geopolitical maneuvering intersects with the personal across generations. 2.2.1861 is framed with the wood of black walnut trees from Robert McNamara’s estate. McNamara was the U.S. Secretary of Defense from 1961 to 1968, during which he presided over—and has been credited with designing—the catastrophic Vietnam War. Võ purchased personal assets from Robert McNamara’s estate in 2012 and incorporated them into some of his works. McNamara’s only son, Craig McNamara, encountered these works, and the two formed an ongoing correspondence. This culminated in the younger McNamara ultimately inviting Võ to visit his family’s diversified farming operations in California. On the farm were an orchard of slowly maturing black walnut trees, which were highly coveted by the gun industry as they were of just the right height for crafting gun stock. Instead of turning these trees into weaponry for a sizeable profit, the McNamaras decided to clear the land for regeneration and planting instead. This wood was then made available to Võ, who used the material in a series of works, including the",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1566796-de3de855-imageUrl.webp",
+      "thumbnailUrl": "https://www.roots.gov.sg/api/media/961f1965-5abd-4d02-ab78-0c7e9ecae721/1566796.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.roots.gov.sg/collection-landing/listing/1566796",
+      "metadata": {
+        "roots_doc_id": "D22C0A20-8A07-487B-A550-A5E908C83A28",
+        "accession_no": "2023-00749",
+        "nlb_type": [
+          "Painting"
+        ],
+        "objecttype": [
+          "installations (visual works)"
+        ]
+      },
+      "original_imageUrl": "https://www.roots.gov.sg/api/media/961f1965-5abd-4d02-ab78-0c7e9ecae721/1566796.jpg"
+    }
+  ]
+}

@@ -1,0 +1,560 @@
+{
+  "museum": "Museum für Gestaltung Zürich",
+  "collection": "Collection",
+  "website": "https://www.emuseum.ch/en/",
+  "scraped_date": "2026-06-12",
+  "total_count": 13,
+  "source_type": "html",
+  "category_breakdown": {
+    "poster": 7,
+    "photograph": 4,
+    "print": 2
+  },
+  "artworks": [
+    {
+      "id": "gestaltung-zurich-16731",
+      "objectNumber": "G-1784",
+      "title": "Giant Step - Monex",
+      "artist": "Matsunaga Design Inc., Tokio, JP; Shin Matsunaga",
+      "date": "1999",
+      "year": 1999,
+      "medium": "Offset",
+      "dimensions": "103 × 145.5 cm",
+      "category": "poster",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-16731-8bb92c15-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/75238/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/16731/giant-step--monex",
+      "metadata": {
+        "department": "Plakatsammlung",
+        "classification": "Plakat",
+        "classificationsFull": [
+          "Commercial Poster"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "Matsunaga Design Inc., Tokio, JP"
+          },
+          {
+            "role": "Design",
+            "name": "Shin Matsunaga"
+          },
+          {
+            "role": "Client",
+            "name": "Monex Inc., JP"
+          },
+          {
+            "role": "Print",
+            "name": "unbekannt"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/75238/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-16768",
+      "objectNumber": "64-1584",
+      "title": "14 - Vierzehnte Triennale di Milano (...) Internationale Ausstellung für moderne dekorative und angewandte Kunst und moderne Architektur (...)",
+      "artist": "Albe Steiner",
+      "date": "1968",
+      "year": 1968,
+      "medium": "Siebdruck",
+      "dimensions": "86.5 × 59 cm",
+      "category": "poster",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-16768-58abefcb-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/10737/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/16768/14--vierzehnte-triennale-di-milano--internationale-aus",
+      "metadata": {
+        "department": "Plakatsammlung",
+        "classification": "Plakat",
+        "classificationsFull": [
+          "Cultural- and Event Poster"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "Albe Steiner"
+          },
+          {
+            "role": "Client",
+            "name": "Triennale di Milano, Mailand, IT"
+          },
+          {
+            "role": "Print",
+            "name": "Crespi & Occhipinti, IT"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/10737/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-16770",
+      "objectNumber": "G-1828",
+      "title": "Single Shell - l'olio invernale per il facile avviamento",
+      "artist": "Erberto Carboni",
+      "date": "1938",
+      "year": 1938,
+      "medium": "Lithografie, mehrfarbig",
+      "dimensions": "132 × 98.5 cm",
+      "category": "poster",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-16770-54c0286b-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/75245/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/16770/single-shell--lolio-invernale-per-il-facile-avviamento",
+      "metadata": {
+        "department": "Plakatsammlung",
+        "classification": "Plakat",
+        "classificationsFull": [
+          "Commercial Poster"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "Erberto Carboni"
+          },
+          {
+            "role": "Client",
+            "name": "Royal Dutch Shell, London, GB"
+          },
+          {
+            "role": "Print",
+            "name": "Barabino & Graeve, Genua, IT"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/75245/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-16771",
+      "objectNumber": "74-0458",
+      "title": "13. Jazzfestival - Schaffhausen - Kammgarn - 21. Mai - 25. Mai",
+      "artist": "Ralph Schraivogel; Egli & Partner AG, Haus für Gestaltung, Glattbrugg, CH",
+      "date": "2002",
+      "year": 2002,
+      "medium": "Siebdruck",
+      "dimensions": "128 × 90.5 cm",
+      "category": "poster",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-16771-7851fe30-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/49553/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/16771/13-jazzfestival--schaffhausen--kammgarn--21-mai--25-m",
+      "metadata": {
+        "department": "Plakatsammlung",
+        "classification": "Plakat",
+        "classificationsFull": [
+          "Cultural- and Event Poster"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "Ralph Schraivogel"
+          },
+          {
+            "role": "Client",
+            "name": "Jazz Festival Schaffhausen, CH"
+          },
+          {
+            "role": "Print",
+            "name": "Uldry AG, Hinterkappelen, CH"
+          },
+          {
+            "role": "Lithography",
+            "name": "Egli & Partner AG, Haus für Gestaltung, Glattbrugg, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/49553/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-16779",
+      "objectNumber": "EE-0100",
+      "title": "Verliebt in die Schweiz",
+      "artist": "André Stehlé",
+      "date": "1971",
+      "year": 1971,
+      "medium": "Fotografie, Collage; Pressspan",
+      "dimensions": "128.5 × 90.5 × 0.6 cm",
+      "category": "poster",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-16779-619ef32c-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/74905/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/16779/verliebt-in-die-schweiz",
+      "metadata": {
+        "department": "Plakatsammlung",
+        "classification": "Plakat",
+        "classificationsFull": [
+          "Tourism Poster"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "André Stehlé"
+          },
+          {
+            "role": "Client",
+            "name": "Schweizerische Verkehrszentrale, SVZ, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/74905/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-16822",
+      "objectNumber": "05-0458",
+      "title": "Lohnabbau Nein",
+      "artist": "Alois Carigiet",
+      "date": "1933",
+      "year": 1933,
+      "medium": "Lithografie",
+      "dimensions": "128 × 90.5 cm",
+      "category": "poster",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-16822-1ee5c30b-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/218598/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/16822/lohnabbau-nein",
+      "metadata": {
+        "department": "Plakatsammlung",
+        "classification": "Plakat",
+        "classificationsFull": [
+          "Political Poster"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "Alois Carigiet"
+          },
+          {
+            "role": "Client",
+            "name": "unbekannt"
+          },
+          {
+            "role": "Print",
+            "name": "Graphische Anstalt J. E. Wolfensberger AG, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/218598/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-16833",
+      "objectNumber": "71-0189",
+      "title": "(in japanischer Schrift)",
+      "artist": "Kazumasa Nagai",
+      "date": "um 1994",
+      "year": 1994,
+      "medium": "Offset",
+      "dimensions": "103 × 73 cm",
+      "category": "poster",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-16833-4d0ac53f-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/71516/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/16833/in-japanischer-schrift",
+      "metadata": {
+        "department": "Plakatsammlung",
+        "classification": "Plakat",
+        "classificationsFull": [
+          "Cultural- and Event Poster"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "Kazumasa Nagai"
+          },
+          {
+            "role": "Client",
+            "name": "The Museum of Modern Art, Toyama, JP"
+          },
+          {
+            "role": "Print",
+            "name": "unbekannt"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/71516/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-254493",
+      "objectNumber": "GUHL-0004-0001-0007",
+      "title": "New York - Strassenszene",
+      "artist": "Willy Guhl",
+      "date": "1967-1968",
+      "year": 1967,
+      "medium": "Diapositiv",
+      "dimensions": "",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-254493-65a87140-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/342181/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/254493/new-york--strassenszene",
+      "metadata": {
+        "department": "Designsammlung",
+        "classification": "Fotografie",
+        "classificationsFull": [
+          "Object Photography",
+          "Person",
+          "Documentary Photography",
+          "Architecture"
+        ],
+        "people": [
+          {
+            "role": "Photography",
+            "name": "Willy Guhl"
+          },
+          {
+            "role": "Department",
+            "name": "SfGZ, Studienbereich Innenarchitektur und Produktgestaltung, SIP, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/342181/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-254495",
+      "objectNumber": "GUHL-0004-0001-0011",
+      "title": "New York - Strassenszene, Fifth Avenue",
+      "artist": "Willy Guhl",
+      "date": "1967-1968",
+      "year": 1967,
+      "medium": "Diapositiv",
+      "dimensions": "",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-254495-91f3da2a-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/342182/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/254495/new-york--strassenszene-fifth-avenue",
+      "metadata": {
+        "department": "Designsammlung",
+        "classification": "Fotografie",
+        "classificationsFull": [
+          "Object Photography",
+          "Person",
+          "Documentary Photography",
+          "Architecture"
+        ],
+        "people": [
+          {
+            "role": "Photography",
+            "name": "Willy Guhl"
+          },
+          {
+            "role": "Department",
+            "name": "SfGZ, Studienbereich Innenarchitektur und Produktgestaltung, SIP, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/342182/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-254496",
+      "objectNumber": "GUHL-0004-0001-0018",
+      "title": "New York - Pan Am Building, Park Avenue",
+      "artist": "Willy Guhl",
+      "date": "1967-1968",
+      "year": 1967,
+      "medium": "Diapositiv",
+      "dimensions": "",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-254496-1dbdd637-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/342183/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/254496/new-york--pan-am-building-park-avenue",
+      "metadata": {
+        "department": "Designsammlung",
+        "classification": "Fotografie",
+        "classificationsFull": [
+          "Object Photography",
+          "Person",
+          "Documentary Photography",
+          "Architecture"
+        ],
+        "people": [
+          {
+            "role": "Photography",
+            "name": "Willy Guhl"
+          },
+          {
+            "role": "Portrayed Work",
+            "name": "Pietro Belluschi"
+          },
+          {
+            "role": "Portrayed Work",
+            "name": "Walter Gropius"
+          },
+          {
+            "role": "Portrayed Work",
+            "name": "Emery Roth"
+          },
+          {
+            "role": "Department",
+            "name": "SfGZ, Studienbereich Innenarchitektur und Produktgestaltung, SIP, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/342183/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-254512",
+      "objectNumber": "GUHL-0004-0008-0001",
+      "title": "New York – Strassenszene",
+      "artist": "Willy Guhl",
+      "date": "1967-1968",
+      "year": 1967,
+      "medium": "Diapositiv",
+      "dimensions": "",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-254512-889a3e56-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/342192/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/254512/new-york--strassenszene",
+      "metadata": {
+        "department": "Designsammlung",
+        "classification": "Fotografie",
+        "classificationsFull": [
+          "Reportage",
+          "Person",
+          "Documentary Photography",
+          "Architecture"
+        ],
+        "people": [
+          {
+            "role": "Photography",
+            "name": "Willy Guhl"
+          },
+          {
+            "role": "Portrayed Institution",
+            "name": "The Museum of Modern Art, MoMA, New York, US"
+          },
+          {
+            "role": "Department",
+            "name": "SfGZ, Studienbereich Innenarchitektur und Produktgestaltung, SIP, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/342192/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-181217",
+      "objectNumber": "F BERT 1-1",
+      "title": "1. Femme fatale with cigarette",
+      "artist": "François Berthoud",
+      "date": "1995",
+      "year": 1995,
+      "medium": "Offset",
+      "dimensions": "Blattgrösse (HxB): 63 × 48.5 cm",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-181217-d98b3fd4-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/326882/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/181217/1-femme-fatale-with-cigarette",
+      "metadata": {
+        "department": "Grafiksammlung",
+        "classification": "Kunstgrafik",
+        "classificationsFull": [
+          "Artists' Book",
+          "Illustrated Book",
+          "Illustration",
+          "European Prints"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "François Berthoud"
+          },
+          {
+            "role": "Publishing",
+            "name": "Dino Simonett"
+          },
+          {
+            "role": "Publishing",
+            "name": "Bruno Margreth, Zürich, CH"
+          },
+          {
+            "role": "Print",
+            "name": "Fontegrafica S.R.L., Mailand, IT"
+          },
+          {
+            "role": "Publisher",
+            "name": "Edition Dino Simonett, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/326882/fullsize"
+    },
+    {
+      "id": "gestaltung-zurich-181236",
+      "objectNumber": "F BERT 1-2",
+      "title": "2. Lina",
+      "artist": "François Berthoud",
+      "date": "2001",
+      "year": 2001,
+      "medium": "Offset",
+      "dimensions": "Blattgrösse (HxB): 63 × 48.5 cm",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-181236-a41537e8-imageUrl.webp",
+      "thumbnailUrl": "https://www.emuseum.ch/internal/media/dispatcher/303039/thumbnail",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.emuseum.ch/en/objects/181236/2-lina",
+      "metadata": {
+        "department": "Grafiksammlung",
+        "classification": "Kunstgrafik",
+        "classificationsFull": [
+          "Artists' Book",
+          "Illustrated Book",
+          "Illustration",
+          "European Prints"
+        ],
+        "people": [
+          {
+            "role": "Design",
+            "name": "François Berthoud"
+          },
+          {
+            "role": "Publishing",
+            "name": "Dino Simonett"
+          },
+          {
+            "role": "Publishing",
+            "name": "Bruno Margreth, Zürich, CH"
+          },
+          {
+            "role": "Print",
+            "name": "Fontegrafica S.R.L., Mailand, IT"
+          },
+          {
+            "role": "Publisher",
+            "name": "Edition Dino Simonett, Zürich, CH"
+          }
+        ]
+      },
+      "original_imageUrl": "https://www.emuseum.ch/internal/media/dispatcher/303039/fullsize"
+    }
+  ]
+}

@@ -1,13 +1,7 @@
 # Jina CLIP v2 텍스트 인코더 — Cloud Run 컨테이너
 #
-# 빌드 + 배포 (one-shot):
-#   gcloud run deploy jina-text-encoder \
-#     --source . \
-#     --region asia-northeast3 \
-#     --memory 4Gi --cpu 2 \
-#     --min-instances 1 --max-instances 5 \
-#     --port 8080 --timeout 60 \
-#     --allow-unauthenticated
+# 빌드 + 배포는 deploy.sh 로 한다(토큰, 최소 0대·최대 1대 설정 포함):
+#   JINA_ENCODER_TOKEN=<토큰> bash deploy.sh
 FROM python:3.11-slim
 
 # 시스템 deps (PIL/torch 기본 필요한 것)

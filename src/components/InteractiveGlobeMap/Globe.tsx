@@ -3,6 +3,42 @@ import * as d3 from "d3";
 import { feature, mesh } from "topojson-client";
 import type { AppLanguage } from "../../contexts/LanguageContext";
 import { localizeCityName, localizeContinentName, localizeCountryName } from "../../i18n/geoLocalization";
+import {
+  resolveGlobeRenderProfile,
+  resolveGlobeVisualPalette,
+  type GlobeVisualPresetId,
+} from "./globeVisualPresets";
+import {
+  resolveCollyGlobeVariantProfile,
+  resolveCollyMuseumEmphasis,
+} from "./collyGlobeVariants";
+import {
+  drawTechniqueOverlay,
+  drawTechniqueUnderlay,
+  shouldDrawProductionPreviewMarkers,
+  type CollyMapTechniqueRenderArgs,
+} from "./collyMapTechniqueRenderer";
+import type { CollyGlobeVariantSlug } from "../../globe-lab/model";
+import {
+  drawGlassOverlay,
+  drawGlassUnderlay,
+  resolveGlobeGlassProfile,
+  type GlobeGlassTweakId,
+} from "./globeGlassTweaks";
+import { getMainlandFeature, smoothGlobeGeometry } from "./globeGeometrySmoothing";
+import {
+  countryLabelRevealZoom,
+  drawAtmosphereFinish,
+  drawContinentLabel,
+  drawGlobeCrosshair,
+  drawGlobeFurniture,
+  drawMuseumPreviewMarker,
+  drawSphereSurface,
+  drawStyledBorders,
+  drawStyledLand,
+  resolveGlobeViewportDensity,
+  type CountryBoundaryStyle,
+} from "./globeCanvasStyles";
 
 // ─── Types ─────────────────────────────────────────────────
 import type { Theme, CityMarker } from "./types";
@@ -19,6 +55,7 @@ interface MuseumPoint {
   city: CityMarker;
   country: string;
   coordinates: [number, number];
+  venueId: string;
   venueName: string;
   artworkCount: number;
   isMajor: boolean;
@@ -142,83 +179,28 @@ const CONTINENT_CENTERS: Record<string, [number, number]> = {
   "Oceania": [135, -25]
 };
 const COUNTRY_CLUSTER_ZOOM = 1.6;
-const COUNTRY_LABEL_ALL_ZOOM = 2.35;
 const CONTINENT_FOCUS_ZOOM = 2.25;
 const COUNTRY_EXIT_ZOOM = COUNTRY_CLUSTER_ZOOM + 0.05;
 const CONTINENT_EXIT_ZOOM = COUNTRY_CLUSTER_ZOOM - 0.1;
 
+// In country-cluster mode markers/labels are shown by proximity to the current
+// view centre (great-circle radians) instead of by continent membership — so
+// border countries (Turkey, Qatar…) stay reachable and panning left/right
+// reveals/hides neighbours smoothly instead of a hard continent cut.
+const COUNTRY_VIEW_INNER = 0.5;  // ≤ ~28.6°: full opacity
+const COUNTRY_VIEW_OUTER = 0.72; // ≥ ~41.3°: hidden; fades to 0 between the two
+const viewCenterFromRot = (rot: [number, number, number]): [number, number] => [-rot[0], -rot[1]];
+const viewProximityAlpha = (coords: [number, number], viewCenter: [number, number]): number => {
+  const d = d3.geoDistance(coords, viewCenter);
+  if (d <= COUNTRY_VIEW_INNER) return 1;
+  if (d >= COUNTRY_VIEW_OUTER) return 0;
+  return 1 - (d - COUNTRY_VIEW_INNER) / (COUNTRY_VIEW_OUTER - COUNTRY_VIEW_INNER);
+};
+
 // ─── Cities & Venues ───────────────────────────────────────
 
 
-// ─── Palette ───────────────────────────────────────────────
-
-interface Palette {
-  sphereFill: string;
-  sphereStroke: string;
-  fg: [number, number, number];
-  lime: string;
-  limeFg: string;   // rgb for strokes/fills
-  limeTxt: string;   // rgb for text
-  crosshair: string;
-}
-
-const PALETTES: Record<Theme, Palette> = {
-  dark: {
-    sphereFill: "rgba(255,255,255,0.012)",
-    sphereStroke: "rgba(255,255,255,0.08)",
-    fg: [255, 255, 255],
-    lime: "#D4A547",
-    limeFg: "212,165,71",
-    limeTxt: "212,165,71",
-    crosshair: "rgba(255,255,255,0.04)",
-  },
-  light: {
-    sphereFill: "rgba(0,0,0,0.006)",
-    sphereStroke: "rgba(0,0,0,0.06)",
-    fg: [0, 0, 0],
-    lime: "#8A6B1F",
-    limeFg: "138,107,31",
-    limeTxt: "138,107,31",
-    crosshair: "rgba(0,0,0,0.04)",
-  },
-};
-
 // ─── Helpers ───────────────────────────────────────────────
-
-// For countries with overseas territories (France, Denmark, Netherlands, USA, etc.)
-// extract only the largest polygon (mainland) for accurate centroid & zoom.
-function getMainlandFeature(feat: any): any {
-  if (feat.geometry?.type !== 'MultiPolygon') return feat;
-  const polys = feat.geometry.coordinates;
-  if (polys.length <= 1) return feat;
-
-  // Find the polygon with the largest bounding-box area (quick proxy for actual area)
-  let bestIdx = 0;
-  let bestArea = 0;
-  for (let i = 0; i < polys.length; i++) {
-    // Each polygon is an array of rings; use the outer ring (index 0)
-    const ring = polys[i][0];
-    if (!ring || ring.length < 3) continue;
-    let minLon = 999, maxLon = -999, minLat = 999, maxLat = -999;
-    for (const [lon, lat] of ring) {
-      if (lon < minLon) minLon = lon;
-      if (lon > maxLon) maxLon = lon;
-      if (lat < minLat) minLat = lat;
-      if (lat > maxLat) maxLat = lat;
-    }
-    const area = (maxLon - minLon) * (maxLat - minLat);
-    if (area > bestArea) { bestArea = area; bestIdx = i; }
-  }
-
-  // Return a synthetic feature with only the largest polygon
-  return {
-    ...feat,
-    geometry: {
-      type: 'Polygon',
-      coordinates: polys[bestIdx]
-    }
-  };
-}
 
 function calcCountryZoom(feat: any): number {
   const mainland = getMainlandFeature(feat);
@@ -241,88 +223,16 @@ function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
 
-// Chaikin smoothing algorithm - makes polygon edges curved
-function chaikinSmoothClosed(coords: number[][], iterations: number = 2): number[][] {
-  if (coords.length < 3) return coords;
-  const isClosed = coords[0][0] === coords[coords.length - 1][0] && coords[0][1] === coords[coords.length - 1][1];
-  let result = isClosed ? coords.slice(0, coords.length - 1) : coords;
-
-  for (let iter = 0; iter < iterations; iter++) {
-    const smoothed: number[][] = [];
-    for (let i = 0; i < result.length; i++) {
-      const p0 = result[i];
-      const p1 = result[(i + 1) % result.length];
-
-      let p1x = p1[0];
-      if (p1x - p0[0] > 180) p1x -= 360;
-      else if (p0[0] - p1x > 180) p1x += 360;
-
-      let qx = 0.75 * p0[0] + 0.25 * p1x;
-      let rx = 0.25 * p0[0] + 0.75 * p1x;
-
-      if (qx > 180) qx -= 360; else if (qx <= -180) qx += 360;
-      if (rx > 180) rx -= 360; else if (rx <= -180) rx += 360;
-
-      const q: number[] = [qx, 0.75 * p0[1] + 0.25 * p1[1]];
-      const r: number[] = [rx, 0.25 * p0[1] + 0.75 * p1[1]];
-      smoothed.push(q, r);
-    }
-    result = smoothed;
-  }
-  if (result.length > 0) result.push([result[0][0], result[0][1]]);
-  return result;
-}
-
-function chaikinSmoothOpen(coords: number[][], iterations: number = 2): number[][] {
-  if (coords.length < 3) return coords;
-  let result = coords;
-  for (let iter = 0; iter < iterations; iter++) {
-    const smoothed: number[][] = [];
-    smoothed.push(result[0]);
-    for (let i = 0; i < result.length - 1; i++) {
-      const p0 = result[i];
-      const p1 = result[i + 1];
-
-      let p1x = p1[0];
-      if (p1x - p0[0] > 180) p1x -= 360;
-      else if (p0[0] - p1x > 180) p1x += 360;
-
-      let qx = 0.75 * p0[0] + 0.25 * p1x;
-      let rx = 0.25 * p0[0] + 0.75 * p1x;
-
-      if (qx > 180) qx -= 360; else if (qx <= -180) qx += 360;
-      if (rx > 180) rx -= 360; else if (rx <= -180) rx += 360;
-
-      const q = [qx, 0.75 * p0[1] + 0.25 * p1[1]];
-      const r = [rx, 0.25 * p0[1] + 0.75 * p1[1]];
-      smoothed.push(q, r);
-    }
-    smoothed.push(result[result.length - 1]);
-    result = smoothed;
-  }
-  return result;
-}
-
-function smoothGeometry(geometry: any): any {
-  if (!geometry) return geometry;
-  if (geometry.type === 'Polygon') {
-    return { ...geometry, coordinates: geometry.coordinates.map((ring: number[][]) => chaikinSmoothClosed(ring, 2)) };
-  } else if (geometry.type === 'MultiPolygon') {
-    return { ...geometry, coordinates: geometry.coordinates.map((poly: number[][][]) => poly.map((ring: number[][]) => chaikinSmoothClosed(ring, 2))) };
-  } else if (geometry.type === 'LineString') {
-    return { ...geometry, coordinates: chaikinSmoothOpen(geometry.coordinates, 2) };
-  } else if (geometry.type === 'MultiLineString') {
-    return { ...geometry, coordinates: geometry.coordinates.map((line: number[][]) => chaikinSmoothOpen(line, 2)) };
-  }
-  return geometry;
-}
-
 // ─── Component ─────────────────────────────────────────────
 
 interface GlobeProps {
   cities: CityMarker[];
   language?: AppLanguage;
   theme?: Theme;
+  visualPreset?: GlobeVisualPresetId;
+  collyVariant?: CollyGlobeVariantSlug;
+  glassTweak?: GlobeGlassTweakId;
+  countryBoundaryStyle?: CountryBoundaryStyle;
   selectedCity: CityMarker | null;
   onSelectCity: (city: CityMarker | null) => void;
   drilledContinent?: string | null;
@@ -332,12 +242,20 @@ interface GlobeProps {
   onRotationChange?: (coords: [number, number]) => void;
   onZoomChange?: (zoom: number) => void;
   onHoverData?: (data: { level: string; label: string; count: number } | null) => void;
+  /** Where the globe sits in its canvas: a horizontal shift (fraction of the
+      canvas width, positive moves it right) and a size multiplier. Changes glide. */
+  stageShift?: number;
+  stageScale?: number;
 }
 
 export function Globe({
   cities,
   language = "ko",
   theme = "dark",
+  visualPreset,
+  collyVariant,
+  glassTweak,
+  countryBoundaryStyle,
   selectedCity,
   onSelectCity,
   drilledContinent,
@@ -347,11 +265,16 @@ export function Globe({
   onRotationChange,
   onZoomChange,
   onHoverData,
+  stageShift = 0,
+  stageScale = 1,
 }: GlobeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const continentHoverOpacitiesRef = useRef<Map<string, number>>(new Map());
   const countryLabelOpacitiesRef = useRef<Map<string, number>>(new Map());
+  const visualPresetRef = useRef<GlobeVisualPresetId | undefined>(visualPreset);
+  const collyVariantRef = useRef<CollyGlobeVariantSlug | undefined>(collyVariant);
+  const glassTweakRef = useRef<GlobeGlassTweakId | undefined>(glassTweak);
 
   const landRef = useRef<any>(null);
   const bordersRef = useRef<any>(null);
@@ -365,6 +288,16 @@ export function Globe({
   const animFrameRef = useRef(0);
   const animRunningRef = useRef(false);
   const wakeGlobeRef = useRef<(() => void) | null>(null);
+  // Current and wanted stage (stageShift/stageScale); draw() eases one into the other.
+  const stageRef = useRef({ shift: stageShift, scale: stageScale });
+  const stageTargetRef = useRef({ shift: stageShift, scale: stageScale });
+  useEffect(() => {
+    stageTargetRef.current = { shift: stageShift, scale: stageScale };
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      stageRef.current = { shift: stageShift, scale: stageScale };
+    }
+    wakeGlobeRef.current?.();
+  }, [stageShift, stageScale]);
 
   const drilledRef = useRef<DrilledCountry | null>(null);
   const targetRotRef = useRef<[number, number, number] | null>(null);
@@ -389,9 +322,14 @@ export function Globe({
     typeof window !== 'undefined' &&
     (window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0)
   );
+  const reducedMotionRef = useRef(
+    typeof window !== "undefined"
+      && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
 
   const drilledContinentRef = useRef(drilledContinent);
   const lastSyncedContinentRef = useRef<string | null>(drilledContinent || null);
+  const suppressContinentSyncRef = useRef(false);
   useEffect(() => {
     drilledContinentRef.current = drilledContinent;
     lastSyncedContinentRef.current = drilledContinent || null;
@@ -407,6 +345,7 @@ export function Globe({
     const onExternalDrill = (e: Event) => {
       const detail = (e as CustomEvent).detail as string | null | undefined;
       const continent = detail || null;
+      suppressContinentSyncRef.current = continent === null;
       drilledContinentRef.current = continent;
       lastSyncedContinentRef.current = continent;
       if (continent) {
@@ -470,6 +409,7 @@ export function Globe({
           city,
           country: city.country,
           coordinates: [lon, lat],
+          venueId: String(venue.id || ""),
           venueName,
           artworkCount,
           isMajor: isLikelyMajorMuseum(venueName, artworkCount),
@@ -515,6 +455,9 @@ export function Globe({
 
   const themeRef = useRef<Theme>(theme);
   useEffect(() => { themeRef.current = theme; wakeGlobeRef.current?.(); }, [theme]);
+  useEffect(() => { visualPresetRef.current = visualPreset; wakeGlobeRef.current?.(); }, [visualPreset]);
+  useEffect(() => { collyVariantRef.current = collyVariant; wakeGlobeRef.current?.(); }, [collyVariant]);
+  useEffect(() => { glassTweakRef.current = glassTweak; wakeGlobeRef.current?.(); }, [glassTweak]);
   const languageRef = useRef<AppLanguage>(language);
   useEffect(() => { languageRef.current = language; wakeGlobeRef.current?.(); }, [language]);
 
@@ -523,12 +466,12 @@ export function Globe({
 
   const getVisibleCities = useCallback((
     countryClusterMode: boolean,
-    activeContinent: string | null,
+    viewCenter: [number, number],
     drilled: DrilledCountry | null,
   ) => {
     return citiesRef.current.filter((m) => {
-      if (!countryClusterMode || !activeContinent) return false;
-      if (!drilled && m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
+      if (!countryClusterMode) return false;
+      if (!drilled && viewProximityAlpha(m.coordinates, viewCenter) <= 0) return false;
       if (m.detail && !drilled) return false;
       if (m.detail && drilled && m.country !== drilled.name) return false;
       return true;
@@ -570,10 +513,33 @@ export function Globe({
     const processLand = (data: any) => {
       let landObj = feature(data, data.objects.land) as any;
       if (d3.geoArea(landObj) > 6) fixWinding(landObj);
-      landRef.current = { ...landObj, _smoothed: { ...landObj, geometry: smoothGeometry(landObj.geometry) } };
+      const balancedLand = {
+        ...landObj,
+        geometry: smoothGlobeGeometry(landObj.geometry, "balanced"),
+      };
+      landRef.current = {
+        ...landObj,
+        _smoothed: balancedLand,
+        _roundedBalanced: balancedLand,
+        _roundedSoft: {
+          ...landObj,
+          geometry: smoothGlobeGeometry(landObj.geometry, "soft"),
+        },
+        _roundedAtlas: {
+          ...landObj,
+          geometry: smoothGlobeGeometry(landObj.geometry, "atlas"),
+        },
+      };
 
       let bordersObj = mesh(data, data.objects.countries, (a: any, b: any) => a !== b) as any;
-      bordersRef.current = { ...bordersObj, _smoothed: smoothGeometry(bordersObj) };
+      const balancedBorders = smoothGlobeGeometry(bordersObj, "balanced");
+      bordersRef.current = {
+        ...bordersObj,
+        _smoothed: balancedBorders,
+        _roundedBalanced: balancedBorders,
+        _roundedSoft: smoothGlobeGeometry(bordersObj, "soft"),
+        _roundedAtlas: smoothGlobeGeometry(bordersObj, "atlas"),
+      };
 
       const fc = feature(data, data.objects.countries);
       countriesRef.current = (fc as any).features.map((f: any) => {
@@ -581,9 +547,22 @@ export function Globe({
         if (d3.geoArea(fCopy) > 6) {
           fixWinding(fCopy);
         }
+        const balancedCountry = {
+          ...fCopy,
+          geometry: smoothGlobeGeometry(fCopy.geometry, "balanced"),
+        };
         return {
           ...fCopy,
-          _smoothed: { ...fCopy, geometry: smoothGeometry(fCopy.geometry) }
+          _smoothed: balancedCountry,
+          _roundedBalanced: balancedCountry,
+          _roundedSoft: {
+            ...fCopy,
+            geometry: smoothGlobeGeometry(fCopy.geometry, "soft"),
+          },
+          _roundedAtlas: {
+            ...fCopy,
+            geometry: smoothGlobeGeometry(fCopy.geometry, "atlas"),
+          },
         };
       });
       setIsLoading(false);
@@ -613,6 +592,9 @@ export function Globe({
 
     const resize = () => {
       const r = container.getBoundingClientRect();
+      // A hidden container measures 0×0. Keep the last size: at radius 0 the
+      // glass rim's arc throws inside draw(), and the loop never restarts.
+      if (r.width === 0 || r.height === 0) return;
       w = r.width; h = r.height;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
@@ -637,6 +619,8 @@ export function Globe({
     obs.observe(container);
 
     const sphere: d3.GeoPermissibleObjects = { type: "Sphere" };
+    const regularGraticule = d3.geoGraticule10();
+    const compactGraticule = d3.geoGraticule().step([30, 30])();
     const projection = projectionRef.current;
 
     const updateCountryHover = () => {
@@ -661,18 +645,69 @@ export function Globe({
     };
 
     const draw = () => {
-      const P = PALETTES[themeRef.current];
-      const [R, G, B] = P.fg;
+      const activeCollyVariant = visualPresetRef.current === "colly-evolved"
+        ? (collyVariantRef.current ?? "atlas-index")
+        : undefined;
+      const renderProfile = resolveGlobeRenderProfile(
+        activeCollyVariant ? undefined : visualPresetRef.current,
+      );
+      const collyProfile = activeCollyVariant
+        ? resolveCollyGlobeVariantProfile(activeCollyVariant)
+        : null;
+      const P = resolveGlobeVisualPalette(
+        activeCollyVariant ? undefined : visualPresetRef.current,
+        themeRef.current,
+      );
 
-      const baseScale = baseSizeRef.current * 0.38;
+      /* One outline for every marker on the globe - the cut-corner square by
+         default - so the taste markers below are the same shape as the cities. */
+      const drawMarkerShape = (cx: number, cy: number, half: number, bev: number) => {
+        ctx.beginPath();
+        if (P.markerStyle === "ring") {
+          ctx.arc(cx, cy, half, 0, Math.PI * 2);
+          return;
+        }
+        if (P.markerStyle === "diamond") {
+          ctx.moveTo(cx, cy - half);
+          ctx.lineTo(cx + half, cy);
+          ctx.lineTo(cx, cy + half);
+          ctx.lineTo(cx - half, cy);
+          ctx.closePath();
+          return;
+        }
+        if (P.markerStyle === "square") {
+          ctx.rect(cx - half, cy - half, half * 2, half * 2);
+          return;
+        }
+        ctx.moveTo(cx - half + bev, cy - half);
+        ctx.lineTo(cx + half - bev, cy - half);
+        ctx.lineTo(cx + half, cy - half + bev);
+        ctx.lineTo(cx + half, cy + half - bev);
+        ctx.lineTo(cx + half - bev, cy + half);
+        ctx.lineTo(cx - half + bev, cy + half);
+        ctx.lineTo(cx - half, cy + half - bev);
+        ctx.lineTo(cx - half, cy - half + bev);
+        ctx.closePath();
+      };
+      const [R, G, B] = P.label.split(",");
+
+      const stage = stageRef.current;
+      stage.shift = lerp(stage.shift, stageTargetRef.current.shift, 0.08);
+      stage.scale = lerp(stage.scale, stageTargetRef.current.scale, 0.08);
+      const baseScale = baseSizeRef.current * (collyProfile?.scaleRatio ?? renderProfile.scaleRatio) * stage.scale;
       // Higher lerp factor (0.22 vs old 0.07) makes cluster taps feel
       // near-instant: ~167ms to fully zoom into a country/city instead of
       // ~500ms. Pinch and wheel still feel smooth because their input is
       // already incremental.
       currentScaleRef.current = lerp(currentScaleRef.current, targetScaleRef.current, 0.22);
 
+      const offsetScale = Math.min(w, h);
+      const activeOffset = collyProfile?.offset ?? renderProfile.offset;
       projection
-        .translate([w / 2, h / 2])
+        .translate([
+          w / 2 + activeOffset[0] * offsetScale + stage.shift * w,
+          h / 2 + activeOffset[1] * offsetScale,
+        ])
         .scale(baseScale * currentScaleRef.current)
         .rotate(rotationRef.current);
 
@@ -690,67 +725,132 @@ export function Globe({
 
       updateCountryHover();
 
-      // Sphere
-      ctx.beginPath();
-      path(sphere);
-      ctx.fillStyle = P.sphereFill;
-      ctx.fill();
-      ctx.strokeStyle = P.sphereStroke;
-      ctx.lineWidth = 0.8;
-      ctx.stroke();
+      const center = projection.translate() as [number, number];
+      const radius = projection.scale();
+      const density = resolveGlobeViewportDensity(w);
+      const canvasStyleArgs = {
+        ctx,
+        path,
+        sphere,
+        graticule: density === "compact" ? compactGraticule : regularGraticule,
+        center,
+        radius,
+        palette: P,
+        profile: renderProfile,
+        collyProfile,
+        drillOpacity: dOp,
+        density,
+      };
+      const techniqueMuseums = museumPointsRef.current.map((museum) => ({
+        id: museum.key,
+        city: museum.city.city,
+        country: museum.country,
+        coordinates: museum.coordinates,
+        artworkCount: museum.artworkCount,
+        isMajor: museum.isMajor,
+      }));
+      const projectedMuseums = museumPointsRef.current.flatMap((museum) => {
+        if (
+          countryClusterMode
+          && viewProximityAlpha(museum.coordinates, viewCenterFromRot(rot)) <= 0
+        ) return [];
+        if (d3.geoDistance(museum.coordinates, [-rot[0], -rot[1]]) > Math.PI / 2) return [];
+        const point = projection(museum.coordinates);
+        if (!point) return [];
+        return [{
+          id: museum.key,
+          city: museum.city.city,
+          country: museum.country,
+          coordinates: museum.coordinates,
+          artworkCount: museum.artworkCount,
+          isMajor: museum.isMajor,
+          x: point[0],
+          y: point[1],
+          visible: true,
+        }];
+      });
+      const focusedCity = hoveredRef.current ?? selectedRef.current;
+      const focusedMuseumId = focusedCity
+        ? museumPointsRef.current.find((museum) => museum.city === focusedCity)?.key ?? null
+        : null;
+      const renderGeometry = (source: any) => {
+        if (!source) return source;
+        if (collyProfile?.geometrySoftness === "atlas") {
+          return source._roundedAtlas || source._roundedSoft || source._smoothed || source;
+        }
+        if (collyProfile?.geometrySoftness === "soft") {
+          return source._roundedSoft || source._smoothed || source;
+        }
+        return source._smoothed || source;
+      };
+      const techniqueArgs: CollyMapTechniqueRenderArgs | null = collyProfile
+        ? {
+            ctx,
+            path,
+            projection,
+            sphere,
+            land: renderGeometry(landRef.current),
+            borders: renderGeometry(bordersRef.current),
+            countryFeatures: countriesRef.current.flatMap((feature) => {
+              const name = COUNTRY_NAMES[String(feature.id)];
+              return name ? [{ name, feature: renderGeometry(feature) }] : [];
+            }),
+            palette: P,
+            profile: collyProfile,
+            museums: techniqueMuseums,
+            projectedMuseums,
+            activeContinent,
+            currentScale: currentScaleRef.current,
+            drilled: Boolean(drilled),
+            focusedMuseumId,
+            reducedMotion: reducedMotionRef.current,
+            width: w,
+            height: h,
+            center,
+            radius,
+            viewCenter: viewCenterFromRot(rot),
+          }
+        : null;
+
+      const glassProfile = resolveGlobeGlassProfile(glassTweakRef.current);
+      const glassArgs = glassProfile
+        ? { ctx, center, radius, currentScale: currentScaleRef.current }
+        : null;
+
+      if (glassProfile && glassArgs) drawGlassUnderlay(glassArgs, glassProfile);
+      drawSphereSurface(canvasStyleArgs);
+      drawGlobeFurniture(canvasStyleArgs);
+      if (techniqueArgs) drawTechniqueUnderlay(techniqueArgs);
 
       // Land
       if (landRef.current) {
-        const fillAlpha = lerp(0.05, 0.02, dOp);
-        ctx.beginPath();
-        path(landRef.current._smoothed);
-        ctx.fillStyle = `rgba(${R},${G},${B},${fillAlpha})`;
-        ctx.fill();
-
-        const strokeAlpha = lerp(0.10, 0.035, dOp);
-        ctx.beginPath();
-        path(landRef.current._smoothed);
-        ctx.strokeStyle = `rgba(${R},${G},${B},${strokeAlpha})`;
-        ctx.lineWidth = 0.6;
-        ctx.lineJoin = "round";
-        ctx.lineCap = "round";
-        ctx.stroke();
+        drawStyledLand({
+          ...canvasStyleArgs,
+          geometry: renderGeometry(landRef.current),
+        });
       }
+      // Two label systems exist: continent clusters (production behaviour) and
+      // the COLLY technique's country labels. They used to draw at the same
+      // time and collide, so the technique only takes over once the view is
+      // inside a continent - top level stays on continent clusters.
+      const techniqueLabelsActive = countryClusterMode || Boolean(drilled);
+      const techniqueOverlayDrawn = techniqueArgs && techniqueLabelsActive
+        ? drawTechniqueOverlay(techniqueArgs)
+        : false;
 
       // Borders
       if (bordersRef.current) {
-        const mob = isMobileRef.current;
-        if (mob) {
-          // Mobile: soft ambient glow + fine crisp line — regions readable without harsh grid
-          ctx.save();
-          ctx.beginPath();
-          path(bordersRef.current._smoothed);
-          ctx.shadowBlur = 5;
-          ctx.shadowColor = `rgba(${R},${G},${B},0.16)`;
-          ctx.strokeStyle = `rgba(${R},${G},${B},${lerp(0.06, 0.022, dOp)})`;
-          ctx.lineWidth = 1.1;
-          ctx.lineJoin = "round";
-          ctx.lineCap = "round";
-          ctx.stroke();
-          ctx.restore();
-          ctx.beginPath();
-          path(bordersRef.current._smoothed);
-          ctx.strokeStyle = `rgba(${R},${G},${B},${lerp(0.09, 0.035, dOp)})`;
-          ctx.lineWidth = 0.35;
-          ctx.lineJoin = "round";
-          ctx.lineCap = "round";
-          ctx.stroke();
-        } else {
-          const bAlpha = lerp(0.04, 0.015, dOp);
-          ctx.beginPath();
-          path(bordersRef.current._smoothed);
-          ctx.strokeStyle = `rgba(${R},${G},${B},${bAlpha})`;
-          ctx.lineWidth = 0.3;
-          ctx.lineJoin = "round";
-          ctx.lineCap = "round";
-          ctx.stroke();
-        }
+        drawStyledBorders({
+          ...canvasStyleArgs,
+          geometry: renderGeometry(bordersRef.current),
+          isMobile: isMobileRef.current,
+          boundaryStyle: countryBoundaryStyle,
+          viewportWidth: w,
+        });
       }
+
+      drawAtmosphereFinish(canvasStyleArgs);
+      if (glassProfile && glassArgs) drawGlassOverlay(glassArgs, glassProfile);
 
       // Country / Continent hover
       const hovCountry = hoveredCountryRef.current;
@@ -763,31 +863,31 @@ export function Globe({
            if (hovContinent) {
                ctx.save();
                ctx.globalAlpha = (1 - dOp * 0.5);
-               ctx.fillStyle = `rgba(${P.limeFg},0.015)`;
+               ctx.fillStyle = `rgba(${P.accentRgb},0.015)`;
                ctx.beginPath();
                countriesRef.current.forEach((c: any) => {
                    const cName = COUNTRY_NAMES[String(c.id)];
                    if (cName && CONTINENT_MAP[cName] === hovContinent) {
-                       path(c._smoothed || c);
+                       path(renderGeometry(c));
                    }
                });
                ctx.fill();
                ctx.restore();
            }
-        } else if (activeContinent && activeContinent === hovContinent) {
+        } else {
            const isDrilledCountry = drilled && drilled.id === hovId;
            if (!isDrilledCountry) {
              ctx.save();
              ctx.globalAlpha = 1 - dOp * 0.5;
 
              ctx.beginPath();
-             path(hovCountry._smoothed);
-             ctx.fillStyle = `rgba(${P.limeFg},0.02)`;
+             path(renderGeometry(hovCountry));
+             ctx.fillStyle = `rgba(${P.accentRgb},0.02)`;
              ctx.fill();
 
              ctx.beginPath();
-             path(hovCountry._smoothed);
-             ctx.strokeStyle = `rgba(${P.limeFg},0.12)`;
+             path(renderGeometry(hovCountry));
+             ctx.strokeStyle = `rgba(${P.accentRgb},0.12)`;
              ctx.lineWidth = 0.8;
              ctx.lineJoin = "round";
              ctx.lineCap = "round";
@@ -804,13 +904,13 @@ export function Globe({
         ctx.globalAlpha = dOp;
 
         ctx.beginPath();
-        path(drilled.feature._smoothed || drilled.feature);
+        path(renderGeometry(drilled.feature));
         ctx.fillStyle = `rgba(${R},${G},${B},0.04)`;
         ctx.fill();
 
         ctx.beginPath();
-        path(drilled.feature._smoothed || drilled.feature);
-        ctx.strokeStyle = `rgba(${P.limeFg},0.30)`;
+        path(renderGeometry(drilled.feature));
+        ctx.strokeStyle = `rgba(${P.accentRgb},0.30)`;
         ctx.lineWidth = 1.2;
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
@@ -821,7 +921,12 @@ export function Globe({
 
       // City markers + zoomed-out museum preview
       const sel = selectedRef.current;
-      const visibleCities = getVisibleCities(countryClusterMode, activeContinent, drilled);
+      const viewCenter = viewCenterFromRot(rot);
+      // Proximity fade: 1 at the view centre → 0 past the outer radius. Off when
+      // not in cluster mode or while drilled into a single country.
+      const viewFade = (coords: [number, number]) =>
+        (!countryClusterMode || drilled) ? 1 : viewProximityAlpha(coords, viewCenter);
+      const visibleCities = getVisibleCities(countryClusterMode, viewCenter, drilled);
 
       const continentTotals = new Map<string, number>();
       const continentArtworks = new Map<string, number>();
@@ -834,7 +939,7 @@ export function Globe({
           if (!countryClusterMode) {
             continentTotals.set(continent, (continentTotals.get(continent) || 0) + c.venues.length);
             continentArtworks.set(continent, (continentArtworks.get(continent) || 0) + (c.artworkCount || 0));
-          } else if (activeContinent === continent) {
+          } else {
             countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + c.venues.length);
             countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
           }
@@ -842,7 +947,12 @@ export function Globe({
       }
 
       // Total country numbers
-      if (!drilled && dOp < 0.5 && countriesRef.current) {
+      if (
+        !drilled
+        && dOp < 0.5
+        && countriesRef.current
+        && !(collyProfile && countryClusterMode)
+      ) {
         ctx.save();
         ctx.globalAlpha = (1 - dOp * 2) * 0.65;
 
@@ -867,22 +977,26 @@ export function Globe({
                 op = lerp(op, isHovered ? 1 : 0, 0.15);
                 currentOpRef.set(name, op);
 
-                const fontSize = name === "Asia" ? 12 : 10;
                 const continentLabel = localizeContinentName(name, languageRef.current);
-                ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
-                ctx.fillStyle = `rgba(${R},${G},${B},0.85)`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(languageRef.current === "ko" ? continentLabel : continentLabel.toUpperCase(), p[0], p[1] - (op * 4));
-
-                ctx.font = `400 ${fontSize - 2}px "Space Grotesk", sans-serif`;
-                ctx.fillStyle = `rgba(${R},${G},${B},${0.45 + op * 0.25})`;
-                ctx.fillText(`${total}`, p[0], p[1] + 12 + (op * 2));
+                drawContinentLabel({
+                  ctx,
+                  x: p[0],
+                  y: p[1],
+                  continentKey: name,
+                  label: continentLabel,
+                  total,
+                  language: languageRef.current,
+                  hoverProgress: op,
+                  palette: P,
+                  profile: renderProfile,
+                  collyProfile,
+                  density,
+                });
             });
         } else if (activeContinent) {
             const hovCountry = hoveredCountryRef.current;
             const hovId = hovCountry ? String(hovCountry.id) : null;
-            const showDenseNames = currentScaleRef.current >= COUNTRY_LABEL_ALL_ZOOM;
+            const showDenseNames = currentScaleRef.current >= countryLabelRevealZoom(renderProfile);
             const countryLabelBoxes: { x1: number; y1: number; x2: number; y2: number }[] = [];
             const labelOpRef = countryLabelOpacitiesRef.current;
 
@@ -890,38 +1004,51 @@ export function Globe({
               const id = String(c.id);
               const name = COUNTRY_NAMES[id];
               if (!name) return;
-              if (CONTINENT_MAP[name] !== activeContinent) return;
               const total = countryTotals.get(name);
               if (!total) return;
 
               const mainlandC = getMainlandFeature(c);
               if (!mainlandC) return;
               const centroid = d3.geoCentroid(mainlandC);
-              
-              const dist = d3.geoDistance(centroid, [-rot[0], -rot[1]]);
+
+              const isHovered = (id === hovId);
+              const vf = viewFade(centroid);
+              if (!isHovered && vf <= 0) return;
+              const dist = d3.geoDistance(centroid, viewCenter);
               if (dist > Math.PI / 2) return;
               const p = projection(centroid);
               if (!p) return;
 
-              const isHovered = (id === hovId);
-              const targetNameOp = isHovered ? 1 : (showDenseNames ? 0.9 : 0);
+              const qualifiesForDenseLabel = true;
+              const targetNameOp = isHovered
+                ? 1
+                : (showDenseNames && qualifiesForDenseLabel ? 0.9 : 0);
               let nameOp = labelOpRef.get(id) || 0;
               nameOp = lerp(nameOp, targetNameOp, 0.18);
               labelOpRef.set(id, nameOp);
 
-              // Number is always visible.
-              ctx.font = `500 11px "Space Grotesk", sans-serif`;
-              const numberAlpha = isHovered ? (0.75 + nameOp * 0.2) : (0.54 + nameOp * 0.18);
-              ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},${numberAlpha})` : `rgba(${R},${G},${B},${numberAlpha})`;
+              // Number is always visible (fades with proximity when not hovered).
+              const countryNumberSize = renderProfile.labelMode === "accessible" ? 12 : 11;
+              ctx.font = `500 ${countryNumberSize}px ${P.labelFont}`;
+              const numberAlpha = isHovered ? (0.75 + nameOp * 0.2) : (0.54 + nameOp * 0.18) * vf;
+              ctx.fillStyle = isHovered ? `rgba(${P.accentRgb},${numberAlpha})` : `rgba(${R},${G},${B},${numberAlpha})`;
               ctx.textAlign = "center";
               ctx.textBaseline = "middle";
               ctx.fillText(`${total}`, p[0], p[1] + 8);
 
-              let shouldShowName = isHovered || showDenseNames || nameOp > 0.03;
+              let shouldShowName = isHovered
+                || (showDenseNames && qualifiesForDenseLabel)
+                || nameOp > 0.03;
               if (shouldShowName) {
                 const localizedCountry = localizeCountryName(name, languageRef.current);
-                const label = languageRef.current === "ko" ? localizedCountry : localizedCountry.toUpperCase();
-                ctx.font = `600 12px "Space Grotesk", sans-serif`;
+                const sentenceCase = renderProfile.labelMode === "editorial"
+                  || renderProfile.labelMode === "minimal"
+                  || renderProfile.labelMode === "accessible";
+                const label = languageRef.current === "ko" || sentenceCase
+                  ? localizedCountry
+                  : localizedCountry.toUpperCase();
+                const countryLabelSize = renderProfile.labelMode === "accessible" ? 14 : 12;
+                ctx.font = `600 ${countryLabelSize}px ${P.labelFont}`;
                 const tw = ctx.measureText(label).width;
                 const box = { x1: p[0] - tw / 2 - 2, y1: p[1] - 14, x2: p[0] + tw / 2 + 2, y2: p[1] - 2 };
 
@@ -934,13 +1061,41 @@ export function Globe({
 
                 if (shouldShowName) {
                   if (!isHovered) countryLabelBoxes.push(box);
-                  const labelAlpha = isHovered ? Math.max(0.75, nameOp) : (0.82 * nameOp);
-                  ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},${labelAlpha})` : `rgba(${R},${G},${B},${labelAlpha})`;
+                  const labelAlpha = isHovered ? Math.max(0.75, nameOp) : (0.82 * nameOp) * vf;
+                  if (renderProfile.labelMode === "accessible") {
+                    ctx.lineWidth = 4;
+                    ctx.strokeStyle = "rgba(220,235,242,0.96)";
+                    ctx.strokeText(label, p[0], p[1] - 4 - (1 - nameOp) * 2);
+                  } else if (renderProfile.labelMode === "minimal") {
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = "rgba(6,7,13,0.82)";
+                    ctx.strokeText(label, p[0], p[1] - 4 - (1 - nameOp) * 2);
+                  }
+                  ctx.fillStyle = isHovered ? `rgba(${P.accentRgb},${labelAlpha})` : `rgba(${R},${G},${B},${labelAlpha})`;
                   ctx.textAlign = "center";
                   ctx.textBaseline = "middle";
                   ctx.fillText(label, p[0], p[1] - 4 - (1 - nameOp) * 2);
                 }
               }
+            });
+
+            // City-states (Hong Kong, Singapore) have no topojson country
+            // geometry, so the loop above can't place their number — draw it at
+            // the marker coordinate instead (same proximity fade as countries).
+            citiesRef.current.forEach((m) => {
+              if (m.detail) return;
+              const total = countryTotals.get(m.country);
+              if (!total) return;
+              const vf = viewFade(m.coordinates);
+              if (vf <= 0) return;
+              if (d3.geoDistance(m.coordinates, viewCenter) > Math.PI / 2) return;
+              const p = projection(m.coordinates);
+              if (!p) return;
+              ctx.font = `500 11px ${P.labelFont}`;
+              ctx.fillStyle = `rgba(${R},${G},${B},${0.54 * vf})`;
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+              ctx.fillText(`${total}`, p[0], p[1] + 10);
             });
         }
         ctx.restore();
@@ -954,24 +1109,41 @@ export function Globe({
       // The cinematic intro hides all pins until its particles land on them.
       const introHidesPins = typeof window !== "undefined" && (window as any).__arminHidePins;
 
-      if (museumPreviewOpacity > 0.01 && !introHidesPins) {
+      const drawProductionPreviewMarkers = !collyProfile
+        || !techniqueLabelsActive
+        || shouldDrawProductionPreviewMarkers(collyProfile.technique, {
+          drilled: Boolean(drilled),
+          derivedDataAvailable: techniqueMuseums.length > 0 && techniqueOverlayDrawn,
+        });
+      if (museumPreviewOpacity > 0.01 && !introHidesPins && drawProductionPreviewMarkers) {
         museumPointsRef.current.forEach((m) => {
-          if (countryClusterMode && activeContinent && CONTINENT_MAP[m.country] !== activeContinent) return;
+          const fade = viewFade(m.coordinates);
+          if (fade <= 0) return;
           const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
           if (dist > Math.PI / 2) return;
           const p = projection(m.coordinates);
           if (!p) return;
 
-          const r = m.isMajor ? 1.25 : 0.95;
-          const alpha = (m.isMajor ? 0.34 : 0.24) * museumPreviewOpacity;
-          const fill = m.isMajor
-            ? `rgba(${P.limeFg},${alpha})`
-            : `rgba(${R},${G},${B},${alpha})`;
-
-          ctx.beginPath();
-          ctx.arc(p[0], p[1], r, 0, Math.PI * 2);
-          ctx.fillStyle = fill;
-          ctx.fill();
+          const emphasis = resolveCollyMuseumEmphasis(
+            activeCollyVariant,
+            m.artworkCount,
+            m.isMajor,
+          );
+          const alpha = (m.isMajor ? 0.34 : 0.24)
+            * museumPreviewOpacity
+            * fade
+            * (collyProfile ? emphasis.alphaScale : 1);
+          drawMuseumPreviewMarker({
+            ctx,
+            x: p[0],
+            y: p[1],
+            isMajor: m.isMajor || (collyProfile !== null && emphasis.level === "primary"),
+            alpha,
+            palette: P,
+            profile: renderProfile,
+            sizeScale: collyProfile ? emphasis.sizeScale : 1,
+            pulse: false,
+          });
         });
       }
 
@@ -998,47 +1170,35 @@ export function Globe({
           const isActive = m === sel || m === hov;
           const isInDrilledCountry = drilled && m.country === drilled.name;
           const dimFactor = drilled && !isInDrilledCountry ? 0.12 : 1;
+          const fade = isActive ? 1 : viewFade(m.coordinates);
           const venueCount = m.venues.length;
 
           ctx.save();
-          ctx.globalAlpha = dimFactor;
-
-          const drawBevelRect = (cx: number, cy: number, half: number, bev: number) => {
-            ctx.beginPath();
-            ctx.moveTo(cx - half + bev, cy - half);
-            ctx.lineTo(cx + half - bev, cy - half);
-            ctx.lineTo(cx + half, cy - half + bev);
-            ctx.lineTo(cx + half, cy + half - bev);
-            ctx.lineTo(cx + half - bev, cy + half);
-            ctx.lineTo(cx - half + bev, cy + half);
-            ctx.lineTo(cx - half, cy + half - bev);
-            ctx.lineTo(cx - half, cy - half + bev);
-            ctx.closePath();
-          };
+          ctx.globalAlpha = dimFactor * fade;
 
           if (isActive) {
-            drawBevelRect(p[0], p[1], 8, 2);
-            ctx.strokeStyle = P.lime;
+            drawMarkerShape(p[0], p[1], 8, 2);
+            ctx.strokeStyle = P.accent;
             ctx.lineWidth = 0.8;
             ctx.stroke();
-            drawBevelRect(p[0], p[1], 2.5, 0.8);
-            ctx.fillStyle = P.lime;
+            drawMarkerShape(p[0], p[1], 2.5, 0.8);
+            ctx.fillStyle = P.accent;
             ctx.fill();
           } else if (venueCount >= 10) {
-            drawBevelRect(p[0], p[1], 4.5, 1);
-            ctx.fillStyle = P.lime;
+            drawMarkerShape(p[0], p[1], 4.5, 1);
+            ctx.fillStyle = P.accent;
             ctx.globalAlpha *= 0.85;
             ctx.fill();
           } else if (venueCount >= 3) {
-            drawBevelRect(p[0], p[1], 3.8, 0.8);
-            ctx.fillStyle = `rgba(${P.limeFg},0.35)`;
+            drawMarkerShape(p[0], p[1], 3.8, 0.8);
+            ctx.fillStyle = `rgba(${P.majorMarker},0.35)`;
             ctx.fill();
-            ctx.strokeStyle = `rgba(${P.limeFg},0.25)`;
+            ctx.strokeStyle = `rgba(${P.majorMarker},0.25)`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           } else {
-            drawBevelRect(p[0], p[1], venueCount > 1 ? 3.5 : 2.2, 0.6);
-            ctx.fillStyle = `rgba(${R},${G},${B},0.40)`;
+            drawMarkerShape(p[0], p[1], venueCount > 1 ? 3.5 : 2.2, 0.6);
+            ctx.fillStyle = `rgba(${P.minorMarker},0.40)`;
             ctx.fill();
           }
 
@@ -1046,7 +1206,7 @@ export function Globe({
             const labelAlpha = isActive ? dOp * 0.75 : dOp * 0.45;
             ctx.globalAlpha = labelAlpha;
             ctx.fillStyle = `rgba(${R},${G},${B},0.9)`;
-            ctx.font = '9px "Space Grotesk", sans-serif';
+            ctx.font = `9px ${P.labelFont}`;
             ctx.textAlign = "left";
             ctx.textBaseline = "middle";
 
@@ -1097,7 +1257,7 @@ export function Globe({
 
               if (venueCount > 1) {
                 ctx.globalAlpha = labelAlpha * 0.45;
-                ctx.fillStyle = P.lime;
+                ctx.fillStyle = P.accent;
                 ctx.font = '8px "Space Mono", monospace';
                 ctx.fillText(`${venueCount}`, finalPos.cx + tw + 5, finalPos.cy + 1);
               }
@@ -1108,16 +1268,7 @@ export function Globe({
         });
       }
 
-      // Crosshair
-      const cx = w / 2, cy = h / 2;
-      ctx.strokeStyle = P.crosshair;
-      ctx.lineWidth = 0.5;
-      ctx.beginPath();
-      ctx.moveTo(cx - 12, cy); ctx.lineTo(cx - 4, cy);
-      ctx.moveTo(cx + 4, cy); ctx.lineTo(cx + 12, cy);
-      ctx.moveTo(cx, cy - 12); ctx.lineTo(cx, cy - 4);
-      ctx.moveTo(cx, cy + 4); ctx.lineTo(cx, cy + 12);
-      ctx.stroke();
+      drawGlobeCrosshair(canvasStyleArgs);
 
       return { continentTotals, continentArtworks, countryTotals, countryArtworks };
     };
@@ -1155,7 +1306,8 @@ export function Globe({
       const activeContinent = getActiveContinentForView(rotationRef.current, countryClusterMode);
 
       // Keep parent continent state in sync with current viewport in zoomed country-cluster mode.
-      if (countryClusterMode && activeContinent && lastSyncedContinentRef.current !== activeContinent) {
+      if (!countryClusterMode) suppressContinentSyncRef.current = false;
+      if (countryClusterMode && !suppressContinentSyncRef.current && activeContinent && lastSyncedContinentRef.current !== activeContinent) {
         lastSyncedContinentRef.current = activeContinent;
         cbRefs.current.onDrillContinent?.(activeContinent);
       }
@@ -1177,7 +1329,7 @@ export function Globe({
            if (!countryClusterMode && continent && stats.continentTotals.has(continent)) {
              const arts = stats.continentArtworks.get(continent) || 0;
              hd = { level: 'CONTINENT', label: localizeContinentName(continent, languageRef.current), count: arts };
-           } else if (countryClusterMode && activeContinent === continent && stats.countryTotals.has(name)) {
+           } else if (countryClusterMode && stats.countryTotals.has(name)) {
              const arts = stats.countryArtworks.get(name) || 0;
              hd = { level: 'COUNTRY', label: localizeCountryName(name, languageRef.current), count: arts };
            }
@@ -1217,6 +1369,8 @@ export function Globe({
         Math.abs(targetScaleRef.current - currentScaleRef.current) > 0.001 ||
         Math.abs(drillOpacityRef.current - drillTarget) > 0.005 ||
         Math.abs(museumPreviewOpacityRef.current - previewTarget) > 0.005 ||
+        Math.abs(stageRef.current.shift - stageTargetRef.current.shift) > 0.0005 ||
+        Math.abs(stageRef.current.scale - stageTargetRef.current.scale) > 0.0005 ||
         hoveredCountryRef.current !== null ||
         hoveredRef.current !== null;
 
@@ -1285,6 +1439,7 @@ export function Globe({
         cbRefs.current.onSelectCity(null);
       }
       if (drilledContinentRef.current && targetScaleRef.current <= CONTINENT_EXIT_ZOOM) {
+        suppressContinentSyncRef.current = true;
         cbRefs.current.onDrillContinent?.(null);
       }
     };
@@ -1345,11 +1500,10 @@ export function Globe({
     const rot = rotationRef.current;
     const drilled = drilledRef.current;
     const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
-    const activeContinent = getActiveContinentForView(rot, countryClusterMode);
 
     hoveredRef.current = null;
-    if (countryClusterMode && activeContinent) {
-      const visibleCities = getVisibleCities(countryClusterMode, activeContinent, drilled);
+    if (countryClusterMode) {
+      const visibleCities = getVisibleCities(countryClusterMode, viewCenterFromRot(rot), drilled);
       for (const m of visibleCities) {
         const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
         if (dist > Math.PI / 2) continue;
@@ -1378,43 +1532,83 @@ export function Globe({
     wakeGlobeRef.current?.();
   }, []);
 
-  const handleClick = useCallback((e: React.MouseEvent) => {
-    wakeGlobeRef.current?.();
-    const stepZoomOut = () => {
-      const drilled = drilledRef.current;
-      if (drilled) {
-        const continent =
-          drilledContinentRef.current ||
-          getCountryContinentById(drilled.id) ||
-          null;
-        drilledRef.current = null;
-        cbRefs.current.onDrillDown(null);
-        cbRefs.current.onSelectCity(null);
+  const stepZoomOut = useCallback(() => {
+    const drilled = drilledRef.current;
+    if (drilled) {
+      const continent =
+        drilledContinentRef.current ||
+        getCountryContinentById(drilled.id) ||
+        null;
+      drilledRef.current = null;
+      cbRefs.current.onDrillDown(null);
+      cbRefs.current.onSelectCity(null);
 
-        if (continent) {
-          const centroid = CONTINENT_CENTERS[continent];
-          if (centroid) {
-            targetRotRef.current = [-centroid[0], -centroid[1], 0];
-          } else {
-            targetRotRef.current = null;
-          }
-          targetScaleRef.current = CONTINENT_FOCUS_ZOOM;
-          cbRefs.current.onDrillContinent?.(continent);
-        } else {
-          targetRotRef.current = null;
-          targetScaleRef.current = 1;
-          cbRefs.current.onDrillContinent?.(null);
-        }
-        return;
-      }
-
-      if (drilledContinentRef.current) {
-        cbRefs.current.onDrillContinent?.(null);
+      if (continent) {
+        const centroid = CONTINENT_CENTERS[continent];
+        targetRotRef.current = centroid ? [-centroid[0], -centroid[1], 0] : null;
+        targetScaleRef.current = CONTINENT_FOCUS_ZOOM;
+        cbRefs.current.onDrillContinent?.(continent);
+      } else {
         targetRotRef.current = null;
         targetScaleRef.current = 1;
-        cbRefs.current.onSelectCity(null);
+        cbRefs.current.onDrillContinent?.(null);
       }
-    };
+      return;
+    }
+
+    if (drilledContinentRef.current) {
+      suppressContinentSyncRef.current = true;
+      cbRefs.current.onDrillContinent?.(null);
+      targetRotRef.current = null;
+      targetScaleRef.current = 1;
+      cbRefs.current.onSelectCity(null);
+    }
+  }, []);
+
+  const handleKeyDown = useCallback((e: React.KeyboardEvent<HTMLCanvasElement>) => {
+    const rotationStep = 6;
+    let handled = true;
+    let clearTargetRotation = true;
+
+    switch (e.key) {
+      case "ArrowLeft":
+        rotationRef.current[0] -= rotationStep;
+        break;
+      case "ArrowRight":
+        rotationRef.current[0] += rotationStep;
+        break;
+      case "ArrowUp":
+        rotationRef.current[1] = Math.min(80, rotationRef.current[1] + rotationStep);
+        break;
+      case "ArrowDown":
+        rotationRef.current[1] = Math.max(-80, rotationRef.current[1] - rotationStep);
+        break;
+      case "+":
+      case "=":
+        targetScaleRef.current = Math.min(8, targetScaleRef.current + 0.4);
+        cbRefs.current.onZoomChange?.(targetScaleRef.current);
+        break;
+      case "-":
+        targetScaleRef.current = Math.max(1, targetScaleRef.current - 0.4);
+        cbRefs.current.onZoomChange?.(targetScaleRef.current);
+        break;
+      case "Escape":
+        stepZoomOut();
+        clearTargetRotation = false;
+        break;
+      default:
+        handled = false;
+    }
+
+    if (!handled) return;
+    e.preventDefault();
+    if (clearTargetRotation) targetRotRef.current = null;
+    velocityRef.current = [0, 0];
+    wakeGlobeRef.current?.();
+  }, [stepZoomOut]);
+
+  const handleClick = useCallback((e: React.MouseEvent) => {
+    wakeGlobeRef.current?.();
 
     // React onClick may expose MouseEvent even for touch taps; preserve pointerType from pointerdown/up.
     const nativeEvent = e.nativeEvent as any;
@@ -1437,8 +1631,7 @@ export function Globe({
     const findHitCity = (radius: number): CityMarker | null => {
       const rot = rotationRef.current;
       const countryClusterModeT = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
-      const activeContinentT = getActiveContinentForView(rot, countryClusterModeT);
-      const visibleCitiesT = getVisibleCities(countryClusterModeT, activeContinentT, drilledRef.current);
+      const visibleCitiesT = getVisibleCities(countryClusterModeT, viewCenterFromRot(rot), drilledRef.current);
       let found: CityMarker | null = null;
       let bestDist = Number.POSITIVE_INFINITY;
       for (const m of visibleCitiesT) {
@@ -1521,8 +1714,10 @@ export function Globe({
         return;
       }
 
-      // Country cluster mode: ignore country clicks outside the active continent.
-      if (countryClusterMode && activeContinent && continent !== activeContinent) {
+      // Country cluster mode: ignore clicks on countries far from the current view.
+      const mainland = getMainlandFeature(clickedCountry);
+      const centroid = d3.geoCentroid(mainland);
+      if (countryClusterMode && viewProximityAlpha(centroid, viewCenterFromRot(rotationRef.current)) <= 0) {
          return;
       }
 
@@ -1537,8 +1732,6 @@ export function Globe({
         return;
       }
 
-      const mainland = getMainlandFeature(clickedCountry);
-      const centroid = d3.geoCentroid(mainland);
       const zoom = calcCountryZoom(clickedCountry);
       drilledRef.current = { feature: clickedCountry, name, id };
       targetRotRef.current = [-centroid[0], -centroid[1], 0];
@@ -1549,18 +1742,44 @@ export function Globe({
     } else {
       stepZoomOut();
     }
-  }, [getActiveContinentForView, getVisibleCities]);
+  }, [getActiveContinentForView, getVisibleCities, stepZoomOut]);
 
   // ─── Render ───────────────────────────────────────
 
   const t = theme === "light";
+  const activeCollyVariant = visualPreset === "colly-evolved"
+    ? (collyVariant ?? "atlas-index")
+    : undefined;
+  const markupProfile = visualPreset
+    ? resolveGlobeRenderProfile(activeCollyVariant ? undefined : visualPreset)
+    : null;
+  const collyProfile = activeCollyVariant
+    ? resolveCollyGlobeVariantProfile(activeCollyVariant)
+    : null;
 
   return (
-    <div ref={containerRef} className="ig-globe-container">
+    <div
+      ref={containerRef}
+      className="ig-globe-container"
+      data-country-boundary-style={countryBoundaryStyle}
+      data-globe-visual-preset={visualPreset}
+      data-globe-render-style={markupProfile?.renderStyle}
+      data-globe-furniture={markupProfile?.furniture}
+      data-globe-atmosphere={markupProfile?.atmosphere}
+      data-globe-label-mode={markupProfile?.labelMode}
+      data-globe-preview-marker={markupProfile?.previewMarker}
+      data-colly-globe-variant={activeCollyVariant}
+      data-colly-map-technique={collyProfile?.technique}
+    >
       <canvas
         ref={canvasRef}
         className="ig-globe-canvas"
+        role={visualPreset ? "group" : undefined}
+        tabIndex={visualPreset ? 0 : undefined}
+        aria-label={visualPreset ? (language === "ko" ? "인터랙티브 미술관 지구본" : "Interactive museum globe") : undefined}
+        aria-keyshortcuts={visualPreset ? "ArrowLeft ArrowRight ArrowUp ArrowDown + - Escape" : undefined}
         style={{ cursor: "grab", touchAction: "none" }}
+        onKeyDown={visualPreset ? handleKeyDown : undefined}
         onPointerDown={(e) => {
           lastPointerTypeRef.current = e.pointerType || null;
           try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
@@ -1608,6 +1827,7 @@ export function Globe({
               cbRefs.current.onSelectCity(null);
             }
             if (drilledContinentRef.current && targetScaleRef.current <= CONTINENT_EXIT_ZOOM) {
+              suppressContinentSyncRef.current = true;
               cbRefs.current.onDrillContinent?.(null);
             }
             return;

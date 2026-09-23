@@ -5,6 +5,7 @@ import { useSearchParams, useNavigate, useLocation, useParams } from "react-rout
 // const D3GeoGlobeSimplified = React.lazy(() => import("../components/D3GeoGlobeSimplified"));
 import DrawingGlobe from "../components/DrawingGlobe";
 import MiniSpinningGlobe from "../components/MiniSpinningGlobe";
+import NearbyExhibitionsEntry, { parseNearbyFrame, parseSheetFrame } from "../components/NearbyExhibitionsEntry";
 
 import ExhibitionDetails from "../components/ExhibitionDetails";
 
@@ -29,6 +30,8 @@ import { FadeInImage } from "../components/ProgressiveImage";
 import { GlobalNav } from "../components/GlobalNav";
 import { useLanguage } from "../contexts/LanguageContext";
 import { localizeMuseum } from "../i18n/museumLocalization";
+import { resolveMobileChromeTweak } from "../components/mobileChromeTweaks";
+import { resolveGlobeGlassTweak } from "../components/InteractiveGlobeMap/globeGlassTweaks";
 
 
 // Admin email whitelist
@@ -114,6 +117,10 @@ const isTextOrDocument = (title: string): boolean => {
 export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePageProps) {
   const navigate = useNavigate();
   const location = useLocation();
+  const mobileChromeTweak = resolveMobileChromeTweak(new URLSearchParams(location.search).get("tweak"));
+  // halo-frost is the shipped default; the other glass variants stay
+  // reachable via ?glass=<id> for comparison but have no visible UI.
+  const globeGlassTweak = resolveGlobeGlassTweak(new URLSearchParams(location.search).get("glass")) ?? "halo-frost";
   const { collectionId } = useParams<{ collectionId?: string }>();
   const { language, t } = useLanguage();
   // Live total artwork count — read from the search manifest (`c`), which is regenerated whenever the
@@ -1451,6 +1458,32 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
             <React.Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', fontSize: 12, letterSpacing: '0.2em' }}>{t({ ko: '지도 로딩 중…', en: 'LOADING MAP…' })}</div>}>
             <InteractiveGlobeMap
               exhibitions={localizedExhibitions}
+              globeVisualPreset="colly-evolved"
+              collyVariant="atlas-index"
+              countryBoundaryStyle="atlas-index"
+              mapIntroduction={{
+                eyebrow: t({ ko: '지도 읽기 방식', en: 'Map reading method' }),
+                headline: t({ ko: '경계에서 지도를 탐구하세요.', en: 'Explore the map from its borders.' }),
+                summary: t({
+                  ko: '확대하면 미술관 수가 국가명 위에 자리 잡습니다. 국경을 따라 드래그하며 이웃 지역을 비교해 보세요.',
+                  en: 'Zoom until each museum count settles above its country. Drag across borders to compare neighboring regions.',
+                }),
+                instruction: t({ ko: '드래그하고 확대해 국가를 선택하세요', en: 'Drag, zoom, then select a country' }),
+              }}
+              detailIntroduction={{
+                eyebrow: t({ ko: '컬렉션 상세 탐색', en: 'Collection detail' }),
+                headline: t({ ko: '장소에서 작품으로 들어갑니다.', en: 'Move from place to collection.' }),
+                summary: t({
+                  ko: '선택한 미술관의 작품, 재료, 시대를 한 흐름으로 살펴보는 상세 화면입니다.',
+                  en: 'This view follows the selected museum through its works, materials, and periods.',
+                }),
+                instruction: t({
+                  ko: '아래로 이동해 작품을 열고 필터로 범위를 좁혀보세요.',
+                  en: 'Move down to open works and narrow the collection with filters.',
+                }),
+              }}
+              mobileChromeTweak={mobileChromeTweak}
+              glassTweak={globeGlassTweak}
               onSelectExhibition={(ex) => {
                 setSelectedExhibition(ex);
                 setShowInteractiveGlobe(false); // Exit globe to show details
@@ -1470,6 +1503,9 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               }}
             />
             </React.Suspense>
+            {/* Nearby exhibitions live here rather than inside Community: the map
+                is the landing screen and is already about places. */}
+            <NearbyExhibitionsEntry frame={parseNearbyFrame(location.search)} sheetFrame={parseSheetFrame(location.search)} />
           </div>
         )}
 

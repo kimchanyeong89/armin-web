@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { loadArtistBio } from "../utils/artistWorks";
 import { getDataFetchOptions } from "../utils/network";
 import "../styles/ArtistWikiPanel.css";
 
@@ -7,6 +8,12 @@ type ArtistWikiPanelProps = {
   fallbackDescription?: string;
   imageUrl?: string;
   headerSlot?: ReactNode;
+  /** the reader's language: a Korean reader is offered the Korean article first */
+  language?: "ko" | "en";
+  /** the artist's name as the reader's language writes it, for that article's title */
+  localizedName?: string;
+  /** the article this text came from, so the page's own link points at it */
+  onSourceUrl?: (url: string) => void;
 };
 
 const shouldSkipWikiFetchOnMobile = () => {
@@ -93,6 +100,9 @@ export default function ArtistWikiPanel({
   fallbackDescription,
   imageUrl,
   headerSlot,
+  language = "en",
+  localizedName,
+  onSourceUrl,
 }: ArtistWikiPanelProps) {
   const [wikiSummary, setWikiSummary] = useState<string>("");
   const [wikiSourceUrl, setWikiSourceUrl] = useState<string>("");
@@ -105,7 +115,7 @@ export default function ArtistWikiPanel({
   /* const [imageAscii, setImageAscii] = useState<string>(""); */
 
   const safeFallbackDescription =
-    fallbackDescription || "설명이 아직 준비되지 않았습니다. 곧 업데이트할게요.";
+    fallbackDescription || "";
 
   /* const faceAscii = useMemo(() => buildFaceAscii(asciiSeed), [asciiSeed]); */
 
@@ -117,15 +127,18 @@ export default function ArtistWikiPanel({
   }, [artistName]);
 
   useEffect(() => {
+    onSourceUrl?.(wikiSourceUrl);
+  }, [wikiSourceUrl, onSourceUrl]);
+
+  useEffect(() => {
     if (!artistName) {
       return undefined;
     }
 
     const controller = new AbortController();
-    const encodedName = encodeURIComponent(artistName);
     const normalizedName = artistName.trim().toLowerCase();
 
-    const cacheKey = `artist-wiki:${normalizedName}`;
+    const cacheKey = `artist-wiki:${language}:${normalizedName}`;
     const fromCache = () => {
       try {
         const raw = sessionStorage.getItem(cacheKey);
@@ -193,32 +206,77 @@ export default function ArtistWikiPanel({
       // alone returns 404 and the user sees the error banner. Falling
       // through ko → no → de → fr → it → es covers the most common cases
       // for European/Nordic/Asian artists in the dataset.
-      const langs = ["en", "ko", "no", "de", "fr", "it", "es", "ru"];
-      for (const lang of langs) {
-        if (controller.signal.aborted) return;
+      /** one article, if that edition has it under that title */
+      const summaryOf = async (lang: string, title: string) => {
+        if (!title || controller.signal.aborted) return null;
         try {
           const response = await fetch(
-            `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodedName}`,
-            { signal: controller.signal, mode: "cors", ...getDataFetchOptions() }
+            `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,
+            { signal: controller.signal, mode: "cors", ...getDataFetchOptions() },
           );
-
-          if (!response.ok) continue;
-
+          if (!response.ok) return null;
           const data = await response.json();
           // Disambiguation / "no such page" pages return 200 but with a
           // non-standard type. Skip those — they're not real artist pages.
-          if (data.type && data.type !== "standard") continue;
-          if (!data.extract || data.extract.trim().length < 30) continue;
-
-          setWikiSummary(data.extract);
-          setWikiSourceUrl(data.content_urls?.desktop?.page || "");
-          saveCache(data.extract, data.content_urls?.desktop?.page || "");
-          return true;
+          if (data.type && data.type !== "standard") return null;
+          if (!data.extract || data.extract.trim().length < 30) return null;
+          return {
+            extract: data.extract as string,
+            url: (data.content_urls?.desktop?.page as string) || "",
+            title: (data.titles?.canonical as string) || (data.title as string) || title,
+          };
         } catch (error) {
-          if (controller.signal.aborted) return;
-          // Try the next language
-          console.warn(`Wikipedia ${lang} fallback error`, error);
+          if (!controller.signal.aborted) console.warn(`Wikipedia ${lang} fetch failed`, error);
+          return null;
         }
+      };
+
+      /** what the English article is called in another language, when it is */
+      const titleIn = async (lang: string, enTitle: string) => {
+        try {
+          const response = await fetch(
+            `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=langlinks&lllang=${lang}&redirects=1&titles=${encodeURIComponent(enTitle)}`,
+            { signal: controller.signal, mode: "cors", ...getDataFetchOptions() },
+          );
+          if (!response.ok) return "";
+          const data = await response.json();
+          const pages = Object.values(data?.query?.pages || {}) as Array<{ langlinks?: Array<{ "*": string }> }>;
+          return pages[0]?.langlinks?.[0]?.["*"] || "";
+        } catch {
+          return "";
+        }
+      };
+
+      const rest = ["no", "de", "fr", "it", "es", "ru"];
+      let hit: Awaited<ReturnType<typeof summaryOf>> = null;
+
+      if (language === "ko") {
+        /* the Korean article, by the Korean name and by the catalogue's */
+        hit = await summaryOf("ko", localizedName && localizedName !== artistName ? localizedName : "")
+          || await summaryOf("ko", artistName);
+        if (!hit) {
+          /* Korean spells a name its own way ("카임 수틴" for Chaïm Soutine), so
+             the English article is asked what its Korean counterpart is called */
+          const english = await summaryOf("en", artistName);
+          if (english) {
+            const koTitle = await titleIn("ko", english.title);
+            hit = (koTitle ? await summaryOf("ko", koTitle) : null) || english;
+          }
+        }
+      } else {
+        hit = await summaryOf("en", artistName) || await summaryOf("ko", artistName);
+      }
+      for (const lang of rest) {
+        if (hit || controller.signal.aborted) break;
+        hit = await summaryOf(lang, artistName);
+      }
+
+      if (controller.signal.aborted) return;
+      if (hit) {
+        setWikiSummary(hit.extract);
+        setWikiSourceUrl(hit.url);
+        saveCache(hit.extract, hit.url);
+        return true;
       }
 
       // All language editions exhausted — show the fallback description
@@ -233,6 +291,19 @@ export default function ArtistWikiPanel({
     };
 
     const run = async () => {
+      /* a Korean reader gets the description built for them ahead of time — the
+         Korean article's text, or the English one put into Korean — at once */
+      if (language === "ko") {
+        const bio = await loadArtistBio(artistName);
+        if (controller.signal.aborted) return;
+        if (bio) {
+          setWikiSummary(bio.t);
+          setWikiSourceUrl(bio.s);
+          setWikiError("");
+          setWikiLoading(false);
+          return;
+        }
+      }
       // Always fetch Wikipedia — skip Gemini API only (requires server env var)
       const geminiOk = shouldUseGeminiWikiApi() ? await fetchGeminiWiki() : false;
       if (!geminiOk && !controller.signal.aborted) {
@@ -341,9 +412,8 @@ export default function ArtistWikiPanel({
   return (
     <>
       {headerSlot && <div className="infinite-wiki__header-slot">{headerSlot}</div>}
-      {wikiLoading && !wikiSummary ? (
-        <p className="artist-bio__loading">Loading biography…</p>
-      ) : (
+      {/* 설명을 기다리는 동안이나 설명이 없을 때는 비워 둔다 — 준비중 문구를 쓰지 않는다 */}
+      {!(wikiLoading && !wikiSummary) && (wikiSummary || safeFallbackDescription) && (
         <p className="artist-bio__text">
           {wikiSummary || safeFallbackDescription}
         </p>

@@ -15,6 +15,7 @@ import {
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
 import SaveCurationButton from "./SaveCurationButton";
+import RatingEmblems from "./Ratings/RatingEmblems";
 import { museumDisplayName } from "../lib/museum-names";
 import { useSubscription } from "../hooks/useSubscription";
 import {
@@ -29,6 +30,10 @@ import {
   findExhibitionByCollectionSlug,
   type ExhibitionLookupResult,
 } from "../lib/find-exhibition";
+
+// 주간 큐레이션은 전부 무료다. 유료 구독은 쓰지 않기로 했으니 잠금을 끈다.
+// 나중에 유료화한다면 이 값 하나만 true 로 되돌리면 된다.
+const PAYWALL_ENABLED = false;
 
 // Lazy so the curation tab doesn't drag in the full modal bundle unless a
 // user actually clicks a museum link.
@@ -1887,7 +1892,7 @@ function ArchiveGrid({
     }}>
       {entries.map((entry, i) => {
         // Subscribers see everything; otherwise the position-based rule applies.
-        const locked = !isSubscriber && i >= UNLOCKED_COUNT;
+        const locked = PAYWALL_ENABLED && !isSubscriber && i >= UNLOCKED_COUNT;
         const weekLabel = entry.week.replace('-W', ' · WEEK ');
         const worksCount = entry.works_count;
         return (
@@ -1949,9 +1954,6 @@ function SpecialGrid({
     );
   }
 
-  // Special-exhibition paywall is temporarily disabled per request — every
-  // special is free. Flip PAYWALL_ENABLED back to true to re-apply the gate.
-  const PAYWALL_ENABLED = false;
   const UNLOCKED_COUNT = 1;
 
   return (
@@ -2404,6 +2406,25 @@ export default function WeeklyCurationTab({
 
   const tokens = { t, fg, fgMed, fgLow, fgFaint, divider };
 
+  // Everyone's rating of this curation, under the top save button: the same
+  // emblems My Page shows on the saved card.
+  const curationRating = editionFile ? (
+    <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 clamp(20px,4vw,56px) 24px', display: 'flex', alignItems: 'center', gap: 14 }}>
+      <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: fgLow, flexShrink: 0 }}>
+        {langKo ? '평점' : 'Rating'}
+      </span>
+      <RatingEmblems
+        subject={{ kind: 'curation', id: editionFile.id }}
+        title={(langKo ? editionFile.title_ko : editionFile.title_en) || editionFile.title_en || editionFile.title_ko}
+        subtitle={(editionFile as unknown as { slug?: string }).slug
+          ? (langKo ? '스페셜 큐레이션' : 'Special curation')
+          : (langKo ? '주간 큐레이션' : 'Weekly curation')}
+        size={14}
+        color={fgMed}
+      />
+    </div>
+  ) : null;
+
   // When chromeless (standalone preview from /admin/weekly/preview), the
   // This Week / Archive / Special strip is suppressed — the page caller
   // already has its own header chrome (back button etc.).
@@ -2550,6 +2571,7 @@ export default function WeeklyCurationTab({
         {editionFile && (
           <SaveCurationButton file={editionFile} langKo={langKo} />
         )}
+        {curationRating}
 
         <MobileHeroWork
           work={edition.works[0]}
@@ -2643,6 +2665,7 @@ export default function WeeklyCurationTab({
       {editionFile && (
         <SaveCurationButton file={editionFile} langKo={langKo} />
       )}
+      {curationRating}
 
       <HeroWork
         work={edition.works[0]}

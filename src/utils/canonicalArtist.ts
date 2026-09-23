@@ -180,31 +180,4 @@ export const getCanonicalName = (name: string | undefined | null): string => {
  * Shared single source of truth for display formatting — used by the search bar
  * and by getArtistDisplayName (modal / venue panel / anywhere artist is shown).
  */
-export const prettifyArtistName = (raw?: string): string => {
-    let name = String(raw || '').replace(/\s+/g, ' ').trim();
-    if (!name) return name;
-    // strip bio-year parens ("(1900-1989)", "(French, 1887-1985)") — display noise, not a qualifier
-    name = name.replace(/\s*\([^)]*\d{4}[^)]*\)/g, '').replace(/\s+/g, ' ').trim();
-    if (!name) return name;
-    // "Surname, Given" → "Given Surname". Skip multi-artist ("A & B" / "A and B")
-    // and anonymous/role designations whose comma is NOT a name inversion
-    // ("Anonymous Italian, Florentine", "Unknown Painter, mid-18th century").
-    const isAnonRole = /\b(anonymous|unknown|unidentified|attributed|circle|school|workshop|studio|follower|manner|various|after)\b/i.test(name);
-    if (name.includes(',') && !/\b(and|&)\b/i.test(name) && !isAnonRole) {
-        const parts = name.split(',').map((p) => p.trim()).filter(Boolean);
-        if (parts.length === 2) name = `${parts[1]} ${parts[0]}`;
-    }
-    const words = name.split(' ');
-    const isShouty = (w: string) => w.length >= 2 && /[A-Z]/.test(w) && w === w.toUpperCase();
-    if (!words.some(isShouty)) return name;
-    const titleCase = (w: string) =>
-        w.replace(/[^\s'-]+/g, (p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase());
-    // "SURNAME Given" — a leading run of shouted words then a normal one.
-    if (words.length >= 2 && isShouty(words[0]) && !words.every(isShouty)) {
-        let i = 0;
-        while (i < words.length && isShouty(words[i])) i += 1;
-        return [...words.slice(i), ...words.slice(0, i)].map(titleCase).join(' ');
-    }
-    // Fully shouted — Title Case in place (word order is unknowable).
-    return words.map((w) => (isShouty(w) ? titleCase(w) : w)).join(' ');
-};
+export { prettifyArtistName } from './artistKey.js';

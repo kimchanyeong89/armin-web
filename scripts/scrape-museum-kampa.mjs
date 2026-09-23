@@ -25,7 +25,9 @@
 //                 values (Neznámý / Neznámý autor / Anonym…) are treated as MISSING (never kept).
 //   year        = a 4-digit year from `datingNote` (e.g. "1968"); else `datingFrom` when it equals
 //                 `datingTo` (a single year) or a tight ≤3-yr span. A century span (1901–2000) is
-//                 NOT a real creation year → year=null (record then fails min-4 and is dropped).
+//                 NOT a real creation year → year=null. year is OPTIONAL (NOT a drop reason): an
+//                 in-scope flat work by a named artist with an image is kept even when undated /
+//                 dated only "20. století"; `date` then carries the century label via buildDateStr.
 //   category    = classify(`description`,`materialDetails`) → painting|drawing|print|photograph|
 //                 mixed_media_2d. `subjectType` is the broad department label ("Malířství, kresba
 //                 a grafika") for EVERY record, so it is useless for fine scope — we drive scope
@@ -296,9 +298,13 @@ async function processImage(a) {
   return { imageUrl: `${R2_PUBLIC}/${key}`, srcW: meta.width || null, srcH: meta.height || null, bytes: buffer.length };
 }
 
-// ---------- record assembly (min-4 guard) ----------
+// ---------- record assembly (min-fields guard) ----------
+// REQUIRE: title ∧ artist ∧ category ∧ image. `year` is OPTIONAL — eSbirky dates many works only
+// at century granularity ("20. století" / "nedatováno"), and a missing specific year is NOT grounds
+// to exclude an in-scope flat work by a named artist. `date` falls back to the century label
+// (buildDateStr) so the record still carries dating context; `year` may be null.
 function toArtwork(a, imageUrl) {
-  if (!a.title || !a.artist || a.year == null || !a.category) return null; // min-4 → drop
+  if (!a.title || !a.artist || !a.category) return null; // min-fields → drop
   return {
     id: a.id,
     objectNumber: a.inventoryNumber,
@@ -381,31 +387,31 @@ async function main() {
 
   // classification tally
   const tally = {};
-  let inScope = 0, outScope = 0, noImg = 0, dropMin4 = 0, noArtist = 0, noYear = 0;
+  let inScope = 0, outScope = 0, noImg = 0, dropMin = 0, noArtist = 0, noYear = 0;
   for (const p of parsed) {
     if (p.category) { inScope++; tally[p.category] = (tally[p.category] || 0) + 1; if (!p.imgUrl) noImg++; }
     else outScope++;
     if (!p.artist) noArtist++;
     if (p.year == null) noYear++;
-    if (p.category && (!p.title || !p.artist || p.year == null)) dropMin4++;
+    if (p.category && (!p.title || !p.artist)) dropMin++; // year NOT required
   }
   console.log('\n[classify] parsed:', parsed.length, '| in-scope:', inScope, '| out-of-scope:', outScope, '| in-scope missing image:', noImg);
   console.log('[classify] breakdown:', tally);
-  console.log(`[classify] missing artist: ${noArtist} | missing year: ${noYear} | in-scope that DROP on min-4: ${dropMin4}`);
-  console.log(`[classify] → would KEEP (in-scope ∧ min-4 ∧ image): ${parsed.filter((p) => p.category && p.imgUrl && p.title && p.artist && p.year != null).length}`);
+  console.log(`[classify] missing artist: ${noArtist} | missing year (kept anyway): ${noYear} | in-scope that DROP on min-fields: ${dropMin}`);
+  console.log(`[classify] → would KEEP (in-scope ∧ title ∧ artist ∧ image; year optional): ${parsed.filter((p) => p.category && p.imgUrl && p.title && p.artist).length}`);
 
   if (MODE === 'classify') {
     const ex = parsed.filter((p) => !p.category).slice(0, 20);
     console.log('\n[classify] sample EXCLUDED/unknown (medium | title):');
     for (const p of ex) console.log('   -', JSON.stringify((p.medium || '').slice(0, 40)), '|', (p.title || '').slice(0, 40));
-    const keep = parsed.filter((p) => p.category && p.imgUrl && p.title && p.artist && p.year != null).slice(0, 12);
+    const keep = parsed.filter((p) => p.category && p.imgUrl && p.title && p.artist).slice(0, 12);
     console.log('\n[classify] sample KEEP (cat | year | artist | title):');
     for (const p of keep) console.log(`   - ${p.category} | ${p.year} | ${p.artist} | ${p.title.slice(0, 36)}`);
     return;
   }
 
-  // in-scope, with image, passing min-4 → candidates
-  let candidates = parsed.filter((p) => p.category && p.imgUrl && p.title && p.artist && p.year != null);
+  // in-scope, with image, passing min-fields (year optional) → candidates
+  let candidates = parsed.filter((p) => p.category && p.imgUrl && p.title && p.artist);
   if (MODE === 'pilot') candidates = candidates.slice(0, PILOT_TARGET);
   console.log(`\n[${MODE}] image-processing ${candidates.length} candidates (upload=${DO_UPLOAD}) …`);
 
@@ -419,7 +425,7 @@ async function main() {
       try {
         const { imageUrl } = await processImage(a);
         const w = toArtwork(a, imageUrl);
-        if (w) artworks.push(w); else dropMin4++;
+        if (w) artworks.push(w); else dropMin++;
       } catch (e) {
         imgErr++;
         fs.appendFileSync(path.join(STATE_DIR, `${SLUG}-failed.ndjson`), JSON.stringify({ id: a.id, url: a.imgUrl, err: String(e.message || e) }) + '\n');
@@ -432,7 +438,7 @@ async function main() {
   artworks.sort((x, y) => Number(x.id) - Number(y.id));
   const stem = MODE === 'pilot' ? `${COLLECTION_STEM}-pilot` : COLLECTION_STEM;
   writeCollection(artworks, stem);
-  console.log(`\n[${MODE}] DONE. collected ${artworks.length} | img errors ${imgErr} | min4-drops ${dropMin4}`);
+  console.log(`\n[${MODE}] DONE. collected ${artworks.length} | img errors ${imgErr} | min-field drops ${dropMin}`);
   console.log(`[${MODE}] total in-scope offered = ${inScope}`);
 }
 

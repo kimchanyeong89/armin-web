@@ -28,8 +28,9 @@ function getInitialLanguage(): AppLanguage {
     // ignore storage access errors
   }
 
-  const browserLanguage = (window.navigator.language || "").toLowerCase();
-  return browserLanguage.startsWith("ko") ? "ko" : "en";
+  // COLLY is a Korean-first product: default to Korean and let the toggle
+  // (which is what gets stored above) be the only way into English.
+  return "ko";
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

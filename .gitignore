@@ -151,3 +151,6 @@ workers/semantic-search/d1-seed.sql
 workers/semantic-search/d1-sync.sql
 workers/semantic-search/d1-snapshot.json
 workers/semantic-search/.local-search.sqlite*
+
+# build scripts keep resumable progress here
+.cache/

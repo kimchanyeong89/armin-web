@@ -1,0 +1,88 @@
+/* ══════════════════════════════════════════════════════════════
+   Artwork detail — shared by the standalone study and the artist page.
+   Style: the map tab's. Revised from review: the type was set far too
+   large for a panel that also has to carry two recommendation rails.
+   ══════════════════════════════════════════════════════════════ */
+/* One centred column, as the live lightbox reads: the work, then the
+   record under it, then the two rails. */
+.wd { display: grid; gap: clamp(14px,2vw,20px); justify-items: center; }
+.wd-plate { position: relative; background: none; display: grid; place-items: center; max-width: 100%; }
+.wd-plate img { max-width: 100%; max-height: 56vh; width: auto; height: auto; display: block; }
+/* no frame: the mark and the word, which turn gold under the pointer */
+.wd-page .wd-close {
+  position: absolute; top: 10px; right: 10px; z-index: 3;
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 2px;
+  border: 0; background: none; color: var(--ink-2);
+  font-family: var(--num); font-size: 9px; font-weight: 650; letter-spacing: .1em;
+  transition: color .16s ease; }
+.wd-close span { font-size: 15px; line-height: 1; }
+.wd-page .wd-close:hover { color: var(--acc); }
+.wd-body { width: 100%; min-width: 0; display: grid; gap: clamp(16px,2.2vw,24px); align-content: start; }
+
+/* the record — 20px title, 12px fields */
+.wd-record { text-align: center; }
+.wd-record h2 { margin: 0; font-family: var(--display); font-size: clamp(1rem,1.35vw,1.18rem);
+  font-weight: 700; line-height: 1.24; letter-spacing: -0.03em; }
+/* Title, artist, a date and a kind, then where it hangs — each on its own
+   line and with no field names, since each says what it is. The museum's
+   own page for the work sits at the end of the museum's line. (.wd-record
+   raises these over the artist page's own `p { margin: 0 }`.) */
+.wd-record .wd-alt { margin-top: .35rem; color: var(--ink-3); font-size: 11.5px; font-style: italic; }
+.wd-record .wd-by { margin-top: 7px; font-size: 13.5px; }
+.wd-record .wd-meta { margin-top: 12px; font-family: var(--num); font-size: 10.5px; letter-spacing: .06em; color: var(--ink-3); }
+.wd-record .wd-held { margin-top: 6px; display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline;
+  gap: 4px 8px; font-size: 12px; color: var(--ink-2); }
+.wd-where { font-size: 11px; color: var(--ink-3); }
+.wd-held .wd-source { display: inline-flex; align-items: center; gap: 3px; margin-left: 4px; padding-left: 12px;
+  border-left: 1px solid var(--hair); font-size: 11px; }
+
+/* White text with its own underline — an ordinary hyperlink. Gold read as
+   a highlight, not as something to click. Gold is kept for the hover. */
+.wd-page .wd-link {
+  color: var(--ink); text-decoration: underline; text-decoration-color: rgba(244,241,234,.45);
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+  transition: color .16s ease, text-decoration-color .16s ease; }
+.wd-page .wd-link:hover { color: var(--acc); text-decoration-color: var(--acc); }
+
+/* The app's own marks — lucide BookmarkPlus and Heart — with no chip behind
+   them and sitting close together. A drop shadow keeps them legible over a
+   light painting. */
+.wd-acts { position: absolute; right: 8px; bottom: 8px; z-index: 2; display: flex; align-items: center; gap: 2px; }
+.wd-page .wd-acts button {
+  width: 24px; height: 24px; display: grid; place-items: center; color: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.9)); transition: color .16s ease; }
+.wd-page .wd-acts button:hover { color: var(--acc); }
+.wd-page .wd-acts button.is-on { color: var(--acc); }
+
+
+/* The rails the live lightbox shows. Cards rather than thumbnails: at 74px
+   a recommendation cannot be judged, which is the whole point of the rail.
+   min-width:0 or the scrolling row stretches its grid track instead of
+   scrolling inside it — grid items default to min-width:auto. */
+.wd-rail { min-width: 0; }
+.wd-rail header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.wd-rail header span { font-family: var(--num); font-size: 9.5px; letter-spacing: .1em; color: var(--acc); }
+.wd-rail header i { flex: 1; height: 1px; background: var(--rule); }
+.wd-rail header em { font-family: var(--num); font-style: normal; font-size: 8.5px; color: var(--ink-3); }
+.wd-rail__row { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.wd-rail__row::-webkit-scrollbar { display: none; }
+.wd-card { flex: none; width: 168px; display: grid; gap: 5px; cursor: zoom-in; }
+.wd-card__shot { position: relative; background: #111; }
+.wd-card .wd-acts { right: 5px; bottom: 5px; gap: 1px; }
+.wd-page .wd-card .wd-acts button { width: 21px; height: 21px; }
+.wd-card__shot img { width: 100%; height: 132px; object-fit: cover; display: block; transition: opacity .18s ease; }
+.wd-card b { font-family: var(--display); font-size: 12px; font-weight: 600; line-height: 1.3; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.wd-card small { font-family: var(--num); font-size: 8.5px; color: var(--ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wd-page .wd-card small a { color: inherit;
+  border-bottom: 1px solid rgba(var(--acc-rgb),.35); transition: color .16s ease, border-color .16s ease; }
+.wd-page .wd-card small a:hover { color: var(--acc); border-bottom-color: var(--acc); }
+.wd-card:hover img { opacity: .78; }
+.wd-card:hover b { color: var(--acc); }
+
+@media (max-width: 860px) {
+  .wd-plate img { max-height: 42vh; }
+  .wd-card { width: 148px; }
+  .wd-card__shot img { height: 116px; }
+}

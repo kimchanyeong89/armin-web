@@ -1,0 +1,79 @@
+/* Wanted Sans, for the small type. */
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css");
+
+/* Paperlogy, for the headings and the large type. */
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+/* ══════════════════════════════════════════════════════════════
+   AI tab — the settled redesign.
+   Paperlogy sets the headings, Wanted Sans the small type; the
+   curation switch is one bordered track split in half, stuck to
+   the top; the match reads as a figure with a gold point that
+   draws itself into a bar when the card is pointed at.
+   ══════════════════════════════════════════════════════════════ */
+.hub {
+  --hub-display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --hub-sans: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --hub-mono: "Space Mono", ui-monospace, monospace;
+  --hub-gold: #d4a547; --hub-gold-rgb: 212,165,71;
+  --hub-ease: cubic-bezier(.16,1,.3,1);
+}
+.hub, .hub button, .hub input { font-family: var(--hub-sans); }
+
+/* ── the title block: one left-aligned column ─────────────────── */
+.hub-statement { padding: var(--page-top) 20px clamp(20px,3vw,28px); max-width: 44rem; }
+.hub-statement__meta { margin: 0 0 1.1rem; color: var(--hub-gold); font: 650 .66rem/1.2 var(--hub-mono); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.hub-statement h1 { margin: 0; max-width: 11ch; font: 700 clamp(2rem,7vw,3.2rem)/1.06 var(--hub-display); letter-spacing: -0.05em; text-wrap: balance; }
+/* the line under the title only - the label above it keeps its own margin */
+.hub-statement h1 + p { margin: 1.2rem 0 0; max-width: 30rem; font-size: clamp(.86rem,3.4vw,.95rem); line-height: 1.62; opacity: .6; text-wrap: pretty; }
+.hub-statement footer { display: flex; gap: .6rem; align-items: center; margin-top: 1.05rem; font-size: .72rem; opacity: .5; }
+.hub-statement footer > span:first-child { display: grid; width: 1.5rem; height: 1.5rem; flex: 0 0 auto; place-items: center; border: 1px solid currentColor; border-radius: 50%; color: var(--hub-gold); }
+
+/* ── the curation switch ──────────────────────────────────────── */
+.hub-switch { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--hub-line); }
+.hub-switch button { display: grid; place-items: center; min-height: 46px; padding: 0 8px; border: 0; background: none;
+  cursor: pointer; color: var(--hub-dim); transition: color .16s ease, background .16s ease; }
+.hub-switch button + button { border-left: 1px solid var(--hub-line); }
+.hub-switch__inner { display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
+.hub-switch__dot { flex: none; width: 4px; height: 4px; border-radius: 50%; background: transparent; transition: background .16s ease, box-shadow .16s ease; }
+.hub-switch__label { font: 600 15px/1 var(--hub-display); letter-spacing: -0.01em; white-space: nowrap; }
+.hub-switch button.is-active { color: var(--hub-fg); background: color-mix(in srgb, var(--hub-gold) 9%, transparent); }
+.hub-switch button.is-active .hub-switch__label { font-weight: 700; }
+.hub-switch button.is-active .hub-switch__dot { background: var(--hub-gold); box-shadow: 0 0 0 3px rgba(var(--hub-gold-rgb),.16); }
+
+/* ── the taste / random row ───────────────────────────────────── */
+.hub-mode { display: flex; align-items: center; gap: 14px; }
+.hub-mode__group { display: inline-flex; gap: 14px; flex: none; }
+.hub-mode button { min-height: 30px; padding: 0; border: 0; background: none; cursor: pointer;
+  font-size: 12.5px; font-weight: 500; color: var(--hub-dim); transition: color .16s ease; }
+.hub-mode button.is-active { color: var(--hub-fg); font-weight: 700; }
+.hub-mode__rule { flex: 1; height: 1px; background: var(--hub-line); }
+.hub-mode__reshuffle { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border: 0; background: none;
+  border-radius: 50%; color: var(--hub-gold); cursor: pointer; transition: background .16s ease; }
+.hub-mode__reshuffle:hover { background: rgba(var(--hub-gold-rgb),.12); }
+
+/* ── the match reading: a point that draws itself out ─────────── */
+.hub-read { flex: none; display: inline-flex; align-items: center; gap: 7px; }
+.hub-read em { font: 500 10px/1 var(--hub-mono); font-style: normal; letter-spacing: .04em; color: var(--hub-gold); font-variant-numeric: tabular-nums; }
+.hub-dot { flex: none; display: flex; align-items: center; justify-content: flex-end; width: 22px; height: 4px; }
+.hub-dot i { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--hub-gold);
+  transition: width .3s var(--hub-ease), height .3s var(--hub-ease), border-radius .3s var(--hub-ease); }
+.hub-card:hover .hub-dot i, .hub-card:focus-within .hub-dot i { width: 22px; height: 2px; border-radius: 1px; }
+
+@media (prefers-reduced-motion: reduce) { .hub * { transition: none !important; } }
+
+/* ── the taste picker / sign-in lead ──────────────────────────── */
+.hub-lead { max-width: 34rem; margin: 0 0 22px; text-align: left; }
+.hub-lead__meta { margin: 0 0 .9rem; color: var(--hub-gold); font: 650 .66rem/1.2 var(--hub-mono); letter-spacing: .04em; }
+.hub-lead h2 { margin: 0; font: 700 clamp(1.35rem,5vw,1.9rem)/1.18 var(--hub-display); letter-spacing: -0.035em; }
+.hub-lead__body { margin: .85rem 0 0; font-size: clamp(.83rem,3.2vw,.9rem); line-height: 1.62; opacity: .6; text-wrap: pretty; }
+.hub-signin { padding: clamp(24px,6vw,48px) 20px; }
+.hub-signin__row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: 1.5rem; }
+.hub-signin__go { display: inline-flex; align-items: center; gap: 7px; padding: 11px 20px; border: 1px solid var(--hub-gold);
+  color: var(--hub-gold); font-size: 13px; font-weight: 600; text-decoration: none; transition: background .16s ease; }
+.hub-signin__go:hover { background: rgba(var(--hub-gold-rgb),.12); }
+.hub-signin__row button { border: 0; background: none; padding: 0; font-size: 12.5px; color: var(--hub-dim); cursor: pointer; transition: color .16s ease; }
+.hub-signin__row button:hover { color: var(--hub-fg); }
+

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { findMuseumForArtwork } from '../utils/museumUtils';
 import { HeartOverlay } from './HeartOverlay';
@@ -12,6 +13,7 @@ import { auth } from '../firebase';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useArtistI18n, getArtistDisplayName } from '../i18n/artistLocalization';
 import { getArtworkTitle, getArtworkDate, useArtworkI18n } from '../i18n/artworkLocalization';
+import './artworkLightbox.css';
 
 
 // Helper: Clean Artist Name (copied from ExhibitionModal to ensure consistency)
@@ -146,6 +148,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 }) => {
     const { language } = useLanguage();
     const artistMap = useArtistI18n();
+    const navigate = useNavigate();
     const titleMap = useArtworkI18n();
     const [animate, setAnimate] = useState(false);
     const [imgLoaded, setImgLoaded] = useState(false);
@@ -209,6 +212,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             }
 
             return {
+                id: found.id,
                 name: found.name,
                 country: found.country,
                 collection: collectionName
@@ -218,6 +222,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
         const mName = artwork.museumName || artwork.museum || artwork.source; // Use source as fallback name
         // Try to guess country from museum name if possible (using strict map or just leave blank)
         return {
+            id: '',
             name: mName,
             country: artwork.country, // might be undefined
             collection: ''
@@ -573,6 +578,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     alignItems: 'center',
                     // justifyContent: 'center', // Removed to prevent top clipping on overflow
                     overflowY: 'auto',
+                    overflowX: 'hidden',
                     overscrollBehaviorY: 'contain',
                     overscrollBehavior: 'contain',
                     WebkitOverflowScrolling: 'touch',
@@ -586,7 +592,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     <div
                         style={{
                             position: 'relative',
-                            maxWidth: '100vw',
+                            maxWidth: '100%',
                             width: '100%',
                             pointerEvents: 'auto',
                             cursor: 'default',
@@ -710,13 +716,50 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 {dateDisplay}
                             </div>
                         )}
+                        {/* Artist and museum are links: the artist opens our own
+                            artist gallery, the museum opens its collection modal.
+                            The gallery reads ?name= for the real name, so the slug
+                            in the path only has to be readable. */}
                         <div style={{ fontSize: 15, color: '#e5e5e5', marginTop: 2 }}>
-                            {getArtistDisplayName(cleanArtistName(artwork.artist), language, artistMap)}
+                            {(() => {
+                                const raw = cleanArtistName(artwork.artist);
+                                const shown = getArtistDisplayName(raw, language, artistMap);
+                                if (!raw) return shown;
+                                return (
+                                    <button
+                                        type="button"
+                                        className="lb-link"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onClose();
+                                            /* where the gallery is hosted (the artist page, the map) it opens in
+                                               place; elsewhere App opens it over the current page, which stays put */
+                                            window.dispatchEvent(new CustomEvent('open-artist-gallery', {
+                                                detail: { artist: raw }, cancelable: true,
+                                            }));
+                                        }}
+                                    >
+                                        {shown}
+                                    </button>
+                                );
+                            })()}
                         </div>
                         <div style={{ fontSize: 12, color: '#a8a8a8', marginTop: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                             {museumInfo.name && (
                                 <span>
-                                    {museumInfo.name}
+                                    {museumInfo.id ? (
+                                        <button
+                                            type="button"
+                                            className="lb-link"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                onClose();
+                                                navigate(`/interactive/world/city/${encodeURIComponent(museumInfo.id)}`);
+                                            }}
+                                        >
+                                            {museumInfo.name}
+                                        </button>
+                                    ) : museumInfo.name}
                                     {museumInfo.country ? ` · ${museumInfo.country}` : ''}
                                 </span>
                             )}
@@ -792,6 +835,9 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     <div
                         style={{
                             width: '100%',
+                            // without border-box the side padding is added to the
+                            // full width, pushing this block past the scroll box
+                            boxSizing: 'border-box',
                             marginTop: 64,
                             padding: isMobile ? '0 14px' : '0 24px',
                             maxWidth: 1400,

@@ -1,0 +1,19 @@
+/* Artist and museum links in the artwork detail view.
+   index.css styles every button on the site (8px radius, a border, a dark
+   fill and a 4px focus ring), so those are cleared here - these read as
+   text with a rule under it, not as buttons. */
+.lb-link {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(212, 165, 71, 0.34);
+  padding: 0 0 1px;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: color .18s ease, border-color .18s ease;
+}
+.lb-link:hover { color: #d4a547; border-bottom-color: #d4a547; }
+.lb-link:focus { outline: none; }
+.lb-link:focus-visible { outline: 1px solid #d4a547; outline-offset: 3px; }

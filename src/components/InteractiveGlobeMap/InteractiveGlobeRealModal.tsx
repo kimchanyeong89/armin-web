@@ -36,6 +36,8 @@ import { getArtworkTitle, useArtworkI18n } from "../../i18n/artworkLocalization"
 import { getDateKo } from "../../i18n/dateLocalization";
 import { getMediumKo } from "../../i18n/mediumGlossary";
 import { getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
+import RatingEmblems from "../Ratings/RatingEmblems";
+import MuseumLogo from "../MuseumLogo";
 
 function typeColor(type: string, t: boolean): string {
   if (type === "current") return t ? "#8A6B1F" : "#D4A547";
@@ -78,6 +80,13 @@ type Artwork = {
 };
 
 type SortMode = "default" | "random" | "year_asc" | "year_desc" | "like_desc";
+
+export type GlobeDetailIntroduction = {
+  eyebrow: string;
+  headline: string;
+  summary: string;
+  instruction: string;
+};
 
 const INITIAL_VISIBLE_ARTWORKS = 40;
 const VISIBLE_ARTWORK_BATCH = 40;
@@ -411,11 +420,13 @@ export function InteractiveGlobeRealModal({
   theme,
   onClose,
   onReady,
+  detailIntroduction,
 }: {
   exhibition: import('../../types/Exhibition').Exhibition;
   theme: Theme;
   onClose: () => void;
   onReady?: () => void;
+  detailIntroduction?: GlobeDetailIntroduction;
 }) {
   const t = theme === "light";
   const { language } = useLanguage();
@@ -1555,11 +1566,6 @@ export function InteractiveGlobeRealModal({
 
   const pad = isNarrowMobile ? '14px' : isMobile ? '20px' : '40px';
 
-  const heroImage = useMemo(() => {
-    if (mappedArtworks.length > 0) return mappedArtworks[0].lowImage || mappedArtworks[0].image;
-    return normalizeImageUrl(exhibition.representativeImage || '');
-  }, [mappedArtworks]);
-
   const relatedProductArtworks = useMemo(() => {
     if (!productArtwork) return [];
     return mappedArtworks
@@ -1574,6 +1580,8 @@ export function InteractiveGlobeRealModal({
     // the modal at partial opacity so the Globe + spinner behind shows
     // through. A static, fully-opaque modal is reliable on every platform.
     <div
+      data-globe-detail-modal
+      data-theme={theme}
       style={{
         position: 'fixed', inset: 0, zIndex: 100, overflow: 'hidden',
         fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif",
@@ -1621,27 +1629,55 @@ export function InteractiveGlobeRealModal({
         onScroll={(event) => {
           latestScrollTopRef.current = event.currentTarget.scrollTop;
         }}
-        style={{ height: '100%', overflowY: 'auto', overflowX: 'hidden' }}
+        style={{ position: 'relative', height: '100%', overflowY: 'auto', overflowX: 'hidden' }}
       >
+        {detailIntroduction && (
+          <aside
+            className="globe-lab__statement globe-lab__detail-statement ig-atlas-detail-statement"
+            aria-labelledby="globe-lab-detail-title"
+          >
+            <div className="globe-lab__statement-meta">
+              <span>{detailIntroduction.eyebrow}</span>
+            </div>
+            <h1 id="globe-lab-detail-title">{detailIntroduction.headline}</h1>
+            <p>{detailIntroduction.summary}</p>
+            <footer>
+              <span aria-hidden="true">↗</span>
+              <span>{detailIntroduction.instruction}</span>
+            </footer>
+          </aside>
+        )}
         {/* ── Hero ── */}
-        <div style={{ position: 'relative', width: '100%', height: '52vh', minHeight: '340px' }}>
-          <motion.img
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            height: detailIntroduction ? '70vh' : '52vh',
+            minHeight: detailIntroduction ? '32rem' : '340px',
+          }}
+        >
+          {/* The museum's logo stands in for the first artwork: the official mark tinted to the
+              text colour, or a COLLY text logo when no official mark was found. On wide screens it
+              keeps clear of the introduction column (--igrm-logo-left, InteractiveGlobe.css). */}
+          <motion.div
+            className={detailIntroduction ? 'igrm-logo-stage--intro' : undefined}
             initial={{ y: -20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
-            src={heroImage}
-            alt={exhibition.title || exhibition.name}
-            style={{ 
-              width: '100%', 
-              height: '100%', 
-              objectFit: 'cover', 
-              display: 'block',
-              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.38) 88%, rgba(0,0,0,0) 100%)',
-              maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.38) 88%, rgba(0,0,0,0) 100%)'
+            style={{
+              position: 'absolute',
+              top: 'calc(env(safe-area-inset-top, 0px) + 84px)',
+              bottom: isMobile ? '112px' : '120px',
+              left: `max(${pad}, var(--igrm-logo-left, 0px))`,
+              right: pad,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              pointerEvents: 'none',
             }}
-          />
-          <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}00 0%, ${bgColor}00 68%, ${bgColor}33 88%, ${bgColor}66 100%)` }} />
-          <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}1A 0%, ${bgColor}00 28%)` }} />
+          >
+            <MuseumLogo museumId={String(exhibition.id || '')} fallbackName={exhibition.name} color={fgHigh} compact={isMobile} />
+          </motion.div>
           {/* Nav bar — absolute inside hero so it scrolls away naturally with the image.
               Top inset is `safe-area + 24px` so the BACK button lands at the
               SAME Y-coordinate as Globe header BACK and VenuePanel BACK —
@@ -1671,9 +1707,22 @@ export function InteractiveGlobeRealModal({
           </div>
           {/* Title overlay */}
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: `0 ${pad} 8px`, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '16px' }}>
-            <h1 style={{ fontSize: 'clamp(24px, 4vw, 40px)', color: fgHigh, lineHeight: 1.15, letterSpacing: '0.02em', margin: 0, maxWidth: '720px' }}>
-              {exhibition.title || exhibition.name}
-            </h1>
+            <div style={{ minWidth: 0, maxWidth: '720px' }}>
+              <h1 style={{ fontSize: 'clamp(24px, 4vw, 40px)', color: fgHigh, lineHeight: 1.15, letterSpacing: '0.02em', margin: 0, maxWidth: '720px' }}>
+                {exhibition.title || exhibition.name}
+              </h1>
+              {selectedType !== "permanent" && (exhibition as any)._selectedExhibitionId && (
+                <div style={{ marginTop: 10, pointerEvents: 'auto' }}>
+                  <RatingEmblems
+                    subject={{ kind: "exhibition", id: String((exhibition as any)._selectedExhibitionId) }}
+                    title={(exhibition as any)._exhibitionTitle || exhibition.name || ""}
+                    subtitle={exhibition.name}
+                    tone="overlay"
+                    size={16}
+                  />
+                </div>
+              )}
+            </div>
             {(() => {
               const museumId = String(exhibition.id || "").trim();
               const isMuseumLiked = !!museumId && (likedMuseumIds.has(museumId) || likedMuseumIds.has(museumId.replace(/\//g, "__")));
@@ -2043,18 +2092,22 @@ export function InteractiveGlobeRealModal({
                   // dark circles, no border, no backdrop-blur. All three icons
                   // are always visible regardless of hover/touch state — the
                   // user explicitly asked for the Mypage system.
+                  // No chip behind the icons - the dark circle read as a badge
+                  // stuck on the artwork. A drop shadow keeps them legible over
+                  // a light painting, and they sit close together as one group.
                   const actionButtonStyle: React.CSSProperties = {
                     cursor: 'pointer',
-                    width: isMobile ? 28 : 30,
-                    height: isMobile ? 28 : 30,
-                    borderRadius: '50%',
+                    width: isMobile ? 22 : 24,
+                    height: isMobile ? 22 : 24,
+                    borderRadius: 0,
                     border: 'none',
-                    background: 'rgba(0,0,0,0.56)',
+                    background: 'none',
                     color: '#fff',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     padding: 0,
+                    filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.9))',
                   };
                   return (
                     <div
@@ -2091,7 +2144,7 @@ export function InteractiveGlobeRealModal({
                           style={{ width: '100%', height: 'auto', display: 'block', transform: isHovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.4s' }}
                         />
                         <div style={{ position: 'absolute', inset: 0, transition: 'border 0.2s', borderTop: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderRight: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderBottom: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderLeft: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent' }} />
-                        <div style={{ position: 'absolute', bottom: isMobile ? 6 : 10, right: isMobile ? 6 : 10, display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 8, zIndex: 2, pointerEvents: 'auto' }}>
+                        <div style={{ position: 'absolute', bottom: isMobile ? 6 : 8, right: isMobile ? 6 : 8, display: 'flex', alignItems: 'center', gap: isMobile ? 1 : 2, zIndex: 2, pointerEvents: 'auto' }}>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();

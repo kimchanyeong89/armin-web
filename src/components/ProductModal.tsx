@@ -6,6 +6,7 @@ import type { Artwork } from '../types/Artwork';
 import type { RecommendationResponse, RecommendedArtwork } from '../types/Recommendation';
 import { getWeservUrl } from '../utils/imageProxy';
 import { useCart } from '../contexts/CartContext';
+import { PRINTS_ENABLED, PRINTS_NOTICE } from '../features/cart/prints';
 import {
   PRODUCT_TYPES,
   calculateSizesByRatio,
@@ -234,6 +235,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
   }, []);
 
   const handlePurchase = async () => {
+    if (!PRINTS_ENABLED) {
+      alert(PRINTS_NOTICE.ko);
+      return;
+    }
     if (!showPayment) {
       setShowPayment(true);
       return;

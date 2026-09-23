@@ -17,6 +17,239 @@
     height: 100%;
 }
 
+/* The canvas always fills the screen. While the reading guide is up the globe
+   is drawn off to the right (Globe `stageShift`), then glides to the centre. */
+.ig-container[data-production-atlas-index="true"] .ig-globe-container {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+}
+
+.ig-container[data-production-atlas-index="true"] {
+    --ig-atlas-accent: #d4a547;
+}
+
+.ig-container[data-production-atlas-index="true"] .ig-venue-panel--atlas-swap {
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.ig-venue-panel--atlas-swap .ig-venue-panel__minimap-reveal {
+    transform-origin: top center;
+    will-change: transform, opacity;
+}
+
+.ig-venue-panel--atlas-swap .ig-venue-panel__venue-row {
+    will-change: transform, opacity;
+}
+
+.ig-container[data-production-atlas-index="true"] .ig-globe-canvas:focus-visible {
+    outline: 0;
+}
+
+.ig-container[data-production-atlas-index="true"] .ig-globe-container::after {
+    content: "";
+    position: absolute;
+    z-index: 5;
+    inset: 0;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    border-image: linear-gradient(
+        105deg,
+        rgba(212, 165, 71, 0.34) 0%,
+        #d4a547 38%,
+        #f0c76f 56%,
+        rgba(212, 165, 71, 0.5) 100%
+    ) 1;
+    opacity: 0;
+    transform: scaleX(0.02);
+    transform-origin: left center;
+    transition:
+        opacity 160ms ease,
+        transform 440ms cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow:
+        inset 0 0 0 1px rgba(240, 199, 111, 0.08),
+        0 0 1.25rem rgba(212, 165, 71, 0.14);
+    pointer-events: none;
+}
+
+/* On a wide screen the frame keeps outlining the globe's own area beside the
+   left column, as it did before the canvas went full-screen. */
+@media (min-width: 1025px) {
+    .ig-container[data-production-atlas-index="true"] .ig-globe-container::after {
+        inset: 5.6rem 1.5rem 5.8rem 31%;
+    }
+}
+
+.ig-container[data-production-atlas-index="true"][data-city-detail-open="true"] .ig-globe-container::after,
+.ig-container[data-production-atlas-index="true"]
+    .ig-globe-container:has(.ig-globe-canvas:focus-visible)::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ig-venue-panel--atlas-swap .ig-venue-panel__minimap-reveal,
+    .ig-venue-panel--atlas-swap .ig-venue-panel__venue-row {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+}
+
+.ig-atlas-statement,
+.ig-atlas-detail-statement {
+    position: absolute;
+    z-index: 18;
+    top: 17%;
+    left: clamp(2.4rem, 4.5vw, 5rem);
+    width: min(26rem, calc(31vw - clamp(2.4rem, 4.5vw, 5rem) - 1.75rem));
+    color: inherit;
+    pointer-events: none;
+}
+
+[data-globe-detail-modal][data-theme="dark"] .ig-atlas-detail-statement {
+    color: #f0ede6;
+}
+
+[data-globe-detail-modal][data-theme="light"] .ig-atlas-detail-statement {
+    color: #111;
+}
+
+.ig-atlas-statement__meta,
+.ig-atlas-detail-statement .globe-lab__statement-meta {
+    margin-bottom: 1.1rem;
+    color: #d4a547;
+    font: 650 0.66rem/1.2 "Space Mono", monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+.ig-atlas-statement h1,
+.ig-atlas-detail-statement h1 {
+    max-width: 9ch;
+    margin: 0;
+    font: 570 clamp(3.4rem, 4.8vw, 5.8rem)/0.9 "Space Grotesk", "Inter", sans-serif;
+    letter-spacing: -0.07em;
+    text-wrap: balance;
+    word-break: keep-all;
+}
+
+.ig-atlas-statement > p,
+.ig-atlas-detail-statement > p {
+    max-width: 34rem;
+    margin: 1.4rem 0 0;
+    color: color-mix(in srgb, currentColor 58%, transparent);
+    font-size: clamp(0.95rem, 1.1vw, 1.12rem);
+    line-height: 1.58;
+    text-wrap: pretty;
+}
+
+.ig-atlas-statement footer,
+.ig-atlas-detail-statement footer {
+    display: flex;
+    gap: 0.65rem;
+    align-items: center;
+    margin-top: 1.7rem;
+    color: color-mix(in srgb, currentColor 58%, transparent);
+    font-size: 0.75rem;
+}
+
+/* The guide's way in: the circled arrow and a label as one real button — the
+   only part of the statement that takes the pointer. The hint sits under it. */
+.ig-atlas-statement footer {
+    flex-direction: column;
+    align-items: flex-start;
+    color: inherit;
+}
+
+.ig-atlas-statement__start {
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.ig-atlas-statement__start:hover > span:first-child,
+.ig-atlas-statement__start:focus-visible > span:first-child {
+    border-color: #d4a547;
+    background: rgba(212, 165, 71, 0.12);
+}
+
+.ig-atlas-statement__start:focus-visible {
+    outline: none;
+}
+
+.ig-atlas-statement__hint {
+    color: color-mix(in srgb, currentColor 58%, transparent);
+    font-size: 0.72rem;
+}
+
+.ig-atlas-statement__start > span:first-child,
+.ig-atlas-statement footer > span:first-child,
+.ig-atlas-detail-statement footer > span:first-child {
+    display: grid;
+    width: 1.8rem;
+    height: 1.8rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+    border-radius: 50%;
+    color: #d4a547;
+}
+
+/* The museum logo in the detail hero keeps clear of the introduction column. */
+.igrm-logo-stage--intro {
+    --igrm-logo-left: 34vw;
+}
+
+/* Below this width the globe fills the viewport, so the left-hand statement
+   has nowhere to sit that is not on top of the country labels. Hide it and
+   let the map speak for itself. */
+@media (max-width: 1024px) {
+    .ig-atlas-statement,
+    .ig-atlas-detail-statement {
+        display: none;
+    }
+
+    .igrm-logo-stage--intro {
+        --igrm-logo-left: 0px;
+    }
+}
+
+@media (max-width: 900px) {
+    .ig-atlas-statement,
+    .ig-atlas-detail-statement {
+        top: calc(env(safe-area-inset-top, 0px) + 5rem);
+        left: 1rem;
+        width: min(28rem, calc(100vw - 2rem));
+    }
+
+    .ig-atlas-statement h1,
+    .ig-atlas-detail-statement h1 {
+        max-width: 8ch;
+        font-size: clamp(2.4rem, 11vw, 3.5rem);
+    }
+
+    .ig-atlas-statement > p,
+    .ig-atlas-detail-statement > p {
+        max-width: 30rem;
+        font-size: 0.88rem;
+    }
+}
+
 .ig-globe-canvas {
     width: 100%;
     height: 100%;
@@ -255,13 +488,15 @@
 }
 
 .ig-vp-header {
-    padding: 24px 24px 0 24px;
+    /* Tightened from 24px: the gutter was eating room the list needs once the
+       window narrows. */
+    padding: 20px 14px 0 14px;
     flex-shrink: 0;
 }
 
 @media (min-width: 640px) {
     .ig-vp-header {
-        padding-top: 32px;
+        padding-top: 26px;
     }
 }
 
@@ -387,4 +622,1422 @@
     100% {
         transform: rotate(360deg);
     }
+}
+
+/* Production hybrid: Margin Ledger continent controls without a COLLY map renderer. */
+.ig-container[data-continent-control-style="margin-ledger"]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+    display: grid !important;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    width: min(56rem, calc(100vw - 48px));
+    max-width: calc(100vw - 48px) !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 13%, transparent);
+}
+
+.ig-container[data-continent-control-style="margin-ledger"]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 44px;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.62rem 0.78rem !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    text-align: left;
+}
+
+.ig-container[data-continent-control-style="margin-ledger"]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"]::after {
+    content: "";
+    position: absolute;
+    right: 0.78rem;
+    bottom: -1px;
+    left: 0.78rem;
+    height: 2px;
+    background: currentColor;
+}
+
+.ig-container[data-continent-control-style="margin-ledger"] .ig-region-pill__index {
+    display: none;
+}
+
+.ig-container[data-continent-control-style="margin-ledger"] .ig-region-pill__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ig-container[data-continent-control-style="margin-ledger"] .ig-region-pill__count {
+    opacity: 0.48;
+    font-size: 9px;
+    font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+    .ig-container[data-continent-control-style="margin-ledger"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(6.4rem, 1fr);
+        width: calc(100vw - 24px);
+        max-width: calc(100vw - 24px) !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+    }
+}
+/* Responsive chrome studies. These alter only the continent control; the globe stays production. */
+@media (max-width: 1280px) {
+    .ig-container[data-mobile-chrome-tweak]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        top: calc(env(safe-area-inset-top, 0px) + 62px) !important;
+        right: auto !important;
+        left: 50% !important;
+        width: min(56rem, calc(100vw - 24px)) !important;
+        max-width: min(56rem, calc(100vw - 24px)) !important;
+        transform: translateX(-50%) !important;
+        box-sizing: border-box;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .ig-container[data-mobile-chrome-tweak]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"]::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ig-container[data-mobile-chrome-tweak]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+        min-height: 44px;
+        scroll-snap-align: start;
+        touch-action: manipulation;
+    }
+
+    .ig-container[data-mobile-chrome-tweak]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button:focus-visible {
+        outline: 2px solid currentColor !important;
+        outline-offset: -3px;
+    }
+
+    /* frontend-design: ticket cells turn the long list into a tactile horizontal itinerary. */
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        grid-auto-columns: minmax(7rem, 38vw);
+        gap: 0 !important;
+        padding: 4px !important;
+        border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+        border-radius: 14px;
+        background: color-mix(in srgb, currentColor 5%, transparent);
+        scroll-snap-type: x mandatory;
+        box-shadow: inset 0 1px 0 color-mix(in srgb, white 10%, transparent);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+        border-right: 1px dashed color-mix(in srgb, currentColor 18%, transparent) !important;
+        padding-inline: 12px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"] {
+        background: color-mix(in srgb, currentColor 10%, transparent) !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"]::after {
+        right: 12px;
+        left: 12px;
+    }
+
+    /* design-taste-frontend: inactive regions compress; the selected region owns the reading width. */
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        display: flex !important;
+        gap: 6px !important;
+        padding: 0 0 6px !important;
+        overflow-x: auto !important;
+        border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+        scroll-snap-type: x proximity;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+        flex: 0 0 3.75rem;
+        grid-template-columns: minmax(0, 1fr) !important;
+        padding-inline: 8px !important;
+        opacity: 0.52;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"] {
+        flex-basis: 9.5rem;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        opacity: 1;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-pills button:not([aria-pressed="true"]) .ig-region-pill__label {
+        max-width: 3.2ch;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-pills button:not([aria-pressed="true"]) .ig-region-pill__count {
+        display: none;
+    }
+
+    /* high-end-visual-design: a machined outer bezel holds a separate selection lens. */
+    .ig-container[data-mobile-chrome-tweak="double-bezel"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        grid-auto-columns: 6.75rem;
+        gap: 4px !important;
+        padding: 5px !important;
+        overflow-x: auto !important;
+        border: 1px solid color-mix(in srgb, white 16%, transparent);
+        border-radius: 999px;
+        background: color-mix(in srgb, #181816 72%, transparent);
+        scroll-snap-type: x proximity;
+        backdrop-filter: blur(22px) saturate(145%);
+        -webkit-backdrop-filter: blur(22px) saturate(145%);
+        box-shadow:
+            inset 0 1px 0 color-mix(in srgb, white 20%, transparent),
+            inset 0 -1px 0 color-mix(in srgb, white 7%, transparent),
+            0 12px 30px rgb(0 0 0 / 24%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+        min-height: 46px;
+        border-radius: 999px !important;
+        padding-inline: 13px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"] {
+        background: linear-gradient(145deg, rgb(255 255 255 / 18%), rgb(255 255 255 / 5%)) !important;
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 24%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"]::after {
+        display: none;
+    }
+
+    /* redesign-existing-projects: preserve the ledger, then make its narrow behavior deliberate. */
+    .ig-container[data-mobile-chrome-tweak="adaptive-ledger"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        grid-auto-columns: minmax(6.6rem, 30vw);
+        gap: 0 !important;
+        padding: 0 10px !important;
+        overflow-x: auto !important;
+        scroll-padding-inline: 10px;
+        scroll-snap-type: x mandatory;
+        mask-image: linear-gradient(90deg, transparent, black 12px, black calc(100% - 12px), transparent);
+        -webkit-mask-image: linear-gradient(90deg, transparent, black 12px, black calc(100% - 12px), transparent);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="adaptive-ledger"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+        padding-inline: 11px !important;
+    }
+
+    /* ui-ux-pro-max: explicit labels and generous targets take precedence over density. */
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        grid-auto-columns: minmax(8.5rem, 44vw);
+        gap: 8px !important;
+        padding: 6px !important;
+        overflow-x: auto !important;
+        border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+        border-radius: 16px;
+        background: color-mix(in srgb, #11110f 88%, transparent);
+        scroll-snap-type: x mandatory;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+        min-height: 48px;
+        border-radius: 10px !important;
+        padding-inline: 12px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"] {
+        background: color-mix(in srgb, currentColor 14%, transparent) !important;
+        box-shadow: inset 0 0 0 1px currentColor;
+    }
+
+    /* design-system-builder: consolidate COLLY spacing, type, gold, and measured swipe behavior. */
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        display: flex !important;
+        gap: 4px !important;
+        padding: 4px !important;
+        overflow-x: auto !important;
+        border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+        border-radius: 12px;
+        background: color-mix(in srgb, #10100e 78%, transparent);
+        scroll-snap-type: x proximity;
+        backdrop-filter: blur(18px) saturate(135%);
+        -webkit-backdrop-filter: blur(18px) saturate(135%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button {
+        flex: 1 0 6.8rem;
+        padding-inline: 11px !important;
+        border-radius: 8px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"] {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: color-mix(in srgb, #d4a547 16%, #11110f) !important;
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] button[aria-pressed="true"]::after {
+        right: 11px;
+        left: 11px;
+    }
+}
+
+/* Compact Index Hybrid: the outer rail owns positioning; each presentation owns layout. */
+.ig-region-index {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ig-region-index::-webkit-scrollbar {
+    display: none;
+}
+
+.ig-region-focus,
+.ig-region-pill__short {
+    display: none;
+}
+
+.ig-container[data-continent-control-style="margin-ledger"]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+    display: block !important;
+}
+
+.ig-container[data-continent-control-style="margin-ledger"]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-region-index {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0;
+    overflow: visible;
+}
+
+@media (max-width: 720px) {
+    .ig-container[data-continent-control-style="margin-ledger"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"]
+        .ig-region-index {
+        grid-template-columns: none;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(6.4rem, 1fr);
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
+@media (max-width: 1280px) {
+    .ig-container[data-mobile-chrome-tweak]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        top: calc(env(safe-area-inset-top, 0px) + 62px) !important;
+        width: min(46rem, calc(100vw - 24px)) !important;
+        max-width: min(46rem, calc(100vw - 24px)) !important;
+        min-height: 0;
+        overflow: visible !important;
+        border-bottom: 0;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-index {
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-option {
+        min-width: 0;
+        min-height: 40px;
+        box-sizing: border-box;
+        justify-content: center;
+        transition:
+            color 160ms ease,
+            background-color 160ms ease,
+            border-color 160ms ease,
+            flex-basis 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus {
+        grid-template-columns: 40px minmax(0, 1fr) 40px;
+        width: 100%;
+        gap: 3px;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus__step,
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus__select {
+        min-width: 0;
+        min-height: 40px;
+        box-sizing: border-box;
+        border: 0 !important;
+        color: currentColor;
+        background: transparent !important;
+        font-family: "Space Mono", monospace;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus__step {
+        display: grid !important;
+        place-items: center;
+        padding: 0 !important;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus__select {
+        width: 100%;
+        padding: 0 28px 0 14px;
+        overflow: hidden;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-align: center;
+        text-align-last: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus__select option {
+        color: #f0ede6;
+        background: #171715;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus__step:focus-visible,
+    .ig-container[data-mobile-chrome-tweak] .ig-region-focus__select:focus-visible {
+        outline: 2px solid #d4a547 !important;
+        outline-offset: -3px;
+    }
+
+    /* Museum Ticket: a compact run of retained index stubs. */
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        padding: 3px !important;
+        border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+        border-radius: 10px;
+        background: color-mix(in srgb, #141412 82%, transparent);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"] .ig-region-index {
+        display: grid !important;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 0 !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"] .ig-region-option {
+        min-height: 40px;
+        padding: 0 9px !important;
+        border-right: 1px dashed color-mix(in srgb, currentColor 16%, transparent) !important;
+        border-radius: 0 !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"] .ig-region-option:last-child {
+        border-right: 0 !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="museum-ticket"] .ig-region-option[aria-pressed="true"] {
+        border-radius: 7px !important;
+        background: color-mix(in srgb, currentColor 11%, #141412) !important;
+    }
+
+    /* Editorial: one expanding headline among quiet geographic folios. */
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        padding: 0 2px 3px !important;
+        border-bottom: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+        background: transparent;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"] .ig-region-index {
+        display: flex !important;
+        gap: 2px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"] .ig-region-option {
+        flex: 1 1 0;
+        padding: 0 8px !important;
+        opacity: 0.42;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"] .ig-region-option[aria-pressed="true"] {
+        flex-grow: 1.45;
+        opacity: 1;
+    }
+
+    /* Double Bezel: one machined lens, with every region in its native menu. */
+    .ig-container[data-mobile-chrome-tweak="double-bezel"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        width: min(23rem, calc(100vw - 24px)) !important;
+        max-width: min(23rem, calc(100vw - 24px)) !important;
+        padding: 3px !important;
+        border: 1px solid rgb(255 255 255 / 16%);
+        border-radius: 999px;
+        background: color-mix(in srgb, #181816 78%, transparent);
+        backdrop-filter: blur(22px) saturate(140%);
+        -webkit-backdrop-filter: blur(22px) saturate(140%);
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 18%),
+            inset 0 0 0 3px rgb(0 0 0 / 18%),
+            0 10px 28px rgb(0 0 0 / 24%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"] .ig-region-index {
+        display: none !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"] .ig-region-focus {
+        display: grid;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"] .ig-region-focus__step,
+    .ig-container[data-mobile-chrome-tweak="double-bezel"] .ig-region-focus__select {
+        border-radius: 999px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"] .ig-region-focus__select {
+        background: linear-gradient(145deg, rgb(255 255 255 / 14%), rgb(255 255 255 / 4%)) !important;
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%);
+    }
+
+    /* Adaptive Ledger: all seven coordinates share one measured baseline. */
+    .ig-container[data-mobile-chrome-tweak="adaptive-ledger"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        padding: 0 5px !important;
+        border-top: 1px solid color-mix(in srgb, currentColor 9%, transparent);
+        border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+        background: rgb(12 12 10 / 48%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="adaptive-ledger"] .ig-region-index {
+        display: grid !important;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 0 !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="adaptive-ledger"] .ig-region-option {
+        min-height: 42px;
+        padding: 0 7px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="adaptive-ledger"] .ig-region-option[aria-pressed="true"]::after {
+        right: 7px;
+        left: 7px;
+        height: 1px;
+    }
+
+    /* Accessible Tray: explicit 44px steps around a central native control. */
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        width: min(27rem, calc(100vw - 24px)) !important;
+        max-width: min(27rem, calc(100vw - 24px)) !important;
+        padding: 4px !important;
+        border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+        border-radius: 12px;
+        background: color-mix(in srgb, #11110f 90%, transparent);
+        box-shadow: 0 10px 26px rgb(0 0 0 / 18%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"] .ig-region-index {
+        display: none !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"] .ig-region-focus {
+        display: grid;
+        grid-template-columns: 44px minmax(0, 1fr) 44px;
+        gap: 4px;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"] .ig-region-focus__step,
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"] .ig-region-focus__select {
+        min-height: 44px;
+        border: 1px solid color-mix(in srgb, currentColor 15%, transparent) !important;
+        border-radius: 8px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"] .ig-region-focus__select {
+        background: color-mix(in srgb, currentColor 7%, transparent) !important;
+    }
+
+    /* COLLY Hybrid: a live active summary held against a six-code index. */
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        padding: 3px !important;
+        border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+        border-radius: 11px;
+        background: color-mix(in srgb, #10100e 82%, transparent);
+        backdrop-filter: blur(18px) saturate(130%);
+        -webkit-backdrop-filter: blur(18px) saturate(130%);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 7%);
+    }
+
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"] .ig-region-index {
+        display: flex !important;
+        gap: 3px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"] .ig-region-option {
+        flex: 1 1 0;
+        padding: 0 7px !important;
+        border-radius: 8px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"] .ig-region-option[aria-pressed="true"] {
+        flex-grow: 1.55;
+        background: color-mix(in srgb, #d4a547 14%, #11110f) !important;
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%);
+    }
+}
+
+@media (max-width: 680px) {
+    .ig-container[data-mobile-chrome-tweak]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        width: calc(100vw - 24px) !important;
+        max-width: calc(100vw - 24px) !important;
+        overflow: visible !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-index {
+        display: grid !important;
+        grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+        grid-auto-flow: row !important;
+        grid-auto-columns: minmax(0, 1fr) !important;
+        width: 100%;
+        gap: 0 !important;
+        overflow: visible !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-option {
+        min-width: 0;
+        min-height: 40px;
+        padding: 0 4px !important;
+        gap: 0 !important;
+        letter-spacing: 0.06em !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pill__short {
+        display: block;
+        overflow: hidden;
+        font-size: 9px;
+        text-overflow: clip;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pill__label,
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pill__count {
+        display: none;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"] .ig-region-index,
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"] .ig-region-index {
+        display: flex !important;
+        gap: 2px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"] .ig-region-option,
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"] .ig-region-option {
+        flex: 1 1 0 !important;
+        padding-inline: 3px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"]
+        .ig-region-index > .ig-region-option,
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"]
+        .ig-region-index > .ig-region-option {
+        padding-inline: 3px !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"] .ig-region-option[aria-pressed="true"],
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"] .ig-region-option[aria-pressed="true"] {
+        flex: 0 1 7rem !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-option[aria-pressed="true"] .ig-region-pill__short,
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-option[aria-pressed="true"] .ig-region-pill__short {
+        display: none;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-option[aria-pressed="true"] .ig-region-pill__label,
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-option[aria-pressed="true"] .ig-region-pill__label {
+        display: block;
+        overflow: hidden;
+        font-size: 9px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="editorial-accordion"]
+        .ig-region-option[aria-pressed="true"] .ig-region-pill__count,
+    .ig-container[data-mobile-chrome-tweak="colly-hybrid"]
+        .ig-region-option[aria-pressed="true"] .ig-region-pill__count {
+        display: block;
+        font-size: 8px;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"] .ig-region-index,
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"] .ig-region-index {
+        display: none !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak="double-bezel"] .ig-region-focus,
+    .ig-container[data-mobile-chrome-tweak="accessible-tray"] .ig-region-focus {
+        display: grid;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pills,
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pills button,
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pills button::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+/* Six continent instruments: shared data, deliberately different structures. */
+.ig-container[data-mobile-chrome-tweak]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+    top: calc(env(safe-area-inset-top, 0px) + 64px) !important;
+    display: block !important;
+    width: auto !important;
+    max-width: calc(100vw - 32px) !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+.ig-container[data-mobile-chrome-tweak]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-continent-control button {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    outline: 0;
+    background: transparent !important;
+    color: inherit;
+    font: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ig-container[data-mobile-chrome-tweak]
+    .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-continent-control button::after {
+    display: none !important;
+}
+
+.ig-continent-control {
+    --continent-gold: #d4a547;
+    --continent-ink: rgba(244, 241, 234, 0.82);
+    --continent-muted: rgba(244, 241, 234, 0.42);
+    --continent-hairline: rgba(244, 241, 234, 0.14);
+    --continent-glass: rgba(18, 18, 16, 0.76);
+    box-sizing: border-box;
+    color: var(--continent-ink);
+    font-family: "Space Mono", monospace;
+}
+
+[data-theme="light"] .ig-continent-control {
+    --continent-ink: rgba(18, 18, 16, 0.82);
+    --continent-muted: rgba(18, 18, 16, 0.42);
+    --continent-hairline: rgba(18, 18, 16, 0.14);
+    --continent-glass: rgba(247, 245, 239, 0.82);
+}
+
+.ig-continent-control button:focus-visible,
+.ig-continent-control select:focus-visible {
+    outline: 2px solid var(--continent-gold) !important;
+    outline-offset: 3px;
+}
+
+.ig-continent-key__index,
+.ig-continent-key__short,
+.ig-continent-key__label,
+.ig-continent-key__count {
+    position: relative;
+    z-index: 1;
+}
+
+.ig-continent-key__short {
+    display: none;
+}
+
+/* 01 · Index Rail — an active lens travels over a measured seven-stop axis. */
+.ig-index-rail {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    width: min(780px, calc(100vw - 32px));
+    height: 58px;
+    padding: 0 5px;
+    border-bottom: 1px solid var(--continent-hairline);
+}
+
+.ig-index-rail::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    bottom: 5px;
+    left: 5px;
+    width: calc((100% - 10px) / 7);
+    border: 1px solid rgba(212, 165, 71, 0.34);
+    border-radius: 3px;
+    background: rgba(212, 165, 71, 0.08);
+    transform: translateX(calc(var(--ig-active-index) * 100%));
+    transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ig-index-rail__line {
+    position: absolute;
+    right: 0;
+    bottom: 17px;
+    left: 0;
+    height: 1px;
+    background: var(--continent-hairline);
+}
+
+.ig-index-rail .ig-continent-key {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 18px;
+    align-items: center;
+    gap: 0 5px;
+    padding: 0 10px !important;
+    color: var(--continent-muted);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.ig-index-rail .ig-continent-key__index {
+    align-self: end;
+    font-size: 7px;
+}
+
+.ig-index-rail .ig-continent-key__label {
+    align-self: end;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ig-index-rail .ig-continent-key__count {
+    align-self: end;
+    font-size: 8px;
+}
+
+.ig-index-rail .ig-continent-key[aria-pressed="true"] {
+    color: var(--continent-gold);
+}
+
+/* 02 · Compass Dial — geographic context is previous, current, and next. */
+.ig-compass-dial {
+    display: grid;
+    grid-template-columns: 72px minmax(170px, 230px) 72px;
+    align-items: stretch;
+    width: max-content;
+    padding: 4px;
+    border: 1px solid var(--continent-hairline);
+    border-radius: 999px;
+    background: var(--continent-glass);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 12px 34px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(18px) saturate(125%);
+    -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+
+.ig-compass-dial__side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: var(--continent-muted) !important;
+    font-size: 9px !important;
+    letter-spacing: 0.1em;
+}
+
+.ig-compass-dial__side:hover {
+    color: var(--continent-ink) !important;
+}
+
+.ig-compass-dial__center {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 11px 1fr;
+    align-items: center;
+    min-height: 46px;
+    padding: 4px 18px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.035));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.11);
+}
+
+.ig-compass-dial__center strong {
+    overflow: hidden;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 13px;
+    font-weight: 520;
+    letter-spacing: 0.05em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ig-compass-dial__center > span:last-child {
+    color: var(--continent-gold);
+    font-size: 9px;
+}
+
+.ig-compass-dial__eyebrow {
+    grid-column: 1 / -1;
+    color: var(--continent-muted);
+    font-size: 7px;
+    letter-spacing: 0.18em;
+}
+
+/* 03 · Folded Ledger — one summary leaf and six narrow folded leaves. */
+.ig-folded-ledger {
+    display: grid;
+    grid-template-columns: minmax(160px, 1.45fr) minmax(330px, 4fr);
+    width: min(760px, calc(100vw - 32px));
+    min-height: 52px;
+    border-top: 1px solid var(--continent-hairline);
+    border-bottom: 1px solid var(--continent-hairline);
+    background: rgba(10, 10, 9, 0.24);
+}
+
+.ig-folded-ledger__active {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px !important;
+    color: var(--continent-gold) !important;
+    background: rgba(212, 165, 71, 0.09) !important;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+}
+
+.ig-folded-ledger__active span,
+.ig-folded-ledger__active em {
+    font-size: 8px;
+    font-style: normal;
+}
+
+.ig-folded-ledger__active strong {
+    overflow: hidden;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 560;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ig-folded-ledger__folds {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.ig-folded-ledger__fold {
+    display: grid;
+    place-items: center;
+    border-left: 1px solid var(--continent-hairline) !important;
+    color: var(--continent-muted) !important;
+    font-size: 8px !important;
+    letter-spacing: 0.08em;
+}
+
+.ig-folded-ledger__fold:hover {
+    color: var(--continent-ink) !important;
+    background: rgba(255, 255, 255, 0.035) !important;
+}
+
+.ig-folded-ledger__fold .ig-continent-key__index,
+.ig-folded-ledger__fold .ig-continent-key__count {
+    display: none;
+}
+
+/* 04 · Museum Ribbon — a continuous admission strip with perforated cells. */
+.ig-museum-ribbon {
+    display: grid;
+    grid-template-columns: 68px minmax(0, 1fr);
+    width: min(850px, calc(100vw - 32px));
+    padding: 4px;
+    border: 1px solid var(--continent-hairline);
+    border-radius: 5px;
+    background: var(--continent-glass);
+}
+
+.ig-museum-ribbon__stub {
+    display: grid;
+    place-items: center;
+    border-right: 1px dashed rgba(212, 165, 71, 0.4);
+    color: var(--continent-gold);
+    font-size: 7px;
+    line-height: 1.5;
+    letter-spacing: 0.16em;
+}
+
+.ig-museum-ribbon__tickets {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.ig-museum-ribbon .ig-continent-key {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    min-height: 44px !important;
+    padding: 0 11px !important;
+    border-right: 1px dashed var(--continent-hairline) !important;
+    color: var(--continent-muted) !important;
+    font-size: 8px !important;
+}
+
+.ig-museum-ribbon .ig-continent-key:last-child {
+    border-right: 0 !important;
+}
+
+.ig-museum-ribbon .ig-continent-key[aria-pressed="true"] {
+    color: #171511 !important;
+    background: var(--continent-gold) !important;
+}
+
+.ig-museum-ribbon .ig-continent-key__index,
+.ig-museum-ribbon .ig-continent-key__short {
+    display: none;
+}
+
+/* 05 · Coordinate Deck — a live readout over a calibrated scale. */
+.ig-coordinate-deck {
+    display: grid;
+    grid-template-columns: minmax(165px, 0.85fr) minmax(300px, 1.8fr);
+    width: min(690px, calc(100vw - 32px));
+    padding: 5px;
+    border-radius: 12px;
+    background: rgba(11, 11, 10, 0.58);
+    box-shadow: inset 0 0 0 1px var(--continent-hairline);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.ig-coordinate-deck__readout {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 11px 1fr;
+    align-items: center;
+    padding: 5px 13px;
+    border-right: 1px solid var(--continent-hairline);
+}
+
+.ig-coordinate-deck__readout span {
+    grid-column: 1 / -1;
+    color: var(--continent-muted);
+    font-size: 7px;
+    letter-spacing: 0.15em;
+}
+
+.ig-coordinate-deck__readout strong {
+    overflow: hidden;
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 540;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ig-coordinate-deck__readout em {
+    color: var(--continent-gold);
+    font-size: 7px;
+    font-style: normal;
+}
+
+.ig-coordinate-deck__scale {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.ig-coordinate-deck__scale::before {
+    content: "";
+    position: absolute;
+    top: 21px;
+    right: 8%;
+    left: 8%;
+    height: 1px;
+    background: var(--continent-hairline);
+}
+
+.ig-coordinate-deck .ig-continent-key {
+    display: grid;
+    grid-template-rows: 1fr 15px;
+    place-items: center;
+    color: var(--continent-muted) !important;
+    font-size: 7px !important;
+}
+
+.ig-coordinate-deck .ig-continent-key::before {
+    content: "";
+    position: relative;
+    z-index: 2;
+    width: 5px;
+    height: 5px;
+    border: 1px solid var(--continent-muted);
+    border-radius: 50%;
+    background: #11110f;
+}
+
+.ig-coordinate-deck .ig-continent-key[aria-pressed="true"] {
+    color: var(--continent-gold) !important;
+}
+
+.ig-coordinate-deck .ig-continent-key[aria-pressed="true"]::before {
+    border-color: var(--continent-gold);
+    background: var(--continent-gold);
+    box-shadow: 0 0 10px rgba(212, 165, 71, 0.6);
+}
+
+.ig-coordinate-deck .ig-continent-key__index,
+.ig-coordinate-deck .ig-continent-key__count,
+.ig-coordinate-deck .ig-continent-key__short {
+    display: none;
+}
+
+/* 06 · Command Strip — a direct command field plus single-keystroke regions. */
+.ig-command-strip {
+    display: grid;
+    grid-template-columns: minmax(190px, 0.85fr) minmax(350px, 1.65fr);
+    width: min(720px, calc(100vw - 32px));
+    padding: 4px;
+    border: 1px solid var(--continent-hairline);
+    border-radius: 8px;
+    background: var(--continent-glass);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+}
+
+.ig-command-strip__field {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 12px;
+    border-right: 1px solid var(--continent-hairline);
+    color: var(--continent-gold);
+    font-size: 7px;
+    letter-spacing: 0.12em;
+}
+
+.ig-command-strip__field select {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--continent-ink);
+    font: 500 11px/1 "Space Grotesk", sans-serif;
+    text-overflow: ellipsis;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ig-command-strip__field option {
+    color: #f3f0e9;
+    background: #171715;
+}
+
+.ig-command-strip__keys {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 2px;
+}
+
+.ig-command-strip .ig-continent-key {
+    display: grid;
+    place-items: center;
+    min-height: 44px !important;
+    border-radius: 5px !important;
+    color: var(--continent-muted) !important;
+    font-size: 8px !important;
+}
+
+.ig-command-strip .ig-continent-key:hover,
+.ig-command-strip .ig-continent-key[aria-pressed="true"] {
+    color: var(--continent-ink) !important;
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+.ig-command-strip .ig-continent-key[aria-pressed="true"] {
+    box-shadow: inset 0 -2px 0 var(--continent-gold);
+}
+
+.ig-command-strip .ig-continent-key__index,
+.ig-command-strip .ig-continent-key__count,
+.ig-command-strip .ig-continent-key__short {
+    display: none;
+}
+
+@media (max-width: 680px) {
+    .ig-container[data-mobile-chrome-tweak]
+        .ig-region-pills[data-colly-map-technique="margin-ledger"] {
+        top: calc(env(safe-area-inset-top, 0px) + 60px) !important;
+        width: calc(100vw - 24px) !important;
+        max-width: calc(100vw - 24px) !important;
+    }
+
+    .ig-continent-control {
+        width: 100%;
+    }
+
+    .ig-continent-key__label,
+    .ig-continent-key__count,
+    .ig-continent-key__index {
+        display: none !important;
+    }
+
+    .ig-continent-key__short {
+        display: inline !important;
+    }
+
+    .ig-index-rail {
+        height: 46px;
+        padding: 0 3px;
+    }
+
+    .ig-index-rail::before {
+        top: 4px;
+        bottom: 4px;
+        left: 3px;
+        width: calc((100% - 6px) / 7);
+    }
+
+    .ig-index-rail__line {
+        bottom: 12px;
+    }
+
+    .ig-index-rail .ig-continent-key {
+        display: grid;
+        place-items: center;
+        padding: 0 2px !important;
+        font-size: 8px;
+    }
+
+    .ig-compass-dial {
+        grid-template-columns: 54px minmax(0, 1fr) 54px;
+        width: 100%;
+    }
+
+    .ig-compass-dial__center {
+        padding-inline: 13px;
+    }
+
+    .ig-compass-dial__side-code {
+        font-size: 8px;
+    }
+
+    .ig-folded-ledger {
+        grid-template-columns: minmax(105px, 1.15fr) minmax(0, 2fr);
+        min-height: 46px;
+    }
+
+    .ig-folded-ledger__active {
+        grid-template-columns: 1fr auto;
+        gap: 6px;
+        padding: 0 11px !important;
+    }
+
+    .ig-folded-ledger__active span {
+        display: none;
+    }
+
+    .ig-folded-ledger__active strong {
+        font-size: 10px;
+    }
+
+    .ig-folded-ledger__fold {
+        font-size: 7px !important;
+    }
+
+    .ig-museum-ribbon {
+        grid-template-columns: 1fr;
+        padding: 3px;
+    }
+
+    .ig-museum-ribbon__stub {
+        display: none;
+    }
+
+    .ig-museum-ribbon .ig-continent-key {
+        min-height: 40px !important;
+        padding: 0 2px !important;
+        font-size: 8px !important;
+    }
+
+    .ig-coordinate-deck {
+        grid-template-columns: 112px minmax(0, 1fr);
+        padding: 4px;
+    }
+
+    .ig-coordinate-deck__readout {
+        padding-inline: 9px;
+    }
+
+    .ig-coordinate-deck__readout strong {
+        font-size: 9px;
+    }
+
+    .ig-coordinate-deck__readout em {
+        display: none;
+    }
+
+    .ig-coordinate-deck__scale::before {
+        top: 19px;
+    }
+
+    .ig-command-strip {
+        grid-template-columns: minmax(108px, 0.85fr) minmax(0, 1.7fr);
+        padding: 3px;
+    }
+
+    .ig-command-strip__field {
+        min-height: 40px;
+        padding: 0 8px;
+    }
+
+    .ig-command-strip__field > span {
+        display: none;
+    }
+
+    .ig-command-strip__field select {
+        font-size: 9px;
+    }
+
+    .ig-command-strip .ig-continent-key {
+        min-height: 40px !important;
+        font-size: 7px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ig-index-rail::before,
+    .ig-continent-control button {
+        transition: none !important;
+    }
+}
+
+/* The legacy Margin Ledger button grid is intentionally not inherited by the six instruments. */
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-index-rail .ig-continent-key {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    grid-template-rows: 1fr 18px !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-compass-dial__side {
+    display: flex !important;
+    grid-template-columns: none !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-folded-ledger__active {
+    display: grid !important;
+    grid-template-columns: auto 1fr auto !important;
+    background: rgba(212, 165, 71, 0.09) !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-folded-ledger__fold {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-museum-ribbon .ig-continent-key {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 6px !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-museum-ribbon .ig-continent-key[aria-pressed="true"] {
+    background: var(--continent-gold) !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-coordinate-deck .ig-continent-key {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr 15px !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-command-strip .ig-continent-key {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+}
+
+.ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+    .ig-command-strip .ig-continent-key[aria-pressed="true"] {
+    background: rgba(255, 255, 255, 0.07) !important;
+}
+
+@media (max-width: 680px) {
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+        .ig-index-rail .ig-continent-key {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 1fr !important;
+    }
+
+    .ig-container[data-mobile-chrome-tweak] .ig-region-pills[data-colly-map-technique="margin-ledger"]
+        .ig-folded-ledger__active {
+        grid-template-columns: 1fr auto !important;
+    }
+}
+
+/* The venue panel is full-bleed and shares the left edge with the breadcrumb,
+   so it now covers the header while a city is open. Fade the header out rather
+   than let it peek out beside the panel; the panel's own "← city" row carries
+   the same context, and closing the panel brings it back. */
+.ig-container[data-production-atlas-index="true"][data-city-detail-open="true"] .ig-header {
+    opacity: 0;
+    pointer-events: none;
 }

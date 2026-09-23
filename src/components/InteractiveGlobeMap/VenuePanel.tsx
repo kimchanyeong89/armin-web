@@ -6,6 +6,9 @@ import { useLanguage } from "../../contexts/LanguageContext";
 import { localizeCityName, localizeCountryName } from "../../i18n/geoLocalization";
 import { getExhibitionDisplayDescription, getExhibitionDisplayTitle, getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
 import { getMuseumDisplayName } from "../../i18n/museumLocalization";
+import RatingEmblems from "../Ratings/RatingEmblems";
+import { MuseumLogoMark } from "../MuseumLogo";
+import { useTasteScores } from "../../features/taste/useTasteScores";
 
 // ─── Exhibition mock data ──────────────────────────────────
 
@@ -849,6 +852,11 @@ export function VenuePanel({ city, theme, placement = "default", onClose, onOpen
   // Museum name for display: reads name_ko from the venue's source museum object.
   // venue.name itself stays English so it remains a stable React key / route id.
   const venueName = (v: Venue) => getMuseumDisplayName((v.originalExhibition as any) ?? { name: v.name }, language);
+  // Museum id for the logo lookup (src/data/museumLogos.json is keyed by the source museum id).
+  const museumIdOf = (v: Venue) => String((v.originalExhibition as any)?.id || v.id);
+  // Museum id → how many times its share of the signed-in user's taste the collection holds; only the matches are listed.
+  const tasteScores = useTasteScores();
+  const tasteLiftById = React.useMemo(() => new Map((tasteScores?.museums ?? []).map((m) => [m.id, m.lift])), [tasteScores]);
 
   // 목록을 표시 이름 기준으로 정렬한다 — 한국어면 가나다순, 영어면 ABC순.
   // 원본 city.venues 는 등록 순서라 새로 추가한 미술관이 늘 맨 끝으로 밀렸다.
@@ -1091,7 +1099,9 @@ export function VenuePanel({ city, theme, placement = "default", onClose, onOpen
           paddingTop: usesStatementSlot ? 'env(safe-area-inset-top, 0px)' : 'calc(env(safe-area-inset-top, 0px) + 6px)',
           paddingBottom: usesStatementSlot ? 0 : 'env(safe-area-inset-bottom, 0px)',
           overflow: 'hidden',
-          fontFamily: "'Space Grotesk', sans-serif",
+          // Hana2 — the KO/EN language switch's face (loaded in index.css). One face for Hangul and Latin,
+          // so Korean museum names no longer mix Space Grotesk punctuation with a system Korean fallback.
+          fontFamily: 'Hana2, "Apple SD Gothic Neo", sans-serif',
         }}
       >
         <AnimatePresence mode="wait">
@@ -1227,6 +1237,9 @@ export function VenuePanel({ city, theme, placement = "default", onClose, onOpen
               >
                 {sortedVenues.map((v, idx) => {
                   const isHL = hoveredVenueIdx === idx;
+                  const nameColor = isHL
+                    ? (t ? "rgba(0,0,0,0.78)" : "rgba(255,255,255,0.82)")
+                    : (t ? "rgba(0,0,0,0.50)" : "rgba(255,255,255,0.46)");
                   return (
                     <motion.button
                       className="ig-venue-panel__venue-row"
@@ -1258,23 +1271,28 @@ export function VenuePanel({ city, theme, placement = "default", onClose, onOpen
                           ...(isHL ? { backgroundColor: t ? "#8A6B1F" : "#D4A547" } : catDotStyle(v.category, t)),
                         }}
                       />
+                      {/* Logo thumbnail — a fixed slot, so names stay aligned even for museums without one */}
+                      <div style={{ flexShrink: 0, width: '44px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <MuseumLogoMark museumId={museumIdOf(v)} color={nameColor} maxWidth={44} maxHeight={22} style={{ transition: 'background-color 0.15s' }} />
+                      </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px' }}>
-                          <span
-                            style={{
-                              fontSize: '13px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                              color: isHL
-                                ? (t ? "rgba(0,0,0,0.78)" : "rgba(255,255,255,0.82)")
-                                : (t ? "rgba(0,0,0,0.50)" : "rgba(255,255,255,0.46)"),
-                              transition: 'color 0.15s',
-                            }}
-                          >
-                            {venueName(v)}
-                          </span>
-                          <span style={{ color: cFg20, fontFamily: "'Space Mono', monospace", fontSize: '10px', flexShrink: 0 }}>
-                            {v.year}
-                          </span>
-                        </div>
+                        {/* Up to two lines, so long names read in full beside the logo slot */}
+                        <span
+                          style={{
+                            fontSize: '13px', lineHeight: 1.4, overflow: 'hidden',
+                            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as any,
+                            wordBreak: 'keep-all', overflowWrap: 'anywhere',
+                            color: nameColor,
+                            transition: 'color 0.15s',
+                          }}
+                        >
+                          {venueName(v)}
+                        </span>
+                        {tasteLiftById.has(v.id) && (
+                          <div style={{ color: t ? "#8A6B1F" : "#D4A547", marginTop: '4px', fontSize: '11px' }}>
+                            {language === 'ko' ? `내 취향 소장품 ${tasteLiftById.get(v.id)}배` : `${tasteLiftById.get(v.id)}× your taste`}
+                          </div>
+                        )}
                         {v.architect && (
                           <div style={{ color: cFg35, marginTop: '4px', fontSize: '11px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {v.architect}
@@ -1339,31 +1357,27 @@ export function VenuePanel({ city, theme, placement = "default", onClose, onOpen
 
               {/* Venue info */}
               <div style={{ padding: '18px 10px 0', flexShrink: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                  <div
-                    style={{
-                      flexShrink: 0, width: '7px', height: '7px', borderRadius: '50%', marginTop: '6px',
-                      ...catDotStyle(selectedVenue.category, t),
-                    }}
-                  />
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ color: cFg90, letterSpacing: '0.06em', fontSize: '16px' }}>
-                      {venueName(selectedVenue)}
-                    </div>
+                {/* Official logo, centred above the name with room below it */}
+                <MuseumLogoMark museumId={museumIdOf(selectedVenue)} color={cFg90} maxWidth={isMobileViewport ? 240 : 300} maxHeight={132} area={26000} style={{ margin: '12px auto 30px', maxWidth: '100%' }} />
+                {/* Name centred under the logo; the category dot stays in the venue list rows */}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ color: cFg90, letterSpacing: '0.06em', fontSize: '16px', wordBreak: 'keep-all' }}>
+                    {venueName(selectedVenue)}
                   </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px', marginLeft: '8px' }}>
-                  <span style={{ color: cFg20, fontFamily: "'Space Mono', monospace", fontSize: '12px' }}>
-                    {selectedVenue.year}
-                  </span>
-                  {selectedVenue.architect && (
-                    <>
-                      <span style={{ color: cFg12 }}>&middot;</span>
-                      <span style={{ color: cFg35, fontSize: '12px' }}>{selectedVenue.architect}</span>
-                    </>
+                  {tasteLiftById.has(selectedVenue.id) && (
+                    <div style={{ color: t ? "#8A6B1F" : "#D4A547", marginTop: '6px', fontSize: '12px', lineHeight: 1.5 }}>
+                      {language === 'ko'
+                        ? `좋아요한 작품과 닮은 소장품이 평균의 ${tasteLiftById.get(selectedVenue.id)}배예요`
+                        : `${tasteLiftById.get(selectedVenue.id)}× the usual share of works like the ones you liked`}
+                    </div>
                   )}
                 </div>
+
+                {selectedVenue.architect && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px', marginLeft: '8px' }}>
+                    <span style={{ color: cFg35, fontSize: '12px' }}>{selectedVenue.architect}</span>
+                  </div>
+                )}
 
                 <div style={{ width: '100%', height: '1px', background: cDiv, marginTop: '24px' }} />
               </div>
@@ -1444,16 +1458,19 @@ export function VenuePanel({ city, theme, placement = "default", onClose, onOpen
                               <div
                                 style={{
                                   fontSize: '12px',
+                                  lineHeight: 1.45,
                                   color: t ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.55)",
                                   display: '-webkit-box',
-                                  WebkitLineClamp: 2,
+                                  WebkitLineClamp: 3,
+                                  wordBreak: 'keep-all',
+                                  overflowWrap: 'anywhere',
                                   WebkitBoxOrient: 'vertical' as any,
                                   overflow: 'hidden',
                                 }}
                               >
                                 {ex.title}
                               </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '6px' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '4px 8px', marginTop: '6px' }}>
                                 <div style={{ width: '4px', height: '4px', borderRadius: '50%', flexShrink: 0, backgroundColor: typeColor(ex.type, t) }} />
                                 <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: t ? "rgba(0,0,0,0.22)" : "rgba(255,255,255,0.22)" }}>
                                   {ex.period}
@@ -1461,11 +1478,16 @@ export function VenuePanel({ city, theme, placement = "default", onClose, onOpen
                                 <span style={{ fontSize: '7px', letterSpacing: '0.1em', textTransform: language === 'ko' ? 'none' : 'uppercase', color: typeColor(ex.type, t) }}>
                                   {getExhibitionTypeLabel(ex.type, language)}
                                 </span>
+                                {ex.id && ex.type !== "permanent" && (
+                                  <RatingEmblems
+                                    subject={{ kind: "exhibition", id: ex.id }}
+                                    title={ex.title}
+                                    subtitle={selectedVenue?.name}
+                                    size={11}
+                                    color={t ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.62)"}
+                                  />
+                                )}
                               </div>
-                            </div>
-                            {/* Arrow */}
-                            <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', fontSize: '14px', color: t ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)" }}>
-                              &rsaquo;
                             </div>
                           </div>
                         </button>

@@ -1,0 +1,434 @@
+{
+  "museum": "Pera Museum",
+  "collection": "Suna and İnan Kıraç Foundation Collection",
+  "website": "https://www.peramuseum.org/collection",
+  "scraped_date": "2026-06-11",
+  "total_count": 20,
+  "source_type": "json-endpoint",
+  "category_breakdown": {
+    "painting": 12,
+    "photograph": 8
+  },
+  "artworks": [
+    {
+      "id": "pera-museum-89",
+      "objectNumber": "",
+      "title": "Two Musician Girls",
+      "artist": "Osman Hamdi Bey",
+      "date": "Second half of the 19 th century",
+      "year": 1850,
+      "medium": "Oil on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "Although he is regarded as an Orientalist painter, Osman Hamdi Bey’s perception of the East is remarkably different his Western counterparts. As opposed to the Western Orientalists who emphasize sexuality in their female figures, in Osman Hamdi Bey’s paintings the female figures are often conscious of the period of Westernization in the Ottoman Empire, as well as their individual identities and talents, and are thus open to learning and self-development. In a number of Osman Hamdi Bey’s works, the Ottoman woman is portrayed while playing an instrument, reading, or arranging the flowers in her house and she always appears fully clothed. In this painting, which incorporates architectural elements of the Bursa Green Mosque, apart from musical instruments like the tambur (lute) and the tambourine, Ottoman decorative elements such as rugs, woodwork, stone carving, and tiles complement the artist’s unique approach to the female identity.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-89-172ea3ed-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_1.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/two-musician-girls/15/89",
+      "metadata": {
+        "api_id": 89
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_1.jpg"
+    },
+    {
+      "id": "pera-museum-91",
+      "objectNumber": "",
+      "title": "Yusuf Agah Efendi",
+      "artist": "Unknown",
+      "date": "1794-1796",
+      "year": 1794,
+      "medium": "Oil on canvas",
+      "dimensions": "240 x 148 cm",
+      "category": "painting",
+      "description": "During the meeting held in 1793 at the seaside mansion of the reis-ül küttab (chief scribe) in Bebek, a decision was made to establish the first permanent embassy of the Ottoman State in England for the “necessary implementation of the ambassadorial system as per the European standards.” Consequently, the Crete-born Scribe of the Navy Yusuf Agah Efendi was appointed as the first ambassador. As soon as Sir Robert Ainslie, the British ambassador to İstanbul, arranged the details of the journey, the delegation left for London in October 1793. Passing through Austria, Germany, and Belgium, the delegation arrived at the Port of Ostend, crossed the English Channel in stormy weather, and set foot in England by way of sea. Upon reaching Dover, salvo fires and a military band welcomed the delegation. In a letter he wrote to Foreign Minister Lord Grenville, General Smith, who was among the group that greeted the delegation, described Yusuf Agah Efendi as a “charming and respectable old man,” sırkatibi (literally, the secret scribe) Mahmud Raif Efendi as “young and reasonable,” and chief translator Emanuel Persiani as “intelligent and skillful.” Arriving in London nearly two months after leaving İstanbul, the delegation first stayed at the Royal Hotel in Pall Mall and later settled into the residence they picked out on Adams Street in Adelphi, along the Thames. Every week on Wednesdays, they would join King George III’s audience held for high-level officials and ambassadors; on Thursdays, they would participate in the functions Queen Charlotte organized where women and members of the royal family were also present. However, due to the 8-month delay in the arrival of the gifts and letters of credence shipped from İstanbul, and in the absence of the King in London, they were able to present their letters of credence and officially assume their duties 14 months after their arrival. The audience was coincided with the opening of the Parliament on 29 January 1795 and thus took place amidst a grand procession of more than 20 horse carriages and 200 guards. The gifts, including guns encrusted with precious stones, Arabian horses with gold tackles, and silk fabrics that Sultan Selim III had sent were presented to the King, the Queen, the Prince of Wales, The Duke of Portland, and the Foreign Minister. Often in attendance at the banquets participated by high-level bureaucrats in London, Yusuf Agah Efendi had a monumentally-sized portrait made by Swedish artist Carl Fredrik von Breda, who was known for the portraits he painted at his studio on St. James Street. Yusuf Agah Efendi’s ambassadorial mission ended in July 1797. The “havadisname” (collection of correspondence) he prepared, as well as the detailed report he had Mahmud Raif Efendi write in French not only include political events, but also offer numerous observations on British economy and social life, the structure of the Parliament, the working of the political system, palace customs, the city of London, universities, and factories. Scan this artwork with Blippar application and see yourself in the painting! Click here for more info!",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-91-4e88840c-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_3.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/yusuf-agah-efendi/15/91",
+      "metadata": {
+        "api_id": 91
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_3.jpg"
+    },
+    {
+      "id": "pera-museum-92",
+      "objectNumber": "",
+      "title": "The Tortoise Trainer",
+      "artist": "Osman Hamdi Bey",
+      "date": "1906",
+      "year": 1906,
+      "medium": "Oil on canvas",
+      "dimensions": "221.5 x 120 cm",
+      "category": "painting",
+      "description": "The painting introduced as “L’homme aux Tortues” in the Salon exhibition organized by Société des Artistes Français on 1 May 1906 in Paris, and briefly referred to in English as “Tortoises” in one of the exhibition catalogues, is none other than Osman Hamdi Bey’s famous work that has come to be known as the “Tortoise Trainer.” The date “1906” on the painting suggests that the painting was completed in the early months of that year in order to be included in the exhibition held in May. Osman Hamdi executed another painting of the same composition in a smaller scale, though withsome differences in detail. This second version includes a dedication by Osman Hamdi Bey tohis in-law Salih Münir Paşa(1). In a letter he wrote to his father from Baghdad 37 years prior to the execution of the painting, Osman Hamdi thanks him for sending an issue of Tour de Monde, which he admits to having read with great pleasure. The said issue of the journal includes an article written by Swiss diplomat Aimé Humbert, who conveys his impressions of Japan and speaks of Korean tortoise trainers. Illustrated with an engraving, the article further reveals that accompanied by the rhythm of their trainer’s small drum, the tortoises learn to walk in a single line and pile on top of one another on a low table. It can be assumed that the article and engraving in question gave the initial idea of inspiration to Osman Hamdi Bey for his painting(2). In the scene by Osman Hamdi, we see a male figure in oriental attire, pensively watching the tortoises eating the greenery on the floor. He holds a ney in his hand and carries a percussion instrument –possibly nakkare or kudüm– on his back. The pediment of the lancet window in front of which he stands bears the following inscription: “Closeness to the beloved (Muhammad), healing to the heart.” Frequently appearing in other paintings by the artist, the upper room of Bursa’s Yeşil Cami (Green Mosque) is used as the space in this work. Similarly, the figure is modeled after Osman Hamdi himself. While the instruments he carries might suggest that he is a dervish, hisheadgear is strikingly similar to the headgear of “Kurd of Mardin,” which is described in Elbise-i Osmaniye as “felt kalpak wrapped in kerchiefs.” It is known that during the time he spent in Vienna, Osman Hamdi had several photographs taken in this costume. As often encountered in his other paintings, the artist must have used various photographs for the details of figure and space(3). “The Tortoise Trainer” is one of Osman Hamdi Bey’s five works included in the Suna and İnan Kıraç Foundation Orientalist Painting Collection. These works form a group that exemplifies the different subjects and stylistic approaches, which the artist ventured into. Like “The Tortoise Trainer,” the “Two Musician Girls” is also a work in which the orientalist tendency stands out. The work, which the artist created in order for it to be sent to an exhibition, reflects the stylistic approach of French academic painting. The “Shepherd Mustafa Pasha Complex in Gebze” is an example of landscape paintings using free brush technique, depicting the views from Gebze and Eskihisar regions. The paintings “Girl with Pink Cap” and “Kökenoğlu Rıza Efendi” are examples of Osman Hamdi’s portraits of people in his circle of family and friends(4). In this regard, Osman Hamdi Bey’s paintings included in the Suna and İnan Kıraç Foundation Orientalist Painting Collection form a whole that encapsulates and thus offers the opportunity to better understand and accurately evaluate the artist’s production. (1) See. Ludovic Baschet (ed.), Catalogue Illustré du Salon de 1906. (Paris: Bibliotheque des Annales, 1906), 23. (2) Edhem Eldem, Osman Hamdi Bey Sözlüğü . (İstanbul: T.C. Kültür ve Turizm Bakanlığı, 2010), 325. (3) Edhem Eldem, Osman Hamdi Bey Sözlüğü . (İstanbul: T.C. Kültür ve Turizm Bakanlığı, 2010), 322, 325. (4) See. Mustafa Cezar, Sanatta Batıya Açılış ve Osman Hamdi. (Istanbul: Erol Kerim Aksoy Kültür, Eğitim, Spor ve Sağlık Vakfı Yayınları, 1995), 354. Semra Germaner and Zeynep İnankur, Oryantalistlerin İstanbulu. (Istanbul: Türkiye İş Bankası Kültür Yayınları, 2002), 301.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-92-c53543a8-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/Kaplumbag_a-terbiyecisi-Koleksiyon.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/the-tortoise-trainer/15/92",
+      "metadata": {
+        "api_id": 92
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/Kaplumbag_a-terbiyecisi.jpg"
+    },
+    {
+      "id": "pera-museum-93",
+      "objectNumber": "",
+      "title": "Mehmed Said Efendi and his Retinue",
+      "artist": "George Engelhardt Schröder",
+      "date": "Mid-18th Century",
+      "year": 1740,
+      "medium": "Oil on canvas",
+      "dimensions": "113 x 142 cm",
+      "category": "painting",
+      "description": "Mehmet Said Efendi, who in this picture has been depicted together with his retinue of fourteen people, was sent to Sweden as ambassador four years after Kozbekçi Mustafa Ağa, with mission of collecting the debt of Charles XII to the Ottoman state. Mehmet Said Efendi is visible in the centre of the composition. From his Sefaretname (diary of his ambassadorship) we learn that he was received by the king with majestic ceremonies but that he had to return without having been able to collect the debt. The matter was solved when Sweden promised to support the Ottomans in their war with the Russians and the Swedes gave a warship as payment for the debt.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-93-db23e7a3-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/Mehmedsaidefendi-koleksiyon.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/mehmed-said-efendi-and-his-retinue/15/93",
+      "metadata": {
+        "api_id": 93
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/Mehmedsaidefendi.jpg"
+    },
+    {
+      "id": "pera-museum-94",
+      "objectNumber": "",
+      "title": "Amusement on the Caique",
+      "artist": "Fausto Zonaro",
+      "date": "1891 – 1910",
+      "year": 1891,
+      "medium": "Oil on canvas",
+      "dimensions": "38 x 61 cm",
+      "category": "painting",
+      "description": "Strongly evident in his landscapes, Zonaro’s Impressionist technique, which is manifested in his rapid brushstrokes and use of vivid colors, is also a dominant feature of this work. Here, Zonaro reveals a brief instant from Istanbul life of the period. The artist prepared a book on the beauties of the city with Adolphe Thalasso, whom he met in &lsaquo;stanbul. As part of this book, Deri Se'adet ou Stamboul Porte du Bonheur, Sc&egrave;nes de la Vie Turque (Dersaadet or the Gate of Felicity, Scenes from Turkish Life), which was published in Paris in 1925, a selection of the Zonaro paintings created in &lsaquo;stanbul were printed as color lithographs. Accompanied by Thalasso’s text, this composition appears in the section entitled &ldquo;en caiq&rdquo; (on the caique).",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-94-1efb7753-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_6.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/amusement-on-the-caique/15/94",
+      "metadata": {
+        "api_id": 94
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_6.jpg"
+    },
+    {
+      "id": "pera-museum-95",
+      "objectNumber": "",
+      "title": "A Scene from the Turkish Harem",
+      "artist": "Unknown",
+      "date": "Second half of the 17th Century",
+      "year": 1650,
+      "medium": "Oil on canvas",
+      "dimensions": "130 x 193.5 cm",
+      "category": "painting",
+      "description": "The Austrian artists, which were in the retinue of the Embassy delegation led by Hans Ludwig von Kuefstein that Holy Roman Emperor Ferdinand II sent to Murad IV in 1628, depicted audiences of the delegation, the sultan and his family, various Ottoman garments and intriguing facets of daily life. This painting is possibly a part of such a series. The 1654 inscription over the painting reads, &ldquo;As it is not customary for distinguished Turkish ladies to leave the house or meet strangers, they invite each other to their homes and amuse themselves with dance, comedy and similar forms of entertainment&rdquo;. In the lower section of the painting, guests are greeted while women dance to the rhythm of the tambourine. In the upper section, two women are seen dancing with scarves on their heads and embroidered kerchiefs in their hands, accompanied by musicians playing traditional instruments, such as rebab, santur, and tambourine. The carpets, garments and instruments are depicted in elaborate detail.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-95-c81a35f8-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_7.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/a-scene-from-the-turkish-harem/15/95",
+      "metadata": {
+        "api_id": 95
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_7.jpg"
+    },
+    {
+      "id": "pera-museum-96",
+      "objectNumber": "",
+      "title": "Sultan Mahmud II",
+      "artist": "Unknown",
+      "date": "Second half of the 19th Century",
+      "year": 1850,
+      "medium": "Oil on canvas",
+      "dimensions": "189 x 91 cm",
+      "category": "painting",
+      "description": "After his dress reform in 1828, the sultan is depicted in a frock coat, trousers, mantle and fez, which is a way of dressing spread throughout the empire. The inscription on the right upper side of the painting, \"Cennet-mekan Gazi Sultan Mahmud Han-ı Sani\" (The Warrior Sultan Mahmud Khan II, who now rules in Paradise), tells that the portrait was done after his death. Sultan Mahmud II commissioned many portraits of himself, standing, at full-length and half-length, with the aim of having them hung in state offices, and in this new iconography to the portraiture of Ottoman Sultans, which was in the manner of the European ruler portraiture tradition.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-96-1016feaa-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_8.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/sultan-mahmud-ii/15/96",
+      "metadata": {
+        "api_id": 96
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_8.jpg"
+    },
+    {
+      "id": "pera-museum-97",
+      "objectNumber": "",
+      "title": "Portrait of Charles Gravier Count of Vergennes and French Ambassador, in Turkish Attire",
+      "artist": "Unknown",
+      "date": "Second half of the 18th Century",
+      "year": 1750,
+      "medium": "Oil on canvas",
+      "dimensions": "141.5 x 113 cm",
+      "category": "painting",
+      "description": "In this portrait, painted by the artist in Istanbul, the ambassador has been depicted with a smoking pipe, in Turkish garb, while sitting in an Ottoman style room. The exquisitely drawn minute details of the clocks on the cushion, on which the model is resting his right arm, the floral decorated and bejeweled dagger on the yemeni belt and the string of prayer beads on his left hand, are noteworthy. Count of Vergennes Charles Gravier (1717-1787) was appointed ambassador extraordinary to the Ottoman capital in 1755 and in the same year he became the appointed ambassador. He kept this position until 1768 and throughout that time sought to improve relations between the two countries so as to increase the volume of bilateral trade. After leaving Istanbul and also because of his success in Sweden, he was made Foreign Affairs Minister during the reign of Louis XVI and was influential in continuing the good relations with the Ottoman Empire. Apart from the reception of the ambassador by the sultan, Favray also depicted a panorama of Istanbul for the ambassador. Scan this artwork with Blippar application and see yourself in the painting! Click here for more info!",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-97-a9b17f35-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_9.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/portrait-of-charles-gravier-count-of-vergennes-and-french-ambassador-in-turkish-attire/15/97",
+      "metadata": {
+        "api_id": 97
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_9.jpg"
+    },
+    {
+      "id": "pera-museum-98",
+      "objectNumber": "",
+      "title": "A European in Turkish Costume",
+      "artist": "Unknown",
+      "date": "Second half of the 18th Century - Late 18th Century",
+      "year": 1750,
+      "medium": "Oil on canvas",
+      "dimensions": "146 x 119 cm",
+      "category": "painting",
+      "description": "It is known that Favray, who while he was in Istanbul was in close contact with the French and Russian embassies, did many portraits of people connected to the embassies. He primarily worked under the patronage of French ambassadors and he has depicted the model for this painting in a pose and composition reminiscent of the portraits of the Vergennes Count and Countess, which are also in this exhibition. This portrait of a young man sitting on a Turkish rug and leaning against a cushion differs from the other Favray paintings in the exhibition, in the use of a landscape background.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-98-b1c3c04b-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_10.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/a-european-in-turkish-costume/15/98",
+      "metadata": {
+        "api_id": 98
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_10.jpg"
+    },
+    {
+      "id": "pera-museum-99",
+      "objectNumber": "",
+      "title": "The Conversation",
+      "artist": "Vanmour School",
+      "date": "First half of the 18 th century",
+      "year": 1700,
+      "medium": "Oil on canvas",
+      "dimensions": "44 x 62 cm",
+      "category": "painting",
+      "description": "This work is part of a four-painting series by the Vanmour School featured in the exhibition depicting a genre scene. The painting, which reflects the domestic life of upper-class members of society, also includes a central fountain that evokes mosque architecture. Again, it is based on a Vanmour painting, which has survived to date. With the exception of small variations in the patterns of the sofa pillows, the composition of the paintings is identical. Nonetheless, when the paintings are studied more carefully, differences in figure styles, brushstroke technique, and details become evident. A radiographic comparison of the two paintings conducted by Paolo Spezzani in 1993 shed light to the technical and stylistic differences between the work of Vanmour and his school. There exists another copy of the same composition created by Antonio or Francesco Guardi for the Count of Schulenburg. In yet another, similar painting by Vanmour in the Rijksmuseum collection, the figures are depicted while playing cards. “The Conversation” was exhibited in the “Turquerie” exhibition in Paris in 1911.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-99-20c5a869-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/sohbet-koleksiyon.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/the-conversation/15/99",
+      "metadata": {
+        "api_id": 99
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/Sohbet.jpg"
+    },
+    {
+      "id": "pera-museum-100",
+      "objectNumber": "",
+      "title": "Panorama of Sarayburnu",
+      "artist": "Unknown",
+      "date": "Late 18th Century - Early 19th Century",
+      "year": 1775,
+      "medium": "Watercolor on paper",
+      "dimensions": "75 x 237 cm",
+      "category": "painting",
+      "description": "This panoramic composition of Cassas, which centers on the Topkapı Palace, is likely to have been created upon his return to his country and is based on the drawings he made during the time he lived in Istanbul. It is known that during his second visit to Istanbul in 1786, the artist made approximately 30 drawings, portraying the major structures and the overall view of the city. The composition is bordered by the entrance to the Bosphorus and Kadıköy on the left, and the Sultanahmed Mosque on the right. For this typical view of Istanbul, similar examples of which have been painted by European traveler-artists since the 16th century, Cassas presumably used the drawings he made from the balcony of the French Palace or gardens of the Swedish Palace. While the artist often includes figures and genre details in his landscapes, in this particular work, he also reveals the commotion at sea through a depiction of sailboats, commercial boats, and imperial caiques with kiosks (stern pavilions) in front of Haliç and Sarayburnu. A similar work by Cassas, which also offers a view of Galata with the flora and the graveyard in the foreground, is part of the collection of Mus&eacute;e de Valenciennes in France.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-100-c021603d-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_12.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/panorama-of-sarayburnu/15/100",
+      "metadata": {
+        "api_id": 100
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_12.jpg"
+    },
+    {
+      "id": "pera-museum-101",
+      "objectNumber": "",
+      "title": "Portrait of the Countess of Vergennes in Turkish Attire",
+      "artist": "Unknown",
+      "date": "Second half of the 18th Century",
+      "year": 1750,
+      "medium": "Oil on canvas",
+      "dimensions": "129 x 96 cm",
+      "category": "painting",
+      "description": "\"Having been appointed to various posts in Portugal and Spain, French diplomat Charles Gravier, Comte de Vergennes (1719- 1787) arrived in Istanbul in 1755 as minister plenipotentiary and was soon made full ambassador, a post he held until he was recalled to France in 1768. During his mission, the role of France in the Ottoman State’s trade with the west increased; just as France had intended, the same year Gravier left Istanbul, the Ottomans reentered war with the increasingly strengthening Imperial Russia. A French military officer of Hungarian origin in the retinue of Vergennes, Baron de Tott contributed towards the renewal of the Ottoman army. Partly due to his diplomatic achievements in Sweden after he left Istanbul, Comte de Vergennes was appointed as foreign minister during the reign of King Louis XVI. He played an instrumental role in the American War of Independence with his policies in favor of the liberation process. Without seeking the king’s consent, Gravier had married Anette de Viviers (1730 – 1798), the widow of a merchant from Pera, after he lived with her for several years and fathered two children out of wedlock. This marriage is cited among the reasons that prompted Gravier’s recall to France. Comte de Vergennes had taken French artist Antoine de Favray in his retinue upon the latter’s arrival in Istanbul in 1862; when he left Istanbul, he entrusted de Favray to the new French ambassador Saint Priest. Before he arrived in Istanbul, de Favray, a Knight himself, was recognized for his portraits of the Grand Master and knights of the Order of St John in Malta, as well as his depictions of Maltese women. Hijacked to Malta by mutinying Christian slaves, the Kaptan Paşa galley was bought by France upon the advice of Vergennes, who kept his country’s relations with the Ottoman Empire in regard, and was returned to the Ottomans. De Favray arrived in Istanbul aboard this vessel, painted an Istanbul panorama to commemorate this event, as well as the ambassador’s audience with Sultan Osman III, and made portraits of Comte and Comtesse de Vergennes in Turkish attire, whom the ambassador married shortly before he left Istanbul. The paintings stand out with the meticulous attention to detail in clothes and accessories. During the nine years he spent in Istanbul, de Favray first lived at the French Palace and later at the Russian Palace, executed portraits of individuals in the embassy circles, and painted genre scenes of Levantine women, as well as Istanbul panoramas from the hills of Pera. The countess has been depicted in a pose similar to that of her husband, Ambassador Charles Gravier, while sitting on a divan. The difference is that the Countess of Vergennes is looking directly towards the viewer. In both paintings the clothing and jewelry have been depicted in exquisite detail, the drawing has been rendered with great care and the artist has been very successful in reflecting the texture of materials like fur, cloth, pearls and gold.” Scan this artwork with Blippar application and see yourself in the painting! Click here for more info!",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-101-a348139e-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_13.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/portrait-of-the-countess-of-vergennes-in-turkish-attire/15/101",
+      "metadata": {
+        "api_id": 101
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/oryantalist_detay_yuksek_13.jpg"
+    },
+    {
+      "id": "pera-museum-128",
+      "objectNumber": "",
+      "title": "Tophane Buildings and Salıpazarı",
+      "artist": "Unknown",
+      "date": "Late 19 th Century",
+      "year": 1875,
+      "medium": "Albumen paper",
+      "dimensions": "25.5 x 19.5 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-128-aa78eaae-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_1.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/tophane-buildings-and-salipazari/15/128",
+      "metadata": {
+        "api_id": 128
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_1.jpg"
+    },
+    {
+      "id": "pera-museum-129",
+      "objectNumber": "",
+      "title": "Tophane Fountain",
+      "artist": "Unknown",
+      "date": "Late 19 th Century",
+      "year": 1875,
+      "medium": "Albumen paper",
+      "dimensions": "25.5 x 19.3 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-129-1eef8e8a-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/tophane-fountain/15/129",
+      "metadata": {
+        "api_id": 129
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_2.jpg"
+    },
+    {
+      "id": "pera-museum-130",
+      "objectNumber": "",
+      "title": "Nusretiye Mosque and the Field Marshal Officer",
+      "artist": "Unknown",
+      "date": "Late 19 th Century",
+      "year": 1875,
+      "medium": "Albumen paper",
+      "dimensions": "24.7 x 18.6 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-130-d1e4e251-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_3.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/nusretiye-mosque-and-the-field-marshal-officer/15/130",
+      "metadata": {
+        "api_id": 130
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_3.jpg"
+    },
+    {
+      "id": "pera-museum-131",
+      "objectNumber": "",
+      "title": "Dolmabahçe Mosque and Square",
+      "artist": "Unknown",
+      "date": "Late 19 th Century",
+      "year": 1875,
+      "medium": "Albumen paper",
+      "dimensions": "25.6 x 19.4 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-131-64c574c7-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_4.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/dolmabahce-mosque-and-square/15/131",
+      "metadata": {
+        "api_id": 131
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_4.jpg"
+    },
+    {
+      "id": "pera-museum-132",
+      "objectNumber": "",
+      "title": "Boğazkesen / Tophane",
+      "artist": "Unknown",
+      "date": "Late 19 th Century",
+      "year": 1875,
+      "medium": "Albumen paper",
+      "dimensions": "27.7 x 21.3 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-132-a2101d56-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_5.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/bogazkesen-tophane/15/132",
+      "metadata": {
+        "api_id": 132
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_5.jpg"
+    },
+    {
+      "id": "pera-museum-133",
+      "objectNumber": "",
+      "title": "Kız Kulesi, Galata and Fındıklı Residential Areas",
+      "artist": "Unknown",
+      "date": "Late 19 th Century",
+      "year": 1875,
+      "medium": "Albumen paper",
+      "dimensions": "26.5 x 20.1 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-133-6be0a66c-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_6.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/kiz-kulesi-galata-and-findikli-residential-areas/15/133",
+      "metadata": {
+        "api_id": 133
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_6.jpg"
+    },
+    {
+      "id": "pera-museum-134",
+      "objectNumber": "",
+      "title": "The Port from the Galata Tower",
+      "artist": "Unknown",
+      "date": "Mid-19 th Century",
+      "year": 1840,
+      "medium": "Albumen paper",
+      "dimensions": "56.9 x 22.3 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-134-8be03023-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_7.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/the-port-from-the-galata-tower/15/134",
+      "metadata": {
+        "api_id": 134
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_7.jpg"
+    },
+    {
+      "id": "pera-museum-135",
+      "objectNumber": "",
+      "title": "Dolmabahçe Palace and its Theatre",
+      "artist": "Unknown",
+      "date": "Mid-19 th Century",
+      "year": 1840,
+      "medium": "Albumen paper",
+      "dimensions": "66.5 x 25.4 cm",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-135-29f951e5-imageUrl.webp",
+      "thumbnailUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_detay_8.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.peramuseum.org/artwork/dolmabahce-palace-and-its-theatre/15/135",
+      "metadata": {
+        "api_id": 135
+      },
+      "original_imageUrl": "https://www.peramuseum.org/Repo/Collection/Images/istanbul_fotograflari_yuksek_detay_8.jpg"
+    }
+  ]
+}

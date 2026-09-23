@@ -1,0 +1,226 @@
+/* ══════════════════════════════════════════════════════════════
+   Search tab — two studies, one style.
+   The style is the map tab's: #080808 ground, gold #d4a547, Space
+   Mono numerals, hairlines instead of boxes, padded counts, and the
+   AI tab's type pair — Paperlogy for headings, Wanted Sans for the
+   small type. Neither study changes any of it.
+
+   The field, the AI switch, the recent-query line and the trending
+   index are all shared. What differs is the frame under them — a
+   board or a drawer.
+   ══════════════════════════════════════════════════════════════ */
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css");
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+.se-page {
+  --g: #080808;
+  --ink: rgba(244,241,234,0.96); --ink-2: rgba(244,241,234,0.62); --ink-3: rgba(244,241,234,0.40);
+  --rule: rgba(244,241,234,0.10); --hair: rgba(244,241,234,0.16);
+  --acc: #d4a547; --acc-rgb: 212,165,71;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.16,1,.3,1);
+  min-height: 100dvh; background: var(--g); color: var(--ink); font-family: var(--body);
+}
+.se-page *, .se-page *::before, .se-page *::after { box-sizing: border-box; }
+.se-page { word-break: keep-all; }
+/* index.css styles every button on the site - 8px radius, a border, a
+   dark fill and `button:focus { outline: 4px auto -webkit-focus-ring-color }`.
+   That focus ring is the rounded "tray" that kept appearing around a
+   chosen row after a click, so it is cleared here; keyboard users still
+   get a ring through :focus-visible below. */
+.se-page button { font: inherit; color: inherit; background: none; border: 0; border-radius: 0;
+  padding: 0; cursor: pointer; }
+.se-page button:focus { outline: none; }
+/* `ol` too: the rankings draw their own padded figures, so the
+   browser's default numbering would print a second set. */
+.se-page ul, .se-page ol { list-style: none; margin: 0; padding: 0; }
+.se-page p, .se-page h1 { margin: 0; }
+.se-page button:focus-visible, .se-page a:focus-visible, .se-page input:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+
+/* ── study chrome ─────────────────────────────────────────────── */
+.se-header { height: 54px; padding: 0 clamp(14px,3vw,28px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--rule); }
+.se-wordmark { color: var(--ink); font-family: var(--display); font-weight: 700; letter-spacing: -0.035em; text-decoration: none; }
+.se-wordmark span { color: var(--ink-3); font-size: 11px; letter-spacing: .08em; }
+.se-header-actions { display: flex; align-items: center; gap: 14px; }
+.se-header-actions a { color: var(--ink-2); font-size: 11px; text-decoration: none; }
+.se-header-actions button { color: var(--ink-2); font-size: 12px; font-weight: 600; letter-spacing: .14em; }
+.se-studybar { display: flex; align-items: center; gap: clamp(12px,1.8vw,22px); padding: 14px clamp(14px,3vw,28px) 0; overflow-x: auto; scrollbar-width: none; }
+.se-studybar::-webkit-scrollbar { display: none; }
+.se-studybar__label { flex: none; font: 650 9.5px/1 var(--num); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.se-page .se-studybar a { display: inline-flex; align-items: baseline; gap: 6px; padding-bottom: 6px; white-space: nowrap;
+  color: var(--ink-3); text-decoration: none; font-size: 12px; border-bottom: 1px solid transparent; transition: color .16s ease; }
+.se-page .se-studybar a em { font: 500 9.5px/1 var(--num); font-style: normal; letter-spacing: .06em; }
+.se-page .se-studybar a:hover { color: var(--ink-2); }
+.se-page .se-studybar a.is-active { color: var(--acc); border-bottom-color: var(--acc); }
+.se-note { margin: 10px clamp(14px,3vw,28px) 0; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+  color: var(--ink-3); font-size: 11.5px; line-height: 1.6; }
+.se-note b { font-weight: 700; color: var(--ink-2); margin-right: 6px; }
+
+.se-main { max-width: 1000px; margin: 0 auto; padding: clamp(20px,4vw,40px) clamp(14px,3vw,28px) 110px; }
+
+/* ── the lead: the map tab's title block ──────────────────────── */
+.se-lead { max-width: 44rem; margin-bottom: clamp(24px,4vw,40px); }
+.se-lead__meta { margin-bottom: .9rem; color: var(--acc); font-family: var(--num); font-size: .64rem; font-weight: 650; letter-spacing: .1em; }
+/* Korean has no spaces inside a phrase, so a browser will break it
+   between any two syllables - which is how "미술관에서든" split across
+   two lines. `word-break: keep-all` makes it break at word boundaries. */
+.se-lead h1 { max-width: 18ch; font-family: var(--display); font-size: clamp(1.9rem,4vw,3rem); font-weight: 700;
+  line-height: 1.1; letter-spacing: -0.05em; word-break: keep-all; text-wrap: balance; }
+
+/* ── the field: a rule under the line of type ─────────────────── */
+.se-field { display: flex; align-items: center; gap: 11px; margin-top: 1.5rem; padding: 14px 2px;
+  border-bottom: 2px solid var(--rule); color: var(--ink-3); transition: border-color .16s ease; }
+.se-field:focus-within { border-bottom-color: var(--acc); }
+.se-field input { flex: 1; min-width: 0; border: 0; background: none; color: var(--ink); font-family: var(--body);
+  font-size: 16px; outline: none; }
+.se-field input::placeholder { color: var(--ink-3); }
+
+/* ── the AI switch ────────────────────────────────────────────
+   One control, as in the real field: the knob says whether semantic
+   search is on, and the two tabs beside it say which engine is behind
+   it — 빠름 (SigLIP) or 정밀 (Jina). State is carried by position and
+   by an underline, never by a filled slab. */
+.se-switch { flex: none; display: inline-flex; align-items: center; gap: 14px; }
+.se-page .se-switch button { font-family: var(--num); font-size: 10.5px; font-weight: 650; letter-spacing: .08em;
+  color: var(--ink-3); transition: color .18s ease; }
+.se-page .se-switch button:hover { color: var(--ink-2); }
+.se-page .se-switch__toggle { display: inline-flex; align-items: center; gap: 8px; }
+.se-switch__rail { position: relative; width: 26px; height: 12px; border: 1px solid var(--hair); transition: border-color .22s ease; }
+.se-switch__rail b { position: absolute; top: 1px; left: 1px; width: 10px; height: 8px; background: var(--ink-3);
+  transition: left .22s var(--ease), background .22s ease; }
+.se-switch[data-on] .se-switch__rail { border-color: var(--acc); }
+.se-switch[data-on] .se-switch__rail b { left: 13px; background: var(--acc); }
+.se-page .se-switch[data-on] .se-switch__toggle { color: var(--acc); }
+.se-switch__tabs { display: inline-flex; gap: 14px; }
+.se-page .se-switch__tabs button { padding-bottom: 4px; box-shadow: 0 1px 0 transparent; }
+.se-page .se-switch__tabs button.is-active { color: var(--acc); box-shadow: 0 2px 0 var(--acc); }
+
+/* Nobody notices a hairline switch, so while it is off it shows what it
+   does: every few seconds the knob slides most of the way over and
+   falls back, the rail warms to gold behind it, and the word brightens.
+   That teaches the affordance rather than just blinking. The hint stops
+   on hover — the viewer has found it — and for good once AI is on. */
+@keyframes se-hint-knob {
+  0%, 62%, 100% { left: 1px; background: var(--ink-3); }
+  72%, 80%      { left: 11px; background: var(--acc); }
+  90%           { left: 1px; background: var(--acc); }
+}
+@keyframes se-hint-rail {
+  0%, 62%, 100% { border-color: var(--hair); box-shadow: 0 0 0 0 rgba(var(--acc-rgb),0); }
+  76%           { border-color: var(--acc); box-shadow: 0 0 0 3px rgba(var(--acc-rgb),.14); }
+  92%           { border-color: rgba(var(--acc-rgb),.5); box-shadow: 0 0 0 0 rgba(var(--acc-rgb),0); }
+}
+@keyframes se-hint-word {
+  0%, 62%, 100% { color: var(--ink-3); }
+  76%, 88%      { color: var(--acc); }
+}
+.se-switch:not([data-on]) .se-switch__rail { animation: se-hint-rail 4.2s var(--ease) 1.2s infinite; }
+.se-switch:not([data-on]) .se-switch__rail b { animation: se-hint-knob 4.2s var(--ease) 1.2s infinite; }
+.se-page .se-switch:not([data-on]) .se-switch__toggle { animation: se-hint-word 4.2s var(--ease) 1.2s infinite; }
+.se-switch:not([data-on]):hover .se-switch__rail,
+.se-switch:not([data-on]):hover .se-switch__rail b,
+.se-page .se-switch:not([data-on]):hover .se-switch__toggle { animation: none; }
+.se-page .se-switch:not([data-on]):hover .se-switch__toggle { color: var(--ink-2); }
+
+/* ── recent queries: the compact line under the field ─────────
+   It sits in the slot the museum/genre counts used to hold, so it is
+   sized like a caption rather than like a list - the query at 11.5px
+   and its age set in the margin of its own word. */
+.se-recent { display: flex; align-items: baseline; gap: 12px; margin-top: 13px; }
+.se-recent__tag { flex: none; font-family: var(--num); font-size: 8.5px; letter-spacing: .1em; color: var(--acc); }
+.se-recent__run { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 3px 16px; }
+.se-page .se-recent__run button { color: var(--ink-2); font-size: 11.5px; transition: color .16s ease; }
+.se-page .se-recent__run button:hover { color: var(--acc); }
+.se-recent__run button em { margin-left: 5px; font-family: var(--num); font-style: normal; font-size: 8px;
+  letter-spacing: .04em; color: var(--ink-3); }
+.se-page .se-recent__clear { flex: none; font-family: var(--num); font-size: 8.5px; letter-spacing: .06em;
+  color: var(--ink-3); transition: color .16s ease; }
+.se-page .se-recent__clear:hover { color: var(--ink-2); }
+
+/* ── trending: an index — term first, a dotted leader, figure right ── */
+.se-live { margin-bottom: clamp(26px,4vw,42px); padding-bottom: clamp(22px,3vw,32px);
+  border-bottom: 1px solid var(--rule); }
+.se-live header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.se-live header span { font-family: var(--num); font-size: 9.5px; letter-spacing: .1em; color: var(--acc); }
+.se-live header i { flex: 1; height: 1px; background: var(--rule); }
+.se-live header em { font-family: var(--num); font-style: normal; font-size: 9px; letter-spacing: .06em; color: var(--ink-3); }
+.se-index { columns: 2; column-gap: 38px; }
+.se-index li { break-inside: avoid; }
+.se-page .se-index button { display: flex; align-items: baseline; gap: 9px; width: 100%; padding: 7px 0;
+  text-align: left; color: var(--ink-2); transition: color .16s ease; }
+.se-page .se-index button:hover { color: var(--ink); }
+.se-index u { flex: none; min-width: 22px; text-decoration: none; font-family: var(--num); font-size: 8px;
+  font-weight: 500; letter-spacing: .04em; color: var(--ink-3); }
+.se-index u[data-move="up"], .se-index u[data-move="new"] { color: var(--acc); }
+.se-index u[data-move="down"] { color: rgba(244,241,234,.26); }
+.se-index span { flex: none; max-width: calc(100% - 74px); font-size: 13px; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.se-index__leader { flex: 1; min-width: 12px; height: 0; border-bottom: 1px dotted rgba(244,241,234,.22);
+  transform: translateY(-4px); }
+.se-index em { flex: none; font-family: var(--num); font-style: normal; font-size: 10px; font-weight: 700;
+  letter-spacing: .04em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.se-index li:nth-child(-n+3) em { color: var(--acc); }
+.se-page .se-index button:hover .se-index__leader { border-bottom-color: rgba(var(--acc-rgb),.5); }
+
+/* ── a museum line, shared ────────────────────────────────────── */
+.se-page .se-museum { display: flex; align-items: baseline; gap: 9px; width: 100%; padding: 8px 2px; text-align: left;
+  color: var(--ink-2); transition: color .16s ease; }
+.se-museum__dot { flex: none; width: 3px; height: 3px; border-radius: 50%; background: rgba(var(--acc-rgb),.75);
+  transform: translateY(-2px); transition: box-shadow .2s var(--ease); }
+.se-page .se-museum span { flex: 1 1 auto; font-size: 13px; }
+.se-page .se-museum em { flex: none; font-family: var(--num); font-style: normal; font-size: 9.5px; letter-spacing: .06em; color: var(--ink-3); }
+.se-page .se-museum:hover { color: var(--ink); }
+.se-page .se-museum:hover .se-museum__dot { box-shadow: 0 0 0 3px rgba(var(--acc-rgb),.18); }
+
+/* ── 01 board — genres left, their museums right ──────────────── */
+.se-board { display: grid; grid-template-columns: minmax(0,220px) minmax(0,1fr); gap: clamp(20px,3vw,44px); align-items: start; }
+.se-board nav { display: grid; border-top: 1px solid var(--rule); position: sticky; top: 18px; }
+/* the chosen genre is marked by a rule alone - no filled slab, which
+   is what the tray look came from */
+.se-page .se-board nav button { display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 10px;
+  padding: 12px 0 12px 13px; text-align: left; background: none; border-bottom: 1px solid var(--rule);
+  box-shadow: inset 2px 0 0 transparent; color: var(--ink-3);
+  transition: color .16s ease, box-shadow .16s ease; }
+.se-page .se-board nav button em { font-family: var(--num); font-style: normal; font-size: 9.5px; letter-spacing: .06em; }
+.se-page .se-board nav button span { font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+.se-page .se-board nav button b { font-family: var(--num); font-size: 10px; font-weight: 500; }
+.se-page .se-board nav button:hover { color: var(--ink-2); }
+.se-page .se-board nav button.is-active { color: var(--ink); background: none; box-shadow: inset 2px 0 0 var(--acc); }
+.se-page .se-board nav button.is-active em, .se-page .se-board nav button.is-active b { color: var(--acc); }
+.se-board__list header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.se-board__list header span { font-family: var(--display); font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+.se-board__list header i { flex: 1; height: 1px; background: var(--rule); }
+.se-board__list header b { font-family: var(--num); font-size: 10px; font-weight: 500; color: var(--acc); }
+
+/* ── 02 drawer — folded away until asked ──────────────────────── */
+.se-drawer { border-top: 1px solid var(--rule); }
+.se-drawer > li { border-bottom: 1px solid var(--rule); }
+.se-page .se-drawer > li > button { display: grid; grid-template-columns: auto auto 1fr auto auto; align-items: baseline;
+  gap: 13px; width: 100%; padding: 15px 2px; text-align: left; color: var(--ink-3); transition: color .16s ease; }
+.se-drawer em { font-family: var(--num); font-style: normal; font-size: 10px; letter-spacing: .06em; }
+.se-drawer span { font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+.se-drawer i { align-self: center; height: 1px; background: var(--rule); }
+.se-drawer b { font-family: var(--num); font-size: 10.5px; font-weight: 500; letter-spacing: .06em; }
+.se-drawer u { font-family: var(--num); font-size: 13px; text-decoration: none; color: var(--acc); }
+.se-page .se-drawer > li > button:hover { color: var(--ink-2); }
+.se-page .se-drawer > li.is-open > button { color: var(--ink); }
+.se-page .se-drawer > li.is-open em, .se-page .se-drawer > li.is-open b { color: var(--acc); }
+.se-drawer__open { padding: 2px 0 18px 36px; columns: 2; column-gap: 34px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .se-page * { transition: none !important; animation: none !important; }
+}
+
+@media (max-width: 760px) {
+  .se-index, .se-drawer__open { columns: 1; }
+  .se-recent { flex-wrap: wrap; gap: 6px 12px; }
+  .se-index span { max-width: calc(100% - 74px); }
+  .se-board { grid-template-columns: minmax(0,1fr); }
+  .se-board nav { position: static; grid-template-columns: repeat(2, 1fr); }
+  .se-page .se-board nav button.is-active { border-bottom-color: var(--acc); }
+  .se-field { flex-wrap: wrap; }
+}

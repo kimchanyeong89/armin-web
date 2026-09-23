@@ -1,0 +1,236 @@
+/* Wanted Sans — the small type. */
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css");
+
+/* Paperlogy — the headings and the large type. */
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+/* ══════════════════════════════════════════════════════════════
+   My Page — the AI tab's type and title treatment.
+   Paperlogy sets the name and the artwork titles, Wanted Sans the
+   small type; the rank reads as a mono gold figure rather than a
+   filled pill, the same way the AI tab handles its readings.
+   ══════════════════════════════════════════════════════════════ */
+.mp {
+  --mp-display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --mp-sans: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --mp-mono: "Space Mono", ui-monospace, monospace;
+  --mp-gold: #d4a547;
+}
+.mp, .mp button, .mp input { font-family: var(--mp-sans); }
+
+/* the name block, set the way the AI tab sets its title */
+.mp-name { font-family: var(--mp-display) !important; font-weight: 700 !important; letter-spacing: -0.04em !important; }
+
+/* ── the card: two actions stacked at the upper right ─────────── */
+.mp-acts { position: absolute; right: 5px; top: 5px; z-index: 3; display: grid; gap: 3px; }
+.mp-acts button { display: grid; place-items: center; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(0,0,0,.5); color: #fff; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  transition: background .16s ease; }
+.mp-acts button:hover { background: rgba(0,0,0,.74); }
+
+/* ── the card: title and artist, always on, lower left ────────── */
+/* Written as longhand, not the `font` shorthand: a shorthand whose
+   family is an undefined custom property is thrown away whole, taking
+   the size with it - which is how these lines ended up at the inherited
+   size in the wrong face. */
+.mp-name-line { position: absolute; left: 8px; right: 8px; bottom: 7px; z-index: 2; color: #fff; pointer-events: none; }
+.mp-name-line b { display: block; font-family: var(--mp-display, "Apple SD Gothic Neo", sans-serif);
+  font-size: 11px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 6px rgba(0,0,0,.75); }
+.mp-name-line small { display: block; margin-top: 2px; font-family: var(--mp-sans, "Apple SD Gothic Neo", sans-serif);
+  font-size: 9.5px; font-weight: 400; line-height: 1.3; color: rgba(255,255,255,.76);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 6px rgba(0,0,0,.75); }
+
+/* ══════════════════════════════════════════════════════════════
+   The top of the page — the globe's stage (proposal B, 2026-09-15).
+   The cover fills a dark field the way the globe fills the map tab;
+   the owner stands at its foot, and where the picture meets the page
+   the playlists lead off on the left and the slideshow waits at the
+   far right. The six counted tabs spread over the whole width.
+   Colours come from the page's theme through --mp-ground and --mp-ink*.
+   ══════════════════════════════════════════════════════════════ */
+.mp { --mp-pad: clamp(14px, 3vw, 28px); --mp-ease: cubic-bezier(.16,1,.3,1); }
+.mp-stage, .mp-lists, .mp-tabs, .mp-sortrow { font-family: var(--mp-sans); color: var(--mp-ink); word-break: keep-all; }
+.mp-stage *, .mp-lists *, .mp-tabs *, .mp-sortrow * { box-sizing: border-box; }
+/* index.css dresses every button on the site; the top takes that off here
+   and each part below sets its own */
+.mp :where(.mp-stage, .mp-lists, .mp-tabs, .mp-sortrow) button { margin: 0; padding: 0; border: 0; border-radius: 0;
+  background: none; font: inherit; color: inherit; cursor: pointer; }
+.mp :where(.mp-stage, .mp-lists, .mp-tabs, .mp-sortrow) button:focus { outline: none; }
+.mp :where(.mp-stage, .mp-lists, .mp-tabs, .mp-sortrow) button:focus-visible { outline: 1px solid var(--mp-gold); outline-offset: 3px; }
+.mp :where(.mp-stage, .mp-lists) :where(p, h1, ul) { margin: 0; }
+
+/* ── the stage ── */
+.mp-stage { position: relative; isolation: isolate; display: grid; align-content: end; min-height: clamp(460px, 68vh, 660px);
+  padding: calc(env(safe-area-inset-top, 0px) + 90px) var(--mp-pad) 26px; }
+/* over the playlists and the tabs while the background picker is open */
+.mp-stage.is-picking { z-index: 6; }
+.mp-stage__cover { position: absolute; inset: 0; z-index: -2; display: block; width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.55) saturate(.85); }
+/* the ground rises into the picture, as the map's dark rises round its globe */
+.mp-stage::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(8,8,8,.4) 0%, rgba(8,8,8,.08) 34%, rgba(8,8,8,.7) 72%, var(--mp-ground) 100%); }
+.mp.is-light .mp-stage__cover { filter: saturate(.85); }
+.mp.is-light .mp-stage::after {
+  background: linear-gradient(to bottom, rgba(250,250,250,.35) 0%, rgba(250,250,250,.06) 34%, rgba(250,250,250,.74) 72%, var(--mp-ground) 100%); }
+
+/* the collection's totals between two hairlines, as the map sets its own */
+.mp-stage__strip { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 24px); left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 16px; white-space: nowrap; font-size: 11.5px; color: var(--mp-ink-2); }
+.mp-stage__strip > i { width: clamp(24px, 5vw, 64px); height: 1px; background: color-mix(in srgb, var(--mp-ink) 22%, transparent); }
+.mp-stage__strip span { display: inline-flex; align-items: baseline; gap: 6px; }
+.mp-stage__strip b { font-family: var(--mp-mono); font-size: 11px; font-weight: 700; color: var(--mp-gold); font-variant-numeric: tabular-nums; }
+
+/* change background: a bare mark and word on the language switch's line, clear
+   of it (App.tsx fixes the switch 14px from the right edge; it is 62px wide),
+   and its card under both */
+.mp-picker { display: contents; }
+.mp .mp-picker > .mp-act { position: absolute; top: max(18px, calc(env(safe-area-inset-top, 0px) + 16px)); right: 90px; }
+.mp-picker__card { position: absolute; top: calc(max(12px, calc(env(safe-area-inset-top, 0px) + 10px)) + 42px); right: var(--mp-pad);
+  z-index: 2; width: min(320px, calc(100vw - 28px)); max-height: min(430px, 60vh); overflow-y: auto; overscroll-behavior: contain;
+  padding: 14px; background: #0d0d0d; border: 1px solid var(--mp-rule); box-shadow: 0 18px 40px rgba(0,0,0,.6);
+  animation: mp-pop .26s var(--mp-ease) backwards; }
+.mp.is-light .mp-picker__card { background: #fff; box-shadow: 0 16px 28px rgba(0,0,0,.16); }
+@keyframes mp-pop { from { opacity: 0; transform: translateY(8px); } }
+.mp-picker__card header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.mp-picker__card header span { font-family: var(--mp-mono); font-size: 9.5px; font-weight: 600; letter-spacing: .1em; color: var(--mp-gold); }
+.mp .mp-picker__card header button { font-size: 12px; font-weight: 600; color: var(--mp-ink-3); transition: color .16s ease; }
+.mp .mp-picker__card header button:hover, .mp .mp-picker__card header button[aria-pressed="true"] { color: var(--mp-ink); }
+.mp-picker__pos { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 10px; margin-bottom: 12px;
+  font-size: 11.5px; color: var(--mp-ink-2); }
+.mp-picker__pos em { font-family: var(--mp-mono); font-style: normal; font-size: 10px; }
+.mp-picker__pos input { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--mp-gold); }
+.mp-picker__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.mp .mp-picker__grid button { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--mp-rule); }
+.mp-picker__grid button > * { opacity: .8; filter: saturate(.72); transition: opacity .2s ease, filter .2s ease; }
+.mp-picker__grid button:hover > *, .mp-picker__grid button[aria-pressed="true"] > * { opacity: 1; filter: none; }
+/* the chosen work: a gold bar along its foot rather than a frame */
+.mp-picker__grid button[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--mp-gold); }
+.mp-picker__card footer { position: sticky; bottom: -14px; display: flex; justify-content: flex-end; gap: 20px;
+  margin: 12px -14px -14px; padding: 12px 14px; background: inherit; border-top: 1px solid var(--mp-rule); }
+
+/* the owner, at the foot of the stage */
+.mp-stage__who { display: grid; justify-items: start; gap: 12px; min-width: 0; max-width: 42rem; }
+/* the photo with its laurel, and the level guide's question mark beside it */
+.mp-stage__rank { display: flex; align-items: center; gap: 6px; }
+.mp-stage__name { display: flex; align-items: center; gap: 12px; min-width: 0; max-width: 100%; }
+/* the heading scale the AI and community tabs use */
+.mp-stage__name h1 { min-width: 0; margin: 0; font-size: clamp(2rem, 4.2vw, 3.2rem); line-height: 1.04; color: var(--mp-ink);
+  overflow-wrap: anywhere; }
+.mp-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12px; color: var(--mp-ink-2); }
+.mp-meta > i { flex: none; width: 1px; height: 10px; background: color-mix(in srgb, var(--mp-ink) 16%, transparent); }
+.mp-email { overflow-wrap: anywhere; }
+.mp-score { font-family: var(--mp-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--mp-ink-3); white-space: nowrap; }
+.mp-score b { font-weight: 700; color: var(--mp-gold); }
+.mp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; }
+/* a mark and a word, gold under the pointer, as the board's actions */
+.mp .mp-act { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--mp-ink-2);
+  white-space: nowrap; transition: color .16s ease; }
+.mp .mp-act:hover, .mp .mp-act[aria-expanded="true"] { color: var(--mp-gold); }
+.mp .mp-act--gold { color: var(--mp-gold); }
+.mp .mp-act--gold:hover { color: #f0c878; }
+.mp .mp-act:disabled { opacity: .6; cursor: default; }
+
+/* where the picture meets the page: the playlists on the left, the slideshow at the far right */
+.mp-stage__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 30px; }
+.mp-stage__foot > :last-child { margin-left: auto; }
+.mp .mp-stage__line { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--mp-ink);
+  transition: color .16s ease; }
+.mp-stage__line b { font-family: var(--mp-mono); font-size: 11px; color: var(--mp-gold); }
+.mp-stage__line u { width: 56px; height: 1px; background: color-mix(in srgb, var(--mp-ink) 30%, transparent); transition: width .3s var(--mp-ease); }
+.mp .mp-stage__line:hover { color: var(--mp-gold); }
+.mp-stage__line:hover u { width: 80px; }
+.mp-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--mp-gold); }
+/* the map guide's button: a circled mark and a label, one target */
+.mp .mp-cta { display: inline-flex; align-items: center; gap: .65rem; font-size: 13px; font-weight: 600; color: var(--mp-ink);
+  transition: color .16s ease; }
+.mp .mp-cta > span { flex: none; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent); color: var(--mp-gold);
+  transition: border-color .16s ease, background-color .16s ease; }
+.mp .mp-cta:hover > span, .mp .mp-cta:focus-visible > span { border-color: var(--mp-gold); background: rgba(212,165,71,.12); }
+/* at the foot the mark stands alone; the padding widens its target without moving it */
+.mp .mp-stage__foot .mp-cta { padding: 6px; margin: -6px -6px -6px auto; }
+
+/* ── My Playlists, under the stage ── */
+.mp-lists { padding: 18px var(--mp-pad) 24px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 56px); }
+.mp-lists ul { display: flex; gap: 14px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.mp-lists ul::-webkit-scrollbar { display: none; }
+/* a playlist: its cover with softened corners, as the exhibition and museum
+   cards are cut, and a round share mark on it */
+.mp-list { position: relative; }
+.mp .mp-list__open { display: grid; gap: 8px; text-align: left; }
+.mp .mp-list__share { position: absolute; top: 6px; right: 6px; z-index: 2; display: grid; place-items: center; width: 26px; height: 26px;
+  border-radius: 50%; background: rgba(0,0,0,.56); color: #fff; transition: background .16s ease, color .16s ease; }
+.mp .mp-list__share:hover { background: rgba(0,0,0,.74); }
+.mp .mp-list__share[data-on] { color: var(--mp-gold); }
+.mp-list__shot { display: block; width: 120px; aspect-ratio: 1; overflow: hidden; border-radius: 10px; background: var(--mp-rule); }
+.mp-list__shot > * { filter: saturate(.72); transition: filter .3s ease; }
+.mp-list:hover .mp-list__shot > *, .mp-list.is-open .mp-list__shot > * { filter: none; }
+.mp-list__text { display: grid; gap: 4px; width: 120px; min-width: 0; }
+.mp-list__text b { font-family: var(--mp-display); font-size: 13px; font-weight: 600; color: var(--mp-ink); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.mp-list:hover .mp-list__text b, .mp-list.is-open .mp-list__text b { color: var(--mp-gold); }
+.mp-list__text small { font-family: var(--mp-mono); font-size: 9.5px; letter-spacing: .04em; color: var(--mp-ink-3); }
+.mp-list__text small em { font-style: normal; color: var(--mp-gold); }
+.mp-lists__empty { font-size: 12px; color: var(--mp-ink-3); }
+
+/* ── the six counted tabs: over the whole width, each centred in its share ── */
+.mp-tabs { position: sticky; top: 0; z-index: 5; display: flex; overflow-x: auto; scrollbar-width: none;
+  padding: env(safe-area-inset-top, 0px) var(--mp-pad) 0; background: rgba(8,8,8,.95);
+  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-bottom: 1px solid var(--mp-rule); }
+.mp-tabs::-webkit-scrollbar { display: none; }
+.mp.is-light .mp-tabs { background: rgba(250,250,250,.95); }
+.mp .mp-tabs button { position: relative; flex: 1 0 auto; display: inline-flex; flex-direction: row-reverse; align-items: baseline;
+  justify-content: center; gap: 7px; padding: 14px 6px 12px; color: var(--mp-ink-3); transition: color .16s ease; }
+.mp .mp-tabs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--mp-gold);
+  transform: scaleX(0); transition: transform .26s var(--mp-ease); }
+.mp .mp-tabs button:hover { color: var(--mp-ink-2); }
+.mp .mp-tabs button[aria-selected="true"] { color: var(--mp-ink); }
+.mp .mp-tabs button[aria-selected="true"]::after { transform: scaleX(1); }
+.mp-tabs b { font-family: var(--mp-mono); font-size: 11px; font-weight: 700; line-height: 1; color: var(--mp-ink-3);
+  font-variant-numeric: tabular-nums; }
+.mp-tabs button[aria-selected="true"] b { color: var(--mp-gold); }
+.mp-tabs span { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+
+/* ── an open playlist's way back, and the sort ── */
+.mp-sortrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px var(--mp-pad) 10px; }
+.mp-sort { position: relative; display: inline-flex; gap: 18px; }
+.mp .mp-sort button { padding: 0 0 8px; font-size: 12.5px; font-weight: 600; white-space: nowrap; color: var(--mp-ink-3);
+  transition: color .2s ease; }
+.mp .mp-sort button:hover { color: var(--mp-ink-2); }
+.mp .mp-sort button[aria-pressed="true"] { color: var(--mp-ink); }
+.mp-sort::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--mp-rule); }
+.mp-sort__bar { position: absolute; left: 0; bottom: 0; z-index: 1; width: 26px; height: 2px; background: var(--mp-gold);
+  transition: transform .26s var(--mp-ease), width .26s var(--mp-ease); }
+.mp .mp-back { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mp-mono); font-size: 10.5px; font-weight: 600;
+  letter-spacing: .06em; color: var(--mp-ink-2); transition: color .16s ease; }
+.mp .mp-back:hover { color: var(--mp-gold); }
+.mp-sortrow__list { display: inline-flex; align-items: center; gap: 16px; min-width: 0; }
+.mp-back span { max-width: 38vw; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (max-width: 767px) {
+  /* a phone: six equal cells, the count over its label as the row has always
+     been set, so all six still span the width without scrolling */
+  .mp-tabs { padding-left: 0; padding-right: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .mp .mp-tabs button { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: center; gap: 5px; padding: 12px 2px 10px; }
+  .mp-tabs svg { display: none; }
+  .mp-tabs span { font-size: 10px; letter-spacing: -0.01em; }
+  /* the background control keeps its mark alone, clear of the totals beside
+     it, with a finger-sized target round the mark */
+  .mp-picker__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .mp .mp-picker > .mp-act { padding: 8px; transform: translate(8px, -8px); }
+}
+@media (max-width: 720px) {
+  .mp-stage { min-height: 0; padding-top: calc(env(safe-area-inset-top, 0px) + 70px); }
+  .mp-stage__strip { left: var(--mp-pad); transform: none; }
+  .mp-stage__strip > i:first-child { display: none; }
+}
+@media (max-width: 560px) {
+  .mp-list__shot, .mp-list__text { width: 104px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mp-picker__card { animation: none; }
+}

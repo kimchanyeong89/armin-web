@@ -4,6 +4,7 @@ import { loadTossPayments } from "@tosspayments/payment-sdk";
 import { ArrowLeft, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { useCart } from "../contexts/CartContext";
 import { PRODUCT_TYPES, formatPrice, getProductTypeById } from "../features/cart/productCatalog";
+import { PRINTS_ENABLED, PRINTS_NOTICE } from "../features/cart/prints";
 import { useLanguage } from "../contexts/LanguageContext";
 import { getWeservUrl } from "../utils/imageProxy";
 
@@ -124,6 +125,11 @@ export default function CartPage() {
     }
     if (!selectedPayment) {
       alert(t({ ko: "결제 수단을 선택해주세요.", en: "Select payment method." }));
+      return;
+    }
+
+    if (!PRINTS_ENABLED) {
+      alert(t(PRINTS_NOTICE));
       return;
     }
 

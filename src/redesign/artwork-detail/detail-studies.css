@@ -1,0 +1,311 @@
+/* ══════════════════════════════════════════════════════════════
+   Artwork detail — three proposals, each opened over the artist page.
+   The tokens and captions are the artist page's own (artist-studies.css);
+   what changes is how the detail stands in the window:
+     A  .dp  the map's panel — a solid column down the left, the work on a stage
+     B  .ds  the globe's stage — the work in a dark field, figures at the edges
+     C  .dt  a menu tab — one left-aligned column with the AI tab's switch
+   All three are left-aligned, open with the house easing, and sit above the
+   app's tab bar (260020, as the live lightbox does). B was chosen on
+   2026-09-15 and is what the artist page opens; A and C keep the like and
+   save marks under the work, B carries them on it.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── shared ─────────────────────────────────────────────────── */
+/* resets at no weight, so each proposal's own spacing wins over them */
+:where(.dd) h2 { margin: 0; }
+:where(.dd) figure { margin: 0; }
+.dd [role="button"] { cursor: pointer; }
+.dd [role="button"]:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+
+/* bare marks: the way back reads as the tabs' back link, the way out as the
+   map's mono × */
+.dd .dd-back { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; font-family: var(--num);
+  font-size: 10px; font-weight: 600; letter-spacing: .1em; color: var(--ink-2); transition: color .16s ease; }
+.dd .dd-back:hover { color: var(--acc); }
+.dd .dd-x { width: 34px; height: 34px; display: grid; place-items: center; font-family: var(--num);
+  font-size: 18px; line-height: 1; color: var(--ink-2); transition: color .16s ease; }
+.dd .dd-x:hover { color: var(--acc); }
+
+/* words */
+.dd .dd-eyebrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--num);
+  font-size: .66rem; font-weight: 650; letter-spacing: .06em; color: var(--acc); font-variant-numeric: tabular-nums; }
+.dd .dd-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--num);
+  font-size: 10px; font-weight: 500; letter-spacing: .05em; color: var(--ink-3); }
+.dd .dd-eyebrow > i, .dd .dd-meta > i, .dd .dd-sub > i, .dd .dt-lede > i { flex: none; width: 1px; height: 9px; background: var(--hair); }
+.dd .dd-eyebrow > i { background: rgba(var(--acc-rgb), .45); }
+.dd .dd-alt { margin-top: .35rem; font-size: 12px; line-height: 1.5; color: var(--ink-3); }
+.dd .dd-link { color: var(--ink); text-decoration: underline; text-decoration-color: var(--ink-3);
+  text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .16s ease, text-decoration-color .16s ease; }
+.dd .dd-link:hover { color: var(--acc); text-decoration-color: var(--acc); }
+.dd .dd-source { display: inline-flex; align-items: center; gap: 3px; font-family: var(--num); font-size: 10px;
+  letter-spacing: .04em; color: var(--ink-2); transition: color .16s ease; }
+.dd .dd-source:hover { color: var(--acc); }
+.dd .dd-dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); }
+
+/* captions: a rail's note sits by its name, and the slot at the end always
+   holds a figure, set as the tabs set their counts */
+.dd .ar-dist__cap small { font-family: var(--num); font-size: 9px; letter-spacing: .04em; color: var(--ink-3); white-space: nowrap; }
+.dd .ar-dist__cap em { font-size: 10px; font-weight: 700; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+
+/* like and save: the app's own marks at stroke 1.8, under the work in A and C
+   (B lays them on the painting — see its section) */
+.dd .wd-acts { position: static; display: flex; align-items: center; gap: 0; }
+.dd .wd-acts button { width: 30px; height: 30px; display: grid; place-items: center; color: var(--ink-2); transition: color .16s ease; }
+.dd .wd-acts button:hover, .dd .wd-acts button.is-on { color: var(--acc); }
+
+/* cards (B and C): the marks ride the thumbnail and show under the pointer,
+   as the artist grid's do — always, where there is no pointer to hover */
+.dd .dd-card { display: grid; gap: 6px; align-content: start; min-width: 0; }
+.dd .dd-card__shot { position: relative; line-height: 0; background: rgba(244,241,234,.06); }
+.dd .dd-card__shot img { display: block; transition: opacity .18s ease; }
+.dd .dd-card .wd-acts { position: absolute; top: 4px; right: 4px; opacity: 0; transition: opacity .18s ease; }
+.dd .dd-card:hover .wd-acts, .dd .dd-card:focus-within .wd-acts { opacity: 1; }
+.dd .dd-card .wd-acts button { width: 24px; height: 24px; color: #fff; filter: drop-shadow(0 1px 3px rgba(0,0,0,.9)); }
+.dd .dd-card .wd-acts button:hover, .dd .dd-card .wd-acts button.is-on { color: var(--acc); }
+@media (hover: none) { .dd .dd-card .wd-acts { opacity: 1; } }
+.dd .dd-card b { font-family: var(--display); font-size: 12px; font-weight: 600; line-height: 1.3; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color .16s ease; }
+.dd .dd-card:hover b { color: var(--acc); }
+.dd .dd-card:hover .dd-card__shot img { opacity: .82; }
+.dd .dd-sub { display: flex; align-items: center; gap: 6px; min-width: 0; font-family: var(--num); font-size: 9px;
+  letter-spacing: .04em; color: var(--ink-3); white-space: nowrap; }
+.dd .dd-sub > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.dd .dd-sub > span:first-child { flex: none; }
+.dd .dd-sub a { color: inherit; transition: color .16s ease; }
+.dd .dd-sub a:hover { color: var(--acc); }
+
+/* house motion: the map panel's slide, the reading guide's rising lines,
+   the nearby sheet's lift */
+@keyframes dd-fade { from { opacity: 0; } }
+@keyframes dd-slide { from { opacity: 0; transform: translateX(-18px); } }
+@keyframes dd-rise { from { opacity: 0; transform: translateY(18px); } }
+@keyframes dd-sheet { from { opacity: 0; transform: translateY(26px) scale(.985); } }
+@media (prefers-reduced-motion: reduce) {
+  .dd, .dd *, .dd::before { animation: none !important; }
+}
+
+/* ── A · the map's panel ─────────────────────────────────────
+   The city panel's geometry: solid, square, full height, the guide column's
+   width, a gold hairline down its right edge. The back and close row, the
+   title behind the globe's ring, rows of 4:3 thumbnails that regain their
+   colour under the pointer and stagger in. The stage holds the work where
+   the globe would stand; a click on its empty ground closes. */
+.dp { position: fixed; inset: 0; z-index: 260020; display: grid;
+  grid-template-columns: clamp(17.5rem, 38vw, 30rem) minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr); }
+.dp-scrim { position: absolute; inset: 0; background: rgba(8,8,8,.92); animation: dd-fade .32s var(--ease) both; }
+.dp::before { content: ""; grid-column: 1; grid-row: 1 / -1; position: relative; z-index: 1;
+  background: rgb(12,12,12); border-right: 1px solid rgba(var(--acc-rgb), .25); animation: dd-slide .32s var(--ease) both; }
+.dp-nav, .dp-head, .dp-body { grid-column: 1; position: relative; z-index: 2; min-width: 0; animation: dd-slide .32s var(--ease) both; }
+.dp-nav { grid-row: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: max(14px, env(safe-area-inset-top)) 12px 4px 22px; }
+.dp-head { grid-row: 2; padding: 10px 22px 18px; border-bottom: 1px solid var(--rule); }
+.dp-head h2 { display: grid; grid-template-columns: 9px minmax(0, 1fr); column-gap: 10px; align-items: start;
+  font-family: var(--display); font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -0.02em; }
+.dp-head h2 i { width: 9px; height: 9px; margin-top: .42em; border: 1.5px solid var(--ink-2); border-radius: 50%; }
+.dp-head .dd-alt, .dp-head .dd-meta, .dp-by { padding-left: 19px; }
+.dp-by { margin-top: .55rem; font-size: 13px; }
+.dp-head .dd-meta { margin-top: .5rem; }
+.dp-stage { grid-column: 2; grid-row: 1 / -1; position: relative; z-index: 2; min-width: 0; min-height: 0;
+  display: grid; place-items: center; padding: clamp(24px, 4vw, 64px); pointer-events: none; }
+.dp-plate { pointer-events: auto; display: grid; justify-items: end; gap: 4px; min-height: 0; animation: dd-rise .42s .08s var(--ease) both; }
+.dp-plate img { display: block; max-width: 100%; max-height: calc(100dvh - 2 * clamp(24px, 4vw, 64px) - 34px); width: auto; height: auto; }
+.dp-body { grid-row: 3; overflow-y: auto; overscroll-behavior: contain; padding: 0 22px 40px;
+  scrollbar-width: thin; scrollbar-color: rgba(244,241,234,.16) transparent; }
+.dp-sec { padding-top: 20px; }
+.dp-held { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 12px 0 2px; font-size: 13px; }
+.dp-row { display: grid; grid-template-columns: 88px minmax(0, 1fr) auto; gap: 12px; align-items: center;
+  padding: 12px 0; border-bottom: 1px solid var(--rule); animation: dd-slide .32s var(--ease) both; }
+.dp-row > img { width: 88px; height: 66px; object-fit: cover; background: rgba(244,241,234,.06);
+  filter: saturate(.72); transition: filter .16s ease; }
+.dp-row:hover > img { filter: none; }
+.dp-row__text { min-width: 0; }
+.dp-row b { font-family: var(--display); font-size: 13px; font-weight: 600; line-height: 1.35; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color .16s ease; }
+.dp-row:hover b { color: var(--acc); }
+.dp-row .dd-sub { margin-top: 5px; }
+.dd .dp-row .wd-acts button { width: 26px; height: 26px; color: var(--ink-3); }
+
+@media (max-width: 767px) {
+  /* the panel takes the screen and scrolls as one column */
+  .dp { display: block; overflow-y: auto; overscroll-behavior: contain; background: rgb(12,12,12); animation: dd-slide .32s var(--ease) both; }
+  .dp::before, .dp-scrim { display: none; }
+  .dp-nav, .dp-head, .dp-body { animation: none; }
+  .dp-nav { position: sticky; top: 0; z-index: 3; padding: max(10px, env(safe-area-inset-top)) 6px 4px var(--pad);
+    background: rgba(12,12,12,.97); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+  .dp-head { padding: 6px var(--pad) 16px; }
+  .dp-stage { padding: 16px var(--pad) 0; pointer-events: auto; }
+  .dp-plate img { max-height: 62vh; }
+  .dp-body { overflow: visible; padding: 0 var(--pad) calc(40px + env(safe-area-inset-bottom)); }
+  .dp-row { grid-template-columns: 72px minmax(0, 1fr) auto; }
+  .dp-row > img { width: 72px; height: 54px; }
+}
+
+/* ── B · the globe's stage ───────────────────────────────────
+   The map's own composition around its globe: figures between two hairlines
+   at the top, the way out where KO | EN stands, the title on the left like
+   the reading guide, the museum at the bottom left on a gold point and a
+   drawn line. The work takes the globe's place under halo-frost: a pale
+   ambient halo and a pale rim along its top edge. */
+.ds { position: fixed; inset: 0; z-index: 260020; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--g); animation: dd-fade .32s var(--ease) both; }
+.ds-stage { position: relative; min-height: 100dvh; display: grid;
+  grid-template-columns: minmax(0, 32%) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas: "title plate" "held plate";
+  column-gap: clamp(28px, 4vw, 72px); padding: 76px clamp(24px, 4vw, 56px) 30px; }
+.ds-stage::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(46% 58% at 66% 50%, rgba(255,255,255,.05), transparent 72%); }
+.ds-strip { position: absolute; z-index: 1; top: max(24px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 16px; white-space: nowrap; }
+.ds-strip > i { width: clamp(28px, 5vw, 64px); height: 1px; background: rgba(244,241,234,.14); }
+.dd .ds-strip button { display: inline-flex; align-items: baseline; gap: 6px; font-size: 11.5px; color: var(--ink-2); transition: color .16s ease; }
+.dd .ds-strip button:hover { color: var(--ink); }
+.ds-strip b { font-family: var(--num); font-size: 11px; font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.ds-x { position: absolute; z-index: 1; top: max(16px, env(safe-area-inset-top)); right: clamp(10px, 3vw, 26px); }
+.ds-title { grid-area: title; align-self: center; position: relative; min-width: 0; }
+.ds-title > * { animation: dd-rise .9s var(--ease) both; }
+.ds-title > :nth-child(2) { animation-delay: .09s; }
+.ds-title > :nth-child(3) { animation-delay: .18s; }
+.ds-title > :nth-child(4) { animation-delay: .27s; }
+.ds-title h2 { margin-top: .6rem; font-family: var(--display); font-size: clamp(1.45rem, 2.6vw, 2.1rem); font-weight: 700;
+  line-height: 1.16; letter-spacing: -0.04em; text-wrap: balance; overflow-wrap: anywhere; }
+/* the year in brackets after the title: lighter, and never parted from the
+   title's last word */
+.ds-title h2 .ds-year { font-weight: 400; color: var(--ink-2); white-space: nowrap; }
+.ds-by { margin-top: .85rem; font-size: 13.5px; }
+.ds-plate { grid-area: plate; align-self: center; justify-self: center; position: relative; min-width: 0; min-height: 0;
+  display: grid; animation: dd-sheet .42s .06s var(--ease) both; }
+.ds-plate img { display: block; max-width: 100%; max-height: calc(100dvh - 120px); width: auto; height: auto;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.035), 0 0 96px 12px rgba(255,255,255,.055); }
+/* like and save ride the painting's corner, a size up from the rails' marks —
+   the work is large enough to carry them. They sit close, as one pair: each
+   hit area is narrow but tall. A tight dark edge under the soft shadow keeps
+   the white strokes readable even on a pale work (Morning Haze). */
+/* the glyphs keep the same margin, ~13px, from the painting's right and bottom edges */
+.dd .ds-plate .wd-acts { position: absolute; right: 8px; bottom: 1px; z-index: 1; gap: 0; }
+.dd .ds-plate .wd-acts button { width: 28px; height: 40px; color: #fff;
+  filter: drop-shadow(0 0 1px rgba(0,0,0,.6)) drop-shadow(0 1px 4px rgba(0,0,0,.85)); }
+.dd .ds-plate .wd-acts button:hover, .dd .ds-plate .wd-acts button.is-on { color: var(--acc); }
+.ds-plate::before { content: ""; position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.14) 20%, rgba(255,255,255,.14) 80%, transparent); }
+.ds-held { grid-area: held; align-self: end; position: relative; display: flex; flex-wrap: wrap; align-items: center;
+  gap: 8px 10px; font-size: 13px; }
+.dd .ds-held > a:not(.dd-source), .ds-held > span { color: var(--ink); transition: color .16s ease; }
+.dd .ds-held > a:not(.dd-source):hover { color: var(--acc); }
+.ds-held em { font-style: normal; font-family: var(--num); font-size: 10px; font-weight: 700; letter-spacing: .04em; color: var(--acc); }
+.ds-held u { flex: none; width: 56px; height: 1px; background: rgba(244,241,234,.22); }
+/* the rails start on the same line as the stage's own words */
+.ds-rail { position: relative; padding: clamp(26px, 3vw, 36px) clamp(24px, 4vw, 56px) 0; }
+.ds-rail:last-child { padding-bottom: 76px; }
+/* the card cut off at the edge says there is more; a bar under the row only clutters it */
+.ds-cards { display: flex; align-items: flex-start; gap: 12px; overflow-x: auto; overscroll-behavior-x: contain; padding: 12px 0 8px;
+  scrollbar-width: none; }
+.ds-cards::-webkit-scrollbar { display: none; }
+/* never cropped: each work at one height in its own shape, as the artist grid keeps them */
+.ds .dd-card { flex: none; min-width: 96px; }
+.ds .dd-card__shot img { height: 148px; width: auto; max-width: 300px; object-fit: contain; }
+.ds .dd-card > b, .ds .dd-card > .dd-sub { width: 0; min-width: 100%; }
+
+@media (max-width: 899px) {
+  .ds-stage { display: flex; flex-direction: column; gap: 20px; min-height: 0; padding: 68px var(--pad) 6px; }
+  .ds-stage::before { background: radial-gradient(90% 36% at 50% 30%, rgba(255,255,255,.05), transparent 72%); }
+  .ds-strip { left: var(--pad); transform: none; gap: 12px; }
+  .ds-strip > i:first-child { display: none; }
+  .ds-strip > i:last-child { width: 24px; }
+  .ds-plate { order: -1; align-self: center; }
+  .ds-plate img { max-height: 58vh; }
+  .ds-title, .ds-held { align-self: auto; }
+  .ds-rail { padding-left: var(--pad); padding-right: var(--pad); }
+}
+
+/* ── C · a menu tab ──────────────────────────────────────────
+   The AI tab's page: one left-aligned column under a sticky bar, a gold
+   eyebrow, the title, a lede split by ticks, the reading guide's circled
+   arrow on the museum line, the work uncropped as a post shows its image,
+   then the tab's switch stuck under the bar and a 3:4 card grid. */
+.dt { position: fixed; inset: 0; z-index: 260020; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--g); animation: dd-fade .32s var(--ease) both; }
+.dt-bar { position: sticky; top: 0; z-index: 3; display: flex; align-items: center; min-height: 52px;
+  padding: env(safe-area-inset-top) var(--pad) 0; border-bottom: 1px solid var(--rule);
+  background: rgba(8,8,8,.97); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+.dt-main { max-width: 1240px; margin: 0 auto; padding: clamp(24px, 3.4vw, 44px) var(--pad) 80px; }
+.dt-head > * { animation: dd-rise .9s var(--ease) both; }
+.dt-head > :nth-child(2) { animation-delay: .09s; }
+.dt-head > :nth-child(3) { animation-delay: .18s; }
+.dt-head > :nth-child(4) { animation-delay: .27s; }
+.dt-head > :nth-child(5) { animation-delay: .36s; }
+.dt-head h2 { margin-top: .55rem; max-width: 28ch; font-family: var(--display); font-size: clamp(1.5rem, 3vw, 2.3rem);
+  font-weight: 700; line-height: 1.14; letter-spacing: -0.05em; text-wrap: balance; overflow-wrap: anywhere; }
+.dd .dt-lede { margin-top: .9rem; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 13.5px; color: var(--ink-2); }
+.dd .dt-lede > i { height: 10px; }
+.dd .dt-lede > span:nth-of-type(2) { font-family: var(--num); font-size: 11px; letter-spacing: .04em; color: var(--ink-3); }
+.dt-held { margin-top: 1.1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 13px; }
+.dt-ring { flex: none; width: 1.8rem; height: 1.8rem; display: grid; place-items: center; border: 1px solid var(--hair);
+  border-radius: 50%; color: var(--acc); transition: border-color .16s ease, background-color .16s ease; }
+.dt-held:hover .dt-ring { border-color: var(--acc); background: rgba(var(--acc-rgb), .12); }
+.dt-held em { font-style: normal; font-family: var(--num); font-size: 10px; letter-spacing: .04em; color: var(--ink-3); }
+.dt-plate { margin-top: clamp(22px, 3vw, 34px); display: inline-grid; justify-items: end; gap: 4px; max-width: 100%;
+  animation: dd-sheet .42s .3s var(--ease) both; }
+.dt-plate img { display: block; max-width: 100%; max-height: 56vh; width: auto; height: auto; }
+.dt-switch { position: sticky; top: 52px; z-index: 2; margin-top: clamp(28px, 4vw, 44px); display: grid;
+  grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); border: 1px solid var(--rule);
+  background: rgba(8,8,8,.97); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); }
+.dd .dt-switch button { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 3px 8px;
+  min-height: 50px; padding: 8px 12px; font-size: 13px; color: var(--ink-3); transition: color .16s ease, background-color .16s ease; }
+.dd .dt-switch button + button { border-left: 1px solid var(--rule); }
+.dd .dt-switch button:hover { color: var(--ink); }
+.dt-switch button i { flex: none; width: 4px; height: 4px; border-radius: 50%; background: var(--hair);
+  transition: background-color .16s ease, box-shadow .16s ease; }
+.dd .dt-switch button.is-on { color: var(--ink); font-weight: 650; background: color-mix(in srgb, var(--acc) 9%, transparent); }
+.dt-switch button.is-on i { background: var(--acc); box-shadow: 0 0 0 3px rgba(var(--acc-rgb), .16); }
+.dt-switch em { font-style: normal; font-family: var(--num); font-size: 9.5px; font-weight: 500; letter-spacing: .04em; color: var(--ink-3); }
+.dt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(164px, 1fr)); gap: 22px 12px; padding-top: 20px; }
+.dt-card .dd-card__shot { aspect-ratio: 3 / 4; }
+.dt-card .dd-card__shot img { width: 100%; height: 100%; object-fit: cover; }
+.dt-sub { display: flex; align-items: center; gap: 7px; min-width: 0; }
+.dt-point { flex: none; width: 4px; height: 4px; border-radius: 2px; background: var(--acc);
+  transition: width .3s var(--ease), height .3s var(--ease); }
+.dt-card:hover .dt-point { width: 14px; height: 2px; }
+
+@media (max-width: 899px) {
+  .dt-plate { display: grid; }
+  .dt-plate img { max-height: 60vh; }
+  .dt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 10px; }
+  .dd .dt-switch button { gap: 2px 7px; min-height: 56px; padding: 8px 6px; }
+  .dt-switch em { flex-basis: 100%; text-align: center; }
+}
+
+/* ── the proposal switch ─────────────────────────────────────
+   Study chrome, not part of any proposal: pinned where the app's tab bar
+   sits and drawn like it, above every detail. It lives outside the artist
+   page, so its colours are written out. */
+.dx { position: fixed; left: 50%; bottom: max(12px, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 260030;
+  display: flex; align-items: center; gap: 2px; max-width: calc(100vw - 24px); padding: 4px;
+  border: 1px solid rgba(244,241,234,.1); border-radius: 30px; background: rgba(20,20,18,.68);
+  -webkit-backdrop-filter: blur(26px) saturate(165%); backdrop-filter: blur(26px) saturate(165%);
+  box-shadow: 0 18px 46px rgba(0,0,0,.42);
+  font-family: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif; }
+.dx a { display: inline-flex; align-items: baseline; gap: 6px; padding: 8px 13px; border-radius: 22px; white-space: nowrap;
+  color: rgba(244,241,234,.62); font-size: 12px; font-weight: 600; text-decoration: none;
+  transition: color .16s ease, background-color .18s ease; }
+.dx a b { font-family: "Space Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; }
+.dx a:hover { color: #d4a547; }
+.dx a.is-on { background: #d4a547; color: #11110f; }
+.dx > i { flex: none; width: 1px; height: 14px; margin: 0 4px; background: rgba(244,241,234,.16); }
+.dx button { margin: 0; padding: 8px 12px 8px 6px; border: 0; border-radius: 0; background: none; box-shadow: none; cursor: pointer;
+  font-family: "Space Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  color: rgba(244,241,234,.62); transition: color .16s ease; }
+.dx button:hover { color: #d4a547; }
+.dx a:focus-visible, .dx button:focus-visible { outline: 1px solid #d4a547; outline-offset: 2px; }
+/* Beside a detail it keeps to a corner: bottom right, clear of A's panel and
+   B's museum line; top right on C, over the empty end of its bar and clear
+   of C's own switch. */
+@media (min-width: 768px) {
+  .dx { left: auto; right: 16px; transform: none; }
+  .dx--tab { top: max(3px, env(safe-area-inset-top)); bottom: auto; }
+}
+@media (max-width: 420px) {
+  .dx a { gap: 4px; padding: 8px 9px; font-size: 11px; }
+  .dx button { padding: 8px 9px 8px 4px; }
+}

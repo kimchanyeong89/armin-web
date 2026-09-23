@@ -1,0 +1,1153 @@
+{
+ "_legend": "ok = auto pick is right | pick = use candidate #n | manual = find a better official file (fallback #n if given) | text = no official logo, use COLLY text logo",
+ "mfa-boston": {
+  "s": "pick",
+  "file": "manual/mfa-boston/1-commons.jpg",
+  "why": "round 3 review"
+ },
+ "mfah": {
+  "s": "ok"
+ },
+ "thebroad": {
+  "s": "ok"
+ },
+ "crystalbridges": {
+  "s": "pick",
+  "file": "manual/crystalbridges/1-site-logo.svg",
+  "why": "round 2 review"
+ },
+ "lacma": {
+  "s": "ok"
+ },
+ "sfmoma": {
+  "s": "pick",
+  "n": 8,
+  "why": "site svg split into SF/MO/MA pieces; commons has the stacked full mark"
+ },
+ "cma": {
+  "s": "ok"
+ },
+ "philadelphia": {
+  "s": "ok"
+ },
+ "high-museum": {
+  "s": "ok"
+ },
+ "dia": {
+  "s": "ok"
+ },
+ "masp": {
+  "s": "ok"
+ },
+ "mbam": {
+  "s": "ok"
+ },
+ "today-art-museum": {
+  "s": "ok"
+ },
+ "zhejiang-art-museum": {
+  "s": "pick",
+  "file": "site/zhejiang-art-museum/00-img-shot.png",
+  "why": "round 2 review"
+ },
+ "long-museum": {
+  "s": "pick",
+  "file": "site/long-museum/00-img.png",
+  "why": "round 2 review"
+ },
+ "guangdong-museum-of-art": {
+  "s": "pick",
+  "file": "site/guangdong-museum-of-art/00-img.png",
+  "why": "round 2 review"
+ },
+ "power-station-of-art": {
+  "s": "ok"
+ },
+ "shanghai-museum": {
+  "s": "pick",
+  "file": "manual/shanghai-museum/1-site-lockup.svg",
+  "why": "round 2 review"
+ },
+ "nanjing-museum": {
+  "s": "pick",
+  "file": "site-extra/nanjing-museum/00-img-shot.png",
+  "why": "round 2 review"
+ },
+ "national-museum-of-china": {
+  "s": "pick",
+  "file": "manual/national-museum-of-china/1-wikipedia.png",
+  "why": "round 2 review"
+ },
+ "shenzhen-museum": {
+  "s": "pick",
+  "file": "site/shenzhen-museum/01-img-shot.png",
+  "why": "round 2 review"
+ },
+ "palace-museum-intl": {
+  "s": "pick",
+  "file": "manual/palace-museum-intl/1-intl-site-lockup.png",
+  "why": "round 2 review"
+ },
+ "hkmoa": {
+  "s": "ok"
+ },
+ "nich-tnm": {
+  "s": "ok"
+ },
+ "mori-collection": {
+  "s": "ok"
+ },
+ "nmwa-collection": {
+  "s": "ok"
+ },
+ "adachi-museum": {
+  "s": "ok"
+ },
+ "kanazawa-21": {
+  "s": "ok"
+ },
+ "tobikan-collection": {
+  "s": "pick",
+  "file": "site/tobikan-collection/00-img-shot.png",
+  "why": "round 2 review"
+ },
+ "mplus": {
+  "s": "ok"
+ },
+ "national-palace-museum-taipei": {
+  "s": "pick",
+  "file": "manual/national-palace-museum-taipei/1-site-logo.svg",
+  "why": "round 2 review"
+ },
+ "tfam": {
+  "s": "pick",
+  "file": "manual/tfam/1-commons-tfam.svg",
+  "why": "round 2 review"
+ },
+ "ntmofa": {
+  "s": "ok"
+ },
+ "namoc": {
+  "s": "pick",
+  "file": "site-extra/namoc/00-img-shot.png",
+  "why": "round 2 review"
+ },
+ "china-art-museum": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "tate-modern": {
+  "s": "ok"
+ },
+ "tate-britain": {
+  "s": "ok"
+ },
+ "national-gallery": {
+  "s": "ok"
+ },
+ "national-portrait-gallery": {
+  "s": "ok",
+  "why": "commons wordmark; recheck against site retry (2023 rebrand)"
+ },
+ "vam": {
+  "s": "ok"
+ },
+ "tate-liverpool": {
+  "s": "ok"
+ },
+ "tate-st-ives": {
+  "s": "ok"
+ },
+ "scottish-national-gallery": {
+  "s": "pick",
+  "file": "manual/scottish-national-gallery/1-wikipedia-national.png",
+  "why": "round 3 review"
+ },
+ "royal-academy": {
+  "s": "pick",
+  "n": 4,
+  "why": "RA monogram + name lockup"
+ },
+ "serpentine-gallery": {
+  "s": "ok"
+ },
+ "dulwich-picture-gallery": {
+  "s": "ok"
+ },
+ "courtauld-gallery": {
+  "s": "ok"
+ },
+ "manchester-art-gallery": {
+  "s": "pick",
+  "file": "manual/manchester-art-gallery/1-site-logo-black.png",
+  "why": "round 3 review"
+ },
+ "walker-art-gallery": {
+  "s": "ok"
+ },
+ "scottish-national-portrait-gallery": {
+  "s": "pick",
+  "file": "manual/scottish-national-portrait-gallery/1-wikipedia-portrait.png",
+  "why": "round 3 review"
+ },
+ "scottish-national-gallery-of-modern-art": {
+  "s": "pick",
+  "file": "manual/scottish-national-gallery-of-modern-art/1-wikipedia-modern.png",
+  "why": "round 3 review"
+ },
+ "british-museum": {
+  "s": "ok"
+ },
+ "hayward-gallery": {
+  "s": "pick",
+  "n": 2,
+  "why": "auto took parent Southbank Centre"
+ },
+ "musee-du-louvre": {
+  "s": "pick",
+  "file": "manual/musee-du-louvre/1-louvre-site.svg",
+  "why": "round 2 review"
+ },
+ "musee-dorsay": {
+  "s": "ok"
+ },
+ "centre-pompidou": {
+  "s": "pick",
+  "n": 2,
+  "why": "full Centre Pompidou lockup instead of stripes only"
+ },
+ "musee-de-lorangerie": {
+  "s": "ok"
+ },
+ "petit-palais": {
+  "s": "ok"
+ },
+ "musee-picasso-paris": {
+  "s": "ok"
+ },
+ "bourse-de-commerce-pinault-collection": {
+  "s": "ok"
+ },
+ "musee-dart-moderne-de-paris": {
+  "s": "ok"
+ },
+ "musee-marmottan-monet": {
+  "s": "ok"
+ },
+ "musee-jacquemart-andre": {
+  "s": "ok"
+ },
+ "jeu-de-paume": {
+  "s": "ok"
+ },
+ "maison-europeenne-de-la-photographie": {
+  "s": "pick",
+  "file": "manual/maison-europeenne-de-la-photographie/1-mep-site-font-full.svg",
+  "why": "round 2 review"
+ },
+ "palais-de-tokyo": {
+  "s": "ok"
+ },
+ "palais-des-beaux-arts-de-lille": {
+  "s": "pick",
+  "file": "manual/palais-des-beaux-arts-de-lille/1-lille-wikimedia-long.jpg",
+  "why": "round 2 review"
+ },
+ "musee-des-beaux-arts-de-rouen": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "musee-des-beaux-arts-de-lyon": {
+  "s": "pick",
+  "file": "manual/musee-des-beaux-arts-de-lyon/1-lyon-mba-site-knockout.png",
+  "why": "round 2 review"
+ },
+ "musee-conde": {
+  "s": "ok",
+  "why": "Chateau de Chantilly brand (musee Conde lives there)"
+ },
+ "musee-toulouse-lautrec": {
+  "s": "ok"
+ },
+ "musee-de-grenoble": {
+  "s": "pick",
+  "file": "site/musee-de-grenoble/00-img-shot.png",
+  "why": "round 2 review"
+ },
+ "musee-granet": {
+  "s": "ok"
+ },
+ "mamcs-strasbourg": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "musee-des-beaux-arts-de-bordeaux": {
+  "s": "pick",
+  "n": 0,
+  "why": "MusBA lockup instead of Ville de Bordeaux"
+ },
+ "musee-rodin": {
+  "s": "pick",
+  "file": "manual/musee-rodin/1-rodin-site-flat.svg",
+  "why": "round 2 review"
+ },
+ "fondation-louis-vuitton": {
+  "s": "ok"
+ },
+ "mad-paris": {
+  "s": "ok"
+ },
+ "carnavalet": {
+  "s": "ok"
+ },
+ "musee-armee": {
+  "s": "ok"
+ },
+ "chateau-de-versailles": {
+  "s": "pick",
+  "file": "manual/chateau-de-versailles/1-versailles-site-2x.png",
+  "why": "round 2 review"
+ },
+ "musee-guimet": {
+  "s": "ok"
+ },
+ "macval": {
+  "s": "pick",
+  "file": "manual/macval/1-mpp-site-logo.png",
+  "why": "round 2 review"
+ },
+ "mucem": {
+  "s": "ok"
+ },
+ "musee-fabre": {
+  "s": "ok"
+ },
+ "musee-chagall": {
+  "s": "pick",
+  "file": "manual/musee-chagall/1-chagall-site-signature.png",
+  "why": "round 2 review"
+ },
+ "la-piscine": {
+  "s": "ok"
+ },
+ "wallace-collection": {
+  "s": "ok"
+ },
+ "soane-museum": {
+  "s": "ok"
+ },
+ "vatican-museums": {
+  "s": "ok"
+ },
+ "museum-wales": {
+  "s": "ok"
+ },
+ "uffizi": {
+  "s": "pick",
+  "n": 2,
+  "why": "Gli Uffizi (the gallery itself), not the Gallerie umbrella"
+ },
+ "pitti-palace": {
+  "s": "pick",
+  "n": 4,
+  "why": "Palazzo Pitti wordmark"
+ },
+ "accademia-firenze": {
+  "s": "pick",
+  "file": "manual/accademia-firenze/1-accademia-site.svg",
+  "why": "round 2 review"
+ },
+ "galleria-borghese": {
+  "s": "pick",
+  "file": "manual/galleria-borghese/1-borghese-site.svg",
+  "why": "round 2 review"
+ },
+ "accademia-venice": {
+  "s": "pick",
+  "file": "site/accademia-venice/01-img-shot.png",
+  "why": "round 2 review"
+ },
+ "guggenheim-venice": {
+  "s": "ok"
+ },
+ "pinacoteca-brera": {
+  "s": "ok"
+ },
+ "doria-pamphilj": {
+  "s": "pick",
+  "file": "manual/doria-pamphilj/1-doria-site-crest-bn.png",
+  "why": "round 3 review"
+ },
+ "museo-egizio": {
+  "s": "ok"
+ },
+ "musei-capitolini": {
+  "s": "text",
+  "why": "round 3: only the generic Musei in Comune system mark"
+ },
+ "museo-novecento": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "pinacoteca-ambrosiana": {
+  "s": "pick",
+  "n": 4,
+  "why": "commons vector; site svg rendered with a filled half"
+ },
+ "museo-del-novecento-milan": {
+  "s": "pick",
+  "file": "manual/museo-del-novecento-milan/1-museodelnovecento-newsletter.jpg",
+  "why": "round 2 review"
+ },
+ "castello-di-rivoli": {
+  "s": "pick",
+  "file": "manual/castello-di-rivoli/1-wikimedia.svg",
+  "why": "round 2 review"
+ },
+ "museo-archeologico-napoli": {
+  "s": "ok"
+ },
+ "humboldt-forum": {
+  "s": "ok"
+ },
+ "altes-museum": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "neues-museum": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "gemaeldegalerie": {
+  "s": "pick",
+  "file": "manual/gemaeldegalerie/1-gac.jpg",
+  "why": "round 2 review"
+ },
+ "alte-nationalgalerie": {
+  "s": "pick",
+  "file": "manual/alte-nationalgalerie/2-gac-nationalgalerie.jpg",
+  "why": "round 2 review"
+ },
+ "neue-nationalgalerie": {
+  "s": "pick",
+  "file": "manual/neue-nationalgalerie/9-nationalgalerie-shared.jpg",
+  "why": "Nationalgalerie lockup shared with Alte Nationalgalerie"
+ },
+ "bode-museum": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "staedel-museum": {
+  "s": "ok"
+ },
+ "bruecke-museum": {
+  "s": "pick",
+  "file": "manual/bruecke-museum/1-site-logo.png",
+  "mode": "lum",
+  "why": "round 3: grey badge collapses under the alpha rule; luminance ink keeps the Brücke letters"
+ },
+ "alte-pinakothek": {
+  "s": "pick",
+  "file": "manual/alte-pinakothek/1-site-title.png",
+  "why": "round 2 review"
+ },
+ "neue-pinakothek": {
+  "s": "pick",
+  "file": "manual/neue-pinakothek/1-site-title.png",
+  "why": "round 2 review"
+ },
+ "pinakothek-der-moderne": {
+  "s": "ok"
+ },
+ "sammlung-schack": {
+  "s": "pick",
+  "file": "manual/sammlung-schack/1-site-title.png",
+  "why": "round 2 review"
+ },
+ "staatsgalerien": {
+  "s": "ok",
+  "why": "branch galleries of the Pinakotheken; parent brand fits"
+ },
+ "hamburger-kunsthalle": {
+  "s": "ok"
+ },
+ "rijksmuseum": {
+  "s": "ok"
+ },
+ "vangogh-museum": {
+  "s": "ok"
+ },
+ "mauritshuis": {
+  "s": "ok"
+ },
+ "stedelijk-museum": {
+  "s": "ok"
+ },
+ "kroller-muller-museum": {
+  "s": "ok"
+ },
+ "mmca-seoul": {
+  "s": "ok"
+ },
+ "national-museum-korea": {
+  "s": "pick",
+  "file": "manual/national-museum-korea/1-museumgokr-ci-horizontal.svg",
+  "why": "round 2 review"
+ },
+ "jeonju-national-museum": {
+  "s": "pick",
+  "file": "manual/jeonju-national-museum/1-namuwiki-nmk-symbol-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "gwangju-national-museum": {
+  "s": "pick",
+  "file": "manual/gwangju-national-museum/1-namuwiki-nmk-symbol-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "folk-museum": {
+  "s": "ok"
+ },
+ "busan-museum": {
+  "s": "pick",
+  "file": "manual/busan-museum/1-namuwiki-symbol-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "seoul-museum-of-art": {
+  "s": "ok"
+ },
+ "museo-reina-sofia": {
+  "s": "ok"
+ },
+ "museo-thyssen-bornemisza": {
+  "s": "pick",
+  "n": 2,
+  "why": "wordmark without slogan"
+ },
+ "guggenheim-bilbao": {
+  "s": "pick",
+  "n": 0,
+  "why": "auto took hamburger icon"
+ },
+ "huntington-library": {
+  "s": "ok"
+ },
+ "famsf-museum": {
+  "s": "pick",
+  "file": "manual/famsf-museum/1-commons-2024.png",
+  "why": "round 2 review"
+ },
+ "museu-picasso-barcelona": {
+  "s": "ok"
+ },
+ "dali-foundation": {
+  "s": "pick",
+  "file": "manual/dali-foundation/1-dali-site.svg",
+  "why": "round 3 review"
+ },
+ "caixaforum": {
+  "s": "pick",
+  "file": "manual/caixaforum/1-caixaforum-site.svg",
+  "why": "round 4 review"
+ },
+ "prado": {
+  "s": "ok"
+ },
+ "sorolla": {
+  "s": "ok"
+ },
+ "malba": {
+  "s": "ok"
+ },
+ "galnas-jakarta": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "nmfa-manila": {
+  "s": "pick",
+  "file": "manual/nmfa-manila/1-commons-full.svg",
+  "why": "round 2 review"
+ },
+ "mathaf-doha": {
+  "s": "ok"
+ },
+ "museum-ludwig": {
+  "s": "pick",
+  "n": 4,
+  "why": "standard wordmark instead of 50th-anniversary variant"
+ },
+ "iziko-sang": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "mam-cdmx": {
+  "s": "ok"
+ },
+ "mnba-habana": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "ngma-newdelhi": {
+  "s": "text",
+  "why": "final gallery: emblem crop is clipped; wordmark crop has a stray bar"
+ },
+ "albertina-museum": {
+  "s": "pick",
+  "n": 6,
+  "why": "standard ALBERTINA instead of 250 anniversary variant"
+ },
+ "leopold-museum": {
+  "s": "ok"
+ },
+ "kunsthistorisches-museum-vienna": {
+  "s": "ok"
+ },
+ "belvedere-museum": {
+  "s": "pick",
+  "file": "site/belvedere-museum/00-img.png",
+  "why": "round 2 review"
+ },
+ "wawel-royal-castle": {
+  "s": "ok"
+ },
+ "mnk-krakow": {
+  "s": "pick",
+  "n": 2,
+  "why": "auto took EU co-funding badge"
+ },
+ "mfab": {
+  "s": "ok"
+ },
+ "gulbenkian-museum": {
+  "s": "ok"
+ },
+ "fine-arts-be": {
+  "s": "text",
+  "why": "round 4: only a tiny umbrella icon or government marks"
+ },
+ "nam-athens": {
+  "s": "ok"
+ },
+ "kunsthaus-zurich": {
+  "s": "pick",
+  "n": 0,
+  "why": "vector instead of screenshot"
+ },
+ "kunstmuseum-basel": {
+  "s": "ok"
+ },
+ "fondation-beyeler": {
+  "s": "ok"
+ },
+ "mah-geneva": {
+  "s": "pick",
+  "file": "manual/mah-geneva/1-site-meta-lockup.png",
+  "why": "round 2 review"
+ },
+ "acropolis-museum": {
+  "s": "ok"
+ },
+ "national-gallery-prague": {
+  "s": "pick",
+  "n": 8,
+  "why": "NGP mark + name lockup"
+ },
+ "nasjonalmuseet": {
+  "s": "pick",
+  "file": "manual/nasjonalmuseet/1-site-footer-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "musee-matisse-nice": {
+  "s": "pick",
+  "file": "site/musee-matisse-nice/00-img-shot.png",
+  "why": "round 4 review"
+ },
+ "munchmuseet": {
+  "s": "ok"
+ },
+ "nationalmuseum-sweden": {
+  "s": "ok"
+ },
+ "smk-collection": {
+  "s": "pick",
+  "n": 2,
+  "why": "SMK crown lockup"
+ },
+ "glyptoteket": {
+  "s": "pick",
+  "n": 4,
+  "why": "site svg was clipped"
+ },
+ "aros-aarhus": {
+  "s": "pick",
+  "file": "manual/aros-aarhus/1-site-logo-v2.svg",
+  "why": "round 2 review"
+ },
+ "skagens-museum": {
+  "s": "ok"
+ },
+ "ateneum-collection": {
+  "s": "ok"
+ },
+ "kiasma-collection": {
+  "s": "ok"
+ },
+ "sinebrychoff-collection": {
+  "s": "ok"
+ },
+ "state-russian-museum": {
+  "s": "ok"
+ },
+ "tretyakov-gallery": {
+  "s": "ok"
+ },
+ "hermitage-museum": {
+  "s": "ok"
+ },
+ "pushkin-museum": {
+  "s": "ok"
+ },
+ "kremlin-museum": {
+  "s": "ok"
+ },
+ "topkapi-palace": {
+  "s": "text",
+  "why": "round 4: only a tiny umbrella icon or government marks"
+ },
+ "hirschsprung-collection": {
+  "s": "ok"
+ },
+ "louisiana-museum": {
+  "s": "ok"
+ },
+ "lee-jung-seop-museum": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "gidang-art-museum": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "soam-memorial-hall": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "house-of-refuge": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "kim-tschang-yeul-art-museum": {
+  "s": "ok"
+ },
+ "dumoak": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "national-gallery-singapore": {
+  "s": "ok"
+ },
+ "met-ny": {
+  "s": "ok"
+ },
+ "nga": {
+  "s": "ok"
+ },
+ "smithsonian-american-art-museum": {
+  "s": "pick",
+  "file": "site/smithsonian-american-art-museum/01-img-shot.png",
+  "why": "round 2 review"
+ },
+ "smithsonian-asian-art": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "smithsonian-national-portrait-gallery": {
+  "s": "pick",
+  "file": "manual/smithsonian-national-portrait-gallery/1-commons.svg",
+  "why": "round 2 review"
+ },
+ "moma-collection": {
+  "s": "ok"
+ },
+ "art-institute-of-chicago": {
+  "s": "pick",
+  "file": "manual/art-institute-of-chicago/1-commons.svg",
+  "why": "round 2 review"
+ },
+ "getty": {
+  "s": "ok"
+ },
+ "whitney-museum": {
+  "s": "pick",
+  "n": 0,
+  "why": "WHITNEY wordmark instead of zigzag line alone"
+ },
+ "museo-frida-kahlo": {
+  "s": "pick",
+  "file": "manual/museo-frida-kahlo/1-site-logo.png",
+  "why": "round 2 review"
+ },
+ "agnsw": {
+  "s": "ok"
+ },
+ "ngv": {
+  "s": "pick",
+  "file": "manual/ngv/1-site-logo.svg",
+  "why": "round 3 review"
+ },
+ "mca-australia": {
+  "s": "ok"
+ },
+ "qagoma": {
+  "s": "ok"
+ },
+ "nmec": {
+  "s": "ok"
+ },
+ "gem": {
+  "s": "pick",
+  "n": 6,
+  "why": "auto took Buy tickets"
+ },
+ "zeitz-mocaa": {
+  "s": "pick",
+  "file": "site/zeitz-mocaa/00-img-shot.png",
+  "why": "round 2 review"
+ },
+ "tepapa-collection": {
+  "s": "ok"
+ },
+ "mmca-gwacheon": {
+  "s": "ok"
+ },
+ "leeum-museum": {
+  "s": "ok"
+ },
+ "apma": {
+  "s": "pick",
+  "file": "manual/apma/1-site-header-wordmark.png",
+  "why": "round 2 review"
+ },
+ "d-museum": {
+  "s": "pick",
+  "file": "manual/d-museum/1-site-dmuseum-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "hoam-museum": {
+  "s": "ok"
+ },
+ "busan-museum-art": {
+  "s": "pick",
+  "file": "manual/busan-museum-art/1-namuwiki-bma-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "jeju-museum-art": {
+  "s": "pick",
+  "file": "manual/jeju-museum-art/1-official-ci-symbol-ko-en.svg",
+  "why": "round 2 review"
+ },
+ "hangaram-art-museum": {
+  "s": "pick",
+  "file": "manual/hangaram-art-museum/1-sac-ci-hangaram-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "ddp-gallery": {
+  "s": "pick",
+  "file": "manual/ddp-gallery/1-ddp-bi-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "daelim-museum": {
+  "s": "pick",
+  "file": "manual/daelim-museum/1-site-daelim-wordmark.svg",
+  "why": "round 2 review"
+ },
+ "groundseesaw": {
+  "s": "ok"
+ },
+ "jeju-contemporary-art-museum": {
+  "s": "pick",
+  "file": "manual/jeju-contemporary-art-museum/1-site-header-logo.png",
+  "why": "round 2 review"
+ },
+ "fitzwilliam": {
+  "s": "ok"
+ },
+ "whitechapel": {
+  "s": "ok"
+ },
+ "ashmolean": {
+  "s": "pick",
+  "file": "site/ashmolean/00-img.png",
+  "why": "round 2 review"
+ },
+ "k20-k21": {
+  "s": "pick",
+  "n": 3,
+  "why": "official slanted stacked wordmark"
+ },
+ "folkwang": {
+  "s": "ok"
+ },
+ "astrup-fearnley": {
+  "s": "ok"
+ },
+ "ngi-reykjavik": {
+  "s": "ok"
+ },
+ "foam-amsterdam": {
+  "s": "ok"
+ },
+ "garage-moscow": {
+  "s": "ok"
+ },
+ "museum-kampa": {
+  "s": "pick",
+  "file": "manual/museum-kampa/1-brandkit-zakladni.svg",
+  "why": "round 2 review"
+ },
+ "boijmans": {
+  "s": "ok"
+ },
+ "ngi-dublin": {
+  "s": "pick",
+  "file": "manual/ngi-dublin/1-shop-lockup.png",
+  "why": "round 2 review"
+ },
+ "hungarian-ng": {
+  "s": "ok"
+ },
+ "sng-bratislava": {
+  "s": "pick",
+  "n": 8,
+  "why": "auto took Goethe-Institut partner mark"
+ },
+ "moderna-museet": {
+  "s": "pick",
+  "file": "manual/moderna-museet/1-site-logo.svg",
+  "why": "round 2 review"
+ },
+ "masi-lugano": {
+  "s": "pick",
+  "n": 0,
+  "why": "auto took a leaf image; MASILugano 900px"
+ },
+ "guggenheim-ny": {
+  "s": "ok"
+ },
+ "hirshhorn": {
+  "s": "pick",
+  "file": "manual/hirshhorn/1-commons.png",
+  "why": "round 2 review"
+ },
+ "walker-art-center": {
+  "s": "ok"
+ },
+ "dma-dallas": {
+  "s": "ok"
+ },
+ "icp-ny": {
+  "s": "ok"
+ },
+ "fomu-antwerp": {
+  "s": "ok"
+ },
+ "museo-jumex": {
+  "s": "pick",
+  "file": "manual/museo-jumex/1-site-wordmark.svg",
+  "why": "round 3 review"
+ },
+ "vnfam-hanoi": {
+  "s": "ok"
+ },
+ "sam-singapore": {
+  "s": "ok"
+ },
+ "museo-botero": {
+  "s": "pick",
+  "file": "site/museo-botero/00-img-shot.png",
+  "why": "round 2 review"
+ },
+ "mali-lima": {
+  "s": "ok"
+ },
+ "mnba-santiago": {
+  "s": "ok"
+ },
+ "moca-busan": {
+  "s": "ok"
+ },
+ "njpac": {
+  "s": "ok"
+ },
+ "mia-doha": {
+  "s": "pick",
+  "file": "manual/mia-doha/1-site-header.svg",
+  "why": "round 2 review"
+ },
+ "istanbul-modern": {
+  "s": "ok"
+ },
+ "jngfa-amman": {
+  "s": "ok"
+ },
+ "sakip-sabanci": {
+  "s": "ok"
+ },
+ "salar-jung": {
+  "s": "pick",
+  "file": "manual/salar-jung/1-google-arts-culture.png",
+  "why": "round 3 review"
+ },
+ "pera-museum": {
+  "s": "ok",
+  "why": "retry gave PERA MUSEUM vector"
+ },
+ "pinacoteca-sp": {
+  "s": "pick",
+  "file": "manual/pinacoteca-sp/1-commons-logo.png",
+  "why": "round 2 review"
+ },
+ "moravian-gallery": {
+  "s": "ok"
+ },
+ "morgan-library": {
+  "s": "text",
+  "why": "no usable official logo (none published, parent-only, or too small)"
+ },
+ "zkm": {
+  "s": "ok"
+ },
+ "ars-electronica": {
+  "s": "ok"
+ },
+ "nfaj": {
+  "s": "ok"
+ },
+ "academy-museum": {
+  "s": "ok"
+ },
+ "gestaltung-zurich": {
+  "s": "pick",
+  "file": "manual/gestaltung-zurich/1-favicon-wordmark.png",
+  "why": "round 2 review"
+ },
+ "mak-vienna": {
+  "s": "pick",
+  "file": "manual/mak-vienna/1-site-lockup.png",
+  "why": "round 2 review"
+ },
+ "kupferstichkabinett": {
+  "s": "pick",
+  "file": "manual/kupferstichkabinett/1-gac-lockup.png",
+  "why": "round 2 review"
+ },
+ "cibdi-angouleme": {
+  "s": "pick",
+  "file": "manual/cibdi-angouleme/1-citebd-site.svg",
+  "mode": "bg-white",
+  "why": "round 4 review"
+ },
+ "korea-manhwa": {
+  "s": "pick",
+  "file": "manual/korea-manhwa/1-komacon-ci-ko-en.svg",
+  "why": "round 2 review"
+ },
+ "poster-house": {
+  "s": "ok"
+ },
+ "wilanow-poster": {
+  "s": "pick",
+  "file": "manual/wilanow-poster/1-mnw-brandbook-pl.png",
+  "why": "round 2 review"
+ },
+ "letterform-archive": {
+  "s": "ok"
+ },
+ "huis-marseille": {
+  "s": "ok"
+ },
+ "nationalmuseum-se": {
+  "s": "ok"
+ },
+ "filmmuseum-potsdam": {
+  "s": "ok"
+ },
+ "cooper-hewitt": {
+  "s": "ok"
+ },
+ "neue-sammlung": {
+  "s": "pick",
+  "file": "manual/neue-sammlung/1-site-logo.svg",
+  "why": "round 2 review"
+ },
+ "niepce-chalon": {
+  "s": "ok"
+ },
+ "powerhouse-sydney": {
+  "s": "pick",
+  "file": "manual/powerhouse-sydney/1-site-footer.svg",
+  "why": "round 2 review"
+ },
+ "cnap-france": {
+  "s": "pick",
+  "file": "manual/cnap-france/1-cnap-site.svg",
+  "why": "round 4 review"
+ },
+ "mkg-hamburg": {
+  "s": "ok"
+ },
+ "het-nieuwe-instituut": {
+  "s": "pick",
+  "file": "site/het-nieuwe-instituut/01-svg-shot.png",
+  "why": "round 2 review"
+ },
+ "cca-montreal": {
+  "s": "ok"
+ },
+ "frac-centre": {
+  "s": "ok"
+ },
+ "azw-vienna": {
+  "s": "ok"
+ },
+ "cite-architecture": {
+  "s": "ok"
+ },
+ "dam-frankfurt": {
+  "s": "ok"
+ },
+ "faam-fukuoka": {
+  "s": "ok"
+ },
+ "momas-saitama": {
+  "s": "ok"
+ },
+ "kyoto-national-museum": {
+  "s": "ok"
+ },
+ "barnes-foundation": {
+  "s": "ok"
+ },
+ "mimoca": {
+  "s": "ok"
+ },
+ "chiba-city-art": {
+  "s": "pick",
+  "file": "manual/chiba-city-art/1-site-footer.png",
+  "why": "round 3 review"
+ },
+ "pola-museum": {
+  "s": "text",
+  "why": "final gallery: the site header SVG itself is missing the M of MUSEUM (POLA MUSEU / OF ART)"
+ },
+ "wellcome-collection": {
+  "s": "ok"
+ },
+ "artsmia": {
+  "s": "ok"
+ },
+ "tokyo-fuji-art": {
+  "s": "pick",
+  "file": "manual/tokyo-fuji-art/1-vi-manual-pdf.png",
+  "why": "round 3 review"
+ }
+}

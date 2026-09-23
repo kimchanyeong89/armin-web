@@ -1,0 +1,2504 @@
+{
+ "academy-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.academymuseum.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/academy-museum.svg",
+  "reviewed": true
+ },
+ "accademia-firenze": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.galleriaaccademiafirenze.it/wp-content/themes/galleriafirenze_theme/public/edc526fbf79899d0c338b14cb9e0d56b.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/accademia-firenze.svg",
+  "reviewed": true
+ },
+ "accademia-venice": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.gallerieaccademia.it/",
+  "license": "",
+  "vector": false,
+  "original": "originals/accademia-venice.png",
+  "reviewed": true
+ },
+ "acropolis-museum": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Acropolis_Museum_Logo_%282011%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/acropolis-museum.svg",
+  "reviewed": true
+ },
+ "adachi-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.adachi-museum.or.jp/admin/wp-content/themes/adachi_museum/assets/img/common/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/adachi-museum.svg",
+  "reviewed": true
+ },
+ "agnsw": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.artgallery.nsw.gov.au/",
+  "license": "",
+  "vector": true,
+  "original": "originals/agnsw.svg",
+  "reviewed": true
+ },
+ "albertina-museum": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Albertina_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/albertina-museum.svg",
+  "reviewed": true
+ },
+ "alte-nationalgalerie": {
+  "source": "manual",
+  "kind": "manual/parent-lockup",
+  "url": "https://lh3.googleusercontent.com/ci/AL18g_THtDZ99ldfnleBGlnOSb58AfBIHBU6PoRLeY4OY8_lasU7Ds6RUp7I32UOb-ofxt-PYaP4n0A",
+  "license": "",
+  "vector": false,
+  "original": "originals/alte-nationalgalerie.jpg",
+  "reviewed": true
+ },
+ "alte-pinakothek": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.pinakothek.de/de/alte-pinakothek",
+  "license": "",
+  "vector": false,
+  "original": "originals/alte-pinakothek.png",
+  "reviewed": true
+ },
+ "apma": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://apma.amorepacific.com/ (header <h1> text, captured at 4x device-pixel-ratio, no image asset exists)",
+  "license": "",
+  "vector": false,
+  "original": "originals/apma.png",
+  "reviewed": true
+ },
+ "aros-aarhus": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.aros.dk/assets/logo-v2.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/aros-aarhus.svg",
+  "reviewed": true
+ },
+ "ars-electronica": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://ars.electronica.art/center/de/",
+  "license": "",
+  "vector": true,
+  "original": "originals/ars-electronica.svg",
+  "reviewed": true
+ },
+ "art-institute-of-chicago": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Art_Institute_of_Chicago_logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/art-institute-of-chicago.svg",
+  "reviewed": true
+ },
+ "artsmia": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://images.artsmia.org/wp-content/uploads/2022/05/16151023/Mia_Isolated_Wordmark_100K.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/artsmia.svg",
+  "reviewed": true
+ },
+ "ashmolean": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.ashmolean.org/sites/default/files/styles/site_logo/public/styles/site_logo/public/ashmolean/site-logo/ash_lock_up-crop.png?itok=JoHc7EPR",
+  "license": "",
+  "vector": false,
+  "original": "originals/ashmolean.png",
+  "reviewed": true
+ },
+ "astrup-fearnley": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.afmuseet.no/",
+  "license": "",
+  "vector": true,
+  "original": "originals/astrup-fearnley.svg",
+  "reviewed": true
+ },
+ "ateneum-collection": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://ateneum.fi/",
+  "license": "",
+  "vector": true,
+  "original": "originals/ateneum-collection.svg",
+  "reviewed": true
+ },
+ "azw-vienna": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.azw.at/wp-content/uploads/2026/03/azw-logo-blue-dark.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/azw-vienna.svg",
+  "reviewed": true
+ },
+ "barnes-foundation": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.barnesfoundation.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/barnes-foundation.svg",
+  "reviewed": true
+ },
+ "belvedere-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.belvedere.at/themes/custom/belvedere/logo.png?ver=202604",
+  "license": "",
+  "vector": false,
+  "original": "originals/belvedere-museum.png",
+  "reviewed": true
+ },
+ "boijmans": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://static.boijmans.nl/dist/assets/img/boijmans-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/boijmans.svg",
+  "reviewed": true
+ },
+ "bourse-de-commerce-pinault-collection": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://www.pinaultcollection.com/themes/custom/bdc2/images/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/bourse-de-commerce-pinault-collection.svg",
+  "reviewed": true
+ },
+ "british-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.britishmuseum.org/themes/custom/numiko/dist/img/british-museum-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/british-museum.svg",
+  "reviewed": true
+ },
+ "bruecke-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.bruecke-museum.de/images/Logo_Draussen.png?w=1550",
+  "license": "",
+  "vector": false,
+  "original": "originals/bruecke-museum.png",
+  "reviewed": true
+ },
+ "busan-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://i.namu.wiki/i/iPGCkh9IqEfCFOV12FIb3TFqrsvnsQiLXdMmEPQysLCXLVyBwd4V2lT93QhYzl3Zr2fpUQEPfJw7ebHFgDJuHDTFD3ZnQnoc4XdNWYpJFmNVyBQXq2EE-zLbjAqks65JP0j1YhaZk-bDh3moSGrm6w.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/busan-museum.svg",
+  "reviewed": true
+ },
+ "busan-museum-art": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://i.namu.wiki/i/x6-qxjrwIYLlWeC1zVo5iKhmjXsBb2a_jJN9WOaronDCpRRjGE8HO0DplXm4aCsl3rsMAGFPXtstRR6roUC1QVIvYDjDqmr9UHnJw672mo8oX-T-sFgT54fCgIjcVrgIN3zQuMGqhUAKKjFSTE73PQ.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/busan-museum-art.svg",
+  "reviewed": true
+ },
+ "caixaforum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://caixaforum.org/documents/307142/28372278/Logo_CXF_Positiu.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/caixaforum.svg",
+  "reviewed": true
+ },
+ "carnavalet": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.carnavalet.paris.fr/themes/custom/carnavalet/dist/images/logo-carnavalet.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/carnavalet.svg",
+  "reviewed": true
+ },
+ "castello-di-rivoli": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/Museo_d%27arte_contemporanea_Castello_di_Rivoli_logo_%28Italy%2C_1986%29.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/castello-di-rivoli.svg",
+  "reviewed": true
+ },
+ "cca-montreal": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.cca.qc.ca/static/dist/img/ui-icons/ico-logo-white.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/cca-montreal.svg",
+  "reviewed": true
+ },
+ "centre-pompidou": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.centrepompidou.fr/en/",
+  "license": "",
+  "vector": true,
+  "original": "originals/centre-pompidou.svg",
+  "reviewed": true
+ },
+ "chateau-de-versailles": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.chateauversailles.fr/themes/custom/versailles/images/source/logo-versailles-blanc-2x.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/chateau-de-versailles.png",
+  "reviewed": true
+ },
+ "chiba-city-art": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.ccma-net.jp/wp-content/themes/ccma/_img/footer/site-name.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/chiba-city-art.png",
+  "reviewed": true
+ },
+ "cibdi-angouleme": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "http://www.citebd.org/themes/custom/citebd/img/header/site-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/cibdi-angouleme.svg",
+  "reviewed": true
+ },
+ "cite-architecture": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.citedelarchitecture.fr/themes/custom/portail/images/svg/logo_capa.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/cite-architecture.svg",
+  "reviewed": true
+ },
+ "cma": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.clevelandart.org/home",
+  "license": "",
+  "vector": true,
+  "original": "originals/cma.svg",
+  "reviewed": true
+ },
+ "cnap-france": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.cnap.fr/themes/custom/cnapd8/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/cnap-france.svg",
+  "reviewed": true
+ },
+ "cooper-hewitt": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.cooperhewitt.org/wp-content/themes/cooperhewitt/assets/images/cooper-hewitt-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/cooper-hewitt.svg",
+  "reviewed": true
+ },
+ "courtauld-gallery": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://courtauld.ac.uk/gallery/",
+  "license": "",
+  "vector": true,
+  "original": "originals/courtauld-gallery.svg",
+  "reviewed": true
+ },
+ "crystalbridges": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://crystalbridges.org/images/CB_Wordmark&Icon_Left%20Align_1.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/crystalbridges.svg",
+  "reviewed": true
+ },
+ "d-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://daelimmuseum.org/ (site asset bundle, D Museum section)",
+  "license": "",
+  "vector": true,
+  "original": "originals/d-museum.svg",
+  "reviewed": true
+ },
+ "daelim-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://daelimmuseum.org/ (site asset bundle, Daelim Museum section)",
+  "license": "",
+  "vector": true,
+  "original": "originals/daelim-museum.svg",
+  "reviewed": true
+ },
+ "dali-foundation": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.salvador-dali.org/wp-content/themes/salvadordali-fundacio/assets/images/fundacio-gala-salvador-white.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/dali-foundation.svg",
+  "reviewed": true
+ },
+ "dam-frankfurt": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://dam-online.de/",
+  "license": "",
+  "vector": false,
+  "original": "originals/dam-frankfurt.png",
+  "reviewed": true
+ },
+ "ddp-gallery": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "http://www.ddp.or.kr/attach/DDP_BI.zip",
+  "license": "",
+  "vector": true,
+  "original": "originals/ddp-gallery.svg",
+  "reviewed": true
+ },
+ "dia": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://dia.org/themes/dia/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/dia.svg",
+  "reviewed": true
+ },
+ "dma-dallas": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Dallas_Museum_of_Art_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/dma-dallas.svg",
+  "reviewed": true
+ },
+ "doria-pamphilj": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.doriapamphilj.it/wp-content/uploads/2019/02/Logo-Trust-Doria-Pamphilj-bn.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/doria-pamphilj.png",
+  "reviewed": true
+ },
+ "dulwich-picture-gallery": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.dulwichpicturegallery.org.uk/",
+  "license": "",
+  "vector": true,
+  "original": "originals/dulwich-picture-gallery.svg",
+  "reviewed": true
+ },
+ "faam-fukuoka": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://faam.city.fukuoka.lg.jp/assets/img/common/logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/faam-fukuoka.png",
+  "reviewed": true
+ },
+ "famsf-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Famsf-logo-2024.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/famsf-museum.png",
+  "reviewed": true
+ },
+ "filmmuseum-potsdam": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://www.filmmuseum-potsdam.de/templates/img/FMP_logo_2016_2_weiss.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/filmmuseum-potsdam.png",
+  "reviewed": true
+ },
+ "fitzwilliam": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://fitzmuseum.cam.ac.uk/images/logos/FitzLogo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/fitzwilliam.svg",
+  "reviewed": true
+ },
+ "foam-amsterdam": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.foam.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/foam-amsterdam.svg",
+  "reviewed": true
+ },
+ "folk-museum": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/National_Folk_Museum_of_Korea_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "South Korea-Gov",
+  "vector": true,
+  "original": "originals/folk-museum.svg",
+  "reviewed": true
+ },
+ "folkwang": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.museum-folkwang.de/themes/custom/theme_museum_folkwang/build/images/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/folkwang.svg",
+  "reviewed": true
+ },
+ "fomu-antwerp": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://fomu.be/",
+  "license": "",
+  "vector": true,
+  "original": "originals/fomu-antwerp.svg",
+  "reviewed": true
+ },
+ "fondation-beyeler": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.fondationbeyeler.ch/en",
+  "license": "",
+  "vector": true,
+  "original": "originals/fondation-beyeler.svg",
+  "reviewed": true
+ },
+ "fondation-louis-vuitton": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.fondationlouisvuitton.fr/images/logo-large.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/fondation-louis-vuitton.svg",
+  "reviewed": true
+ },
+ "frac-centre": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.frac-centre.fr/wp-content/themes/mddw/res/imgs/logo_FRAC_noir.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/frac-centre.svg",
+  "reviewed": true
+ },
+ "galleria-borghese": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://galleriaborghese.cultura.gov.it/wp-content/uploads/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/galleria-borghese.svg",
+  "reviewed": true
+ },
+ "garage-moscow": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Garage_Museum_of_Contemporary_Art.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/garage-moscow.svg",
+  "reviewed": true
+ },
+ "gem": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://gem.eg/",
+  "license": "",
+  "vector": true,
+  "original": "originals/gem.svg",
+  "reviewed": true
+ },
+ "gemaeldegalerie": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://lh3.googleusercontent.com/ci/AL18g_S-DwSvozywiDIJBZ2FR-XjFTiOlqdaoP5rAOfiIJUsvYzaZmW2aikFdi4dHWMsIPXypPLVDw",
+  "license": "",
+  "vector": false,
+  "original": "originals/gemaeldegalerie.jpg",
+  "reviewed": true
+ },
+ "gestaltung-zurich": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://museum-gestaltung.ch/favicon/museum/favicon_512.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/gestaltung-zurich.png",
+  "reviewed": true
+ },
+ "getty": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.getty.edu/museum/",
+  "license": "",
+  "vector": true,
+  "original": "originals/getty.svg",
+  "reviewed": true
+ },
+ "glyptoteket": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Ny_Carlsberg_Glyptotek_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/glyptoteket.svg",
+  "reviewed": true
+ },
+ "groundseesaw": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://ecimg.cafe24img.com/pg516b88922980035/groundseesaw/web/img/logotype.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/groundseesaw.svg",
+  "reviewed": true
+ },
+ "guangdong-museum-of-art": {
+  "source": "site",
+  "kind": "img",
+  "url": "data:image/png;base64,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",
+  "license": "",
+  "vector": false,
+  "original": "originals/guangdong-museum-of-art.png",
+  "reviewed": true
+ },
+ "guggenheim-bilbao": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.guggenheim-bilbao.eus/images/svg/logo_home.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/guggenheim-bilbao.svg",
+  "reviewed": true
+ },
+ "guggenheim-ny": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.guggenheim.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/guggenheim-ny.svg",
+  "reviewed": true
+ },
+ "guggenheim-venice": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://www.guggenheim-venice.it/site/templates/img/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/guggenheim-venice.svg",
+  "reviewed": true
+ },
+ "gulbenkian-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://cdn.gulbenkian.pt/museu/wp-content/uploads/sites/5/2018/12/02_logotipo_web_museu_50px.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/gulbenkian-museum.svg",
+  "reviewed": true
+ },
+ "gwangju-national-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://i.namu.wiki/i/eqN63xX4r5Bnl0i6rlJU0TSZMXCBG7iMDSiMpMgPu-sldHZa9Lgq0CRWnsv01o_uPhJVG4kl_0l8Mv_1pX5CK-Qtsr97vk5UlHofwx-l2smokiFOh2zQNByabeY2qk3cgv7zlIPd4g-h0AtnTtLiAw.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/gwangju-national-museum.svg",
+  "reviewed": true
+ },
+ "hamburger-kunsthalle": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.hamburger-kunsthalle.de/themes/custom/hkh_barrio/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/hamburger-kunsthalle.svg",
+  "reviewed": true
+ },
+ "hangaram-art-museum": {
+  "source": "manual",
+  "kind": "manual/parent-lockup",
+  "url": "https://www.sac.or.kr (CI소개 > 공간별_로고타입, SAC_HangaramArtMuseum CI file)",
+  "license": "",
+  "vector": true,
+  "original": "originals/hangaram-art-museum.svg",
+  "reviewed": true
+ },
+ "hayward-gallery": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.southbankcentre.co.uk/themes/childtheme/assets/images/hayward-logo-white.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/hayward-gallery.svg",
+  "reviewed": true
+ },
+ "hermitage-museum": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Hermitage_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/hermitage-museum.svg",
+  "reviewed": true
+ },
+ "het-nieuwe-instituut": {
+  "source": "site-shot",
+  "kind": "svg",
+  "url": "https://nieuweinstituut.nl/",
+  "license": "",
+  "vector": false,
+  "original": "originals/het-nieuwe-instituut.png",
+  "reviewed": true
+ },
+ "high-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "http://high.org/wp-content/themes/icelander-child/assets/images/highmuseum-logo.svg?ver=1788228566",
+  "license": "",
+  "vector": true,
+  "original": "originals/high-museum.svg",
+  "reviewed": true
+ },
+ "hirschsprung-collection": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.hirschsprung.dk/",
+  "license": "",
+  "vector": true,
+  "original": "originals/hirschsprung-collection.svg",
+  "reviewed": true
+ },
+ "hirshhorn": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Hirshhorn_Museum_and_Sculpture_Garden_Logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/hirshhorn.png",
+  "reviewed": true
+ },
+ "hkmoa": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://hk.art.museum/image/journal/article-23133542.jpg",
+  "license": "",
+  "vector": false,
+  "original": "originals/hkmoa.jpg",
+  "reviewed": true
+ },
+ "hoam-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.leeumhoam.org/hoam/exhibition?params=Y&state=1",
+  "license": "",
+  "vector": true,
+  "original": "originals/hoam-museum.svg",
+  "reviewed": true
+ },
+ "huis-marseille": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://huismarseille.nl/en/",
+  "license": "",
+  "vector": true,
+  "original": "originals/huis-marseille.svg",
+  "reviewed": true
+ },
+ "humboldt-forum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.humboldtforum.org/de/",
+  "license": "",
+  "vector": true,
+  "original": "originals/humboldt-forum.svg",
+  "reviewed": true
+ },
+ "hungarian-ng": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://mng.hu/app/themes/szepmu-mng/assets/images/mng_logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/hungarian-ng.svg",
+  "reviewed": true
+ },
+ "huntington-library": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.huntington.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/huntington-library.svg",
+  "reviewed": true
+ },
+ "icp-ny": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.icp.org/themes/custom/icp_redesign/assets/media/images/icp-logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/icp-ny.png",
+  "reviewed": true
+ },
+ "istanbul-modern": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.istanbulmodern.org/files/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/istanbul-modern.svg",
+  "reviewed": true
+ },
+ "jeju-contemporary-art-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.jeju.go.kr/pub/site/jejumuseum/images/main/logo_mobile.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/jeju-contemporary-art-museum.png",
+  "reviewed": true
+ },
+ "jeju-museum-art": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.jeju.go.kr/jmoa/download.htm?act=download&seq=1074235&no=6",
+  "license": "",
+  "vector": true,
+  "original": "originals/jeju-museum-art.svg",
+  "reviewed": true
+ },
+ "jeonju-national-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://i.namu.wiki/i/2VQGoK_YPsY95k24QPDN05M5pg24zm5aZ7Te3MnKtrnLadwbVlpLAk5v_eLue4_FtsK0iOehV6dIx1O33If5FhPjcB7RV39UFcz94zA_D9xkLZHyVYcx0nMKfTZUoaa8vY425OVvfP6zpDzlBfUI1A.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/jeonju-national-museum.svg",
+  "reviewed": true
+ },
+ "jeu-de-paume": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://jeudepaume.org/wp-content/webp-express/webp-images/themes/hands-woocommerce/app/master/_images/Logo_Jeu_de_Paume_Trame_Principale.png.webp",
+  "license": "",
+  "vector": false,
+  "original": "originals/jeu-de-paume.webp",
+  "reviewed": true
+ },
+ "jngfa-amman": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://nationalgallery.org/wp-content/themes/jngfa/assets/images/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/jngfa-amman.svg",
+  "reviewed": true
+ },
+ "k20-k21": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/bb/Logo_Kunstsammlung.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/k20-k21.svg",
+  "reviewed": true
+ },
+ "kanazawa-21": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.kanazawa21.jp/",
+  "license": "",
+  "vector": true,
+  "original": "originals/kanazawa-21.svg",
+  "reviewed": true
+ },
+ "kiasma-collection": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://kiasma.fi/en/",
+  "license": "",
+  "vector": true,
+  "original": "originals/kiasma-collection.svg",
+  "reviewed": true
+ },
+ "kim-tschang-yeul-art-museum": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://kimtschang-yeul.jeju.go.kr/images/client/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/kim-tschang-yeul-art-museum.svg",
+  "reviewed": true
+ },
+ "korea-manhwa": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.komacon.kr/komacon/file/museum_ai.zip",
+  "license": "",
+  "vector": true,
+  "original": "originals/korea-manhwa.svg",
+  "reviewed": true
+ },
+ "kremlin-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://kreml.ru/ru",
+  "license": "",
+  "vector": true,
+  "original": "originals/kremlin-museum.svg",
+  "reviewed": true
+ },
+ "kroller-muller-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.krollermuller.nl/logo-light.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/kroller-muller-museum.svg",
+  "reviewed": true
+ },
+ "kunsthaus-zurich": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.kunsthaus.ch/",
+  "license": "",
+  "vector": true,
+  "original": "originals/kunsthaus-zurich.svg",
+  "reviewed": true
+ },
+ "kunsthistorisches-museum-vienna": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.khm.at/",
+  "license": "",
+  "vector": true,
+  "original": "originals/kunsthistorisches-museum-vienna.svg",
+  "reviewed": true
+ },
+ "kunstmuseum-basel": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://kunstmuseumbasel.ch/",
+  "license": "",
+  "vector": true,
+  "original": "originals/kunstmuseum-basel.svg",
+  "reviewed": true
+ },
+ "kupferstichkabinett": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://lh3.googleusercontent.com/ci/AL18g_ThcWt3DfSrzYjJN6k1pZ-hSnjMSiJ3IVdehTe5EhiTLislZ5qAYC_yzgKSKww616CaUPLO05k",
+  "license": "",
+  "vector": false,
+  "original": "originals/kupferstichkabinett.png",
+  "reviewed": true
+ },
+ "kyoto-national-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.kyohaku.go.jp/common/img/sub/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/kyoto-national-museum.svg",
+  "reviewed": true
+ },
+ "la-piscine": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.roubaix-lapiscine.com/wp-content/uploads/2025/06/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/la-piscine.svg",
+  "reviewed": true
+ },
+ "lacma": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/0/07/LACMA_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/lacma.svg",
+  "reviewed": true
+ },
+ "leeum-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.leeumhoam.org/leeum",
+  "license": "",
+  "vector": true,
+  "original": "originals/leeum-museum.svg",
+  "reviewed": true
+ },
+ "leopold-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.leopoldmuseum.org/rassets/content/logo-leopold-museum.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/leopold-museum.svg",
+  "reviewed": true
+ },
+ "letterform-archive": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://letterformarchive.org/wp-content/themes/letterform-archive/assets/img/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/letterform-archive.svg",
+  "reviewed": true
+ },
+ "long-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "http://www.thelongmuseum.org/statics/img/logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/long-museum.png",
+  "reviewed": true
+ },
+ "louisiana-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://louisiana.dk/",
+  "license": "",
+  "vector": true,
+  "original": "originals/louisiana-museum.svg",
+  "reviewed": true
+ },
+ "macval": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://mediatheque-patrimoine.culture.gouv.fr/sites/mediatheque/files/logo_mpp.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/macval.png",
+  "reviewed": true
+ },
+ "mad-paris": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://madparis.fr/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mad-paris.svg",
+  "reviewed": true
+ },
+ "mah-geneva": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.mahmah.ch/themes/custom/mah/assets/img/logo-mah-meta.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/mah-geneva.png",
+  "reviewed": true
+ },
+ "maison-europeenne-de-la-photographie": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.mep-fr.org/wp-content/themes/mep_2021/assets/fonts/96f8445378d0b9e1065828fc4758cce246b1b879.ttf",
+  "license": "",
+  "vector": true,
+  "original": "originals/maison-europeenne-de-la-photographie.svg",
+  "reviewed": true
+ },
+ "mak-vienna": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.mak.at/jart/prj3/mak-resp/resources/images/mak-logo-griffin-black-04-22.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/mak-vienna.png",
+  "reviewed": true
+ },
+ "malba": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://malba.org.ar/wp-content/uploads/2025/08/Marca-en-negro.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/malba.svg",
+  "reviewed": true
+ },
+ "mali-lima": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://mali.pe/es/wp-content/uploads/2025/06/MALI_Institucional_blanco_Web_566x365.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/mali-lima.png",
+  "reviewed": true
+ },
+ "mam-cdmx": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://mam.inba.gob.mx/assets/img/logo-mam.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/mam-cdmx.svg",
+  "reviewed": true
+ },
+ "manchester-art-gallery": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://manchesterartgallery.org/wp-content/uploads/2021/06/logo.svg (site's own logo asset; this PNG is a black-ink rasterization of it recovered from an earlier crawl attempt)",
+  "license": "",
+  "vector": false,
+  "original": "originals/manchester-art-gallery.png",
+  "reviewed": true
+ },
+ "masi-lugano": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.masilugano.ch/masi/home",
+  "license": "",
+  "vector": false,
+  "original": "originals/masi-lugano.png",
+  "reviewed": true
+ },
+ "masp": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://cdn.prod.website-files.com/67338a991d8aa120d15ef8c5/673b7e5f6ed39dae0217cb42_Wordmark%20%E2%80%93%20Red.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/masp.svg",
+  "reviewed": true
+ },
+ "mathaf-doha": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://mathaf.org.qa/en/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mathaf-doha.svg",
+  "reviewed": true
+ },
+ "mauritshuis": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.mauritshuis.nl/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mauritshuis.svg",
+  "reviewed": true
+ },
+ "mbam": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.mbam.qc.ca/workspace/uploads/logos/mbam-blocmarque-bilingue-rgb-noir-1-fr-1728330800.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/mbam.png",
+  "reviewed": true
+ },
+ "mca-australia": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Museum_of_Contemporary_Art_Australia_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": false,
+  "original": "originals/mca-australia.png",
+  "reviewed": true
+ },
+ "met-ny": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.metmuseum.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/met-ny.svg",
+  "reviewed": true
+ },
+ "mfa-boston": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Museum_of_Fine_Arts%2C_Boston_Logo.jpg",
+  "license": "",
+  "vector": false,
+  "original": "originals/mfa-boston.jpg",
+  "reviewed": true
+ },
+ "mfab": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.szepmuveszeti.hu/app/themes/szepmu/assets/images/logo-szepmu.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/mfab.svg",
+  "reviewed": true
+ },
+ "mfah": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.mfah.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mfah.svg",
+  "reviewed": true
+ },
+ "mia-doha": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://mia.org.qa/en/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mia-doha.svg",
+  "reviewed": true
+ },
+ "mimoca": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.mimoca.jp/wp-content/themes/mimoca/_img/header/heading.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/mimoca.svg",
+  "reviewed": true
+ },
+ "mkg-hamburg": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.mkg-hamburg.de/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mkg-hamburg.svg",
+  "reviewed": true
+ },
+ "mmca-gwacheon": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://www.mmca.go.kr/asset/images/common/bg_logo_full.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/mmca-gwacheon.svg",
+  "reviewed": true
+ },
+ "mmca-seoul": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://www.mmca.go.kr/asset/images/common/bg_logo_full.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/mmca-seoul.svg",
+  "reviewed": true
+ },
+ "mnba-santiago": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.mnba.gob.cl/",
+  "license": "",
+  "vector": false,
+  "original": "originals/mnba-santiago.png",
+  "reviewed": true
+ },
+ "mnk-krakow": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://mnk.pl/wp-content/uploads/2025/10/desktop-logo-1.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/mnk-krakow.svg",
+  "reviewed": true
+ },
+ "moca-busan": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.busan.go.kr/moca/index",
+  "license": "",
+  "vector": false,
+  "original": "originals/moca-busan.png",
+  "reviewed": true
+ },
+ "moderna-museet": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.modernamuseet.se/ (site logo asset, hand-lettered 'Moderna Museet' wordmark)",
+  "license": "",
+  "vector": true,
+  "original": "originals/moderna-museet.svg",
+  "reviewed": true
+ },
+ "moma-collection": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.moma.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/moma-collection.svg",
+  "reviewed": true
+ },
+ "momas-saitama": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://pref.spec.ed.jp/momas/wysiwyg/image/download/1/4067",
+  "license": "",
+  "vector": false,
+  "original": "originals/momas-saitama.jpg",
+  "reviewed": true
+ },
+ "moravian-gallery": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://moravska-galerie.cz/wp-content/uploads/2022/04/MG-Logo_RED.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/moravian-gallery.svg",
+  "reviewed": true
+ },
+ "mori-collection": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.mori.art.museum/jp/common/img/mam_logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/mori-collection.svg",
+  "reviewed": true
+ },
+ "mplus": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.mplus.org.hk/en/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mplus.svg",
+  "reviewed": true
+ },
+ "mucem": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://mucem.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/mucem.svg",
+  "reviewed": true
+ },
+ "munchmuseet": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Munch_%28logo%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/munchmuseet.svg",
+  "reviewed": true
+ },
+ "musee-armee": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.musee-armee.fr/typo3conf/cru-1788954796/ext/mda/Resources/Public/Frontend/assets/images/logo-mda.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-armee.svg",
+  "reviewed": true
+ },
+ "musee-chagall": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://musees-nationaux-alpesmaritimes.fr/chagall/sites/chagall/files/chagall_0.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/musee-chagall.png",
+  "reviewed": true
+ },
+ "musee-conde": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.musee-conde.fr/files/logo-chantilly_826ac4533d0d309052943e2241a74aab.webp",
+  "license": "",
+  "vector": false,
+  "original": "originals/musee-conde.webp",
+  "reviewed": true
+ },
+ "musee-dart-moderne-de-paris": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.mam.paris.fr/sites/all/themes/custom/mam/static/dist/images/mam-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-dart-moderne-de-paris.svg",
+  "reviewed": true
+ },
+ "musee-de-grenoble": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.museedegrenoble.fr/",
+  "license": "",
+  "vector": false,
+  "original": "originals/musee-de-grenoble.png",
+  "reviewed": true
+ },
+ "musee-de-lorangerie": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.musee-orangerie.fr/themes/custom/orangerie/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-de-lorangerie.svg",
+  "reviewed": true
+ },
+ "musee-des-beaux-arts-de-bordeaux": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.musba-bordeaux.fr/sites/bor-musba-drupal/files/inline-images/logomusba.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/musee-des-beaux-arts-de-bordeaux.png",
+  "reviewed": true
+ },
+ "musee-des-beaux-arts-de-lyon": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.mba-lyon.fr/sites/mba/files/medias/images/2023-09/Logo%20mba%20petit.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/musee-des-beaux-arts-de-lyon.png",
+  "reviewed": true
+ },
+ "musee-dorsay": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.musee-orsay.fr/themes/custom/orsay/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-dorsay.svg",
+  "reviewed": true
+ },
+ "musee-du-louvre": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.louvre.fr/ (inline SVG sprite, path#logo)",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-du-louvre.svg",
+  "reviewed": true
+ },
+ "musee-fabre": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.museefabre.fr/themes/custom/musee_fabre/assets/images/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-fabre.svg",
+  "reviewed": true
+ },
+ "musee-granet": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/logos/musee-granet-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-granet.svg",
+  "reviewed": true
+ },
+ "musee-guimet": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.guimet.fr/themes/custom/guimet/img/logo_n.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-guimet.svg",
+  "reviewed": true
+ },
+ "musee-jacquemart-andre": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.musee-jacquemart-andre.com/themes/custom/white/images/Logo_mja.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-jacquemart-andre.svg",
+  "reviewed": true
+ },
+ "musee-marmottan-monet": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.marmottan.fr/wp-content/themes/marmottan2019/assets/ui/logo_marmottan_fonce.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-marmottan-monet.svg",
+  "reviewed": true
+ },
+ "musee-matisse-nice": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.musee-matisse-nice.org/en/",
+  "license": "",
+  "vector": false,
+  "original": "originals/musee-matisse-nice.png",
+  "reviewed": true
+ },
+ "musee-picasso-paris": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.museepicassoparis.fr/wp-content/uploads/2026/03/mnpp.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/musee-picasso-paris.png",
+  "reviewed": true
+ },
+ "musee-rodin": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.musee-rodin.fr/sites/default/files/2020-10/musee_rodin_2_lignes_plein_fond_claire.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-rodin.svg",
+  "reviewed": true
+ },
+ "musee-toulouse-lautrec": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.musee-toulouse-lautrec.com/themes/lae-site/assets/img/mtl-logo-h.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/musee-toulouse-lautrec.svg",
+  "reviewed": true
+ },
+ "museo-archeologico-napoli": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.museoarcheologiconapoli.it/mann/uploads/2025/06/logo-title-white-big.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/museo-archeologico-napoli.svg",
+  "reviewed": true
+ },
+ "museo-botero": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.banrepcultural.org/bogota/museo-botero",
+  "license": "",
+  "vector": false,
+  "original": "originals/museo-botero.png",
+  "reviewed": true
+ },
+ "museo-del-novecento-milan": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.museodelnovecento.org/documents/470571431/470571459/logo+newsletter+.jpg/5fbb2ab8-aefd-c32b-5bd8-f5812f0c488d",
+  "license": "",
+  "vector": false,
+  "original": "originals/museo-del-novecento-milan.jpg",
+  "reviewed": true
+ },
+ "museo-egizio": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.museoegizio.it/static/logos/logo-horizontal-white.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/museo-egizio.svg",
+  "reviewed": true
+ },
+ "museo-frida-kahlo": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2025/10/LogoMFK-01.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/museo-frida-kahlo.png",
+  "reviewed": true
+ },
+ "museo-jumex": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.fundacionjumex.org/es",
+  "license": "",
+  "vector": true,
+  "original": "originals/museo-jumex.svg",
+  "reviewed": true
+ },
+ "museo-reina-sofia": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.museoreinasofia.es/",
+  "license": "",
+  "vector": true,
+  "original": "originals/museo-reina-sofia.svg",
+  "reviewed": true
+ },
+ "museo-thyssen-bornemisza": {
+  "source": "site",
+  "kind": "jsonld",
+  "url": "https://www.museothyssen.org/themes/thyssen/img/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/museo-thyssen-bornemisza.svg",
+  "reviewed": true
+ },
+ "museu-picasso-barcelona": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://museupicassobcn.cat/sites/default/files/inline-images/Logo-Picasso-black.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/museu-picasso-barcelona.svg",
+  "reviewed": true
+ },
+ "museum-kampa": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.museumkampa.cz/wp-content/uploads/MK_logo.rar (01 Zakladni varianta / museum-kampa_logo_01_zakladni.pdf, converted to SVG)",
+  "license": "",
+  "vector": true,
+  "original": "originals/museum-kampa.svg",
+  "reviewed": true
+ },
+ "museum-ludwig": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/Logo_Museum_Ludwig.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/museum-ludwig.svg",
+  "reviewed": true
+ },
+ "museum-wales": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://museum.wales/block-media/Themes:Amgueddfa:Resources/ac-logo-black.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/museum-wales.svg",
+  "reviewed": true
+ },
+ "nam-athens": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.namuseum.gr/wp-content/themes/nam/dist/assets/images/eam_main_logo_gr.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/nam-athens.svg",
+  "reviewed": true
+ },
+ "namoc": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.namoc.cn/",
+  "license": "",
+  "vector": false,
+  "original": "originals/namoc.png",
+  "reviewed": true
+ },
+ "nanjing-museum": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.njmuseum.com/zh",
+  "license": "",
+  "vector": false,
+  "original": "originals/nanjing-museum.png",
+  "reviewed": true
+ },
+ "nasjonalmuseet": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.nasjonalmuseet.no/",
+  "license": "",
+  "vector": true,
+  "original": "originals/nasjonalmuseet.svg",
+  "reviewed": true
+ },
+ "national-gallery": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/National_Gallery_London_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/national-gallery.svg",
+  "reviewed": true
+ },
+ "national-gallery-prague": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/0/0b/National_Gallery_Prague.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/national-gallery-prague.svg",
+  "reviewed": true
+ },
+ "national-gallery-singapore": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.nationalgallery.sg/content/dam/nationalgallerysg/national_gallery_singapore_logo_2026_2.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/national-gallery-singapore.svg",
+  "reviewed": true
+ },
+ "national-museum-korea": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.museum.go.kr/afile/fileDownloadById/14456?siteCode=MUSEUM",
+  "license": "",
+  "vector": true,
+  "original": "originals/national-museum-korea.svg",
+  "reviewed": true
+ },
+ "national-museum-of-china": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/en/5/5e/NATIONAL_MUSEUM_OF_CHINA.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/national-museum-of-china.png",
+  "reviewed": true
+ },
+ "national-palace-museum-taipei": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.npm.gov.tw/images/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/national-palace-museum-taipei.svg",
+  "reviewed": true
+ },
+ "national-portrait-gallery": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/1/1f/NPG_UK_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/national-portrait-gallery.svg",
+  "reviewed": true
+ },
+ "nationalmuseum-se": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://www.nationalmuseum.se/css/images/NMSmarque_grey_orange_RGB.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/nationalmuseum-se.svg",
+  "reviewed": true
+ },
+ "nationalmuseum-sweden": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://www.nationalmuseum.se/css/images/NMSmarque_grey_orange_RGB.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/nationalmuseum-sweden.svg",
+  "reviewed": true
+ },
+ "neue-nationalgalerie": {
+  "source": "manual",
+  "kind": "manual/parent-lockup",
+  "url": "shared with alte-nationalgalerie",
+  "license": "",
+  "vector": false,
+  "original": "originals/neue-nationalgalerie.jpg",
+  "reviewed": true
+ },
+ "neue-pinakothek": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.pinakothek.de/de/neue-pinakothek",
+  "license": "",
+  "vector": false,
+  "original": "originals/neue-pinakothek.png",
+  "reviewed": true
+ },
+ "neue-sammlung": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.die-neue-sammlung.de/ (site logo asset)",
+  "license": "",
+  "vector": true,
+  "original": "originals/neue-sammlung.svg",
+  "reviewed": true
+ },
+ "nfaj": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.nfaj.go.jp/wp-content/uploads/nfajlogo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/nfaj.png",
+  "reviewed": true
+ },
+ "nga": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.nga.gov/",
+  "license": "",
+  "vector": true,
+  "original": "originals/nga.svg",
+  "reviewed": true
+ },
+ "ngi-dublin": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://shop.nationalgallery.ie/ (site header/footer lockup, white version)",
+  "license": "",
+  "vector": false,
+  "original": "originals/ngi-dublin.png",
+  "reviewed": true
+ },
+ "ngi-reykjavik": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.listasafn.is/",
+  "license": "",
+  "vector": true,
+  "original": "originals/ngi-reykjavik.svg",
+  "reviewed": true
+ },
+ "ngv": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.ngv.vic.gov.au/",
+  "license": "",
+  "vector": true,
+  "original": "originals/ngv.svg",
+  "reviewed": true
+ },
+ "nich-tnm": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.tnm.jp/themes/tnm2022/image/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/nich-tnm.svg",
+  "reviewed": true
+ },
+ "niepce-chalon": {
+  "source": "site-shot",
+  "kind": "bg",
+  "url": "https://www.museeniepce.com/",
+  "license": "",
+  "vector": false,
+  "original": "originals/niepce-chalon.png",
+  "reviewed": true
+ },
+ "njpac": {
+  "source": "site-shot",
+  "kind": "bg",
+  "url": "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
+  "license": "",
+  "vector": false,
+  "original": "originals/njpac.png",
+  "reviewed": true
+ },
+ "nmec": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Logo_NMEC.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "CC BY-SA 4.0",
+  "vector": false,
+  "original": "originals/nmec.png",
+  "reviewed": true
+ },
+ "nmfa-manila": {
+  "source": "manual",
+  "kind": "manual/parent-lockup",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/4/46/National_Museum_of_the_Philippines.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/nmfa-manila.svg",
+  "reviewed": true
+ },
+ "nmwa-collection": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.nmwa.go.jp/common2/img/common/logo1.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/nmwa-collection.svg",
+  "reviewed": true
+ },
+ "ntmofa": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/1/18/%E5%9C%8B%E7%BE%8E%E9%A4%A8logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": false,
+  "original": "originals/ntmofa.png",
+  "reviewed": true
+ },
+ "palace-museum-intl": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://intl.dpm.org.cn/Public/static/themes/image/logo1.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/palace-museum-intl.png",
+  "reviewed": true
+ },
+ "palais-de-tokyo": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://palaisdetokyo.com/",
+  "license": "",
+  "vector": true,
+  "original": "originals/palais-de-tokyo.svg",
+  "reviewed": true
+ },
+ "palais-des-beaux-arts-de-lille": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Logo_du_Palais_des_Beaux-Arts_de_Lille%2C_format_long.jpg",
+  "license": "",
+  "vector": false,
+  "original": "originals/palais-des-beaux-arts-de-lille.jpg",
+  "reviewed": true
+ },
+ "pera-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.peramuseum.org/assetsv2/img/logos/PM-2023logo-en.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/pera-museum.svg",
+  "reviewed": true
+ },
+ "petit-palais": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.petitpalais.paris.fr/",
+  "license": "",
+  "vector": true,
+  "original": "originals/petit-palais.svg",
+  "reviewed": true
+ },
+ "philadelphia": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.philamuseum.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/philadelphia.svg",
+  "reviewed": true
+ },
+ "pinacoteca-ambrosiana": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/c0/Biblioteca_Ambrosiana_-_logo_%28Italy%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/pinacoteca-ambrosiana.svg",
+  "reviewed": true
+ },
+ "pinacoteca-brera": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://pinacotecabrera.org/wp-content/uploads/2024/11/main_logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/pinacoteca-brera.svg",
+  "reviewed": true
+ },
+ "pinacoteca-sp": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/55/Pinacoteca_SP_-_logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/pinacoteca-sp.png",
+  "reviewed": true
+ },
+ "pinakothek-der-moderne": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.pinakothek-der-moderne.de/",
+  "license": "",
+  "vector": true,
+  "original": "originals/pinakothek-der-moderne.svg",
+  "reviewed": true
+ },
+ "pitti-palace": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.uffizi.it/images/pitti-logo-color.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/pitti-palace.svg",
+  "reviewed": true
+ },
+ "poster-house": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://posterhouse.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/poster-house.svg",
+  "reviewed": true
+ },
+ "power-station-of-art": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.powerstationofart.com/whats-on",
+  "license": "",
+  "vector": true,
+  "original": "originals/power-station-of-art.svg",
+  "reviewed": true
+ },
+ "powerhouse-sydney": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://powerhouse.com.au/",
+  "license": "",
+  "vector": true,
+  "original": "originals/powerhouse-sydney.svg",
+  "reviewed": true
+ },
+ "prado": {
+  "source": "site",
+  "kind": "bg",
+  "url": "data:image/svg+xml,%3Csvg version='1.0' id='e8e37340-c394-479d-aa99-29d932d7acb9' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 205.8 13.8' enable-background='new 0 0 205.8 13.8' xml:space='preserve'%3E%3Cg%3E%3Cpath fill='%23FFFFFF' d='M6.3,9.9L6.3,9.9L1.4,2.8v10.8H0V0.3h1.5l4.8,7.2l4.9-7.2h1.5v13.3h-1.5V2.8L6.3,9.9z'/%3E%3Cpath fill='%23FFFFFF' d='M28.3,7.9c0,0.9-0.1,1.7-0.4,2.5c-0.2,0.7-0.6,1.4-1.1,1.9c-0.5,0.5-1.1,0.9-1.8,1.1 c-0.7,0.2-1.5,0.4-2.2,0.4c-0.8,0-1.6-0.2-2.3-0.4c-0.6-0.2-1.2-0.6-1.7-1.1c-0.5-0.5-0.9-1.1-1.2-1.8c-0.2-0.8-0.4-1.7-0.4-2.5 V0.3h1.5v7.6c0,1.2,0.3,2.4,1.1,3.3c0.8,0.8,1.9,1.3,3,1.2c1.1,0,2.1-0.4,2.9-1.1c0.8-0.9,1.1-2.1,1.1-3.3V0.3h1.5L28.3,7.9z'/%3E%3Cpath fill='%23FFFFFF' d='M34.2,4.4c0.1,0.3,0.3,0.5,0.5,0.7l1.1,0.6l1.8,0.5c1.2,0.2,2.3,0.6,3.3,1.3c0.7,0.6,1.1,1.6,1,2.5 c0,0.5-0.1,1-0.3,1.5c-0.2,0.5-0.5,0.9-0.9,1.2c-0.5,0.3-1,0.6-1.5,0.8c-0.6,0.2-1.2,0.2-1.8,0.2c-1,0-2-0.1-2.9-0.5 c-0.9-0.4-1.8-0.9-2.5-1.6l0.9-1.1c0.6,0.6,1.3,1,2.1,1.4c0.8,0.3,1.6,0.5,2.5,0.5c0.7,0,1.5-0.2,2.1-0.6c0.5-0.4,0.8-1,0.8-1.7 c0-0.3,0-0.5-0.1-0.8C40.2,9,40,8.8,39.7,8.6l-1-0.6L37,7.6L35,7c-0.5-0.2-1-0.5-1.4-0.8c-0.4-0.2-0.7-0.6-0.8-1 c-0.2-0.5-0.3-1-0.3-1.5c0-0.5,0.1-1,0.3-1.5c0.2-0.4,0.5-0.8,0.9-1.1l1.4-0.8l1.8-0.2c0.9,0,1.7,0.1,2.5,0.4 c0.8,0.2,1.5,0.6,2.1,1.2l-0.8,1.2c-0.6-0.5-1.2-0.8-1.9-1.1c-0.6-0.3-1.3-0.4-2-0.4l-1.1,0.2c-0.6,0.1-1.2,0.5-1.5,1.1 C34.1,3,34,3.3,34,3.6C34,3.9,34.1,4.2,34.2,4.4z'/%3E%3Cpath fill='%23FFFFFF' d='M55.6,1.6h-8.1v4.6h7.3v1.3h-7.3v4.7h8.2v1.4H46V0.3h9.6V1.6z'/%3E%3Cpath fill='%23FFFFFF' d='M72.2,9.5c-0.3,0.8-0.8,1.6-1.4,2.2c-0.6,0.6-1.3,1.1-2.1,1.5c-1.8,0.8-3.8,0.8-5.6,0 c-0.8-0.3-1.5-0.8-2.1-1.5c-0.6-0.6-1.1-1.3-1.4-2.1c-0.3-0.9-0.5-1.8-0.5-2.7c0-0.9,0.2-1.8,0.5-2.6c0.3-0.8,0.8-1.6,1.4-2.2 c0.6-0.6,1.3-1.1,2.1-1.5C64,0.2,64.9,0,65.9,0c1,0,1.9,0.2,2.8,0.6c0.8,0.3,1.5,0.8,2.1,1.5c0.6,0.6,1.1,1.4,1.4,2.2 C72.9,6,72.9,7.8,72.2,9.5z M70.7,4.8c-0.2-0.7-0.6-1.3-1.1-1.8c-0.4-0.5-1-0.9-1.6-1.2c-0.7-0.2-1.4-0.4-2.1-0.4 c-0.7,0-1.4,0.2-2.1,0.4c-0.6,0.3-1.2,0.7-1.7,1.2c-0.4,0.5-0.8,1.1-1,1.7c-0.3,0.7-0.4,1.4-0.4,2.2c0,0.7,0.1,1.4,0.4,2.1 c0.2,0.7,0.6,1.3,1.1,1.8c0.4,0.5,1,0.9,1.6,1.2c0.7,0.2,1.4,0.4,2.1,0.4c0.7,0,1.4-0.1,2.1-0.4c0.6-0.3,1.2-0.7,1.7-1.2 c0.4-0.5,0.8-1.1,1-1.7c0.3-0.7,0.4-1.4,0.4-2.2C71.1,6.2,71,5.5,70.7,4.8z'/%3E%3Cpath fill='%23FFFFFF' d='M94.7,9.5c-0.3,0.8-0.8,1.5-1.4,2.1c-1.4,1.2-3.2,1.9-5.1,2h-4.7V0.3h4.7c1,0,1.9,0.1,2.8,0.5 c0.9,0.3,1.6,0.8,2.3,1.4c0.6,0.6,1.1,1.3,1.4,2.1C95,5.1,95.2,6,95.2,6.9C95.2,7.8,95,8.7,94.7,9.5z M93.3,4.9 c-0.3-0.6-0.6-1.2-1.1-1.7c-0.5-0.5-1.1-0.9-1.8-1.2c-0.7-0.2-1.5-0.4-2.2-0.4H85v10.6h3.2c1.5,0,2.9-0.5,4-1.5 c0.4-0.5,0.8-1.1,1.1-1.7c0.2-0.7,0.4-1.4,0.4-2.1C93.7,6.2,93.5,5.5,93.3,4.9z'/%3E%3Cpath fill='%23FFFFFF' d='M109,1.6h-8.1v4.6h7.2v1.3h-7.2v4.7h8.2v1.4h-9.7V0.3h9.6L109,1.6z'/%3E%3Cpath fill='%23FFFFFF' d='M113.1,0.3h1.5v11.9h7.5v1.4h-9V0.3z'/%3E%3Cpath fill='%23FFFFFF' d='M142.1,6.4c-0.3,0.5-0.7,1-1.2,1.4c-0.5,0.3-1,0.6-1.6,0.8c-0.6,0.2-1.3,0.3-2,0.3H134v4.7h-1.5V0.3h5 l2.1,0.2c0.6,0.2,1.1,0.5,1.5,0.9c0.5,0.3,0.8,0.8,1,1.3c0.3,0.6,0.4,1.2,0.4,1.8C142.5,5.2,142.4,5.8,142.1,6.4z M140,2.4 c-0.8-0.5-1.7-0.8-2.6-0.8H134v5.9h3.3l1.5-0.2l1.2-0.6l0.7-0.9c0.2-0.4,0.3-0.8,0.3-1.3C141,3.7,140.6,2.9,140,2.4z'/%3E%3Cpath fill='%23FFFFFF' d='M155.4,13.6l-3.9-5.2h-3.8v5.2h-1.5V0.3h5.7c0.7,0,1.3,0,2,0.2c0.5,0.2,1,0.5,1.5,0.8 c0.9,0.7,1.4,1.8,1.3,2.9c0,0.5,0,1-0.2,1.5c-0.2,0.4-0.5,0.8-0.8,1.2l-1.1,0.8l-1.5,0.4l4.1,5.5L155.4,13.6z M154.3,2.3 c-0.7-0.5-1.6-0.7-2.5-0.7h-4.1V7h4.1c0.5,0,1,0,1.4-0.2l1.1-0.5c0.3-0.2,0.5-0.5,0.7-0.9c0.1-0.4,0.2-0.7,0.2-1.1 C155.2,3.5,154.9,2.8,154.3,2.3z'/%3E%3Cpath fill='%23FFFFFF' d='M173.3,13.6h-1.6l-1.5-3.6h-7.3l-1.6,3.6h-1.5l6.1-13.4h1.4L173.3,13.6z M166.5,1.9l-3,6.8h6.1L166.5,1.9z' /%3E%3Cpath fill='%23FFFFFF' d='M188.1,9.5c-0.3,0.8-0.8,1.5-1.4,2.1c-1.4,1.2-3.2,1.9-5.1,2h-4.7V0.3h4.7c1,0,1.9,0.1,2.8,0.5 c0.9,0.3,1.6,0.8,2.3,1.4c0.6,0.6,1.1,1.3,1.4,2.1c0.4,0.8,0.5,1.7,0.5,2.6C188.6,7.8,188.5,8.7,188.1,9.5z M186.7,4.9 c-0.3-0.6-0.6-1.2-1.1-1.7c-0.5-0.5-1.1-0.9-1.8-1.2c-0.7-0.2-1.5-0.4-2.2-0.4h-3.2v10.6h3.2c0.7,0,1.5-0.2,2.2-0.4 c0.6-0.3,1.3-0.7,1.8-1.1c0.4-0.5,0.8-1.1,1.1-1.7c0.2-0.7,0.4-1.4,0.4-2.1C187.1,6.2,186.9,5.5,186.7,4.9z'/%3E%3Cpath fill='%23FFFFFF' d='M205.3,9.5c-0.3,0.8-0.8,1.5-1.4,2.2c-0.6,0.6-1.4,1.1-2.2,1.5c-0.8,0.4-1.8,0.6-2.7,0.6 c-1,0-1.9-0.2-2.8-0.6c-0.8-0.3-1.5-0.8-2.1-1.5c-0.6-0.6-1.1-1.3-1.4-2.1c-0.3-0.9-0.5-1.8-0.5-2.7c0-0.9,0.2-1.8,0.5-2.6 c0.3-0.8,0.8-1.6,1.4-2.2c0.6-0.6,1.3-1.1,2.1-1.5c1.8-0.8,3.8-0.8,5.6,0c0.8,0.3,1.5,0.8,2.1,1.5c0.6,0.6,1.1,1.4,1.4,2.2 C206,6,206,7.8,205.3,9.5L205.3,9.5z M203.8,4.8c-0.2-0.7-0.6-1.3-1.1-1.8c-0.4-0.5-1-0.9-1.6-1.2c-0.7-0.2-1.4-0.4-2.1-0.4 c-0.7,0-1.4,0.2-2.1,0.4c-0.6,0.3-1.2,0.7-1.7,1.2c-0.4,0.5-0.8,1.1-1.1,1.7c-0.2,0.7-0.3,1.5-0.3,2.2c0,0.7,0.1,1.4,0.3,2.1 c0.3,0.6,0.7,1.3,1.1,1.8c1,1.1,2.4,1.6,3.8,1.6c0.7,0,1.4-0.1,2.1-0.4c0.6-0.3,1.2-0.7,1.6-1.2c0.5-0.5,0.9-1.1,1.1-1.7 c0.3-0.7,0.4-1.4,0.4-2.2C204.2,6.2,204.1,5.5,203.8,4.8z'/%3E%3C/g%3E%3C/svg%3E",
+  "license": "",
+  "vector": true,
+  "original": "originals/prado.svg",
+  "reviewed": true
+ },
+ "pushkin-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://pushkinmuseum.art/images/svg/logoPM-sign_text_26.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/pushkin-museum.svg",
+  "reviewed": true
+ },
+ "qagoma": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.qagoma.qld.gov.au/assets/images/qagoma-brand.230eff4b.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/qagoma.svg",
+  "reviewed": true
+ },
+ "rijksmuseum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.rijksmuseum.nl/nl",
+  "license": "",
+  "vector": true,
+  "original": "originals/rijksmuseum.svg",
+  "reviewed": true
+ },
+ "royal-academy": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/RA_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/royal-academy.svg",
+  "reviewed": true
+ },
+ "sakip-sabanci": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.sakipsabancimuzesi.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/sakip-sabanci.svg",
+  "reviewed": true
+ },
+ "salar-jung": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://lh3.googleusercontent.com/ci/AL18g_RTV3yq5WCLzJdf4o_sQqTsFcapZXvhZXPXoOPI_1z4abr78K0Q_8O6jdMw6zppAeMOWQUT1A",
+  "license": "",
+  "vector": false,
+  "original": "originals/salar-jung.png",
+  "reviewed": true
+ },
+ "sam-singapore": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.singaporeartmuseum.sg/-/media/SAM/Images/Logos/SAMHorizontal_NoTagline.svg?iar=0&hash=92381F55203275FD625728ECD1BEC6E9",
+  "license": "",
+  "vector": true,
+  "original": "originals/sam-singapore.svg",
+  "reviewed": true
+ },
+ "sammlung-schack": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.pinakothek.de/de/sammlung-schack",
+  "license": "",
+  "vector": false,
+  "original": "originals/sammlung-schack.png",
+  "reviewed": true
+ },
+ "scottish-national-gallery": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/en/6/64/National_Galleries_Scotland_National_logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/scottish-national-gallery.png",
+  "reviewed": true
+ },
+ "scottish-national-gallery-of-modern-art": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/en/8/8a/National_Galleries_Scotland_Modern_logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/scottish-national-gallery-of-modern-art.png",
+  "reviewed": true
+ },
+ "scottish-national-portrait-gallery": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/en/8/82/National_Galleries_Scotland_Portrait_logo.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/scottish-national-portrait-gallery.png",
+  "reviewed": true
+ },
+ "seoul-museum-of-art": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://sema.seoul.go.kr/resources/assets/svg/o_symbol_b_v.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/seoul-museum-of-art.svg",
+  "reviewed": true
+ },
+ "serpentine-gallery": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.serpentinegalleries.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/serpentine-gallery.svg",
+  "reviewed": true
+ },
+ "sfmoma": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Sfmoma_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": false,
+  "original": "originals/sfmoma.png",
+  "reviewed": true
+ },
+ "shanghai-museum": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.shanghaimuseum.net/mu/site2/svg/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/shanghai-museum.svg",
+  "reviewed": true
+ },
+ "shenzhen-museum": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.shenzhenmuseum.com/",
+  "license": "",
+  "vector": false,
+  "original": "originals/shenzhen-museum.png",
+  "reviewed": true
+ },
+ "sinebrychoff-collection": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://sinebrychoffintaidemuseo.fi/",
+  "license": "",
+  "vector": true,
+  "original": "originals/sinebrychoff-collection.svg",
+  "reviewed": true
+ },
+ "skagens-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://skagensmuseum.dk/",
+  "license": "",
+  "vector": true,
+  "original": "originals/skagens-museum.svg",
+  "reviewed": true
+ },
+ "smithsonian-american-art-museum": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://americanart.si.edu/",
+  "license": "",
+  "vector": false,
+  "original": "originals/smithsonian-american-art-museum.png",
+  "reviewed": true
+ },
+ "smithsonian-national-portrait-gallery": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/55/National_Portrait_Gallery_%28United_States%29_logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/smithsonian-national-portrait-gallery.svg",
+  "reviewed": true
+ },
+ "smk-collection": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.smk.dk/",
+  "license": "",
+  "vector": true,
+  "original": "originals/smk-collection.svg",
+  "reviewed": true
+ },
+ "sng-bratislava": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/50/SNG_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/sng-bratislava.svg",
+  "reviewed": true
+ },
+ "soane-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.soane.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/soane-museum.svg",
+  "reviewed": true
+ },
+ "sorolla": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Logotipo_Museo_Sorolla.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/sorolla.svg",
+  "reviewed": true
+ },
+ "staatsgalerien": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.pinakothek.de/en",
+  "license": "",
+  "vector": true,
+  "original": "originals/staatsgalerien.svg",
+  "reviewed": true
+ },
+ "staedel-museum": {
+  "source": "site",
+  "kind": "jsonld",
+  "url": "https://www.staedelmuseum.de//assets/images/jsonld-staedel-museum-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/staedel-museum.svg",
+  "reviewed": true
+ },
+ "state-russian-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://en.rusmuseum.ru/",
+  "license": "",
+  "vector": true,
+  "original": "originals/state-russian-museum.svg",
+  "reviewed": true
+ },
+ "stedelijk-museum": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.stedelijk.nl/en",
+  "license": "",
+  "vector": true,
+  "original": "originals/stedelijk-museum.svg",
+  "reviewed": true
+ },
+ "tate-britain": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.tate.org.uk/static/images/tate-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/tate-britain.svg",
+  "reviewed": true
+ },
+ "tate-liverpool": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.tate.org.uk/static/images/tate-logo.21bf83bab79c.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/tate-liverpool.svg",
+  "reviewed": true
+ },
+ "tate-modern": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.tate.org.uk/static/images/tate-logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/tate-modern.svg",
+  "reviewed": true
+ },
+ "tate-st-ives": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.tate.org.uk/static/images/tate-logo.21bf83bab79c.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/tate-st-ives.svg",
+  "reviewed": true
+ },
+ "tepapa-collection": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.tepapa.govt.nz/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/tepapa-collection.svg",
+  "reviewed": true
+ },
+ "tfam": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Taipei_Fine_Arts_Museum_logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/tfam.svg",
+  "reviewed": true
+ },
+ "thebroad": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.thebroad.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/thebroad.svg",
+  "reviewed": true
+ },
+ "tobikan-collection": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.tobikan.jp/",
+  "license": "",
+  "vector": false,
+  "original": "originals/tobikan-collection.png",
+  "reviewed": true
+ },
+ "today-art-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "http://www.todayartmuseum.com/images/logonew.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/today-art-museum.png",
+  "reviewed": true
+ },
+ "tokyo-fuji-art": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.fujibi.or.jp/assets/files/logo_guidelines.pdf",
+  "license": "",
+  "vector": false,
+  "original": "originals/tokyo-fuji-art.png",
+  "reviewed": true
+ },
+ "tretyakov-gallery": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.tretyakovgallery.ru/",
+  "license": "",
+  "vector": true,
+  "original": "originals/tretyakov-gallery.svg",
+  "reviewed": true
+ },
+ "uffizi": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.uffizi.it/images/icons/uffizi-logoBlack.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/uffizi.svg",
+  "reviewed": true
+ },
+ "vam": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.vam.ac.uk/",
+  "license": "",
+  "vector": true,
+  "original": "originals/vam.svg",
+  "reviewed": true
+ },
+ "vangogh-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.vangoghmuseum.nl/statics/images/logo.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/vangogh-museum.svg",
+  "reviewed": true
+ },
+ "vatican-museums": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.museivaticani.va/etc/designs/museivaticani/release/library/main/images/logo-internal.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/vatican-museums.svg",
+  "reviewed": true
+ },
+ "vnfam-hanoi": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://vnfam.vn/static/media/logo-full-en-converted.bbe17f97.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/vnfam-hanoi.png",
+  "reviewed": true
+ },
+ "walker-art-center": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.walkerart.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/walker-art-center.svg",
+  "reviewed": true
+ },
+ "walker-art-gallery": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.liverpoolmuseums.org.uk/walker-art-gallery",
+  "license": "",
+  "vector": true,
+  "original": "originals/walker-art-gallery.svg",
+  "reviewed": true
+ },
+ "wallace-collection": {
+  "source": "site",
+  "kind": "svg",
+  "url": "https://www.wallacecollection.org/",
+  "license": "",
+  "vector": true,
+  "original": "originals/wallace-collection.svg",
+  "reviewed": true
+ },
+ "wawel-royal-castle": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://wawel.krakow.pl/build/assets/logo_bfed6905.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/wawel-royal-castle.svg",
+  "reviewed": true
+ },
+ "wellcome-collection": {
+  "source": "commons",
+  "kind": "logo",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Wellcome_Collection_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "license": "Public domain",
+  "vector": true,
+  "original": "originals/wellcome-collection.svg",
+  "reviewed": true
+ },
+ "whitechapel": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://www.whitechapelgallery.org/wp-content/themes/whitechapel/assets/images/Whitechapel-Gallery.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/whitechapel.svg",
+  "reviewed": true
+ },
+ "whitney-museum": {
+  "source": "site",
+  "kind": "img",
+  "url": "https://whitney.org/assets/whitney_text-a190f486.png",
+  "license": "",
+  "vector": false,
+  "original": "originals/whitney-museum.png",
+  "reviewed": true
+ },
+ "wilanow-poster": {
+  "source": "manual",
+  "kind": "manual/found",
+  "url": "https://www.mnw.art.pl/download/gfx/muzeumnarodowe/pl/defaultstronaopisowa/439/2/1/mnw_ksiega_znaku.pdf (page 33, 'Logo oddzialow MNW / Muzeum Plakatu', primary on-white version)",
+  "license": "",
+  "vector": false,
+  "original": "originals/wilanow-poster.png",
+  "reviewed": true
+ },
+ "zeitz-mocaa": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://zeitzmocaa.museum/",
+  "license": "",
+  "vector": false,
+  "original": "originals/zeitz-mocaa.png",
+  "reviewed": true
+ },
+ "zhejiang-art-museum": {
+  "source": "site-shot",
+  "kind": "img",
+  "url": "https://www.zjam.org.cn/",
+  "license": "",
+  "vector": false,
+  "original": "originals/zhejiang-art-museum.png",
+  "reviewed": true
+ },
+ "zkm": {
+  "source": "site",
+  "kind": "bg",
+  "url": "https://zkm.de/themes/custom/zkm/img/zkm/logo/logo-lrg-de-000000.svg",
+  "license": "",
+  "vector": true,
+  "original": "originals/zkm.svg",
+  "reviewed": true
+ }
+}

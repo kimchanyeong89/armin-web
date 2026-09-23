@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState, lazy, Suspense, type ReactNode } from "react";
 import { geoOrthographic, geoDistance } from "d3-geo";
 import { Search as SearchIcon, Palette, Calendar, MapPin, User, ListMusic, Bookmark, Sparkles } from "lucide-react";
-import { onAuthStateChanged } from "firebase/auth";
-import { collection, getCountFromServer, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { exhibitions } from "../data/exhibitions";
-import { auth, db } from "../firebase";
 import BottomPageNavigator from "./BottomPageNavigator";
 // The artist page's distribution uses the REAL world map (lazy, same component the live page renders).
 const ArtistDistributionMap = lazy(() => import("./ArtistDistributionMap"));
@@ -50,13 +47,14 @@ const MONO = { fontFamily: "'Space Mono', monospace", letterSpacing: ".13em" } a
 // Real artwork images (R2). AI grid = recognisable, popular pieces; weekly = Hodler's Lake Thun
 // series for the real "호수와 평행" (lake & parallel) curation.
 const R2 = "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/";
-const AI_ART: { k: string; pct?: number }[] = [
-  { k: "aic-collection/20545-4aca4e10-imageUrl.webp", pct: 96 },               // Monet — Belle-Île
-  { k: "met-ny-collection/437880-3e464bc6-image.webp", pct: 92 },              // Vermeer — Woman with a Lute
-  { k: "famsf-collections/yoshida-on-the-tokaido-from-th-483821f5-imageUrl.webp", pct: 89 }, // Hokusai
-  { k: "vangogh-museum-collection/d0425V1962-60ee14d5-imageUrl.webp" },        // Van Gogh
-  { k: "munch-collection/munch-MM-M-00295-7924fb1b-image.webp" },              // Munch
-  { k: "agnsw-collection/agnsw-1721985-8c8cde13-image.webp" },                 // Klimt
+// AI grid = FIXED, hand-vetted real paintings (recognisable, colourful — never the viewer's likes).
+const AI_ART: string[] = [
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/kunsthaus-collection/kunsthaus-822968-d6e2f372-image.webp", // Chagall — Le Bouquet des amoureux
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vangogh-museum-collection/s0107V1962-d66a43dd-imageUrl.webp", // Van Gogh — Landscape at Twilight
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vangogh-museum-collection/s0219V1962-e10bcf32-imageUrl.webp", // Fantin-Latour — Flowers
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/famsf-collections/spring-154102-26308839-imageUrl.webp", // Arcimboldo — Spring
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ateneum-collection/432949-d6cd1490-image.webp", // Eino Ruutsalo — Trees
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aic-collection/93450-ea7ad678-imageUrl.webp", // Goya — Winter Scene
 ];
 const WK_ART: { k: string; tag: string; title: string }[] = [
   { k: "mah-collection/176649-007f0aef-image.webp", tag: "2026 · WEEK 21", title: "끝까지 바라본 호수" },
@@ -69,20 +67,32 @@ const ARTIST = {
   meta: "1840–1926 · 프랑스 · 인상주의",
   bio: "빛과 대기의 순간을 평생 좇은 인상주의의 창시자. 같은 풍경을 시간과 계절에 따라 반복해 그리며, 빛의 변화 그 자체를 화폭에 기록했습니다.",
   works: 294, museums: 48,
-  dist: [["The Art Institute of Chicago", 46], ["National Gallery of Art", 29], ["Philadelphia Museum of Art", 23], ["National Gallery", 20]] as [string, number][],
+  // FIXED by-country breakdown for the donut + legend (was by-museum).
+  distByCountry: [{ name: "미국", count: 123, pct: 42 }, { name: "영국", count: 38, pct: 13 }, { name: "스위스", count: 29, pct: 10 }, { name: "프랑스", count: 21, pct: 7 }, { name: "일본", count: 18, pct: 6 }, { name: "그 외", count: 65, pct: 22 }],
   imgs: [
     "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aic-collection/20545-4aca4e10-imageUrl.webp",
     "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/kunsthaus-collection/kunsthaus-586962-96a82d53-image.webp",
     "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/collection/claude-monet-bathers-at-la-grenouillere.webp",
-    "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/philadelphia-collection/W1921-1-5-e61ff486-image.webp",
-    "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-133-3c5d3d97-imageUrl.webp",
+    "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aic-collection/64818-6e9810ec-imageUrl.webp",
+    "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aic-collection/4783-dc43dbd2-imageUrl.webp",
     "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vangogh-museum-collection/s0530N2012-01e4f426-imageUrl.webp",
   ],
 };
+// MyPage mock images — FIXED, hand-vetted real paintings, DISTINCT from the AI grid. [0]/[1] are the
+// playlist covers (cleanest first), the rest the grid. (Never pulls the viewer's own likes.)
+const MY_ART = [
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ateneum-collection/473087-4e664334-image.webp", // Edelfelt — Harbour (cover)
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aic-collection/25872-d1b6ef91-imageUrl.webp", // Twachtman — The White Bridge (cover)
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aic-collection/65848-ef895989-imageUrl.webp", // Italian Landscape
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/famsf-collections/landscape-with-travelers-efd079ac-imageUrl.webp", // Salvator Rosa — Landscape with Travelers
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mah-collection/123989-7c8f5f42-image.webp", // Huber — Village de l'Oberland
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/kunsthaus-collection/kunsthaus-1005-c8341b45-image.webp", // Holy — Winterlandschaft
+  "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/kunsthaus-collection/kunsthaus-604979-873d7664-image.webp", // Pissarro — Vue sur le village (clean, no frame)
+];
 function Chip({ children, on }: { children: ReactNode; on?: boolean }) {
   return <span style={{ ...MONO, fontSize: 11, padding: "6px 13px", borderRadius: 999, whiteSpace: "nowrap", background: on ? GOLD : "rgba(255,255,255,0.05)", color: on ? "#19130a" : "rgba(243,238,223,0.6)", border: on ? "none" : "1px solid rgba(255,255,255,0.08)" }}>{children}</span>;
 }
-function TabMock({ kind, likedImgs, profile, artistData }: { kind: IntroStep["kind"]; likedImgs: string[]; profile: { stats: Record<string, number>; playlists: { name: string; count: number }[] } | null; artistData: { artworks: { museumName: string }[]; musArr: { name: string; count: number; pct: number }[] } | null }) {
+function TabMock({ kind, artistData }: { kind: IntroStep["kind"]; artistData: { artworks: { museumName: string }[]; musArr: { name: string; count: number; pct: number }[] } | null }) {
   if (kind === "community") {
     const posts = [["보스턴에서 본 사전트", "빛을 다루는 방식이 달랐다 · 미술관찬"], ["전시 후기 — 모네와 빛", "워싱턴 내셔널 갤러리 · 김세아"], ["요즘 다시 보는 페르메이르", "고요함의 정체에 대하여 · 기체"]];
     return (
@@ -106,7 +116,7 @@ function TabMock({ kind, likedImgs, profile, artistData }: { kind: IntroStep["ki
     // Recommendations consistent with the viewer's taste — the signed-in user's own likes when available,
     // else a curated set. EVERY cell carries a match score so the grid reads as AI recommendations.
     const PCT = [98, 95, 93, 90, 87, 84];
-    const srcs = (likedImgs.length >= 3 ? likedImgs : AI_ART.map((a) => R2 + a.k)).slice(0, 6);
+    const srcs = AI_ART.slice(0, 6);   // FIXED curated set (real paintings, vetted)
     return (
       <div style={{ width: "100%", maxWidth: 560, display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
         <div style={{ ...MONO, fontSize: 11, color: GOLD }}>✦ FOR YOU · 취향 기반 추천</div>
@@ -154,13 +164,11 @@ function TabMock({ kind, likedImgs, profile, artistData }: { kind: IntroStep["ki
     );
   }
   if (kind === "profile") {
-    const imgs = likedImgs.length >= 3 ? likedImgs : AI_ART.map((a) => R2 + a.k);
-    const gridImgs = imgs.length >= 11 ? imgs.slice(6, 11) : imgs.slice(0, 5); // differ from the AI grid
-    // Mirror the REAL MyPage: the same 6 saved categories WITH their icons, the user's real playlists when signed in.
-    const stats: [typeof Palette, string, number | string][] = profile
-      ? [[Palette, "작품", profile.stats.작품], [Calendar, "전시", profile.stats.전시], [MapPin, "미술관", profile.stats.미술관], [User, "작가", profile.stats.작가], [ListMusic, "플레이리스트", profile.stats.플레이리스트], [Bookmark, "큐레이션", profile.stats.큐레이션]]
-      : [[Palette, "작품", 724], [Calendar, "전시", 36], [MapPin, "미술관", 9], [User, "작가", 11], [ListMusic, "플레이리스트", 2], [Bookmark, "큐레이션", 1]];
-    const pls = (profile && profile.playlists.length ? profile.playlists : [{ name: "내 플레이리스트", count: 12 }, { name: "다시 보고 싶은", count: 8 }]).slice(0, 2);
+    const imgs = MY_ART;                       // FIXED set — playlist covers + grid never change
+    const gridImgs = MY_ART.slice(2, 7);       // 5-up grid, different pieces from the playlist covers
+    const stats: [typeof Palette, string, number | string][] =
+      [[Palette, "작품", 724], [Calendar, "전시", 36], [MapPin, "미술관", 9], [User, "작가", 11], [ListMusic, "플레이리스트", 2], [Bookmark, "큐레이션", 1]];
+    const pls = [{ name: "내 플레이리스트", count: 12 }, { name: "다시 보고 싶은", count: 8 }];
     return (
       <div style={{ width: "100%", maxWidth: 760, display: "flex", flexDirection: "column", gap: 16 }}>
         {/* My Playlists — square cover + name + items below, exactly like the real page */}
@@ -206,10 +214,9 @@ function TabMock({ kind, likedImgs, profile, artistData }: { kind: IntroStep["ki
     );
   }
   if (kind === "artist") {
-    const maxc = ARTIST.dist[0][1];
-    const dist = artistData ? artistData.musArr : ARTIST.dist.map(([name, count]) => ({ name, count, pct: Math.round((count / maxc) * 100) }));
+    const dist = ARTIST.distByCountry;         // FIXED by-country breakdown (donut + legend)
     return (
-      <div style={{ width: "100%", maxWidth: 780, display: "flex", flexDirection: "column", gap: 13 }}>
+      <div style={{ width: "100%", maxWidth: 780, display: "flex", flexDirection: "column", gap: 10 }}>
         {/* header — artist name + "N 점 소장" (works in collection), exactly like the real artist page */}
         <div style={{ display: "flex", alignItems: "baseline", gap: 12, flexWrap: "wrap" }}>
           <div style={{ fontFamily: FONT, fontSize: 27, color: CREAM }}>{ARTIST.name}</div>
@@ -223,15 +230,15 @@ function TabMock({ kind, likedImgs, profile, artistData }: { kind: IntroStep["ki
         <div>
           <div style={{ ...MONO, fontSize: 9.5, color: GOLD, marginBottom: 8 }}>전 세계 분포 · GLOBAL DISTRIBUTION</div>
           <div style={{ borderRadius: 10, overflow: "hidden", border: "1px solid rgba(212,165,71,0.18)", display: "flex", flexDirection: "column" }}>
-            <div style={{ height: 124, width: "100%", overflow: "hidden" }}>
+            <div style={{ height: 98, width: "100%", overflow: "hidden" }}>
               {artistData ? (
-                <Suspense fallback={<div style={{ height: 124, display: "flex", alignItems: "center", justifyContent: "center", color: DIM, fontSize: 11 }}>지도 불러오는 중…</div>}>
-                  <ArtistDistributionMap artworks={artistData.artworks as never} isDark hideLegend mapHeight="124px" />
+                <Suspense fallback={<div style={{ height: 98, display: "flex", alignItems: "center", justifyContent: "center", color: DIM, fontSize: 11 }}>지도 불러오는 중…</div>}>
+                  <ArtistDistributionMap artworks={artistData.artworks as never} isDark hideLegend mapHeight="98px" />
                 </Suspense>
-              ) : <div style={{ ...ART, height: 124, borderRadius: 0 }} />}
+              ) : <div style={{ ...ART, height: 98, borderRadius: 0 }} />}
             </div>
             <div style={{ borderTop: "1px solid rgba(212,165,71,0.14)", background: "#0f0f0f", padding: "10px 14px" }}>
-              <div style={{ ...MONO, fontSize: 9, color: DIM, marginBottom: 7 }}>미술관별 소장 분포 · BY MUSEUM</div>
+              <div style={{ ...MONO, fontSize: 9, color: DIM, marginBottom: 7 }}>나라별 소장 분포 · BY COUNTRY</div>
               <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
                 <Donut data={dist} />
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -252,7 +259,7 @@ function TabMock({ kind, likedImgs, profile, artistData }: { kind: IntroStep["ki
           <div style={{ ...MONO, fontSize: 9.5, color: GOLD, marginBottom: 10 }}>전체 작품 · ALL WORKS {ARTIST.works}점</div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(6,1fr)", gap: 7 }}>
             {ARTIST.imgs.map((src, i) => (
-              <div key={i} style={{ ...ART, aspectRatio: "1 / 1", position: "relative", overflow: "hidden" }}>
+              <div key={i} style={{ ...ART, height: 78, position: "relative", overflow: "hidden" }}>
                 <img src={src} alt="" loading="eager" onError={(e) => { e.currentTarget.style.display = "none"; }} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
               </div>
             ))}
@@ -303,8 +310,6 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
   const jumpRef = useRef<{ map: () => void; step: (i: number) => void } | null>(null);
   const [navIndex, setNavIndex] = useState(0); // active tab for the embedded real navigator
   const [navShown, setNavShown] = useState(false);
-  const [likedImgs, setLikedImgs] = useState<string[]>([]); // the signed-in user's own liked artworks
-  const [profile, setProfile] = useState<{ stats: Record<string, number>; playlists: { name: string; count: number }[] } | null>(null);
   const [artistData, setArtistData] = useState<{ artworks: { museumName: string }[]; musArr: { name: string; count: number; pct: number }[] } | null>(null);
   const skipRef = useRef(false);
   const finishedRef = useRef(false);
@@ -312,36 +317,7 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
   const stepsRef = useRef(tourSteps);
   onDoneRef.current = onDone; stepsRef.current = tourSteps;
 
-  // Fill the MyPage mock with the signed-in user's REAL liked artworks, playlists and counts.
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (user) => {
-      if (!user || user.isAnonymous) return; // only the real signed-in user has likes/playlists
-      const base = `users/${user.uid}`;
-      const count = async (c: string) => { try { return (await getCountFromServer(collection(db, `${base}/${c}`))).data().count; } catch { return 0; } };
-      try {
-        const snap = await getDocs(query(collection(db, `${base}/liked_artworks`), limit(80)));
-        // Sort by likedAt DESC so the grid matches what the user sees at the TOP of their MyPage
-        // (the "Latest" order) — i.e. their most-recently-liked artworks, not an arbitrary first-N.
-        const toMs = (v: any): number => v?.toMillis?.() ?? (typeof v?.seconds === "number" ? v.seconds * 1000 : (Number.isFinite(new Date(v).getTime()) ? new Date(v).getTime() : 0));
-        const rows: { img: string; t: number }[] = [];
-        snap.forEach((d) => { const x = d.data() as Record<string, any>; const img = (x.image || x.i || x.imageUrl) as string | undefined; if (img && String(img).startsWith("http")) rows.push({ img: String(img), t: toMs(x.likedAt) }); });
-        rows.sort((a, b) => b.t - a.t);
-        if (rows.length >= 3) setLikedImgs(rows.map((r) => r.img).slice(0, 12));
-      } catch { /* keep fallback */ }
-      try {
-        const plSnap = await getDocs(query(collection(db, `${base}/playlists`), orderBy("createdAt", "desc"), limit(3)));
-        const playlists = await Promise.all(plSnap.docs.map(async (d) => {
-          const x = d.data() as Record<string, unknown>;
-          return { name: String(x.name || x.title || "플레이리스트"), count: await count(`playlists/${d.id}/items`) };
-        }));
-        const [aw, ex, mu, ar, pl, cu] = await Promise.all([count("liked_artworks"), count("liked_exhibitions"), count("liked_museums"), count("liked_artists"), count("playlists"), count("saved_curations")]);
-        setProfile({ stats: { 작품: aw, 전시: ex, 미술관: mu, 작가: ar, 플레이리스트: pl, 큐레이션: cu }, playlists });
-      } catch { /* keep fallback */ }
-    });
-    return () => unsub();
-  }, []);
-
-  // Artist-page distribution data (public): build map artworks + a by-museum breakdown for the donut.
+  // Artist-page distribution data (public): build map artworks for the world map.
   useEffect(() => {
     fetch("/artists/monet.json").then((r) => r.json()).then((rows: { m?: string }[]) => {
       const artworks: { museumName: string }[] = [];
@@ -403,7 +379,7 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
       o.fillStyle = "#fff"; o.textAlign = "center"; o.textBaseline = "middle";
       try { (o as any).letterSpacing = "28px"; } catch { /* */ }
       o.font = "150px " + FONT;
-      o.fillText("ARMIN", ww / 2, hh / 2);
+      o.fillText("COLLY", ww / 2, hh / 2);
       const d = o.getImageData(0, 0, ww, hh).data, pts: number[][] = [];
       for (let y = 0; y < hh; y += 3) for (let x = 0; x < ww; x += 3)
         if (d[(y * ww + x) * 4 + 3] > 120) pts.push([x - ww / 2 + (Math.random() - 0.5) * 2, y - hh / 2 + (Math.random() - 0.5) * 2]);
@@ -498,7 +474,7 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
           X.textAlign = "center"; X.textBaseline = "middle";
           try { (X as any).letterSpacing = (28 * sc) + "px"; } catch { /* */ }
           X.font = (150 * sc) + "px " + FONT; X.fillStyle = "rgba(243,238,223,0.97)";
-          X.fillText("ARMIN", cx, cy);
+          X.fillText("COLLY", cx, cy);
           // catchphrase under the wordmark (from the original 시안) — fades out together as ARMIN shatters
           try { (X as any).letterSpacing = (3 * sc) + "px"; } catch { /* */ }
           X.font = (19 * sc) + "px " + FONT; X.fillStyle = "rgba(212,165,71,0.92)";
@@ -532,7 +508,8 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
       for (let i = 0; i < TOUR.length; i++) {
         const im = mockRefs.current[i]; if (!im) continue;
         const stepStart = T_TOUR + i * D_STEP;
-        const fadeIn = el >= stepStart ? cl01((el - stepStart) / D_FADE) : 0;
+        const imgDelay = D_STEP * 0.22;        // image appears AFTER the caption text (text-first reveal)
+        const fadeIn = el >= stepStart + imgDelay ? cl01((el - stepStart - imgDelay) / D_FADE) : 0;
         // CRITICAL: mockups are transparent (not opaque screenshots), so each MUST fade OUT as the
         // next begins — otherwise they pile up and overlap. Last step holds until the global endFade.
         const fadeOut = i === TOUR.length - 1 ? 0 : cl01((el - (stepStart + D_STEP - D_FADE)) / D_FADE);
@@ -547,7 +524,7 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
       } else if (el >= T_TOUR && el < T_TOUR_END) {
         const si = Math.min(TOUR.length - 1, Math.floor((el - T_TOUR) / D_STEP));
         const lp = (el - T_TOUR - si * D_STEP) / D_STEP;
-        capOp = cl01((lp - 0.26) / 0.12) * (1 - cl01((lp - 0.86) / 0.12)); // appear after the image settles
+        capOp = cl01((lp - 0.03) / 0.09) * (1 - cl01((lp - 0.9) / 0.1)); // caption FIRST, then the image fades in
         setCap("t" + si, 2 + si, TOUR[si].title, TOUR[si].body);
       }
       if (capRef.current) capRef.current.style.opacity = String(capOp);
@@ -596,7 +573,7 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
   };
   return (
     <div ref={wrapRef} onClick={() => { skipRef.current = true; }}
-      style={{ position: "fixed", inset: 0, zIndex: 260000, background: "transparent", cursor: "pointer" }} aria-label="ARMIN 인트로">
+      style={{ position: "fixed", inset: 0, zIndex: 260000, background: "transparent", cursor: "pointer" }} aria-label="COLLY 인트로">
       <div ref={backdropRef} style={{ position: "absolute", inset: 0, background: "#050506", zIndex: 1 }} />
       <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 2, display: "block", pointerEvents: "none" }} />
       {/* built design-mockups of each tab (cross-faded). They sit in the CLEAR BAND below the caption
@@ -604,8 +581,8 @@ export default function CinematicIntro({ onDone, tourSteps }: { onDone: () => vo
           so nothing is ever cropped on narrow screens. */}
       {tourSteps.map((s, i) => (
         <div key={s.kind} ref={(el) => { mockRefs.current[i] = el; }}
-          style={{ position: "absolute", left: 0, right: 0, top: "27%", bottom: "13%", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "0 22px", overflow: "hidden", zIndex: 3 + i, opacity: 0, pointerEvents: "none" }}>
-          <TabMock kind={s.kind} likedImgs={likedImgs} profile={profile} artistData={artistData} />
+          style={{ position: "absolute", left: 0, right: 0, top: "24%", bottom: "9%", display: "flex", alignItems: "flex-start", justifyContent: "center", padding: "0 22px", overflow: "hidden", zIndex: 3 + i, opacity: 0, pointerEvents: "none" }}>
+          <TabMock kind={s.kind} artistData={artistData} />
         </div>
       ))}
       <div ref={topScrimRef} style={{ position: "absolute", top: 0, left: 0, right: 0, height: "42%", opacity: 0, zIndex: 20, pointerEvents: "none", background: "linear-gradient(180deg, rgba(5,5,6,0.94) 0%, rgba(5,5,6,0.72) 38%, rgba(5,5,6,0) 100%)" }} />

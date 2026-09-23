@@ -1,0 +1,171 @@
+/* ══════════════════════════════════════════════════════════════
+   AI tab redesign — five card studies, one layout.
+   Vocabulary from the globe's own label mechanics (Globe.tsx): a
+   leader stub that pushes out from 8 to 12px when a point goes
+   active, labels that pick a side, markers that scale with count.
+   Each study makes one of those moves carry the match.
+
+   `--m` is the match as a length (e.g. 96%), `--mr` the bare ratio.
+   Base rules paint the SETTLED state, so anything without hover -
+   touch, reduced motion - reads correctly; the resting state is
+   applied only under (hover: hover).
+   ══════════════════════════════════════════════════════════════ */
+.ai-page {
+  --ai-bg: #080808; --ai-shell: #0b0b0b;
+  --ai-fg: rgba(244,241,234,0.96); --ai-med: rgba(244,241,234,0.82);
+  --ai-low: rgba(244,241,234,0.64); --ai-faint: rgba(244,241,234,0.40);
+  --ai-line: rgba(244,241,234,0.10); --ai-hair: rgba(244,241,234,0.16);
+  --ai-gold: #d4a547; --ai-gold-rgb: 212,165,71;
+  --ai-mono: "Space Mono", ui-monospace, monospace;
+  /* Paperlogy sets the headings and the large type; Wanted Sans the small
+     type. Both faces are loaded from the community board's table. */
+  --ai-display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --ai-sans: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --ai-ease: cubic-bezier(.16,1,.3,1);
+  min-height: 100dvh; background: var(--ai-bg); color: var(--ai-fg); font-family: var(--ai-sans);
+}
+.ai-page[data-light] {
+  --ai-bg: #fafafa; --ai-shell: #ffffff;
+  --ai-fg: rgba(0,0,0,0.92); --ai-med: rgba(0,0,0,0.72); --ai-low: rgba(0,0,0,0.58); --ai-faint: rgba(0,0,0,0.36);
+  --ai-line: rgba(0,0,0,0.09); --ai-hair: rgba(0,0,0,0.16);
+}
+.ai-page *, .ai-page *::before, .ai-page *::after { box-sizing: border-box; }
+.ai-page button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+.ai-page button, .ai-page a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.ai-page button:focus-visible, .ai-page a:focus-visible { outline: 2px solid var(--ai-gold); outline-offset: 2px; }
+.ai-page ul { list-style: none; margin: 0; padding: 0; }
+.ai-page p { margin: 0; }
+.ai-mono { font-family: var(--ai-mono); }
+.ai-art { display: block; width: 100%; height: 100%; object-fit: cover; background: rgba(244,241,234,.06); }
+.ai-art--missing { display: block; width: 100%; height: 100%; background: rgba(244,241,234,.06); }
+.ai-empty { padding: 64px 4px; color: var(--ai-low); font-size: 13px; text-align: center; }
+
+/* ── header ───────────────────────────────────────────────────── */
+.ai-header { height: 58px; padding: 0 clamp(16px,3vw,44px); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--ai-line); background: var(--ai-shell); }
+.ai-wordmark { color: var(--ai-fg); font-family: var(--ai-display); text-decoration: none; font-weight: 700; letter-spacing: -0.035em; }
+.ai-wordmark span { color: var(--ai-faint); font-size: 11px; letter-spacing: .08em; }
+.ai-stats { display: inline-flex; align-items: center; gap: 11px; font: 500 12px/1 var(--ai-mono); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.ai-stats em { font-style: normal; color: var(--ai-faint); font-family: var(--ai-sans); letter-spacing: 0; }
+.ai-stats i { width: 1px; height: 9px; background: var(--ai-hair); }
+.ai-header-actions { justify-self: end; display: flex; align-items: center; gap: 14px; }
+.ai-header-actions a { color: var(--ai-low); font-size: 11px; text-decoration: none; }
+.ai-header-actions button { color: var(--ai-low); font-size: 12px; font-weight: 600; letter-spacing: .14em; }
+
+.ai-main { padding: clamp(20px,3vw,36px) clamp(16px,3vw,44px) 110px; max-width: 1320px; margin: 0 auto; }
+
+/* ══ statement: settled — one left column ═════════════════════ */
+.ai-statement { max-width: 44rem; margin-bottom: clamp(26px,3.5vw,40px); }
+.ai-statement__meta { margin: 0 0 1.1rem; color: var(--ai-gold); font: 650 .66rem/1.2 var(--ai-mono); font-variant-numeric: tabular-nums; letter-spacing: .04em; }
+.ai-statement h1 { margin: 0; max-width: 11ch; font: 700 clamp(2.4rem,4.2vw,4.2rem)/1.06 var(--ai-display); letter-spacing: -0.05em; text-wrap: balance; }
+.ai-statement__aside { margin-top: 1.3rem; max-width: 30rem; }
+.ai-statement__aside p { color: color-mix(in srgb, currentColor 60%, transparent); font-size: clamp(.9rem,1vw,1rem); line-height: 1.62; text-wrap: pretty; }
+.ai-statement footer { display: flex; gap: .6rem; align-items: center; margin-top: 1.05rem; color: color-mix(in srgb, currentColor 48%, transparent); font-size: .72rem; }
+.ai-statement footer > span:first-child { display: grid; width: 1.5rem; height: 1.5rem; flex: 0 0 auto; place-items: center; border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: 50%; color: var(--ai-gold); }
+
+/* ── the curation switch ──────────────────────────────────────
+   One bordered track split in half, centred, with a gold point in
+   front of the chosen label. It sticks to the top of the window
+   once the title block has scrolled past. */
+.ai-tabsbar { position: sticky; top: 0; z-index: 20; margin-bottom: 20px; padding: 10px 0 12px;
+  background: color-mix(in srgb, var(--ai-bg) 92%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.ai-tabs { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--ai-line); }
+/* The button centres a baseline-aligned group. Putting align-items:baseline
+   on the button itself pins the text to the top of the box and leaves the
+   rest of the strip hollow - flex baseline alignment does not centre. */
+.ai-page .ai-tabs button { display: grid; place-items: center; min-height: 46px; padding: 0 8px;
+  position: relative; color: var(--ai-faint); transition: color .16s ease, background .16s ease; }
+.ai-page .ai-tabs button + button { border-left: 1px solid var(--ai-line); }
+.ai-tabs__inner { display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
+.ai-page .ai-tabs button span { font: 600 15px/1 var(--ai-display); letter-spacing: -0.01em; white-space: nowrap; }
+.ai-tabs__dot { flex: none; width: 4px; height: 4px; border-radius: 50%; background: transparent;
+  transition: background .16s ease, box-shadow .16s ease; }
+.ai-page .ai-tabs button:hover { color: var(--ai-med); }
+.ai-page .ai-tabs button.is-active { color: var(--ai-fg); background: color-mix(in srgb, var(--ai-gold) 9%, transparent); }
+.ai-page .ai-tabs button.is-active span { font-weight: 700; }
+.ai-page .ai-tabs button.is-active .ai-tabs__dot { background: var(--ai-gold); box-shadow: 0 0 0 3px rgba(var(--ai-gold-rgb),.16); }
+
+.ai-weekly-host { margin-top: -6px; }
+
+/* ── mode row ─────────────────────────────────────────────────── */
+.ai-modebar { display: flex; align-items: center; gap: 14px; margin: 4px 0 20px; }
+.ai-mode { display: inline-flex; gap: 14px; flex: none; }
+.ai-mode button { min-height: 30px; padding: 0; font-size: 12.5px; font-weight: 500; color: var(--ai-faint); transition: color .16s ease; }
+.ai-mode button:hover { color: var(--ai-fg); }
+.ai-mode button.is-active { color: var(--ai-fg); font-weight: 700; }
+.ai-rule-line { flex: 1; height: 1px; background: var(--ai-line); }
+.ai-readout { flex: none; font: 500 10px/1 var(--ai-mono); letter-spacing: .08em; color: var(--ai-faint); font-variant-numeric: tabular-nums; }
+
+/* ══ grid ══════════════════════════════════════════════════════ */
+@keyframes ai-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.ai-grid { display: grid; }
+.ai-grid[data-cols="5"] { grid-template-columns: repeat(5, minmax(0,1fr)); gap: 30px 14px; }
+.ai-grid > li { animation: ai-in 380ms var(--ai-ease) both; min-width: 0; display: flex; }
+.ai-card { display: flex; flex-direction: column; width: 100%; min-width: 0; }
+
+.ai-shot { position: relative; }
+.ai-coverbtn { display: block; width: 100%; padding: 0; }
+.ai-cover { position: relative; display: block; aspect-ratio: 3 / 4; overflow: hidden; background: rgba(244,241,234,.05); }
+.ai-cover .ai-art { transition: transform .5s var(--ai-ease); }
+.ai-coverbtn:hover .ai-art { transform: scale(1.03); }
+/* like + playlist ride the artwork's lower right, leaving the text to the lines */
+.ai-onimg { position: absolute; right: 4px; bottom: 4px; z-index: 3; display: inline-flex; }
+.ai-page .ai-onimg .ai-act { color: rgba(244,241,234,.86); text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+.ai-page .ai-onimg .ai-act:hover { color: #fff; background: rgba(0,0,0,.4); }
+.ai-page .ai-onimg .ai-act svg { filter: drop-shadow(0 1px 3px rgba(0,0,0,.65)); }
+
+.ai-body { min-width: 0; margin-top: 11px; }
+/* `.ai-page button{font:inherit}` is (0,1,1) and would beat a lone class */
+.ai-page .ai-titlebtn { display: block; width: 100%; padding: 0; text-align: left; color: var(--ai-fg);
+  font: 600 13px/1.36 var(--ai-display); letter-spacing: -0.005em;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  /* two lines always, so a one-line title never staggers the lines below */
+  min-height: 2.68em; transition: color .16s ease; }
+.ai-page .ai-titlebtn:hover { color: var(--ai-gold); }
+.ai-body strong { display: block; font: 600 8.5px/1 var(--ai-mono); letter-spacing: .09em; color: var(--ai-med); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ai-body small { display: block; margin-top: 6px; font-size: 10.5px; color: var(--ai-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ai-body em { font: 500 10px/1 var(--ai-mono); font-style: normal; letter-spacing: .04em; color: var(--ai-gold); font-variant-numeric: tabular-nums; }
+.ai-actions { display: inline-flex; align-items: center; gap: 2px; }
+.ai-page .ai-act { display: grid; place-items: center; width: 26px; height: 26px; padding: 0; border-radius: 50%; color: var(--ai-faint); transition: color .16s ease, background .16s ease; }
+.ai-page .ai-act:hover { color: var(--ai-fg); background: color-mix(in srgb, currentColor 10%, transparent); }
+
+/* ══ the reading — a point that draws itself out ═══════════════
+   The point lives in a fixed 22px slot and is right-aligned inside
+   it, so growing into a bar costs no layout: the figure beside it
+   never moves. */
+.ai-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 8px; min-width: 0; }
+.ai-meta strong { flex: 0 1 auto; }
+.ai-read { flex: none; display: inline-flex; align-items: center; gap: 7px; }
+.ai-dot { flex: none; display: flex; align-items: center; justify-content: flex-end; width: 22px; height: 4px; }
+.ai-dot b { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--ai-gold);
+  box-shadow: 0 0 0 0 rgba(var(--ai-gold-rgb),.18);
+  transition: width .3s var(--ai-ease), height .3s var(--ai-ease), border-radius .3s var(--ai-ease), box-shadow .3s var(--ai-ease); }
+.ai-card:hover .ai-dot b, .ai-card:focus-within .ai-dot b { width: 22px; height: 2px; border-radius: 1px; box-shadow: 0 0 0 2px rgba(var(--ai-gold-rgb),.10); }
+
+.ai-more { grid-column: 1 / -1; }
+.ai-more button { width: 100%; min-height: 44px; border: 1px solid var(--ai-line); color: var(--ai-low); font-size: 12.5px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: border-color .16s ease, color .16s ease; }
+.ai-more button:hover { border-color: var(--ai-gold); color: var(--ai-fg); }
+.ai-more .ai-mono { font-size: 10px; color: var(--ai-gold); }
+
+@media (prefers-reduced-motion: reduce) { .ai-page * { animation: none !important; transition: none !important; } }
+
+/* ══ responsive ════════════════════════════════════════════════
+   Columns hold as the window narrows: cards shrink to ~150px
+   before a column is dropped, then 5 → 4 → 3 → 2. */
+@media (max-width: 900px) {
+  .ai-stats { display: none; } .ai-header { grid-template-columns: 1fr auto; }
+  .ai-page .ai-titlebtn { font-size: 11.5px; min-height: 2.68em; }
+  .ai-body strong { font-size: 8px; }
+  .ai-body small { font-size: 9.5px; }
+  .ai-body em { font-size: 9px; }
+  .ai-page .ai-act { width: 24px; height: 24px; }
+}
+@media (max-width: 820px) {
+  .ai-grid[data-cols="5"] { grid-template-columns: repeat(4, minmax(0,1fr)); }
+}
+@media (max-width: 700px) {
+  .ai-header { padding: 0 16px; }
+  .ai-header-actions > a { display: none; }
+}
+@media (max-width: 640px) { .ai-grid[data-cols="5"] { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+@media (max-width: 460px) { .ai-grid[data-cols="5"] { grid-template-columns: repeat(2, minmax(0,1fr)); } }

@@ -1,45 +1,31 @@
 /**
  * ExhibitionsNearMePage.tsx
  *
- * 전시 추천 페이지 — 취향 벡터 기반 예상점수 + 커뮤니티 평점
+ * 전시 추천 페이지 — 취향 일치 + 커뮤니티 평점
  *
- * ── 예상점수 알고리즘 ────────────────────────────────────────────────────────
+ * ── 취향 일치 (1~99) ─────────────────────────────────────────────────────────
+ *      좋아요한 작품들의 SigLIP 이미지 벡터를 워커(/taste-scores)가 취향 군집으로 요약하고,
+ *      전시마다 소개글로 찾아 둔 가까운 작품들의 이미지와 비교해 매긴다.
+ *      50 은 이 사용자에게 보통인 전시이고, 높을수록 취향에 맞는다. 좋아요가 적으면 50 쪽으로 당겨진다.
+ *      공식: workers/semantic-search/src/taste.ts · 데이터: scripts/taste/build-taste-data.mjs
  *
- *  [1] 사용자 취향 벡터 (V_user)
- *      - 좋아요한 작품들의 SigLIP 이미지 임베딩 768D 벡터들의 평균(centroid)
- *      - CF Worker(/taste-profile)에서 관리; 로컬에서는 encodeText로 근사
- *
- *  [2] 전시 임베딩 (V_exh)
- *      - 우선: coverEmbedding 필드에 사전 계산된 이미지 임베딩 사용
- *      - 없으면: SigLIP 텍스트 인코더로 "{제목} {설명}" 인코딩
- *      - SigLIP 텍스트/이미지 임베딩은 같은 공간에 있으므로 교차 비교 가능
- *
- *  [3] 취향 유사도 점수 (0~100)
- *      taste_score = cosine_sim(V_user, V_exh) × 100
- *      (두 벡터 모두 L2-정규화되어 있으므로 내적 = cosine similarity)
- *
- *  [4] 커뮤니티 평점 보정 (±10점)
- *      rating_adj = (avg_rating - 3.0) × 5
- *      → 5점 평균이면 +10, 3점이면 ±0, 1점이면 -10
- *
- *  [5] 최종 예상점수
- *      final_score = clamp(taste_score × 0.85 + rating_adj × 0.15, 0, 100)
- *      → 취향 유사도 85% + 커뮤니티 평점 15% 혼합
- *
- * ── 평점 저장 스키마 (Firestore) ─────────────────────────────────────────────
- *      users/{userId}/exhibition_ratings/{exhibitionId}
- *        → { rating: 1~5, ratedAt: Timestamp }
- *
- *      exhibition_stats/{exhibitionId}
- *        → { avgRating: number, totalRatings: number }
+ * ── 평점 ─────────────────────────────────────────────────────────────────────
+ *      평점(0.5점 단위)과 한줄평은 앱 전체가 함께 쓰는 RatingEmblems·ReviewPanel 로 남기고 본다.
+ *      저장 구조: features/ratings/ratingWrites.ts
  * ────────────────────────────────────────────────────────────────────────────
  */
 
 import React, {
-  useState, useEffect, useCallback, useRef, useMemo, memo,
+  useState, useEffect, useCallback, useMemo, memo,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import RatingEmblems from '../components/Ratings/RatingEmblems';
+import { ReviewPanel } from '../components/Ratings/ReviewPanel';
+import { averageRating, subjectKey } from '../features/ratings/ratingWrites';
+import { useAllRatingStats } from '../features/ratings/useRatings';
+import { useTasteScores } from '../features/taste/useTasteScores';
+import { useLikedArtworks } from '../hooks/useLikedArtworks';
 
 // ─── 타입 ──────────────────────────────────────────────────────────────────
 
@@ -53,7 +39,6 @@ interface TemporaryExhibition {
   coverImage: string;
   officialUrl?: string;
   status: 'ongoing' | 'upcoming' | 'past';
-  coverEmbedding?: number[];
 }
 
 interface Museum {
@@ -73,34 +58,16 @@ interface ExhibitionWithMeta {
   exhibition: TemporaryExhibition;
   museum: Museum;
   distanceKm: number | null;
-  tasteScore: number | null;       // 0~100: 취향 유사도
-  finalScore: number | null;       // 0~100: 취향 + 커뮤니티 혼합
+  tasteScore: number | null;       // 1~99: 취향 일치 (좋아요한 작품이 없으면 null)
   communityAvg: number | null;     // 1~5: 커뮤니티 평균 평점
   communityCount: number;
-  myRating: number | null;         // 1~5: 내 평점
   daysLeft: number | null;
 }
 
-interface ExhibitionStats {
-  avgRating: number;
-  totalRatings: number;
-}
 
 type SortMode = 'score' | 'distance' | 'deadline' | 'rating';
 
-const CF = 'https://armin-semantic-search.armin-art.workers.dev';
-
 // ─── 유틸 ──────────────────────────────────────────────────────────────────
-
-function cosineSim(a: number[], b: number[]): number {
-  if (!a?.length || !b?.length || a.length !== b.length) return 0;
-  return a.reduce((s, v, i) => s + v * b[i], 0);
-}
-
-function l2Norm(v: number[]): number[] {
-  const norm = Math.sqrt(v.reduce((s, x) => s + x * x, 0));
-  return norm > 0 ? v.map(x => x / norm) : v;
-}
 
 function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371;
@@ -136,98 +103,6 @@ function scoreBg(s: number): string {
   return 'rgba(255,255,255,0.07)';
 }
 
-// ─── Firestore 평점 헬퍼 ────────────────────────────────────────────────────
-
-async function fetchExhibitionStats(exhId: string): Promise<ExhibitionStats | null> {
-  try {
-    const { getFirestore, doc, getDoc } = await import('firebase/firestore');
-    const db = getFirestore();
-    const snap = await getDoc(doc(db, 'exhibition_stats', exhId));
-    if (snap.exists()) return snap.data() as ExhibitionStats;
-    return null;
-  } catch { return null; }
-}
-
-async function fetchMyRating(userId: string, exhId: string): Promise<number | null> {
-  try {
-    const { getFirestore, doc, getDoc } = await import('firebase/firestore');
-    const db = getFirestore();
-    const snap = await getDoc(doc(db, 'users', userId, 'exhibition_ratings', exhId));
-    if (snap.exists()) return (snap.data() as { rating: number }).rating;
-    return null;
-  } catch { return null; }
-}
-
-async function writeRating(userId: string, exhId: string, rating: number): Promise<void> {
-  const { getFirestore, doc, setDoc, getDoc, updateDoc, serverTimestamp, runTransaction } =
-    await import('firebase/firestore');
-  const db = getFirestore();
-  const userRef = doc(db, 'users', userId, 'exhibition_ratings', exhId);
-  const statsRef = doc(db, 'exhibition_stats', exhId);
-
-  await runTransaction(db, async (tx) => {
-    const prevSnap = await tx.get(userRef);
-    const statsSnap = await tx.get(statsRef);
-
-    const prevRating: number | null = prevSnap.exists()
-      ? (prevSnap.data() as { rating: number }).rating
-      : null;
-
-    tx.set(userRef, { rating, ratedAt: serverTimestamp() });
-
-    if (statsSnap.exists()) {
-      const s = statsSnap.data() as ExhibitionStats;
-      let total = s.totalRatings;
-      let sum = s.avgRating * total;
-      if (prevRating !== null) sum -= prevRating; else total += 1;
-      sum += rating;
-      tx.update(statsRef, { avgRating: sum / total, totalRatings: total });
-    } else {
-      tx.set(statsRef, { avgRating: rating, totalRatings: 1 });
-    }
-  });
-}
-
-// ─── 스타 평점 컴포넌트 ─────────────────────────────────────────────────────
-
-const StarRating = memo(({
-  value, onChange, size = 18, readonly = false,
-}: {
-  value: number | null;
-  onChange?: (v: number) => void;
-  size?: number;
-  readonly?: boolean;
-}) => {
-  const [hover, setHover] = useState(0);
-  const active = hover || value || 0;
-
-  return (
-    <div style={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-      {[1, 2, 3, 4, 5].map(n => (
-        <svg
-          key={n}
-          width={size} height={size} viewBox="0 0 24 24"
-          style={{
-            cursor: readonly ? 'default' : 'pointer',
-            transition: 'transform 0.12s',
-            transform: !readonly && hover === n ? 'scale(1.25)' : 'scale(1)',
-          }}
-          onMouseEnter={() => !readonly && setHover(n)}
-          onMouseLeave={() => !readonly && setHover(0)}
-          onClick={() => !readonly && onChange?.(n)}
-        >
-          <polygon
-            points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
-            fill={n <= active ? '#c9a55a' : 'rgba(255,255,255,0.12)'}
-            stroke={n <= active ? '#c9a55a' : 'rgba(255,255,255,0.2)'}
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-      ))}
-    </div>
-  );
-});
 
 // ─── 예상점수 게이지 ────────────────────────────────────────────────────────
 
@@ -254,7 +129,7 @@ const ScoreGauge = memo(({ score }: { score: number }) => {
         alignItems: 'center', justifyContent: 'center',
       }}>
         <span style={{ fontSize: 13, fontWeight: 700, color: col, lineHeight: 1 }}>{score}</span>
-        <span style={{ fontSize: 8, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>점</span>
+        <span style={{ fontSize: 8, color: 'rgba(255,255,255,0.4)', marginTop: 1 }}>%</span>
       </div>
     </div>
   );
@@ -263,15 +138,13 @@ const ScoreGauge = memo(({ score }: { score: number }) => {
 // ─── 전시 카드 ──────────────────────────────────────────────────────────────
 
 const ExhibitionCard = memo(({
-  item, onOpen, onRate,
+  item, onOpen,
 }: {
   item: ExhibitionWithMeta;
   onOpen: () => void;
-  onRate: (rating: number) => void;
 }) => {
   const [imgFailed, setImgFailed] = useState(false);
-  const { exhibition: exh, museum, distanceKm, finalScore, tasteScore, communityAvg,
-    communityCount, myRating, daysLeft } = item;
+  const { exhibition: exh, museum, distanceKm, tasteScore, daysLeft } = item;
   const isUrgent = daysLeft !== null && daysLeft >= 0 && daysLeft <= 7;
   const isUpcoming = exh.status === 'upcoming';
 
@@ -281,7 +154,7 @@ const ExhibitionCard = memo(({
         borderRadius: 14,
         overflow: 'hidden',
         background: '#141414',
-        border: finalScore !== null && finalScore >= 75
+        border: tasteScore !== null && tasteScore >= 75
           ? '1px solid rgba(201,165,90,0.28)' : '1px solid rgba(255,255,255,0.06)',
         cursor: 'pointer',
         position: 'relative',
@@ -310,21 +183,21 @@ const ExhibitionCard = memo(({
         ) : (
           <div style={{
             width: '100%', height: '100%',
-            background: `linear-gradient(135deg, ${scoreBg(finalScore ?? 0)} 0%, #1e1e1e 100%)`,
+            background: `linear-gradient(135deg, ${scoreBg(tasteScore ?? 0)} 0%, #1e1e1e 100%)`,
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36,
           }}>🎨</div>
         )}
-        {/* 예상점수 배지 */}
-        {finalScore !== null && (
+        {/* 취향 일치 배지 */}
+        {tasteScore !== null && (
           <div style={{
             position: 'absolute', top: 8, right: 8,
             padding: '4px 8px', borderRadius: 10,
-            background: scoreBg(finalScore),
+            background: scoreBg(tasteScore),
             backdropFilter: 'blur(8px)',
-            border: `1px solid ${scoreColor(finalScore)}33`,
+            border: `1px solid ${scoreColor(tasteScore)}33`,
           }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: scoreColor(finalScore) }}>
-              {finalScore}점
+            <span style={{ fontSize: 11, fontWeight: 700, color: scoreColor(tasteScore) }}>
+              취향 {tasteScore}%
             </span>
           </div>
         )}
@@ -369,16 +242,8 @@ const ExhibitionCard = memo(({
         </div>
 
         {/* 평점 */}
-        <div
-          style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}
-          onClick={e => e.stopPropagation()}
-        >
-          <StarRating value={myRating} onChange={onRate} size={14} />
-          {communityAvg !== null && (
-            <span style={{ fontSize: 10, color: 'rgba(232,224,212,0.38)' }}>
-              {communityAvg.toFixed(1)} ({communityCount})
-            </span>
-          )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4 }}>
+          <RatingEmblems subject={{ kind: 'exhibition', id: exh.id }} title={exh.title} subtitle={museum.name} color="rgba(232,224,212,0.62)" size={13} />
         </div>
       </div>
     </div>
@@ -388,15 +253,13 @@ const ExhibitionCard = memo(({
 // ─── 상세 모달 ──────────────────────────────────────────────────────────────
 
 const DetailModal = memo(({
-  item, onClose, onRate,
+  item, onClose,
 }: {
   item: ExhibitionWithMeta;
   onClose: () => void;
-  onRate: (rating: number) => void;
 }) => {
   const [imgFailed, setImgFailed] = useState(false);
-  const { exhibition: exh, museum, distanceKm, tasteScore, finalScore,
-    communityAvg, communityCount, myRating, daysLeft } = item;
+  const { exhibition: exh, museum, distanceKm, tasteScore, communityAvg, daysLeft } = item;
 
   return (
     <div
@@ -425,10 +288,10 @@ const DetailModal = memo(({
           )}
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, #111 0%, transparent 55%)' }} />
 
-          {/* 예상점수 게이지 */}
-          {finalScore !== null && (
+          {/* 취향 일치 게이지 */}
+          {tasteScore !== null && (
             <div style={{ position: 'absolute', bottom: 16, right: 16 }}>
-              <ScoreGauge score={finalScore} />
+              <ScoreGauge score={tasteScore} />
             </div>
           )}
 
@@ -480,43 +343,22 @@ const DetailModal = memo(({
                 점수 분석
               </div>
               {tasteScore !== null && (
-                <ScoreRow label="취향 유사도" value={tasteScore} max={100} unit="점" />
+                <ScoreRow label="취향 일치" value={tasteScore} max={100} unit="%" color={scoreColor(tasteScore)} bold />
               )}
               {communityAvg !== null && (
                 <ScoreRow label="커뮤니티 평점" value={communityAvg} max={5} unit="점" color="#c9a55a" />
               )}
-              {finalScore !== null && (
-                <ScoreRow label="나의 예상점수" value={finalScore} max={100} unit="점" color={scoreColor(finalScore)} bold />
+              {tasteScore !== null && (
+                <div style={{ fontSize: 10, color: 'rgba(232,224,212,0.28)', marginTop: 8, lineHeight: 1.6 }}>
+                  좋아요한 작품과 이 전시에 가까운 소장품의 이미지를 비교한 점수예요. 50%가 보통이고, 높을수록 취향에 맞아요.
+                </div>
               )}
-              <div style={{ fontSize: 10, color: 'rgba(232,224,212,0.28)', marginTop: 8, lineHeight: 1.6 }}>
-                예상점수 = 취향 유사도 85% + 커뮤니티 평점 보정 15%
-              </div>
             </div>
           )}
 
-          {/* 내 평점 */}
-          <div style={{ marginBottom: 18 }}>
-            <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: '1.2px', color: 'rgba(232,224,212,0.35)', textTransform: 'uppercase', marginBottom: 10 }}>
-              내 평점
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <StarRating value={myRating} onChange={onRate} size={26} />
-              {myRating && (
-                <span style={{ fontSize: 13, color: '#c9a55a', fontWeight: 600 }}>
-                  {myRating}점 평가함
-                </span>
-              )}
-              {!myRating && (
-                <span style={{ fontSize: 12, color: 'rgba(232,224,212,0.35)' }}>
-                  별점을 남겨보세요
-                </span>
-              )}
-            </div>
-            {communityAvg !== null && (
-              <div style={{ fontSize: 11, color: 'rgba(232,224,212,0.3)', marginTop: 6 }}>
-                커뮤니티 평균 ★ {communityAvg.toFixed(1)} ({communityCount}명)
-              </div>
-            )}
+          {/* 평점·한줄평 — 주변 전시 모달과 같은 패널 (제목줄도 패널이 그린다) */}
+          <div style={{ marginBottom: 22 }}>
+            <ReviewPanel subject={{ kind: 'exhibition', id: exh.id }} />
           </div>
 
           <p style={{ fontSize: 13, color: 'rgba(232,224,212,0.65)', lineHeight: 1.8, marginBottom: 20 }}>
@@ -590,24 +432,16 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
   const [locationName, setLocationName] = useState<string | null>(null);
   const [locLoading, setLocLoading] = useState(false);
 
-  // 취향 벡터
-  const [tasteVector, setTasteVector] = useState<number[] | null>(null);
-  const [likedCount, setLikedCount] = useState(0);
-  const [vectorLoading, setVectorLoading] = useState(false);
+  // 취향 일치 (전시 id → 1~99). 작품에 ♥ 를 누른 적이 있어야 생긴다.
+  const taste = useTasteScores();
+  const { loading: likesLoading, ids: likedArtworkIds } = useLikedArtworks();
 
-  // 전시 임베딩 (id → vector)
-  const [exhVectors, setExhVectors] = useState<Record<string, number[]>>({});
-  const encodingRef = useRef(false);
-
-  // 커뮤니티 데이터 (id → stats)
-  const [statsMap, setStatsMap] = useState<Record<string, ExhibitionStats>>({});
-  // 내 평점 (id → rating)
-  const [myRatings, setMyRatings] = useState<Record<string, number>>({});
+  // 커뮤니티 평점 (전시 id → 실시간 합계)
+  const statsById = useAllRatingStats();
 
   // UI
   const [sortMode, setSortMode] = useState<SortMode>('score');
   const [selected, setSelected] = useState<ExhibitionWithMeta | null>(null);
-  const [ratingLoading, setRatingLoading] = useState<string | null>(null);
 
   // ── 위치 ──────────────────────────────────────────────────────────────────
   const requestLocation = useCallback(() => {
@@ -626,117 +460,6 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
 
   useEffect(() => { requestLocation(); }, [requestLocation]);
 
-  // ── 취향 벡터 로드 ─────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (!user?.uid) return;
-    setVectorLoading(true);
-    (async () => {
-      try {
-        const { getFirestore, collection, getDocs } = await import('firebase/firestore');
-        const db = getFirestore();
-        const snap = await getDocs(collection(db, `users/${user.uid}/liked_artworks`));
-        const ids = snap.docs.map(d => d.id);
-        setLikedCount(ids.length);
-        if (ids.length < 3) return;
-
-        // CF Worker에서 취향 벡터 요청
-        const res = await fetch(`${CF}/taste-profile`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId: user.uid, likedIds: ids, returnVector: true }),
-        });
-        if (res.ok) {
-          const data: { vector?: number[] } = await res.json();
-          if (data.vector?.length) setTasteVector(data.vector);
-        }
-      } catch { /* silent */ }
-      finally { setVectorLoading(false); }
-    })();
-  }, [user?.uid]);
-
-  // ── 전시 텍스트 임베딩 (SigLIP 텍스트 인코더) ─────────────────────────────
-  useEffect(() => {
-    if (!tasteVector || encodingRef.current) return;
-    encodingRef.current = true;
-
-    (async () => {
-      try {
-        const { encodeText } = await import('../utils/siglipSearch');
-        const allExhs: { id: string; text: string }[] = [];
-        for (const m of exhibitions) {
-          for (const e of (m.temporaryExhibitions ?? [])) {
-            if (e.status !== 'past' && !e.coverEmbedding) {
-              allExhs.push({ id: e.id, text: `${e.title} ${e.description}` });
-            }
-          }
-        }
-        // 배치로 인코딩
-        const newVecs: Record<string, number[]> = {};
-        for (const { id, text } of allExhs) {
-          try {
-            const vec = await encodeText(text);
-            if (vec?.length) newVecs[id] = l2Norm(vec);
-          } catch { /* skip */ }
-        }
-        setExhVectors(prev => ({ ...prev, ...newVecs }));
-      } catch { /* SigLIP 로드 실패 시 무시 */ }
-    })();
-  }, [tasteVector, exhibitions]);
-
-  // ── 커뮤니티 평점 로드 ────────────────────────────────────────────────────
-  useEffect(() => {
-    const ids: string[] = [];
-    for (const m of exhibitions) {
-      for (const e of (m.temporaryExhibitions ?? [])) {
-        if (e.status !== 'past') ids.push(e.id);
-      }
-    }
-    (async () => {
-      const results: Record<string, ExhibitionStats> = {};
-      await Promise.all(ids.map(async id => {
-        const s = await fetchExhibitionStats(id);
-        if (s) results[id] = s;
-      }));
-      setStatsMap(results);
-    })();
-  }, [exhibitions]);
-
-  // ── 내 평점 로드 ──────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (!user?.uid) return;
-    const ids: string[] = [];
-    for (const m of exhibitions) {
-      for (const e of (m.temporaryExhibitions ?? [])) {
-        if (e.status !== 'past') ids.push(e.id);
-      }
-    }
-    (async () => {
-      const results: Record<string, number> = {};
-      await Promise.all(ids.map(async id => {
-        const r = await fetchMyRating(user.uid, id);
-        if (r !== null) results[id] = r;
-      }));
-      setMyRatings(results);
-    })();
-  }, [user?.uid, exhibitions]);
-
-  // ── 예상점수 계산 ─────────────────────────────────────────────────────────
-  function computeScore(exhId: string, coverEmbedding?: number[]): number | null {
-    if (!tasteVector) return null;
-    // 벡터: 사전계산 임베딩 > 텍스트 임베딩 순서
-    const vec = coverEmbedding ?? exhVectors[exhId];
-    if (!vec?.length) return null;
-
-    const taste = cosineSim(tasteVector, vec); // [-1, 1] → SigLIP은 보통 양수 범위
-    const tasteScore = Math.round(Math.max(0, taste) * 100);
-
-    const stats = statsMap[exhId];
-    const ratingAdj = stats ? (stats.avgRating - 3.0) * 5 : 0; // ±10
-
-    const final = Math.round(Math.min(100, Math.max(0, tasteScore * 0.85 + ratingAdj * 0.15)));
-    return final;
-  }
-
   // ── 전체 전시 목록 ────────────────────────────────────────────────────────
   const allItems = useMemo<ExhibitionWithMeta[]>(() => {
     const result: ExhibitionWithMeta[] = [];
@@ -746,39 +469,26 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
         const dist = userLat !== null && userLng !== null
           ? Math.round(haversineKm(userLat, userLng, museum.latitude, museum.longitude) * 10) / 10
           : null;
-        const stats = statsMap[exh.id] ?? null;
-        const tasteScore = (() => {
-          if (!tasteVector) return null;
-          const vec = exh.coverEmbedding ?? exhVectors[exh.id];
-          if (!vec?.length) return null;
-          return Math.round(Math.max(0, cosineSim(tasteVector, vec)) * 100);
-        })();
-        const finalScore = (() => {
-          if (tasteScore === null) return null;
-          const ratingAdj = stats ? (stats.avgRating - 3.0) * 5 : 0;
-          return Math.round(Math.min(100, Math.max(0, tasteScore * 0.85 + ratingAdj * 0.15)));
-        })();
+        const stats = statsById.get(subjectKey({ kind: 'exhibition', id: exh.id }));
         result.push({
           exhibition: exh,
           museum,
           distanceKm: dist,
-          tasteScore,
-          finalScore,
-          communityAvg: stats?.avgRating ?? null,
+          tasteScore: taste?.exhibitions[exh.id] ?? null,
+          communityAvg: averageRating(stats),
           communityCount: stats?.totalRatings ?? 0,
-          myRating: myRatings[exh.id] ?? null,
           daysLeft: daysUntil(exh.endDate),
         });
       }
     }
     return result;
-  }, [exhibitions, userLat, userLng, tasteVector, exhVectors, statsMap, myRatings]);
+  }, [exhibitions, userLat, userLng, taste, statsById]);
 
   // ── 정렬 ──────────────────────────────────────────────────────────────────
   const sorted = useMemo(() => {
     const arr = [...allItems];
     if (sortMode === 'score') {
-      arr.sort((a, b) => (b.finalScore ?? -1) - (a.finalScore ?? -1));
+      arr.sort((a, b) => (b.tasteScore ?? -1) - (a.tasteScore ?? -1) || (b.communityAvg ?? 0) - (a.communityAvg ?? 0));
     } else if (sortMode === 'rating') {
       arr.sort((a, b) => (b.communityAvg ?? 0) - (a.communityAvg ?? 0));
     } else if (sortMode === 'distance') {
@@ -792,29 +502,6 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
   const ongoing = sorted.filter(e => e.exhibition.status === 'ongoing');
   const upcoming = sorted.filter(e => e.exhibition.status === 'upcoming');
 
-  // ── 평점 저장 ─────────────────────────────────────────────────────────────
-  const handleRate = useCallback(async (exhId: string, rating: number) => {
-    if (!user?.uid) { navigate('/login'); return; }
-    setRatingLoading(exhId);
-    try {
-      await writeRating(user.uid, exhId, rating);
-      setMyRatings(prev => ({ ...prev, [exhId]: rating }));
-      // 낙관적 업데이트
-      setStatsMap(prev => {
-        const old = prev[exhId];
-        if (!old) return { ...prev, [exhId]: { avgRating: rating, totalRatings: 1 } };
-        const prevRating = myRatings[exhId] ?? null;
-        const total = old.totalRatings + (prevRating !== null ? 0 : 1);
-        const sum = old.avgRating * old.totalRatings - (prevRating ?? 0) + rating;
-        return { ...prev, [exhId]: { avgRating: sum / total, totalRatings: total } };
-      });
-      // 선택된 항목 업데이트
-      if (selected?.exhibition.id === exhId) {
-        setSelected(prev => prev ? { ...prev, myRating: rating } : prev);
-      }
-    } catch { /* silent */ }
-    finally { setRatingLoading(null); }
-  }, [user?.uid, navigate, myRatings, selected]);
 
   // ── 렌더 ──────────────────────────────────────────────────────────────────
   const S = {
@@ -887,18 +574,18 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
           background: 'rgba(201,165,90,0.07)', border: '1px solid rgba(201,165,90,0.18)',
           fontSize: 13, color: 'rgba(232,224,212,0.6)', lineHeight: 1.55,
         }}>
-          로그인하면 취향 기반 예상점수와 나만의 평점을 남길 수 있어요.{' '}
+          로그인하면 전시마다 내 취향과 얼마나 맞는지 보고, 나만의 평점을 남길 수 있어요.{' '}
           <span onClick={() => navigate('/login')}
             style={{ color: '#c9a55a', cursor: 'pointer', fontWeight: 600 }}>로그인 →</span>
         </div>
       )}
-      {user && likedCount < 3 && !vectorLoading && (
+      {user && !likesLoading && likedArtworkIds.size === 0 && (
         <div style={{
           margin: '12px 20px', padding: '11px 14px', borderRadius: 10,
           background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
           fontSize: 12, color: 'rgba(232,224,212,0.42)',
         }}>
-          작품 3개 이상 ♥ 하면 취향 예상점수가 계산돼요. (현재 {likedCount}개)
+          작품에 ♥ 를 누르면 전시마다 취향 일치 점수가 계산돼요.
         </div>
       )}
 
@@ -910,7 +597,6 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
               key={item.exhibition.id}
               item={item}
               onOpen={() => setSelected(item)}
-              onRate={r => handleRate(item.exhibition.id, r)}
             />
           ))}
         </Section>
@@ -924,7 +610,6 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
               key={item.exhibition.id}
               item={item}
               onOpen={() => setSelected(item)}
-              onRate={r => handleRate(item.exhibition.id, r)}
             />
           ))}
         </Section>
@@ -943,7 +628,6 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
         <DetailModal
           item={selected}
           onClose={() => setSelected(null)}
-          onRate={r => handleRate(selected.exhibition.id, r)}
         />
       )}
     </div>

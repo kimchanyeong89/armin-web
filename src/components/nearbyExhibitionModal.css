@@ -1,0 +1,111 @@
+/* ══════════════════════════════════════════════════════════════
+   Nearby exhibition — a card's detail, opened over the map sheet.
+   The sheet's glass (collyGlass.css), the community board's type and
+   hairlines, and the globe statement's way in: a mono gold kicker, a
+   Paperlogy title, facts on hairlines, one gold circled arrow that
+   leaves for the museum, and circles that take a halo on hover.
+   Fonts are loaded by Ratings/ratings.css, which the panel inside brings.
+   ══════════════════════════════════════════════════════════════ */
+@keyframes nem-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes nem-rise { from { opacity: 0; transform: translateY(22px) scale(0.985); } to { opacity: 1; transform: none; } }
+
+/* over the map sheet, the tab bar (250000) and the quick-menu chips (250012);
+   under the artwork lightbox (260020), the review sheet (265000) and the sign-in prompt (270000) */
+.nem-backdrop { position: fixed; inset: 0; z-index: 255000; display: flex; align-items: center; justify-content: center; padding: 14px;
+  background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: default;
+  animation: nem-fade 0.2s ease both; }
+.nem-backdrop[data-light] { background: rgba(0, 0, 0, 0.2); }
+
+.nem {
+  --ink: rgba(244, 241, 234, 0.96); --ink-2: rgba(244, 241, 234, 0.62); --ink-3: rgba(244, 241, 234, 0.40);
+  --rule: rgba(244, 241, 234, 0.10); --hair: rgba(244, 241, 234, 0.18); --soft: rgba(244, 241, 234, 0.05);
+  --acc: #d4a547; --acc-rgb: 212, 165, 71;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  width: min(880px, 100%); max-height: min(92dvh, 940px); display: flex; flex-direction: column; overflow: hidden;
+  color: var(--ink); font-family: var(--body); text-align: left; word-break: keep-all;
+  animation: nem-rise 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.nem[data-light] {
+  --ink: rgba(0, 0, 0, 0.9); --ink-2: rgba(0, 0, 0, 0.6); --ink-3: rgba(0, 0, 0, 0.42);
+  --rule: rgba(0, 0, 0, 0.09); --hair: rgba(0, 0, 0, 0.18); --soft: rgba(0, 0, 0, 0.04);
+  --acc: #a8781e; --acc-rgb: 168, 120, 30;
+}
+.nem *, .nem *::before, .nem *::after { box-sizing: border-box; }
+.nem button { font: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; }
+.nem button:focus { outline: none; }
+.nem button:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+.nem :where(p, h2, dl, dd, figure) { margin: 0; }
+
+/* a circle on a hairline that takes the marker's halo — the quick menu's button */
+.nem .nem-close,
+.nem .nem-heart { display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--hair); color: var(--ink-2);
+  transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1); }
+.nem .nem-close:hover,
+.nem .nem-heart:hover { border-color: var(--acc); color: var(--acc); box-shadow: 0 0 0 4px rgba(var(--acc-rgb), 0.12); }
+.nem .nem-close { position: absolute; top: 18px; right: 18px; z-index: 2; width: 34px; height: 34px; }
+.nem .nem-heart { flex: none; width: 38px; height: 38px; margin-left: auto; }
+.nem .nem-heart[aria-pressed="true"] { border-color: var(--acc); color: var(--acc); }
+
+.nem-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: var(--hair) transparent; }
+
+.nem-top { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 32px; padding: 32px 32px 28px; }
+.nem-poster { align-self: start; aspect-ratio: 3 / 4; overflow: hidden; background: var(--soft); border: 1px solid var(--rule); }
+.nem-poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+.nem-info { min-width: 0; display: flex; flex-direction: column; padding-right: 40px; }
+/* the kicker: the venue in gold, then readings, split by short hairlines */
+.nem-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font: 600 9.5px/1.4 var(--num); letter-spacing: 0.12em;
+  color: var(--ink-3); }
+.nem-kicker b { color: var(--acc); font-weight: 650; }
+.nem-kicker i { width: 1px; height: 9px; background: var(--hair); }
+.nem-title { margin-top: 12px; font: 700 clamp(1.55rem, 2.6vw, 2.15rem)/1.2 var(--display); letter-spacing: -0.045em; text-wrap: balance; }
+
+/* facts on hairlines: a mono gold label, then the value */
+.nem-facts { margin-top: 22px; border-top: 1px solid var(--rule); }
+.nem-facts div { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 14px; align-items: baseline; padding: 11px 0;
+  border-bottom: 1px solid var(--rule); }
+.nem-facts dt { font: 600 9.5px/1.8 var(--num); letter-spacing: 0.12em; color: var(--acc); }
+.nem-facts dd { font: 500 13px/1.5 var(--num); font-variant-numeric: tabular-nums; color: var(--ink); }
+.nem-about { margin-top: 18px; font-size: 13.5px; line-height: 1.8; color: var(--ink-2); white-space: pre-line; }
+
+.nem-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: auto; padding-top: 26px; }
+/* booking: the one filled plate in the modal, cut at the corners like the map's
+   markers; the site that takes the booking sits beside the verb, smaller */
+.nem .nem-book { display: inline-flex; align-items: baseline; gap: 8px; min-height: 42px; padding: 11px 18px 11px 20px;
+  background: var(--acc); color: #0b0b0b; text-decoration: none; font-size: 14px; font-weight: 700; letter-spacing: -0.01em;
+  clip-path: polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 7px 100%, 0 calc(100% - 7px), 0 7px);
+  transition: background 0.16s ease; }
+.nem .nem-book small { font-size: 11.5px; font-weight: 600; opacity: 0.62; }
+.nem .nem-book svg { align-self: center; }
+.nem .nem-book:hover, .nem .nem-book:focus-visible { background: #e2b85c; }
+/* the way to the museum: the globe statement's circled arrow and its label as one button */
+.nem .nem-go { display: inline-flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 650; color: var(--ink);
+  transition: color 0.16s ease; }
+.nem-go span { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--acc); color: var(--acc);
+  transition: background 0.18s ease, box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1); }
+.nem .nem-go:hover { color: var(--acc); }
+.nem .nem-go:hover span,
+.nem .nem-go:focus-visible span { background: rgba(var(--acc-rgb), 0.14); box-shadow: 0 0 0 5px rgba(var(--acc-rgb), 0.12); }
+.nem .nem-link { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+  transition: color 0.16s ease; }
+.nem .nem-link:hover { color: var(--acc); }
+
+.nem-ratings { padding: 26px 32px 32px; border-top: 1px solid var(--rule); }
+
+@media (max-width: 720px) {
+  .nem { border-radius: 24px; }
+  .nem-top { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 24px 20px 22px; }
+  .nem-poster { justify-self: center; width: min(210px, 58vw); }
+  .nem-info { padding-right: 0; }
+  /* keep the heart on the museum button's line at phone width */
+  .nem-acts { column-gap: 12px; }
+  .nem .nem-close { top: 12px; right: 12px; }
+  .nem-ratings { padding: 22px 20px 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nem-backdrop, .nem { animation: none; }
+  .nem * { transition: none !important; }
+}

@@ -38,6 +38,18 @@ const idsArg = args.find((a) => a.startsWith('--ids='));
 const ID_FILTER = idsArg ? new Set(idsArg.split('=')[1].split(',')) : null;
 
 const TEST_IDS_TO_DELETE = ['test-probe-123', 'test-id-1', 'test-short-id-debug-12345'];
+
+// Many collection JSONs are bare arrays with no museum name anywhere, so their
+// vectors went up with m: "" and the app printed "Unknown Museum". The app's
+// museum registry already names the museum behind each collection file.
+const { exhibitions } = await import(path.join(REPO_ROOT, 'src', 'data', 'exhibitions.js'));
+const COLLECTION_MUSEUM = new Map();
+for (const museum of exhibitions) {
+  for (const p of museum.permanentExhibitions || []) {
+    const base = path.basename(String(p.collectionFile || ''), '.json'); // some entries are full R2 URLs
+    if (base && !COLLECTION_MUSEUM.has(base)) COLLECTION_MUSEUM.set(base, museum.name_en || museum.name || '');
+  }
+}
 const BATCH_SIZE = 20; // Vectorize getByIds caps at 20 (HTTP 500 above 20)
 const CONCURRENCY = 12; // parallel batches sent to the worker
 
@@ -74,7 +86,7 @@ function loadIdMap() {
     if (!Array.isArray(arr)) continue;
 
     const defaults = {
-      museum: data?.galleryName || data?.museum || '',
+      museum: data?.galleryName || data?.museum || COLLECTION_MUSEUM.get(path.basename(f, '.json')) || '',
       exhibition_id: data?.galleryId || data?.exhibitionId || path.basename(f, '.json'),
     };
 

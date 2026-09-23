@@ -1,0 +1,475 @@
+{
+  "museum": "International Center of Photography",
+  "collection": "Collection",
+  "website": "https://www.icp.org/browse/archive",
+  "scraped_date": "2026-06-10",
+  "total_count": 23,
+  "source_type": "html+sitemap",
+  "category_breakdown": {
+    "photograph": 22,
+    "print": 1
+  },
+  "scope_note": "Sitemap corpus ≈54,809 objects; collected in sitemap (≈accession) order up to a ~23MB JSON cap. Excluded: negatives/contact sheets, publications/equipment, B&W reproductive prints (colorfulness<20), no-image and no-date records.",
+  "artworks": [
+    {
+      "id": "icp-ny-309",
+      "objectNumber": "1.1997",
+      "title": "Mediterranean Bedroom",
+      "artist": "Bernard Plossu",
+      "date": "1972",
+      "year": 1972,
+      "medium": "Photo-Carbon",
+      "dimensions": "Image: 14 3/8 x 9 11/16 in. (36.5 x 24.6 cm); Paper: 15 x 10 1/4 in. (38.1 x 26 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-309-ec3019d7-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/mediterranean-bedroom",
+      "metadata": {
+        "nid": "309"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/p/l/o/s/plossu_bernard_1_1997_409410_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-310",
+      "objectNumber": "2.1992",
+      "title": "Pitt Street, New York",
+      "artist": "Lou Bernstein",
+      "date": "1948",
+      "year": 1948,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 9 7/16 x 7 in. (24 x 17.8 cm); Mat: 20 x 16 in. (50.8 x 40.6 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-310-5d7fe9c1-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/pitt-street-new-york",
+      "metadata": {
+        "nid": "310"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/b/e/r/n/bernstein_lou_2_1992_409337_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-313",
+      "objectNumber": "13.1996",
+      "title": "Roxbury",
+      "artist": "Charles Pratt",
+      "date": "1970",
+      "year": 1970,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 13 3/8 x 9 in. (34 x 22.9 cm); Paper: 14 x 11 in. (35.6 x 27.9 cm); Mount: 20 x 16 in. (50.8 x 40.6 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-313-51a70a63-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/roxbury",
+      "metadata": {
+        "nid": "313"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/p/r/a/t/pratt_charles_13_1996_407461_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-314",
+      "objectNumber": "13.2005",
+      "title": "[Children playing playing in a courtyard]",
+      "artist": "Rosalie Gwathmey",
+      "date": "1940s",
+      "year": 1940,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 7 3/8 x 9 1/2 in. (18.7 x 24.1 cm); Mount: 19 7/8 x 15 in. (50.5 x 38.1 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-314-af0165f0-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/children-playing-playing-in-a-courtyard",
+      "metadata": {
+        "nid": "314"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/g/w/a/t/gwathmey_rosalie_13_2005a-2_407457_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-315",
+      "objectNumber": "14.1988",
+      "title": "Micho's Wall, County Clare",
+      "artist": "Jill Freedman",
+      "date": "1984",
+      "year": 1984,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 12 5/16 x 17 3/8 in. (31.3 x 44.1 cm); Paper: 15 15/16 x 19 7/8 in. (40.5 x 50.5 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-315-f1884048-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/michos-wall-county-clare",
+      "metadata": {
+        "nid": "315"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/f/r/e/e/freedman_jill_14_1988_412215_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-316",
+      "objectNumber": "14.1993",
+      "title": "Gallagher's People, New York",
+      "artist": "Lisette Model",
+      "date": "1945",
+      "year": 1945,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 15 7/8 x 19 5/8 in. (40.3 x 49.8 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-316-738295dd-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/gallaghers-people-new-york",
+      "metadata": {
+        "nid": "316"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/m/o/d/e/model_lisette_14_1993_412433_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-317",
+      "objectNumber": "17.2002",
+      "title": "Tartar settlement of Asigol",
+      "artist": "Alain Keler",
+      "date": "May 1998",
+      "year": 1998,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 11 7/8 x 17 5/8 in. (30.2 x 44.8 cm); Paper: 15 5/8 x 19 1/2 in. (39.7 x 49.5 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-317-aa28e401-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/tartar-settlement-of-asigol",
+      "metadata": {
+        "nid": "317"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/k/e/l/e/keler_alain_17_2002_detail_411008_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-318",
+      "objectNumber": "18.2005",
+      "title": "George Arliss",
+      "artist": "Adolf de Meyer",
+      "date": "1918",
+      "year": 1918,
+      "medium": "Photo-Platinum",
+      "dimensions": "Image: 9 7/16 x 7 3/8 in. (24 x 18.7 cm); Mat: 16 1/2 x 14 1/16 in. (41.9 x 35.7 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-318-d7025836-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/george-arliss",
+      "metadata": {
+        "nid": "318"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/d/e/_/m/de_meyer_adolf_18_2005_410013_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-319",
+      "objectNumber": "23.1982",
+      "title": "Margaret",
+      "artist": "Consuelo Kanaga",
+      "date": "1962",
+      "year": 1962,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 10 1/4 x 6 9/16 in. (26 x 16.7 cm); Mount: 14 x 10 1/2 in. (35.6 x 26.7 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-319-c414cfc2-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/margaret",
+      "metadata": {
+        "nid": "319"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/k/a/n/a/kanaga_consuelo_23_1982_409999_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-320",
+      "objectNumber": "23.1997",
+      "title": "[Man holding a baby wearing a long white dress, Alma, Israel]",
+      "artist": "Chim (David Seymour)",
+      "date": "1951",
+      "year": 1951,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 8 1/2 x 13 in. (21.6 x 33 cm); Paper: 11 x 14 in. (27.9 x 35.6 cm); Mount: 11 x 14 in. (27.9 x 35.6 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-320-318f08ae-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/man-holding-a-baby-wearing-a-long-white-dress-alma-israel",
+      "metadata": {
+        "nid": "320"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/s/e/y/m/seymour_david_23_1997_409306_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-321",
+      "objectNumber": "23.2003",
+      "title": "Corner of a kitchen of an apartment rented to Negroes",
+      "artist": "Russell Lee",
+      "date": "April 1941",
+      "year": 1941,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 7 1/8 x 9 9/16 in. (18.1 x 24.3 cm); Paper: 8 1/4 x 10 3/16 in. (21 x 25.9 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-321-9b676ea3-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/corner-of-a-kitchen-of-an-apartment-rented-to-negroes",
+      "metadata": {
+        "nid": "321"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/l/e/e/_/lee_russell_23_2003_409327_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-323",
+      "objectNumber": "26.2004.43",
+      "title": "Photographische Rundschau und Mitteilungen",
+      "artist": "Photographische Rundschau und Mitteilungen",
+      "date": "December 1929",
+      "year": 1929,
+      "medium": "Print-Lithograph",
+      "dimensions": "Overall: 11 1/16 x 8 5/8 x 1/8 in. (28.1 x 21.9 x 0.3 cm)",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-323-4a405ae6-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/photographische-rundschau-und-mitteilungen",
+      "metadata": {
+        "nid": "323"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/p/h/o/t/photo_graphische_rundschau_26_2004_43_409266_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-324",
+      "objectNumber": "28.1992",
+      "title": "New York",
+      "artist": "Lou Bernstein",
+      "date": "1973",
+      "year": 1973,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 12 1/2 x 9 1/2 in. (31.8 x 24.1 cm); Paper: 13 7/8 x 11 in. (35.2 x 27.9 cm); Mat: 20 x 16 in. (50.8 x 40.6 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-324-65df048d-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/new-york-30",
+      "metadata": {
+        "nid": "324"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/b/e/r/n/bernstein_lou_28_1992_407625_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-325",
+      "objectNumber": "28.1994",
+      "title": "Fine Movement",
+      "artist": "Hidekazu Iwase",
+      "date": "1990",
+      "year": 1990,
+      "medium": "Photo-Chromogenic",
+      "dimensions": "Image: 17 15/16 x 17 15/16 in. (45.6 x 45.6 cm); Paper: 20 x 21 5/8 in. (50.8 x 54.9 cm); Mat: 23 15/16 x 23 15/16 in. (60.8 x 60.8 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-325-ebe8e483-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/fine-movement",
+      "metadata": {
+        "nid": "325"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/i/w/a/s/iwase_hidekazu_28_1994_412198_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-326",
+      "objectNumber": "32.2004",
+      "title": "[Woman standing in underwear]",
+      "artist": "E. J. Bellocq",
+      "date": "ca. 1912 (printed ca. 1967)",
+      "year": 1912,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 10 x 8 in. (25.4 x 20.3 cm); Paper: 10 x 8 in. (25.4 x 20.3 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-326-e8596354-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/woman-standing-in-underwear",
+      "metadata": {
+        "nid": "326"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/b/e/l/l/bellocq_ernest_j_32_2004_407465_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-327",
+      "objectNumber": "33.2002",
+      "title": "Untitled (African Warrior)",
+      "artist": "Eliot Elisofon",
+      "date": "ca. 1964",
+      "year": 1964,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 18 1/8 x 14 in. (46 x 35.6 cm); Paper: 20 x 15 3/4 in. (50.8 x 40 cm); Mount: 20 x 15 3/4 in. (50.8 x 40 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-327-ba70f2c9-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/untitled-african-warrior",
+      "metadata": {
+        "nid": "327"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/e/l/i/s/elisofon_eliot_33_2002a-2_410014_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-328",
+      "objectNumber": "36.1981",
+      "title": "Calcutta, India",
+      "artist": "Paul Fusco",
+      "date": "1971",
+      "year": 1971,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Overall: 7 1/8 x 11 in. (18.1 x 27.9 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-328-094af597-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/calcutta-india",
+      "metadata": {
+        "nid": "328"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/f/u/s/c/fusco_paul_36_1981_410888_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-329",
+      "objectNumber": "37.1991",
+      "title": "[Marya Freud singing]",
+      "artist": "Ilse Bing",
+      "date": "ca. 1932",
+      "year": 1932,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 6 3/4 x 4 7/8 in. (17.1 x 12.4 cm); Sheet: 6 3/4 x 4 7/8 in. (17.1 x 12.4 cm); Mount: 11 x 9 in. (27.9 x 22.9 cm); Mat: 17 x 14 in. (43.2 x 35.6 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-329-985af9a6-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/marya-freud-singing",
+      "metadata": {
+        "nid": "329"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/b/i/n/g/bing_ilse_37_1991_408306_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-330",
+      "objectNumber": "37.2003",
+      "title": "Living room in the home of a well-to-do Negro",
+      "artist": "Russell Lee",
+      "date": "April 1941",
+      "year": 1941,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 7 1/8 x 9 9/16 in. (18.1 x 24.3 cm); Paper: 8 1/4 x 10 3/16 in. (21 x 25.9 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-330-28b8bffa-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/living-room-in-the-home-of-a-well-to-do-negro",
+      "metadata": {
+        "nid": "330"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/l/e/e/_/lee_russell_37_2003_408328_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-331",
+      "objectNumber": "40.1998",
+      "title": "Untitled",
+      "artist": "Harvey Stein",
+      "date": "1985",
+      "year": 1985,
+      "medium": "Photo-Silver dye bleach print",
+      "dimensions": "Image: 29 1/2 x 23 1/8 in. (74.9 x 58.7 cm); Paper: 29 1/2 x 26 1/2 in. (74.9 x 67.3 cm); Mat: 36 x 29 in. (91.4 x 73.7 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-331-c1c7be58-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/untitled",
+      "metadata": {
+        "nid": "331"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/s/t/e/i/stein_harvey_40_1998_410199_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-332",
+      "objectNumber": "40.2003",
+      "title": "At home, \"Red\" practices on the vibrasharp with the assistance of his son Edmund",
+      "artist": "Jack Delano",
+      "date": "April 1942",
+      "year": 1942,
+      "medium": "Photo-Gelatin silver",
+      "dimensions": "Image: 10 1/4 x 13 1/2 in. (26 x 34.3 cm); Paper: 11 x 14 in. (27.9 x 35.6 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-332-2dd2c073-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/at-home-red-practices-on-the-vibrasharp-with-the-assistance-of-his-son-edmund",
+      "metadata": {
+        "nid": "332"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/d/e/l/a/delano_jack_40_2003_411448_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-333",
+      "objectNumber": "44.1976",
+      "title": "Little Big Man, Montana",
+      "artist": "Ernst Haas",
+      "date": "1974",
+      "year": 1974,
+      "medium": "Photo-Chromogenic",
+      "dimensions": "Overall: 5 7/16 x 8 1/8 in. (13.8 x 20.6 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-333-700742bb-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/little-big-man-montana",
+      "metadata": {
+        "nid": "333"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/h/a/a/s/haas_ernst_44_1976_409324_fullscreen.jpg"
+    },
+    {
+      "id": "icp-ny-334",
+      "objectNumber": "45.2005",
+      "title": "AIZ",
+      "artist": "John Heartfield",
+      "date": "June 8, 1933",
+      "year": 1933,
+      "medium": "Photo-Gravure",
+      "dimensions": "Overall: 15 x 10 5/8 x 1/16 in. (38.1 x 27 x 0.2 cm)",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-334-a43efa8d-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.icp.org/browse/archive/objects/aiz",
+      "metadata": {
+        "nid": "334"
+      },
+      "original_imageUrl": "https://s3.amazonaws.com/icptmsdata/h/e/a/r/heartfield_john_45_2005_408315_fullscreen.jpg"
+    }
+  ]
+}

@@ -13,11 +13,21 @@
 //   4. backstop placeholder check on downloaded popup image (768x768 / 14413B "No image" gray)
 //   5. resize→webp(2048,q85)→R2 (skip upload if key exists)
 //
-// Scope = flat visual art only (photograph/painting/print/drawing). Collection is huge (33,435) →
-// two-phase: (A) scan range collecting in-scope metadata only (no image), (B) prioritise
-// (painting > drawing > print > photograph) up to CAP and download images for the selected set.
+// Scope = flat visual art only (photograph/painting/print/drawing). The catalogue reports 33,435 total
+// objects; range-sampling (200..130000) shows ~93% are in-scope flat art and the populated bands run the
+// WHOLE id space (not just the low band). BUT only ~25-30% of in-scope objects carry a real image — the
+// rest serve the 340x340 5721B "no image" placeholder. Estimated in-scope-with-real-image ≈ 8,000-10,000.
 //
-// Usage:  node scripts/scrape-folkwang.mjs [--limit=N] [--cap=1500] [--maxid=135000] [--concurrency=6] [--pilot]
+// 2026-06-25 re-verify: the old run capped at 1500 and only scanned ids 200-16000, then curation trimmed
+// to 381 — a ~5% sample of what's recoverable. Defaults now recover EVERYTHING in-scope with a real image:
+//   - CAP raised to 100000 (effectively uncapped — the placeholder filter is the real ceiling)
+//   - MAX_ID raised to 130000 (full populated range; high band is as dense + in-scope as the low band)
+//   - full runs auto-resume (load existing folkwang-collection.json, skip already-collected ids), and
+//     R2 HeadObject skips re-uploading images already pushed.
+//
+// Usage:  node scripts/scrape-folkwang.mjs                 # full recovery (resumable, uncapped, 200..130000)
+//         node scripts/scrape-folkwang.mjs --limit=20      # small test run (first 20 in-scope w/ image)
+//         node scripts/scrape-folkwang.mjs --cap=N --maxid=M --ranges=a-b,c-d --concurrency=2 --no-resume
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,15 +46,18 @@ const args = Object.fromEntries(process.argv.slice(2).map(a => {
 }));
 const PILOT       = !!args.pilot || !!args.limit;
 const LIMIT       = args.limit ? Number(args.limit) : null;          // pilot: process only first N in-scope objects
-const CAP         = args.cap ? Number(args.cap) : 1500;              // full: max records to keep
-// scan ceiling. Default 16000 = the proven-dense low band (Photography throughout + Painting ~8k +
-// Print ~10k + Drawing), which holds far more than the cap. Raise with --maxid only if a band runs short.
-const MAX_ID      = args.maxid ? Number(args.maxid) : 16000;
+const CAP         = args.cap ? Number(args.cap) : 100000;            // full: effectively uncapped (placeholder filter is the real ceiling)
+// scan ceiling. Default 130000 = the full populated id space. Range-sampling confirms the high band
+// (16k-130k) is as dense (~67% of ids exist) and as in-scope (~93%) as the low band — the old 16000
+// default left the bulk of the collection unscanned. Narrow with --maxid/--ranges for partial passes.
+const MAX_ID      = args.maxid ? Number(args.maxid) : 130000;
 const START_ID    = args.startid ? Number(args.startid) : 200; // ids 1-199 are sparse/empty — skip them
 // --ranges=a-b,c-d visits only those objectId ranges (used for a targeted painting/print top-up pass).
-// --append merges new records into an existing folkwang-collection.json instead of overwriting it.
+// --append (or default full resume) merges into the existing folkwang-collection.json instead of overwriting.
 const RANGES      = args.ranges ? String(args.ranges).split(',').map(r => r.split('-').map(Number)) : null;
-const APPEND      = !!args.append;
+// Full runs resume by default (load existing records, skip already-collected ids). Disable with --no-resume.
+// Pilot/limit runs never resume (they write a separate -pilot file). --append is kept as an explicit alias.
+const APPEND      = !!args.append || (!PILOT && args.resume !== 'false' && args['no-resume'] === undefined);
 // The eMuseumPlus backend (zem-emp-lbaas-01.os.stoney-cloud.com) is single-threaded and throttles hard
 // under concurrency: 6 workers pushed per-request latency from ~0.7s to 24-34s. Keep it gentle.
 const CONCURRENCY = Number(args.concurrency || 2);

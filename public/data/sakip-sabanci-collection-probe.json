@@ -1,0 +1,609 @@
+{
+  "museum": "Sakıp Sabancı Museum",
+  "collection": "Painting · Arts of the Book and Calligraphy",
+  "website": "https://www.sakipsabancimuzesi.org/en/collections-and-research/collections/341",
+  "scraped_date": "2026-06-10",
+  "total_count": 22,
+  "source_type": "contentdm-api+iiif",
+  "category_breakdown": {
+    "manuscript": 8,
+    "painting": 5,
+    "drawing": 9
+  },
+  "artworks": [
+    {
+      "id": "sakip-sabanci-hat-182429",
+      "objectNumber": "102-0304",
+      "title": "Amme cüzü",
+      "artist": "Mehmed Şefik",
+      "date": "h. 1263 [1846-1847]",
+      "year": 1846,
+      "medium": "Âharlı kâğıt üzerine siyah mürekkep, renkli boyalar ve altın; Nesih; Rıka",
+      "dimensions": "21,8 x 15 cm; 27 yaprak, sayfada 9 satır",
+      "category": "manuscript",
+      "description": "Hattat, Sultan Abdülmecid’in yaptırdığı caminin kitabelerini yazması için 1855’te Sakız adasına gönderilir. Mehmed Şefik, 1855 depreminde zarar gören Bursa Ulu Cami’nin kitabelerinin onarım işinde de görevlendirilir.",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/182429",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "182429",
+          "filetype": "cpd"
+        },
+        "year_source": "date",
+        "artist_raw": "Mehmed Şefik, -1880"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-182429-4ea2526a-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:182365/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:182365/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-hat-186669",
+      "objectNumber": "190-0331",
+      "title": "Bedir Risalesi",
+      "artist": "Eyüplü Hafız Osman",
+      "date": "h. 1169 [1755-1756]",
+      "year": 1755,
+      "medium": "Âharlı kâğıt üzerine siyah mürekkep, boya ve altın; Nestalik",
+      "dimensions": "20 x 11,3 cm; 14 yaprak, sayfada 15 satır",
+      "category": "manuscript",
+      "description": "Kitap, Bedir savaşına katılanların isimlerini zikreder ve faziletlerini anlatır.",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/186669",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "186669",
+          "filetype": "cpd"
+        },
+        "year_source": "date",
+        "artist_raw": "Eyüplü Hafız Osman, -1781"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-186669-bb3e2672-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:186627/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:186627/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-hat-190396",
+      "objectNumber": "102-0021",
+      "title": "Amme Cüzü",
+      "artist": "Abdullah Zühdi",
+      "date": "h. 1263 [1846-1847]",
+      "year": 1846,
+      "medium": "Âharlı kâğıt, siyah ve üstübeç mürekkebi, renkli boyalar, altın; Nesih; Sülüs",
+      "dimensions": "21.2x 14.8 cm; 27 yaprak, sayfada 10 satır",
+      "category": "manuscript",
+      "description": "19. yüzyılın ünlü hattatlarından Kazasker Mustafa İzzet’den (ö. 1876) sülüs ve nesih hat meşk eden Abdullah Zühdi, celi sülüs hatlarıyla üne kavuşmuştur. İstanbul’da Nuruosmaniye Cami meşkhanesi’nde, Mühendis mektebinde resim ve hat hocalığı yapmış, resim, taş baskı ve fotoğraf alanında da ustalaşmış, kendisi de hattat olan Sultan Abdülmecid’den (salt. 1839-1861) destek görmüş, padişah tarafından Medine’de Mescid-i Nebi’nin kubbe kasnağı yazılarını yazmakla görevlendirilmiş, burada yedi yıl kalmıştır. Daha sonra Kahire’ye giden hattat Abdullah Zühdi, Hidiv İsmail Paşa’nın hizmetinde çalışarak,",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/190396",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "190396",
+          "filetype": "cpd"
+        },
+        "year_source": "date",
+        "artist_raw": "Abdullah Zühdi, -1879"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-190396-9ccdf323-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:190328/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:190328/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-hat-192827",
+      "objectNumber": "102-0020",
+      "title": "Amme Cüzü",
+      "artist": "Mehmed Şefik",
+      "date": "h. 1269 [1852-1853]",
+      "year": 1852,
+      "medium": "Âharlı kâğıt, siyah ve üstübeç mürekkebi, renkli boyalar, altın; Nesih; Sülüs",
+      "dimensions": "22,5 x 15,6 cm. 27 yaprak, sayfada 9 satır",
+      "category": "manuscript",
+      "description": "Hattat Muhammed Şefik, Kazasker Mustafa İzzet’in (ö. 1876) öğrencisidir. Sultan Abdülmecid (salt. 1839-1861) Mustafa İzzet’i ikinci imamlığa atayınca, Muhammed Şefik hocasının yerine Musika-i Hümayun’un ve Saray’ın hüsnühat hocalığı görevine getirilmiştir. Muhammed Şefik, Sultan Abdülmecid’in yaptırdığı caminin yazılarını yazmak üzere 1855’te Sakız adasına gönderilmiş, aynı yıl depremde zarar gören Bursa Ulu Cami’nin kitabelerinin onarımı için de görevlendirilmiştir. Sultan Abdülmecid’in türbesinin yazılarını da Muhammed Şefik yazmıştır. Hattatın bu eserinin son sayfasına yazdığı satırlarda, k",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/192827",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "192827",
+          "filetype": "cpd"
+        },
+        "year_source": "date",
+        "artist_raw": "Mehmed Şefik, -1880"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-192827-368cab37-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:192759/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:192759/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-hat-193401",
+      "objectNumber": "102-0317",
+      "title": "Amme Cüzü",
+      "artist": "Ömer el-Vasfi",
+      "date": "h. 1202 [1787-1788]",
+      "year": 1787,
+      "medium": "Âharlı kâğıt, siyah mürekkep, renkli boyalar, altın; Nesih",
+      "dimensions": "21,5 x 14 cm; 26 yaprak, sayfada 9 satır",
+      "category": "manuscript",
+      "description": "Hattat, Enderun-u Hümayun'da yazı hocalığı yapmış, İstanbul'da bazı cami ve çeşme kitabeleri de yazmıştır.",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/193401",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "193401",
+          "filetype": "cpd"
+        },
+        "year_source": "date",
+        "artist_raw": "Ömer el-Vasfi, -1824"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-193401-2de8b501-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:193335/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:193335/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-hat-193822",
+      "objectNumber": "102-0211",
+      "title": "Amme Cüzü",
+      "artist": "Abdülkadir Hamdi Efendi",
+      "date": "",
+      "year": 1765,
+      "medium": "",
+      "dimensions": "",
+      "category": "manuscript",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/193822",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "193822",
+          "filetype": "cpd"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Abdülkadir Hamdi Efendi, -1795"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-193822-9e48982e-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:193758/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:193758/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-hat-195601",
+      "objectNumber": "102-0290",
+      "title": "Amme Cüzü",
+      "artist": "Ömer el-Vasfi",
+      "date": "",
+      "year": 1794,
+      "medium": "",
+      "dimensions": "",
+      "category": "manuscript",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/195601",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "195601",
+          "filetype": "cpd"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Ömer el-Vasfi, -1824"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-195601-51b52344-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:195533/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:195533/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-hat-222788",
+      "objectNumber": "190-0342",
+      "title": "Ashabi Bedrin İsimleri",
+      "artist": "Hafız Mehmed Emin Naci",
+      "date": "h. 1231 [1816]",
+      "year": 1816,
+      "medium": "Nesih; Rıka",
+      "dimensions": "21,3 x 13 cm; 31 yaprak, sayfada 15 satır",
+      "category": "manuscript",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/Kitapvehat/id/222788",
+      "metadata": {
+        "contentdm": {
+          "collection": "Kitapvehat",
+          "pointer": "222788",
+          "filetype": "cpd"
+        },
+        "year_source": "date",
+        "artist_raw": "Hafız Mehmed Emin Naci"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-hat-222788-d9c1534c-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/Kitapvehat:222720/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/Kitapvehat:222720/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1009",
+      "objectNumber": "AKB063",
+      "title": "Adem ile Havva",
+      "artist": "Ergin İnan",
+      "date": "1980",
+      "year": 1980,
+      "medium": "Kâğıt üzerine karışık teknik / Mixed media on paper",
+      "dimensions": "63 x 39 cm",
+      "category": "painting",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1009",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1009",
+          "filetype": "jp2"
+        },
+        "year_source": "date",
+        "artist_raw": "Ergin İnan (1943- )"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1009-3b6da446-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1009/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1009/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1116",
+      "objectNumber": "200-0357-RP",
+      "title": "Akşam Işığı, İstanbul / Evening Light, Istanbul",
+      "artist": "Roy Petley",
+      "date": "1994",
+      "year": 1994,
+      "medium": "Tuval üzerine yağlıboya / Oil on canvas",
+      "dimensions": "28 x 44 cm",
+      "category": "painting",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1116",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1116",
+          "filetype": "jp2"
+        },
+        "year_source": "date",
+        "artist_raw": "Roy Petley (1951- )"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1116-2d3e6c76-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1116/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1116/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1120",
+      "objectNumber": "200-0355-RP",
+      "title": "Alacakaranlık, İstanbul / Twilight Scene, Istanbul",
+      "artist": "Roy Petley",
+      "date": "1994",
+      "year": 1994,
+      "medium": "Tuval üzerine yağlıboya / Oil on canvas",
+      "dimensions": "59 x 90 cm",
+      "category": "painting",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1120",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1120",
+          "filetype": "jp2"
+        },
+        "year_source": "date",
+        "artist_raw": "Roy Petley (1951- )"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1120-f9b1b034-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1120/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1120/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1177",
+      "objectNumber": "240-0449-AD",
+      "title": "Abdülhak Hâmid Portresi / Portrait of Abdülhak Hâmid",
+      "artist": "Abidin Dino",
+      "date": "",
+      "year": 1933,
+      "medium": "Kâğıt üzerine mürekkep / Ink on paper",
+      "dimensions": "28.1 x 21.1 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1177",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1177",
+          "filetype": "jp2"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1177-342a3e9a-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1177/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1177/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1193",
+      "objectNumber": "240-0555-SD",
+      "title": "Abidin Dino Portresi / Portrait of Abidin Dino",
+      "artist": "Selçuk Demirel",
+      "date": "1979",
+      "year": 1979,
+      "medium": "Kâğıt üzerine mürekkep / Ink on paper",
+      "dimensions": "6.8 x 6.4 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1193",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1193",
+          "filetype": "jp2"
+        },
+        "year_source": "date",
+        "artist_raw": "Selçuk Demirel (1954- )"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1193-a4f6c241-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1193/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1193/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1280",
+      "objectNumber": "270-0534-AD",
+      "title": "Acının Resimleri / Drawing Pain",
+      "artist": "Abidin Dino",
+      "date": "",
+      "year": 1933,
+      "medium": "Kâğıt üzerine keçeli kalem / Felt-tip pen on paper",
+      "dimensions": "31.8 x 24 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1280",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1280",
+          "filetype": "jp2"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1280-dd669529-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1280/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1280/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1281",
+      "objectNumber": "270-0535-AD",
+      "title": "Acının Resimleri / Drawing Pain",
+      "artist": "Abidin Dino",
+      "date": "",
+      "year": 1933,
+      "medium": "Kâğıt üzerine keçeli kalem / Felt-tip pen on paper",
+      "dimensions": "31.7 x 24 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1281",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1281",
+          "filetype": "jp2"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1281-8d1686a5-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1281/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1281/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1282",
+      "objectNumber": "270-0536-AD",
+      "title": "Acının Resimleri / Drawing Pain",
+      "artist": "Abidin Dino",
+      "date": "",
+      "year": 1933,
+      "medium": "Kâğıt üzerine keçeli kalem / Felt-tip pen on paper",
+      "dimensions": "31.7 x 24 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1282",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1282",
+          "filetype": "jp2"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1282-e81eaf6f-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1282/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1282/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1283",
+      "objectNumber": "270-0537-AD",
+      "title": "Acının Resimleri / Drawing Pain",
+      "artist": "Abidin Dino",
+      "date": "1991",
+      "year": 1991,
+      "medium": "Kâğıt üzerine keçeli kalem / Felt-tip pen on paper",
+      "dimensions": "29.9 x 20.9 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1283",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1283",
+          "filetype": "jp2"
+        },
+        "year_source": "date",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1283-5f7f9f3c-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1283/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1283/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1285",
+      "objectNumber": "270-0539-AD",
+      "title": "Acının Resimleri / Drawing Pain",
+      "artist": "Abidin Dino",
+      "date": "",
+      "year": 1933,
+      "medium": "Kâğıt üzerine keçeli kalem / Felt-tip pen on paper",
+      "dimensions": "31.8 x 24 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1285",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1285",
+          "filetype": "jp2"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1285-fdef803b-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1285/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1285/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1286",
+      "objectNumber": "270-0540-AD",
+      "title": "Acının Resimleri - Karikatür / Drawing Pain - Caricature",
+      "artist": "Abidin Dino",
+      "date": "1991",
+      "year": 1991,
+      "medium": "Kâğıt üzerine keçeli kalem / Felt-tip pen on paper",
+      "dimensions": "30 x 20.9 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1286",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1286",
+          "filetype": "jp2"
+        },
+        "year_source": "date",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1286-043510cb-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1286/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1286/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-1287",
+      "objectNumber": "270-0541-AD",
+      "title": "Acının Resimleri - Karikatür / Drawing Pain - Caricature",
+      "artist": "Abidin Dino",
+      "date": "1991",
+      "year": 1991,
+      "medium": "Kâğıt üzerine keçeli kalem / Felt-tip pen on paper",
+      "dimensions": "29.9 x 20.9 cm",
+      "category": "drawing",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/1287",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "1287",
+          "filetype": "jp2"
+        },
+        "year_source": "date",
+        "artist_raw": "Abidin Dino (1913-1993)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1287-e7e5b71d-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1287/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:1287/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-774",
+      "objectNumber": "200-0207-EHK",
+      "title": "Aile",
+      "artist": "Edip Hakkı Köseoğlu",
+      "date": "Tarihsiz",
+      "year": 1924,
+      "medium": "Duralit üzerine yağlıboya / Oil on hardboard",
+      "dimensions": "60 x 81.5 cm",
+      "category": "painting",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/774",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "774",
+          "filetype": "tif"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Edip Hakkı Köseoğlu (1904-1990)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-774-1b3c4c89-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:774/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:774/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    },
+    {
+      "id": "sakip-sabanci-resim-874",
+      "objectNumber": "210-0302-BRE",
+      "title": "Ağaçlar",
+      "artist": "Bedri Rahmi Eyüboğlu",
+      "date": "Tarihsiz",
+      "year": 1931,
+      "medium": "Kâğıt üzerine guaj / Gouache on paper",
+      "dimensions": "24 x 34 cm",
+      "category": "painting",
+      "description": "",
+      "sourceUrl": "https://digitalssm.org/digital/collection/ResimKlksyn/id/874",
+      "metadata": {
+        "contentdm": {
+          "collection": "ResimKlksyn",
+          "pointer": "874",
+          "filetype": "tif"
+        },
+        "year_source": "artist_dates",
+        "artist_raw": "Bedri Rahmi Eyüboğlu (1911-1975)"
+      },
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-874-381260b4-imageUrl.webp",
+      "thumbnailUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:874/full/400,/0/default.jpg",
+      "original_imageUrl": "https://digitalssm.org/iiif/2/ResimKlksyn:874/full/1600,/0/default.jpg",
+      "onDisplay": false,
+      "displayLocation": ""
+    }
+  ]
+}

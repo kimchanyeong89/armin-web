@@ -1,0 +1,241 @@
+/* ══════════════════════════════════════════════════════════════
+   Artist page — six studies. Each is a whole page: a way of laying
+   the works out and a way of drawing the distribution.
+   Style: the map tab's — #080808 ground, gold #d4a547, Space Mono
+   numerals, hairlines, Paperlogy headings, Wanted Sans small type.
+   ══════════════════════════════════════════════════════════════ */
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css");
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+.ar-page {
+  --g: #080808;
+  --ink: rgba(244,241,234,0.96); --ink-2: rgba(244,241,234,0.62); --ink-3: rgba(244,241,234,0.40);
+  --rule: rgba(244,241,234,0.10); --hair: rgba(244,241,234,0.16);
+  --acc: #d4a547; --acc-rgb: 212,165,71;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --gap: 4px;
+  --pad: clamp(14px,3vw,28px);
+  --main-top: clamp(16px,2.2vw,26px);
+  min-height: 100dvh; background: var(--g); color: var(--ink); font-family: var(--body); word-break: keep-all;
+}
+.ar-page *, .ar-page *::before, .ar-page *::after { box-sizing: border-box; }
+/* index.css styles every button on the site — radius, border, fill and a 4px
+   focus ring — so those are cleared; :focus-visible keeps a gold ring */
+.ar-page button { font: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; }
+.ar-page button:focus { outline: none; }
+.ar-page ul { list-style: none; margin: 0; padding: 0; }
+.ar-page p, .ar-page h1, .ar-page h3 { margin: 0; }
+.ar-page a { color: inherit; text-decoration: none; }
+.ar-page button:focus-visible, .ar-page a:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+
+/* study chrome */
+.ar-header { height: 54px; padding: 0 clamp(14px,3vw,28px); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--rule); }
+.ar-wordmark { font-family: var(--display); font-weight: 700; letter-spacing: -0.035em; }
+.ar-wordmark span { color: var(--ink-3); font-size: 11px; letter-spacing: .08em; }
+.ar-page .ar-header-actions button { color: var(--ink-2); font-size: 12px; font-weight: 600; letter-spacing: .14em; }
+.ar-note { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px;
+  margin: 10px clamp(14px,3vw,28px) 0; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
+  color: var(--ink-3); font-size: 11.5px; line-height: 1.6; }
+.ar-note b { font-weight: 700; color: var(--ink-2); }
+.ar-note > i { width: 1px; height: 10px; background: var(--hair); }
+
+.ar-main { max-width: 1280px; margin: 0 auto; padding: var(--main-top) var(--pad) 110px; }
+
+/* ── the header: details and distribution abreast ─────────────
+   Two tiers, top aligned: the name beside the map, and the Wikipedia text
+   beside the share carousel, its caption on the carousel's line. The map
+   and the carousel still stack in one column — two readings of the same
+   fact, so hovering one has to be visibly answered by the other. The row
+   gap is the one the map and the carousel always had between them. */
+.ar-head { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr);
+  grid-template-areas: "intro world" "about share";
+  column-gap: clamp(18px,2.4vw,40px); row-gap: 10px; align-items: start;
+  padding-bottom: clamp(28px,4vw,48px); border-bottom: 1px solid var(--rule); }
+.ar-head__main { grid-area: intro; min-width: 0; }
+.ar-about { grid-area: about; min-width: 0; display: grid; gap: 8px; align-content: start; }
+.ar-head__meta { color: var(--acc); font-family: var(--num); font-size: .62rem; font-weight: 650; letter-spacing: .12em; }
+/* the component measures the name and sets the size that fills its column on
+   one line; the clamp only covers the first frame */
+.ar-head h1 { margin-top: .35rem; width: max-content; white-space: nowrap; font-family: var(--display);
+  font-size: clamp(2rem,4.2vw,3.2rem); font-weight: 700; line-height: 1.04; letter-spacing: -0.05em; }
+/* (.ar-head raises these over the page's own `p { margin: 0 }`) */
+.ar-head .ar-head__life { margin-top: .5rem; font-family: var(--num); font-size: 10px; letter-spacing: .06em; color: var(--ink-3); }
+/* one description — the encyclopaedia's; its source link is in the caption */
+.ar-head .ar-head__about { max-width: 52ch; font-size: 12.5px; line-height: 1.78; color: var(--ink-2); }
+/* the counts, in the works' own header */
+.ar-figures { display: flex; flex-wrap: wrap; align-items: baseline; gap: 13px; }
+.ar-figures span { display: inline-flex; align-items: baseline; gap: 6px; }
+.ar-figures b { font-family: var(--num); font-size: 18px; font-weight: 700; color: var(--acc); }
+.ar-figures em { font-style: normal; font-size: 10.5px; color: var(--ink-3); }
+.ar-figures > i { width: 1px; height: 11px; background: var(--hair); }
+/* the source link: the arrow alone in the caption's figure slot. The padding
+   widens what takes the pointer; the negative margin keeps the caption as
+   short as its neighbours, so the text still starts on the carousel's line. */
+.ar-page .ar-wiki { padding: 6px 0 6px 10px; margin: -6px 0; font-family: var(--num); font-size: 11px; line-height: 1;
+  color: var(--ink-3); transition: color .16s ease; }
+.ar-page .ar-wiki:hover { color: var(--acc); }
+
+/* ── the distribution ─────────────────────────────────────────
+   The live page's own arrangement: 전 세계 분포 over a carousel of
+   국가별 · 미술관별 · 인기 미술관, with its pagination dots. */
+
+/* Stacked in one column: the map, then the share carousel. Splitting them
+   into columns of their own made the page read as three, which is one
+   division too many. The component's wrapper steps aside (display:
+   contents) so the map and the carousel are the band's own right-hand
+   cells — that is what lets the Wikipedia text start on the carousel's line. */
+.ar-dist { display: contents; }
+.ar-world { grid-area: world; min-width: 0; display: grid; gap: 8px; }
+/* the band's captions — the map's, the carousel's and the Wikipedia text's */
+.ar-dist__cap { display: flex; align-items: center; gap: 10px; }
+.ar-dist__cap span { font-family: var(--num); font-size: 9.5px; letter-spacing: .1em; color: var(--acc); }
+.ar-dist__cap i { flex: 1; height: 1px; background: var(--rule); }
+.ar-dist__cap em { font-family: var(--num); font-style: normal; font-size: 9px; color: var(--ink-3); }
+.ar-map { width: 100%; height: auto; display: block; }
+.ar-map__land path { fill: rgba(244,241,234,.045); stroke: rgba(244,241,234,.14); stroke-width: .4; vector-effect: non-scaling-stroke; }
+/* an anchor dot sized by count, the figure beside it — no chip, no box.
+   A bordered chip reads as a tray stuck on the map. */
+.ar-mark { cursor: pointer; }
+.ar-mark__hit { fill: transparent; }
+.ar-mark__dot { transition: opacity .18s ease; }
+.ar-mark__halo { fill: none; stroke: rgba(var(--acc-rgb),0); stroke-width: 1; transition: stroke .2s ease; }
+.ar-mark line { stroke: rgba(var(--acc-rgb),.4); stroke-width: .7; }
+/* the ground shows through a thin figure, so it is knocked out with a
+   stroke of the page colour painted behind the glyph */
+.ar-mark__n { fill: var(--ink); font-family: var(--num); font-size: 9.5px; font-weight: 700;
+  paint-order: stroke; stroke: #080808; stroke-width: 2.6px; stroke-linejoin: round; }
+.ar-mark.is-on .ar-mark__halo { stroke: rgba(var(--acc-rgb),.65); }
+.ar-mark.is-on .ar-mark__n { fill: var(--acc); }
+.ar-map:hover .ar-mark:not(.is-on) .ar-mark__dot { opacity: .45; }
+
+.ar-share { grid-area: share; min-width: 0; display: grid; gap: 8px; align-content: start; }
+
+.ar-slides { min-width: 0; overflow: hidden; touch-action: pan-y; }
+.ar-slides__strip { display: flex; width: 300%; align-items: flex-start;
+  transition: transform .38s ease-in-out; will-change: transform; }
+/* Each slide is capped and scrolls inside, as the live page does it. Without
+   the cap all three sit in one flex row, the tallest (twelve rows) sets the
+   height, and the shorter slides float in the middle of it. */
+/* The slide is a fixed band; the list inside it scrolls so every country and
+   every museum is reachable while the donut stays where it is. */
+.ar-slide { width: 33.3333%; flex-shrink: 0; display: flex; align-items: center; gap: 16px;
+  height: 168px; overflow: hidden; }
+.ar-slide--top { align-items: stretch; }
+/* it only has to scroll — the bar itself is chrome the page does not need */
+.ar-keys, .ar-tops { overflow-y: auto; overflow-x: hidden; scrollbar-width: none; max-height: 100%; }
+.ar-keys::-webkit-scrollbar, .ar-tops::-webkit-scrollbar { display: none; }
+
+/* the live donut: filled wedges, a separator in the page colour, a grey rest */
+.ar-donut { flex: none; width: 112px; height: 112px; }
+.ar-donut__seg { stroke: #080808; stroke-width: 1.5; cursor: pointer; transition: opacity .18s ease; }
+.ar-donut__rest { fill: #222; stroke: #080808; stroke-width: 1.5; }
+.ar-donut__total { fill: var(--ink); font-family: var(--num); font-size: 16px; font-weight: 700; text-anchor: middle; }
+
+/* the live list: a swatch, the name, a right-aligned percent */
+.ar-keys { flex: 1; min-width: 0; display: grid; gap: 5px; align-content: start; }
+.ar-keys li { display: flex; align-items: center; gap: 7px; font-size: 10.5px; color: var(--ink-2); cursor: pointer; }
+.ar-keys li i { flex: none; width: 9px; height: 9px; border-radius: 1px; }
+.ar-keys li span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* the figure holds its width and the name shrinks — it was the percent
+   sign that got cut when the column narrowed */
+.ar-keys li em { font-style: normal; color: var(--ink-3); }
+.ar-keys li b { flex: none; min-width: 32px; text-align: right; font-family: var(--num); font-size: 11px;
+  font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.ar-keys li.is-on { color: var(--ink); }
+
+/* slide 2 — two columns, a count and a bar */
+.ar-tops { flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px 16px; align-content: start; }
+.ar-top { display: grid; gap: 3px; min-width: 0; cursor: pointer; }
+.ar-top__row { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
+.ar-top__row span { flex: 1; min-width: 0; font-size: 10px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ar-top__row u { text-decoration: none; color: var(--ink-3); }
+.ar-top__row b { flex: none; min-width: 22px; text-align: right; font-family: var(--num); font-size: 11px;
+  font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.ar-top__bar { height: 2px; background: var(--rule); }
+.ar-top__bar i { display: block; height: 100%; }
+.ar-top.is-on .ar-top__row span { color: var(--ink); }
+
+/* the same pagination dots the live page uses */
+.ar-dots { display: flex; justify-content: center; align-items: center; gap: 5px; padding: 7px 0 0; }
+.ar-page .ar-dots button { width: 6px; height: 6px; border-radius: 3px; background: var(--rule); transition: all .2s ease; }
+.ar-page .ar-dots button.is-on { width: 20px; background: var(--acc); }
+
+/* ── the works: width matched, height from the work itself ─────
+   Dealt round robin into columns so the reading order still runs left to
+   right. Nothing is cropped — the column takes whatever height the work's
+   own proportion asks for. */
+.ar-works { margin-top: clamp(18px,2.2vw,26px); }
+.ar-works > header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.ar-works > header > i { flex: 1; height: 1px; background: var(--rule); }
+.ar-works > header > .ar-figures { margin-right: 8px; }
+.ar-cols { display: flex; gap: var(--gap); align-items: flex-start; }
+.ar-col { flex: 1 1 0; min-width: 0; display: grid; gap: var(--gap); align-content: start; }
+.ar-cols article { min-width: 0; }
+.ar-shot { position: relative; display: block; line-height: 0; }
+.ar-shot img { width: 100%; height: auto; display: block; }
+.ar-acts { position: absolute; top: 6px; right: 6px; z-index: 2; display: grid; gap: 0; opacity: 0; transition: opacity .18s ease; }
+.ar-shot:hover .ar-acts { opacity: 1; }
+.ar-page .ar-acts button { width: 20px; height: 19px; display: grid; place-items: center; color: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.9)); transition: color .16s ease; }
+.ar-page .ar-acts button.is-on { color: var(--acc); }
+
+/* the caption rides on the work, so there is no gap under it */
+.ar-over { position: absolute; inset: auto 0 0 0; padding: 26px 10px 9px; pointer-events: none; line-height: normal;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.82) 62%); }
+.ar-over h3 { font-family: var(--display); font-size: 11.5px; font-weight: 600; line-height: 1.3;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ar-over p { margin-top: 2px; font-family: var(--num); font-size: 8px; letter-spacing: .04em; color: rgba(244,241,234,.62);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+@media (max-width: 900px) {
+  .ar-head { grid-template-columns: minmax(0,1fr) minmax(0,1fr); column-gap: 18px; }
+  .ar-head .ar-head__about { font-size: 11.5px; line-height: 1.7; }
+  .ar-tops { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 720px) {
+  /* one column: who, what the encyclopaedia says, then the distribution */
+  .ar-head { grid-template-columns: minmax(0,1fr); grid-template-areas: "intro" "about" "world" "share"; }
+  .ar-tops { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .ar-page * { transition: none !important; } }
+
+/* the caption's museum name is a link */
+.ar-page .ar-over a { color: inherit; border-bottom: 1px solid rgba(var(--acc-rgb),.4); pointer-events: auto;
+  transition: color .16s ease, border-color .16s ease; }
+.ar-page .ar-over a:hover { color: var(--acc); border-bottom-color: var(--acc); }
+.ar-over { pointer-events: none; }
+.ar-over p { pointer-events: auto; }
+.ar-shot { cursor: zoom-in; }
+
+/* the map: zoom and pan (touch-action is set inline — it follows the zoom) */
+.ar-mapwrap { position: relative; }
+.ar-map { user-select: none; }
+.ar-zoom { position: absolute; right: 6px; bottom: 6px; display: grid; gap: 3px; }
+/* bare marks, no box; a shadow keeps them legible over the land */
+.ar-page .ar-zoom button { width: 22px; height: 22px; display: grid; place-items: center;
+  border: 0; background: none; color: var(--ink-2); text-shadow: 0 1px 6px rgba(0,0,0,.9);
+  font-family: var(--num); font-size: 14px; line-height: 1; transition: color .16s ease; }
+.ar-page .ar-zoom button:hover:not(:disabled) { color: var(--acc); }
+.ar-page .ar-zoom button:disabled { opacity: .4; cursor: default; }
+
+/* The leader runs inside the row — from the name across to its figure —
+   so the eye follows one line rather than crossing the block. */
+.ar-keys li u { flex: 1; min-width: 10px; height: 0; align-self: center; text-decoration: none;
+  border-bottom: 1px dotted rgba(244,241,234,.18); transition: border-color .16s ease; }
+.ar-keys li.is-on u { border-bottom-color: var(--acc); border-bottom-style: solid; }
+.ar-keys li span { flex: none; max-width: calc(100% - 96px); }
+
+/* ── the band's only ornament ─────────────────────────────────
+   Nothing sits behind the band's words: a painting there read as clutter,
+   and the name in huge letters got in the way. The map alone carries a faint
+   light — the halo the globe wears on the map tab — so the band keeps some
+   depth with nothing to read around. It stays inside the map's width. */
+.ar-world { position: relative; isolation: isolate; }
+.ar-world::before { content: ""; position: absolute; z-index: -1; inset: -16% 0 -10%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255,255,255,.045), transparent); }

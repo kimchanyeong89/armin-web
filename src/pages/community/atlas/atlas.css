@@ -1,0 +1,394 @@
+/* ══════════════════════════════════════════════════════════════
+   Community — the board, the composer and the post, in the language
+   the AI tab, search and the artwork detail already share: a dark
+   ground, gold as the accent, Space Mono figures, hairlines instead
+   of boxes, Paperlogy for headings and Wanted Sans for the small type.
+   Each category keeps the colour the live board gave it, as a point
+   and a label, never as a filled chip. Used by /community and by the
+   study at /redesign/community-atlas.
+   ══════════════════════════════════════════════════════════════ */
+@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css");
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-4Regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-6SemiBold.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Paperlogy"; src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-7Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+.ca {
+  --g: #080808;
+  --ink: rgba(244,241,234,0.96); --ink-2: rgba(244,241,234,0.62); --ink-3: rgba(244,241,234,0.40);
+  --rule: rgba(244,241,234,0.10); --hair: rgba(244,241,234,0.16);
+  --soft: rgba(244,241,234,0.06); --ghost: rgba(244,241,234,0.26); --menu: #0d0d0d;
+  --acc: #d4a547; --acc-rgb: 212,165,71; --acc-hi: #f0c878;
+  --display: Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  --body: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif;
+  --num: "Space Mono", ui-monospace, monospace;
+  --ease: cubic-bezier(.16,1,.3,1);
+  --pad: clamp(14px,3vw,28px);
+  min-height: 100dvh; background: var(--g); color: var(--ink); font-family: var(--body); word-break: keep-all;
+}
+/* the app's light theme: the same roles on a pale ground; the gold is
+   deepened so small gold type still reads on white */
+.ca[data-light] {
+  --g: #f6f6f6;
+  --ink: rgba(0,0,0,0.9); --ink-2: rgba(0,0,0,0.6); --ink-3: rgba(0,0,0,0.42);
+  --rule: rgba(0,0,0,0.09); --hair: rgba(0,0,0,0.16);
+  --soft: rgba(0,0,0,0.05); --ghost: rgba(0,0,0,0.28); --menu: #ffffff;
+  --acc: #a8781e; --acc-rgb: 168,120,30; --acc-hi: #8a6216;
+}
+/* inside the app each route sits in a shell that clips and does not
+   scroll, so the page is its own scroll container */
+.ca--app { height: 100%; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.ca *, .ca *::before, .ca *::after { box-sizing: border-box; }
+/* index.css styles every button on the site — radius, border, fill and a
+   4px focus ring — so those are cleared; keyboard focus keeps a gold ring */
+.ca button { font: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; cursor: pointer; }
+.ca button:focus { outline: none; }
+.ca button:disabled { cursor: default; }
+.ca button:focus-visible, .ca a:focus-visible, .ca input:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+.ca :where(p, h1, h2, h3, figure, blockquote) { margin: 0; }
+.ca :where(ul, ol) { margin: 0; padding: 0; list-style: none; }
+.ca :where(a) { color: inherit; text-decoration: none; }
+
+/* the study's own top bar — the app has its own chrome */
+.ca-top { height: 54px; padding: 0 var(--pad); display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--rule); }
+.ca-wordmark { font-family: var(--display); font-weight: 700; letter-spacing: -0.035em; }
+.ca-wordmark span { color: var(--ink-3); font-size: 11px; letter-spacing: .08em; }
+.ca .ca-lang { color: var(--ink-2); font-size: 12px; font-weight: 600; letter-spacing: .14em; }
+.ca-main { max-width: 1240px; margin: 0 auto; padding: clamp(18px,2.6vw,30px) var(--pad) 110px; }
+/* in the app the page opens on the same line as search and AI do */
+.ca--app .ca-main { padding-top: var(--page-top); }
+
+.ca-av { flex: none; display: block; border-radius: 50%; object-fit: cover; background: var(--soft); }
+.ca-av--init { display: grid; place-items: center; color: var(--ink-2); font-family: var(--num); font-weight: 700; line-height: 1; }
+.ca-empty { padding: 56px 0; text-align: center; color: var(--ink-3); font-size: 12.5px; }
+.ca-empty__acts { display: flex; justify-content: center; gap: 18px; margin-top: 14px; }
+.ca .ca-empty__acts button { font-size: 12.5px; color: var(--ink-2); transition: color .16s ease; }
+.ca .ca-empty__acts button:hover { color: var(--ink); }
+.ca .ca-empty__acts button:last-child { color: var(--acc); }
+/* the composer's door while signed out */
+.ca-gate { display: grid; place-items: center; text-align: center; }
+.ca-gate p { margin-bottom: 16px; font: 700 clamp(1.1rem,2.4vw,1.35rem)/1.4 var(--display); letter-spacing: -0.02em; }
+
+/* the AI tab's point: it sits in a fixed slot and draws itself out into a
+   short bar, so marking something costs no layout */
+.ca-pt { flex: none; display: flex; align-items: center; width: 18px; height: 4px; }
+.ca-pt i { display: block; width: 4px; height: 4px; border-radius: 50%; background: transparent;
+  transition: width .3s var(--ease), height .3s var(--ease), border-radius .3s var(--ease), background .2s ease; }
+
+/* ── the board ────────────────────────────────────────────────── */
+.ca-lead { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+  margin-bottom: clamp(14px,2vw,20px); }
+.ca-lead h1 { font: 700 clamp(2rem,4.2vw,3.2rem)/1.04 var(--display); letter-spacing: -0.05em; }
+/* sort: two labels over a hairline, and a gold bar that slides between them
+   — the same move as the search page's engine picker */
+.ca-sort { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 46px; margin-top: 14px; }
+.ca .ca-sort button { padding: 0 0 7px; text-align: left; font-size: 12.5px; font-weight: 600; color: var(--ink-3); transition: color .2s ease; }
+.ca .ca-sort button:hover { color: var(--ink-2); }
+.ca .ca-sort button[aria-pressed="true"] { color: var(--ink); }
+.ca-sort::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--rule); }
+.ca-sort__bar { position: absolute; left: 0; bottom: 0; z-index: 1; width: 26px; height: 2px; background: var(--acc);
+  transition: transform .26s var(--ease); }
+.ca-sort[data-i="1"] .ca-sort__bar { transform: translateX(46px); }
+
+.ca-acts { display: flex; align-items: center; gap: 18px; padding-bottom: 7px; }
+.ca .ca-act { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
+  transition: color .16s ease; }
+.ca .ca-act:hover, .ca .ca-act[aria-pressed="true"] { color: var(--acc); }
+.ca .ca-act[aria-pressed="true"] span { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.ca .ca-act--write { color: var(--acc); }
+.ca .ca-act--write:hover { color: var(--acc-hi); }
+
+/* The categories read as one row above the board at every width, not as a
+   column beside it: the board then starts where the title does, and the row
+   sticks to the top as the board scrolls under it. */
+.ca-body { display: grid; grid-template-columns: minmax(0,1fr); align-items: start; }
+.ca-rail { position: sticky; top: 0; z-index: 10; display: flex; gap: 20px; overflow-x: auto; scrollbar-width: none;
+  /* stuck to the top on a phone, the row would sit under the notch; the
+     row carries that inset itself, so the tabs stop below it */
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--g); border-bottom: 1px solid var(--rule); }
+.ca-rail::-webkit-scrollbar { display: none; }
+.ca .ca-rail button { position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 42px;
+  text-align: left; font-size: 13px; color: var(--ink-3); transition: color .16s ease; }
+.ca .ca-rail button:hover { color: var(--ink-2); }
+.ca .ca-rail button[aria-selected="true"] { color: var(--ink); font-weight: 650; }
+.ca .ca-rail button[aria-selected="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--cat, var(--acc)); }
+/* the point belonged to the column, where it marked the selected row */
+.ca-rail .ca-pt { display: none; }
+.ca-rail b { font: 500 10px/1 var(--num); letter-spacing: .04em; font-variant-numeric: tabular-nums; color: var(--ink-3); }
+.ca-rail button[aria-selected="true"] b { color: var(--cat, var(--acc)); }
+/* the app's KO | EN switch is fixed at the window's top right; the rail
+   stuck to the top leaves that corner to it (the composer hides the switch) */
+.ca--app .ca-rail { padding-right: 84px; }
+
+.ca-board { min-width: 0; }
+.ca-targets { display: flex; flex-wrap: wrap; gap: 4px 18px; padding: 12px 0 10px; border-bottom: 1px solid var(--rule); }
+.ca .ca-targets button { padding: 2px 0 4px; font-size: 12px; color: var(--ink-3); border-bottom: 1px solid transparent;
+  transition: color .16s ease, border-color .16s ease; }
+.ca .ca-targets button:hover { color: var(--ink-2); }
+.ca .ca-targets button[aria-pressed="true"] { color: var(--ink); border-bottom-color: var(--acc); }
+
+.ca-cols, .ca-row { display: grid; grid-template-columns: 44px minmax(0,1fr) 138px 70px 34px 34px; gap: 14px; align-items: center; }
+.ca-cols { padding: 13px 0 9px; border-bottom: 1px solid var(--rule); font: 500 9px/1 var(--num); letter-spacing: .1em; color: var(--ink-3); }
+.ca-cols span:nth-child(n+4) { text-align: right; }
+.ca-rows li { border-bottom: 1px solid var(--rule); }
+.ca .ca-row { width: 100%; padding: 12px 0; text-align: left; }
+.ca-row__thumb { width: 44px; height: 44px; overflow: hidden; background: var(--soft); }
+.ca-row__thumb img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); transition: filter .3s ease; }
+.ca-row:hover .ca-row__thumb img { filter: none; }
+.ca-row__main { min-width: 0; display: grid; gap: 4px; }
+/* the category's own colour — the point and the label, not a chip behind them */
+.ca-row__cat { display: flex; align-items: center; font: 600 8.5px/1 var(--num); letter-spacing: .1em; color: var(--cat, var(--ink-3)); }
+.ca[data-light] .ca-row__cat { color: color-mix(in srgb, var(--cat, #777) 70%, #000); }
+.ca-row__cat .ca-pt { width: 16px; }
+.ca-row__cat .ca-pt i { background: var(--cat, var(--acc)); }
+.ca-row:hover .ca-row__cat .ca-pt i, .ca-row:focus-visible .ca-row__cat .ca-pt i { width: 12px; height: 2px; border-radius: 1px; }
+.ca-hot { display: inline-flex; align-items: center; gap: 3px; margin-left: 10px; font-style: normal; color: var(--acc); }
+.ca-row__title { font: 600 14px/1.35 var(--display); letter-spacing: -0.01em; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.ca-row:hover .ca-row__title { color: var(--acc); }
+.ca-row__ex { font-size: 11.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ca-row__meta { display: none; }
+.ca-row__by { min-width: 0; display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ink-2); }
+.ca-row__by > span:not(.ca-badge):not(.rk-pair) { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ca-badge { flex: none; display: inline-flex; color: var(--ink-3); }
+/* a writer's level beside the name — the laurel mark alone, in gold; the level's name is its tooltip */
+.ca-rank { flex: none; display: inline-flex; align-items: center; color: var(--acc); }
+.ca-c__by .ca-rank { align-self: center; }
+.ca-row__date, .ca-row__n { font: 500 10.5px/1 var(--num); color: var(--ink-3); text-align: right; font-variant-numeric: tabular-nums; }
+.ca-row__n { color: var(--ink-2); }
+.ca-nearby { padding-top: 16px; }
+
+/* ── playlists: the shelf of public playlists, and one playlist's page ── */
+.ca .ca-empty__acts a { font-size: 12.5px; color: var(--acc); transition: color .16s ease; }
+.ca .ca-empty__acts a:hover { color: var(--acc-hi); }
+.ca-shelf { padding-top: 16px; }
+.ca-shelf__cap { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.ca-shelf__cap span { font: 600 9.5px/1 var(--num); letter-spacing: .1em; color: var(--acc); white-space: nowrap; }
+.ca-shelf__cap i { flex: 1; height: 1px; background: var(--rule); }
+.ca-shelf__cap em { font: 700 10px/1 var(--num); font-style: normal; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ca-shelf__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px 12px; }
+/* a playlist: the cover with softened corners, as My Page's exhibition and museum cards are cut */
+.ca-plcard { display: grid; gap: 9px; }
+.ca-plcard__cover { display: block; aspect-ratio: 1; overflow: hidden; border-radius: 10px; background: var(--soft); }
+.ca-plcard__cover img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8);
+  transition: filter .3s ease, transform .5s var(--ease); }
+.ca-plcard:hover .ca-plcard__cover img { filter: none; transform: scale(1.03); }
+.ca-plcard__text { display: grid; gap: 5px; min-width: 0; }
+.ca-plcard__text b { font: 600 14px/1.3 var(--display); letter-spacing: -0.01em; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.ca-plcard:hover .ca-plcard__text b { color: var(--acc); }
+.ca-plcard__by { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 11.5px; color: var(--ink-2); }
+.ca-plcard__by > span:not(.ca-av):not(.ca-badge) { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ca-plcard small { font: 500 9.5px/1 var(--num); letter-spacing: .04em; color: var(--ink-3); }
+
+.ca-pl { max-width: 1240px; margin: 0 auto; }
+.ca-pl__lead { display: grid; justify-items: start; gap: 12px; padding-bottom: clamp(18px,2.6vw,26px); }
+.ca-pl__eyebrow { font: 650 .66rem/1.2 var(--num); letter-spacing: .06em; color: var(--acc); }
+.ca-pl__lead h1 { font: 700 clamp(2rem,4.2vw,3.2rem)/1.04 var(--display); letter-spacing: -0.05em; text-wrap: balance; overflow-wrap: anywhere; }
+.ca-pl__by { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 9px; font-size: 12.5px; color: var(--ink-2); }
+.ca-pl__by b { font-weight: 650; color: var(--ink); }
+.ca-pl__by i { width: 1px; height: 10px; background: var(--hair); }
+.ca-pl__by em { font: 500 10px/1 var(--num); font-style: normal; letter-spacing: .06em; color: var(--ink-3); }
+/* the slideshow: the map guide's circled mark, alone */
+.ca-pl__acts { display: flex; align-items: center; gap: 20px; margin-top: 4px; }
+.ca .ca-pl__play { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--acc) 34%, transparent); color: var(--acc);
+  transition: border-color .16s ease, background-color .16s ease; }
+.ca .ca-pl__play:hover { border-color: var(--acc); background: rgba(var(--acc-rgb), .12); }
+/* the works, drawn as My Page draws its artwork grid */
+.ca-pl__grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 2px; padding-top: 2px; border-top: 1px solid var(--rule); }
+.ca .ca-pl__work { position: relative; display: block; width: 100%; aspect-ratio: 1; overflow: hidden; background: #151515; }
+.ca[data-light] .ca-pl__work { background: #e9e9e9; }
+.ca-pl__work img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.ca-pl__work:hover img { transform: scale(1.03); }
+.ca-pl__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.76) 0%, transparent 54%); pointer-events: none; }
+.ca-pl__note { padding: 14px 0; font: 500 10px/1 var(--num); letter-spacing: .04em; color: var(--ink-3); }
+@media (max-width: 860px) { .ca-pl__grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+
+/* ── the post ─────────────────────────────────────────────────── */
+.ca-post { max-width: 760px; margin: 0 auto; }
+.ca-post__bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: clamp(16px,2.4vw,26px); }
+.ca .ca-back { display: inline-flex; align-items: center; gap: 6px; font: 600 10px/1 var(--num); letter-spacing: .1em; color: var(--ink-2);
+  transition: color .16s ease; }
+.ca .ca-back:hover { color: var(--acc); }
+.ca .ca-del { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--ink-3); transition: color .16s ease; }
+.ca .ca-del:hover { color: var(--ink); }
+/* the subject is shown whole, as the artwork detail shows a work */
+.ca-post__cover { display: grid; place-items: center; margin-bottom: clamp(20px,3vw,30px); }
+.ca-post__cover img { display: block; max-width: 100%; max-height: 52vh; width: auto; height: auto; }
+.ca-post__kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font: 600 9.5px/1.3 var(--num);
+  letter-spacing: .1em; color: var(--ink-3); }
+.ca-post__kicker b { color: var(--cat, var(--acc)); font-weight: 650; }
+.ca[data-light] .ca-post__kicker b { color: color-mix(in srgb, var(--cat, #777) 70%, #000); }
+.ca-post__kicker i { width: 1px; height: 9px; background: var(--hair); }
+.ca-post h1 { margin-top: 14px; font: 700 clamp(1.7rem,3.6vw,2.55rem)/1.2 var(--display); letter-spacing: -0.045em; text-wrap: balance; }
+.ca-post__by { display: flex; align-items: center; gap: 10px; margin-top: 18px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+.ca-post__by b { font-size: 13px; font-weight: 650; }
+.ca-post__by em { font: 500 9.5px/1 var(--num); font-style: normal; letter-spacing: .06em; color: var(--ink-3); }
+.ca-post > .ca-prose { margin-top: clamp(24px,3vw,34px); }
+.ca-post__acts { display: flex; align-items: center; gap: 20px; margin-top: clamp(32px,4vw,46px); padding: 14px 0;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.ca .ca-like { display: inline-flex; align-items: center; gap: 7px; font: 600 11px/1 var(--num); color: var(--ink-2); transition: color .16s ease; }
+.ca .ca-like:hover, .ca .ca-like[aria-pressed="true"] { color: var(--acc); }
+.ca-count { display: inline-flex; align-items: center; gap: 7px; font: 600 11px/1 var(--num); color: var(--ink-3); }
+
+.ca-comments { margin-top: clamp(26px,3.4vw,36px); }
+.ca-cap { display: flex; align-items: center; gap: 10px; }
+.ca-cap span { font: 600 9.5px/1 var(--num); letter-spacing: .1em; color: var(--acc); }
+.ca-cap i { flex: 1; height: 1px; background: var(--rule); }
+.ca-cap b { font: 700 10px/1 var(--num); color: var(--ink-2); }
+.ca-clist { margin-top: 4px; }
+.ca-clist li { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 11px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.ca-c__by { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.ca-c__by b { font-size: 12px; font-weight: 650; }
+.ca-c__by em, .ca-c__by time { font: 500 9px/1 var(--num); font-style: normal; letter-spacing: .04em; color: var(--ink-3); }
+.ca-c__text { margin-top: 5px; font-size: 13px; line-height: 1.7; color: var(--ink-2); white-space: pre-wrap; overflow-wrap: anywhere; }
+/* no box around the field — a hairline under it that turns gold while typing */
+.ca-cbox { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: end; margin-top: 16px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--hair); transition: border-color .16s ease; }
+.ca-cbox:focus-within { border-bottom-color: var(--acc); }
+.ca-cbox textarea { min-height: 46px; padding: 4px 0; resize: none; border: 0; background: none; outline: none;
+  color: var(--ink); font: 13px/1.6 var(--body); }
+.ca-cbox textarea::placeholder { color: var(--ink-3); }
+.ca-cbox textarea:disabled { cursor: not-allowed; }
+.ca .ca-send { padding: 6px 0; font-size: 12.5px; font-weight: 650; color: var(--acc); transition: color .16s ease; }
+.ca .ca-send:disabled { color: var(--ink-3); }
+
+/* ── the post body ─────────────────────────────────────────────
+   One reading measure, 15px on 1.9 leading. A subhead is set in Paperlogy
+   behind a short gold rule; a quote hangs from a gold hairline; list markers
+   are gold dashes and mono figures; an attached work is shown whole, never
+   cropped, with its record under it in mono. The composer's editor wears
+   the same class, so what is typed is what is published. */
+/* Everything in the body is set in the small-type face (Wanted Sans) —
+   quotes and an attached work's record included; only a subhead takes the
+   heading face. */
+.ca-prose { max-width: 40rem; margin: 0 auto; font-family: var(--body); font-size: 15px; line-height: 1.9; color: var(--ink-2); overflow-wrap: anywhere; }
+.ca-prose > * + * { margin-top: 1.1em; }
+.ca-prose h2, .ca-prose h3 { color: var(--ink); font-family: var(--display); font-weight: 700; }
+.ca-prose h2 { margin-top: 2.2em; font-size: 1.32rem; line-height: 1.4; letter-spacing: -0.03em; }
+.ca-prose h3 { position: relative; margin-top: 2em; padding-left: 26px; font-size: 1.08rem; line-height: 1.5; letter-spacing: -0.02em; }
+.ca-prose h3::before { content: ""; position: absolute; left: 0; top: .78em; width: 14px; height: 1px; background: var(--acc); }
+.ca-prose blockquote { margin: 1.7em 0; padding: .15em 0 .15em 20px; border-left: 1px solid var(--acc);
+  color: var(--ink); font-size: 1.04rem; font-weight: 500; line-height: 1.8; }
+.ca-prose ul, .ca-prose ol { padding: 0; list-style: none; }
+.ca-prose li { position: relative; padding-left: 24px; }
+.ca-prose li + li { margin-top: .35em; }
+.ca-prose ul > li::before { content: ""; position: absolute; left: 3px; top: .95em; width: 9px; height: 1px; background: var(--acc); }
+.ca-prose ol { counter-reset: ca-ol; }
+.ca-prose ol > li { counter-increment: ca-ol; }
+.ca-prose ol > li::before { content: counter(ca-ol, decimal-leading-zero); position: absolute; left: 0; top: 0;
+  font: 700 10px/2.85 var(--num); color: var(--acc); }
+.ca-prose strong, .ca-prose b { color: var(--ink); font-weight: 700; }
+.ca-prose a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--ink-3);
+  text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .16s ease, text-decoration-color .16s ease; }
+.ca-prose a:hover { color: var(--acc); text-decoration-color: var(--acc); }
+.ca-prose hr { width: 40px; height: 1px; margin: 2.4em auto; border: 0; background: var(--acc); }
+.ca-prose figure { margin: 2em 0; display: grid; justify-items: center; }
+.ca-prose img { display: block; max-width: 100%; max-height: 68vh; width: auto; height: auto; }
+.ca-prose figcaption { margin-top: 11px; max-width: 32rem; text-align: center; font-size: 11.5px; line-height: 1.6; color: var(--ink-3); }
+.ca-prose figcaption b { display: block; margin-bottom: 2px; font-size: 13px; font-weight: 600; line-height: 1.45; color: var(--ink); }
+.ca-prose > :first-child { margin-top: 0; }
+/* in a post the reading column starts on the title's left edge */
+.ca-post .ca-prose { margin-left: 0; }
+
+/* ── the composer ─────────────────────────────────────────────
+   The post's own measure, so the editor lines break where the published
+   post will. A bar that stays at the top holds cancel and publish; the
+   toolbar stays under it while the body scrolls. */
+.ca-write { max-width: 40rem; margin: 0 auto; }
+.ca-wbar { position: sticky; top: 0; z-index: 20; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+  height: 52px; background: color-mix(in srgb, var(--g) 92%, transparent);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--rule); }
+.ca-wbar__title { font: 600 10px/1 var(--num); letter-spacing: .12em; color: var(--ink-2); text-align: center; }
+.ca .ca-cancel { justify-self: start; font-size: 12.5px; color: var(--ink-2); transition: color .16s ease; }
+.ca .ca-cancel:hover { color: var(--ink); }
+.ca .ca-publish { justify-self: end; padding: 7px 15px; border: 1px solid var(--acc); color: var(--acc); font-size: 12.5px; font-weight: 650;
+  transition: background .16s ease, color .16s ease, border-color .16s ease; }
+.ca .ca-publish:hover:not(:disabled) { background: rgba(var(--acc-rgb),.12); }
+.ca .ca-publish:disabled { border-color: var(--hair); color: var(--ink-3); }
+
+.ca-field { display: grid; grid-template-columns: 68px minmax(0,1fr); gap: 14px; align-items: baseline; padding: 14px 0;
+  border-bottom: 1px solid var(--rule); }
+.ca-field > span { font: 600 9px/1.9 var(--num); letter-spacing: .12em; color: var(--acc); }
+/* a chosen subject is a picture with two lines beside it: the label sits level with its middle */
+.ca-field--card { align-items: center; }
+.ca-tabs { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.ca .ca-tabs button { padding: 2px 0 5px; font-size: 13px; color: var(--ink-3); border-bottom: 1px solid transparent;
+  transition: color .16s ease, border-color .16s ease; }
+.ca .ca-tabs button:hover { color: var(--ink-2); }
+.ca .ca-tabs button[aria-pressed="true"] { color: var(--ink); font-weight: 650; border-bottom-color: var(--cat, var(--acc)); }
+.ca-tabs--small button { font-size: 12px !important; }
+.ca-note { font-size: 11.5px; line-height: 1.6; color: var(--ink-3); }
+
+/* the subject of a review: a field with a hairline under it, a list that
+   drops from it, and the chosen subject shown with its picture */
+.ca-pick { position: relative; min-width: 0; }
+.ca-pick input { width: 100%; padding: 4px 0 7px; border: 0; border-bottom: 1px solid var(--hair); background: none; outline: none;
+  color: var(--ink); font: 13px/1.5 var(--body); transition: border-color .16s ease; }
+.ca-pick input:focus { border-bottom-color: var(--acc); }
+.ca-pick input::placeholder { color: var(--ink-3); }
+.ca-pick input:focus-visible { outline: none; }
+.ca-menu { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 30; max-height: 320px; overflow-y: auto;
+  background: var(--menu); border: 1px solid var(--rule); box-shadow: 0 18px 40px rgba(0,0,0,.6); scrollbar-width: thin; }
+.ca[data-light] .ca-menu { box-shadow: 0 14px 34px rgba(0,0,0,.12); }
+.ca .ca-menu button { width: 100%; display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 10px; align-items: center;
+  padding: 8px 10px; text-align: left; transition: background .12s ease; }
+.ca .ca-menu button:hover, .ca .ca-menu button[aria-selected="true"] { background: rgba(var(--acc-rgb),.08); }
+.ca-menu img, .ca-menu__ph { display: block; width: 34px; height: 34px; object-fit: cover; background: var(--soft); }
+.ca-menu b { display: block; font: 600 12.5px/1.3 var(--display); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ca-menu small { display: block; margin-top: 3px; font-size: 10.5px; line-height: 1.35; color: var(--ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ca-menu small em { font: 600 9px/1 var(--num); font-style: normal; letter-spacing: .06em; color: var(--acc); margin-right: 6px; }
+.ca-menu p { padding: 12px; font-size: 12px; color: var(--ink-3); }
+.ca-menu .ca-menu__note { padding: 9px 12px; border-top: 1px solid var(--rule); font-size: 11px; color: var(--ink-3); }
+.ca-chosen { display: grid; grid-template-columns: 44px minmax(0,1fr) auto; gap: 12px; align-items: center; }
+.ca-chosen img, .ca-chosen .ca-menu__ph { width: 44px; height: 44px; object-fit: cover; }
+.ca-chosen b { display: block; font: 600 13px/1.35 var(--display); }
+.ca-chosen small { display: block; margin-top: 3px; font: 500 9px/1.3 var(--num); letter-spacing: .06em; color: var(--acc); }
+.ca .ca-chosen button { display: grid; place-items: center; width: 26px; height: 26px; color: var(--ink-3); transition: color .16s ease; }
+.ca .ca-chosen button:hover { color: var(--ink); }
+
+.ca-title { width: 100%; margin-top: 22px; padding: 0 0 14px; border: 0; border-bottom: 1px solid var(--rule); background: none; outline: none;
+  color: var(--ink); font: 700 clamp(1.5rem,3.2vw,2.1rem)/1.25 var(--display); letter-spacing: -0.04em; }
+.ca-title::placeholder { color: var(--ghost); }
+.ca .ca-title:focus-visible { outline: none; }
+
+/* tools: icons, no chips — the one in force turns gold with a hairline under it */
+.ca-tools { position: sticky; top: 52px; z-index: 15; display: flex; flex-wrap: wrap; align-items: center; gap: 2px;
+  padding: 7px 0; background: color-mix(in srgb, var(--g) 94%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.ca .ca-tool { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-width: 30px; height: 30px;
+  padding: 0 7px; font-size: 12px; color: var(--ink-3); transition: color .16s ease; }
+.ca .ca-tool:hover { color: var(--ink); }
+.ca .ca-tool[aria-pressed="true"] { color: var(--acc); }
+.ca .ca-tool[aria-pressed="true"]::after { content: ""; position: absolute; left: 7px; right: 7px; bottom: 2px; height: 1px; background: var(--acc); }
+.ca-tools > i { width: 1px; height: 14px; margin: 0 7px; background: var(--hair); }
+.ca .ca-tool--attach { margin-left: auto; color: var(--ink-2); }
+
+.ca-editwrap { position: relative; margin-top: 22px; }
+.ca-editor { position: relative; min-height: 340px; outline: none; }
+.ca-editor[data-empty]::before { content: attr(data-placeholder); position: absolute; left: 0; top: 0; pointer-events: none;
+  color: var(--ghost); }
+.ca-editor figure { cursor: default; }
+.ca-editor figure:hover { outline: 1px solid var(--hair); outline-offset: 8px; }
+.ca-mention { position: absolute; z-index: 30; width: min(340px, 100%); }
+.ca-mention .ca-menu { position: static; }
+.ca-wfoot { display: flex; justify-content: space-between; gap: 12px; margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--rule);
+  font: 500 9.5px/1.5 var(--num); letter-spacing: .06em; color: var(--ink-3); }
+
+/* ── narrow ───────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .ca-cols, .ca-row { grid-template-columns: 40px minmax(0,1fr) 30px 30px; gap: 12px; }
+  .ca-cols span:nth-child(3), .ca-cols span:nth-child(4), .ca-row__by, .ca-row__date { display: none; }
+  .ca-row__thumb { width: 40px; height: 40px; }
+  .ca-row__meta { display: block; font: 500 9px/1.2 var(--num); letter-spacing: .04em; color: var(--ink-3);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+}
+@media (max-width: 560px) {
+  .ca-field { grid-template-columns: minmax(0,1fr); gap: 8px; }
+  .ca-prose { font-size: 14.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .ca * { transition: none !important; animation: none !important; } }

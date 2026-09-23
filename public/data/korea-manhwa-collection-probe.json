@@ -1,0 +1,130 @@
+{
+  "museum": "Korea Manhwa Museum",
+  "collection": "Original Comic Art (원화)",
+  "website": "https://www.komacon.kr/comicsmuseum/",
+  "scraped_date": "2026-06-16",
+  "total_count": 5,
+  "source_type": "html",
+  "source_note": "KMAS / 만화규장각 (kmas.or.kr) — museum-own digital archive, 원화 category only",
+  "in_scope_total": 41,
+  "category_breakdown": {
+    "drawing": 5
+  },
+  "artworks": [
+    {
+      "id": "korea-manhwa-1532",
+      "objectNumber": "1532",
+      "title": "왈순 아지매",
+      "artist": "정운경",
+      "date": "1997",
+      "year": 1997,
+      "medium": "원화 (original comic art)",
+      "dimensions": "270x195mm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/korea-manhwa-collection/korea-manhwa-1532-628b1506-imageUrl.webp",
+      "thumbnailUrl": "https://www.kmas.or.kr/common/file/atchmnDownloadThum.ajax?relic=C&fileImageId=68ca0d2c-3da9-4bb0-9faa-9ca81b268723",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.kmas.or.kr/original/mainCollectionList/10/10/1532",
+      "metadata": {
+        "relicId": "1532",
+        "category_ko": "원화",
+        "image_count": 1
+      },
+      "original_imageUrl": "https://www.kmas.or.kr/common/file/atchmnDownload.ajax?type=collection&fileImageId=68ca0d2c-3da9-4bb0-9faa-9ca81b268723"
+    },
+    {
+      "id": "korea-manhwa-1544",
+      "objectNumber": "1544",
+      "title": "조랑어사 (20)",
+      "artist": "정한기",
+      "date": "1963",
+      "year": 1963,
+      "medium": "원화 (original comic art)",
+      "dimensions": "275x395mm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/korea-manhwa-collection/korea-manhwa-1544-e9ecc56f-imageUrl.webp",
+      "thumbnailUrl": "https://www.kmas.or.kr/common/file/atchmnDownloadThum.ajax?relic=C&fileImageId=fcb88936-43e6-4ba8-98e8-1504d5691652",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.kmas.or.kr/original/mainCollectionList/10/10/1544",
+      "metadata": {
+        "relicId": "1544",
+        "category_ko": "원화",
+        "image_count": 2
+      },
+      "original_imageUrl": "https://www.kmas.or.kr/common/file/atchmnDownload.ajax?type=collection&fileImageId=fcb88936-43e6-4ba8-98e8-1504d5691652"
+    },
+    {
+      "id": "korea-manhwa-1572",
+      "objectNumber": "1572",
+      "title": "불새 (1)",
+      "artist": "차성진",
+      "date": "1987",
+      "year": 1987,
+      "medium": "원화 (original comic art)",
+      "dimensions": "255x350mm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/korea-manhwa-collection/korea-manhwa-1572-cedb6484-imageUrl.webp",
+      "thumbnailUrl": "https://www.kmas.or.kr/common/file/atchmnDownloadThum.ajax?relic=C&fileImageId=31397e1f-a394-4532-a855-cf9fbfe478c1",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.kmas.or.kr/original/mainCollectionList/10/10/1572",
+      "metadata": {
+        "relicId": "1572",
+        "category_ko": "원화",
+        "image_count": 1
+      },
+      "original_imageUrl": "https://www.kmas.or.kr/common/file/atchmnDownload.ajax?type=collection&fileImageId=31397e1f-a394-4532-a855-cf9fbfe478c1"
+    },
+    {
+      "id": "korea-manhwa-6009",
+      "objectNumber": "6009",
+      "title": "소년 조선일보 위인그림",
+      "artist": "이범기",
+      "date": "1984",
+      "year": 1984,
+      "medium": "원화 (original comic art)",
+      "dimensions": "270x394x15mm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/korea-manhwa-collection/korea-manhwa-6009-39c55da1-imageUrl.webp",
+      "thumbnailUrl": "https://www.kmas.or.kr/common/file/atchmnDownloadThum.ajax?relic=C&fileImageId=e2a557f7-8b89-4c8c-9a14-570745b10c17",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.kmas.or.kr/original/mainCollectionList/10/10/6009",
+      "metadata": {
+        "relicId": "6009",
+        "category_ko": "원화",
+        "image_count": 2
+      },
+      "original_imageUrl": "https://www.kmas.or.kr/common/file/atchmnDownload.ajax?type=collection&fileImageId=e2a557f7-8b89-4c8c-9a14-570745b10c17"
+    },
+    {
+      "id": "korea-manhwa-6788",
+      "objectNumber": "6788",
+      "title": "나의 만화 이력서",
+      "artist": "이상호",
+      "date": "1963",
+      "year": 1963,
+      "medium": "원화 (original comic art)",
+      "dimensions": "395x265mm",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/korea-manhwa-collection/korea-manhwa-6788-dabcf60c-imageUrl.webp",
+      "thumbnailUrl": "https://www.kmas.or.kr/common/file/atchmnDownloadThum.ajax?relic=C&fileImageId=2ee8a65e-9458-426a-8336-d356a62e7583",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.kmas.or.kr/original/mainCollectionList/10/10/6788",
+      "metadata": {
+        "relicId": "6788",
+        "category_ko": "원화",
+        "image_count": 1
+      },
+      "original_imageUrl": "https://www.kmas.or.kr/common/file/atchmnDownload.ajax?type=collection&fileImageId=2ee8a65e-9458-426a-8336-d356a62e7583"
+    }
+  ]
+}

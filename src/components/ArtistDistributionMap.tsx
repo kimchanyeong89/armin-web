@@ -255,11 +255,10 @@ const ArtistDistributionMap: React.FC<Props> = ({
         const count = d?.count ?? 1;
         const museums = d?.museums ?? [];
 
-        // Circle diameter: log-scaled, 12px (min) → 30px (max)
+        // Rounded-square marker side: log-scaled, 13px (min) → 24px (max) — compact, low overlap
         const logRatio  = Math.log(count + 1) / Math.log(maxCount + 1);
-        const diameter  = Math.round(12 + 18 * logRatio);
-        const radius    = diameter / 2;
-        const fontSize  = diameter < 15 ? 7 : diameter < 19 ? 8 : diameter < 24 ? 9 : 10;
+        const side      = Math.round(13 + 11 * logRatio);
+        const fontSize  = side < 16 ? 7.5 : side < 20 ? 8.5 : 9.5;
         const isCluster = museums.length > 1;
 
         // ── Tooltip — list every museum with its individual count ────────────
@@ -288,8 +287,8 @@ const ArtistDistributionMap: React.FC<Props> = ({
 
         // ── Container — centered on the map point ────────────────────────────
         const container = am5.Container.new(root, {
-          width: diameter,
-          height: diameter,
+          width: side,
+          height: side,
           centerX: am5.p50,
           centerY: am5.p50,
           cursorOverStyle: 'pointer',
@@ -298,20 +297,23 @@ const ArtistDistributionMap: React.FC<Props> = ({
           tooltip,
         });
 
-        // Circle: MUST set x/y at p50 so it centers within the container.
-        // Without this the circle's origin sits at the container's (0,0) top-left
-        // and the count label renders outside the dot.
-        const circle = container.children.push(
-          am5.Circle.new(root, {
-            radius,
+        // Rounded square — centered in the container via p50 origin so the count label sits inside it.
+        const rect = container.children.push(
+          am5.RoundedRectangle.new(root, {
+            width: side,
+            height: side,
             x: am5.p50,
             y: am5.p50,
             centerX: am5.p50,
             centerY: am5.p50,
+            cornerRadiusTL: 4,
+            cornerRadiusTR: 4,
+            cornerRadiusBL: 4,
+            cornerRadiusBR: 4,
             fill: am5.color(dotFill),
-            fillOpacity: isCluster ? 0.90 : 0.85,
-            stroke: am5.color(isDark && !isDrawingFlat ? 0x111111 : 0x111111),
-            strokeOpacity: isCluster ? 0.2 : 0.0,
+            fillOpacity: isCluster ? 0.92 : 0.86,
+            stroke: am5.color(0x111111),
+            strokeOpacity: isCluster ? 0.22 : 0.0,
             strokeWidth: 1,
           })
         );
@@ -334,7 +336,7 @@ const ArtistDistributionMap: React.FC<Props> = ({
         );
 
         // Hover states
-        circle.states.create('hover', {
+        rect.states.create('hover', {
           fillOpacity: 1,
           strokeOpacity: 0.4,
         });

@@ -1,40 +1,27 @@
-import { motion } from "framer-motion";
 import { useLanguage, type AppLanguage } from "../contexts/LanguageContext";
 
-// Sliding gold highlight glides between the two segments. Matched to the
-// BottomPageNavigator spring so the whole app's chrome shares one motion feel.
-const SPRING = { type: "spring" as const, stiffness: 380, damping: 32, mass: 0.7 };
-
+/**
+ * KO / EN language switch.
+ *
+ * Both languages stay on screen so the control says two things at once: which
+ * one you are on (full strength) and what tapping gives you (dimmed). Earlier
+ * versions failed by showing only one - a lone "EN" cannot express state and
+ * destination together - or by filling the active half with gold, which gave a
+ * rarely used utility the same weight as the page's real actions.
+ *
+ * Weight comes from opacity alone: no fill, no border, no accent colour.
+ */
 const OPTIONS: { code: AppLanguage; label: string }[] = [
-  { code: "ko", label: "KR" },
+  { code: "ko", label: "KO" },
   { code: "en", label: "EN" },
 ];
 
-/**
- * Segmented KR | EN language switch. Always shows both choices with the active
- * one filled gold, so the current language and the toggle target are visible at
- * a glance — unlike a single flip-button buried in the profile menu.
- *
- * Glass tokens mirror BottomPageNavigator so it reads as native app chrome.
- */
-export default function LanguageToggle({
-  light = false,
-  layoutId = "language-toggle-pill",
-}: {
-  light?: boolean;
-  // Unique per shared-layout group. The floating (App.tsx) and search-bar
-  // (GlobalSearchBar) copies must differ, or framer-motion tries to glide one
-  // gold pill between the two locations during route transitions.
-  layoutId?: string;
-}) {
+export default function LanguageToggle({ light = false }: { light?: boolean }) {
   const { language, setLanguage } = useLanguage();
 
-  const inactiveColor = light ? "rgba(0,0,0,0.46)" : "rgba(255,255,255,0.52)";
-  const containerBg = light ? "rgba(10,10,10,0.06)" : "rgba(255,255,255,0.09)";
-  const containerBorder = light ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.10)";
-  const containerShadow = light
-    ? "0 2px 24px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.55)"
-    : "0 2px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05)";
+  const active = light ? "rgba(0,0,0,0.92)" : "rgba(255,255,255,0.95)";
+  const idle = light ? "rgba(0,0,0,0.34)" : "rgba(255,255,255,0.36)";
+  const divider = light ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.22)";
 
   return (
     <div
@@ -43,61 +30,48 @@ export default function LanguageToggle({
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: 2,
-        padding: 3,
-        borderRadius: 999,
-        background: containerBg,
-        border: containerBorder,
-        boxShadow: containerShadow,
-        backdropFilter: "blur(28px)",
-        WebkitBackdropFilter: "blur(28px)",
-        fontFamily: "'Space Grotesk', sans-serif",
+        gap: 7,
+        fontFamily: 'Hana2, "Apple SD Gothic Neo", sans-serif',
+        // Enough separation from a busy map without painting a panel behind it.
+        textShadow: light ? "none" : "0 1px 10px rgba(0,0,0,0.75)",
         userSelect: "none",
       }}
     >
-      {OPTIONS.map(({ code, label }) => {
+      {OPTIONS.map(({ code, label }, index) => {
         const isActive = language === code;
         return (
-          <button
-            key={code}
-            type="button"
-            onClick={() => setLanguage(code)}
-            aria-pressed={isActive}
-            title={code === "ko" ? "한국어" : "English"}
-            style={{
-              position: "relative",
-              border: "none",
-              background: "transparent",
-              borderRadius: 999,
-              padding: "5px 12px",
-              minWidth: 34,
-              lineHeight: 1,
-              cursor: "pointer",
-              outline: "none",
-              color: isActive ? "#000" : inactiveColor,
-              fontSize: 11,
-              fontWeight: isActive ? 700 : 500,
-              letterSpacing: "0.07em",
-              fontFamily: "'Space Grotesk', sans-serif",
-              WebkitTapHighlightColor: "transparent",
-              transition: "color 0.25s ease",
-            }}
-          >
-            {isActive && (
-              <motion.span
-                layoutId={layoutId}
-                transition={SPRING}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  borderRadius: 999,
-                  background: "#D4A547",
-                  zIndex: 0,
-                }}
-              />
+          <span key={code} style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
+            {index > 0 && (
+              <span aria-hidden="true" style={{ width: 1, height: 11, background: divider }} />
             )}
-            <span style={{ position: "relative", zIndex: 1 }}>{label}</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => setLanguage(code)}
+              aria-pressed={isActive}
+              title={code === "ko" ? "한국어" : "English"}
+              style={{
+                border: "none",
+                background: "transparent",
+                padding: "9px 2px",
+                cursor: isActive ? "default" : "pointer",
+                color: isActive ? active : idle,
+                fontSize: 12,
+                fontWeight: isActive ? 700 : 500,
+                letterSpacing: "0.09em",
+                lineHeight: 1,
+                WebkitTapHighlightColor: "transparent",
+                transition: "color 0.18s ease",
+              }}
+              onMouseEnter={(event) => {
+                if (!isActive) event.currentTarget.style.color = active;
+              }}
+              onMouseLeave={(event) => {
+                if (!isActive) event.currentTarget.style.color = idle;
+              }}
+            >
+              {label}
+            </button>
+          </span>
         );
       })}
     </div>

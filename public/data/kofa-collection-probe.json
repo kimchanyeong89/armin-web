@@ -1,0 +1,67 @@
+{
+  "museum": "Korean Film Archive (KOFA)",
+  "collection": "Film Posters & Stills",
+  "website": "https://www.kmdb.or.kr/",
+  "scraped_date": "2026-06-16",
+  "total_count": 2,
+  "source_type": "api",
+  "category_breakdown": {
+    "print": 1,
+    "photograph": 1
+  },
+  "artworks": [
+    {
+      "id": "kofa-p-13816-01",
+      "objectNumber": "K/13816/01",
+      "title": "기생충",
+      "artist": "봉준호",
+      "date": "2019",
+      "year": 2019,
+      "medium": "film poster",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/kofa-collection/kofa-p-13816-01-a2ee4cd3-imageUrl.webp",
+      "thumbnailUrl": "http://file.koreafilm.or.kr/poster/00/02/27/DPK007026_01.JPG",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/13816/01",
+      "metadata": {
+        "kmdb_movieId": "K/13816/01",
+        "nation": "한국",
+        "genre": "드라마",
+        "company": "바른손이앤에이",
+        "titleEng": "Parasite",
+        "type": "poster"
+      },
+      "original_imageUrl": "http://file.koreafilm.or.kr/poster/00/02/27/DPK007026_01.JPG"
+    },
+    {
+      "id": "kofa-s-13816-01-1",
+      "objectNumber": "K/13816/01",
+      "title": "기생충",
+      "artist": "봉준호",
+      "date": "2019",
+      "year": 2019,
+      "medium": "film still (production photograph)",
+      "dimensions": "runtime 131 min",
+      "category": "photograph",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/kofa-collection/kofa-s-13816-01-1-3b325fbc-imageUrl.webp",
+      "thumbnailUrl": "http://file.koreafilm.or.kr/still/copy/00/68/32/DST852947_01.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.kmdb.or.kr/db/kor/detail/movie/K/13816/01",
+      "metadata": {
+        "kmdb_movieId": "K/13816/01",
+        "nation": "한국",
+        "genre": "드라마",
+        "company": "바른손이앤에이",
+        "titleEng": "Parasite",
+        "type": "still",
+        "stillIndex": 1
+      },
+      "original_imageUrl": "http://file.koreafilm.or.kr/still/copy/00/68/32/DST852947_01.jpg"
+    }
+  ]
+}

@@ -1,0 +1,360 @@
+.bpn[data-light-mode="false"] {
+  --bpn-ink: rgba(255, 255, 255, 0.5);
+  --bpn-glass: rgba(20, 20, 18, 0.68);
+  --bpn-glass-solid: #171715;
+  --bpn-edge: rgba(255, 255, 255, 0.16);
+  --bpn-highlight: rgba(255, 255, 255, 0.2);
+  --bpn-shadow: rgba(0, 0, 0, 0.42);
+}
+
+.bpn[data-light-mode="true"] {
+  --bpn-ink: rgba(0, 0, 0, 0.5);
+  --bpn-glass: rgba(245, 245, 242, 0.72);
+  --bpn-glass-solid: #f0f0ed;
+  --bpn-edge: rgba(255, 255, 255, 0.7);
+  --bpn-highlight: rgba(255, 255, 255, 0.86);
+  --bpn-shadow: rgba(29, 27, 22, 0.16);
+}
+
+.bpn-mobile-shell {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 6px 6px calc(18px + env(safe-area-inset-bottom, 0px));
+  overflow: hidden;
+  border: 1px solid var(--bpn-edge);
+  border-radius: 24px 24px 0 0;
+  background:
+    linear-gradient(128deg, rgba(255, 255, 255, 0.13), transparent 38%, rgba(255, 255, 255, 0.04)),
+    var(--bpn-glass);
+  backdrop-filter: blur(26px) saturate(165%) contrast(1.04);
+  -webkit-backdrop-filter: blur(26px) saturate(165%) contrast(1.04);
+  box-shadow:
+    inset 0 1px 0 var(--bpn-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 -14px 38px var(--bpn-shadow);
+}
+
+.bpn-pill-shell {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  border: 1px solid var(--bpn-edge) !important;
+  border-radius: 30px !important;
+  background:
+    linear-gradient(128deg, rgba(255, 255, 255, 0.13), transparent 38%, rgba(255, 255, 255, 0.04)),
+    var(--bpn-glass) !important;
+  backdrop-filter: blur(26px) saturate(165%) contrast(1.04) !important;
+  -webkit-backdrop-filter: blur(26px) saturate(165%) contrast(1.04) !important;
+  box-shadow:
+    inset 0 1px 0 var(--bpn-highlight),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+    0 18px 46px var(--bpn-shadow),
+    0 0 0 5px rgba(255, 255, 255, 0.035) !important;
+}
+
+.bpn-pill-shell::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 27px;
+  pointer-events: none;
+}
+
+.bpn-mobile-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 14% -30%, rgba(255, 255, 255, 0.34), transparent 34%),
+    linear-gradient(96deg, transparent 15%, rgba(255, 255, 255, 0.08) 48%, transparent 72%);
+  pointer-events: none;
+}
+
+.bpn-mobile-tab {
+  position: relative;
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 2px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--bpn-ink);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: color 180ms cubic-bezier(0.32, 0.72, 0, 1), opacity 180ms cubic-bezier(0.32, 0.72, 0, 1), transform 180ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.bpn-mobile-tab[data-active="true"] {
+  color: #11110f;
+  font-weight: 650;
+}
+
+.bpn-mobile-tab:active {
+  transform: scale(0.97);
+}
+
+.bpn-mobile-tab:focus-visible {
+  outline: 2px solid #d4a547;
+  outline-offset: -3px;
+}
+
+.bpn-mobile-active {
+  position: absolute;
+  inset: 2px;
+  z-index: 0;
+  border-radius: 10px;
+  background: #d4a547;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.36),
+    inset 0 -1px 0 rgba(63, 40, 0, 0.16);
+}
+
+.bpn-mobile-icon,
+.bpn-mobile-label {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.bpn-mobile-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  line-height: 1.1;
+  transition: opacity 180ms cubic-bezier(0.32, 0.72, 0, 1), transform 180ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.bpn[data-narrow="true"] .bpn-mobile-label {
+  font-size: 9px;
+}
+
+/* frontend-design: five museum tickets with the active destination fully captioned. */
+.bpn[data-mobile-chrome-tweak="museum-ticket"] .bpn-mobile-shell {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  padding-inline: 8px;
+  border-radius: 18px 18px 0 0;
+  background:
+    radial-gradient(circle at 0 50%, transparent 5px, var(--bpn-glass) 6px) left / 12px 100% no-repeat,
+    radial-gradient(circle at 100% 50%, transparent 5px, var(--bpn-glass) 6px) right / 12px 100% no-repeat,
+    linear-gradient(122deg, rgba(255, 255, 255, 0.15), transparent 46%),
+    var(--bpn-glass);
+}
+
+.bpn[data-mobile-chrome-tweak="museum-ticket"] .bpn-mobile-tab {
+  border-radius: 9px;
+}
+
+.bpn[data-mobile-chrome-tweak="museum-ticket"] .bpn-mobile-tab:not([data-active="true"]) .bpn-mobile-label {
+  opacity: 0;
+  transform: translateY(3px);
+}
+
+.bpn[data-mobile-chrome-tweak="museum-ticket"] .bpn-mobile-active {
+  border-radius: 9px;
+}
+
+/* design-taste-frontend: a low film strip where only the current section expands. */
+.bpn[data-mobile-chrome-tweak="editorial-accordion"] .bpn-mobile-shell {
+  gap: 3px;
+  padding: 5px 8px calc(10px + env(safe-area-inset-bottom, 0px));
+  border-radius: 14px 14px 0 0;
+}
+
+.bpn[data-mobile-chrome-tweak="editorial-accordion"] .bpn-mobile-tab {
+  flex: 0.62 1 0;
+  min-height: 46px;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.bpn[data-mobile-chrome-tweak="editorial-accordion"] .bpn-mobile-tab[data-active="true"] {
+  flex-grow: 1.75;
+}
+
+.bpn[data-mobile-chrome-tweak="editorial-accordion"] .bpn-mobile-tab:not([data-active="true"]) .bpn-mobile-label {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bpn[data-mobile-chrome-tweak="editorial-accordion"] .bpn-mobile-active {
+  inset: auto 3px 3px;
+  height: 2px;
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+/* high-end-visual-design: detached, concentric double bezel with a selection lens. */
+.bpn[data-mobile="true"][data-mobile-chrome-tweak="double-bezel"] {
+  left: 12px !important;
+  bottom: max(8px, env(safe-area-inset-bottom, 0px)) !important;
+  width: calc(100vw - 24px) !important;
+}
+
+.bpn[data-mobile="false"][data-mobile-chrome-tweak="double-bezel"] {
+  bottom: max(10px, env(safe-area-inset-bottom, 0px)) !important;
+  width: min(720px, calc(100vw - 24px)) !important;
+}
+
+.bpn[data-mobile-chrome-tweak="double-bezel"] .bpn-mobile-shell {
+  gap: 4px;
+  padding: 6px;
+  border-radius: 30px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 46px var(--bpn-shadow),
+    0 0 0 5px rgba(255, 255, 255, 0.035);
+}
+
+.bpn[data-mobile-chrome-tweak="double-bezel"] .bpn-mobile-shell::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 27px;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) and (max-width: 920px) {
+  .bpn[data-mobile="false"][data-mobile-chrome-tweak="double-bezel"] {
+    width: calc(100vw - 24px) !important;
+  }
+}
+
+.bpn[data-mobile-chrome-tweak="double-bezel"] .bpn-mobile-tab {
+  min-height: 48px;
+  border-radius: 22px;
+}
+
+.bpn[data-mobile-chrome-tweak="double-bezel"] .bpn-mobile-active {
+  inset: 1px;
+  border-radius: 21px;
+  background:
+    linear-gradient(138deg, rgba(255, 255, 255, 0.38), rgba(212, 165, 71, 0.9) 42%, #d4a547);
+}
+
+/* redesign-existing-projects: the current full tray detaches only when width permits. */
+.bpn[data-mobile-chrome-tweak="adaptive-ledger"] .bpn-mobile-shell {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  border-radius: 20px 20px 0 0;
+}
+
+@media (min-width: 430px) and (max-width: 767px) {
+  .bpn[data-mobile-chrome-tweak="adaptive-ledger"] {
+    left: 50% !important;
+    bottom: max(10px, env(safe-area-inset-bottom, 0px)) !important;
+    width: min(34rem, calc(100vw - 28px)) !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .bpn[data-mobile-chrome-tweak="adaptive-ledger"] .bpn-mobile-shell {
+    padding-bottom: 6px;
+    border-radius: 24px;
+  }
+}
+
+/* ui-ux-pro-max: the most explicit tray keeps five equal 48px actions and both cues. */
+.bpn[data-mobile-chrome-tweak="accessible-tray"] .bpn-mobile-shell {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  padding-inline: 8px;
+  background:
+    linear-gradient(130deg, rgba(255, 255, 255, 0.12), transparent 42%),
+    color-mix(in srgb, var(--bpn-glass-solid) 92%, transparent);
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+}
+
+.bpn[data-mobile-chrome-tweak="accessible-tray"] .bpn-mobile-tab {
+  min-height: 52px;
+  border-radius: 12px;
+}
+
+.bpn[data-mobile-chrome-tweak="accessible-tray"] .bpn-mobile-tab:not([data-active="true"]) {
+  color: color-mix(in srgb, var(--bpn-ink) 82%, white);
+}
+
+.bpn[data-mobile-chrome-tweak="accessible-tray"] .bpn-mobile-active {
+  inset: 0;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+/* design-system-builder: stable COLLY grid, gold lens, and a restrained glass capsule. */
+.bpn[data-mobile="true"][data-mobile-chrome-tweak="colly-hybrid"] {
+  left: 10px !important;
+  bottom: max(8px, env(safe-area-inset-bottom, 0px)) !important;
+  width: calc(100vw - 20px) !important;
+}
+
+.bpn[data-mobile-chrome-tweak="colly-hybrid"] .bpn-mobile-shell {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
+  padding: 5px;
+  border-radius: 24px;
+}
+
+.bpn[data-mobile-chrome-tweak="colly-hybrid"] .bpn-mobile-tab {
+  min-height: 48px;
+  border-radius: 18px;
+}
+
+.bpn[data-mobile-chrome-tweak="colly-hybrid"] .bpn-mobile-active {
+  inset: 1px;
+  border-radius: 17px;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bpn-mobile-shell {
+    background: var(--bpn-glass-solid);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .bpn-mobile-shell {
+    background: var(--bpn-glass-solid);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bpn-mobile-tab,
+  .bpn-mobile-label,
+  .bpn-mobile-active {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

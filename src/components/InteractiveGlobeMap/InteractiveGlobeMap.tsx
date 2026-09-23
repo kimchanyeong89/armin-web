@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Globe, CONTINENT_MAP } from "./Globe";
 import { VenuePanel } from "./VenuePanel";
@@ -8,6 +8,7 @@ import {
   type GlobeDetailIntroduction,
 } from "./InteractiveGlobeRealModal";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { CollyMark } from "../CollyMark";
 import { localizeCityName, localizeContinentName, localizeCountryName, localizeGeoLabel } from "../../i18n/geoLocalization";
 
 import type { CityMarker, Theme, Venue, InteractiveExhibition } from "./types";
@@ -19,6 +20,23 @@ import type { CollyGlobeVariantSlug } from "../../globe-lab/model";
 import { resolveCollyGlobeVariantProfile } from "./collyGlobeVariants";
 import type { Exhibition } from "../../types/Exhibition";
 import "./InteractiveGlobe.css"; // Ensure new CSS is imported
+
+// Above this width the reading guide and the city panel get the left column
+// beside the globe (InteractiveGlobe.css hides the guide at 1024px and below).
+const WIDE_STAGE_QUERY = "(min-width: 1025px)";
+const MAP_EXPLORED_KEY = "armin:map-explored";
+
+// Apple-style arrival: the guide's lines rise in one after another, then the
+// whole guide lifts away and softens once exploring starts.
+const GUIDE_MOTION: Variants = {
+  hidden: { opacity: 0 },
+  shown: { opacity: 1, filter: "blur(0px)", transition: { staggerChildren: 0.09, delayChildren: 0.2 } },
+  gone: { opacity: 0, y: -14, filter: "blur(6px)", transition: { duration: 0.45, ease: [0.4, 0, 0.2, 1] } },
+};
+const GUIDE_LINE: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  shown: { opacity: 1, y: 0, transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] } },
+};
 
 // ─── Helpers ───────────────────────────────────────────────
 
@@ -272,6 +290,31 @@ export default function InteractiveGlobeMap({
     return () => window.removeEventListener('theme-changed', handleThemeChange);
   }, [initialTheme]);
   const [selectedCity, setSelectedCity] = useState<CityMarker | null>(null);
+  // Museums whose collections hold the most of the signed-in user's taste get a gold ring on the globe.
+  // The reading guide greets a visit once; the first drag, zoom or the
+  // "explore" button retires it and the globe glides to the centre.
+  const [exploring, setExploring] = useState(() => {
+    try { return sessionStorage.getItem(MAP_EXPLORED_KEY) === "1"; } catch { return false; }
+  });
+  const beginExploring = useCallback(() => {
+    setExploring(true);
+    try { sessionStorage.setItem(MAP_EXPLORED_KEY, "1"); } catch { /* storage blocked */ }
+  }, []);
+  const [wideStage, setWideStage] = useState(
+    () => typeof window !== "undefined" && window.matchMedia?.(WIDE_STAGE_QUERY).matches === true,
+  );
+  useEffect(() => {
+    const mq = window.matchMedia?.(WIDE_STAGE_QUERY);
+    if (!mq) return;
+    const sync = () => setWideStage(mq.matches);
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  // Arriving on a city (a click on the globe, a search result, a shared link)
+  // counts as exploring, so closing its panel doesn't bring the guide back.
+  useEffect(() => {
+    if (selectedCity) beginExploring();
+  }, [selectedCity, beginExploring]);
   const [drilledContinent, setDrilledContinent] = useState<string | null>(null);
   const [drilledCountry, setDrilledCountry] = useState<string | null>(null);
   const [rotation, setRotation] = useState<[number, number]>([0, 20]);
@@ -742,6 +785,12 @@ export default function InteractiveGlobeMap({
   const usesProductionAtlasIndex = !visualPreset
     && activeMapVisualPreset === "colly-evolved"
     && resolveCollyGlobeVariantProfile(collyVariant).technique === "atlas-index";
+  const showGuide = usesProductionAtlasIndex && !!mapIntroduction && !selectedCity && !exploring;
+  // While the guide or the city panel holds the left column of a wide screen the
+  // globe stands aside to the right; otherwise it takes the centre at full size.
+  const stage = usesProductionAtlasIndex && wideStage && (showGuide || !!selectedCity)
+    ? { shift: 0.15, scale: 0.8 }
+    : { shift: 0, scale: 1 };
   return (
     <div
       className={`ig-container${visualPreset ? ` ig-container--${visualPreset}` : ""}`}
@@ -757,44 +806,55 @@ export default function InteractiveGlobeMap({
         color: t ? "#111" : "#f0ede6",
       }}
     >
-      {/* ── Globe ── */}
-      <Globe
-        cities={cities}
-        theme={theme}
-        visualPreset={activeMapVisualPreset}
-        collyVariant={collyVariant}
-        glassTweak={glassTweak}
-        countryBoundaryStyle={countryBoundaryStyle}
-        language={language}
-        selectedCity={selectedCity}
-        onSelectCity={handleSelectCity}
-        drilledContinent={drilledContinent}
-        onDrillContinent={setDrilledContinent}
-        drilledCountry={drilledCountry}
-        onDrillDown={setDrilledCountry}
-        onRotationChange={handleRotationChange}
-        onZoomChange={handleZoomChange}
-        onHoverData={handleHoverDataChange}
+      {/* ── Globe ── the first drag or wheel on it retires the reading guide */}
+      <div
+        style={{ display: "contents" }}
+        onPointerDownCapture={showGuide ? beginExploring : undefined}
+        onWheelCapture={showGuide ? beginExploring : undefined}
+      >
+        <Globe
+          cities={cities}
+          theme={theme}
+          visualPreset={activeMapVisualPreset}
+          collyVariant={collyVariant}
+          glassTweak={glassTweak}
+          countryBoundaryStyle={countryBoundaryStyle}
+          language={language}
+          selectedCity={selectedCity}
+          onSelectCity={handleSelectCity}
+          drilledContinent={drilledContinent}
+          onDrillContinent={setDrilledContinent}
+          drilledCountry={drilledCountry}
+          onDrillDown={setDrilledCountry}
+          onRotationChange={handleRotationChange}
+          onZoomChange={handleZoomChange}
+          onHoverData={handleHoverDataChange}
+          stageShift={stage.shift}
+          stageScale={stage.scale}
         />
+      </div>
 
       <AnimatePresence>
-        {usesProductionAtlasIndex && mapIntroduction && !selectedCity && (
+        {showGuide && mapIntroduction && (
           <motion.aside
             key="atlas-statement"
             className="ig-atlas-statement"
             aria-labelledby="ig-atlas-statement-title"
-            initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -12 }}
-            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            variants={GUIDE_MOTION}
+            initial="hidden"
+            animate="shown"
+            exit="gone"
           >
-            <div className="ig-atlas-statement__meta">{mapIntroduction.eyebrow}</div>
-            <h1 id="ig-atlas-statement-title">{mapIntroduction.headline}</h1>
-            <p>{mapIntroduction.summary}</p>
-            <footer>
-              <span aria-hidden="true">↗</span>
-              <span>{mapIntroduction.instruction}</span>
-            </footer>
+            <motion.div variants={GUIDE_LINE} className="ig-atlas-statement__meta">{mapIntroduction.eyebrow}</motion.div>
+            <motion.h1 variants={GUIDE_LINE} id="ig-atlas-statement-title">{mapIntroduction.headline}</motion.h1>
+            <motion.p variants={GUIDE_LINE}>{mapIntroduction.summary}</motion.p>
+            <motion.footer variants={GUIDE_LINE}>
+              <button type="button" className="ig-atlas-statement__start" onClick={beginExploring}>
+                <span aria-hidden="true">↗</span>
+                <span>{tt({ ko: "지도 탐색하기", en: "Explore the map" })}</span>
+              </button>
+              <span className="ig-atlas-statement__hint">{mapIntroduction.instruction}</span>
+            </motion.footer>
           </motion.aside>
         )}
       </AnimatePresence>
@@ -842,14 +902,17 @@ export default function InteractiveGlobeMap({
                 fontWeight: 500,
                 letterSpacing: "0.08em",
                 color: t ? "#111" : "#fff",
-                position: "relative",
+                // The mark is taller than the old wordmark: pin it 12px from the top so it sits
+                // on the KO | EN row whether the header padding is 24px (mobile) or 32px.
+                position: "absolute",
+                top: "calc(12px + env(safe-area-inset-top, 0px))",
                 display: "inline-block"
               }}
               onClick={() => navigate(routeBase || "/")}
               whileHover={{ letterSpacing: "0.25em" }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
-              COLLY
+              <CollyMark size={72} />
             </motion.div>
           )}
         </AnimatePresence>

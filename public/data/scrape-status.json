@@ -1,0 +1,78 @@
+{
+ "generatedAt": "2026-09-12T04:08:30.390Z",
+ "app": {
+  "museums": 300,
+  "indexed": 1077907,
+  "indexedAt": "2026-09-12T01:36:57.589Z"
+ },
+ "jobs": [
+  {
+   "id": "artsmia",
+   "ko": "미니애폴리스 미술관",
+   "en": "Minneapolis Institute of Art",
+   "total": null,
+   "state": "stopped",
+   "processed": 7192,
+   "kept": 7098,
+   "skipped": 94,
+   "byCategory": {
+    "drawing": 3756,
+    "painting": 3223,
+    "print": 99,
+    "photograph": 20
+   },
+   "bySkip": {
+    "image-fetch-failed": 2,
+    "no-image": 15,
+    "grayscale-print": 76,
+    "photo-pre-1920": 1
+   },
+   "alreadyOk": 0,
+   "kind": "collect",
+   "updatedAt": 1789026106701.154
+  },
+  {
+   "id": "tokyo-fuji-art",
+   "ko": "도쿄후지미술관",
+   "en": "Tokyo Fuji Art Museum",
+   "total": null,
+   "state": "stopped",
+   "processed": 2086,
+   "kept": 977,
+   "skipped": 1109,
+   "byCategory": {
+    "painting": 369,
+    "print": 601,
+    "drawing": 7
+   },
+   "bySkip": {
+    "out-of-scope": 528,
+    "grayscale-print": 155,
+    "no-image": 426
+   },
+   "alreadyOk": 0,
+   "kind": "collect",
+   "updatedAt": 1789085889794.5872
+  },
+  {
+   "id": "national-gallery-fix",
+   "ko": "내셔널 갤러리 이미지 교정",
+   "en": "National Gallery image fix",
+   "total": 2654,
+   "state": "stopped",
+   "processed": 2654,
+   "kept": 1581,
+   "skipped": 216,
+   "byCategory": {
+    "undefined": 1581
+   },
+   "bySkip": {
+    "no-image": 195,
+    "page-failed": 21
+   },
+   "alreadyOk": 857,
+   "kind": "repair",
+   "updatedAt": 1789003502225.8127
+  }
+ ]
+}

@@ -15,6 +15,7 @@ import type { Exhibition, ExhibitionItem } from '../types/Exhibition';
 import DrawingLoader from '../components/DrawingLoader';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getMuseumDisplayName, getMuseumDisplayLocation, getMuseumDisplayDescription } from '../i18n/museumLocalization';
+import RatingEmblems from '../components/Ratings/RatingEmblems';
 
 const ExhibitionModal = React.lazy(() => import('../components/ExhibitionModal'));
 
@@ -704,6 +705,9 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
                   <span className="ep-card-num">{String(idx + 1).padStart(2, '0')}</span>
                   <span className={`ep-card-tag${ex.type === 'PERMANENT' ? ' permanent' : ''}`}>{language === 'ko' ? (ex.type === 'PERMANENT' ? '상설' : '기획·임시') : ex.type}</span>
                   <h3 className="ep-card-title">{ex.title || ex.name}</h3>
+                  {ex.type === 'TEMPORARY' && (
+                    <RatingEmblems subject={{ kind: 'exhibition', id: ex.id }} title={ex.title || ex.name || ''} subtitle={museumName} size={14} />
+                  )}
                   <p className="ep-card-sub">{ex.artworks?.length ? (language === 'ko' ? `작품 ${ex.artworks.length}점` : `${ex.artworks.length} artworks`) : (language === 'ko' ? '컬렉션 열기' : 'Open collection')}</p>
                   <div className="ep-card-arrow">{language === 'ko' ? '둘러보기 →' : 'EXPLORE →'}</div>
                 </div>
@@ -771,6 +775,9 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
                 <div className="dg-row-meta">
                   {ex.artworks?.length ? (language === 'ko' ? `작품 ${ex.artworks.length}점` : `${ex.artworks.length} artworks`) : (language === 'ko' ? '컬렉션 열기' : 'Open collection')}
                 </div>
+                {ex.type === 'TEMPORARY' && (
+                  <RatingEmblems subject={{ kind: 'exhibition', id: ex.id }} title={ex.title || ex.name || ''} subtitle={museumName} size={13} />
+                )}
               </div>
               <div className="dg-row-badge-cell">
                 <span className={`dg-row-badge${ex.type === 'PERMANENT' ? ' perm' : ''}`}>{language === 'ko' ? (ex.type === 'PERMANENT' ? '상설' : '기획') : ex.type}</span>
@@ -805,6 +812,9 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
             {/* Exhibition title + artwork count */}
             <div className="dg-detail-info">
               <h2 className="dg-detail-title">{activeItem.title || activeItem.name}</h2>
+              {activeItem.type === 'TEMPORARY' && (
+                <RatingEmblems subject={{ kind: 'exhibition', id: activeItem.id }} title={activeItem.title || activeItem.name || ''} subtitle={museumName} size={13} />
+              )}
               <div className="dg-detail-sub">
                 {activeItem.artworks?.length
                   ? `${activeItem.artworks.length} works`

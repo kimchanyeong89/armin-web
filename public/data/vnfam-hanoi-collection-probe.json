@@ -1,0 +1,669 @@
+{
+  "museum": "Vietnam National Fine Arts Museum",
+  "collection": "Collection",
+  "website": "https://vnfam.vn",
+  "scraped_date": "2026-06-10",
+  "total_count": 22,
+  "source_type": "algolia+graphql",
+  "category_breakdown": {
+    "painting": 22
+  },
+  "scope_note": "Catalogue of 281 published artifacts; in-scope flat art {\"painting\":186,\"print\":36,\"mixed_media_2d\":4,\"drawing\":1}. Excluded: bronze/wood/ceramic/plaster/metal/textile/composite sculpture and lacquered 3D objects; B&W reproductive prints (colorfulness<20); records the museum site itself publishes without year or artist (min-4); images with long side <400px.",
+  "artworks": [
+    {
+      "id": "vnfam-hanoi-5a61a3f99f1f592e7371ab12",
+      "objectNumber": "18",
+      "title": "Little Sister Thuy",
+      "artist": "Trần Văn Cẩn",
+      "date": "1943",
+      "year": 1943,
+      "medium": "Oil painting",
+      "dimensions": "60 x 45 cm.",
+      "category": "painting",
+      "description": "In 1943, painter Trần Văn Cẩn painted a portrait of a real person – Little Thúy, a young girl who lived near the painter’s home. Thúy looks slender in bright white clothes. She sits on the chair, slightly leaning, with her hands closed; this position suggests that she is a little shy. In the back is a light curtain decorated with bright flowers; the flowers are formed by suggestive red streaks and warm yellow earth tones arrayed in an impressive style. Thúy has a bright, cherubic face. The lips are naturally closed. Her hair falls behind her shoulders. Contrary to her overall timid appearance are her innocent black eyes looking directly at the viewer. \"Little Thúy\" is one of the typical portraits of 20th century Vietnam. The work was recognised by the Prime Minister of the Socialist Republic of Vietnam as \"National Treasure\" in 2013.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a61a3f99f1f592e7371ab12-0791a3f1-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a61a3f99f1f592e7371ab12",
+      "metadata": {
+        "name_vi": "Em Thúy",
+        "category_vi": "Sơn dầu",
+        "publishedLanguages": [
+          "vi",
+          "fr",
+          "zh",
+          "ja",
+          "en",
+          "ko",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/01aeb27b842fe5541dc4d559b3c1c20fb7d040d658f1809da0aad485e2b1943b.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a718bcd16f5bd004aa13b33",
+      "objectNumber": "45",
+      "title": "Party Admission Ceremony on the Dien Bien Phu Battlefield",
+      "artist": "Nguyễn Sáng",
+      "date": "1963",
+      "year": 1963,
+      "medium": "Lacquer",
+      "dimensions": "112.3 x 180 cm.",
+      "category": "painting",
+      "description": "In 1963, with the artwork “Ceremony admitting a new member to the Communist Party at Điện Biên Phủ”, Nguyễn Sáng recreated a heroic moment of the soldiers at Dien Bien Phu. At center there is a group of three figures including one who has a white band around his head and a gun in his hands. This group of three soldiers is connected through a very committed handshake to the two soldiers at the right side of the painting. (Inside the trench, the admission ceremony normally took place very quickly.) At the left side of the painting, a soldier helping his wounded comrade shows the fragility of life. In the background, a soldier rushes to the front, further emphasizing the context of the emergency of the war. The painting has a tight composition, strong shapes, and bold colours. The painting is considered to be the national epic of the resistance war against the French and which is symbolizes the revolutionary spirit of nobility. The work was recognized by the Prime Minister of the Socialist Republic of Vietnam as \"National Treasure\" in 2013.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a718bcd16f5bd004aa13b33-032bf6ef-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a718bcd16f5bd004aa13b33",
+      "metadata": {
+        "name_vi": "Kết nạp Đảng ở Điện Biên Phủ",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "fr",
+          "zh",
+          "ja",
+          "en",
+          "ko",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/e0a1878e9cc4b0e011cec7192c35737c83b564a72fad89401087283a7775349e.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a7432a38f283b0243c050ea",
+      "objectNumber": "",
+      "title": "Bình phong (mặt 1: Thiếu nữ trong vườn)",
+      "artist": "Nguyễn Gia Trí",
+      "date": "1939",
+      "year": 1939,
+      "medium": "Lacquer",
+      "dimensions": "159 x 400 cm.",
+      "category": "painting",
+      "description": "Bức tranh \"Thiếu nữ trong vườn\" là một mặt trên bức bình phong gồm 8 tấm vóc ghép lại thành bức tranh khổ lớn. Một mặt thể hiện bức tranh Thiếu nữ trong vườn, mặt còn lại thể hiện bức tranh Phong cảnh (Dọc mùng). Mặt thứ nhất vẽ nhóm nhân vật nhiều dáng vẻ tinh thần thư nhàn trong không gian hòa quyện thiên nhiên cảnh vật, toàn thể bức họa có nền vàng lộng lẫy, vừa toát lên không khí lễ hội vừa có nét lãng mạn trữ tình đặc trưng phương đông. Mặt thứ hai diễn tả các lớp lá khoai, lá chuối, hoa, họa tiết sáng trên nền sẫm. Là tác phẩm độc bản, “Bình phong” đã thể hiện được sự tìm tòi của tác giả, góp phần vào việc phát triển chất liệu sơn mài từ mỹ nghệ truyền thống trở thành chất liệu hội họa, đáp ứng mọi yêu cầu biểu hiện tạo hình của hội họa hiện đại. Ở tác phẩm này, cũng như nhiều tác phẩm khác đã chứng minh tài nghệ bậc thầy của Nguyễn Gia Trí trong sử dụng các chất liệu, kỹ thuật đặc thù của sơn mài. Tác phẩm được Thủ tướng Chính phủ nước CHXHCN Việt Nam công nhận là “Bảo vật quốc gia” năm 2017.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a7432a38f283b0243c050ea-f5b585be-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5a7432a38f283b0243c050ea",
+      "metadata": {
+        "name_vi": " Bình phong (mặt 1: Thiếu nữ trong vườn)",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-516c6565a20c469d8dba5702a5cccd9b1ca88f0d249970c7a32bc736282cbdff.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a7434148f283b0243c050f2",
+      "objectNumber": "97",
+      "title": "A ploughing time",
+      "artist": "Lưu Công Nhân",
+      "date": "1960",
+      "year": 1960,
+      "medium": "Oil painting",
+      "dimensions": "",
+      "category": "painting",
+      "description": "With the brownish, yellowish-yellow earth and bright spots of wet breath from the plowed field, Luu Cong Nhan painted a spacious space representing the laborers in the morning. The picture recalled the atmosphere of the 1960s when farming was still in the cooperative and all members discuss the work of farming. In the field never appear mechanized mechanics, human manual labor, you with \"Buffalo is the most important part of cultivation. It seem to heard footsteps, feet of buffalo in the field full of broken water, reflected light, the ball they printed down the field downstream of the collective plow. The gentle steps of the farmer, the village girl, the graceful relief of the buffalo who diligently pull the civet. The surface of the water is like the smell of straw, the plow, the furrow plow the soil. Smooth plastic promises a full season. A vivid picture of life, a moment in the countryside has appeared unforgettable closer.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a7434148f283b0243c050f2-57776fc2-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a7434148f283b0243c050f2",
+      "metadata": {
+        "name_vi": "Một buổi cày",
+        "category_vi": "Sơn dầu",
+        "publishedLanguages": [
+          "vi",
+          "zh",
+          "ja",
+          "ko",
+          "en",
+          "fr",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-bd8995fd5ae83bfd86fe17fa337be04f91a7e8bec76e13d563a3294b2d7ec64f.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a7436f18f283b0243c050ff",
+      "objectNumber": "25",
+      "title": "Meeting",
+      "artist": "Mai Văn Hiến",
+      "date": "1954",
+      "year": 1954,
+      "medium": "Gouache",
+      "dimensions": "",
+      "category": "painting",
+      "description": "Military life has brought painter Mai Van Hien to all paths of the campaign, with his good sentiment he quickly grasp the phenomenon that occurs around it not easy to get that intuition when accompanied with him on a road. Mai Van Hien's Pastel Coloring Meet was born from his humorous, shrewd look. He was a gunman carrying a shoulder bag, wrapped in bullets, she was a prostitute who was supplying ammunition to the battlefield, with a shoulder bag on her shoulder. They are each other's villagers suddenly meet on a transfer station. In this bustling atmosphere, they recognized each other hastily, the gestures of the soldiers, the peasants showed us they were very moving, very happy and a little embarrassed. Anyway, a couple of girls and girlfriends are looking towards them, smiling smile on the soldiers lips, girlfriend has a delicate look of sympathy. It also found the hurry when they recognize each other they do not have time to sandals, two bare feet as a telltale. Over the years is a most impressive work when talking about the composition of Mai Van Hien, he always being joy and showing his desire to live.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a7436f18f283b0243c050ff-0dcc8a65-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a7436f18f283b0243c050ff",
+      "metadata": {
+        "name_vi": "Gặp nhau",
+        "category_vi": "Bột màu",
+        "publishedLanguages": [
+          "vi",
+          "ja",
+          "ko",
+          "zh",
+          "en",
+          "fr",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/14ada15c44815f3720ae747ecbe645ebbc6b1f78388dcfcc8951fd13e88837ca.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a7ab4d66b347c0109a34df6",
+      "objectNumber": "9",
+      "title": "Two young women and a child",
+      "artist": "Tô Ngọc Vân",
+      "date": "1944",
+      "year": 1944,
+      "medium": "Oil painting",
+      "dimensions": "100.2 x 75 cm.",
+      "category": "painting",
+      "description": "Tô Ngọc Vân is considered one of the four giants of the modern art in Vietnam. His works often reflect the inheritance of a Western visual style that is blended with a clear Eastern spirit. This picture depicts a peaceful space with two young women in long dresses - one in yellow dress, one in white dress - sitting opposite each other on the porch, next to a little boy playing. The three characters form a triangular shape within the vertical rectangular frame; this is a classic layout of Western art. However, the peaceful space with bamboo bench, bamboo blinds and white hibiscus mutabilis, and the elegant traditional dress of the female characters show that the scene is boldly Eastern and especially very Vietnamese from the early 20th century Vietnam. By contrasting light with an overall warm yellow colour, the author has created a vibrant combination of the soul of the East within the modern rendering of learning from the West. The work is recognised by the Prime Minister of the Socialist Republic of Vietnam as \"National Treasure\" in 2013.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a7ab4d66b347c0109a34df6-f6ad3f6f-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a7ab4d66b347c0109a34df6",
+      "metadata": {
+        "name_vi": "Hai thiếu nữ và em bé",
+        "category_vi": "Sơn dầu",
+        "publishedLanguages": [
+          "vi",
+          "fr",
+          "zh",
+          "ja",
+          "en",
+          "ko",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/6599a3d474a12c32b948bc0a195ecbc15e943595021f730fcddc9584411c8321.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a8162921858a5002689eeae",
+      "objectNumber": "",
+      "title": "Đan len",
+      "artist": "Trần Văn Cẩn",
+      "date": "1959",
+      "year": 1959,
+      "medium": "Lacquer",
+      "dimensions": "74.8 x 100.2 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a8162921858a5002689eeae-ed4cc9bf-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5a8162921858a5002689eeae",
+      "metadata": {
+        "name_vi": "Đan len",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-2421e30c0d07f2a0e07d1a71c7513bcbebe03fa5590f193399d548a197f3badd.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a8163264f90780027f356f7",
+      "objectNumber": "20",
+      "title": "Summer wind",
+      "artist": "Phạm Hậu",
+      "date": "1940",
+      "year": 1940,
+      "medium": "Lacquer",
+      "dimensions": "67.7 x 149 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a8163264f90780027f356f7-17cd2373-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a8163264f90780027f356f7",
+      "metadata": {
+        "name_vi": "Gió mùa hạ",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "ja",
+          "ko",
+          "zh",
+          "en",
+          "fr",
+          "it",
+          "es",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-0a89ccce8bd6733485e9d6ffaf184c6e3e0bda3bf52921e947d35822a45348ef.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a8163a24f90780027f356fa",
+      "objectNumber": "53",
+      "title": "Gióng",
+      "artist": "Nguyễn Tư Nghiêm",
+      "date": "1990",
+      "year": 1990,
+      "medium": "Lacquer",
+      "dimensions": "90 x 120.3 cm.",
+      "category": "painting",
+      "description": "This artwork presents the national hero Saint Giong in the visual language of cubism. Using many geometric motifs combined with the expressive language of modern Western art, Nguyen Tu Nghiem takes viewers to an ancient legendary period, from which come the roots of the national culture. Intermingled with cubist elements are decorative elements from the art of Dong Son; these patterns can be seen on the bronze axes and breast shields and include zigzag and concentric circle motifs, etc. Saint Giong is wearing a costume which is often seen worn by the characters of the art of Dong Son: the upper body is naked, protected only by a chest shield; the lower body is clothed by a loincloth and covered by layers of flared textile. The light-yellow outfit of orange, grey and white markings, and the silver-grey markings of the iron horse form a delicate array of colors on the warm light red background. The streaks, red dots, and the dark black streaks - which look like lightning bolts - are cleverly depicted in the front and the back to tighten the composition and help accentuate the image of the figures. Through the overlapping of form, rhythm, color and light, the author succeeds in expressing a \"sense of motion\" and the simultaneity of the mental states and of the complex structure of the world. The artwork was recognized by the Prime Minister of the Socialist Republic of Vietnam as \"National Treasure\" in 2017.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a8163a24f90780027f356fa-3a1dde14-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a8163a24f90780027f356fa",
+      "metadata": {
+        "name_vi": "Gióng",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "fr",
+          "zh",
+          "ja",
+          "ko",
+          "en",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/907af2bf44b2cb3fb9771d2a0fccbf16c98b335f3d65437be700b1bbc62d3e43.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a8164704f90780027f356fd",
+      "objectNumber": "29",
+      "title": "The Bowl of Water",
+      "artist": "Nguyễn Sỹ Ngọc",
+      "date": "1949",
+      "year": 1949,
+      "medium": "Lacquer",
+      "dimensions": "80 x 60 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a8164704f90780027f356fd-f920cdc4-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a8164704f90780027f356fd",
+      "metadata": {
+        "name_vi": "Tình quân dân",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "fr",
+          "zh",
+          "ja",
+          "en",
+          "ko",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-0e0294286960641b0e3e9f71f6f8281390956b407231317fb44c320f4a8f9226.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a816d954f90780027f35707",
+      "objectNumber": "",
+      "title": "Bình văn",
+      "artist": "Lê Văn Miến",
+      "date": "1905",
+      "year": 1905,
+      "medium": "Oil painting",
+      "dimensions": "68.5 x 96.5 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a816d954f90780027f35707-5de71e5f-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5a816d954f90780027f35707",
+      "metadata": {
+        "name_vi": "Bình văn",
+        "category_vi": "Sơn dầu",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-161ed78655b78a8ea2b799a1b5700d015c67591aaa691cbc8896b8b060df1b9e.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a816e174f90780027f3570a",
+      "objectNumber": "",
+      "title": "Trước giờ biểu diễn II",
+      "artist": "Bùi Xuân Phái",
+      "date": "1984",
+      "year": 1984,
+      "medium": "Oil painting",
+      "dimensions": "58.5 x 79 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a816e174f90780027f3570a-ca0221b9-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5a816e174f90780027f3570a",
+      "metadata": {
+        "name_vi": "Trước giờ biểu diễn II",
+        "category_vi": "Sơn dầu",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-4eb493f0d86ade2c4a304e3ac38f9434b80cb942b99d63da1fdfdab3af6f80ee.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a8170494f90780027f3570d",
+      "objectNumber": "",
+      "title": "O Quang Chuong",
+      "artist": "Bùi Xuân Phái",
+      "date": "1983",
+      "year": 1983,
+      "medium": "Oil painting",
+      "dimensions": "48.5 x 63.5 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a8170494f90780027f3570d-dbbd6f0a-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a8170494f90780027f3570d",
+      "metadata": {
+        "name_vi": "Ô Quan Chưởng",
+        "category_vi": "Sơn dầu",
+        "publishedLanguages": [
+          "vi",
+          "en"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-15781b2ce630a5d2500693004ad0c2b36e7680437453d273c33cbcb17e33adfe.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5a8170e64f90780027f35710",
+      "objectNumber": "89",
+      "title": "The Central shoreline region of Viet Nam",
+      "artist": "Lê Huy Tiếp",
+      "date": "1981",
+      "year": 1981,
+      "medium": "Oil painting",
+      "dimensions": "100 x 120 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a8170e64f90780027f35710-180f1d27-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5a8170e64f90780027f35710",
+      "metadata": {
+        "name_vi": "Miền Trung ",
+        "category_vi": "Sơn dầu",
+        "publishedLanguages": [
+          "vi",
+          "zh",
+          "fr",
+          "en",
+          "ja",
+          "it",
+          "ko",
+          "es",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-e53f4383f81f2fe6684b2d6810170604625e782edcefd72c6489963dee8c842a.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab51b4033ed1001d512438",
+      "objectNumber": "44",
+      "title": "Remembering the Northwest",
+      "artist": "Phan Kế An",
+      "date": "1955",
+      "year": 1955,
+      "medium": "Lacquer",
+      "dimensions": "69.8 x 112.3 cm.",
+      "category": "painting",
+      "description": "Toàn cảnh bức tranh là rừng núi Tây Bắc hùng vĩ vào một buổi chiều đông có nắng. Ánh sáng mặt trời từ phía tây chiếu vào sườn đông của các dãy núi khiến cả vùng non nước hoang vắng sáng bừng lên. Trong ánh sáng huy hoàng ấy, đoàn quân du kích địa phương từ khoảng tối phía bên kia của dãy núi đi ra. Tác phẩm là sự chắt lọc tư liệu cùng những thăng hoa cảm xúc sau những năm đi kháng chiến trở về. Phong cảnh đặc sắc của núi rừng Tây Bắc giai đoạn kháng chiến gian lao nhưng cũng thể hiện hơi thở cuộc sống thi vị khiến bức tranh trở nên giàu chất thơ. Hiện vật có giá trị nghệ thuật cao, được đánh giá đặc biệt về hiệu quả sử dụng chất liệu khi tạo ra màu xanh đặc trưng của núi rừng Tây Bắc trên chất liệu sơn mài (vốn chỉ mạnh về các gam màu nóng). Tác phẩm nổi tiếng nhất của họa sĩ Phan Kế An thể hiện bằng bút pháp hiện thực là sự phục hồi, tái hiện những kỷ niệm không thể nào quên của người họa sĩ, chiến sĩ từ một chặng đường tham gia kháng chiến. Tác phẩm đạt giải nhất Triển lãm Mỹ thuật toàn quốc 1955 và là tác phẩm nằm trong nhóm tác phẩm đạt giải thưởng Nhà nước về Văn học Nghệ thuật đợt I năm 2001 (gồm cụm tác phẩm Nhớ một chiều Tây Bắc; Gặt ở Việt Bắc; Bác Hồ; Những đồi cọ; Bác làm việc ở Lán Nà Lừa và Cánh đồng bản Bắc).",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab51b4033ed1001d512438-0a2751ca-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5aab51b4033ed1001d512438",
+      "metadata": {
+        "name_vi": "Nhớ một chiều Tây Bắc",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "ja",
+          "ko",
+          "zh",
+          "en",
+          "fr",
+          "it",
+          "es",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-1f0df24a1a6b8055b818177adc760e4f1132094b3f1f8f4a76e866617cbaab91.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab6a09033ed1001d51243e",
+      "objectNumber": "",
+      "title": "Đón con",
+      "artist": "Trần Thanh Ngọc",
+      "date": "1960",
+      "year": 1960,
+      "medium": "Silk",
+      "dimensions": "89.5 x 65 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab6a09033ed1001d51243e-ee5b16b2-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5aab6a09033ed1001d51243e",
+      "metadata": {
+        "name_vi": "Đón con",
+        "category_vi": "Lụa",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-44fe7c5c66657b8c954656574671afa7291896fdb95aafd7d5bf40d04a45c0b7.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab6c1f97a96f001c666d8a",
+      "objectNumber": "",
+      "title": "Mặt trận phía Nam cầu chữ Y",
+      "artist": "Huỳnh Phương Đông",
+      "date": "1985",
+      "year": 1985,
+      "medium": "Watercolour",
+      "dimensions": "61.7 x 91.2 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab6c1f97a96f001c666d8a-5c8f2a8e-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5aab6c1f97a96f001c666d8a",
+      "metadata": {
+        "name_vi": "Mặt trận phía Nam cầu chữ Y",
+        "category_vi": "Màu nước",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-b189da92557ed0193b3f3da2b60a8254c6d63056b6e9380720708ac1ebfaa74d.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab6ce297a96f001c666d92",
+      "objectNumber": "",
+      "title": "Xóm chài Quất Lâm",
+      "artist": "Trần Liên Hằng",
+      "date": "1974",
+      "year": 1974,
+      "medium": "Lacquer",
+      "dimensions": "74.8 x 143 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab6ce297a96f001c666d92-b8296ad9-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5aab6ce297a96f001c666d92",
+      "metadata": {
+        "name_vi": "Xóm chài Quất Lâm",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-be7f52e913ace949e94ffbd26a367b15da587f3c7692180e3b7c7540dfdba4d8.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab71e5c111b9001d289a7d",
+      "objectNumber": "46",
+      "title": "Nghe Tinh Soviet",
+      "artist": "Nguyễn Đức Nùng, Phạm Văn Đôn, Huỳnh Văn Thuận, Trần Đình Thọ, Nguyễn Sỹ Ngọc, Nguyễn Văn Tỵ",
+      "date": "1957",
+      "year": 1957,
+      "medium": "Lacquer",
+      "dimensions": "320.5 x 160.6 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab71e5c111b9001d289a7d-0c3abefc-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5aab71e5c111b9001d289a7d",
+      "metadata": {
+        "name_vi": "Xô Viết Nghệ Tĩnh",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "ja",
+          "ko",
+          "zh",
+          "en",
+          "fr",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-d9946fdab807cb25c7c1f6df978ec526b6ccf61a2905a67007cfae9e64181234.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab764ac111b9001d289a84",
+      "objectNumber": "47",
+      "title": "Bamboo",
+      "artist": "Trần Đình Thọ",
+      "date": "1957",
+      "year": 1957,
+      "medium": "Lacquer",
+      "dimensions": "51.7 x 43.5 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab764ac111b9001d289a84-72d6161b-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5aab764ac111b9001d289a84",
+      "metadata": {
+        "name_vi": "Tre",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "ja",
+          "ko",
+          "zh",
+          "en",
+          "fr",
+          "it",
+          "es",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/cac6469ac51adc9f7256c561f654f8d2f4149ffad81a9055dd4671a483cccdc9.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab7752c111b9001d289a87",
+      "objectNumber": "",
+      "title": "Hành quân qua suối",
+      "artist": "Nguyễn Khang",
+      "date": "1960",
+      "year": 1960,
+      "medium": "Lacquer",
+      "dimensions": "92 x 273 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab7752c111b9001d289a87-c610114e-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/hi%E1%BB%87n-v%E1%BA%ADt/5aab7752c111b9001d289a87",
+      "metadata": {
+        "name_vi": "Hành quân qua suối",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi"
+        ],
+        "detailLang": "vi"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-82096db1ea3220a9db0149a4c1cfebff33a6bc6f4930808afecf800f0e4cf30c.jpeg"
+    },
+    {
+      "id": "vnfam-hanoi-5aab784faa2a52001cda74fc",
+      "objectNumber": "54",
+      "title": "Village production team",
+      "artist": "Hoàng Tích Chù",
+      "date": "1958",
+      "year": 1958,
+      "medium": "Lacquer",
+      "dimensions": "76.4 x 100 cm.",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5aab784faa2a52001cda74fc-fe65959f-imageUrl.webp",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://vnfam.vn/artifact/5aab784faa2a52001cda74fc",
+      "metadata": {
+        "name_vi": "Tổ đổi công",
+        "category_vi": "Sơn mài",
+        "publishedLanguages": [
+          "vi",
+          "en",
+          "fr",
+          "zh",
+          "ja",
+          "ko",
+          "es",
+          "it",
+          "de"
+        ],
+        "detailLang": "en"
+      },
+      "original_imageUrl": "https://d1fbzwhbgcf4vf.cloudfront.net/optimized-630274e554f839f441df2ebb081aba99b320cbf43b80fb88b4a41eda731dea09.jpeg"
+    }
+  ]
+}

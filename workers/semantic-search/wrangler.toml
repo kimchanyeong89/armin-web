@@ -43,12 +43,33 @@ id = "4ca7209a702446efb0f205bcacbae33a"
 binding = "AI"
 
 # ────────────────────────────────────────────────────────────
-# Scheduled trigger — Cloud Run Jina 인코더 cold start 회피.
-# 매 4분마다 /warmup 호출 → min=0 인스턴스 항상-warm 유지.
-# 비용: $0 (CF 무료, 호출 자체도 CF Workers AI 무관)
+# Scheduled trigger — 기본 검색(SigLIP) 인코더 cold start 회피.
+# 매 4분마다 SigLIP /encode 한 번 → 모델까지 warm 유지.
+# Jina(정밀)는 드물게 쓰여 데우지 않는다. 앱이 정밀 검색을 켤 때 /warm-jina 로 깨운다.
 # ────────────────────────────────────────────────────────────
 [triggers]
 crons = ["*/4 * * * *"]
+
+# ────────────────────────────────────────────────────────────
+# 요금 상한 — 돈이 드는 공개 라우트(AI 검색·추천·취향)를 두 겹으로 막는다.
+#  - RATE_LIMITER: IP 하나가 1분에 보낼 수 있는 수 (Cloudflare 위치별로 센다)
+#  - DAILY_BUDGET: 전 세계 합계 하루(한국 시간) 총량 — 건수는 src/index.ts 의 DAILY_REQUEST_BUDGET
+# Cloudflare 예산 알림은 메일만 보내고 사용을 멈추지 않아서, 상한은 워커가 직접 건다.
+# ────────────────────────────────────────────────────────────
+# 이 wrangler(3.x)는 속도 제한을 unsafe.bindings 로만 읽는다 (4.x 의 [[ratelimits]] 와 같은 설정).
+[[unsafe.bindings]]
+name = "RATE_LIMITER"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 60, period = 60 }
+
+[[durable_objects.bindings]]
+name = "DAILY_BUDGET"
+class_name = "DailyBudget"
+
+[[migrations]]
+tag = "v1-daily-budget"
+new_sqlite_classes = ["DailyBudget"]
 
 # ────────────────────────────────────────────────────────────
 # D1 — 키워드 검색용 SQLite + FTS5 풀텍스트 인덱스

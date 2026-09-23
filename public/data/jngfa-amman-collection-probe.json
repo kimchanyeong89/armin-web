@@ -1,0 +1,478 @@
+{
+  "museum": "Jordan National Gallery of Fine Arts",
+  "collection": "Collection",
+  "website": "https://nationalgallery.org/collection/",
+  "scraped_date": "2026-06-10",
+  "total_count": 22,
+  "source_type": "html",
+  "category_breakdown": {
+    "painting": 14,
+    "print": 5,
+    "drawing": 1,
+    "mixed_media_2d": 2
+  },
+  "artworks": [
+    {
+      "id": "jngfa-amman-a-d-pirous-terrestrial-triangle",
+      "objectNumber": "INDO_P_1503_1996",
+      "title": "Terrestrial/triangle",
+      "artist": "A.D. Pirous",
+      "date": "1996",
+      "year": 1996,
+      "medium": "Mixed media on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-a-d-pirous-terrestrial-triangle-0c169e2b-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/INDO_P_1503_1996.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/a-d-pirous/#terrestrial-triangle",
+      "metadata": {
+        "artist_origin": "Indonesia, b. 1932"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/INDO_P_1503_1996.jpg"
+    },
+    {
+      "id": "jngfa-amman-a-q-arif-old-door",
+      "objectNumber": "PAK_P_2585_2017",
+      "title": "Old Door",
+      "artist": "A.Q. Arif",
+      "date": "2017",
+      "year": 2017,
+      "medium": "Watercolor on paper",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-a-q-arif-old-door-e43eafaf-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/03/PAK_P_2585_2017.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/a-q-arif/#old-door",
+      "metadata": {
+        "artist_origin": "Pakistan"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/03/PAK_P_2585_2017.jpg"
+    },
+    {
+      "id": "jngfa-amman-abbas-yousif-arabic-alphabet",
+      "objectNumber": "BAH_G_1384_1994",
+      "title": "Arabic Alphabet",
+      "artist": "Abbas Yousif",
+      "date": "1994",
+      "year": 1994,
+      "medium": "Etching on copper 9/15",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abbas-yousif-arabic-alphabet-1b4163b3-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/BAH_G_1384_1994.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abbas-yousif/#arabic-alphabet",
+      "metadata": {
+        "artist_origin": "Bahrain, b. 1960"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/BAH_G_1384_1994.jpg"
+    },
+    {
+      "id": "jngfa-amman-abbas-yousif-lighting-memory",
+      "objectNumber": "",
+      "title": "Lighting Memory",
+      "artist": "Abbas Yousif",
+      "date": "1999",
+      "year": 1999,
+      "medium": "Etching 2/15",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abbas-yousif-lighting-memory-694dd014-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/BAH_G_1680_1999-1.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abbas-yousif/#lighting-memory",
+      "metadata": {
+        "artist_origin": "Bahrain, b. 1960"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/BAH_G_1680_1999-1.jpg"
+    },
+    {
+      "id": "jngfa-amman-abbas-yousif-saffron",
+      "objectNumber": "",
+      "title": "Saffron",
+      "artist": "Abbas Yousif",
+      "date": "1999",
+      "year": 1999,
+      "medium": "Etching 2/15",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abbas-yousif-saffron-f91c111e-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/BAH_G_1679_1999-1-scaled-e1676883050194.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abbas-yousif/#saffron",
+      "metadata": {
+        "artist_origin": "Bahrain, b. 1960"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/BAH_G_1679_1999-1-scaled-e1676883050194.jpg"
+    },
+    {
+      "id": "jngfa-amman-abd-masoud-contemporary-interpretation-of-old-manuscripts-stars",
+      "objectNumber": "JOR_P_2469_2012",
+      "title": "Contemporary Interpretation Of Old Manuscripts – Stars",
+      "artist": "Abd Masoud",
+      "date": "2012",
+      "year": 2012,
+      "medium": "Mixed media on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abd-masoud-contemporary-interpretation-of-old-manuscripts-stars-b73046b7-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/JOR_P_2469_2012.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abd-masoud/#contemporary-interpretation-of-old-manuscripts-stars",
+      "metadata": {
+        "artist_origin": "Jordan, b. 1963"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/JOR_P_2469_2012.jpg"
+    },
+    {
+      "id": "jngfa-amman-abd-masoud-contemporary-interpretation-of-old-manuscripts-stars-2",
+      "objectNumber": "JOR_P_2470_2010",
+      "title": "Contemporary Interpretation Of Old Manuscripts – Stars",
+      "artist": "Abd Masoud",
+      "date": "2010",
+      "year": 2010,
+      "medium": "Mixed media on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abd-masoud-contemporary-interpretation-of-old-manuscripts-stars-2-a8299ece-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/JOR_P_2470_2010.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abd-masoud/#contemporary-interpretation-of-old-manuscripts-stars-2",
+      "metadata": {
+        "artist_origin": "Jordan, b. 1963"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/JOR_P_2470_2010.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdal-wahab-abdal-muhsen-untitled-2",
+      "objectNumber": "EGY_P_1934_2000",
+      "title": "Untitled",
+      "artist": "Abdal Wahab Abdal Muhsen",
+      "date": "2000",
+      "year": 2000,
+      "medium": "Woodcut 3/3",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdal-wahab-abdal-muhsen-untitled-2-f7c63b08-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/01/EGY_P_1934_2000-scaled.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdal-wahab-abdal-muhsen/#untitled-2",
+      "metadata": {
+        "artist_origin": "Egypt, b. 1951"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/01/EGY_P_1934_2000-scaled.jpg"
+    },
+    {
+      "id": "jngfa-amman-abded-alraheem-al-arajan-church-of-the-holy-sepulcher-jerusalem-jesus-grave",
+      "objectNumber": "JOR_PH_2376_2011",
+      "title": "Church Of The Holy Sepulcher – Jerusalem -Jesus Grave",
+      "artist": "Abdel Raheem Al Arajan",
+      "date": "2011",
+      "year": 2011,
+      "medium": "Ink on Canson paper",
+      "dimensions": "",
+      "category": "drawing",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abded-alraheem-al-arajan-church-of-the-holy-sepulcher-jerusalem-jesus-grave-aca5a12d-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/JOR_PH_2376_2011.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abded-alraheem-al-arajan/#church-of-the-holy-sepulcher-jerusalem-jesus-grave",
+      "metadata": {
+        "artist_origin": "Jordan"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/02/JOR_PH_2376_2011.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-aziz-ashour-composition-no-1",
+      "objectNumber": "SA_P_747_1987",
+      "title": "Composition No.1",
+      "artist": "Abdel Aziz Ashour",
+      "date": "1987",
+      "year": 1987,
+      "medium": "Oil on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-aziz-ashour-composition-no-1-3c7bf941-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/03/SA_P_747_1987.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-aziz-ashour/#composition-no-1",
+      "metadata": {
+        "artist_origin": "Saudi Arabia, b. 1962"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/03/SA_P_747_1987.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-aziz-ashour-composition-no-2",
+      "objectNumber": "SA_P_748_1987",
+      "title": "Composition No.2",
+      "artist": "Abdel Aziz Ashour",
+      "date": "1987",
+      "year": 1987,
+      "medium": "Oil on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-aziz-ashour-composition-no-2-678b5c14-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/03/SA_P_748_1987.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-aziz-ashour/#composition-no-2",
+      "metadata": {
+        "artist_origin": "Saudi Arabia, b. 1962"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/03/SA_P_748_1987.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-basit-khatim-3-untitled",
+      "objectNumber": "",
+      "title": "Untitled",
+      "artist": "Abdel Basit Khatim",
+      "date": "1981",
+      "year": 1981,
+      "medium": "Oil on wood",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-basit-khatim-3-untitled-f90c6a70-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/01/UO7A9400-Copy.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-basit-khatim-3/#untitled",
+      "metadata": {
+        "artist_origin": "Sudan, b. 1942"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/01/UO7A9400-Copy.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-halim-radwi-folk-dance",
+      "objectNumber": "SA_P_742_1987",
+      "title": "Folk Dance",
+      "artist": "Abdel Halim Radwi",
+      "date": "1987",
+      "year": 1987,
+      "medium": "Oil on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-halim-radwi-folk-dance-b3327333-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/09/SA_P_742_1987.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-halim-radwi/#folk-dance",
+      "metadata": {
+        "artist_origin": "Saudi Arabia, b. 1939-2006"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/09/SA_P_742_1987.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-halim-radwi-untitled",
+      "objectNumber": "SA_P_365_1983",
+      "title": "Untitled",
+      "artist": "Abdel Halim Radwi",
+      "date": "1983",
+      "year": 1983,
+      "medium": "Acrylic on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-halim-radwi-untitled-b4c9618c-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/09/SA_P_365_1983.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-halim-radwi/#untitled",
+      "metadata": {
+        "artist_origin": "Saudi Arabia, b. 1939-2006"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/09/SA_P_365_1983.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-qader-bakheet-abstract",
+      "objectNumber": "SUD_P_1862_2002",
+      "title": "Abstract",
+      "artist": "Abdel Qader Bakheet",
+      "date": "2002",
+      "year": 2002,
+      "medium": "Mixed media on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-qader-bakheet-abstract-7d35ef52-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_1862_2002.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-qader-bakheet/#abstract",
+      "metadata": {
+        "artist_origin": "Sudan, b. 1966"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_1862_2002.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-qader-bakheet-immigration-season-from-north-to-south",
+      "objectNumber": "SUD_P_1957_2002",
+      "title": "Immigration season from North to South",
+      "artist": "Abdel Qader Bakheet",
+      "date": "2002",
+      "year": 2002,
+      "medium": "Mixed media",
+      "dimensions": "",
+      "category": "mixed_media_2d",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-qader-bakheet-immigration-season-from-north-to-south-292a1fc6-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_1957_2002.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-qader-bakheet/#immigration-season-from-north-to-south",
+      "metadata": {
+        "artist_origin": "Sudan, b. 1966"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_1957_2002.jpg"
+    },
+    {
+      "id": "jngfa-amman-abdel-rahman-almassri-the-inspired-self",
+      "objectNumber": "",
+      "title": "The Pure Self",
+      "artist": "Abdel Rahman Almassri",
+      "date": "2026",
+      "year": 2026,
+      "medium": "Giclée 1/10",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-rahman-almassri-the-inspired-self-6dc17bd4-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2026/05/3747.png",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-rahman-almassri/#the-inspired-self",
+      "metadata": {
+        "artist_origin": "Jordan"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2026/05/3747.png"
+    },
+    {
+      "id": "jngfa-amman-abdel-rahman-nashar-2-relations-of-geometrical-elements",
+      "objectNumber": "EGY_P_665_1981",
+      "title": "Relations Of Geometrical Elements",
+      "artist": "Abdel Rahman Nashar",
+      "date": "1981",
+      "year": 1981,
+      "medium": "Oil on wood",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-abdel-rahman-nashar-2-relations-of-geometrical-elements-29e10b7c-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/01/EGY_P_665_1981.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/abdel-rahman-nashar-2/#relations-of-geometrical-elements",
+      "metadata": {
+        "artist_origin": "Egypt, b. 1932"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/01/EGY_P_665_1981.jpg"
+    },
+    {
+      "id": "jngfa-amman-ar-9848318b-flute-player",
+      "objectNumber": "SUD_P_977_1990",
+      "title": "Flute Player",
+      "artist": "Abdul Mon`im Sagha",
+      "date": "1990",
+      "year": 1990,
+      "medium": "Oil on paper",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-ar-9848318b-flute-player-cc54896c-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_977_1990.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/%d8%b9%d8%a8%d8%af-%d8%a7%d9%84%d9%85%d9%86%d8%b9%d9%85-%d8%b5%d8%a7%d8%ba%d8%a7/#flute-player",
+      "metadata": {
+        "artist_origin": "Sudan, b. 1954"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_977_1990.jpg"
+    },
+    {
+      "id": "jngfa-amman-ar-9848318b-khartoum-90",
+      "objectNumber": "SUD_P_978_1990",
+      "title": "Khartoum 90",
+      "artist": "Abdul Mon`im Sagha",
+      "date": "1990",
+      "year": 1990,
+      "medium": "Ink & oil on paper",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-ar-9848318b-khartoum-90-415c9695-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_978_1990.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/%d8%b9%d8%a8%d8%af-%d8%a7%d9%84%d9%85%d9%86%d8%b9%d9%85-%d8%b5%d8%a7%d8%ba%d8%a7/#khartoum-90",
+      "metadata": {
+        "artist_origin": "Sudan, b. 1954"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2023/08/SUD_P_978_1990.jpg"
+    },
+    {
+      "id": "jngfa-amman-ar-ac1050d5-cigar-smoker",
+      "objectNumber": "",
+      "title": "Cigar Smoker",
+      "artist": "Ali Taleb",
+      "date": "1991",
+      "year": 1991,
+      "medium": "Mixed media on paper",
+      "dimensions": "",
+      "category": "mixed_media_2d",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-ar-ac1050d5-cigar-smoker-7af6afb6-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2018/09/Ali-Taleb-1576-1.gif",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/%d8%b9%d9%84%d9%8a-%d8%b7%d8%a7%d9%84%d8%a8/#cigar-smoker",
+      "metadata": {
+        "artist_origin": "Iraq, b. 1944"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2018/09/Ali-Taleb-1576-1.gif"
+    },
+    {
+      "id": "jngfa-amman-ar-ac1050d5-untitled",
+      "objectNumber": "",
+      "title": "Untitled",
+      "artist": "Ali Taleb",
+      "date": "1990",
+      "year": 1990,
+      "medium": "Oil on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-ar-ac1050d5-untitled-9a7b1803-imageUrl.webp",
+      "thumbnailUrl": "https://nationalgallery.org/wp-content/uploads/2018/09/1048-Ali-Taleb-WEB-1.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://nationalgallery.org/artist/%d8%b9%d9%84%d9%8a-%d8%b7%d8%a7%d9%84%d8%a8/#untitled",
+      "metadata": {
+        "artist_origin": "Iraq, b. 1944"
+      },
+      "original_imageUrl": "https://nationalgallery.org/wp-content/uploads/2018/09/1048-Ali-Taleb-WEB-1.jpg"
+    }
+  ]
+}

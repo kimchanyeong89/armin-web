@@ -1,0 +1,254 @@
+/* ══════════════════════════════════════════════════════════════
+   Community board - rail layout.
+   Colour tokens are handed in from CommunityPage.tsx so the
+   light/dark decision stays in one place; this file owns layout,
+   density and the breakpoint where the rail folds.
+   ══════════════════════════════════════════════════════════════ */
+.cm-page {
+  /* one spacing scale drives the whole row */
+  --cm-s1: 4px;
+  --cm-s2: 8px;
+  --cm-s3: 12px;
+  --cm-row: 56px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--cm-page-bg);
+  /* --cm-font is only set by the ?font= study; without it the board uses Hana2
+     (declared globally in index.css so app chrome can share it). */
+  font-family: var(--cm-font, Hana2, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif);
+}
+.cm-page *, .cm-page *::before, .cm-page *::after { box-sizing: border-box; }
+.cm-page button { font: inherit; cursor: pointer; }
+.cm-page button:focus-visible { outline: 2px solid var(--cm-gold); outline-offset: -2px; }
+.cm-page ul { list-style: none; margin: 0; padding: 0; }
+
+.cm-shell {
+  max-width: 1240px; margin: 0 auto; min-height: 100%;
+  background: var(--cm-shell-bg); color: var(--cm-text);
+}
+.cm-head { padding: max(52px, calc(env(safe-area-inset-top) + 30px)) 14px 14px; }
+
+/* One control row between the title and the tabs: sort on the far left, the
+   two actions on the far right, aligned with the list's outer edges. */
+.cm-controls { display: flex; align-items: center; gap: 12px; padding: 0 14px 2px; }
+
+/* The rail and the two actions share one bar. When the rail is a column the
+   actions lift to the top of it; when it folds to a row they pin right. */
+.cm-railbar { display: flex; flex-direction: column; gap: 10px; }
+.cm-actions { display: inline-flex; align-items: center; gap: 16px; flex: none; }
+
+/* Wide: the wrapper dissolves so the rail and the actions place themselves on
+   the page grid - rail down the left, actions pinned to the right edge above
+   the list, rather than stacked at the top of the sidebar. */
+@media (min-width: 861px) {
+  .cm-railbar { display: contents; }
+  .cm-rail { grid-column: 1; grid-row: 1 / span 2; }
+  .cm-actions { grid-column: 2; grid-row: 1; justify-self: end; align-self: start; margin-bottom: 6px; }
+  .cm-listcol { grid-column: 2; grid-row: 2; min-width: 0; }
+}
+.cm-head h1 { font-family: var(--cm-title-font, inherit); margin: 0; font-size: clamp(30px, 4.5vw, 40px); font-weight: 700; letter-spacing: -0.015em; color: var(--cm-title); }
+/* Squared off to sit on the same ruled grid as the columns; a floating pill
+   read as borrowed from a different screen. */
+/* Outlined rather than filled: on a board the posts are the loud part, and a
+   solid gold slab was the biggest thing on the screen. */
+/* No box. A filled slab, a squared slab and an outlined box all read heavier
+   than the posts they sit above; the action is carried by the gold alone, the
+   same way the language switch is carried by contrast alone. */
+.cm-page .cm-write {
+  border: 0; background: transparent; color: var(--cm-gold);
+  padding: 6px 0; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; letter-spacing: .01em; flex-shrink: 0;
+  transition: opacity .16s ease;
+}
+.cm-page .cm-write:hover { opacity: .68; }
+.cm-sort { display: inline-flex; align-items: center; gap: 13px; flex: none; }
+.cm-page .cm-nearby {
+  border: 0; background: transparent; color: #2dd4bf;
+  padding: 6px 0; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 700; letter-spacing: .01em; flex: none;
+  transition: opacity .16s ease;
+}
+.cm-page .cm-nearby:hover { opacity: .68; }
+.cm-page .cm-nearby.is-active { text-decoration: underline; text-underline-offset: 4px; }
+.cm-page[data-light] .cm-nearby { color: #0d7a6c; }
+.cm-sort button {
+  border: 0; background: transparent; min-height: 30px; padding: 0;
+  font-size: 12px; font-weight: 500; color: var(--cm-low);
+  transition: color .16s ease;
+}
+.cm-sort button:hover { color: var(--cm-text); }
+.cm-sort button.is-active { color: var(--cm-title); font-weight: 700; }
+
+/* ── rail + list ───────────────────────────────────────────── */
+.cm-body { display: grid; grid-template-columns: 188px minmax(0, 1fr); gap: 22px; padding: 0 14px 88px; align-items: start; }
+.cm-rail { position: sticky; top: 8px; }
+
+.cm-rail { display: flex; flex-direction: column; gap: 2px; }
+/* A filled chip reads as a raised tray sitting on the page. The menu is a
+   ruled index instead: every item carries a full-width rule and the active
+   one simply draws its rule thicker, in the category colour. */
+.cm-rail button {
+  border: 0; border-radius: 0; background: transparent;
+  min-height: 42px; padding: 0 2px;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px;
+  text-align: left; font-size: 13px; color: var(--cm-med);
+  box-shadow: inset 0 -1px 0 var(--cm-line);
+  transition: color .16s ease, box-shadow .16s ease;
+}
+.cm-rail button:hover { color: var(--cm-text); box-shadow: inset 0 -1px 0 var(--cm-med); }
+.cm-rail button.is-active {
+  color: var(--cm-title); font-weight: 700;
+  box-shadow: inset 0 -2px 0 var(--cm-cat);
+}
+.cm-rail-count {
+  font-size: 10.5px; font-weight: 400; font-variant-numeric: tabular-nums;
+  color: var(--cm-low); justify-self: end;
+}
+.cm-rail button.is-active .cm-rail-count { color: var(--cm-cat); font-weight: 600; }
+
+/* what the review is about - where the density switch used to be */
+.cm-target { display: flex; gap: var(--cm-s1); margin-bottom: var(--cm-s3); overflow-x: auto; scrollbar-width: none; }
+.cm-target::-webkit-scrollbar { display: none; }
+.cm-target button {
+  flex: none; border: 0; min-height: 34px; padding: 0 14px; border-radius: 8px;
+  font-size: 11.5px; background: var(--cm-chip); color: var(--cm-med);
+  transition: background .16s ease, color .16s ease;
+}
+.cm-target button:hover { color: var(--cm-text); }
+.cm-target button.is-active { background: var(--cm-gold); color: #000; font-weight: 700; }
+
+/* ── rows: aligned columns under micro headers ─────────────── */
+.cm-colhead, .cm-list li > button {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 122px 58px 48px 48px;
+  gap: var(--cm-s3); align-items: center;
+}
+.cm-colhead {
+  min-height: 34px; padding: 0 var(--cm-s2); border-bottom: 1px solid var(--cm-line);
+  font-size: 10px; font-weight: 500; color: var(--cm-low); letter-spacing: .06em;
+}
+.cm-colhead span:nth-child(2), .cm-colhead span:nth-child(3), .cm-colhead span:nth-child(4),
+.cm-colhead span:nth-child(5), .cm-colhead span:nth-child(6) { text-align: center; }
+
+/* The row's own rule is the hover affordance, so it lives on the <li> and
+   the button stays borderless - that also keeps the button's grid on the
+   exact same origin as the column header. */
+.cm-list li { border-bottom: 1px solid var(--cm-line); }
+.cm-list li > button {
+  width: 100%; border: 0; background: transparent; color: inherit; text-align: left;
+  padding: var(--cm-s2); min-height: 66px; transition: background .14s ease;
+}
+/* A faint wash across the row and nothing else - light enough that the row
+   never reads as a raised tray. */
+.cm-list li > button:hover { background: var(--cm-row-hover); }
+.cm-list li > button:active { background: var(--cm-row-press); }
+
+.cm-thumb {
+  width: 40px; height: 40px; border-radius: 5px; overflow: hidden; flex: none;
+  border: 1px solid var(--cm-line); background: var(--cm-chip);
+}
+.cm-thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  filter: saturate(0.45) brightness(0.88);
+}
+.cm-page[data-light] .cm-thumb img { filter: saturate(0.72); }
+
+.cm-main { display: block; min-width: 0; }
+.cm-titleline { display: flex; align-items: center; gap: 9px; min-width: 0; }
+/* One faint line of the post body under the title. */
+.cm-excerpt {
+  display: block; min-width: 0; max-width: 52ch; margin-top: 3px;
+  font-size: 11.5px; font-weight: 400; color: var(--cm-low);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cm-chip {
+  flex: none; font-weight: 500; font-size: 10.5px; padding: 2px 8px; border-radius: 999px;
+  color: var(--cm-cat); background: color-mix(in oklab, var(--cm-cat) 16%, transparent);
+}
+/* The category hues are tuned for a dark ground; on light they need to be
+   pushed toward ink to clear the 4.5:1 text contrast bar. */
+.cm-page[data-light] .cm-chip {
+  color: color-mix(in oklab, var(--cm-cat) 55%, #101010);
+  background: color-mix(in oklab, var(--cm-cat) 24%, transparent);
+}
+/* `.cm-title` is a <span>; without display:block the overflow/ellipsis pair
+   is silently ignored and long titles spill over the count columns. */
+.cm-title {
+  font-family: var(--cm-title-font, inherit);
+  display: block; min-width: 0; font-size: 14px; font-weight: 700;
+  color: var(--cm-title); letter-spacing: -0.004em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cm-hot { flex: none; display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 500; color: var(--cm-gold); letter-spacing: .06em; }
+
+/* One line, centred under its column header. The level is a mark, not a
+   second line of text. */
+.cm-author { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
+.cm-rankmark { display: inline-flex; flex: none; color: var(--cm-cat); }
+.cm-date {
+  text-align: center; font-family: "Space Mono", monospace; font-size: 10px;
+  font-weight: 400; color: var(--cm-low); white-space: nowrap;
+}
+.cm-n {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  font-size: 12px; font-weight: 400; color: var(--cm-text); font-variant-numeric: tabular-nums;
+}
+.cm-state { padding: 64px 24px; text-align: center; color: var(--cm-med); font-size: 13px; }
+
+/* ══════════════════════════════════════════════════════════════
+   Below 860px the rail folds into the sticky category strip the
+   app already had, so the phone layout stays familiar.
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .cm-body { grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 0 14px 88px; }
+  /* The bar becomes one row: tabs scroll on the left, the two actions hold
+     the right edge. */
+  .cm-railbar {
+    position: sticky; top: 0; z-index: 20;
+    flex-direction: row; align-items: center; gap: 12px;
+    margin: 0 -14px; padding: 6px 14px 8px;
+    background: var(--cm-sticky-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--cm-line);
+  }
+  .cm-actions { order: 0; margin-left: auto; gap: 14px; }
+  .cm-rail {
+    position: static; flex-direction: row; gap: 8px; padding: 0;
+    overflow-x: auto; scrollbar-width: none; min-width: 0; flex: 1 1 auto;
+    background: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+  }
+  .cm-rail::-webkit-scrollbar { display: none; }
+  .cm-rail button {
+    flex: none; min-height: 38px; padding: 0 10px; border-radius: 0;
+    grid-template-columns: auto auto; font-size: 12.5px;
+    box-shadow: none;
+  }
+  .cm-rail button.is-active { box-shadow: inset 0 -2px 0 var(--cm-cat); }
+  .cm-head { padding-bottom: 10px; }
+  .cm-head h1 { font-size: 26px; }
+  .cm-rail-sep { display: none; }
+  /* Author and date are the first columns to go when there is no room;
+     the title and the two counts are what a board is actually for. */
+  .cm-colhead, .cm-list li > button { grid-template-columns: 40px minmax(0, 1fr) 44px 44px; }
+  .cm-colhead span:nth-child(3), .cm-colhead span:nth-child(4),
+  .cm-author, .cm-date { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-page *, .cm-page *::before, .cm-page *::after { transition-duration: 0.01ms !important; }
+}
+
+/* ── ?font= type study bar ─────────────────────────────────── */
+.cm-fontbar {
+  padding: max(44px, calc(env(safe-area-inset-top) + 22px)) 14px 12px;
+  border-bottom: 1px solid var(--cm-line);
+}
+.cm-fontbar-tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.cm-fontbar-tabs::-webkit-scrollbar { display: none; }
+.cm-fontbar-tabs button {
+  flex: none; border: 1px solid var(--cm-line); background: transparent; color: var(--cm-med);
+  min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 13px;
+}
+.cm-fontbar-tabs button.is-active { background: var(--cm-gold); border-color: var(--cm-gold); color: #000; font-weight: 700; }
+.cm-fontbar p { margin: 10px 2px 0; font-size: 11.5px; line-height: 1.6; color: var(--cm-med); }
