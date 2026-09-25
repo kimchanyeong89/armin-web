@@ -611,10 +611,10 @@ const Login: React.FC = () => {
       <div style={{ position: "relative", width: "100%", maxWidth: "480px" }}>
         <section className="lg-statement">
           <p className="lg-statement__meta">{t({ ko: "COLLY · 계정", en: "COLLY · Account" })}</p>
-          <h1>{t({ ko: "여기서부터 당신의 기록입니다.", en: "Your record starts here." })}</h1>
+          <h1>{t({ ko: "로그인하고 기록을 쌓아 보세요.", en: "Sign in and keep a record." })}</h1>
           <p>{t({
-            ko: "좋아요와 취향, 플레이리스트가 계정에 남아 어느 기기에서든 이어집니다.",
-            en: "Likes, taste and playlists live in your account and follow you across devices.",
+            ko: "좋아요한 작품과 플레이리스트가 계정에 남아, 어느 기기에서든 이어서 볼 수 있습니다.",
+            en: "The works you like and your playlists stay in your account, on any device.",
           })}</p>
         </section>
 

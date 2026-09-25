@@ -649,11 +649,11 @@ function CurationTab({
         return (
           <div className="hub-lead hub-signin">
             <p className="hub-lead__meta">{tr({ ko: 'COLLY AI · 로그인 필요', en: 'COLLY AI · Sign in' })}</p>
-            <h2>{tr({ ko: '추천은 로그인한 뒤부터 쌓입니다.', en: 'Your picks begin once you sign in.' })}</h2>
+            <h2>{tr({ ko: '로그인하면 AI 추천을 받을 수 있습니다.', en: 'Sign in to get AI picks.' })}</h2>
             <p className="hub-lead__body">
               {tr({
-                ko: '좋아요와 취향 기록을 계정에 저장해야 추천을 만들 수 있습니다. 로그인 없이도 주간 큐레이션은 볼 수 있습니다.',
-                en: 'Likes and taste have to live in an account before anything can be recommended. The weekly curation is open to everyone.',
+                ko: '작품을 많이 저장할수록 추천이 정밀해집니다. 주간 큐레이션은 로그인하지 않아도 볼 수 있습니다.',
+                en: 'The more works you save, the sharper the picks get. The weekly curation is open to everyone.',
               })}
             </p>
             <div className="hub-signin__row">
