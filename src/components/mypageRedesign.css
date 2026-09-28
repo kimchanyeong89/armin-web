@@ -120,6 +120,12 @@
 .mp-email { overflow-wrap: anywhere; }
 .mp-score { font-family: var(--mp-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--mp-ink-3); white-space: nowrap; }
 .mp-score b { font-weight: 700; color: var(--mp-gold); }
+/* the wall's index tab: a gold tab standing out of the page's right edge,
+   cut at its two outer corners like the map's markers */
+.mp .mp-index { position: absolute; right: 0; top: calc(var(--page-top) + 10px); z-index: 3; padding: 14px 7px 14px 8px;
+  writing-mode: vertical-rl; background: var(--mp-gold); color: #0b0b0b; font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  clip-path: polygon(7px 0, 100% 0, 100% 100%, 7px 100%, 0 calc(100% - 7px), 0 7px); transition: background .16s ease, padding .2s ease; }
+.mp .mp-index:hover, .mp .mp-index:focus-visible { background: #e2b85c; padding-right: 11px; }
 /* the edit mark beside the name: a pencil alone, gold on hover */
 .mp .mp-edit { flex: none; display: grid; place-items: center; padding: 6px; margin: 0 -6px; color: var(--mp-ink-3);
   transition: color .16s ease; }
