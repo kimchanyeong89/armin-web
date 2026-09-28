@@ -129,7 +129,16 @@
     font-variant-numeric: tabular-nums;
 }
 
-.ig-atlas-statement h1,
+/* the map tab's title, set as the search, AI and community titles are:
+   two lines broken by hand ("\n" in the copy), at their size and face */
+.ig-atlas-statement h1 {
+    margin: 0;
+    white-space: pre-line;
+    font: 700 clamp(1.8rem, 3vw, 3.2rem)/1.08 Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    letter-spacing: -0.05em;
+    word-break: keep-all;
+}
+
 .ig-atlas-detail-statement h1 {
     max-width: 9ch;
     margin: 0;
@@ -237,7 +246,6 @@
         width: min(28rem, calc(100vw - 2rem));
     }
 
-    .ig-atlas-statement h1,
     .ig-atlas-detail-statement h1 {
         max-width: 8ch;
         font-size: clamp(2.4rem, 11vw, 3.5rem);

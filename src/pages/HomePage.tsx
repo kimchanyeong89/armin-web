@@ -1462,13 +1462,14 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               collyVariant="atlas-index"
               countryBoundaryStyle="atlas-index"
               mapIntroduction={{
-                eyebrow: t({ ko: '지도 읽기 방식', en: 'Map reading method' }),
-                headline: t({ ko: '경계에서 지도를 탐구하세요.', en: 'Explore the map from its borders.' }),
+                eyebrow: t({ ko: '지도', en: 'MAP' }),
+                // broken by hand, as the other tabs' titles are: "\n" is the line break
+                headline: t({ ko: '지도에서 미술관을\n탐색하세요.', en: 'Find museums\non the map.' }),
                 summary: t({
-                  ko: '확대하면 미술관 수가 국가명 위에 자리 잡습니다. 국경을 따라 드래그하며 이웃 지역을 비교해 보세요.',
-                  en: 'Zoom until each museum count settles above its country. Drag across borders to compare neighboring regions.',
+                  ko: '나라와 도시를 골라 들어가면 그곳 미술관의 작품을 직접 둘러볼 수 있습니다.',
+                  en: 'Pick a country, step into a city, and browse the works its museums hold.',
                 }),
-                instruction: t({ ko: '드래그하고 확대해 국가를 선택하세요', en: 'Drag, zoom, then select a country' }),
+                instruction: t({ ko: '지구본을 돌리거나 확대해 나라를 고르세요', en: 'Turn or zoom the globe to pick a country' }),
               }}
               detailIntroduction={{
                 eyebrow: t({ ko: '컬렉션 상세 탐색', en: 'Collection detail' }),
