@@ -1,5 +1,6 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from "react";
-import { ArrowLeft, Heart, MessageSquare, Trash2 } from "lucide-react";
+import { ArrowLeft, MessageSquare, Trash2 } from "lucide-react";
+import { LikeIcon } from "../../../components/like/LikeIcon";
 import { normalizeCommunityCategory, normalizeCommunityHeaderType } from "../../../features/community/communityFeed";
 import { getOptimizedImageUrl } from "../../../utils/imageProxy";
 import { toProse } from "./prose";
@@ -127,7 +128,7 @@ export default function PostArticle({
 
       <div className="ca-post__acts">
         <button type="button" className="ca-like" aria-pressed={liked} onClick={onLike} aria-label={ko ? "좋아요" : "Like"}>
-          <Heart size={15} strokeWidth={1.8} fill={liked ? "currentColor" : "none"} />{post.likes}
+          <LikeIcon liked={liked} size={15} strokeWidth={1.8} />{post.likes}
         </button>
         <span className="ca-count"><MessageSquare size={14} strokeWidth={1.8} />{commentCount}</span>
       </div>

@@ -585,7 +585,7 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
           background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)',
           fontSize: 12, color: 'rgba(232,224,212,0.42)',
         }}>
-          작품에 ♥ 를 누르면 전시마다 취향 일치 점수가 계산돼요.
+          작품에 좋아요를 누르면 전시마다 취향 일치 점수가 계산돼요.
         </div>
       )}
 

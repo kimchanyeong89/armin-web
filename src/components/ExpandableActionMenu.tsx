@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookmarkPlus, ShoppingBag, Heart } from 'lucide-react';
+import { BookmarkPlus, ShoppingBag } from "lucide-react";
+import { LikeIcon } from "./like/LikeIcon";
 import { SHOW_SALES_UI } from '../config/features';
 
 interface ExpandableActionMenuProps {
@@ -124,12 +125,7 @@ export function ExpandableActionMenu({
         style={{ ...btnStyle, zIndex: 10, position: 'relative' }}
         title={isMobile && !expanded ? "Open menu" : "Like"}
       >
-        <Heart
-          size={iconSize + 1}
-          strokeWidth={2.2}
-          fill={isLiked ? "#D4A547" : "none"}
-          color={isLiked ? "#D4A547" : buttonColor}
-        />
+        <LikeIcon liked={isLiked} size={iconSize + 1} strokeWidth={2.2} color="#D4A547" emptyColor={buttonColor} />
       </motion.button>
     </div>
   );

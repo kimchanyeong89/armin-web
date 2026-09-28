@@ -2,7 +2,8 @@ import {
   useEffect, useLayoutEffect, useMemo, useRef, useState,
   type CSSProperties, type Dispatch, type ReactNode, type SetStateAction,
 } from "react";
-import { ArrowLeft, Bookmark, BookmarkPlus, Calendar, Heart, ListMusic, MapPin, Palette, Pencil, Play, User } from "lucide-react";
+import { ArrowLeft, Bookmark, BookmarkPlus, Calendar, ListMusic, MapPin, Palette, Pencil, Play, User } from "lucide-react";
+import { LikeIcon } from "../../components/like/LikeIcon";
 import ProfileAvatar from "../../components/ProfileAvatar";
 import { RankInfo } from "../../components/RankInfo";
 import { getOptimizedImageUrl } from "../../utils/imageProxy";
@@ -323,7 +324,7 @@ export function LiveGrid({ works, tab, sort, openList }: Pick<TopProps, "works" 
             <div className="pf-card__shade" />
             <div className="mp-acts">
               <button type="button" title={off ? "Like again" : "Unlike"} onClick={() => toggle(w.id)}>
-                <Heart size={12} strokeWidth={2.2} fill={off ? "none" : GOLD} color={off ? "#fff" : GOLD} />
+                <LikeIcon liked={!off} size={12} strokeWidth={2.2} color={GOLD} emptyColor="#fff" />
               </button>
               <button type="button" title="Save to Playlist">
                 <BookmarkPlus size={12} strokeWidth={2.2} />

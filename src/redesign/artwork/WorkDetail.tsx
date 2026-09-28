@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { ArrowUpRight, BookmarkPlus, Heart } from "lucide-react";
+import { ArrowUpRight, BookmarkPlus, } from "lucide-react";
+import { LikeIcon } from "../../components/like/LikeIcon";
 import type { ArtistWork } from "../artist/model";
 
 /**
@@ -41,7 +42,7 @@ export function Acts({ id, liked, toggle, ko, size = 15, stroke = 2.2 }: {
       <button type="button" className={on ? "is-on" : ""}
         onClick={(e) => { e.stopPropagation(); toggle(id); }}
         aria-pressed={on} aria-label={ko ? "좋아요" : "Like"}>
-        <Heart size={size + 1} strokeWidth={stroke} fill={on ? "currentColor" : "none"} />
+        <LikeIcon liked={on} size={size + 1} strokeWidth={stroke} />
       </button>
     </div>
   );

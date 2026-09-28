@@ -15,7 +15,8 @@
 // ═════════════════════════════════════════════════════════════════════════
 import React, { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, BookmarkPlus, ShoppingBag } from "lucide-react";
+import { BookmarkPlus, ShoppingBag } from "lucide-react";
+import { LikeIcon } from "../like/LikeIcon";
 import type { Theme } from "./types";
 import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { SearchInputWithSuggestions } from "../SearchInputWithSuggestions";
@@ -1755,12 +1756,7 @@ export function InteractiveGlobeRealModal({
                   onMouseUp={(ev) => { (ev.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}
                   onMouseLeave={(ev) => { (ev.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}
                 >
-                  <Heart
-                    size={isMobile ? 18 : 20}
-                    strokeWidth={2.2}
-                    fill={isMuseumLiked ? limeColor : 'none'}
-                    color={isMuseumLiked ? limeColor : (t ? '#000' : '#fff')}
-                  />
+                  <LikeIcon liked={isMuseumLiked} size={isMobile ? 18 : 20} strokeWidth={2.2} color={limeColor} emptyColor={t ? "#000" : "#fff"} />
                 </button>
               );
             })()}
@@ -2178,12 +2174,7 @@ export function InteractiveGlobeRealModal({
                             title={isLikedAw ? 'Unlike' : 'Like'}
                             style={actionButtonStyle}
                           >
-                            <Heart
-                              size={isMobile ? 13 : 15}
-                              strokeWidth={2.2}
-                              fill={isLikedAw ? limeColor : 'none'}
-                              color={isLikedAw ? limeColor : '#fff'}
-                            />
+                            <LikeIcon liked={isLikedAw} size={isMobile ? 13 : 15} strokeWidth={2.2} color={limeColor} emptyColor="#fff" />
                           </button>
                         </div>
                       </div>

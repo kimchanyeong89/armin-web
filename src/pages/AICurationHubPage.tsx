@@ -3,8 +3,9 @@ import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MapPin, Calendar, X,
-  Heart, Navigation, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw
+  Navigation, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw
 } from "lucide-react";
+import { LikeIcon } from "../components/like/LikeIcon";
 import WeeklyCurationTab from '../components/WeeklyCurationTab';
 import { useAuth } from '../contexts/AuthContext';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
@@ -347,7 +348,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint: _fgFaint, divi
               backgroundColor: t ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)",
               border: "none", display: "flex", alignItems: "center", justifyContent: "center",
             }}>
-              <Heart size={18} color={fg} />
+              <LikeIcon liked={false} size={18} emptyColor={fg} />
             </button>
           </div>
         </div>

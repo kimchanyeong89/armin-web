@@ -20,7 +20,6 @@ import {
   ArrowLeft,
   ArrowRight,
   BookmarkPlus,
-  Heart,
   ListMusic,
   MapPin,
   Pencil,
@@ -32,6 +31,7 @@ import {
   Bookmark,
   Share2,
 } from "lucide-react";
+import { LikeIcon } from "./like/LikeIcon";
 
 import { useSavedCurations } from "../hooks/useSavedCurations";
 import RatingEmblems from "./Ratings/RatingEmblems";
@@ -2191,7 +2191,7 @@ const MyPage: React.FC = () => {
             }}
             title={isUnliked ? "Like again" : "Unlike"}
           >
-            <Heart size={12} strokeWidth={2.2} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
+            <LikeIcon liked={!isUnliked} size={12} strokeWidth={2.2} color={lime} emptyColor="#fff" />
           </button>
 
           <button
@@ -2346,7 +2346,7 @@ const MyPage: React.FC = () => {
             padding: 0,
           }}
         >
-          <Heart size={13} strokeWidth={2.1} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
+          <LikeIcon liked={!isUnliked} size={13} strokeWidth={2.1} color={lime} emptyColor="#fff" />
         </button>
 
         <div style={{ padding: artistCard ? "4px 9px 12px" : "8px 9px", textAlign: artistCard ? "center" : "left" }}>

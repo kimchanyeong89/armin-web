@@ -14,7 +14,8 @@ import {
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import { ArrowLeft, Heart, MessageCircle, Send } from "lucide-react";
+import { ArrowLeft, MessageCircle, Send } from "lucide-react";
+import { LikeIcon } from "../../components/like/LikeIcon";
 import { db } from "../../firebase";
 import { useAuth } from "../../contexts/AuthContext";
 import { shouldLimitNetwork } from "../../utils/network";
@@ -591,7 +592,7 @@ const PostDetailPage: React.FC = () => {
               onClick={handleLike}
               style={{ border: "none", background: "none", color: colors.medText, cursor: "pointer", display: "inline-flex", alignItems: "center", gap: 5, padding: 0, fontSize: 12 }}
             >
-              <Heart size={14} strokeWidth={2} fill={hasLiked ? "currentColor" : "none"} /> {post.likes || 0}
+              <LikeIcon liked={hasLiked} size={14} strokeWidth={2} /> {post.likes || 0}
             </button>
             <span style={{ color: colors.medText, display: "inline-flex", alignItems: "center", gap: 5, fontSize: 12 }}>
               <MessageCircle size={14} strokeWidth={2} /> {post.commentCount || comments.length || 0}

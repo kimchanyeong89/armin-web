@@ -4,7 +4,8 @@
 import React, { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import { LikeIcon } from "./like/LikeIcon";
 import {
   fetchCurrentCuration,
   fetchArchiveList,
@@ -785,7 +786,7 @@ function HeroWork({
               ...LABEL, fontSize: 10,
               transition: 'border-color 0.15s, color 0.15s',
             }}>
-              <Heart size={13} color="currentColor" fill={saved ? "currentColor" : "none"} />
+              <LikeIcon liked={saved} size={13} />
               {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
             </button>
             <button onClick={onClick} style={{
@@ -922,7 +923,7 @@ function WorkRow({
             ...LABEL, fontSize: 9,
             transition: 'border-color 0.15s, color 0.15s',
           }}>
-            <Heart size={11} color="currentColor" fill={saved ? "currentColor" : "none"} />
+            <LikeIcon liked={saved} size={11} />
             {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
           </button>
           <button onClick={(e) => { e.stopPropagation(); onClick(); }} style={{
@@ -1184,7 +1185,7 @@ function WeeklyLightbox({
               ...LABEL, fontSize: 10,
               transition: 'border-color 0.15s, color 0.15s',
             }}>
-              <Heart size={14} color="currentColor" fill={saved ? "currentColor" : "none"} />
+              <LikeIcon liked={saved} size={14} />
               {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
             </button>
           </div>
@@ -1356,7 +1357,7 @@ function MobileHeroWork({
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             ...LABEL, fontSize: 10,
           }}>
-            <Heart size={13} color="currentColor" fill={saved ? "currentColor" : "none"} />
+            <LikeIcon liked={saved} size={13} />
             {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
           </button>
           <button onClick={onClick} style={{
@@ -1461,7 +1462,7 @@ function MobileWorkCard({
               display: 'flex', alignItems: 'center', gap: 5,
               ...LABEL, fontSize: 9,
             }}>
-              <Heart size={11} color="currentColor" fill={saved ? "currentColor" : "none"} />
+              <LikeIcon liked={saved} size={11} />
               {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
             </button>
             <button onClick={onClick} style={{
@@ -1550,7 +1551,7 @@ function MobileWorkDetail({
           color: saved ? accentText : fgLow,
           display: 'flex', alignItems: 'center', gap: 5,
         }}>
-          <Heart size={14} color="currentColor" fill={saved ? "currentColor" : "none"} />
+          <LikeIcon liked={saved} size={14} />
           {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
         </button>
       </div>
@@ -1645,7 +1646,7 @@ function MobileWorkDetail({
           ...LABEL, fontSize: 11,
           transition: 'border-color 0.15s, color 0.15s',
         }}>
-          <Heart size={15} color="currentColor" fill={saved ? "currentColor" : "none"} />
+          <LikeIcon liked={saved} size={15} />
           {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
         </button>
       </div>

@@ -8,7 +8,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, Navigation, Heart } from "lucide-react";
+import { Clock, Navigation } from "lucide-react";
+import { LikeIcon } from "./like/LikeIcon";
 import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NearbyExhibitionModal from "./NearbyExhibitionModal";
@@ -322,12 +323,7 @@ export default function NearbyExhibitions({
                     cursor: "pointer", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.6))",
                   }}
                 >
-                  <Heart
-                    size={18}
-                    strokeWidth={2.2}
-                    fill={isLiked(ex.id) ? "#D4A547" : "none"}
-                    color={isLiked(ex.id) ? "#D4A547" : "#fff"}
-                  />
+                  <LikeIcon liked={isLiked(ex.id)} size={18} strokeWidth={2.2} color="#D4A547" emptyColor="#fff" />
                 </button>
               </div>
               <div style={{ padding: "10px 8px", backgroundColor: t ? "rgba(0,0,0,0.02)" : "rgba(255,255,255,0.02)" }}>

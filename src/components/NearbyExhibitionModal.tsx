@@ -1,6 +1,7 @@
 import type { SyntheticEvent } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, ArrowUpRight, Heart, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, X } from "lucide-react";
+import { LikeIcon } from "./like/LikeIcon";
 import { ReviewPanel } from "./Ratings/ReviewPanel";
 import { useCloseOnEscape } from "./Ratings/useMyRating";
 import { NO_IMAGE_PLACEHOLDER_DARK } from "../utils/noImagePlaceholder";
@@ -152,7 +153,7 @@ export default function NearbyExhibitionModal({
                   aria-pressed={liked}
                   onClick={onToggleLike}
                 >
-                  <Heart size={16} strokeWidth={1.9} fill={liked ? "currentColor" : "none"} />
+                  <LikeIcon liked={liked} size={16} strokeWidth={1.9} />
                 </button>
               </div>
             </div>

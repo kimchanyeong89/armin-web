@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { BookmarkPlus, Heart } from "lucide-react";
+import { BookmarkPlus, } from "lucide-react";
+import { LikeIcon } from "../../components/like/LikeIcon";
 import { Link } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { ARTIST, WORKS, type ArtistWork } from "./model";
@@ -144,7 +145,7 @@ export default function ArtistStudiesApp({ renderDetail, initialWork }: {
                         <button type="button" className={liked.includes(w.image) ? "is-on" : ""}
                           onClick={(e) => { e.stopPropagation(); toggle(w.image); }}
                           aria-pressed={liked.includes(w.image)} aria-label={t({ ko: "좋아요", en: "Like" })}>
-                          <Heart size={14} strokeWidth={2.2} fill={liked.includes(w.image) ? "currentColor" : "none"} />
+                          <LikeIcon liked={liked.includes(w.image)} size={14} strokeWidth={2.2} />
                         </button>
                         <button type="button" onClick={(e) => e.stopPropagation()}
                           aria-label={t({ ko: "플레이리스트에 추가", en: "Save to playlist" })}>

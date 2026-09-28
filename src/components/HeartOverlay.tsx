@@ -1,4 +1,5 @@
 import React from 'react';
+import { LikeIcon } from './like/LikeIcon';
 
 interface HeartOverlayProps {
     isLiked: boolean;
@@ -34,9 +35,7 @@ export const HeartOverlay: React.FC<HeartOverlayProps> = ({ isLiked, onToggle, s
             onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
             onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-            <svg width={size} height={size} viewBox="0 0 24 24" fill={isLiked ? color : "none"} stroke={isLiked ? color : emptyColor} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.3))' }}>
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
+            <LikeIcon liked={isLiked} size={size} color={color} emptyColor={emptyColor} style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.3))' }} />
         </div>
     );
 };

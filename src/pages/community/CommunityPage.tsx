@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BadgeCheck, MessageSquare, PenLine, TrendingUp, Heart, MapPin } from "lucide-react";
+import { BadgeCheck, MessageSquare, PenLine, TrendingUp, MapPin } from "lucide-react";
+import { LikeIcon } from "../../components/like/LikeIcon";
 import NearbyExhibitions from "../../components/NearbyExhibitions";
 import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { resolveCommunityRank } from "../../utils/communityRank";
@@ -443,7 +444,7 @@ const CommunityPage: React.FC = () => {
                             </span>
 
                             <span className="cm-date">{formatDate(post.createdAt)}</span>
-                            <span className="cm-n"><Heart size={10} strokeWidth={1.8} />{post.likes}</span>
+                            <span className="cm-n"><LikeIcon liked={false} size={10} strokeWidth={1.8} />{post.likes}</span>
                             <span className="cm-n"><MessageSquare size={10} strokeWidth={1.8} />{post.commentCount}</span>
                           </button>
                         </li>
