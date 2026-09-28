@@ -1,35 +1,38 @@
 /* ══════════════════════════════════════════════════════════════
-   My wall — a drawer on every page, pulled down from the top on a
-   desktop and up from the tab bar on a phone, as far as it is pulled.
-   The page's ground and a mono gold line; the wall itself is the one lit
-   surface, with a metre drawn to its scale. Small controls are marks and
-   figures only, gold on hover.
+   My wall — a drawer on every page, pulled up from the tab bar by a
+   handle of the bar's own glass, as far as it is pulled. The page's
+   ground and a mono gold line; the wall itself is the one lit surface,
+   with a metre drawn to its scale. Prints snap a hair apart and grow from
+   their corners. Small controls are marks and figures only, gold on hover.
    ══════════════════════════════════════════════════════════════ */
 
-/* the drawer: over the page and the language switch (199900), under the tab bar (250000) */
-.wall-drawer { position: fixed; left: 0; right: 0; z-index: 249000; display: flex; background: #080808; }
-.wall-drawer--top { top: 0; border-bottom: 1px solid rgba(244,241,234,.12); box-shadow: 0 24px 60px rgba(0,0,0,.55);
-  padding-top: env(safe-area-inset-top, 0px); }
-/* a phone's sheet stands on the handle, over the floating profile button (250012) */
-.wall-drawer--bottom { z-index: 250020; border-radius: 18px 18px 0 0; border-top: 1px solid rgba(244,241,234,.14); box-shadow: 0 -20px 50px rgba(0,0,0,.55); }
+/* the sheet stands on the handle, over the floating profile button (250012) */
+.wall-drawer { position: fixed; left: 0; right: 0; z-index: 250020; display: flex; background: #080808;
+  border-radius: 18px 18px 0 0; border-top: 1px solid rgba(244,241,234,.14); box-shadow: 0 -20px 50px rgba(0,0,0,.55); }
 
-/* the handle: a small glass tab, a gold bar across it, the word under */
-.wall-grip { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 64px; height: 24px; padding: 0;
-  border: 1px solid rgba(255,255,255,.16); background: rgba(20,20,18,.72); color: rgba(244,241,234,.66);
-  -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%);
-  font: 700 8.5px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .12em; cursor: grab; touch-action: none;
-  transition: color .16s ease, height .2s ease; }
+/* the handle: a tab of the tab bar's glass (its --bpn-* tokens, light or dark)
+   on the bar's top edge, a gold bar across it that nudges now and then */
+@keyframes wall-grip-nudge { 0%, 82%, 100% { transform: translateY(0); } 88% { transform: translateY(-3px); } 94% { transform: translateY(0); } }
+.wall-grip { position: absolute; left: 50%; bottom: calc(100% - 1px); z-index: 1; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  width: 104px; height: 28px; padding: 3px 0 0; border: 1px solid var(--bpn-edge, rgba(255,255,255,.16)); border-bottom: 0; border-radius: 14px 14px 0 0;
+  background: linear-gradient(128deg, rgba(255,255,255,.13), transparent 38%, rgba(255,255,255,.04)), var(--bpn-glass, rgba(20,20,18,.68));
+  -webkit-backdrop-filter: blur(26px) saturate(165%); backdrop-filter: blur(26px) saturate(165%);
+  box-shadow: inset 0 1px 0 var(--bpn-highlight, rgba(255,255,255,.2)), 0 -8px 20px rgba(0,0,0,.25);
+  color: var(--bpn-ink, rgba(255,255,255,.5)); font: 700 9px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .1em;
+  cursor: grab; touch-action: none; transition: color .16s ease, height .2s cubic-bezier(.16,1,.3,1); }
 .wall-grip:active { cursor: grabbing; }
-.wall-grip i { display: block; width: 26px; height: 3px; border-radius: 2px; background: #d4a547; transition: width .24s cubic-bezier(.16,1,.3,1); }
-.wall-grip:hover { color: #d4a547; }
-.wall-grip:hover i { width: 34px; }
+.wall-grip i { display: block; width: 34px; height: 4px; border-radius: 2px; background: #d4a547;
+  box-shadow: 0 0 10px rgba(212,165,71,.55); animation: wall-grip-nudge 3.6s ease-in-out infinite;
+  transition: width .24s cubic-bezier(.16,1,.3,1); }
+.wall-grip:hover { height: 32px; color: #d4a547; }
+.wall-grip:hover i { width: 44px; animation: none; }
 .wall-grip:focus { outline: none; }
 .wall-grip:focus-visible { outline: 1px solid #d4a547; outline-offset: 2px; }
-/* on a desktop it hangs from the top edge (or the open drawer's foot) */
-.wall-grip-hang { position: fixed; left: 50%; z-index: 249001; transform: translateX(-50%); }
-.wall-grip--top { flex-direction: column-reverse; border-top: 0; border-radius: 0 0 12px 12px; }
-/* on a phone it stands on the tab bar's top edge */
-.wall-grip--bottom { position: absolute; left: 50%; bottom: calc(100% - 1px); transform: translateX(-50%); border-bottom: 0; border-radius: 12px 12px 0 0; }
+
+/* while the wall is out, pictures on the page are picked up by the wall, not
+   by the browser's own drag or long-press menu */
+html.wall-open img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 
 .mw {
   --ink: rgba(244, 241, 234, 0.96); --ink-2: rgba(244, 241, 234, 0.62); --ink-3: rgba(244, 241, 234, 0.40);
@@ -70,7 +73,7 @@
 /* the stage centres the wall; the room is the wall and its metre under it */
 .mw-stage { position: relative; flex: 1 1 auto; min-height: 0; display: grid; place-items: center; padding: 12px 28px 8px; }
 .mw-room { display: grid; gap: 10px; }
-.mw-wall { position: relative; overflow: hidden; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8), inset 0 -18px 30px -24px rgba(0, 0, 0, 0.25);
+.mw-wall { position: relative; overflow: visible; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.8), inset 0 -18px 30px -24px rgba(0, 0, 0, 0.25);
   touch-action: none; transition: box-shadow .2s ease; }
 /* a picture from the page is over the wall */
 .mw-wall.is-dropping { box-shadow: 0 0 0 2px var(--acc), 0 30px 60px -30px rgba(0, 0, 0, 0.8); }
@@ -80,7 +83,20 @@
 .mw-piece { position: absolute; cursor: grab; touch-action: none; box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.45); }
 .mw-piece:active { cursor: grabbing; }
 .mw-piece img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.mw-piece.is-on { outline: 1.5px solid var(--acc); outline-offset: 3px; }
+.mw-piece.is-on { outline: 1.5px solid var(--acc); outline-offset: 3px; z-index: 2; }
+/* the chosen print's corners: gold points that pull it larger or smaller */
+.mw-corner { position: absolute; z-index: 1; width: 22px; height: 22px; touch-action: none; }
+.mw-corner::after { content: ""; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%;
+  background: var(--acc); box-shadow: 0 0 0 2px #080808; transition: transform .16s ease; }
+.mw-corner:hover::after { transform: scale(1.3); }
+.mw-corner--nw { top: -14px; left: -14px; cursor: nwse-resize; }
+.mw-corner--se { bottom: -14px; right: -14px; cursor: nwse-resize; }
+.mw-corner--ne { top: -14px; right: -14px; cursor: nesw-resize; }
+.mw-corner--sw { bottom: -14px; left: -14px; cursor: nesw-resize; }
+/* the lines a moving print has caught */
+.mw-guide { position: absolute; z-index: 3; background: var(--acc); opacity: .8; pointer-events: none; }
+.mw-guide--x { top: 0; bottom: 0; width: 1px; }
+.mw-guide--y { left: 0; right: 0; height: 1px; }
 .mw-ruler { position: relative; height: 8px; border: solid var(--ink-3); border-width: 0 1px 1px; }
 .mw-ruler span { position: absolute; left: calc(100% + 8px); top: -1px; font: 600 10px/1 var(--num); color: var(--ink-3); white-space: nowrap; }
 
@@ -99,27 +115,15 @@
 .mw .mw-remove { display: grid; place-items: center; padding: 6px; margin: -6px; color: var(--ink-3); transition: color 0.16s ease; }
 .mw .mw-remove:hover { color: var(--acc); }
 
-/* the saved works, each at its own proportions, to drag up or tap */
-.mw-tray { flex: none; padding: 10px 0 12px; border-top: 1px solid var(--rule); }
-.mw-tray ul { display: flex; align-items: flex-end; gap: 10px; padding: 0 28px; list-style: none; overflow-x: auto; scrollbar-width: none; }
-.mw-tray ul::-webkit-scrollbar { display: none; }
-.mw .mw-tray button { display: block; height: 76px; touch-action: pan-x; cursor: grab; }
-.mw-tray img { display: block; height: 100%; width: auto; max-width: 140px; min-width: 40px; object-fit: cover; border-radius: 3px;
-  transition: transform 0.2s ease; pointer-events: none; }
-.mw .mw-tray button:hover img { transform: translateY(-3px); }
-.mw-tray__empty { padding: 14px 28px; font-size: 12.5px; color: var(--ink-3); }
 
 .mw-ghost { position: fixed; z-index: 250030; height: 90px; width: auto; transform: translate(-50%, -50%) rotate(-2deg);
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5); pointer-events: none; opacity: 0.92; }
 
-/* a short drawer or a phone: smaller pictures in the tray, the kicker and status go */
+/* a short drawer or a phone: the kicker and the saving note go */
 .mw.is-compact .mw-kicker, .mw.is-compact .mw-status { display: none; }
-.mw.is-compact .mw-tray button { height: 56px; }
 @media (max-width: 720px) {
   .mw-head, .mw-piecebar { margin-left: 16px; margin-right: 16px; }
   .mw-controls { gap: 8px 16px; }
   .mw-stage { padding: 14px 16px 8px; }
-  .mw-tray ul { padding: 0 16px; }
-  .mw .mw-tray button { height: 64px; }
 }
-@media (prefers-reduced-motion: reduce) { .mw *, .wall-grip, .wall-grip i { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .mw *, .wall-grip, .wall-grip i { transition: none !important; animation: none !important; } }

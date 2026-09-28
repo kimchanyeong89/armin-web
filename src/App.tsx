@@ -983,13 +983,13 @@ function AppContent() {
           onChange={handleBottomNavChange}
           lightMode={isLightTheme}
           mobileChromeTweak={mobileChromeTweak}
-          grip={isAuthedUser && viewportWidth < 768 ? <WallGrip edge="bottom" ko={language === "ko"} /> : undefined}
+          grip={isAuthedUser ? <WallGrip ko={language === "ko"} /> : undefined}
         />
       )}
 
       {/* the wall, on every page a signed-in member browses */}
       {isAuthedUser && user && isBottomNavVisible && !introAllowed && (
-        <WallDrawer uid={user.uid} ko={language === "ko"} mobile={viewportWidth < 768} />
+        <WallDrawer uid={user.uid} ko={language === "ko"} compact={viewportWidth < 768} />
       )}
 
       {isInteractiveRoute && mobileChromeTweak && (

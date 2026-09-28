@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 import { followWallHeight, getWallHeight, setWallHeight } from "./wallPull";
 
-/* The handle the wall is pulled out by. On a desktop it hangs from the top of
-   the screen and pulls the wall down; on a phone it sits on the tab bar and
-   pulls the wall up. The wall comes out exactly as far as it is pulled; a tap
-   opens it halfway, or closes it. */
-export default function WallGrip({ edge, ko, className }: { edge: "top" | "bottom"; ko: boolean; className?: string }) {
+/* The handle the wall is pulled up by: a tab of the tab bar's own glass on its
+   top edge. The wall comes out exactly as far as it is pulled; a tap opens it
+   halfway, or closes it. */
+export default function WallGrip({ ko }: { ko: boolean }) {
   const drag = useRef<{ y: number; from: number; moved: boolean } | null>(null);
 
   const onPointerDown = (event: React.PointerEvent<HTMLButtonElement>) => {
@@ -18,7 +17,7 @@ export default function WallGrip({ edge, ko, className }: { edge: "top" | "botto
     if (!d) return;
     const dy = event.clientY - d.y;
     if (Math.abs(dy) > 4) d.moved = true;
-    if (d.moved) followWallHeight(d.from + (edge === "top" ? dy : -dy));
+    if (d.moved) followWallHeight(d.from - dy);
   };
   const onPointerUp = () => {
     const d = drag.current;
@@ -31,7 +30,7 @@ export default function WallGrip({ edge, ko, className }: { edge: "top" | "botto
   return (
     <button
       type="button"
-      className={`wall-grip wall-grip--${edge}${className ? ` ${className}` : ""}`}
+      className="wall-grip"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -40,7 +39,7 @@ export default function WallGrip({ edge, ko, className }: { edge: "top" | "botto
       title={ko ? "끌어서 벽 꾸미기" : "Pull out your wall"}
     >
       <i aria-hidden="true" />
-      <span>{ko ? "벽" : "WALL"}</span>
+      <span>{ko ? "벽 꾸미기" : "MY WALL"}</span>
     </button>
   );
 }
