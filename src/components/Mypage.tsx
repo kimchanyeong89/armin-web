@@ -1184,6 +1184,8 @@ const MyPage: React.FC = () => {
   const [liveProfilePhoto, setLiveProfilePhoto] = useState<string | null>(null);
   const [liveProfileCrop, setLiveProfileCrop] = useState<ProfileImageCrop | null>(null);
   const [selectedHeroArtworkId, setSelectedHeroArtworkId] = useState<string | null>(null);
+  /* "배경 변경": the next artwork card pressed becomes the page's background */
+  const [pickingBg, setPickingBg] = useState(false);
   const [heroFocusY, setHeroFocusY] = useState(50);
 
   const displayPhotoURL = liveProfilePhoto || profileData.photoURL || user?.photoURL;
@@ -2096,7 +2098,15 @@ const MyPage: React.FC = () => {
     return (
       <div
         key={`${modeForItem}-${stableCardKey}`}
-        onClick={() => openItem(normalized, modeForItem)}
+        onClick={() => {
+          if (pickingBg && heroId) {
+            void saveHeroBackgroundPreference(heroId);
+            setPickingBg(false);
+            scrollContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+          }
+          openItem(normalized, modeForItem);
+        }}
         style={{
           breakInside: "avoid",
           marginBottom: 2,
@@ -2508,6 +2518,22 @@ const MyPage: React.FC = () => {
           alt=""
           style={{ objectPosition: `50% ${heroFocusY}%` }}
         />
+        {heroOptionIds.size > 0 && (
+          <button
+            type="button"
+            className="mp-act mp-bg"
+            aria-pressed={pickingBg}
+            onClick={() => {
+              setPickingBg((on) => !on);
+              setActivePlaylist(null);
+              setViewMode("artworks");
+              window.setTimeout(() => tabsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+            }}
+          >
+            <Palette size={13} strokeWidth={2} aria-hidden="true" />
+            {t({ ko: "배경 변경", en: "Background" })}
+          </button>
+        )}
 
         {/* the owner's lines rise in as the tab opens, as every tab's opening lines do */}
         <div className="mp-stage__who colly-rise">
@@ -2649,6 +2675,13 @@ const MyPage: React.FC = () => {
           );
         })}
       </nav>
+
+      {pickingBg && (
+        <div className="mp-bgpick" role="status">
+          <span>{t({ ko: "배경으로 쓸 작품을 누르세요", en: "Tap the work to use as the background" })}</span>
+          <button type="button" className="mp-act" onClick={() => setPickingBg(false)}>{t({ ko: "취소", en: "Cancel" })}</button>
+        </div>
+      )}
 
       {/* an open playlist's way back on the left; the sort on the right, a short
           gold bar sliding to the chosen label as the community sort's does */}

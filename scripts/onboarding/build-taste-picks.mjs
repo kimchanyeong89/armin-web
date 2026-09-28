@@ -19,8 +19,8 @@ import path from 'node:path';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '../..');
 const OUT = path.join(ROOT, 'public/data/onboarding-picks.json');
 const PROJECT = 'armin-web';
-const RANDOM_COUNT = 240;
-const PER_MUSEUM = 3;
+const RANDOM_COUNT = 480;
+const PER_MUSEUM = 6;
 const PAINTING = new Set(['painting', 'paintings']);
 
 const embedded = new Set(fs.readFileSync(path.join(ROOT, 'siglip_processed_ids.txt'), 'utf8').split('\n').map((s) => s.trim()).filter(Boolean));

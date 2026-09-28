@@ -91,6 +91,15 @@
 .mp-email { overflow-wrap: anywhere; }
 .mp-score { font-family: var(--mp-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--mp-ink-3); white-space: nowrap; }
 .mp-score b { font-weight: 700; color: var(--mp-gold); }
+/* change background: a mark and word on the language switch's line, clear of
+   it (App.tsx fixes the switch 14px from the right edge; it is 62px wide) */
+.mp .mp-bg { position: absolute; top: max(18px, calc(env(safe-area-inset-top, 0px) + 16px)); right: 90px; z-index: 3; }
+.mp .mp-bg[aria-pressed="true"] { color: var(--mp-gold); }
+/* while a background is being chosen: a gold line under the tabs says so */
+.mp-bgpick { display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; padding: 10px var(--mp-pad); background: rgba(8,8,8,.92); border-bottom: 1px solid var(--mp-gold);
+  font-size: 13px; font-weight: 600; color: var(--mp-gold); }
+.mp.is-light .mp-bgpick { background: rgba(250,250,250,.94); }
 /* the edit mark beside the name: a pencil alone, gold on hover */
 .mp .mp-edit { flex: none; display: grid; place-items: center; padding: 6px; margin: 0 -6px; color: var(--mp-ink-3);
   transition: color .16s ease; }

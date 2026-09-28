@@ -2051,11 +2051,12 @@
 }
 
 /* The home mark on a phone: the 72px box draws a mark about 50px wide and a
-   13px wordmark, which reads as a speck on a small screen. Larger there; the
-   KO | EN switch on the same row sits far enough right to leave it room. */
+   13px wordmark, which reads as a speck on a small screen; 100px still read
+   small (9/28). Larger there; the KO | EN switch on the same row sits far
+   enough right to leave it room. */
 @media (max-width: 768px) {
     .ig-home-logo svg {
-        width: 100px;
-        height: 100px;
+        width: 128px;
+        height: 128px;
     }
 }

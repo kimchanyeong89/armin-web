@@ -32,10 +32,15 @@
 .hub-statement footer > span:first-child { display: grid; width: 1.5rem; height: 1.5rem; flex: 0 0 auto; place-items: center; border: 1px solid currentColor; border-radius: 50%; color: var(--hub-gold); }
 
 /* ── the curation switch ──────────────────────────────────────── */
-.hub-switch { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--hub-line); }
+/* no box round the pair: the chosen side is one cut plate, lightly tinted,
+   the map marker's shape; the other side is its bare label */
+.hub-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .hub-switch button { display: grid; place-items: center; min-height: 46px; padding: 0 8px; border: 0; background: none;
-  cursor: pointer; color: var(--hub-dim); transition: color .16s ease, background .16s ease; }
-.hub-switch button + button { border-left: 1px solid var(--hub-line); }
+  cursor: pointer; color: var(--hub-dim); transition: color .16s ease, background .16s ease;
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px); }
+.hub-switch button:hover { color: var(--hub-fg); }
+.hub-switch button:focus { outline: none; }
+.hub-switch button:focus-visible .hub-switch__label { text-decoration: underline; text-decoration-color: var(--hub-gold); text-underline-offset: 6px; }
 .hub-switch__inner { display: inline-flex; align-items: center; justify-content: center; gap: 9px; }
 .hub-switch__dot { flex: none; width: 4px; height: 4px; border-radius: 50%; background: transparent; transition: background .16s ease, box-shadow .16s ease; }
 .hub-switch__label { font: 600 15px/1 var(--hub-display); letter-spacing: -0.01em; white-space: nowrap; }

@@ -60,31 +60,9 @@
 /* a label over a set of choices */
 .ob-label { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px;
   font: 600 11.5px/1 var(--ob-sans); color: var(--ob-dim); }
-.ob-label__value { font: 700 1.25rem/1 var(--ob-mono); color: var(--ob-gold); font-variant-numeric: tabular-nums; }
 .ob-field { margin-bottom: 22px; }
 
-.ob-range { width: 100%; height: 18px; margin: 0; background: none; accent-color: var(--ob-gold); cursor: pointer; }
 
-/* decades, years, months and days: bare figures on a grid; the chosen
-   one sits on a filled gold disc (a pill for four figures), the decade in
-   a gold ring - one glance says what is set */
-.ob-grid { display: grid; gap: 2px; }
-.ob-grid--decade { grid-template-columns: repeat(6, minmax(0,1fr)); margin-bottom: 6px; }
-.ob-grid--year { grid-template-columns: repeat(5, minmax(0,1fr)); }
-.ob-grid--m { grid-template-columns: repeat(6, minmax(0,1fr)); }
-.ob-grid--d { grid-template-columns: repeat(7, minmax(0,1fr)); }
-.ob .ob-grid button { position: relative; isolation: isolate; height: 42px; font: 500 13px/1 var(--ob-mono); color: var(--ob-fg2);
-  font-variant-numeric: tabular-nums; transition: color .16s ease; }
-.ob .ob-grid--decade button { height: 36px; font-size: 12px; }
-.ob .ob-grid button::before { content: ""; position: absolute; top: 50%; left: 50%; z-index: -1; width: 34px; height: 34px; margin: -17px 0 0 -17px;
-  border-radius: 50%; background: var(--ob-gold); transform: scale(0); transition: transform .24s var(--ob-ease); }
-.ob .ob-grid--year button::before, .ob .ob-grid--decade button::before { width: 58px; margin-left: -29px; border-radius: 999px; }
-.ob .ob-grid--decade button::before { height: 28px; margin-top: -14px; background: none; border: 1px solid var(--ob-gold); }
-.ob .ob-grid button:hover:not(:disabled) { color: var(--ob-fg); }
-.ob .ob-grid button:disabled { color: rgba(244,241,234,.16); }
-.ob .ob-grid button[aria-pressed="true"] { color: #0b0b0b; font-weight: 700; }
-.ob .ob-grid--decade button[aria-pressed="true"] { color: var(--ob-gold); }
-.ob .ob-grid button[aria-pressed="true"]::before { transform: scale(1); }
 
 /* artists born on this day, on one line */
 .ob-born { display: flex; gap: 16px; margin: 4px 0 26px; padding: 14px 0; border-top: 1px solid var(--ob-line); border-bottom: 1px solid var(--ob-line);
@@ -94,31 +72,51 @@
 .ob-born img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--ob-line); }
 .ob-born figcaption { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10.5px; color: var(--ob-fg2); }
 
-/* back and on: one row under every step, back at the left, on at the right;
-   on's gold point draws out into a line, as on the sign-in page */
+/* back and on: one row under every step, back at the left, on at the right */
 .ob-nav { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; max-width: 480px;
   margin: 0 auto; padding: 0 20px calc(env(safe-area-inset-bottom, 0px) + 6px); border-top: 1px solid var(--ob-line); }
 .ob .ob-nav button { display: inline-flex; align-items: center; gap: 10px; min-height: 60px; padding: 0 4px; transition: color .16s ease; }
 .ob-nav button[hidden] { display: inline-flex; visibility: hidden; }
-.ob .ob-nav__back { font: 600 14px/1 var(--ob-sans); color: var(--ob-fg2); }
-.ob .ob-nav__back span { font-family: var(--ob-mono); }
-.ob .ob-nav__back:hover { color: var(--ob-gold); }
-.ob .ob-nav__next { font: 700 15px/1 var(--ob-display); letter-spacing: -0.01em; color: var(--ob-fg); }
-.ob .ob-nav__next:disabled { color: var(--ob-dim); }
-.ob-next__go { display: flex; align-items: center; justify-content: flex-end; width: 26px; height: 4px; }
-.ob-next__go i { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--ob-gold);
-  transition: width .3s var(--ob-ease), height .3s var(--ob-ease), border-radius .3s var(--ob-ease); }
-.ob .ob-nav__next:hover:not(:disabled) .ob-next__go i { width: 26px; height: 2px; border-radius: 1px; }
-.ob .ob-nav__next:disabled .ob-next__go i { background: var(--ob-dim); }
+
+/* step one: three wheels side by side, the chosen row between two gold
+   lines across all three, the rows above and below fading out */
+.ob-date { margin-bottom: 26px; }
+.ob-date__read { margin: 0 0 12px; font: 700 1.35rem/1.2 var(--ob-display); letter-spacing: -0.03em; color: var(--ob-gold); }
+.ob-date__wheels { position: relative; display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 6px; }
+.ob-date__wheels::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; margin-top: -22px; pointer-events: none;
+  border-top: 1px solid rgba(var(--ob-gold-rgb), .55); border-bottom: 1px solid rgba(var(--ob-gold-rgb), .55);
+  background: rgba(var(--ob-gold-rgb), .06); }
+.ob-wheel { overflow-y: auto; scroll-snap-type: y mandatory; scrollbar-width: none; overscroll-behavior: contain; outline: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 32%, #000 68%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 32%, #000 68%, transparent); }
+.ob-wheel::-webkit-scrollbar { display: none; }
+.ob .ob-wheel button { display: grid; place-items: center; width: 100%; scroll-snap-align: center;
+  font: 500 16px/1 var(--ob-sans); color: var(--ob-dim); font-variant-numeric: tabular-nums; transition: color .16s ease; }
+.ob .ob-wheel button:hover { color: var(--ob-fg2); }
+.ob .ob-wheel button.is-on { color: var(--ob-fg); font: 700 19px/1 var(--ob-display); letter-spacing: -0.02em; }
+.ob-wheel:focus-visible { box-shadow: inset 0 0 0 1px rgba(var(--ob-gold-rgb), .5); }
+
+/* back and on: a mirrored pair, the same words, weight and arrow; on is gold when it can be pressed */
+.ob .ob-nav__btn { font: 700 15px/1 var(--ob-display); letter-spacing: -0.01em; color: var(--ob-fg2); }
+.ob .ob-nav__btn span { font-family: var(--ob-sans); font-weight: 500; transition: transform .24s var(--ob-ease); }
+.ob .ob-nav__btn--next:not(:disabled) { color: var(--ob-gold); }
+.ob .ob-nav__btn:disabled { color: var(--ob-dim); }
+.ob .ob-nav__btn--back:hover span { transform: translateX(-4px); }
+.ob .ob-nav__btn--next:hover:not(:disabled) span { transform: translateX(4px); }
+.ob .ob-nav__btn:hover:not(:disabled) { color: var(--ob-gold); }
+
+/* step two: finding an artist by name, always at the top - a field with a mark in it */
+.ob-search { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; padding: 0 14px; min-height: 48px;
+  background: rgba(244,241,234,.06); color: var(--ob-fg2);
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  transition: background .16s ease; }
+.ob-search:focus-within { background: rgba(var(--ob-gold-rgb), .1); color: var(--ob-gold); }
+.ob-search input { flex: 1; min-width: 0; padding: 12px 0; border: 0; background: none; color: var(--ob-fg); font: 500 15px var(--ob-sans); outline: none; }
+.ob-search input::placeholder { color: var(--ob-fg2); }
+.ob .ob-search button { display: grid; place-items: center; padding: 6px; margin-right: -6px; color: var(--ob-dim); }
+.ob .ob-search button:hover { color: var(--ob-gold); }
 
 /* step two: the artist line, the one chosen, and their works */
-.ob-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; }
-.ob .ob-switch { flex: none; padding: 6px 0; font-size: 12.5px; font-weight: 600; color: var(--ob-gold); transition: color .16s ease; }
-.ob .ob-switch:hover { color: #f0c878; }
-.ob-search { width: 100%; margin-bottom: 18px; padding: 10px 0 11px; border: 0; border-bottom: 1px solid var(--ob-hair); border-radius: 0;
-  background: none; color: var(--ob-fg); font: 500 15px var(--ob-sans); outline: none; }
-.ob-search:focus { border-bottom-color: var(--ob-gold); }
-.ob-search::placeholder { color: var(--ob-dim); }
 .ob-artists { display: flex; gap: 18px; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--ob-line);
   overflow-x: auto; scrollbar-width: none; touch-action: pan-x; overscroll-behavior: contain; }
 .ob-artists::-webkit-scrollbar { display: none; }
@@ -139,17 +137,33 @@
 .ob-empty { padding: 26px 0; text-align: center; font-size: 12.5px; color: var(--ob-dim); }
 
 /* step three: the picture under a round window, the gold ring its edge */
+/* size: − and + either side of a gold thread with a gold point on it */
+.ob-zoom { display: grid; grid-template-columns: 32px minmax(0,1fr) 32px; align-items: center; gap: 8px; width: 100%; max-width: 292px; margin: 16px auto 22px; }
+.ob .ob-zoom button { display: grid; place-items: center; height: 32px; font: 400 20px/1 var(--ob-sans); color: var(--ob-fg2); transition: color .16s ease; }
+.ob .ob-zoom button:hover { color: var(--ob-gold); }
+.ob-zoom input { -webkit-appearance: none; appearance: none; width: 100%; height: 24px; margin: 0; background: none; cursor: pointer; outline: none; }
+.ob-zoom input::-webkit-slider-runnable-track { height: 2px; border-radius: 1px;
+  background: linear-gradient(to right, var(--ob-gold) var(--fill), rgba(244,241,234,.18) var(--fill)); }
+.ob-zoom input::-moz-range-track { height: 2px; background: rgba(244,241,234,.18); }
+.ob-zoom input::-moz-range-progress { height: 2px; background: var(--ob-gold); }
+.ob-zoom input::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; margin-top: -7px; border-radius: 50%; border: 0;
+  background: var(--ob-gold); box-shadow: 0 0 0 3px #080808; transition: transform .16s ease; }
+.ob-zoom input::-moz-range-thumb { width: 16px; height: 16px; border: 0; border-radius: 50%; background: var(--ob-gold); box-shadow: 0 0 0 3px #080808; }
+.ob-zoom input:active::-webkit-slider-thumb, .ob-zoom input:focus-visible::-webkit-slider-thumb { transform: scale(1.2); }
+/* the picture with the name under it, which can be changed here */
+.ob-me { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.ob-me img { flex: none; width: 48px; height: 48px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #080808, 0 0 0 3px var(--ob-gold); }
+.ob-me label { flex: 1; min-width: 0; display: grid; gap: 4px; }
+.ob-me label span { font-size: 11.5px; font-weight: 600; color: var(--ob-dim); }
+.ob-me input { width: 100%; padding: 6px 0 8px; border: 0; border-bottom: 1px solid var(--ob-hair); border-radius: 0; background: none;
+  color: var(--ob-fg); font: 700 18px/1.2 var(--ob-display); letter-spacing: -0.02em; outline: none; }
+.ob-me input:focus { border-bottom-color: var(--ob-gold); }
 .ob-crop { position: relative; width: 100%; max-width: 292px; height: 340px; margin: 0 auto; overflow: hidden; background: #0d0d0d;
   touch-action: none; cursor: grab; }
 .ob-crop.is-dragging { cursor: grabbing; }
 .ob-crop img { position: absolute; top: 50%; left: 50%; max-width: none; max-height: none; pointer-events: none; user-select: none; }
 .ob-crop__shade { position: absolute; inset: 0; background: rgba(0,0,0,.6); pointer-events: none; }
 .ob-crop__ring { position: absolute; top: 50%; left: 50%; border-radius: 50%; border: 1.5px solid var(--ob-gold); transform: translate(-50%,-50%); pointer-events: none; }
-.ob-crop__zoom { display: block; width: 100%; max-width: 292px; margin: 16px auto 22px; }
-.ob-me { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
-.ob-me img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #080808, 0 0 0 3px var(--ob-gold); }
-.ob-me b { display: block; font: 700 15px var(--ob-display); }
-.ob-me span { display: block; margin-top: 3px; font-size: 11.5px; color: var(--ob-dim); }
 
 /* step four: rating */
 .ob-taste { display: flex; flex-direction: column; flex: 1; min-height: 0; }
@@ -166,28 +180,30 @@
 .ob-col--fill { height: 100%; min-height: 0; }
 .ob-taste__stage { position: relative; flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
 .ob-taste__note { text-align: center; font-size: 12.5px; color: var(--ob-dim); }
-.ob-card { flex: 1; min-height: 0; display: grid; grid-template-rows: minmax(0,1fr) auto; justify-items: center; gap: 12px; width: 100%;
-  touch-action: pan-y; cursor: grab; user-select: none;
+/* two works side by side; the pair is what moves left and right */
+.ob-pair { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; touch-action: pan-y; cursor: grab; user-select: none;
   transition: transform .22s var(--ob-ease); animation: ob-in .32s var(--ob-ease) both; }
-.ob-card:active { cursor: grabbing; transition: none; }
+.ob-pair:active { cursor: grabbing; transition: none; }
+/* a work: its picture filling what is left, its name, and its own globe */
+.ob-card { min-width: 0; min-height: 0; display: grid; grid-template-rows: minmax(0,1fr) auto auto; justify-items: center; gap: 10px; }
 @keyframes ob-in { from { opacity: 0; transform: scale(.97); } }
 /* the picture fills its row and is letterboxed inside it; the shadow is a
    filter so it follows the painting, not the empty letterbox */
 .ob-card img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; pointer-events: none;
   filter: drop-shadow(0 18px 24px rgba(0,0,0,.7)); }
 .ob-card figcaption { display: grid; justify-items: center; gap: 3px; max-width: 100%; text-align: center; }
-.ob-card b { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 15px/1.3 var(--ob-display); letter-spacing: -0.02em; }
-.ob-card span { font-size: 12px; color: var(--ob-fg2); }
-.ob-card small { font: 500 10px var(--ob-mono); letter-spacing: .04em; color: var(--ob-dim); }
+.ob-card b { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 13.5px/1.3 var(--ob-display); letter-spacing: -0.02em; }
+.ob-card span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px; color: var(--ob-fg2); }
 .ob-taste__preload { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; pointer-events: none; }
 /* moving: bare arrows either side of the like, gold on hover */
-.ob-taste__acts { flex: none; display: flex; align-items: center; justify-content: center; gap: 36px; padding: 12px 0 4px; }
+.ob-taste__page { font-size: 11.5px; color: var(--ob-dim); }
+.ob-taste__acts { flex: none; display: flex; align-items: center; justify-content: center; gap: 28px; padding: 12px 0 4px; }
 .ob .ob-arrow { display: grid; place-items: center; width: 44px; height: 44px; font: 300 34px/1 var(--ob-sans); color: var(--ob-fg2);
   transition: color .16s ease; }
 .ob .ob-arrow:hover:not(:disabled) { color: var(--ob-gold); }
 .ob .ob-arrow:disabled { color: rgba(244,241,234,.14); }
 /* the like: the map's globe in a gold ring that takes the marker's halo */
-.ob .ob-like { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; border: 1px solid var(--ob-gold);
+.ob .ob-like { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--ob-gold);
   transition: box-shadow .24s var(--ob-ease), background .2s ease; }
 .ob .ob-like:hover:not(:disabled) { background: rgba(var(--ob-gold-rgb), .12); box-shadow: 0 0 0 6px rgba(var(--ob-gold-rgb), .12); }
 .ob .ob-like.is-on { background: rgba(var(--ob-gold-rgb), .16); }

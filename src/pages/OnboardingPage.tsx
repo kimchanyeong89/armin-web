@@ -11,6 +11,8 @@ import { getOptimizedImageUrl } from "../utils/imageProxy";
 import type { ProfileImageCrop } from "../types/Profile";
 import { useLanguage } from "../contexts/LanguageContext";
 import TasteStep, { TASTE_GOAL } from "../features/onboarding/TasteStep";
+import DateWheel from "../features/onboarding/DateWheel";
+import { Search, X } from "lucide-react";
 import "./onboardingRedesign.css";
 
 // Proxy onboarding artwork thumbnails through wsrv.nl at low resolution
@@ -588,6 +590,9 @@ const OnboardingPage: React.FC = () => {
   };
 
   const cropPreviewSize = 292;
+  const CROP_MIN = 0.2;
+  const CROP_MAX = 3;
+  const clampScale = (v: number) => Math.min(CROP_MAX, Math.max(CROP_MIN, Math.round(v * 100) / 100));
   const cropMaskSize = 150;
   const cropScaleFactor = cropPreviewSize / 240;
 
@@ -735,9 +740,9 @@ const OnboardingPage: React.FC = () => {
   const stepCount = firstTime ? 4 : 3;
   const slideClass = (s: number) => `ob-slide${step === s ? ' is-on' : step > s ? ' is-past' : ''}`;
   const bornArtists = recommendedArtists.slice(0, 6);
-  const decades = Array.from({ length: Math.floor(yearMax / 10) - Math.floor(yearMin / 10) + 1 }, (_, i) => Math.floor(yearMin / 10) * 10 + i * 10);
-  const birthDecade = Math.floor(birthYear / 10) * 10;
-  const pickDecade = (d: number) => setBirthYear(Math.min(yearMax, Math.max(yearMin, d + (birthYear % 10))));
+  const years = Array.from({ length: yearMax - yearMin + 1 }, (_, i) => yearMin + i);
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
+  const days = Array.from({ length: daysInMonth }, (_, i) => i + 1);
   const nav = [
     { label: '다음', disabled: !canProceedStep1 || savingBirth, go: saveBirthDate },
     { label: '다음', disabled: !selectedImage, go: () => selectedImage && setStep(2) },
@@ -766,36 +771,13 @@ const OnboardingPage: React.FC = () => {
               <p>생일 무렵 세상을 떠난 예술가를 찾아, 그 작품으로 프로필 사진을 꾸밉니다.</p>
             </section>
 
-            <div className="ob-field">
-              <div className="ob-label"><span>태어난 해</span><b className="ob-label__value">{birthYear}</b></div>
-              {/* a decade, then the year in it - two taps, no slider */}
-              <div className="ob-grid ob-grid--decade" role="group" aria-label="연대">
-                {decades.map((d) => (
-                  <button key={d} type="button" aria-pressed={birthDecade === d} onClick={() => pickDecade(d)}>{d}</button>
-                ))}
-              </div>
-              <div className="ob-grid ob-grid--year" role="group" aria-label="태어난 해">
-                {Array.from({ length: 10 }, (_, i) => birthDecade + i).map((y) => (
-                  <button key={y} type="button" aria-pressed={birthYear === y} disabled={y < yearMin || y > yearMax} onClick={() => setBirthYear(y)}>{y}</button>
-                ))}
-              </div>
-            </div>
-
-            <div className="ob-field">
-              <div className="ob-label"><span>월</span></div>
-              <div className="ob-grid ob-grid--m">
-                {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
-                  <button key={m} type="button" aria-pressed={birthMonth === m} onClick={() => setBirthMonth(m)}>{m}</button>
-                ))}
-              </div>
-            </div>
-
-            <div className="ob-field">
-              <div className="ob-label"><span>일</span></div>
-              <div className="ob-grid ob-grid--d">
-                {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => (
-                  <button key={d} type="button" aria-pressed={birthDay === d} onClick={() => setBirthDay(d)}>{d}</button>
-                ))}
+            {/* three wheels, as a phone sets a date: what rests between the gold lines is chosen */}
+            <div className="ob-date">
+              <p className="ob-date__read" aria-live="polite">{`${birthYear}년 ${birthMonth}월 ${birthDay}일`}</p>
+              <div className="ob-date__wheels">
+                <DateWheel label="태어난 해" values={years} value={birthYear} onChange={setBirthYear} format={(v) => `${v}년`} />
+                <DateWheel label="월" values={months} value={birthMonth} onChange={setBirthMonth} format={(v) => `${v}월`} />
+                <DateWheel label="일" values={days} value={birthDay} onChange={setBirthDay} format={(v) => `${v}일`} />
               </div>
             </div>
 
@@ -820,27 +802,32 @@ const OnboardingPage: React.FC = () => {
           <div className="ob-col">
             <section className="ob-statement ob-statement--tight">
               <p className="ob-statement__meta">{`COLLY · 시작하기 2/${stepCount}`}</p>
-              <div className="ob-head">
-                <h1>{searchByBirthday ? '프로필에 쓸\n작품을 고르세요.' : '작가를 찾아\n작품을 고르세요.'}</h1>
-                <button type="button" className="ob-switch" onClick={() => setSearchByBirthday((prev) => !prev)}>
-                  {searchByBirthday ? '이름으로 찾기' : '생일로 찾기'}
-                </button>
-              </div>
-              {searchByBirthday && (
-                <p>{`${birthMonth}월 ${birthDay}일 무렵 세상을 떠난 예술가들입니다.`}</p>
-              )}
+              <h1>{'프로필에 쓸\n작품을 고르세요.'}</h1>
+              <p>{searchByBirthday
+                ? `${birthMonth}월 ${birthDay}일 무렵 세상을 떠난 예술가들입니다. 좋아하는 작가가 따로 있다면 이름으로 찾으세요.`
+                : '찾은 작가의 작품에서 고르세요.'}</p>
             </section>
 
-            {!searchByBirthday && (
+            {/* finding an artist by name is always there, above the list */}
+            <label className="ob-search">
+              <Search size={17} strokeWidth={1.8} aria-hidden="true" />
               <input
                 id="artist-search-input"
                 name="artistSearch"
-                className="ob-search"
                 value={artistSearchQuery}
-                onChange={(e) => setArtistSearchQuery(e.target.value)}
-                placeholder="작가 이름"
+                onChange={(e) => {
+                  setArtistSearchQuery(e.target.value);
+                  setSearchByBirthday(e.target.value.trim().length === 0);
+                }}
+                placeholder="작가 이름으로 직접 찾기"
+                autoComplete="off"
               />
-            )}
+              {!searchByBirthday && (
+                <button type="button" onClick={() => { setArtistSearchQuery(''); setSearchByBirthday(true); }} aria-label="지우고 생일로 찾기">
+                  <X size={16} strokeWidth={1.8} />
+                </button>
+              )}
+            </label>
 
             <div className="ob-artists" onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}>
               {recommendedArtists.map((artist, idx) => (
@@ -890,7 +877,7 @@ const OnboardingPage: React.FC = () => {
             <section className="ob-statement ob-statement--tight">
               <p className="ob-statement__meta">{`COLLY · 시작하기 3/${stepCount}`}</p>
               <h1>{'사진에 보일\n부분을 맞추세요.'}</h1>
-              <p>그림을 끌어 옮기고, 아래 막대로 크기를 조절합니다.</p>
+              <p>그림을 끌어 옮기고, 아래에서 크기와 이름을 정하세요.</p>
             </section>
 
             <div
@@ -899,6 +886,7 @@ const OnboardingPage: React.FC = () => {
               onPointerMove={onCropPointerMove}
               onPointerUp={onCropPointerUp}
               onPointerCancel={onCropPointerUp}
+              onWheel={(e) => setCrop((prev) => ({ ...prev, scale: clampScale(prev.scale - e.deltaY * 0.002) }))}
             >
               {selectedImage && (
                 <img
@@ -929,28 +917,38 @@ const OnboardingPage: React.FC = () => {
               <div className="ob-crop__ring" style={{ width: cropMaskSize, height: cropMaskSize }} />
             </div>
 
-            <input
-              type="range"
-              className="ob-range ob-crop__zoom"
-              id="profile-crop-scale-range"
-              name="profileCropScale"
-              min="0.2"
-              max="3"
-              step="0.05"
-              value={crop.scale}
-              onChange={(e) => setCrop((prev) => ({ ...prev, scale: parseFloat(e.target.value) }))}
-              aria-label="크기"
-            />
+            {/* size: a gold thread between a smaller and a larger mark */}
+            <div className="ob-zoom">
+              <button type="button" onClick={() => setCrop((prev) => ({ ...prev, scale: clampScale(prev.scale - 0.15) }))} aria-label="작게">−</button>
+              <input
+                type="range"
+                id="profile-crop-scale-range"
+                name="profileCropScale"
+                min={CROP_MIN}
+                max={CROP_MAX}
+                step="0.01"
+                value={crop.scale}
+                onChange={(e) => setCrop((prev) => ({ ...prev, scale: parseFloat(e.target.value) }))}
+                aria-label="크기"
+                style={{ ["--fill" as string]: `${((crop.scale - CROP_MIN) / (CROP_MAX - CROP_MIN)) * 100}%` }}
+              />
+              <button type="button" onClick={() => setCrop((prev) => ({ ...prev, scale: clampScale(prev.scale + 0.15) }))} aria-label="크게">+</button>
+            </div>
 
-            {selectedArtist && (
-              <div className="ob-me">
-                <img src={thumbUrl(selectedImage || selectedArtist.artworks?.[0] || selectedArtist.image || '', 128)} alt="" loading="lazy" decoding="async" />
-                <div>
-                  <b>{nickname || user?.displayName || 'Art Explorer'}</b>
-                  <span>{selectedArtist.name}</span>
-                </div>
-              </div>
-            )}
+            {/* the name shown with the picture, changed here */}
+            <div className="ob-me">
+              <img src={thumbUrl(selectedImage || selectedArtist?.artworks?.[0] || selectedArtist?.image || '', 128)} alt="" loading="lazy" decoding="async" />
+              <label>
+                <span>이름</span>
+                <input
+                  value={nickname}
+                  onChange={(e) => setNickname(e.target.value.slice(0, 24))}
+                  placeholder={user?.displayName || '이름'}
+                  maxLength={24}
+                  autoComplete="nickname"
+                />
+              </label>
+            </div>
 
           </div>
         </div>
@@ -966,12 +964,11 @@ const OnboardingPage: React.FC = () => {
 
       {/* back and on, in the same place on every step: back at the left, on at the right */}
       <nav className="ob-nav" aria-label="단계 이동">
-        <button type="button" className="ob-nav__back" onClick={() => setStep(step - 1)} hidden={step === 0}>
+        <button type="button" className="ob-nav__btn ob-nav__btn--back" onClick={() => setStep(step - 1)} hidden={step === 0}>
           <span aria-hidden="true">←</span>이전
         </button>
-        <button type="button" className="ob-nav__next" onClick={nav.go} disabled={nav.disabled}>
-          {nav.label}
-          <span className="ob-next__go" aria-hidden="true"><i /></span>
+        <button type="button" className="ob-nav__btn ob-nav__btn--next" onClick={nav.go} disabled={nav.disabled}>
+          {nav.label}<span aria-hidden="true">→</span>
         </button>
       </nav>
 
