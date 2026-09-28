@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { collection, doc, getCountFromServer, getFirestore, increment, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, getCountFromServer, getFirestore, increment, serverTimestamp, setDoc } from "firebase/firestore";
 import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { normalizeArtworkIdForFirestore } from "../../hooks/useLikedArtworkSet";
 import { LikeIcon } from "../../components/like/LikeIcon";
@@ -7,7 +7,8 @@ import { LikeIcon } from "../../components/like/LikeIcon";
 /* The last onboarding step: works other members liked, mixed with paintings
    drawn at random, one at a time. Each like is saved as it is given - to the
    member's likes (so the works are on My Page from the start) and to the
-   shared like count - and the step ends at TASTE_GOAL likes.
+   shared like count. Only the globe likes; moving left or right just looks.
+   The page's own "완료" opens at TASTE_GOAL likes.
 
    TASTE_GOAL is the worker's cluster size (TASTE_K_PER_LIKES = 8 in
    workers/semantic-search): the fewest likes that make one whole taste
@@ -47,14 +48,13 @@ function deal(popular: Pick[], random: Pick[]): Pick[] {
   return out;
 }
 
-export default function TasteStep({ uid, ko, meta, onDone }: { uid: string; ko: boolean; meta: string; onDone: () => void }) {
+export default function TasteStep({ uid, ko, meta, onCount }: { uid: string; ko: boolean; meta: string; onCount: (count: number) => void }) {
   const t = (copy: { ko: string; en: string }) => (ko ? copy.ko : copy.en);
   const [deck, setDeck] = useState<Pick[] | null>(null);
   const [at, setAt] = useState(0);
   const [earlier, setEarlier] = useState(0); // likes given before this visit
-  const [liked, setLiked] = useState<Pick[]>([]);
+  const [liked, setLiked] = useState<Set<string>>(() => new Set());
   const [failed, setFailed] = useState(false);
-  const [leaving, setLeaving] = useState<"like" | "pass" | null>(null);
   const drag = useRef<{ x: number; dx: number } | null>(null);
   const [dx, setDx] = useState(0);
 
@@ -73,60 +73,67 @@ export default function TasteStep({ uid, ko, meta, onDone }: { uid: string; ko: 
     };
   }, [uid]);
 
-  const count = earlier + liked.length;
-  const done = count >= TASTE_GOAL;
+  const count = earlier + liked.size;
+  useEffect(() => onCount(count), [count, onCount]);
   const card = deck?.[at] || null;
-  const upcoming = useMemo(() => deck?.slice(at + 1, at + 4) || [], [deck, at]);
+  const isLiked = !!card && liked.has(card.id);
+  /* the pictures either side load while this one is looked at */
+  const around = useMemo(() => (deck ? [deck[at - 1], ...deck.slice(at + 1, at + 4)].filter(Boolean) as Pick[] : []), [deck, at]);
 
-  const save = (pick: Pick) => {
+  /* only the globe likes a work; pressing it again takes the like back */
+  const toggleLike = () => {
+    if (!card) return;
     const db = getFirestore();
-    const docId = normalizeArtworkIdForFirestore(pick.id);
-    void setDoc(doc(db, `users/${uid}/liked_artworks/${docId}`), {
+    const docId = normalizeArtworkIdForFirestore(card.id);
+    const likeRef = doc(db, `users/${uid}/liked_artworks/${docId}`);
+    const statsRef = doc(db, "artwork_stats", docId);
+    if (isLiked) {
+      setLiked((prev) => { const next = new Set(prev); next.delete(card.id); return next; });
+      void deleteDoc(likeRef).catch((err) => console.error("[TasteStep] unlike failed", err));
+      void setDoc(statsRef, { likeCount: increment(-1), artworkId: card.id }, { merge: true }).catch(() => {});
+      return;
+    }
+    setLiked((prev) => new Set(prev).add(card.id));
+    void setDoc(likeRef, {
       likedAt: serverTimestamp(),
-      artworkId: pick.id,
-      id: pick.id,
-      title: pick.t,
-      name: pick.t,
-      artist: pick.a,
-      year: pick.y,
-      image: pick.i,
-      i: pick.i,
-      imageUrl: pick.i,
+      artworkId: card.id,
+      id: card.id,
+      title: card.t,
+      name: card.t,
+      artist: card.a,
+      year: card.y,
+      image: card.i,
+      i: card.i,
+      imageUrl: card.i,
       mediaType: "image",
-      museum: pick.m,
-      museumName: pick.m,
-      exhibitionId: pick.e,
-      sourceCollection: pick.e,
+      museum: card.m,
+      museumName: card.m,
+      exhibitionId: card.e,
+      sourceCollection: card.e,
       source: "onboarding",
     }).catch((err) => console.error("[TasteStep] like failed", err));
-    void setDoc(doc(db, "artwork_stats", docId), { likeCount: increment(1), artworkId: pick.id }, { merge: true }).catch(() => {});
+    void setDoc(statsRef, { likeCount: increment(1), artworkId: card.id }, { merge: true }).catch(() => {});
   };
 
-  const answer = (kind: "like" | "pass") => {
-    if (!card || leaving || done) return;
-    if (kind === "like") {
-      save(card);
-      setLiked((prev) => [...prev, card]);
-    }
-    setLeaving(kind);
-    /* the card leaves before the next one comes in */
-    window.setTimeout(() => {
-      setLeaving(null);
-      setDx(0);
-      setAt((i) => i + 1);
-    }, 220);
+  /* left and right only move between works - nothing is liked by moving */
+  const canBack = at > 0;
+  const canOn = !!deck && at < deck.length - 1;
+  const move = (step: -1 | 1) => {
+    if ((step < 0 && !canBack) || (step > 0 && !canOn)) return;
+    setDx(0);
+    setAt((i) => i + step);
   };
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") answer("like");
-      if (event.key === "ArrowLeft") answer("pass");
+      if (event.key === "ArrowRight") move(1);
+      if (event.key === "ArrowLeft") move(-1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  /* a card thrown right is liked, left is passed */
+  /* a card pushed left shows the next work, pushed right the one before */
   const onPointerDown = (event: React.PointerEvent) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
     drag.current = { x: event.clientX, dx: 0 };
@@ -140,48 +147,24 @@ export default function TasteStep({ uid, ko, meta, onDone }: { uid: string; ko: 
   const onPointerUp = () => {
     const moved = drag.current?.dx || 0;
     drag.current = null;
-    if (moved > 90) answer("like");
-    else if (moved < -90) answer("pass");
+    if (moved < -70 && canOn) move(1);
+    else if (moved > 70 && canBack) move(-1);
     else setDx(0);
   };
 
-  if (done) {
-    return (
-      <div className="ob-taste ob-taste--done">
-        <section className="ob-statement">
-          <p className="ob-statement__meta">{t({ ko: "COLLY · 취향 저장됨", en: "COLLY · Taste saved" })}</p>
-          <h1>{t({ ko: "이제 시작할 수 있습니다.", en: "You're ready." })}</h1>
-          <p>{t({
-            ko: "고른 작품은 마이페이지에 저장했습니다. 작품 추천과 전시 취향 점수는 이 작품들을 바탕으로 정해지고, 좋아요를 더 누를수록 정확해집니다.",
-            en: "The works you chose are on My Page, and recommendations and exhibition matches now start from them. More likes make them sharper.",
-          })}</p>
-        </section>
-        {liked.length > 0 && (
-          <ul className="ob-taste__chosen">
-            {liked.slice(-TASTE_GOAL).map((pick) => (
-              <li key={pick.id}>
-                <img src={getOptimizedImageUrl(pick.i, 200)} alt={pick.t} />
-              </li>
-            ))}
-          </ul>
-        )}
-        <button type="button" className="ob-next" onClick={onDone}>
-          <span>{t({ ko: "마이페이지로", en: "Go to My Page" })}</span>
-          <span className="ob-next__go" aria-hidden="true"><i /></span>
-        </button>
-      </div>
-    );
-  }
+  const enough = count >= TASTE_GOAL;
 
   return (
     <div className="ob-taste">
       <section className="ob-statement ob-statement--tight">
         <p className="ob-statement__meta">{meta}</p>
         <h1>{t({ ko: "마음에 드는 작품을\n골라 주세요.", en: "Pick the works\nyou like." })}</h1>
-        <p>{t({
-          ko: `${TASTE_GOAL}점을 고르면 끝납니다. 고른 작품은 마이페이지에 저장됩니다.`,
-          en: `Choose ${TASTE_GOAL} to finish. They are saved to My Page.`,
-        })}</p>
+        <p>{enough
+          ? t({ ko: "다 골랐습니다. 더 골라도 되고, 아래 완료를 누르면 끝납니다.", en: "That's enough. Keep choosing, or press Done below." })
+          : t({
+            ko: `지구본을 눌러 ${TASTE_GOAL}점을 고르면 끝납니다. 고른 작품은 마이페이지에 저장됩니다.`,
+            en: `Tap the globe on ${TASTE_GOAL} works to finish. They are saved to My Page.`,
+          })}</p>
       </section>
 
       <div className="ob-taste__count" aria-live="polite">
@@ -197,8 +180,8 @@ export default function TasteStep({ uid, ko, meta, onDone }: { uid: string; ko: 
         {card && (
           <figure
             key={card.id}
-            className={`ob-card${leaving ? ` is-${leaving}` : ""}`}
-            style={leaving ? undefined : { transform: `translateX(${dx}px) rotate(${dx / 30}deg)` }}
+            className="ob-card"
+            style={{ transform: `translateX(${dx}px)` }}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
@@ -212,20 +195,24 @@ export default function TasteStep({ uid, ko, meta, onDone }: { uid: string; ko: 
             </figcaption>
           </figure>
         )}
-        {/* the next pictures load while this one is judged */}
         <div className="ob-taste__preload" aria-hidden="true">
-          {upcoming.map((pick) => <img key={pick.id} src={getOptimizedImageUrl(pick.i, 900)} alt="" />)}
+          {around.map((pick) => <img key={pick.id} src={getOptimizedImageUrl(pick.i, 900)} alt="" />)}
         </div>
       </div>
 
       <div className="ob-taste__acts">
-        <button type="button" className="ob-pass" onClick={() => answer("pass")} disabled={!card}>
-          {t({ ko: "넘기기", en: "Skip" })}
+        <button type="button" className="ob-arrow" onClick={() => move(-1)} disabled={!canBack} aria-label={t({ ko: "이전 작품", en: "Previous work" })}>‹</button>
+        <button
+          type="button"
+          className={isLiked ? "ob-like is-on" : "ob-like"}
+          onClick={toggleLike}
+          disabled={!card}
+          aria-pressed={isLiked}
+          aria-label={t({ ko: "좋아요", en: "Like" })}
+        >
+          <LikeIcon liked={isLiked} size={26} strokeWidth={1.8} color="#d4a547" emptyColor="#d4a547" />
         </button>
-        <button type="button" className="ob-like" onClick={() => answer("like")} disabled={!card} aria-label={t({ ko: "좋아요", en: "Like" })}>
-          <LikeIcon liked size={26} strokeWidth={1.8} color="#d4a547" />
-        </button>
-        <span className="ob-taste__hint">{t({ ko: "밀어서도 고를 수 있어요", en: "or swipe" })}</span>
+        <button type="button" className="ob-arrow" onClick={() => move(1)} disabled={!canOn} aria-label={t({ ko: "다음 작품", en: "Next work" })}>›</button>
       </div>
     </div>
   );

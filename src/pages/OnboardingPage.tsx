@@ -10,7 +10,7 @@ import { TransitionBadge } from "../components/DrawingLoader";
 import { getOptimizedImageUrl } from "../utils/imageProxy";
 import type { ProfileImageCrop } from "../types/Profile";
 import { useLanguage } from "../contexts/LanguageContext";
-import TasteStep from "../features/onboarding/TasteStep";
+import TasteStep, { TASTE_GOAL } from "../features/onboarding/TasteStep";
 import "./onboardingRedesign.css";
 
 // Proxy onboarding artwork thumbnails through wsrv.nl at low resolution
@@ -200,6 +200,7 @@ const OnboardingPage: React.FC = () => {
   const [step, setStep] = useState(0); // 0=date, 1=artist, 2=crop, 3=taste (first sign-in only)
   /* not yet onboarded: the taste step follows the profile */
   const [firstTime, setFirstTime] = useState(false);
+  const [tasteCount, setTasteCount] = useState(0);
   const { language } = useLanguage();
 
   const [nickname, setNickname] = useState("");
@@ -687,6 +688,23 @@ const OnboardingPage: React.FC = () => {
   const userYear = birthDateInput.length === 10 ? parseInt(birthDateInput.split('.')[0]) : null;
   const yearMin = 1900;
   const yearMax = Math.max(yearMin + 1, new Date().getFullYear() - 10);
+  const daysInMonth = new Date(birthYear, birthMonth, 0).getDate();
+  useEffect(() => {
+    if (birthDay > daysInMonth) setBirthDay(daysInMonth);
+  }, [birthDay, daysInMonth]);
+
+  /* the birthday is kept before the artist is chosen, so a search by name
+     in the next step starts from a saved birthday */
+  const [savingBirth, setSavingBirth] = useState(false);
+  const saveBirthDate = async () => {
+    if (!user || !canProceedStep1) return;
+    setSavingBirth(true);
+    try {
+      await setDoc(doc(getFirestore(), "users", user.uid), { birthDate: birthDateInput, updatedAt: new Date() }, { merge: true });
+      setSearchByBirthday(true);
+      setStep(1);
+    } catch (err: any) { alert("저장 실패: " + err.message); } finally { setSavingBirth(false); }
+  };
 
   const [isCropDragging, setIsCropDragging] = useState(false);
   const cropLast = useRef({ x: 0, y: 0 });
@@ -717,12 +735,21 @@ const OnboardingPage: React.FC = () => {
   const stepCount = firstTime ? 4 : 3;
   const slideClass = (s: number) => `ob-slide${step === s ? ' is-on' : step > s ? ' is-past' : ''}`;
   const bornArtists = recommendedArtists.slice(0, 6);
+  const decades = Array.from({ length: Math.floor(yearMax / 10) - Math.floor(yearMin / 10) + 1 }, (_, i) => Math.floor(yearMin / 10) * 10 + i * 10);
+  const birthDecade = Math.floor(birthYear / 10) * 10;
+  const pickDecade = (d: number) => setBirthYear(Math.min(yearMax, Math.max(yearMin, d + (birthYear % 10))));
+  const nav = [
+    { label: '다음', disabled: !canProceedStep1 || savingBirth, go: saveBirthDate },
+    { label: '다음', disabled: !selectedImage, go: () => selectedImage && setStep(2) },
+    { label: loading ? '저장 중' : firstTime ? '다음' : '저장하기', disabled: loading || !selectedImage, go: handleSubmit },
+    { label: tasteCount >= TASTE_GOAL ? '완료' : `${tasteCount} / ${TASTE_GOAL}`, disabled: tasteCount < TASTE_GOAL, go: finishOnboarding },
+  ][step];
   const photoOf = (artist: any) => thumbUrl(artist?.artworks?.[0] || artist?.image || '', 120);
 
   return (
     <div className="ob">
       <div className="ob-top">
-        <button type="button" className="ob-top__mark" onClick={() => setStep(step - 1)} aria-label="뒤로" hidden={step === 0 || step === 3}>←</button>
+        <span className="ob-top__mark" aria-hidden="true" />
         <ol className="ob-steps" aria-label={`${step + 1} / ${stepCount}`}>
           {Array.from({ length: stepCount }, (_, i) => <li key={i} className={step >= i ? 'is-on' : ''} />)}
         </ol>
@@ -740,20 +767,17 @@ const OnboardingPage: React.FC = () => {
             </section>
 
             <div className="ob-field">
-              <div className="ob-label"><span>태어난 해</span></div>
-              <div className="ob-year">
-                <input
-                  type="range"
-                  className="ob-range"
-                  id="birth-year-range"
-                  name="birthYear"
-                  min={yearMin}
-                  max={yearMax}
-                  value={birthYear}
-                  onChange={(e) => setBirthYear(Number(e.target.value))}
-                  aria-label="태어난 해"
-                />
-                <b>{birthYear}</b>
+              <div className="ob-label"><span>태어난 해</span><b className="ob-label__value">{birthYear}</b></div>
+              {/* a decade, then the year in it - two taps, no slider */}
+              <div className="ob-grid ob-grid--decade" role="group" aria-label="연대">
+                {decades.map((d) => (
+                  <button key={d} type="button" aria-pressed={birthDecade === d} onClick={() => pickDecade(d)}>{d}</button>
+                ))}
+              </div>
+              <div className="ob-grid ob-grid--year" role="group" aria-label="태어난 해">
+                {Array.from({ length: 10 }, (_, i) => birthDecade + i).map((y) => (
+                  <button key={y} type="button" aria-pressed={birthYear === y} disabled={y < yearMin || y > yearMax} onClick={() => setBirthYear(y)}>{y}</button>
+                ))}
               </div>
             </div>
 
@@ -769,7 +793,7 @@ const OnboardingPage: React.FC = () => {
             <div className="ob-field">
               <div className="ob-label"><span>일</span></div>
               <div className="ob-grid ob-grid--d">
-                {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                {Array.from({ length: daysInMonth }, (_, i) => i + 1).map((d) => (
                   <button key={d} type="button" aria-pressed={birthDay === d} onClick={() => setBirthDay(d)}>{d}</button>
                 ))}
               </div>
@@ -789,25 +813,6 @@ const OnboardingPage: React.FC = () => {
               </div>
             )}
 
-            <div className="ob-actions">
-              <button
-                type="button"
-                className="ob-next"
-                disabled={!canProceedStep1}
-                onClick={() => { if (canProceedStep1) { setSearchByBirthday(true); setStep(1); } }}
-              >
-                <span>나의 예술가 찾기</span>
-                <span className="ob-next__go" aria-hidden="true"><i /></span>
-              </button>
-              <button
-                type="button"
-                className="ob-alt"
-                onClick={() => { setSearchByBirthday(false); setArtistSearchQuery(''); setStep(1); }}
-              >
-                <span>작가를 이름으로 찾기<small>좋아하는 작가가 따로 있다면</small></span>
-                <span className="ob-next__go" aria-hidden="true"><i /></span>
-              </button>
-            </div>
           </div>
         </div>
 
@@ -877,12 +882,6 @@ const OnboardingPage: React.FC = () => {
               <p className="ob-empty">{artistDataLoading ? '작가 정보를 불러오는 중입니다.' : '고를 수 있는 작품이 없습니다.'}</p>
             )}
 
-            <div className="ob-actions ob-sticky">
-              <button type="button" className="ob-next" onClick={() => selectedImage && setStep(2)} disabled={!selectedImage}>
-                <span>{selectedImage ? '이 작품으로' : '작품을 하나 고르세요'}</span>
-                <span className="ob-next__go" aria-hidden="true"><i /></span>
-              </button>
-            </div>
           </div>
         </div>
 
@@ -953,23 +952,28 @@ const OnboardingPage: React.FC = () => {
               </div>
             )}
 
-            <div className="ob-actions">
-              <button type="button" className="ob-next" onClick={handleSubmit} disabled={loading || !selectedImage}>
-                <span>{loading ? '저장 중' : firstTime ? '다음' : '저장하기'}</span>
-                <span className="ob-next__go" aria-hidden="true"><i /></span>
-              </button>
-            </div>
           </div>
         </div>
 
         {firstTime && (
           <div className={slideClass(3)}>
-            <div className="ob-col">
-              {step === 3 && user && <TasteStep uid={user.uid} ko={language === 'ko'} meta={`COLLY · 시작하기 4/${stepCount}`} onDone={finishOnboarding} />}
+            <div className="ob-col ob-col--fill">
+              {step === 3 && user && <TasteStep uid={user.uid} ko={language === 'ko'} meta={`COLLY · 시작하기 4/${stepCount}`} onCount={setTasteCount} />}
             </div>
           </div>
         )}
       </div>
+
+      {/* back and on, in the same place on every step: back at the left, on at the right */}
+      <nav className="ob-nav" aria-label="단계 이동">
+        <button type="button" className="ob-nav__back" onClick={() => setStep(step - 1)} hidden={step === 0}>
+          <span aria-hidden="true">←</span>이전
+        </button>
+        <button type="button" className="ob-nav__next" onClick={nav.go} disabled={nav.disabled}>
+          {nav.label}
+          <span className="ob-next__go" aria-hidden="true"><i /></span>
+        </button>
+      </nav>
 
       <TransitionBadge show={artistDataLoading && step === 1} />
     </div>
