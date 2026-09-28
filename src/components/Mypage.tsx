@@ -1924,6 +1924,7 @@ const MyPage: React.FC = () => {
 
   const [displayedCount, setDisplayedCount] = useState(initialBatchSize);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLElement>(null);
 
   const leaving = useRef({ tab: viewMode, sort: sortMode, scrollTop: 0, count: displayedCount });
   leaving.current = { ...leaving.current, tab: viewMode, sort: sortMode, count: displayedCount };
@@ -2506,6 +2507,12 @@ const MyPage: React.FC = () => {
     const el = scrollContainerRef.current;
     if (!el) return;
     leaving.current.scrollTop = el.scrollTop;
+    // the tab row covers the status bar only once it has stuck under it
+    const tabsEl = tabsRef.current;
+    if (tabsEl) {
+      const stuckAt = el.getBoundingClientRect().top + parseFloat(getComputedStyle(tabsEl).top || "0");
+      tabsEl.classList.toggle("is-stuck", tabsEl.getBoundingClientRect().top <= stuckAt + 0.5);
+    }
     
     // Start loading early and in smaller chunks for smoother visual cadence.
     if (el.scrollHeight - el.scrollTop - el.clientHeight < 1800) {
@@ -2633,6 +2640,15 @@ const MyPage: React.FC = () => {
           </div>
           <div className="mp-stage__name">
             <h1 className="mp-name">{displayName}</h1>
+            <button
+              type="button"
+              className="mp-edit"
+              onClick={() => navigate("/onboarding")}
+              aria-label={t({ ko: "프로필 편집", en: "Edit profile" })}
+              title={t({ ko: "프로필 편집", en: "Edit profile" })}
+            >
+              <Pencil size={15} strokeWidth={1.8} aria-hidden="true" />
+            </button>
           </div>
           <p className="mp-meta">
             {user?.email && (
@@ -2643,12 +2659,6 @@ const MyPage: React.FC = () => {
             )}
             <span className="mp-score">{t({ ko: "점수", en: "Score" })} <b>{userScore.toLocaleString()}</b></span>
           </p>
-          <div className="mp-actions">
-            <button type="button" className="mp-act" onClick={() => navigate("/onboarding")} title={t({ ko: "프로필 편집", en: "Edit profile" })}>
-              <Pencil size={12} strokeWidth={2} aria-hidden="true" />
-              {t({ ko: "편집", en: "Edit" })}
-            </button>
-          </div>
         </div>
 
         <div className="mp-stage__foot">
@@ -2730,9 +2740,9 @@ const MyPage: React.FC = () => {
         </section>
       </section>
 
-      {/* The six counted tabs spread over the whole width and stick to the top,
-          their background covering the status-bar band too. */}
-      <nav className="mp-tabs" role="tablist" aria-label={t({ ko: "나의 기록", en: "My collections" })}>
+      {/* The six counted tabs spread over the whole width and stick under the
+          status bar; once stuck, their background covers that band too. */}
+      <nav className="mp-tabs" ref={tabsRef} role="tablist" aria-label={t({ ko: "나의 기록", en: "My collections" })}>
         {tabs.map((tab) => {
           const active = viewMode === tab.id;
           return (

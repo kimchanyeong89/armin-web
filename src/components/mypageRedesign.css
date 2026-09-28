@@ -66,7 +66,7 @@
 /* as tall as what stands on it: the page top, the owner, the playlists - no
    more, so the saved works below show on arrival */
 .mp-stage { position: relative; isolation: isolate; display: grid; align-content: end;
-  padding: var(--page-top) var(--mp-pad) 18px; }
+  padding: var(--page-top) var(--mp-pad) 14px; }
 /* over the playlists and the tabs while the background picker is open */
 .mp-stage.is-picking { z-index: 6; }
 .mp-stage__cover { position: absolute; inset: 0; z-index: -2; display: block; width: 100%; height: 100%; object-fit: cover;
@@ -120,7 +120,10 @@
 .mp-email { overflow-wrap: anywhere; }
 .mp-score { font-family: var(--mp-mono); font-size: 10.5px; letter-spacing: .06em; color: var(--mp-ink-3); white-space: nowrap; }
 .mp-score b { font-weight: 700; color: var(--mp-gold); }
-.mp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; }
+/* the edit mark beside the name: a pencil alone, gold on hover */
+.mp .mp-edit { flex: none; display: grid; place-items: center; padding: 6px; margin: 0 -6px; color: var(--mp-ink-3);
+  transition: color .16s ease; }
+.mp .mp-edit:hover { color: var(--mp-gold); }
 /* a mark and a word, gold under the pointer, as the board's actions */
 .mp .mp-act { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--mp-ink-2);
   white-space: nowrap; transition: color .16s ease; }
@@ -152,31 +155,36 @@
 /* ── My Playlists, under the stage ── */
 /* inside the stage now, on the cover, under the playlists line */
 .mp-lists { padding-top: 12px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 56px); }
-.mp-lists ul { display: flex; gap: 12px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+.mp-lists ul { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
 .mp-lists ul::-webkit-scrollbar { display: none; }
 /* a playlist: its cover with softened corners, as the exhibition and museum
    cards are cut, and a round share mark on it */
 .mp-list { position: relative; }
-.mp .mp-list__open { display: grid; gap: 6px; text-align: left; }
-.mp .mp-list__share { position: absolute; top: 4px; right: 4px; z-index: 2; display: grid; place-items: center; width: 22px; height: 22px;
+.mp .mp-list__open { display: grid; gap: 5px; text-align: left; }
+.mp .mp-list__share { position: absolute; top: 3px; right: 3px; z-index: 2; display: grid; place-items: center; width: 20px; height: 20px;
   border-radius: 50%; background: rgba(0,0,0,.56); color: #fff; transition: background .16s ease, color .16s ease; }
 .mp .mp-list__share:hover { background: rgba(0,0,0,.74); }
 .mp .mp-list__share[data-on] { color: var(--mp-gold); }
-.mp-list__shot { display: block; width: 76px; aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: var(--mp-rule); }
+.mp-list__shot { display: block; width: 60px; aspect-ratio: 1; overflow: hidden; border-radius: 7px; background: var(--mp-rule); }
 .mp-list__shot > * { filter: saturate(.72); transition: filter .3s ease; }
 .mp-list:hover .mp-list__shot > *, .mp-list.is-open .mp-list__shot > * { filter: none; }
-.mp-list__text { display: grid; gap: 2px; width: 76px; min-width: 0; }
-.mp-list__text b { font-family: var(--mp-display); font-size: 12px; font-weight: 600; color: var(--mp-ink); white-space: nowrap;
+.mp-list__text { display: grid; gap: 1px; width: 60px; min-width: 0; }
+.mp-list__text b { font-family: var(--mp-display); font-size: 11px; font-weight: 600; color: var(--mp-ink); white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
 .mp-list:hover .mp-list__text b, .mp-list.is-open .mp-list__text b { color: var(--mp-gold); }
-.mp-list__text small { font-family: var(--mp-mono); font-size: 9.5px; letter-spacing: .04em; color: var(--mp-ink-3); }
+.mp-list__text small { font-family: var(--mp-mono); font-size: 9px; letter-spacing: .04em; color: var(--mp-ink-3); }
 .mp-list__text small em { font-style: normal; color: var(--mp-gold); }
 .mp-lists__empty { font-size: 12px; color: var(--mp-ink-3); }
 
 /* ── the six counted tabs: over the whole width, each centred in its share ── */
-.mp-tabs { position: sticky; top: 0; z-index: 5; display: flex; overflow-x: auto; scrollbar-width: none;
-  padding: env(safe-area-inset-top, 0px) var(--mp-pad) 0; background: rgba(8,8,8,.95);
+/* no top padding: on a notched phone that padding opened a status-bar-high
+   gap under the playlists. The band over the status bar is drawn only once
+   the row has stuck (is-stuck, set on scroll). */
+.mp-tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; overflow-x: auto; scrollbar-width: none;
+  padding: 0 var(--mp-pad); background: rgba(8,8,8,.95);
   -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-bottom: 1px solid var(--mp-rule); }
+.mp-tabs.is-stuck { box-shadow: 0 calc(-1 * env(safe-area-inset-top, 0px)) 0 0 rgba(8,8,8,.95); }
+.mp.is-light .mp-tabs.is-stuck { box-shadow: 0 calc(-1 * env(safe-area-inset-top, 0px)) 0 0 rgba(250,250,250,.95); }
 .mp-tabs::-webkit-scrollbar { display: none; }
 .mp.is-light .mp-tabs { background: rgba(250,250,250,.95); }
 .mp .mp-tabs button { position: relative; flex: 1 0 auto; display: inline-flex; flex-direction: row-reverse; align-items: baseline;
