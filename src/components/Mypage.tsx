@@ -2229,8 +2229,8 @@ const MyPage: React.FC = () => {
     let artistName: string | undefined;
     let objectPosition: string | undefined;
     let fallback: React.ReactNode = null;
-    /* an artist card is round, and its name carries the card */
-    let roundArt = false;
+    /* an artist card shows the whole portrait plate, and its name carries the card */
+    let artistCard = false;
 
     if (viewMode === "exhibitions") {
       const standing = standingCollectionOf(rawItem);
@@ -2269,9 +2269,9 @@ const MyPage: React.FC = () => {
       subtitleNode = <ArtistWorkCount name={artistName} saved={works} ko={ko} />;
       sources = [artistPortrait(artistPortraits, artistName, isMobile ? 320 : 480), rawItem.image];
       /* a portrait is framed for the face, not the middle of the plate */
-      objectPosition = "center 28%";
+      objectPosition = "center 20%";
       fallback = <ArtistInitial name={title} color={markColor} accent={lime} />;
-      roundArt = true;
+      artistCard = true;
     }
 
     return (
@@ -2293,40 +2293,17 @@ const MyPage: React.FC = () => {
             display: "grid",
             placeItems: "center",
             overflow: "hidden",
-            background: roundArt ? "transparent" : isLightTheme ? "#f1f1f1" : "#151515",
+            background: isLightTheme ? "#f1f1f1" : "#151515",
           }}
         >
-          {roundArt ? (
-            <span
-              style={{
-                display: "grid",
-                placeItems: "center",
-                width: "64%",
-                aspectRatio: "1",
-                borderRadius: "50%",
-                overflow: "hidden",
-                background: isLightTheme ? "#ececec" : "#1b1b1b",
-              }}
-            >
-              <SavedArt
-                sources={sources}
-                artistName={artistName}
-                alt={title}
-                width={isMobile ? 240 : 400}
-                objectPosition={objectPosition}
-                fallback={fallback}
-              />
-            </span>
-          ) : (
-            <SavedArt
-              sources={sources}
-              artistName={artistName}
-              alt={title}
-              width={isMobile ? 240 : 400}
-              objectPosition={objectPosition}
-              fallback={fallback}
-            />
-          )}
+          <SavedArt
+            sources={sources}
+            artistName={artistName}
+            alt={title}
+            width={isMobile ? 240 : 400}
+            objectPosition={objectPosition}
+            fallback={fallback}
+          />
         </div>
 
         <button
@@ -2355,7 +2332,7 @@ const MyPage: React.FC = () => {
           <Heart size={13} strokeWidth={2.1} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
         </button>
 
-        <div style={{ padding: roundArt ? "4px 9px 12px" : "8px 9px", textAlign: roundArt ? "center" : "left" }}>
+        <div style={{ padding: artistCard ? "4px 9px 12px" : "8px 9px", textAlign: artistCard ? "center" : "left" }}>
           {kicker && (
             <div
               style={{
@@ -2371,10 +2348,10 @@ const MyPage: React.FC = () => {
             </div>
           )}
           <div
-            className={roundArt ? "mp-name" : undefined}
+            className={artistCard ? "mp-name" : undefined}
             style={{
-              fontSize: roundArt ? (isMobile ? 13 : 15) : 12,
-              fontWeight: roundArt ? 700 : 600,
+              fontSize: artistCard ? (isMobile ? 13 : 15) : 12,
+              fontWeight: artistCard ? 700 : 600,
               lineHeight: 1.25,
               color: pageText,
               whiteSpace: "nowrap",
@@ -2386,10 +2363,10 @@ const MyPage: React.FC = () => {
           </div>
           <div
             style={{
-              marginTop: roundArt ? 4 : 2,
+              marginTop: artistCard ? 4 : 2,
               fontSize: 10,
-              fontFamily: roundArt ? "'Space Mono', monospace" : undefined,
-              letterSpacing: roundArt ? "0.04em" : undefined,
+              fontFamily: artistCard ? "'Space Mono', monospace" : undefined,
+              letterSpacing: artistCard ? "0.04em" : undefined,
               color: subText,
               whiteSpace: "nowrap",
               overflow: "hidden",
