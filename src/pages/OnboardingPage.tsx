@@ -9,6 +9,9 @@ import { getWorkerNetworkMode } from "../utils/network";
 import { TransitionBadge } from "../components/DrawingLoader";
 import { getOptimizedImageUrl } from "../utils/imageProxy";
 import type { ProfileImageCrop } from "../types/Profile";
+import { useLanguage } from "../contexts/LanguageContext";
+import TasteStep from "../features/onboarding/TasteStep";
+import "./onboardingRedesign.css";
 
 // Proxy onboarding artwork thumbnails through wsrv.nl at low resolution
 // so the picker grid loads quickly on mobile data, regardless of the
@@ -194,19 +197,10 @@ const OnboardingPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Compact layout when running inside the mobile WebView so the entire
-  // birthday step fits on a single screen without scrolling.
-  const [isMobile, setIsMobile] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.innerWidth < 768;
-  });
-  useEffect(() => {
-    const handler = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handler);
-    return () => window.removeEventListener("resize", handler);
-  }, []);
-
-  const [step, setStep] = useState(0); // 0=date, 1=artist, 2=crop
+  const [step, setStep] = useState(0); // 0=date, 1=artist, 2=crop, 3=taste (first sign-in only)
+  /* not yet onboarded: the taste step follows the profile */
+  const [firstTime, setFirstTime] = useState(false);
+  const { language } = useLanguage();
 
   const [nickname, setNickname] = useState("");
   const [birthDateInput, setBirthDateInput] = useState("");
@@ -324,6 +318,10 @@ const OnboardingPage: React.FC = () => {
         if (data.soulmateArtist || data.photoURL) {
           initialUserPref.current = { artistName: data.soulmateArtist, photoURL: data.photoURL, crop: data.profileImageCrop };
         }
+        /* a member who finished the profile but left during taste goes straight back to it */
+        const onboarded = !!data.isOnboarded;
+        setFirstTime(!onboarded);
+        if (!onboarded && data.birthDate && data.photoURL) setStep(3);
       };
       loadUser();
     }
@@ -607,16 +605,29 @@ const OnboardingPage: React.FC = () => {
     setLoading(true);
     try {
       const db = getFirestore();
+      /* on a first sign-in the profile is kept now and the member is
+         onboarded only when the taste step ends */
       await setDoc(doc(db, "users", user.uid), {
         nickname: safeNickname, birthDate: birthDateInput, photoURL: selectedImage,
-        displayName: safeNickname, email: user.email, isOnboarded: true,
+        displayName: safeNickname, email: user.email, ...(firstTime ? {} : { isOnboarded: true }),
         updatedAt: new Date(), soulmateArtist: selectedArtist ? selectedArtist.name : null,
         profileImageCrop: normalizedCrop
       }, { merge: true });
       try { await updateProfile(user, { displayName: safeNickname, photoURL: selectedImage || "" }); } catch (e) { }
       window.dispatchEvent(new CustomEvent('profile-updated'));
-      navigate('/', { replace: true });
+      if (firstTime) setStep(3);
+      else navigate('/', { replace: true });
     } catch (err: any) { alert("저장 실패: " + err.message); } finally { setLoading(false); }
+  };
+
+  const finishOnboarding = async () => {
+    if (!user) return;
+    try {
+      await setDoc(doc(getFirestore(), "users", user.uid), { isOnboarded: true, updatedAt: new Date() }, { merge: true });
+      sessionStorage.setItem(`onboarded_${user.uid}`, 'true');
+      window.dispatchEvent(new CustomEvent('profile-updated'));
+      navigate('/mypage', { replace: true });
+    } catch (err: any) { alert("저장 실패: " + err.message); }
   };
 
   // ── Artist navigation (simple prev/next, no drag) ──────────────
@@ -674,7 +685,6 @@ const OnboardingPage: React.FC = () => {
   const canProceedStep1 = birthDateInput.length === 10;
   const artistYear = selectedArtist?.deathYear;
   const userYear = birthDateInput.length === 10 ? parseInt(birthDateInput.split('.')[0]) : null;
-  const selectedArtistYearsAgo = artistYear ? Math.max(1, Math.abs(birthYear - artistYear)) : null;
   const yearMin = 1900;
   const yearMax = Math.max(yearMin + 1, new Date().getFullYear() - 10);
 
@@ -700,504 +710,229 @@ const OnboardingPage: React.FC = () => {
     setIsCropDragging(false);
   };
 
-  // ── Step slide style ───────────────────────────────────────────
-  // Slides absolute-fill their parent (the slideContainer below) so the
-  // shell's flex layout determines the actual height. Previously each
-  // slide had a hard-coded `top: 76px` which was correct for Android (no
-  // safe-area-inset on the page) but meant the slide overlapped the
-  // header on iOS, where env(safe-area-inset-top) pushes everything
-  // ~47–59 px lower. Letting the parent size the slide fixes both.
-  const slide = (s: number): React.CSSProperties => ({
-    position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
-    opacity: step === s ? 1 : 0,
-    transform: step === s ? 'translateY(0)' : step > s ? 'translateY(-24px)' : 'translateY(24px)',
-    transition: 'opacity 0.45s cubic-bezier(0.25,1,0.5,1), transform 0.45s cubic-bezier(0.25,1,0.5,1)',
-    pointerEvents: step === s ? 'auto' : 'none',
-  });
-
-  // 44×44 is the iOS HIG / Android Material minimum hit target.
-  const HEADER_BTN_STYLE: React.CSSProperties = {
-    background: 'none',
-    border: 'none',
-    color: DIM,
-    fontFamily: MONO,
-    fontSize: 18,
-    cursor: 'pointer',
-    minWidth: 44,
-    minHeight: 44,
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 0,
-  };
+  // ── Render ─────────────────────────────────────────────────────
+  // Four steps on a first sign-in (birthday, a work for the photo, its crop,
+  // then taste); three when the profile is edited later. Each slide is its
+  // own scrolling column so the page itself never moves.
+  const stepCount = firstTime ? 4 : 3;
+  const slideClass = (s: number) => `ob-slide${step === s ? ' is-on' : step > s ? ' is-past' : ''}`;
+  const bornArtists = recommendedArtists.slice(0, 6);
+  const photoOf = (artist: any) => thumbUrl(artist?.artworks?.[0] || artist?.image || '', 120);
 
   return (
-    <div
-      className="onboarding-shell"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: BG,
-        zIndex: 1000,
-        fontFamily: MONO,
-        color: TEXT,
-        overflowX: 'hidden',
-        overflowY: 'hidden',
-        paddingTop: 'env(safe-area-inset-top)',
-        // Flex column lets header + progress bar take their natural
-        // height and the slide container claim the rest. No hard-coded
-        // top offset that has to guess each platform's safe-area.
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: isMobile ? '4px 8px' : '8px 12px', borderBottom: `1px solid ${DIMMER}`, flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          {step > 0 && (
-            <button
-              onClick={() => setStep(step - 1)}
-              aria-label="Back"
-              style={HEADER_BTN_STYLE}
-            >
-              ←
-            </button>
-          )}
-          <div style={{ width: 6, height: 6, background: ACCENT, marginLeft: step > 0 ? 0 : 12 }} />
-          <span style={{ fontSize: 10, letterSpacing: '0.25em', color: DIM }}>{'프로필 설정'}</span>
-        </div>
-        <button
-          onClick={() => navigate('/')}
-          aria-label="Close"
-          style={HEADER_BTN_STYLE}
-        >
-          ×
-        </button>
+    <div className="ob">
+      <div className="ob-top">
+        <button type="button" className="ob-top__mark" onClick={() => setStep(step - 1)} aria-label="뒤로" hidden={step === 0 || step === 3}>←</button>
+        <ol className="ob-steps" aria-label={`${step + 1} / ${stepCount}`}>
+          {Array.from({ length: stepCount }, (_, i) => <li key={i} className={step >= i ? 'is-on' : ''} />)}
+        </ol>
+        {/* the taste step is the way in; it has no way out but finishing */}
+        <button type="button" className="ob-top__mark" onClick={() => navigate('/')} aria-label="닫기" hidden={step === 3}>×</button>
       </div>
 
-      <div style={{ display: 'flex', gap: 3, padding: '10px 20px 0', flexShrink: 0 }}>
-        {[0, 1, 2].map((idx) => (
-          <div
-            key={idx}
-            style={{
-              flex: 1,
-              height: 2,
-              borderRadius: 1,
-              background: step >= idx ? ACCENT : DIMMER,
-              transition: 'background-color 0.25s ease',
-            }}
-          />
-        ))}
-      </div>
+      <div className="ob-slides">
+        <div className={slideClass(0)}>
+          <div className="ob-col">
+            <section className="ob-statement">
+              <p className="ob-statement__meta">{`COLLY · 시작하기 1/${stepCount}`}</p>
+              <h1>{'생일을\n알려 주세요.'}</h1>
+              <p>생일 무렵 세상을 떠난 예술가를 찾아, 그 작품으로 프로필 사진을 꾸밉니다.</p>
+            </section>
 
-      {/* Slide container fills the remaining flex space and acts as the
-          positioning parent for each absolute-positioned slide. */}
-      <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
-
-      <div className="onboarding-scroll" style={{ ...slide(0), overflowY: 'auto' }}>
-        <div
-          style={{
-            width: '100%',
-            maxWidth: 560,
-            margin: '0 auto',
-            padding: isMobile ? '14px 16px 20px' : '28px 20px 40px',
-            boxSizing: 'border-box',
-          }}
-        >
-          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: isMobile ? 6 : 10 }}>STEP 1 OF 3</p>
-          <h2 style={{ fontSize: isMobile ? 22 : 'clamp(27px,6vw,36px)', letterSpacing: '-0.02em', lineHeight: 1.25, margin: isMobile ? '0 0 6px' : '0 0 8px' }}>
-            생년월일을 알려주세요
-          </h2>
-          <p style={{ fontSize: isMobile ? 11 : 13, color: DIM, lineHeight: 1.5, marginBottom: isMobile ? 18 : 24 }}>
-            태어난 해와 날에 맞는 예술가를 찾아드립니다.
-          </p>
-
-          <div style={{ marginBottom: isMobile ? 14 : 18 }}>
-            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: isMobile ? 4 : 8 }}>출생 연도</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <input
-                type="range"
-                id="birth-year-range"
-                name="birthYear"
-                min={yearMin}
-                max={yearMax}
-                value={birthYear}
-                onChange={(e) => setBirthYear(Number(e.target.value))}
-                style={{ flex: 1, accentColor: ACCENT, height: 4, cursor: 'pointer' }}
-              />
-              <div style={{ minWidth: isMobile ? 54 : 62, textAlign: 'center', padding: isMobile ? '5px 8px' : '8px 12px', borderRadius: 8, border: `1.5px solid ${ACCENT}`, color: ACCENT, fontSize: isMobile ? 13 : 16, fontWeight: 700 }}>
-                {birthYear}
+            <div className="ob-field">
+              <div className="ob-label"><span>태어난 해</span></div>
+              <div className="ob-year">
+                <input
+                  type="range"
+                  className="ob-range"
+                  id="birth-year-range"
+                  name="birthYear"
+                  min={yearMin}
+                  max={yearMax}
+                  value={birthYear}
+                  onChange={(e) => setBirthYear(Number(e.target.value))}
+                  aria-label="태어난 해"
+                />
+                <b>{birthYear}</b>
               </div>
             </div>
-          </div>
 
-          <div style={{ marginBottom: isMobile ? 8 : 14 }}>
-            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: isMobile ? 4 : 8 }}>월</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: isMobile ? 4 : 6 }}>
-              {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
-                const active = birthMonth === m;
-                return (
-                  <button
-                    key={m}
-                    onClick={() => setBirthMonth(m)}
-                    style={{
-                      padding: isMobile ? '6px 2px' : '10px 6px',
-                      borderRadius: 7,
-                      border: `1px solid ${active ? ACCENT : DIMMER}`,
-                      background: active ? 'rgba(212,165,71,0.10)' : 'rgba(255,255,255,0.07)',
-                      color: active ? ACCENT : 'rgba(255,255,255,0.62)',
-                      fontSize: isMobile ? 10 : 11,
-                      fontWeight: active ? 700 : 400,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {m}월
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          <div style={{ marginBottom: isMobile ? 12 : 24 }}>
-            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: isMobile ? 4 : 8 }}>일</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: isMobile ? 4 : 6 }}>
-              {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => {
-                const active = birthDay === d;
-                return (
-                  <button
-                    key={d}
-                    onClick={() => setBirthDay(d)}
-                    style={{
-                      padding: isMobile ? '6px 2px' : '9px 4px',
-                      borderRadius: 7,
-                      border: `1px solid ${active ? ACCENT : DIMMER}`,
-                      background: active ? 'rgba(212,165,71,0.10)' : 'rgba(255,255,255,0.07)',
-                      color: active ? ACCENT : 'rgba(255,255,255,0.62)',
-                      fontSize: isMobile ? 10 : 11,
-                      fontWeight: active ? 700 : 400,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {d}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {recommendedArtists.length > 0 && (
-            <div style={{ padding: isMobile ? '10px 12px' : '12px 14px', borderRadius: 10, marginBottom: isMobile ? 14 : 16, background: 'rgba(212,165,71,0.06)', border: '1px solid rgba(212,165,71,0.14)' }}>
-              <div style={{ fontSize: 8, letterSpacing: '0.18em', color: ACCENT, marginBottom: isMobile ? 6 : 8 }}>
-                {birthMonth}월 {birthDay}일, {Math.max(1, new Date().getFullYear() - birthYear)}년 전 예술가들
-              </div>
-              <div style={{ display: 'flex', gap: isMobile ? 10 : 10 }}>
-                {recommendedArtists.slice(0, 4).map((artist, idx) => (
-                  <div key={artist.name || idx} style={{ textAlign: 'center' }}>
-                    <div style={{ width: isMobile ? 32 : 36, height: isMobile ? 32 : 36, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 4px', border: `1px solid ${DIMMER}` }}>
-                      <img src={thumbUrl(artist.artworks?.[0] || artist.image || '', 96)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    </div>
-                    <div style={{ fontSize: 8, color: TEXT, whiteSpace: 'nowrap' }}>{String(artist.name || '').split(' ')[0]}</div>
-                    <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)' }}>#{idx + 1}</div>
-                  </div>
+            <div className="ob-field">
+              <div className="ob-label"><span>월</span></div>
+              <div className="ob-grid ob-grid--m">
+                {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
+                  <button key={m} type="button" aria-pressed={birthMonth === m} onClick={() => setBirthMonth(m)}>{m}</button>
                 ))}
               </div>
             </div>
-          )}
 
-          <button
-            onClick={() => { if (canProceedStep1) { setSearchByBirthday(true); setStep(1); } }}
-            style={{ width: '100%', padding: isMobile ? '13px' : '14px', borderRadius: 10, background: ACCENT, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: 'pointer', marginBottom: isMobile ? 10 : 12 }}
-          >
-            나의 예술가 찾기 →
-          </button>
+            <div className="ob-field">
+              <div className="ob-label"><span>일</span></div>
+              <div className="ob-grid ob-grid--d">
+                {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => (
+                  <button key={d} type="button" aria-pressed={birthDay === d} onClick={() => setBirthDay(d)}>{d}</button>
+                ))}
+              </div>
+            </div>
 
-          <button
-            onClick={() => { setSearchByBirthday(false); setArtistSearchQuery(''); setStep(1); }}
-            style={{
-              width: '100%',
-              padding: isMobile ? '12px 14px' : '15px 16px',
-              borderRadius: 10,
-              border: '1.5px solid rgba(212,165,71,0.62)',
-              background: 'linear-gradient(180deg, rgba(212,165,71,0.16), rgba(212,165,71,0.10))',
-              color: '#E9FFAA',
-              fontSize: isMobile ? 13 : 13,
-              fontWeight: 700,
-              cursor: 'pointer',
-              textAlign: 'left',
-              boxShadow: '0 8px 18px rgba(212,165,71,0.13)',
-            }}
-          >
-            작가 직접 검색하기
-            <div style={{ fontSize: isMobile ? 10 : 10, color: 'rgba(233,255,170,0.84)', marginTop: 2 }}>이름으로 빠르게 찾기</div>
-          </button>
-        </div>
-      </div>
+            {bornArtists.length > 0 && (
+              <div>
+                <div className="ob-label"><span>{`${birthMonth}월 ${birthDay}일 무렵 세상을 떠난 예술가`}</span></div>
+                <div className="ob-born">
+                  {bornArtists.map((artist, idx) => (
+                    <figure key={artist.name || idx}>
+                      <img src={photoOf(artist)} alt="" loading="lazy" decoding="async" />
+                      <figcaption>{String(artist.name || '').split(' ')[0]}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            )}
 
-      <div className="onboarding-scroll" style={{ ...slide(1), overflowY: 'auto', overflowX: 'hidden' }}>
-        <div
-          style={{
-            width: '100%',
-            maxWidth: 560,
-            margin: '0 auto',
-            padding: isMobile ? '14px 16px 20px' : '24px 20px 34px',
-            boxSizing: 'border-box',
-          }}
-        >
-          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: isMobile ? 8 : 10 }}>STEP 2 OF 3</p>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isMobile ? 10 : 14, gap: 10 }}>
-            <h2 style={{ margin: 0, fontSize: isMobile ? 18 : 'clamp(21px,5vw,29px)', letterSpacing: '-0.02em', lineHeight: 1.24, minWidth: 0, flex: 1 }}>
-              {birthMonth}월 {birthDay}일, {birthYear}년으로부터 {selectedArtistYearsAgo ? ` ${selectedArtistYearsAgo}년 전` : ''}
-            </h2>
-            <button
-              onClick={() => setSearchByBirthday((prev) => !prev)}
-              style={{ border: '1.5px solid rgba(212,165,71,0.65)', borderRadius: 999, background: 'rgba(212,165,71,0.15)', color: '#E9FFAA', fontSize: 11, fontWeight: 700, padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}
-            >
-              {searchByBirthday ? '직접 검색' : '생년 기반'}
-            </button>
+            <div className="ob-actions">
+              <button
+                type="button"
+                className="ob-next"
+                disabled={!canProceedStep1}
+                onClick={() => { if (canProceedStep1) { setSearchByBirthday(true); setStep(1); } }}
+              >
+                <span>나의 예술가 찾기</span>
+                <span className="ob-next__go" aria-hidden="true"><i /></span>
+              </button>
+              <button
+                type="button"
+                className="ob-alt"
+                onClick={() => { setSearchByBirthday(false); setArtistSearchQuery(''); setStep(1); }}
+              >
+                <span>작가를 이름으로 찾기<small>좋아하는 작가가 따로 있다면</small></span>
+                <span className="ob-next__go" aria-hidden="true"><i /></span>
+              </button>
+            </div>
           </div>
+        </div>
 
-          {!searchByBirthday && (
-            <div style={{ marginBottom: 12 }}>
+        <div className={slideClass(1)}>
+          <div className="ob-col">
+            <section className="ob-statement ob-statement--tight">
+              <p className="ob-statement__meta">{`COLLY · 시작하기 2/${stepCount}`}</p>
+              <div className="ob-head">
+                <h1>{searchByBirthday ? '프로필에 쓸\n작품을 고르세요.' : '작가를 찾아\n작품을 고르세요.'}</h1>
+                <button type="button" className="ob-switch" onClick={() => setSearchByBirthday((prev) => !prev)}>
+                  {searchByBirthday ? '이름으로 찾기' : '생일로 찾기'}
+                </button>
+              </div>
+              {searchByBirthday && (
+                <p>{`${birthMonth}월 ${birthDay}일 무렵 세상을 떠난 예술가들입니다.`}</p>
+              )}
+            </section>
+
+            {!searchByBirthday && (
               <input
                 id="artist-search-input"
                 name="artistSearch"
+                className="ob-search"
                 value={artistSearchQuery}
                 onChange={(e) => setArtistSearchQuery(e.target.value)}
-                placeholder="작가 이름 검색..."
-                style={{ width: '100%', borderRadius: 10, border: `1px solid ${DIMMER}`, background: 'rgba(255,255,255,0.07)', color: TEXT, fontSize: 14, padding: '11px 13px', outline: 'none' }}
-              />
-            </div>
-          )}
-
-          <div
-            style={{
-              display: 'flex',
-              gap: 8,
-              overflowX: 'auto',
-              overflowY: 'hidden',
-              paddingBottom: 6,
-              marginBottom: isMobile ? 10 : 14,
-              scrollbarWidth: 'none',
-              // Constrain panning to horizontal only on this row so it
-              // doesn't fight the page's vertical scroll when the user
-              // swipes the area, and prevent the scroll from chaining out
-              // and shifting the rest of the page sideways.
-              touchAction: 'pan-x',
-              overscrollBehavior: 'contain',
-              WebkitOverflowScrolling: 'touch',
-            }}
-          >
-            {recommendedArtists.map((artist, idx) => {
-              const active = selectedArtist?.name === artist.name;
-              return (
-                <button
-                  key={artist.name || idx}
-                  onClick={() => { setSelectedArtist(artist); setSelectedImage(artist.artworks?.[0] || artist.image || ''); }}
-                  style={{
-                    flexShrink: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    borderRadius: 999,
-                    border: `1px solid ${active ? ACCENT : DIMMER}`,
-                    background: active ? 'rgba(212,165,71,0.10)' : 'rgba(255,255,255,0.07)',
-                    padding: '7px 11px 7px 7px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  <div style={{ width: 26, height: 26, borderRadius: '50%', overflow: 'hidden', border: `1px solid ${active ? ACCENT : DIMMER}` }}>
-                    <img src={thumbUrl(artist.artworks?.[0] || artist.image || '', 96)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  </div>
-                  <div style={{ textAlign: 'left' }}>
-                    <div style={{ fontSize: 10, color: active ? ACCENT : TEXT, fontWeight: active ? 700 : 500 }}>{String(artist.name || '').split(' ')[0]}</div>
-                      <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)' }}>
-                        {artist?.deathYear ? `${Math.max(1, Math.abs(birthYear - Number(artist.deathYear)))}년 전` : `#${idx + 1}`}
-                      </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {selectedArtist && (
-            <div style={{ padding: '12px 14px', borderRadius: 10, marginBottom: 14, background: 'rgba(255,255,255,0.06)', border: `1px solid ${DIMMER}` }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={thumbUrl(selectedArtist.artworks?.[0] || selectedArtist.image || '', 120)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <div>
-                  <div style={{ fontSize: 15, fontWeight: 700 }}>{selectedArtist.name}</div>
-                  <div style={{ fontSize: 10, color: DIM, marginTop: 1 }}>
-                    {artistYear ? `${artistYear}년 작고 · ${Math.max(1, Math.abs((userYear || artistYear) - artistYear))}년 전` : '추천 작가'}
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {relevantArtworks.length > 0 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 6, marginBottom: 18 }}>
-              {relevantArtworks.map((art, idx) => {
-                const active = selectedImage === art.image;
-                return (
-                  <button
-                    key={art.image + idx}
-                    onClick={() => setSelectedImage(art.image)}
-                    style={{
-                      border: `1px solid ${active ? ACCENT : DIMMER}`,
-                      borderRadius: 10,
-                      background: 'transparent',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      padding: 0,
-                    }}
-                  >
-                    <div style={{ aspectRatio: '1 / 1', position: 'relative' }}>
-                      <img
-                        src={thumbUrl(art.image, 220)}
-                        alt=""
-                        loading="lazy"
-                        decoding="async"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                      />
-                      <div style={{ position: 'absolute', inset: 0, background: active ? 'linear-gradient(to top, rgba(212,165,71,0.18), transparent)' : 'linear-gradient(to top, rgba(0,0,0,0.45), transparent)' }} />
-                      <div style={{ position: 'absolute', left: 6, right: 6, bottom: 6, fontSize: 8, color: '#fff', fontWeight: 700, textAlign: 'left' }}>
-                        Artwork {idx + 1}
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            <div style={{ textAlign: 'center', color: DIM, fontSize: 12, padding: '22px 8px' }}>
-              {artistDataLoading ? '작가 데이터를 불러오는 중...' : '선택 가능한 작품이 없습니다.'}
-            </div>
-          )}
-
-          <div
-            style={{
-              position: 'sticky',
-              bottom: 0,
-              paddingTop: 10,
-              // Respect iOS home-indicator + Android navigation bar so
-              // the next-step button isn't hidden behind the system UI.
-              paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)',
-              background: 'linear-gradient(to top, #111111 68%, rgba(17,17,17,0.18))',
-            }}
-          >
-            <button
-              onClick={() => selectedImage && setStep(2)}
-              disabled={!selectedImage}
-              style={{
-                width: '100%',
-                padding: '14px',
-                borderRadius: 10,
-                border: 'none',
-                background: selectedImage ? ACCENT : DIMMER,
-                color: selectedImage ? '#000' : DIM,
-                fontSize: 13,
-                fontWeight: 800,
-                cursor: selectedImage ? 'pointer' : 'not-allowed',
-              }}
-            >
-              {selectedImage ? '다음 단계로 →' : '작품 선택 후 다음 단계'}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="onboarding-scroll" style={{ ...slide(2), overflowY: 'auto', overflowX: 'hidden' }}>
-        <div
-          style={{
-            width: '100%',
-            maxWidth: 560,
-            margin: '0 auto',
-            padding: isMobile ? '14px 16px 20px' : '24px 20px 34px',
-            boxSizing: 'border-box',
-          }}
-        >
-          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: 10 }}>STEP 3 OF 3</p>
-          <h2 style={{ margin: '0 0 8px', fontSize: 'clamp(24px,5.8vw,34px)', letterSpacing: '-0.02em' }}>프로필 영역 선택</h2>
-          <p style={{ fontSize: 12, color: DIM, marginBottom: 16 }}>작품 이미지를 드래그해 프로필에 사용할 영역을 조정하세요.</p>
-
-          <div
-            onPointerDown={onCropPointerDown}
-            onPointerMove={onCropPointerMove}
-            onPointerUp={onCropPointerUp}
-            onPointerCancel={onCropPointerUp}
-            style={{
-              width: '100%',
-              maxWidth: cropPreviewSize,
-              height: 360,
-              margin: '0 auto',
-              position: 'relative',
-              overflow: 'hidden',
-              borderRadius: 8,
-              background: '#0d0d0d',
-              border: `1px solid ${DIMMER}`,
-              cursor: isCropDragging ? 'grabbing' : 'grab',
-              touchAction: 'none',
-            }}
-          >
-            {selectedImage && (
-              <img
-                src={thumbUrl(selectedImage, 800)}
-                draggable={false}
-                onLoad={(e) => {
-                  const img = e.currentTarget;
-                  if (img.naturalWidth > 0 && img.naturalHeight > 0) {
-                    const a = img.naturalHeight / img.naturalWidth;
-                    if (Number.isFinite(a) && a > 0 && Math.abs(a - cropImgAspect) > 0.001) {
-                      setCropImgAspect(a);
-                    }
-                  }
-                }}
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  width: cropPreviewSize,
-                  height: cropPreviewSize * cropImgAspect,
-                  maxWidth: 'none',
-                  maxHeight: 'none',
-                  transform: `translate(-50%,-50%) translate(${crop.x * cropScaleFactor}px,${crop.y * cropScaleFactor}px) scale(${crop.scale})`,
-                  pointerEvents: 'none',
-                  userSelect: 'none',
-                }}
+                placeholder="작가 이름"
               />
             )}
 
-            {/* Darkened overlay with circular cutout */}
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'rgba(0,0,0,0.55)',
-                pointerEvents: 'none',
-                WebkitMaskImage: `radial-gradient(circle ${cropMaskSize / 2}px at 50% 50%, transparent 100%, black 100%)`,
-                maskImage: `radial-gradient(circle ${cropMaskSize / 2}px at 50% 50%, transparent 100%, black 100%)`,
-              }}
-            />
+            <div className="ob-artists" onTouchStart={onSwipeStart} onTouchEnd={onSwipeEnd}>
+              {recommendedArtists.map((artist, idx) => (
+                <button
+                  key={artist.name || idx}
+                  type="button"
+                  aria-pressed={selectedArtist?.name === artist.name}
+                  onClick={() => { setSelectedArtist(artist); setSelectedImage(artist.artworks?.[0] || artist.image || ''); }}
+                >
+                  <img src={photoOf(artist)} alt="" loading="lazy" decoding="async" />
+                  <span>{String(artist.name || '').split(' ')[0]}</span>
+                  {artist?.deathYear && <small>{`${Math.max(1, Math.abs(birthYear - Number(artist.deathYear)))}년 전`}</small>}
+                </button>
+              ))}
+            </div>
 
-            {/* Circle border */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: cropMaskSize,
-                height: cropMaskSize,
-                transform: 'translate(-50%,-50%)',
-                borderRadius: '50%',
-                border: `2px solid ${ACCENT}`,
-                pointerEvents: 'none',
-              }}
-            />
+            {selectedArtist && (
+              <div className="ob-chosen">
+                <b>{selectedArtist.name}</b>
+                <span>{artistYear ? `${artistYear}년 작고 · ${Math.max(1, Math.abs((userYear || artistYear) - artistYear))}년 전` : '추천 작가'}</span>
+              </div>
+            )}
+
+            {relevantArtworks.length > 0 ? (
+              <div className="ob-works">
+                {relevantArtworks.map((art, idx) => (
+                  <button
+                    key={art.image + idx}
+                    type="button"
+                    aria-pressed={selectedImage === art.image}
+                    aria-label={`작품 ${idx + 1}`}
+                    onClick={() => setSelectedImage(art.image)}
+                  >
+                    <img src={thumbUrl(art.image, 220)} alt="" loading="lazy" decoding="async" />
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <p className="ob-empty">{artistDataLoading ? '작가 정보를 불러오는 중입니다.' : '고를 수 있는 작품이 없습니다.'}</p>
+            )}
+
+            <div className="ob-actions ob-sticky">
+              <button type="button" className="ob-next" onClick={() => selectedImage && setStep(2)} disabled={!selectedImage}>
+                <span>{selectedImage ? '이 작품으로' : '작품을 하나 고르세요'}</span>
+                <span className="ob-next__go" aria-hidden="true"><i /></span>
+              </button>
+            </div>
           </div>
+        </div>
 
-          <div style={{ marginTop: 14, marginBottom: 16 }}>
+        <div className={slideClass(2)}>
+          <div className="ob-col">
+            <section className="ob-statement ob-statement--tight">
+              <p className="ob-statement__meta">{`COLLY · 시작하기 3/${stepCount}`}</p>
+              <h1>{'사진에 보일\n부분을 맞추세요.'}</h1>
+              <p>그림을 끌어 옮기고, 아래 막대로 크기를 조절합니다.</p>
+            </section>
+
+            <div
+              className={isCropDragging ? 'ob-crop is-dragging' : 'ob-crop'}
+              onPointerDown={onCropPointerDown}
+              onPointerMove={onCropPointerMove}
+              onPointerUp={onCropPointerUp}
+              onPointerCancel={onCropPointerUp}
+            >
+              {selectedImage && (
+                <img
+                  src={thumbUrl(selectedImage, 800)}
+                  alt=""
+                  draggable={false}
+                  onLoad={(e) => {
+                    const img = e.currentTarget;
+                    if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+                      const a = img.naturalHeight / img.naturalWidth;
+                      if (Number.isFinite(a) && a > 0 && Math.abs(a - cropImgAspect) > 0.001) setCropImgAspect(a);
+                    }
+                  }}
+                  style={{
+                    width: cropPreviewSize,
+                    height: cropPreviewSize * cropImgAspect,
+                    transform: `translate(-50%,-50%) translate(${crop.x * cropScaleFactor}px,${crop.y * cropScaleFactor}px) scale(${crop.scale})`,
+                  }}
+                />
+              )}
+              <div
+                className="ob-crop__shade"
+                style={{
+                  WebkitMaskImage: `radial-gradient(circle ${cropMaskSize / 2}px at 50% 50%, transparent 100%, black 100%)`,
+                  maskImage: `radial-gradient(circle ${cropMaskSize / 2}px at 50% 50%, transparent 100%, black 100%)`,
+                }}
+              />
+              <div className="ob-crop__ring" style={{ width: cropMaskSize, height: cropMaskSize }} />
+            </div>
+
             <input
               type="range"
+              className="ob-range ob-crop__zoom"
               id="profile-crop-scale-range"
               name="profileCropScale"
               min="0.2"
@@ -1205,75 +940,38 @@ const OnboardingPage: React.FC = () => {
               step="0.05"
               value={crop.scale}
               onChange={(e) => setCrop((prev) => ({ ...prev, scale: parseFloat(e.target.value) }))}
-              style={{ width: '100%', accentColor: ACCENT }}
+              aria-label="크기"
             />
-          </div>
 
-          {selectedArtist && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-              <div style={{ width: 42, height: 42, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${ACCENT}` }}>
-                <img src={thumbUrl(selectedImage || selectedArtist.artworks?.[0] || selectedArtist.image || '', 128)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            {selectedArtist && (
+              <div className="ob-me">
+                <img src={thumbUrl(selectedImage || selectedArtist.artworks?.[0] || selectedArtist.image || '', 128)} alt="" loading="lazy" decoding="async" />
+                <div>
+                  <b>{nickname || user?.displayName || 'Art Explorer'}</b>
+                  <span>{selectedArtist.name}</span>
+                </div>
               </div>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 700 }}>Art Explorer</div>
-                <div style={{ fontSize: 11, color: DIM }}>{selectedArtist.name}</div>
-              </div>
+            )}
+
+            <div className="ob-actions">
+              <button type="button" className="ob-next" onClick={handleSubmit} disabled={loading || !selectedImage}>
+                <span>{loading ? '저장 중' : firstTime ? '다음' : '저장하기'}</span>
+                <span className="ob-next__go" aria-hidden="true"><i /></span>
+              </button>
             </div>
-          )}
-
-          <button
-            onClick={handleSubmit}
-            disabled={loading || !selectedImage}
-            style={{
-              width: '100%',
-              padding: '14px',
-              borderRadius: 10,
-              border: 'none',
-              background: loading || !selectedImage ? DIMMER : ACCENT,
-              color: loading || !selectedImage ? DIM : '#000',
-              fontSize: 13,
-              fontWeight: 800,
-              cursor: loading || !selectedImage ? 'not-allowed' : 'pointer',
-              // Reserve room below the button for the iOS home indicator
-              // / Android nav bar so it isn't hidden behind system UI.
-              marginBottom: 'env(safe-area-inset-bottom, 0px)',
-            }}
-          >
-            {loading ? '저장 중...' : '저장하기 ✓'}
-          </button>
+          </div>
         </div>
-      </div>
+
+        {firstTime && (
+          <div className={slideClass(3)}>
+            <div className="ob-col">
+              {step === 3 && user && <TasteStep uid={user.uid} ko={language === 'ko'} meta={`COLLY · 시작하기 4/${stepCount}`} onDone={finishOnboarding} />}
+            </div>
+          </div>
+        )}
       </div>
 
       <TransitionBadge show={artistDataLoading && step === 1} />
-
-      <style>{`
-        .onboarding-shell,
-        .onboarding-scroll {
-          scrollbar-width: thin;
-          scrollbar-color: rgba(212,165,71,0.62) rgba(255,255,255,0.08);
-        }
-        .onboarding-shell::-webkit-scrollbar,
-        .onboarding-scroll::-webkit-scrollbar {
-          width: 10px;
-          height: 10px;
-        }
-        .onboarding-shell::-webkit-scrollbar-track,
-        .onboarding-scroll::-webkit-scrollbar-track {
-          background: rgba(255,255,255,0.08);
-          border-radius: 999px;
-        }
-        .onboarding-shell::-webkit-scrollbar-thumb,
-        .onboarding-scroll::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, rgba(212,165,71,0.84), rgba(212,165,71,0.52));
-          border-radius: 999px;
-          border: 1px solid rgba(212,165,71,0.35);
-        }
-        .onboarding-shell::-webkit-scrollbar-thumb:hover,
-        .onboarding-scroll::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, rgba(212,165,71,0.96), rgba(212,165,71,0.66));
-        }
-      `}</style>
     </div>
   );
 };
