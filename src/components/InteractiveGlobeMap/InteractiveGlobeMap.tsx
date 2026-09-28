@@ -24,7 +24,6 @@ import "./InteractiveGlobe.css"; // Ensure new CSS is imported
 // Above this width the reading guide and the city panel get the left column
 // beside the globe (InteractiveGlobe.css hides the guide at 1024px and below).
 const WIDE_STAGE_QUERY = "(min-width: 1025px)";
-const MAP_EXPLORED_KEY = "armin:map-explored";
 
 // Apple-style arrival: the guide's lines rise in one after another, then the
 // whole guide lifts away and softens once exploring starts.
@@ -291,15 +290,12 @@ export default function InteractiveGlobeMap({
   }, [initialTheme]);
   const [selectedCity, setSelectedCity] = useState<CityMarker | null>(null);
   // Museums whose collections hold the most of the signed-in user's taste get a gold ring on the globe.
-  // The reading guide greets a visit once; the first drag, zoom or the
-  // "explore" button retires it and the globe glides to the centre.
-  const [exploring, setExploring] = useState(() => {
-    try { return sessionStorage.getItem(MAP_EXPLORED_KEY) === "1"; } catch { return false; }
-  });
-  const beginExploring = useCallback(() => {
-    setExploring(true);
-    try { sessionStorage.setItem(MAP_EXPLORED_KEY, "1"); } catch { /* storage blocked */ }
-  }, []);
+  // The reading guide greets every arrival on the map tab; the first drag,
+  // zoom or the "explore" button retires it and the globe glides to the
+  // centre. It used to stay retired for the whole browser session, so after
+  // one drag it never came back.
+  const [exploring, setExploring] = useState(false);
+  const beginExploring = useCallback(() => setExploring(true), []);
   const [wideStage, setWideStage] = useState(
     () => typeof window !== "undefined" && window.matchMedia?.(WIDE_STAGE_QUERY).matches === true,
   );

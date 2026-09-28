@@ -2542,12 +2542,10 @@ const MyPage: React.FC = () => {
         ["--mp-rule" as string]: divider,
       }}
     >
-      {/* The top of the page is the globe's stage (proposal B). The cover fills a
-          dark field the way the globe fills the map tab, turned down so the words
-          read over it; the collection's totals sit between two hairlines at the
-          top and the background control beside the language switch. The owner
-          stands at the foot, and where the picture meets the page the playlists
-          lead off on the left and the slideshow waits at the far right. */}
+      {/* The top of the page is the globe's stage (proposal B), kept short so the
+          saved works show without scrolling. The cover is turned well down and
+          everything stands on it: the owner, then the playlists with the
+          slideshow at the far right. The totals are the tabs' own figures. */}
       <section className={isHeroPickerOpen ? "mp-stage is-picking" : "mp-stage"}>
         <img
           className="mp-stage__cover"
@@ -2555,13 +2553,6 @@ const MyPage: React.FC = () => {
           alt=""
           style={{ objectPosition: `50% ${previewHeroFocusY}%` }}
         />
-        <p className="mp-stage__strip">
-          <i aria-hidden="true" />
-          <span><b>{figure(likedArtworks.length)}</b>{t({ ko: "작품", en: "Artworks" })}</span>
-          <span><b>{figure(likedMuseums.length)}</b>{t({ ko: "미술관", en: "Museums" })}</span>
-          <i aria-hidden="true" />
-        </p>
-
         {heroImageOptions.length > 0 && (
           <div className="mp-picker" ref={heroPickerRef}>
             <button
@@ -2683,60 +2674,60 @@ const MyPage: React.FC = () => {
             <span aria-hidden="true"><Play size={12} strokeWidth={2.2} /></span>
           </button>
         </div>
-      </section>
 
-      {/* My Playlists: each list's cover, its name and how many works it holds.
-          Pressing one opens it in the grid; pressing it again closes it. The
-          round mark on its cover shares it. */}
-      <section className="mp-lists" id="mp-lists">
-        {playlists.length > 0 ? (
-          <ul>
-            {playlists.map((playlist) => {
-              const open = activePlaylist?.id === playlist.id;
-              return (
-                <li key={playlist.id} className={open ? "mp-list is-open" : "mp-list"}>
-                  <button
-                    type="button"
-                    className="mp-list__open"
-                    aria-pressed={open}
-                    onClick={() => {
-                      if (open) {
-                        setActivePlaylist(null);
-                        return;
-                      }
-                      setViewMode("artworks");
-                      setActivePlaylist(playlist);
-                      setActivePlaylistItems(playlist.items || []);
-                    }}
-                  >
-                    <span className="mp-list__shot">
-                      {playlist.coverImage ? <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 220 : 300} disableBlur /> : null}
-                    </span>
-                    <span className="mp-list__text">
-                      <b>{playlist.name}</b>
-                      <small>
-                        {figure(playlist.items?.length || 0)} {t({ ko: "작품", en: "works" })}
-                        {playlist.shared && <em> · {t({ ko: "공개", en: "Public" })}</em>}
-                      </small>
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    className="mp-list__share"
-                    data-on={playlist.shared || undefined}
-                    title={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
-                    aria-label={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
-                    onClick={() => setSharingPlaylistId(playlist.id)}
-                  >
-                    <Share2 size={12} strokeWidth={2.2} aria-hidden="true" />
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="mp-lists__empty">{t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}</p>
-        )}
+        {/* My Playlists: each list's cover, its name and how many works it holds.
+            Pressing one opens it in the grid; pressing it again closes it. The
+            round mark on its cover shares it. */}
+        <section className="mp-lists" id="mp-lists">
+          {playlists.length > 0 ? (
+            <ul>
+              {playlists.map((playlist) => {
+                const open = activePlaylist?.id === playlist.id;
+                return (
+                  <li key={playlist.id} className={open ? "mp-list is-open" : "mp-list"}>
+                    <button
+                      type="button"
+                      className="mp-list__open"
+                      aria-pressed={open}
+                      onClick={() => {
+                        if (open) {
+                          setActivePlaylist(null);
+                          return;
+                        }
+                        setViewMode("artworks");
+                        setActivePlaylist(playlist);
+                        setActivePlaylistItems(playlist.items || []);
+                      }}
+                    >
+                      <span className="mp-list__shot">
+                        {playlist.coverImage ? <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 220 : 300} disableBlur /> : null}
+                      </span>
+                      <span className="mp-list__text">
+                        <b>{playlist.name}</b>
+                        <small>
+                          {figure(playlist.items?.length || 0)} {t({ ko: "작품", en: "works" })}
+                          {playlist.shared && <em> · {t({ ko: "공개", en: "Public" })}</em>}
+                        </small>
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="mp-list__share"
+                      data-on={playlist.shared || undefined}
+                      title={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
+                      aria-label={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
+                      onClick={() => setSharingPlaylistId(playlist.id)}
+                    >
+                      <Share2 size={12} strokeWidth={2.2} aria-hidden="true" />
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="mp-lists__empty">{t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}</p>
+          )}
+        </section>
       </section>
 
       {/* The six counted tabs spread over the whole width and stick to the top,

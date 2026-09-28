@@ -76,12 +76,16 @@
   transition: width .3s var(--ease), height .3s var(--ease), border-radius .3s var(--ease), background .2s ease; }
 
 /* ── the board ────────────────────────────────────────────────── */
+/* the opening words, the AI tab's (aiHubRedesign .hub-statement) in this sheet's tokens */
+.ca-statement { max-width: 44rem; margin-bottom: clamp(20px,3vw,28px); }
+.ca-statement__meta { margin: 0 0 1.1rem; color: var(--acc); font: 650 .66rem/1.2 var(--num); letter-spacing: .04em; }
+.ca-statement h1 { margin: 0; max-width: 12ch; font: 700 clamp(2rem,7vw,3.2rem)/1.06 var(--display); letter-spacing: -0.05em; text-wrap: balance; }
+.ca-statement h1 + p { margin: 1.2rem 0 0; max-width: 30rem; font-size: clamp(.86rem,3.4vw,.95rem); line-height: 1.62; color: var(--ink-2); text-wrap: pretty; }
 .ca-lead { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; flex-wrap: wrap;
   margin-bottom: clamp(14px,2vw,20px); }
-.ca-lead h1 { font: 700 clamp(2rem,4.2vw,3.2rem)/1.04 var(--display); letter-spacing: -0.05em; }
 /* sort: two labels over a hairline, and a gold bar that slides between them
    — the same move as the search page's engine picker */
-.ca-sort { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 46px; margin-top: 14px; }
+.ca-sort { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 46px; }
 .ca .ca-sort button { padding: 0 0 7px; text-align: left; font-size: 12.5px; font-weight: 600; color: var(--ink-3); transition: color .2s ease; }
 .ca .ca-sort button:hover { color: var(--ink-2); }
 .ca .ca-sort button[aria-pressed="true"] { color: var(--ink); }

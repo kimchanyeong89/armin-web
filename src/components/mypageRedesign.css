@@ -63,25 +63,20 @@
 .mp :where(.mp-stage, .mp-lists) :where(p, h1, ul) { margin: 0; }
 
 /* ── the stage ── */
-.mp-stage { position: relative; isolation: isolate; display: grid; align-content: end; min-height: clamp(460px, 68vh, 660px);
-  padding: calc(env(safe-area-inset-top, 0px) + 90px) var(--mp-pad) 26px; }
+/* as tall as what stands on it: the page top, the owner, the playlists - no
+   more, so the saved works below show on arrival */
+.mp-stage { position: relative; isolation: isolate; display: grid; align-content: end;
+  padding: var(--page-top) var(--mp-pad) 18px; }
 /* over the playlists and the tabs while the background picker is open */
 .mp-stage.is-picking { z-index: 6; }
 .mp-stage__cover { position: absolute; inset: 0; z-index: -2; display: block; width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(.55) saturate(.85); }
+  filter: brightness(.34) saturate(.8); }
 /* the ground rises into the picture, as the map's dark rises round its globe */
 .mp-stage::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(to bottom, rgba(8,8,8,.4) 0%, rgba(8,8,8,.08) 34%, rgba(8,8,8,.7) 72%, var(--mp-ground) 100%); }
+  background: linear-gradient(to bottom, rgba(8,8,8,.35) 0%, rgba(8,8,8,.12) 40%, rgba(8,8,8,.62) 82%, var(--mp-ground) 100%); }
 .mp.is-light .mp-stage__cover { filter: saturate(.85); }
 .mp.is-light .mp-stage::after {
   background: linear-gradient(to bottom, rgba(250,250,250,.35) 0%, rgba(250,250,250,.06) 34%, rgba(250,250,250,.74) 72%, var(--mp-ground) 100%); }
-
-/* the collection's totals between two hairlines, as the map sets its own */
-.mp-stage__strip { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 24px); left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 16px; white-space: nowrap; font-size: 11.5px; color: var(--mp-ink-2); }
-.mp-stage__strip > i { width: clamp(24px, 5vw, 64px); height: 1px; background: color-mix(in srgb, var(--mp-ink) 22%, transparent); }
-.mp-stage__strip span { display: inline-flex; align-items: baseline; gap: 6px; }
-.mp-stage__strip b { font-family: var(--mp-mono); font-size: 11px; font-weight: 700; color: var(--mp-gold); font-variant-numeric: tabular-nums; }
 
 /* change background: a bare mark and word on the language switch's line, clear
    of it (App.tsx fixes the switch 14px from the right edge; it is 62px wide),
@@ -113,7 +108,7 @@
   margin: 12px -14px -14px; padding: 12px 14px; background: inherit; border-top: 1px solid var(--mp-rule); }
 
 /* the owner, at the foot of the stage */
-.mp-stage__who { display: grid; justify-items: start; gap: 12px; min-width: 0; max-width: 42rem; }
+.mp-stage__who { display: grid; justify-items: start; gap: 8px; min-width: 0; max-width: 42rem; }
 /* the photo with its laurel, and the level guide's question mark beside it */
 .mp-stage__rank { display: flex; align-items: center; gap: 6px; }
 .mp-stage__name { display: flex; align-items: center; gap: 12px; min-width: 0; max-width: 100%; }
@@ -135,7 +130,7 @@
 .mp .mp-act:disabled { opacity: .6; cursor: default; }
 
 /* where the picture meets the page: the playlists on the left, the slideshow at the far right */
-.mp-stage__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 30px; }
+.mp-stage__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; margin-top: 18px; }
 .mp-stage__foot > :last-child { margin-left: auto; }
 .mp .mp-stage__line { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: var(--mp-ink);
   transition: color .16s ease; }
@@ -155,22 +150,23 @@
 .mp .mp-stage__foot .mp-cta { padding: 6px; margin: -6px -6px -6px auto; }
 
 /* ── My Playlists, under the stage ── */
-.mp-lists { padding: 18px var(--mp-pad) 24px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 56px); }
-.mp-lists ul { display: flex; gap: 14px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
+/* inside the stage now, on the cover, under the playlists line */
+.mp-lists { padding-top: 12px; scroll-margin-top: calc(env(safe-area-inset-top, 0px) + 56px); }
+.mp-lists ul { display: flex; gap: 12px; margin: 0; padding: 0; list-style: none; overflow-x: auto; scrollbar-width: none; }
 .mp-lists ul::-webkit-scrollbar { display: none; }
 /* a playlist: its cover with softened corners, as the exhibition and museum
    cards are cut, and a round share mark on it */
 .mp-list { position: relative; }
-.mp .mp-list__open { display: grid; gap: 8px; text-align: left; }
-.mp .mp-list__share { position: absolute; top: 6px; right: 6px; z-index: 2; display: grid; place-items: center; width: 26px; height: 26px;
+.mp .mp-list__open { display: grid; gap: 6px; text-align: left; }
+.mp .mp-list__share { position: absolute; top: 4px; right: 4px; z-index: 2; display: grid; place-items: center; width: 22px; height: 22px;
   border-radius: 50%; background: rgba(0,0,0,.56); color: #fff; transition: background .16s ease, color .16s ease; }
 .mp .mp-list__share:hover { background: rgba(0,0,0,.74); }
 .mp .mp-list__share[data-on] { color: var(--mp-gold); }
-.mp-list__shot { display: block; width: 120px; aspect-ratio: 1; overflow: hidden; border-radius: 10px; background: var(--mp-rule); }
+.mp-list__shot { display: block; width: 76px; aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: var(--mp-rule); }
 .mp-list__shot > * { filter: saturate(.72); transition: filter .3s ease; }
 .mp-list:hover .mp-list__shot > *, .mp-list.is-open .mp-list__shot > * { filter: none; }
-.mp-list__text { display: grid; gap: 4px; width: 120px; min-width: 0; }
-.mp-list__text b { font-family: var(--mp-display); font-size: 13px; font-weight: 600; color: var(--mp-ink); white-space: nowrap;
+.mp-list__text { display: grid; gap: 2px; width: 76px; min-width: 0; }
+.mp-list__text b { font-family: var(--mp-display); font-size: 12px; font-weight: 600; color: var(--mp-ink); white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
 .mp-list:hover .mp-list__text b, .mp-list.is-open .mp-list__text b { color: var(--mp-gold); }
 .mp-list__text small { font-family: var(--mp-mono); font-size: 9.5px; letter-spacing: .04em; color: var(--mp-ink-3); }
@@ -222,14 +218,6 @@
      it, with a finger-sized target round the mark */
   .mp-picker__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .mp .mp-picker > .mp-act { padding: 8px; transform: translate(8px, -8px); }
-}
-@media (max-width: 720px) {
-  .mp-stage { min-height: 0; padding-top: calc(env(safe-area-inset-top, 0px) + 70px); }
-  .mp-stage__strip { left: var(--mp-pad); transform: none; }
-  .mp-stage__strip > i:first-child { display: none; }
-}
-@media (max-width: 560px) {
-  .mp-list__shot, .mp-list__text { width: 104px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .mp-picker__card { animation: none; }

@@ -63,9 +63,18 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
 
   return (
     <div className="ca-feed">
-      <section className="ca-lead colly-rise">
+      {/* the tab's own words, set as the AI tab sets its own: a gold label,
+          a line, and what the board is for */}
+      <section className="ca-statement colly-rise">
+        <p className="ca-statement__meta">{ko ? "커뮤니티" : "COMMUNITY"}</p>
+        <h1>{ko ? "전시를 본 사람들의 이야기." : "What people saw, in their words."}</h1>
+        <p>{ko
+          ? "관람 후기와 전시 소식, 궁금한 점을 나누는 곳입니다. 주변 전시와 다른 사람의 플레이리스트도 여기서 볼 수 있습니다."
+          : "Reviews, exhibition news and questions from people who went. Nearby shows and shared playlists live here too."}</p>
+      </section>
+
+      <section className="ca-lead">
         <div>
-          <h1>{ko ? "커뮤니티" : "Community"}</h1>
           <div className="ca-sort" role="group" aria-label={ko ? "정렬" : "Sort"} data-i={state.sort === "popular" ? 1 : 0}>
             <button type="button" aria-pressed={state.sort === "latest"} onClick={() => set({ sort: "latest" })}>
               {ko ? "최신" : "Latest"}
