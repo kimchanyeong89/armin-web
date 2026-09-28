@@ -30,6 +30,7 @@ import {
   Palette,
   Bookmark,
   Share2,
+  Image as ImageIcon,
 } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
 
@@ -1198,13 +1199,9 @@ const MyPage: React.FC = () => {
   });
   const [liveProfilePhoto, setLiveProfilePhoto] = useState<string | null>(null);
   const [liveProfileCrop, setLiveProfileCrop] = useState<ProfileImageCrop | null>(null);
-  const [isHeroPickerOpen, setIsHeroPickerOpen] = useState(false);
   const [isWallOpen, setIsWallOpen] = useState(false);
   const [selectedHeroArtworkId, setSelectedHeroArtworkId] = useState<string | null>(null);
-  const [draftHeroArtworkId, setDraftHeroArtworkId] = useState<string | null>(null);
   const [heroFocusY, setHeroFocusY] = useState(50);
-  const [draftHeroFocusY, setDraftHeroFocusY] = useState(50);
-  const [isSavingHeroPrefs, setIsSavingHeroPrefs] = useState(false);
 
   const displayPhotoURL = liveProfilePhoto || profileData.photoURL || user?.photoURL;
   // Only apply the stored crop when the rendered URL is actually the
@@ -1813,42 +1810,10 @@ const MyPage: React.FC = () => {
   }, [profileData?.heroArtworkId, profileData?.heroImageFocusY, profileData?.heroPrefsUpdatedAt, heroPrefsStorageKey]);
 
   useEffect(() => {
-    if (!isHeroPickerOpen) return;
-    setDraftHeroArtworkId(selectedHeroArtworkId);
-    setDraftHeroFocusY(heroFocusY);
-  }, [isHeroPickerOpen, selectedHeroArtworkId, heroFocusY]);
-
-  useEffect(() => {
     if (!selectedHeroArtworkId) return;
     const exists = heroImageOptions.some((item) => item.id === selectedHeroArtworkId);
     if (!exists) setSelectedHeroArtworkId(null);
   }, [heroImageOptions, selectedHeroArtworkId]);
-
-  useEffect(() => {
-    const node = scrollContainerRef.current;
-    if (!node || !isHeroPickerOpen) return;
-    const handleScroll = () => setIsHeroPickerOpen(false);
-    node.addEventListener("scroll", handleScroll, { passive: true });
-    return () => node.removeEventListener("scroll", handleScroll);
-  }, [isHeroPickerOpen]);
-
-  /* the picker also closes on Escape or a press outside it */
-  const heroPickerRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    if (!isHeroPickerOpen) return;
-    const away = (event: PointerEvent) => {
-      if (!heroPickerRef.current?.contains(event.target as Node)) setIsHeroPickerOpen(false);
-    };
-    const esc = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsHeroPickerOpen(false);
-    };
-    document.addEventListener("pointerdown", away);
-    document.addEventListener("keydown", esc);
-    return () => {
-      document.removeEventListener("pointerdown", away);
-      document.removeEventListener("keydown", esc);
-    };
-  }, [isHeroPickerOpen]);
 
   /* the sort's gold bar stands under the chosen label; the labels differ in
      width, so its place is measured */
@@ -1874,15 +1839,8 @@ const MyPage: React.FC = () => {
     return () => observer.disconnect();
   }, [sortMode, language, loading]);
 
-  useEffect(() => {
-    if (!draftHeroArtworkId) return;
-    const exists = heroImageOptions.some((item) => item.id === draftHeroArtworkId);
-    if (!exists) setDraftHeroArtworkId(null);
-  }, [heroImageOptions, draftHeroArtworkId]);
-
-  const previewHeroArtworkId = isHeroPickerOpen ? draftHeroArtworkId : selectedHeroArtworkId;
-  const previewHeroFocusY = isHeroPickerOpen ? draftHeroFocusY : heroFocusY;
-  const selectedHeroOption = heroImageOptions.find((item) => item.id === previewHeroArtworkId) || null;
+  const selectedHeroOption = heroImageOptions.find((item) => item.id === selectedHeroArtworkId) || null;
+  const heroOptionIds = useMemo(() => new Set(heroImageOptions.map((item) => item.id)), [heroImageOptions]);
   const heroImage =
     selectedHeroOption?.image ||
     heroImageOptions.find((item) => !!item.image)?.image ||
@@ -2061,9 +2019,10 @@ const MyPage: React.FC = () => {
   const displayName = profileData.nickname || username || user?.displayName || "Art Explorer";
   const sharingPlaylist = playlists.find((playlist) => playlist.id === sharingPlaylistId) || null;
 
-  const saveHeroBackgroundPreference = async () => {
-    const nextHeroId = draftHeroArtworkId || null;
-    const nextFocusY = clampHeroFocusY(draftHeroFocusY);
+  /* a work's own mark on its card sets the page's background at once and
+     saves it; the same mark on the current background returns it to auto */
+  const saveHeroBackgroundPreference = async (nextHeroId: string | null) => {
+    const nextFocusY = nextHeroId === selectedHeroArtworkId ? clampHeroFocusY(heroFocusY) : 50;
     const nextUpdatedAt = Date.now();
 
     setSelectedHeroArtworkId(nextHeroId);
@@ -2084,12 +2043,8 @@ const MyPage: React.FC = () => {
       }
     }
 
-    if (!user) {
-      setIsHeroPickerOpen(false);
-      return;
-    }
+    if (!user) return;
 
-    setIsSavingHeroPrefs(true);
     try {
       const db = getFirestore();
       await setDoc(
@@ -2109,11 +2064,8 @@ const MyPage: React.FC = () => {
         heroPrefsUpdatedAt: nextUpdatedAt,
       }));
       window.dispatchEvent(new CustomEvent("profile-updated"));
-      setIsHeroPickerOpen(false);
     } catch (error) {
       console.error("Error saving hero background preference", error);
-    } finally {
-      setIsSavingHeroPrefs(false);
     }
   };
 
@@ -2149,6 +2101,10 @@ const MyPage: React.FC = () => {
     const itemType = resolveItemType(modeForItem);
     const itemId = getItemId(normalized, modeForItem);
     const isUnliked = unlikedItems.has(itemId);
+    /* any liked work can be the page's background */
+    const heroCandidate = String(normalized.artworkId || normalized.id || "").trim();
+    const heroId = heroOptionIds.has(heroCandidate) ? heroCandidate : null;
+    const isHero = !!heroId && heroId === selectedHeroArtworkId;
 
     const stableCardKey = String(
       rawItem?._docId || rawItem?.likeDocId || `${itemType}-${itemId}-${normalizeToken(String(normalized.title || "").toLowerCase()) || index}`,
@@ -2203,6 +2159,21 @@ const MyPage: React.FC = () => {
           >
             <BookmarkPlus size={12} strokeWidth={2.2} />
           </button>
+
+          {heroId && (
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                void saveHeroBackgroundPreference(isHero ? null : heroId);
+              }}
+              aria-pressed={isHero}
+              title={isHero
+                ? t({ ko: "지금 배경 · 누르면 자동으로", en: "Current background · tap for auto" })
+                : t({ ko: "배경으로 쓰기", en: "Use as background" })}
+            >
+              <ImageIcon size={12} strokeWidth={2.2} />
+            </button>
+          )}
 
           {SHOW_SALES_UI && (
           <button
@@ -2547,82 +2518,18 @@ const MyPage: React.FC = () => {
           saved works show without scrolling. The cover is turned well down and
           everything stands on it: the owner, then the playlists with the
           slideshow at the far right. The totals are the tabs' own figures. */}
-      <section className={isHeroPickerOpen ? "mp-stage is-picking" : "mp-stage"}>
+      <section className="mp-stage">
         <img
           className="mp-stage__cover"
           src={getOptimizedImageUrl(heroImage, 1600)}
           alt=""
-          style={{ objectPosition: `50% ${previewHeroFocusY}%` }}
+          style={{ objectPosition: `50% ${heroFocusY}%` }}
         />
         {/* an index tab on the page's edge: the wall slides out of it */}
         {user?.uid && (
           <button type="button" className="mp-index" onClick={() => setIsWallOpen(true)}>
             {t({ ko: "벽 꾸미기", en: "MY WALL" })}
           </button>
-        )}
-        {heroImageOptions.length > 0 && (
-          <div className="mp-picker" ref={heroPickerRef}>
-            <button
-              type="button"
-              className="mp-act"
-              aria-expanded={isHeroPickerOpen}
-              onClick={() => setIsHeroPickerOpen((prev) => !prev)}
-            >
-              <Palette size={12} strokeWidth={2} aria-hidden="true" />
-              <span className="mp-picker__label">{t({ ko: "배경 변경", en: "Change background" })}</span>
-            </button>
-            {isHeroPickerOpen && (
-              <div className="mp-picker__card" role="dialog" aria-label={t({ ko: "하트 작품 배경", en: "Heart List Backgrounds" })}>
-                <header>
-                  <span>{t({ ko: "하트 작품 배경", en: "Heart List Backgrounds" })}</span>
-                  <button type="button" aria-pressed={draftHeroArtworkId === null} onClick={() => setDraftHeroArtworkId(null)}>
-                    {t({ ko: "자동", en: "Auto" })}
-                  </button>
-                </header>
-                <label className="mp-picker__pos">
-                  <span>{t({ ko: "배경 위치", en: "Background position" })}</span>
-                  <em>{clampHeroFocusY(draftHeroFocusY)}%</em>
-                  <input
-                    type="range"
-                    min={15}
-                    max={85}
-                    step={1}
-                    value={clampHeroFocusY(draftHeroFocusY)}
-                    onChange={(event) => setDraftHeroFocusY(Number(event.currentTarget.value))}
-                  />
-                </label>
-                <div className="mp-picker__grid">
-                  {heroImageOptions.slice(0, 120).map((option) => (
-                    <button
-                      key={option.id}
-                      type="button"
-                      aria-pressed={draftHeroArtworkId === option.id}
-                      title={option.artist ? `${option.title} - ${option.artist}` : option.title}
-                      onClick={() => setDraftHeroArtworkId(option.id)}
-                    >
-                      <MyPageImage item={option.previewItem} width={220} disableBlur />
-                    </button>
-                  ))}
-                </div>
-                <footer>
-                  <button
-                    type="button"
-                    className="mp-act"
-                    onClick={() => {
-                      setDraftHeroArtworkId(selectedHeroArtworkId);
-                      setDraftHeroFocusY(heroFocusY);
-                      setIsHeroPickerOpen(false);
-                    }}
-                  >
-                    {t({ ko: "취소", en: "Cancel" })}
-                  </button>
-                  <button type="button" className="mp-act mp-act--gold" onClick={saveHeroBackgroundPreference} disabled={isSavingHeroPrefs}>
-                    {isSavingHeroPrefs ? t({ ko: "저장 중...", en: "Saving..." }) : t({ ko: "저장", en: "Save" })}
-                  </button>
-                </footer>
-              </div>
-            )}
-          </div>
         )}
 
         {/* the owner's lines rise in as the tab opens, as every tab's opening lines do */}

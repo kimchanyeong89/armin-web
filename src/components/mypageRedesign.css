@@ -29,6 +29,8 @@
   background: rgba(0,0,0,.5); color: #fff; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   transition: background .16s ease; }
 .mp-acts button:hover { background: rgba(0,0,0,.74); }
+/* the work that is the page's background */
+.mp-acts button[aria-pressed="true"] { color: var(--mp-gold); }
 
 /* ── the card: title and artist, always on, lower left ────────── */
 /* Written as longhand, not the `font` shorthand: a shorthand whose
@@ -67,8 +69,6 @@
    more, so the saved works below show on arrival */
 .mp-stage { position: relative; isolation: isolate; display: grid; align-content: end;
   padding: var(--page-top) var(--mp-pad) 14px; }
-/* over the playlists and the tabs while the background picker is open */
-.mp-stage.is-picking { z-index: 6; }
 .mp-stage__cover { position: absolute; inset: 0; z-index: -2; display: block; width: 100%; height: 100%; object-fit: cover;
   filter: brightness(.34) saturate(.8); }
 /* the ground rises into the picture, as the map's dark rises round its globe */
@@ -77,35 +77,6 @@
 .mp.is-light .mp-stage__cover { filter: saturate(.85); }
 .mp.is-light .mp-stage::after {
   background: linear-gradient(to bottom, rgba(250,250,250,.35) 0%, rgba(250,250,250,.06) 34%, rgba(250,250,250,.74) 72%, var(--mp-ground) 100%); }
-
-/* change background: a bare mark and word on the language switch's line, clear
-   of it (App.tsx fixes the switch 14px from the right edge; it is 62px wide),
-   and its card under both */
-.mp-picker { display: contents; }
-.mp .mp-picker > .mp-act { position: absolute; top: max(18px, calc(env(safe-area-inset-top, 0px) + 16px)); right: 90px; }
-.mp-picker__card { position: absolute; top: calc(max(12px, calc(env(safe-area-inset-top, 0px) + 10px)) + 42px); right: var(--mp-pad);
-  z-index: 2; width: min(320px, calc(100vw - 28px)); max-height: min(430px, 60vh); overflow-y: auto; overscroll-behavior: contain;
-  padding: 14px; background: #0d0d0d; border: 1px solid var(--mp-rule); box-shadow: 0 18px 40px rgba(0,0,0,.6);
-  animation: mp-pop .26s var(--mp-ease) backwards; }
-.mp.is-light .mp-picker__card { background: #fff; box-shadow: 0 16px 28px rgba(0,0,0,.16); }
-@keyframes mp-pop { from { opacity: 0; transform: translateY(8px); } }
-.mp-picker__card header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.mp-picker__card header span { font-family: var(--mp-mono); font-size: 9.5px; font-weight: 600; letter-spacing: .1em; color: var(--mp-gold); }
-.mp .mp-picker__card header button { font-size: 12px; font-weight: 600; color: var(--mp-ink-3); transition: color .16s ease; }
-.mp .mp-picker__card header button:hover, .mp .mp-picker__card header button[aria-pressed="true"] { color: var(--mp-ink); }
-.mp-picker__pos { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 6px 10px; margin-bottom: 12px;
-  font-size: 11.5px; color: var(--mp-ink-2); }
-.mp-picker__pos em { font-family: var(--mp-mono); font-style: normal; font-size: 10px; }
-.mp-picker__pos input { grid-column: 1 / -1; width: 100%; margin: 0; accent-color: var(--mp-gold); }
-.mp-picker__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-.mp .mp-picker__grid button { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--mp-rule); }
-.mp-picker__grid button > * { opacity: .8; filter: saturate(.72); transition: opacity .2s ease, filter .2s ease; }
-.mp-picker__grid button:hover > *, .mp-picker__grid button[aria-pressed="true"] > * { opacity: 1; filter: none; }
-/* the chosen work: a gold bar along its foot rather than a frame */
-.mp-picker__grid button[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
-  background: var(--mp-gold); }
-.mp-picker__card footer { position: sticky; bottom: -14px; display: flex; justify-content: flex-end; gap: 20px;
-  margin: 12px -14px -14px; padding: 12px 14px; background: inherit; border-top: 1px solid var(--mp-rule); }
 
 /* the owner, at the foot of the stage */
 .mp-stage__who { display: grid; justify-items: start; gap: 8px; min-width: 0; max-width: 42rem; }
@@ -228,11 +199,4 @@
   .mp .mp-tabs button { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: center; gap: 5px; padding: 12px 2px 10px; }
   .mp-tabs svg { display: none; }
   .mp-tabs span { font-size: 10px; letter-spacing: -0.01em; }
-  /* the background control keeps its mark alone, clear of the totals beside
-     it, with a finger-sized target round the mark */
-  .mp-picker__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  .mp .mp-picker > .mp-act { padding: 8px; transform: translate(8px, -8px); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .mp-picker__card { animation: none; }
 }
