@@ -1,5 +1,5 @@
 import { Globe2, Search, Sparkles, User, Users } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import type { MobileChromeTweakId } from "./mobileChromeTweaks";
@@ -26,6 +26,8 @@ type BottomPageNavigatorProps = {
   onChange: (index: number) => void;
   lightMode?: boolean;
   mobileChromeTweak?: MobileChromeTweakId;
+  /** a handle that stands on the bar's top edge (the wall's, on a phone) */
+  grip?: ReactNode;
 };
 
 export function resolveMainTabIndex(pathname: string): number | null {
@@ -55,6 +57,7 @@ export default function BottomPageNavigator({
   activeIndex,
   onChange,
   lightMode = false,
+  grip,
 }: BottomPageNavigatorProps) {
   const { language } = useLanguage();
   const [viewportWidth, setViewportWidth] = useState(() =>
@@ -91,6 +94,7 @@ export default function BottomPageNavigator({
       data-narrow={isNarrow ? "true" : "false"}
       data-mobile={isMobile ? "true" : "false"}
     >
+      {grip}
       <div className="bpn-pill-shell bpn-mobile-shell">
         {MAIN_TABS.map((item, index) => {
           const isActive = index === activeIndex;

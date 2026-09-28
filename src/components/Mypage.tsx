@@ -71,7 +71,6 @@ import { rankForScore, userActivityScore } from "../utils/communityRank";
 import type { ProfileImageCrop } from "../types/Profile";
 import { ensureSharedSearchWorkerLoaded } from "../utils/searchWorkerRuntime";
 import DeleteAccountSection from "../features/account/DeleteAccountSection";
-import MyWall, { type WallSource } from "../features/mypage/wall/MyWall";
 
 type ViewMode = "artworks" | "exhibitions" | "museums" | "artists" | "playlists" | "curations";
 const MYPAGE_RETURN_KEY = "mypage:return";
@@ -1127,21 +1126,6 @@ const MyPage: React.FC = () => {
   const [likedExhibitions, setLikedExhibitions] = useState<any[]>([]);
   // Exhibitions bookmarked from the map's "현재 진행중인 전시" sheet.
   const [savedExhibitions, setSavedExhibitions] = useState<any[]>([]);
-  /* what can hang on the wall: liked works, then the posters of saved shows */
-  const wallSources = useMemo<WallSource[]>(() => {
-    const seen = new Set<string>();
-    const out: WallSource[] = [];
-    const add = (key: string, src: unknown, title: unknown) => {
-      const url = String(src || "").trim();
-      if (!/^https?:\/\//.test(url) || seen.has(url)) return;
-      seen.add(url);
-      out.push({ key, src: url, title: String(title || "") });
-    };
-    likedArtworks.forEach((art) => add(`a-${art.id}`, art.image, art.title));
-    [...likedExhibitions, ...savedExhibitions].forEach((show) => add(`e-${show.id}`, show.image, show.title || show.name));
-    return out;
-  }, [likedArtworks, likedExhibitions, savedExhibitions]);
-
   const allExhibitions = useMemo(() => {
     const seen = new Set(likedExhibitions.map((e: any) => String(e.id)));
     return [...likedExhibitions, ...savedExhibitions.filter((e: any) => !seen.has(String(e.id)))];
@@ -1199,7 +1183,6 @@ const MyPage: React.FC = () => {
   });
   const [liveProfilePhoto, setLiveProfilePhoto] = useState<string | null>(null);
   const [liveProfileCrop, setLiveProfileCrop] = useState<ProfileImageCrop | null>(null);
-  const [isWallOpen, setIsWallOpen] = useState(false);
   const [selectedHeroArtworkId, setSelectedHeroArtworkId] = useState<string | null>(null);
   const [heroFocusY, setHeroFocusY] = useState(50);
 
@@ -2525,12 +2508,6 @@ const MyPage: React.FC = () => {
           alt=""
           style={{ objectPosition: `50% ${heroFocusY}%` }}
         />
-        {/* an index tab on the page's edge: the wall slides out of it */}
-        {user?.uid && (
-          <button type="button" className="mp-index" onClick={() => setIsWallOpen(true)}>
-            {t({ ko: "벽 꾸미기", en: "MY WALL" })}
-          </button>
-        )}
 
         {/* the owner's lines rise in as the tab opens, as every tab's opening lines do */}
         <div className="mp-stage__who colly-rise">
@@ -2997,9 +2974,6 @@ const MyPage: React.FC = () => {
         />
       )}
 
-      {isWallOpen && user?.uid && (
-        <MyWall uid={user.uid} sources={wallSources} ko={language === "ko"} onClose={() => setIsWallOpen(false)} />
-      )}
     </div>
   );
 };

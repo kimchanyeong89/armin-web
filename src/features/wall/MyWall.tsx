@@ -1,8 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, setDoc } from "firebase/firestore";
 import { Trash2, X } from "lucide-react";
-import { getOptimizedImageUrl } from "../../../utils/imageProxy";
+import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import "./myWall.css";
 
 /* A wall to try prints on: the saved works and exhibition posters hung at a
@@ -57,10 +56,54 @@ const keepOn = (p: Piece, wall: { w: number; h: number }): Piece => ({
   y: clamp(p.y, 0, wall.h - p.w * p.ratio),
 });
 
-export default function MyWall({ uid, sources, ko, onClose }: {
+/* the picture's own address when it was shown through the image proxy */
+function originalImage(src: string): string {
+  try {
+    const url = new URL(src, window.location.href);
+    if (/(^|\.)wsrv\.nl$|weserv\.nl$/.test(url.hostname)) {
+      const inner = url.searchParams.get("url") || "";
+      return inner ? (/^https?:\/\//.test(inner) ? inner : `https://${inner}`) : src;
+    }
+    return url.href;
+  } catch {
+    return src;
+  }
+}
+
+/* liked works first, then the posters of saved shows */
+async function loadSources(uid: string): Promise<WallSource[]> {
+  const db = getFirestore();
+  const read = (path: string) => getDocs(collection(db, path)).then((snap) => snap.docs.map((d) => ({ id: d.id, ...(d.data() as any) }))).catch(() => []);
+  const [works, liked, saved] = await Promise.all([
+    read(`users/${uid}/liked_artworks`),
+    read(`users/${uid}/liked_exhibitions`),
+    read(`users/${uid}/saved_exhibitions`),
+  ]);
+  const when = (x: any) => Number(x.likedAt?.seconds ?? x.likedAt ?? 0) || 0;
+  works.sort((a: any, b: any) => when(b) - when(a));
+  const seen = new Set<string>();
+  const out: WallSource[] = [];
+  const add = (key: string, src: unknown, title: unknown) => {
+    const url = String(src || "").trim();
+    if (!/^https?:\/\//.test(url) || seen.has(url)) return;
+    seen.add(url);
+    out.push({ key, src: url, title: String(title || "") });
+  };
+  works.forEach((w: any) => add(`a-${w.artworkId || w.id}`, w.image || w.i || w.imageUrl, w.title || w.name));
+  [...liked, ...saved].forEach((x: any) => add(`e-${x.id}`, x.image, x.title || x.name));
+  return out;
+}
+
+/* the picture last picked up anywhere on the page, for a drop on the wall */
+let pickedUp: { src: string; title: string } | null = null;
+
+export default function MyWall({ uid, ko, compact, pageDrops, onClose }: {
   uid: string;
-  sources: WallSource[];
   ko: boolean;
+  /** a short drawer or a phone: smaller tray, no kicker */
+  compact?: boolean;
+  /** pictures on the page can be dragged in (a desktop; a phone has no drag) */
+  pageDrops?: boolean;
   onClose: () => void;
 }) {
   const t = (copy: { ko: string; en: string }) => (ko ? copy.ko : copy.en);
@@ -72,6 +115,30 @@ export default function MyWall({ uid, sources, ko, onClose }: {
   const wallRef = useRef<HTMLDivElement>(null);
   const ratios = useRef(new Map<string, number>());
   const [ghost, setGhost] = useState<{ src: string; x: number; y: number } | null>(null);
+  const [sources, setSources] = useState<WallSource[]>([]);
+  const [dropping, setDropping] = useState(false);
+
+  useEffect(() => {
+    let live = true;
+    void loadSources(uid).then((list) => live && setSources(list));
+    return () => {
+      live = false;
+    };
+  }, [uid]);
+
+  /* any picture on the page can be dragged onto the wall: note what was
+     picked up (an image, or a link or card holding one) */
+  useEffect(() => {
+    const onDragStart = (event: DragEvent) => {
+      const target = event.target as HTMLElement | null;
+      const img = target instanceof HTMLImageElement ? target : target?.querySelector?.("img");
+      pickedUp = img?.currentSrc || img?.src
+        ? { src: originalImage(img.currentSrc || img.src), title: img.alt || img.title || target?.getAttribute?.("aria-label") || "" }
+        : null;
+    };
+    document.addEventListener("dragstart", onDragStart, true);
+    return () => document.removeEventListener("dragstart", onDragStart, true);
+  }, []);
 
   const ref = doc(getFirestore(), `users/${uid}/profile/wall`);
 
@@ -113,9 +180,12 @@ export default function MyWall({ uid, sources, ko, onClose }: {
     const stage = stageRef.current;
     if (!stage || !wall) return;
     const fit = () => {
-      const { width, height } = stage.getBoundingClientRect();
+      /* inside the stage's padding, with room under the wall for the metre */
+      const cs = getComputedStyle(stage);
+      const width = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      const height = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 22;
       if (width <= 0 || height <= 0) return;
-      setScale(Math.min((width - 8) / wall.w, (height - 34) / wall.h));
+      setScale(Math.min(width / wall.w, height / wall.h));
     };
     fit();
     const observer = new ResizeObserver(fit);
@@ -147,6 +217,29 @@ export default function MyWall({ uid, sources, ko, onClose }: {
     const piece = keepOn({ id: `${source.key}-${Date.now()}`, src: source.src, title: source.title, ratio, x, y, w }, wall);
     setWall({ ...wall, pieces: [...wall.pieces, piece] });
     setSelected(piece.id);
+  };
+
+  /* a picture from the page: its proportions are read before it is hung */
+  const hangFromPage = (src: string, title: string, at: { x: number; y: number } | null) => {
+    const key = `p-${src}`;
+    const probe = new Image();
+    probe.onload = () => {
+      if (probe.naturalWidth) ratios.current.set(key, probe.naturalHeight / probe.naturalWidth);
+      hang({ key, src, title }, at || undefined);
+    };
+    probe.onerror = () => hang({ key, src, title }, at || undefined);
+    probe.src = getOptimizedImageUrl(src, 240);
+  };
+
+  const onDrop = (event: React.DragEvent) => {
+    event.preventDefault();
+    setDropping(false);
+    const at = toWallCm(event.clientX, event.clientY);
+    const uri = event.dataTransfer.getData("text/uri-list").split("\n").find((l) => l && !l.startsWith("#"));
+    const src = pickedUp?.src || (uri ? originalImage(uri.trim()) : "");
+    const title = pickedUp?.title || "";
+    pickedUp = null;
+    if (/^https?:\/\//.test(src)) hangFromPage(src, title, at);
   };
 
   const toWallCm = (clientX: number, clientY: number) => {
@@ -240,20 +333,12 @@ export default function MyWall({ uid, sources, ko, onClose }: {
   const dark = wall ? wall.color === "#2a2a2a" : false;
   const chosen = wall?.pieces.find((p) => p.id === selected) || null;
 
-  /* on the body, so no stacking layer of the page can hold it under the tab bar */
-  return createPortal(
-    <div className="mw" role="dialog" aria-modal="true" aria-label={t({ ko: "내 벽 꾸미기", en: "My wall" })}>
+  return (
+    <div className={compact ? "mw is-compact" : "mw"} role="region" aria-label={t({ ko: "내 벽 꾸미기", en: "My wall" })}>
+      {/* one line: what this is, the wall's measures and colour, saving, close */}
       <header className="mw-head">
-        <div>
-          <p className="mw-kicker">MY WALL</p>
-          <h2>{t({ ko: "내 벽 꾸미기", en: "Hang your wall" })}</h2>
-        </div>
-        <button type="button" className="mw-close" onClick={onClose} aria-label={t({ ko: "닫기", en: "Close" })}>
-          <X size={22} strokeWidth={1.6} />
-        </button>
-      </header>
-
-      {wall && (
+        <p className="mw-kicker">{t({ ko: "MY WALL · 벽 꾸미기", en: "MY WALL" })}</p>
+        {wall && (
         <div className="mw-controls">
           <label className="mw-size">
             <span>{t({ ko: "벽 크기", en: "Wall" })}</span>
@@ -278,19 +363,28 @@ export default function MyWall({ uid, sources, ko, onClose }: {
           </div>
           <span className="mw-status">{saved ? t({ ko: "저장됨", en: "Saved" }) : t({ ko: "저장 중", en: "Saving" })}</span>
         </div>
-      )}
+        )}
+        <button type="button" className="mw-close" onClick={onClose} aria-label={t({ ko: "닫기", en: "Close" })}>
+          <X size={20} strokeWidth={1.6} />
+        </button>
+      </header>
 
       <div className="mw-stage" ref={stageRef} onPointerDown={() => setSelected(null)}>
         {wall && (
           <div className="mw-room" style={{ width: wall.w * scale }}>
             <div
-              className={dark ? "mw-wall is-dark" : "mw-wall"}
+              className={`mw-wall${dark ? " is-dark" : ""}${dropping ? " is-dropping" : ""}`}
               ref={wallRef}
+              onDragOver={(e) => { e.preventDefault(); e.dataTransfer.dropEffect = "copy"; if (!dropping) setDropping(true); }}
+              onDragLeave={() => setDropping(false)}
+              onDrop={onDrop}
               style={{ width: wall.w * scale, height: wall.h * scale, background: wall.color }}
             >
               {wall.pieces.length === 0 && (
                 <p className="mw-empty">
-                  {t({ ko: "아래 작품을 벽으로 끌어오거나 눌러서 걸어 보세요.", en: "Drag a work up onto the wall, or tap it." })}
+                  {!pageDrops
+                    ? t({ ko: "아래 작품을 눌러 걸어 보세요.", en: "Tap a work below to hang it." })
+                    : t({ ko: "페이지의 작품이나 아래 작품을 벽으로 끌어오세요.", en: "Drag any work on the page, or one below, onto the wall." })}
                 </p>
               )}
               {wall.pieces.map((p) => (
@@ -364,8 +458,7 @@ export default function MyWall({ uid, sources, ko, onClose }: {
       </div>
 
       {ghost && <img className="mw-ghost" src={getOptimizedImageUrl(ghost.src, 240)} alt="" style={{ left: ghost.x, top: ghost.y }} />}
-    </div>,
-    document.body,
+    </div>
   );
 }
 
