@@ -2,6 +2,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import { getFirestore, collection, addDoc, getDocs, doc, setDoc, query, orderBy, serverTimestamp } from "firebase/firestore";
 import { refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
+import { createPortal } from "react-dom";
+import { Plus, X } from "lucide-react";
+import "./playlistShare.css";
 
 const normalizeArtworkIdForFirestore = (value: unknown): string => String(value ?? "").trim().replace(/\//g, "__");
 
@@ -36,17 +40,8 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
   }, [theme]);
 
   const isLight = resolvedTheme === "light";
-  const panelBg = isLight ? "rgba(250,250,250,0.97)" : "rgba(10,10,10,0.95)";
-  const panelBorder = isLight ? "rgba(0,0,0,0.10)" : "rgba(255,255,255,0.10)";
-  const panelShadow = isLight ? "0 24px 48px rgba(0,0,0,0.16)" : "0 28px 56px rgba(0,0,0,0.62)";
-  const textPrimary = isLight ? "rgba(0,0,0,0.88)" : "rgba(255,255,255,0.92)";
-  const textSecondary = isLight ? "rgba(0,0,0,0.60)" : "rgba(255,255,255,0.64)";
-  const textMuted = isLight ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.42)";
-  const divider = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
-  const limeText = isLight ? "#4E6700" : "#D9FF6E";
-  const limeBg = isLight ? "rgba(138,107,31,0.10)" : "rgba(212,165,71,0.14)";
-  const limeBorder = isLight ? "rgba(138,107,31,0.25)" : "rgba(212,165,71,0.30)";
-  const controlBg = isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.04)";
+  const { t } = useLanguage();
+  const title = String(item?.title || item?.name || "").trim();
 
   useEffect(() => {
     if (!isOpen) return;
@@ -81,6 +76,15 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
       setLoading(true);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const esc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", esc);
+    return () => document.removeEventListener("keydown", esc);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -150,282 +154,71 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
     }
   };
 
-  return (
+  const canCreate = Boolean(newPlaylistName.trim()) && !saving && Boolean(user);
+
+  /* the playlist share sheet's panel: a hairline edge, words for actions, the
+     one thing to do as a circled gold mark, the lists as hairline rows */
+  return createPortal(
     <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: isLight ? "rgba(12,12,12,0.40)" : "rgba(0,0,0,0.62)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        zIndex: 260200,
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
-        padding: 16,
+      className="pls pls--add"
+      data-light={isLight || undefined}
+      onPointerDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
       }}
-      onClick={onClose}
     >
-      <div
-        style={{
-          width: "min(100%, 520px)",
-          maxHeight: "min(82vh, 760px)",
-          overflow: "hidden",
-          borderRadius: 18,
-          background: panelBg,
-          borderTop: `1px solid ${panelBorder}`,
-          borderRight: `1px solid ${panelBorder}`,
-          borderBottom: `1px solid ${panelBorder}`,
-          borderLeft: `1px solid ${panelBorder}`,
-          boxShadow: panelShadow,
-          fontFamily: "'Space Grotesk', sans-serif",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div style={{ padding: "18px 20px", borderBottom: `1px solid ${divider}` }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-            <div>
-              <h2
-                style={{
-                  margin: 0,
-                  fontSize: 16,
-                  fontWeight: 700,
-                  letterSpacing: "0.02em",
-                  textTransform: "uppercase",
-                  color: textPrimary,
-                }}
-              >
-                Add to Playlist
-              </h2>
-              <div style={{ marginTop: 5, fontSize: 11, color: textMuted, letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                Save this item for later
-              </div>
-            </div>
-            <button
-              onClick={onClose}
-              style={{
-                background: controlBg,
-                borderTop: `1px solid ${divider}`,
-                borderRight: `1px solid ${divider}`,
-                borderBottom: `1px solid ${divider}`,
-                borderLeft: `1px solid ${divider}`,
-                cursor: "pointer",
-                padding: 8,
-                borderRadius: 999,
-                display: "flex",
-                color: textSecondary,
-              }}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+      <div className="pls__card" role="dialog" aria-modal="true" aria-labelledby="pla-title">
+        <header>
+          <span>{t({ ko: "플레이리스트에 담기", en: "ADD TO PLAYLIST" })}</span>
+          <button type="button" className="pls__close" onClick={onClose} aria-label={t({ ko: "닫기", en: "Close" })}>
+            <X size={16} strokeWidth={1.8} aria-hidden="true" />
+          </button>
+        </header>
+        <h2 id="pla-title">{title || t({ ko: "이 작품", en: "This item" })}</h2>
+
+        <div className="pla__new">
+          <input
+            type="text"
+            placeholder={t({ ko: "새 플레이리스트 이름", en: "New playlist name" })}
+            value={newPlaylistName}
+            onChange={(e) => setNewPlaylistName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && void handleCreateAndSave()}
+            maxLength={60}
+          />
+          <button type="button" className="pls__cta" disabled={!canCreate} onClick={() => void handleCreateAndSave()}>
+            <span aria-hidden="true"><Plus size={13} strokeWidth={2.2} /></span>
+            {saving ? t({ ko: "담는 중", en: "Saving" }) : t({ ko: "만들고 담기", en: "Create" })}
+          </button>
         </div>
 
-        <div style={{ padding: "16px 20px 20px" }}>
-          <div style={{ marginBottom: 16 }}>
-            <div style={{ display: "flex", gap: 8, position: "relative" }}>
-              <input
-                type="text"
-                placeholder="New playlist name"
-                value={newPlaylistName}
-                onChange={(e) => setNewPlaylistName(e.target.value)}
-                style={{
-                  flex: 1,
-                  padding: "12px 14px",
-                  borderRadius: 10,
-                  borderTop: `1px solid ${divider}`,
-                  borderRight: `1px solid ${divider}`,
-                  borderBottom: `1px solid ${divider}`,
-                  borderLeft: `1px solid ${divider}`,
-                  fontSize: 13,
-                  fontWeight: 500,
-                  outline: "none",
-                  color: textPrimary,
-                  background: controlBg,
-                  transition: "border-color 0.2s ease, background-color 0.2s ease",
-                }}
-                onFocus={(e) => {
-                  e.currentTarget.style.borderColor = limeBorder;
-                  e.currentTarget.style.background = isLight ? "rgba(138,107,31,0.06)" : "rgba(212,165,71,0.07)";
-                }}
-                onBlur={(e) => {
-                  e.currentTarget.style.borderColor = divider;
-                  e.currentTarget.style.background = controlBg;
-                }}
-                onKeyDown={(e) => e.key === "Enter" && void handleCreateAndSave()}
-              />
-              <button
-                onClick={() => void handleCreateAndSave()}
-                disabled={!newPlaylistName.trim() || saving || !user}
-                style={{
-                  background: newPlaylistName.trim() && !saving && user ? limeBg : controlBg,
-                  color: newPlaylistName.trim() && !saving && user ? limeText : textMuted,
-                  borderTop: `1px solid ${newPlaylistName.trim() && !saving && user ? limeBorder : divider}`,
-                  borderRight: `1px solid ${newPlaylistName.trim() && !saving && user ? limeBorder : divider}`,
-                  borderBottom: `1px solid ${newPlaylistName.trim() && !saving && user ? limeBorder : divider}`,
-                  borderLeft: `1px solid ${newPlaylistName.trim() && !saving && user ? limeBorder : divider}`,
-                  borderRadius: 10,
-                  padding: "0 14px",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  cursor: newPlaylistName.trim() && !saving && user ? "pointer" : "not-allowed",
-                  minWidth: 92,
-                }}
-              >
-                {saving ? "Saving" : "Create"}
-              </button>
-            </div>
-          </div>
+        <p className="pla__label">{t({ ko: "내 플레이리스트", en: "YOUR PLAYLISTS" })}</p>
 
-          <div style={{ fontSize: 10, fontWeight: 600, color: textMuted, marginBottom: 10, textTransform: "uppercase", letterSpacing: "0.15em" }}>
-            Your Playlists
-          </div>
-
-          {!user ? (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "26px 14px",
-                borderRadius: 12,
-                borderTop: `1px solid ${divider}`,
-                borderRight: `1px solid ${divider}`,
-                borderBottom: `1px solid ${divider}`,
-                borderLeft: `1px solid ${divider}`,
-                color: textSecondary,
-                background: controlBg,
-                fontSize: 13,
-              }}
-            >
-              Sign in to save items to playlists.
-            </div>
-          ) : loading ? (
-            <div style={{ textAlign: "center", padding: "30px 12px", color: textSecondary, fontSize: 13 }}>Loading playlists...</div>
-          ) : playlists.length === 0 ? (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "30px 14px",
-                borderTop: `1px solid ${divider}`,
-                borderRight: `1px solid ${divider}`,
-                borderBottom: `1px solid ${divider}`,
-                borderLeft: `1px solid ${divider}`,
-                borderRadius: 12,
-                color: textSecondary,
-                background: controlBg,
-                fontSize: 13,
-              }}
-            >
-              No playlists yet. Create your first one above.
-            </div>
-          ) : (
-            <div
-              className="playlist-scroll"
-              style={{
-                maxHeight: "44vh",
-                overflowY: "auto",
-                display: "flex",
-                flexDirection: "column",
-                gap: 8,
-                paddingRight: 2,
-                scrollbarWidth: "thin",
-                scrollbarColor: isLight ? "rgba(138,107,31,0.35) rgba(0,0,0,0.05)" : "rgba(212,165,71,0.35) rgba(255,255,255,0.05)",
-              }}
-            >
-              {playlists.map((pl) => (
-                <button
-                  key={pl.id}
-                  onClick={() => void handleSaveToExisting(pl.id, pl.coverImage)}
-                  disabled={saving}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    width: "100%",
-                    padding: 10,
-                    borderTop: `1px solid ${divider}`,
-                    borderRight: `1px solid ${divider}`,
-                    borderBottom: `1px solid ${divider}`,
-                    borderLeft: `1px solid ${divider}`,
-                    borderRadius: 10,
-                    background: controlBg,
-                    cursor: saving ? "default" : "pointer",
-                    textAlign: "left",
-                    transition: "border-color 0.18s ease, background-color 0.18s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!saving) {
-                      e.currentTarget.style.borderColor = limeBorder;
-                      e.currentTarget.style.background = isLight ? "rgba(138,107,31,0.07)" : "rgba(212,165,71,0.07)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!saving) {
-                      e.currentTarget.style.borderColor = divider;
-                      e.currentTarget.style.background = controlBg;
-                    }
-                  }}
-                >
-                  <div
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: 8,
-                      background: isLight ? "#fff" : "rgba(255,255,255,0.06)",
-                      overflow: "hidden",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    {pl.coverImage ? (
-                      <img src={pl.coverImage} alt={pl.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    ) : (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={textMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
-                      </svg>
-                    )}
-                  </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontWeight: 600, fontSize: 13, color: textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {pl.name}
-                    </div>
-                    <div style={{ fontSize: 10, color: textMuted, marginTop: 2, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                      Tap to save
-                    </div>
-                  </div>
-                  <div style={{ color: textMuted, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 5v14M5 12h14" />
-                    </svg>
-                  </div>
+        {!user ? (
+          <p className="pls__body">{t({ ko: "로그인하면 플레이리스트에 담을 수 있어요.", en: "Sign in to save items to playlists." })}</p>
+        ) : loading ? (
+          <p className="pls__body">{t({ ko: "불러오는 중…", en: "Loading…" })}</p>
+        ) : playlists.length === 0 ? (
+          <p className="pls__body">{t({ ko: "아직 플레이리스트가 없어요. 위에서 첫 목록을 만들어 보세요.", en: "No playlists yet. Create your first one above." })}</p>
+        ) : (
+          <ul className="pla__list">
+            {playlists.map((pl) => (
+              <li key={pl.id}>
+                <button type="button" disabled={saving} onClick={() => void handleSaveToExisting(pl.id, pl.coverImage)}>
+                  <span className="pla__shot">{pl.coverImage ? <img src={pl.coverImage} alt="" loading="lazy" decoding="async" /> : null}</span>
+                  <span className="pla__name">
+                    <b>{pl.name}</b>
+                    {pl.shared === true && <small>{t({ ko: "공개", en: "PUBLIC" })}</small>}
+                  </span>
+                  <span className="pla__put">
+                    <Plus size={13} strokeWidth={2} aria-hidden="true" />
+                    {t({ ko: "담기", en: "Add" })}
+                  </span>
                 </button>
-              ))}
-            </div>
-          )}
-
-          <style>{`
-            .playlist-scroll::-webkit-scrollbar {
-              width: 6px;
-            }
-            .playlist-scroll::-webkit-scrollbar-track {
-              background: ${isLight ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.05)"};
-              border-radius: 999px;
-            }
-            .playlist-scroll::-webkit-scrollbar-thumb {
-              background: ${isLight ? "rgba(138,107,31,0.36)" : "rgba(212,165,71,0.34)"};
-              border-radius: 999px;
-            }
-            .playlist-scroll::-webkit-scrollbar-thumb:hover {
-              background: ${isLight ? "rgba(138,107,31,0.55)" : "rgba(212,165,71,0.54)"};
-            }
-          `}</style>
-        </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

@@ -73,7 +73,8 @@ html.wall-open img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 .mw *, .mw *::before, .mw *::after { box-sizing: border-box; }
 .mw button { font: inherit; color: inherit; background: none; border: 0; border-radius: 0; padding: 0; margin: 0; cursor: pointer; }
 .mw button:focus { outline: none; }
-.mw button:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
+/* no box round a focused control (small controls are marks and words only); focus shows as gold */
+.mw button:focus-visible { outline: none; color: var(--acc); }
 .mw :where(p, h2, ul, figure) { margin: 0; }
 
 /* one line over a hairline: what this is, the measures, the colour, close */

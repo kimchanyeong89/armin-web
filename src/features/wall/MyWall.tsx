@@ -49,7 +49,11 @@ const defaultWall = (): Wall => ({
 const WALL_LIMITS = { min: 100, max: 1000 };
 /* print sizes by the long side, as poster shops sell them */
 const LONG_SIDES = [40, 50, 70, 100];
-const FIRST_LONG_SIDE = 50;
+/* a newly hung print's long side: a good share of the wall so it reads at
+   once - two fifths of the wall's shorter side on a computer, a little less
+   on a phone - within 40 and 150cm */
+const firstLongSide = (wall: { w: number; h: number }, phone: boolean) =>
+  clamp(Math.round(Math.min(wall.w, wall.h) * (phone ? 0.3 : 0.4)), 40, 150);
 const MIN_WIDTH = 10;
 /* the space between two prints, and between a print and the wall's edge, in
    cm: none when the wall is set to snug (the default), a hair when it isn't */
@@ -127,6 +131,32 @@ function settle(p: Piece, others: Piece[], wall: Wall): Piece {
   if (!places.length) return p;
   places.sort((a, b) => Math.hypot(a.x - p.x, a.y - p.y) - Math.hypot(b.x - p.x, b.y - p.y));
   return places[0];
+}
+
+/* Snug turned on or off: prints that sat against each other (or against the
+   wall's edge) at the old spacing are laid out again at the new one, in their
+   order - left to right, then top to bottom - so a row of joined prints opens
+   into hair-spaced prints and closes again. Prints that stood apart stay put. */
+function respace(wall: Wall, from: number, to: number): Wall {
+  const touch = 0.6; // cm of slack when deciding two prints were set together
+  const overlapY = (a: Piece, b: Piece) => a.y < b.y + heightOf(b) && b.y < a.y + heightOf(a);
+  const overlapX = (a: Piece, b: Piece) => a.x < b.x + b.w && b.x < a.x + a.w;
+  const moved = new Map(wall.pieces.map((p) => [p.id, { ...p }]));
+  const byX = [...wall.pieces].sort((a, b) => a.x - b.x);
+  for (const p of byX) {
+    const cur = moved.get(p.id)!;
+    const left = byX.find((o) => o.id !== p.id && overlapY(o, p) && Math.abs(p.x - (o.x + o.w) - from) < touch);
+    if (left) { const l = moved.get(left.id)!; cur.x = l.x + l.w + to; }
+    else if (Math.abs(p.x - from) < touch) cur.x = to;
+  }
+  const byY = [...wall.pieces].sort((a, b) => a.y - b.y);
+  for (const p of byY) {
+    const cur = moved.get(p.id)!;
+    const above = byY.find((o) => o.id !== p.id && overlapX(o, p) && Math.abs(p.y - (o.y + heightOf(o)) - from) < touch);
+    if (above) { const a = moved.get(above.id)!; cur.y = a.y + heightOf(a) + to; }
+    else if (Math.abs(p.y - from) < touch) cur.y = to;
+  }
+  return { ...wall, pieces: wall.pieces.map((p) => keepOn(moved.get(p.id)!, wall)) };
 }
 
 /* the picture's own address when it was shown through the image proxy */
@@ -285,7 +315,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     const place = (ratio: number) =>
       setWall((current) => {
         if (!current) return current;
-        const w = widthFor(ratio, FIRST_LONG_SIDE);
+        const w = widthFor(ratio, firstLongSide(current, coarsePointer()));
         const raw = keepOn({ id: `p-${Date.now()}`, src, title, ratio, x: at.x - w / 2, y: at.y - (w * ratio) / 2, w }, current);
         const s = snap(raw, current.pieces, current, reachFor(scale));
         const piece = settle(keepOn({ ...raw, x: s.x, y: s.y }, current), current.pieces, current);
@@ -597,7 +627,10 @@ export default function MyWall({ uid, ko, compact, onClose }: {
               type="button"
               className="mw-tight"
               aria-pressed={wall.tight !== false}
-              onClick={() => setWall({ ...wall, tight: wall.tight === false })}
+              onClick={() => {
+                const next = { ...wall, tight: wall.tight === false };
+                setWall(respace(next, gapOf(wall), gapOf(next)));
+              }}
             >
               <i aria-hidden="true" />
               {t({ ko: "딱 붙이기", en: "Snug" })}

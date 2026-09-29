@@ -330,6 +330,14 @@ export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
         opacity: visible ? 1 : 0,
         transform: visible ? 'scale(1)' : 'scale(0.80)',
         transition: 'opacity 0.22s ease, transform 0.28s cubic-bezier(0.34,1.2,0.64,1)',
+        /* it floats over whatever the page shows: a soft disc of the page's own
+           ground behind it, so page text under it never reads through the globe */
+        padding: 18,
+        borderRadius: '50%',
+        background: isLight ? 'rgba(250,250,250,0.86)' : 'rgba(8,8,8,0.82)',
+        boxShadow: isLight ? '0 0 30px 18px rgba(250,250,250,0.86)' : '0 0 30px 18px rgba(8,8,8,0.82)',
+        backdropFilter: 'blur(6px)',
+        WebkitBackdropFilter: 'blur(6px)',
       }}>
         <GhostGlobeSVG size={56} dur="2.2s" color={strokeColor} />
         <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
@@ -342,6 +350,27 @@ export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
           ))}
         </div>
       </div>
+    </div>
+  );
+};
+
+// ── LoadingMark ───────────────────────────────────────────────────
+// The same globe and dots, in the flow of the page with their words under
+// them - for a place that waits on something and says so. Globe, dots and
+// words stack, so the words can never sit under the globe.
+export const LoadingMark: React.FC<{ label?: string; light?: boolean; size?: number }> = ({ label, light = false, size = 44 }) => {
+  injectStyles();
+  const stroke = light ? '#000000' : '#ffffff';
+  const dot = light ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)';
+  return (
+    <div role="status" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: '24px 0' }}>
+      <GhostGlobeSVG size={size} dur="2.2s" color={stroke} />
+      <div style={{ display: 'flex', gap: 5, alignItems: 'center' }} aria-hidden="true">
+        {[0, 1, 2].map(i => (
+          <div key={i} style={{ width: 4, height: 4, borderRadius: '50%', background: dot, animation: `dl-dot-blink 1.2s ease-in-out ${i * 0.22}s infinite` }} />
+        ))}
+      </div>
+      {label && <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.5, color: light ? 'rgba(0,0,0,0.5)' : 'rgba(244,241,234,0.5)', textAlign: 'center' }}>{label}</p>}
     </div>
   );
 };

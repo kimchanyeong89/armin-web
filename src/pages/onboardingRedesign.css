@@ -202,7 +202,7 @@
 @keyframes ob-in { from { opacity: 0; transform: scale(.97); } }
 /* the picture fills its row and is letterboxed inside it; the shadow is a
    filter so it follows the painting, not the empty letterbox */
-.ob-card img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; pointer-events: none;
+.ob-card img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; cursor: pointer;
   filter: drop-shadow(0 18px 24px rgba(0,0,0,.7)); }
 .ob-card figcaption { display: grid; justify-items: center; gap: 3px; max-width: 100%; text-align: center; }
 .ob-card b { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 13.5px/1.3 var(--ob-display); letter-spacing: -0.02em; }

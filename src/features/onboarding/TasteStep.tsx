@@ -59,6 +59,8 @@ export default function TasteStep({ uid, ko, meta, onCount }: { uid: string; ko:
   const [liked, setLiked] = useState<Set<string>>(() => new Set());
   const [failed, setFailed] = useState(false);
   const drag = useRef<{ x: number; dx: number } | null>(null);
+  /* a push that moved the pair is not also a tap on a picture */
+  const dragMoved = useRef(false);
   const [dx, setDx] = useState(0);
 
   useEffect(() => {
@@ -139,12 +141,17 @@ export default function TasteStep({ uid, ko, meta, onCount }: { uid: string; ko:
   const onPointerDown = (event: React.PointerEvent) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
     if ((event.target as Element).closest("button")) return;
+    dragMoved.current = false;
     drag.current = { x: event.clientX, dx: 0 };
-    (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
   };
   const onPointerMove = (event: React.PointerEvent) => {
     if (!drag.current) return;
     drag.current.dx = event.clientX - drag.current.x;
+    /* the pair takes the pointer only once it is really pushed, so a tap still reaches the picture */
+    if (!dragMoved.current && Math.abs(drag.current.dx) > 8) {
+      dragMoved.current = true;
+      (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+    }
     setDx(drag.current.dx);
   };
   const onPointerUp = () => {
@@ -194,7 +201,13 @@ export default function TasteStep({ uid, ko, meta, onCount }: { uid: string; ko:
               const on = liked.has(card.id);
               return (
                 <figure key={card.id} className={on ? "ob-card is-on" : "ob-card"}>
-                  <img src={getOptimizedImageUrl(card.i, 700)} alt={card.t} draggable={false} />
+                  {/* the picture itself chooses too - a tap on it is the same as the globe */}
+                  <img
+                    src={getOptimizedImageUrl(card.i, 700)}
+                    alt={card.t}
+                    draggable={false}
+                    onClick={() => { if (!dragMoved.current) toggleLike(card); }}
+                  />
                   <figcaption>
                     <b>{card.t}</b>
                     <span>{[card.a, card.y].filter(Boolean).join(", ")}</span>

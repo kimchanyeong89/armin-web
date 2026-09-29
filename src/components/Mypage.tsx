@@ -30,6 +30,7 @@ import {
   Palette,
   Bookmark,
   Share2,
+  Trash2,
   Image as ImageIcon,
 } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
@@ -64,7 +65,7 @@ import {
   ArtistWorkCount,
 } from "../features/mypage/savedItemArt";
 import PlaylistShareSheet from "./PlaylistShareSheet";
-import { refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
+import { deletePlaylist, refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
 import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
 import { readPostCount, syncPublicProfile } from "../features/community/publicProfile";
 import { rankForScore, userActivityScore } from "../utils/communityRank";
@@ -1147,6 +1148,9 @@ const MyPage: React.FC = () => {
   const [activePlaylistItems, setActivePlaylistItems] = useState<any[]>([]);
   /* the playlist whose share sheet is open */
   const [sharingPlaylistId, setSharingPlaylistId] = useState<string | null>(null);
+  /* deleting the open playlist asks once more in place: "ask", then "busy" while it goes */
+  const [playlistDelete, setPlaylistDelete] = useState<null | "ask" | "busy">(null);
+  useEffect(() => setPlaylistDelete(null), [activePlaylist?.id]);
 
   const [userScore, setUserScore] = useState(0);
 
@@ -1185,6 +1189,7 @@ const MyPage: React.FC = () => {
   const [selectedHeroArtworkId, setSelectedHeroArtworkId] = useState<string | null>(null);
   /* "배경 변경": the next artwork card pressed becomes the page's background */
   const [pickingBg, setPickingBg] = useState(false);
+  const [adjustingBg, setAdjustingBg] = useState(false);
   const [heroFocusY, setHeroFocusY] = useState(50);
 
   const displayPhotoURL = liveProfilePhoto || profileData.photoURL || user?.photoURL;
@@ -1201,7 +1206,7 @@ const MyPage: React.FC = () => {
 
   const clampHeroFocusY = (value: number) => {
     if (!Number.isFinite(value)) return 50;
-    return Math.min(85, Math.max(15, Math.round(value)));
+    return Math.min(100, Math.max(0, Math.round(value)));
   };
 
   useEffect(() => {
@@ -2005,8 +2010,8 @@ const MyPage: React.FC = () => {
 
   /* a work's own mark on its card sets the page's background at once and
      saves it; the same mark on the current background returns it to auto */
-  const saveHeroBackgroundPreference = async (nextHeroId: string | null) => {
-    const nextFocusY = nextHeroId === selectedHeroArtworkId ? clampHeroFocusY(heroFocusY) : 50;
+  const saveHeroBackgroundPreference = async (nextHeroId: string | null, focusY?: number) => {
+    const nextFocusY = focusY !== undefined ? clampHeroFocusY(focusY) : nextHeroId === selectedHeroArtworkId ? clampHeroFocusY(heroFocusY) : 50;
     const nextUpdatedAt = Date.now();
 
     setSelectedHeroArtworkId(nextHeroId);
@@ -2101,6 +2106,8 @@ const MyPage: React.FC = () => {
           if (pickingBg && heroId) {
             void saveHeroBackgroundPreference(heroId);
             setPickingBg(false);
+            /* then its place: the picture spans the width, so it only moves up and down */
+            setAdjustingBg(true);
             scrollContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             return;
           }
@@ -2517,6 +2524,32 @@ const MyPage: React.FC = () => {
           alt=""
           style={{ objectPosition: `50% ${heroFocusY}%` }}
         />
+        {/* placing the background: drag it up or down over the stage, then 완료 */}
+        {adjustingBg && (
+          <div
+            className="mp-bgadjust"
+            onPointerDown={(e) => {
+              if ((e.target as Element).closest("button")) return;
+              const el = e.currentTarget;
+              el.setPointerCapture(e.pointerId);
+              const start = { y: e.clientY, focus: heroFocusY, h: el.getBoundingClientRect().height || 1 };
+              const move = (ev: PointerEvent) => setHeroFocusY(clampHeroFocusY(start.focus - ((ev.clientY - start.y) / start.h) * 100));
+              const up = () => { el.removeEventListener("pointermove", move); el.removeEventListener("pointerup", up); el.removeEventListener("pointercancel", up); };
+              el.addEventListener("pointermove", move);
+              el.addEventListener("pointerup", up);
+              el.addEventListener("pointercancel", up);
+            }}
+          >
+            <p>{t({ ko: "위아래로 끌어 배경 위치를 맞추세요", en: "Drag up or down to place the background" })}</p>
+            <button
+              type="button"
+              className="mp-act mp-act--gold"
+              onClick={() => { void saveHeroBackgroundPreference(selectedHeroArtworkId, heroFocusY); setAdjustingBg(false); }}
+            >
+              {t({ ko: "완료", en: "Done" })}
+            </button>
+          </div>
+        )}
         {heroOptionIds.size > 0 && (
           <button
             type="button"
@@ -2699,6 +2732,39 @@ const MyPage: React.FC = () => {
               <Share2 size={12} strokeWidth={2} aria-hidden="true" />
               {activePlaylist.shared ? t({ ko: "공개 중", en: "Public" }) : t({ ko: "공유", en: "Share" })}
             </button>
+            <button
+              type="button"
+              className={playlistDelete ? "mp-act mp-act--gold" : "mp-act"}
+              disabled={playlistDelete === "busy"}
+              onClick={async () => {
+                if (!playlistDelete) return setPlaylistDelete("ask");
+                if (!user) return;
+                setPlaylistDelete("busy");
+                const id = activePlaylist.id;
+                try {
+                  await deletePlaylist(user.uid, id);
+                  setPlaylists((prev) => prev.filter((playlist) => playlist.id !== id));
+                  setActivePlaylist(null);
+                } catch (error) {
+                  console.error("Error deleting playlist", error);
+                  alert(t({ ko: "플레이리스트를 삭제하지 못했습니다.", en: "Could not delete the playlist." }));
+                } finally {
+                  setPlaylistDelete(null);
+                }
+              }}
+            >
+              <Trash2 size={12} strokeWidth={2} aria-hidden="true" />
+              {playlistDelete === "busy"
+                ? t({ ko: "삭제 중", en: "Deleting" })
+                : playlistDelete
+                  ? t({ ko: "정말 삭제", en: "Delete for good" })
+                  : t({ ko: "삭제", en: "Delete" })}
+            </button>
+            {playlistDelete === "ask" && (
+              <button type="button" className="mp-act" onClick={() => setPlaylistDelete(null)}>
+                {t({ ko: "취소", en: "Cancel" })}
+              </button>
+            )}
           </span>
         ) : (
           <span />

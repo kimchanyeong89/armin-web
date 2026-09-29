@@ -95,6 +95,12 @@
    it (App.tsx fixes the switch 14px from the right edge; it is 62px wide) */
 .mp .mp-bg { position: absolute; top: max(18px, calc(env(safe-area-inset-top, 0px) + 16px)); right: 90px; z-index: 3; }
 .mp .mp-bg[aria-pressed="true"] { color: var(--mp-gold); }
+/* placing the chosen background: the whole stage takes the drag, a line of
+   words and 완료 at its top */
+.mp-bgadjust { position: absolute; inset: 0; z-index: 4; display: flex; align-items: flex-start; justify-content: center; gap: 18px;
+  padding-top: calc(var(--page-top) - 8px); cursor: ns-resize; touch-action: none;
+  background: linear-gradient(to bottom, rgba(8,8,8,.55), transparent 38%); box-shadow: inset 0 0 0 1px rgba(212,165,71,.45); }
+.mp-bgadjust p { margin: 0; padding-top: 2px; font-size: 13px; font-weight: 600; color: #f4f1ea; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
 /* while a background is being chosen: a gold line under the tabs says so */
 .mp-bgpick { display: flex; align-items: center; justify-content: space-between;
   gap: 12px; padding: 10px var(--mp-pad); background: rgba(8,8,8,.92); border-bottom: 1px solid var(--mp-gold);
@@ -180,8 +186,9 @@
 .mp-tabs span { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; white-space: nowrap; }
 
 /* ── an open playlist's way back, and the sort ── */
-.mp-sortrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px var(--mp-pad) 10px; }
-.mp-sort { position: relative; display: inline-flex; gap: 18px; }
+/* an open playlist's actions and the sort share the row; on a narrow screen the sort drops to its own line, still on the right */
+.mp-sortrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 12px; padding: 12px var(--mp-pad) 10px; }
+.mp-sort { position: relative; display: inline-flex; gap: 18px; margin-left: auto; }
 .mp .mp-sort button { padding: 0 0 8px; font-size: 12.5px; font-weight: 600; white-space: nowrap; color: var(--mp-ink-3);
   transition: color .2s ease; }
 .mp .mp-sort button:hover { color: var(--mp-ink-2); }

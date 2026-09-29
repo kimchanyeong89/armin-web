@@ -51,3 +51,28 @@
   .pls__card { width: calc(100% - 24px); }
 }
 @media (prefers-reduced-motion: reduce) { .pls, .pls__card { animation: none; } }
+
+/* ── Adding to a playlist: the same panel, above an open artwork ── */
+.pls--add { z-index: 260200; }
+@media (min-width: 561px) { .pls--add .pls__card { width: min(440px, 100%); } }
+.pla__new { display: flex; align-items: center; gap: 16px; margin-top: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+.pla__new input { flex: 1; min-width: 0; margin: 0; padding: 6px 0; border: 0; border-radius: 0; background: none; outline: none;
+  font-family: inherit; font-size: 14px; font-weight: 500; line-height: 1.4; color: var(--ink); }
+.pla__new input::placeholder { color: var(--ink-3); }
+.pla__new:focus-within { border-bottom-color: color-mix(in srgb, var(--acc) 60%, transparent); }
+.pla__new .pls__cta { flex: none; font-size: 12.5px; }
+.pla__label { margin-top: 18px !important; font: 600 9.5px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .1em; color: var(--ink-3); }
+.pla__list { margin: 8px 0 0; padding: 0; list-style: none; max-height: min(44vh, 360px); overflow-y: auto; scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--acc) 40%, transparent) transparent; }
+.pla__list li + li { border-top: 1px solid var(--rule); }
+.pls .pla__list button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 0; text-align: left; }
+/* covers are the concept's cut-corner squares */
+.pla__shot { flex: none; width: 40px; height: 40px; overflow: hidden; background: var(--rule);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px); }
+.pla__shot img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.72); transition: filter .3s ease; }
+.pla__name { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.pla__name b { font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.pla__name small { font: 600 9px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .08em; color: var(--acc); }
+.pla__put { flex: none; display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; color: var(--ink-3); transition: color .16s ease; }
+.pls .pla__list button:hover .pla__put, .pls .pla__list button:focus-visible .pla__put, .pls .pla__list button:hover .pla__name b { color: var(--acc); }
+.pls .pla__list button:hover .pla__shot img { filter: none; }

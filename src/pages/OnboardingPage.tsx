@@ -6,7 +6,7 @@ import { updateProfile } from "firebase/auth";
 import { exhibitions } from "../data/exhibitions";
 import { getCanonicalName } from "../utils/canonicalArtist";
 import { getWorkerNetworkMode } from "../utils/network";
-import { TransitionBadge } from "../components/DrawingLoader";
+import { LoadingMark } from "../components/DrawingLoader";
 import { getOptimizedImageUrl } from "../utils/imageProxy";
 import type { ProfileImageCrop } from "../types/Profile";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -354,33 +354,15 @@ const OnboardingPage: React.FC = () => {
             localArtworksByArtist[key].push(art);
           }
         };
-        const collectionFilesSet = new Set<string>();
+        /* works already in the page's museum data; every collection file is NOT
+           fetched here any more - together they are over 1GB, and on the live
+           site that held the artist list on "loading" for minutes. An artist's
+           works come from artists-dates.json below and, for the one chosen,
+           from the search worker (GET_ARTIST_WORKS). */
         (exhibitions as any[]).forEach(museum => {
           if (museum.rooms) Object.values(museum.rooms).forEach((roomArts: any) => { if (Array.isArray(roomArts)) roomArts.forEach(addArtwork); });
           if (museum.items && Array.isArray(museum.items)) museum.items.forEach(addArtwork);
-          const allExhibitions = [...(museum.permanentExhibitions || []), ...(museum.temporaryExhibitions || []), ...(museum.pastExhibitions || [])];
-          allExhibitions.forEach((ex: any) => { if (ex.collectionFile) collectionFilesSet.add(ex.collectionFile); });
         });
-        ['orangerie-collection.json', 'pompidou-painting-collection.json', 'basel-collection.json', 'mam-painting-collection.json', 'kunsthaus-collection.json'].forEach(f => collectionFilesSet.add(f));
-        const collectionFiles = Array.from(collectionFilesSet);
-
-        const BATCH_SIZE = 20;
-        const loadFile = async (filename: string) => {
-          try {
-            const resp = await fetch(`/data/${filename}`);
-            if (!resp.ok) return;
-            const data = await resp.json();
-            let items: any[] = Array.isArray(data) ? data : (data.objects || data.items || []);
-            items.forEach(art => {
-              const artistName = art.artist || art.a;
-              const imageUrl = art.image || art.imageUrl || art.i;
-              if (artistName && imageUrl) addArtwork({ artist: artistName, image: imageUrl });
-            });
-          } catch (e) { }
-        };
-        for (let i = 0; i < collectionFiles.length; i += BATCH_SIZE) {
-          await Promise.all(collectionFiles.slice(i, i + BATCH_SIZE).map(loadFile));
-        }
 
         const res = await fetch('/data/artists-dates.json');
         if (res.ok) {
@@ -393,12 +375,32 @@ const OnboardingPage: React.FC = () => {
             deathYear?: number; deathDate?: string;
           }>();
 
+          /* One person, one entry. The same artist comes in under several spellings
+             ("Ilja Repin" / "Ilya Repin", "HENRI MATISSE" / "Matisse Henri"): they share a
+             Wikidata id, or failing that a surname with the same birth and death dates.
+             Q4233718 is Wikidata's "anonymous" - many different hands, never merged. */
+          const ANONYMOUS_WIKI = new Set(['Q4233718']);
+          /* "Monet, Claude" → monet; "Claude Monet" → monet; accents dropped */
+          const surnameOf = (name: string) => {
+            const n = name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            const part = n.includes(',') ? n.split(',')[0] : n;
+            return part.trim().split(/\s+/).pop() || '';
+          };
+          const personKey = (artist: any, canonKey: string) => {
+            if (artist.wikiId && !ANONYMOUS_WIKI.has(artist.wikiId)) return `wd:${artist.wikiId}`;
+            if (artist.birthDate && artist.deathDate) return `bd:${surnameOf(artist.name)}:${artist.birthDate}:${artist.deathDate}`;
+            return `nm:${canonKey}`;
+          };
+          /* the spelling shown: Latin letters over others, written case over SHOUTING, then the one with more works */
+          const nameScore = (name: string, works: number) =>
+            (/[a-z]/i.test(name) ? 4 : 0) + (name !== name.toUpperCase() ? 2 : 0) + Math.min(1, works / 1000);
+
           Object.values(data).forEach((artist: any) => {
             if (!artist.name) return;
 
             const canonicalName = getCanonicalName(artist.name);
             if (!canonicalName) return;
-            const canonKey = normalize(canonicalName);
+            const canonKey = personKey(artist, normalize(canonicalName));
 
             // Collect artworks from local files (try both original and canonical name, deduplicate)
             const localArts: string[] = [];
@@ -434,6 +436,7 @@ const OnboardingPage: React.FC = () => {
             if (canonicalMap.has(canonKey)) {
               // Merge into existing entry
               const existing = canonicalMap.get(canonKey)!;
+              if (nameScore(canonicalName, allArts.length) > nameScore(existing.name, existing.artworks.length)) existing.name = canonicalName;
               existing.artworks.push(...allArts);
               if (deathYear && !existing.deathYear) { existing.deathYear = deathYear; existing.deathDate = deathDate; }
               if (!existing.imageUrl && artist.imageUrl) existing.imageUrl = artist.imageUrl;
@@ -714,7 +717,8 @@ const OnboardingPage: React.FC = () => {
 
   const canProceedStep1 = birthDateInput.length === 10;
   const artistYear = selectedArtist?.deathYear;
-  const userYear = birthDateInput.length === 10 ? parseInt(birthDateInput.split('.')[0]) : null;
+  /* years since an artist died, counted from today */
+  const yearsSince = (deathYear: number) => Math.max(1, new Date().getFullYear() - deathYear);
   const yearMin = 1900;
   const yearMax = Math.max(yearMin + 1, new Date().getFullYear() - 10);
   const daysInMonth = new Date(birthYear, birthMonth, 0).getDate();
@@ -819,6 +823,16 @@ const OnboardingPage: React.FC = () => {
               </div>
             )}
 
+            {/* editing an existing profile: account settings, folded away on the first screen, so nothing has to load first */}
+            {!firstTime && (
+              <div className="ob-account">
+                <button type="button" className="ob-account__toggle" aria-expanded={accountOpen} onClick={() => setAccountOpen((v) => !v)}>
+                  계정 관리 <span aria-hidden="true">{accountOpen ? "▴" : "▾"}</span>
+                </button>
+                {accountOpen && <DeleteAccountSection />}
+              </div>
+            )}
+
           </div>
         </div>
 
@@ -827,9 +841,10 @@ const OnboardingPage: React.FC = () => {
             <section className="ob-statement ob-statement--tight">
               <p className="ob-statement__meta">{`COLLY · 시작하기 2/${stepCount}`}</p>
               <h1>{'프로필에 쓸\n작품을 고르세요.'}</h1>
-              <p>{searchByBirthday
-                ? `${birthMonth}월 ${birthDay}일 무렵 세상을 떠난 예술가들입니다. 좋아하는 작가가 따로 있다면 이름으로 찾으세요.`
-                : '찾은 작가의 작품에서 고르세요.'}</p>
+              {/* the chosen artist and how long ago they died - it follows the choice */}
+              <p>{selectedArtist && artistYear
+                ? `${selectedArtist.name}, 타계한 지 ${yearsSince(artistYear)}년 된 예술가입니다. 좋아하는 작가가 있다면 이름으로 검색하세요.`
+                : '좋아하는 작가가 있다면 이름으로 검색하세요.'}</p>
             </section>
 
             {/* finding an artist by name is always there, above the list */}
@@ -863,7 +878,7 @@ const OnboardingPage: React.FC = () => {
                 >
                   <img src={photoOf(artist)} alt="" loading="lazy" decoding="async" />
                   <span>{String(artist.name || '').split(' ')[0]}</span>
-                  {artist?.deathYear && <small>{`${Math.max(1, Math.abs(birthYear - Number(artist.deathYear)))}년 전`}</small>}
+                  {artist?.deathYear && <small>{`타계 ${yearsSince(Number(artist.deathYear))}년`}</small>}
                 </button>
               ))}
             </div>
@@ -871,7 +886,7 @@ const OnboardingPage: React.FC = () => {
             {selectedArtist && (
               <div className="ob-chosen">
                 <b>{selectedArtist.name}</b>
-                <span>{artistYear ? `${artistYear}년 작고 · ${Math.max(1, Math.abs((userYear || artistYear) - artistYear))}년 전` : '추천 작가'}</span>
+                <span>{artistYear ? `${artistYear}년 작고 · 타계 ${yearsSince(artistYear)}년` : '추천 작가'}</span>
               </div>
             )}
 
@@ -890,7 +905,9 @@ const OnboardingPage: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <p className="ob-empty">{artistDataLoading ? '작가 정보를 불러오는 중입니다.' : '고를 수 있는 작품이 없습니다.'}</p>
+              artistDataLoading
+                ? <LoadingMark label="작가 정보를 불러오는 중입니다" />
+                : <p className="ob-empty">고를 수 있는 작품이 없습니다.</p>
             )}
 
           </div>
@@ -974,16 +991,6 @@ const OnboardingPage: React.FC = () => {
               </label>
             </div>
 
-            {/* editing an existing profile: account settings, folded away */}
-            {!firstTime && (
-              <div className="ob-account">
-                <button type="button" className="ob-account__toggle" aria-expanded={accountOpen} onClick={() => setAccountOpen((v) => !v)}>
-                  계정 관리 <span aria-hidden="true">{accountOpen ? "▴" : "▾"}</span>
-                </button>
-                {accountOpen && <DeleteAccountSection />}
-              </div>
-            )}
-
           </div>
         </div>
 
@@ -1006,7 +1013,6 @@ const OnboardingPage: React.FC = () => {
         </button>
       </nav>
 
-      <TransitionBadge show={artistDataLoading && step === 1} />
     </div>
   );
 };

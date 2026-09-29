@@ -104,6 +104,15 @@ export async function unsharePlaylist(uid: string, playlistId: string): Promise<
   await setDoc(ownRef(uid, playlistId), { shared: false }, { merge: true });
 }
 
+/** Deletes a playlist and the works in it; a shared one's public copy goes first, so it never outlives the list. */
+export async function deletePlaylist(uid: string, playlistId: string): Promise<void> {
+  const own = await getDoc(ownRef(uid, playlistId));
+  if (own.exists() && own.data().shared === true) await deleteDoc(publicRef(playlistId));
+  const items = await getDocs(collection(db, "users", uid, "playlists", playlistId, "items"));
+  await Promise.all(items.docs.map((item) => deleteDoc(item.ref)));
+  await deleteDoc(ownRef(uid, playlistId));
+}
+
 /** Brings a shared playlist's public copy up to date after its works change; a private playlist is left alone. */
 export async function refreshSharedPlaylist(uid: string, playlistId: string): Promise<void> {
   const own = await getDoc(ownRef(uid, playlistId));
