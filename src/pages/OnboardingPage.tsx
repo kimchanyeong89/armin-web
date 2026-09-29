@@ -13,6 +13,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import TasteStep, { TASTE_GOAL } from "../features/onboarding/TasteStep";
 import DateWheel from "../features/onboarding/DateWheel";
 import { useArtistI18n } from "../i18n/artistLocalization";
+import DeleteAccountSection from "../features/account/DeleteAccountSection";
 import { Search, X } from "lucide-react";
 import "./onboardingRedesign.css";
 
@@ -204,6 +205,7 @@ const OnboardingPage: React.FC = () => {
   /* not yet onboarded: the taste step follows the profile */
   const [firstTime, setFirstTime] = useState(false);
   const [tasteCount, setTasteCount] = useState(0);
+  const [accountOpen, setAccountOpen] = useState(false);
   const { language } = useLanguage();
   /* the Korean names of artists, for a search typed in Hangul */
   const artistKo = useArtistI18n();
@@ -971,6 +973,16 @@ const OnboardingPage: React.FC = () => {
                 />
               </label>
             </div>
+
+            {/* editing an existing profile: account settings, folded away */}
+            {!firstTime && (
+              <div className="ob-account">
+                <button type="button" className="ob-account__toggle" aria-expanded={accountOpen} onClick={() => setAccountOpen((v) => !v)}>
+                  계정 관리 <span aria-hidden="true">{accountOpen ? "▴" : "▾"}</span>
+                </button>
+                {accountOpen && <DeleteAccountSection />}
+              </div>
+            )}
 
           </div>
         </div>

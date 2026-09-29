@@ -79,7 +79,7 @@ export function isMobileAppContainer(): boolean {
 
 const PRODUCTION_WEB_URL = "https://armin-web.pages.dev";
 
-export function buildExternalLoginUrl(provider: MobileAuthProvider): string {
+export function buildExternalLoginUrl(provider: MobileAuthProvider, options?: { naverReauth?: boolean }): string {
   // IMPORTANT: Always use production URL for external browser OAuth.
   // Firebase's auth handler (armin-web.firebaseapp.com) cannot reach localhost
   // via cross-origin iframe, which causes getRedirectResult() to always return null.
@@ -94,14 +94,16 @@ export function buildExternalLoginUrl(provider: MobileAuthProvider): string {
   url.searchParams.set("provider", provider);
   url.searchParams.set("start", "1");
   url.searchParams.set("returnToApp", "1");
+  /* ask Naver for its login screen even when a Naver ID is already signed in, so another ID can be used */
+  if (options?.naverReauth) url.searchParams.set("naverReauth", "1");
   return url.toString();
 }
 
-export function requestExternalMobileLogin(provider: MobileAuthProvider): boolean {
+export function requestExternalMobileLogin(provider: MobileAuthProvider, options?: { naverReauth?: boolean }): boolean {
   if (typeof window === "undefined") return false;
   if (!isMobileAppContainer()) return false;
 
-  const url = buildExternalLoginUrl(provider);
+  const url = buildExternalLoginUrl(provider, options);
   const bridge = getBridge();
 
   if (bridge?.postMessage) {

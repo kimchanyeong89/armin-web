@@ -70,7 +70,6 @@ import { readPostCount, syncPublicProfile } from "../features/community/publicPr
 import { rankForScore, userActivityScore } from "../utils/communityRank";
 import type { ProfileImageCrop } from "../types/Profile";
 import { ensureSharedSearchWorkerLoaded } from "../utils/searchWorkerRuntime";
-import DeleteAccountSection from "../features/account/DeleteAccountSection";
 
 type ViewMode = "artworks" | "exhibitions" | "museums" | "artists" | "playlists" | "curations";
 const MYPAGE_RETURN_KEY = "mypage:return";
@@ -2895,7 +2894,9 @@ const MyPage: React.FC = () => {
         </div>
       )}
 
-      <DeleteAccountSection light={isLightTheme} />
+      {/* account deletion lives in the profile edit (the pencil by the name),
+          under 계정 관리 - out of reach of a stray tap at the page's foot */}
+      <div style={{ height: 110 }} aria-hidden="true" />
 
       {showSlideshow && (
         <Slideshow artworks={activePlaylist ? activePlaylistItems : likedArtworks} onClose={() => setShowSlideshow(false)} />

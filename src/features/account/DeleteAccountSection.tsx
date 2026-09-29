@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { deleteAccount } from "./deleteAccount";
 
-// 마이페이지 맨 아래에 두는 계정 삭제. 눈에 띄게 만들 이유는 없지만
-// 찾을 수 있어야 한다 — 스토어 심사가 앱 안에서의 경로를 확인한다.
+// 계정 삭제. 프로필 편집 화면의 '계정 관리' 안에 둔다 — 실수로 누르기 어렵게,
+// 그래도 찾을 수는 있게(스토어 심사가 앱 안에서의 경로를 확인한다).
+// 한 번 더 묻고, 그다음엔 끝까지 지운다(본인 확인이 필요하면 그것부터).
 export default function DeleteAccountSection({ light = false }: { light?: boolean }) {
   const { t } = useLanguage();
   const navigate = useNavigate();
@@ -26,8 +27,8 @@ export default function DeleteAccountSection({ light = false }: { light?: boolea
         return;
       }
       setNotice(t({
-        ko: "기록은 모두 지웠습니다. 로그인 정보까지 지우려면 다시 로그인한 뒤 한 번 더 눌러 주세요.",
-        en: "Your records are deleted. Sign in once more and tap again to remove the sign-in itself.",
+        ko: "로그인한 지 오래되어 본인 확인이 필요합니다. 아직 아무것도 지우지 않았습니다. 로그아웃 후 다시 로그인하고 바로 이 화면에서 한 번 더 눌러 주세요.",
+        en: "It's been a while since you signed in, so we need to confirm it's you. Nothing was deleted. Sign out, sign in again and tap this straight away.",
       }));
       setOpen(false);
     } catch {
@@ -41,7 +42,7 @@ export default function DeleteAccountSection({ light = false }: { light?: boolea
   };
 
   return (
-    <div style={{ padding: "26px 20px 110px", textAlign: "center" }}>
+    <div style={{ padding: "8px 0 4px", textAlign: "left" }}>
       {!open ? (
         <button
           onClick={() => setOpen(true)}

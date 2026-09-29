@@ -28,6 +28,10 @@ interface Wall {
   h: number;
   color: string;
   pieces: Piece[];
+  /** prints sit edge to edge (the default); off, a hair apart */
+  tight?: boolean;
+  /** the member set the wall's size; until then it takes the drawer's shape */
+  sized?: boolean;
 }
 
 type Corner = "nw" | "ne" | "sw" | "se";
@@ -47,10 +51,15 @@ const WALL_LIMITS = { min: 100, max: 1000 };
 const LONG_SIDES = [40, 50, 70, 100];
 const FIRST_LONG_SIDE = 50;
 const MIN_WIDTH = 10;
-/* the hair between two prints, and between a print and the wall's edge, in cm */
-const GAP = 1;
-/* how near, on screen, a print has to come to catch an edge */
+/* the space between two prints, and between a print and the wall's edge, in
+   cm: none when the wall is set to snug (the default), a hair when it isn't */
+const gapOf = (wall: { tight?: boolean }) => (wall.tight === false ? 1 : 0);
+/* how near a print has to come to catch an edge: 10px on screen, but never
+   more than 3cm - on a small drawing 10px is a long way, and every line
+   within it would hold the print still */
 const SNAP_PX = 10;
+const SNAP_MAX_CM = 3;
+const reachFor = (scale: number) => Math.min(SNAP_PX / scale, SNAP_MAX_CM);
 const COLORS = [
   { value: CREAM, ko: "미색", en: "Cream" },
   { value: "#ece8df", ko: "화이트", en: "White" },
@@ -75,6 +84,7 @@ const keepOn = (p: Piece, wall: { w: number; h: number }): Piece => ({
    beside another print, or in line with another print's edges or middle.
    The lines it caught are returned so they can be drawn while it moves. */
 function snap(p: Piece, others: Piece[], wall: Wall, reach: number): { x: number; y: number; guides: Guides } {
+  const GAP = gapOf(wall);
   const w = p.w;
   const h = heightOf(p);
   const xs: Array<[at: number, line: number]> = [[GAP, 0], [wall.w - GAP - w, wall.w], [(wall.w - w) / 2, wall.w / 2]];
@@ -100,8 +110,11 @@ function snap(p: Piece, others: Piece[], wall: Wall, reach: number): { x: number
 /* A print let go on top of another is moved to the nearest free place beside
    it - left, right, above or below, a hair apart - so prints never overlap. */
 function settle(p: Piece, others: Piece[], wall: Wall): Piece {
+  const GAP = gapOf(wall);
+  /* prints that only touch do not overlap; a hundredth of a cm allows for rounding */
+  const e = GAP / 2 - 0.01;
   const overlaps = (a: Piece, b: Piece) =>
-    a.x < b.x + b.w + GAP / 2 && a.x + a.w + GAP / 2 > b.x && a.y < b.y + heightOf(b) + GAP / 2 && a.y + heightOf(a) + GAP / 2 > b.y;
+    a.x < b.x + b.w + e && a.x + a.w + e > b.x && a.y < b.y + heightOf(b) + e && a.y + heightOf(a) + e > b.y;
   const hit = others.find((o) => overlaps(p, o));
   if (!hit) return p;
   const h = heightOf(p);
@@ -130,11 +143,20 @@ function originalImage(src: string): string {
   }
 }
 
-/* the picture under a point, outside the wall and the tab bar and big enough to be a work */
+/* the picture under a point, outside the wall and the tab bar and big enough
+   to be a work. A card often lays a label or shade over its picture, or turns
+   the picture's pointer off, so the picture itself is not always under the
+   pointer: the elements there are searched for a picture that covers the point. */
 function pictureAt(x: number, y: number): HTMLImageElement | null {
-  for (const el of document.elementsFromPoint(x, y)) {
+  const covers = (img: HTMLImageElement) => {
+    const r = img.getBoundingClientRect();
+    return r.width >= 40 && r.height >= 40 && x >= r.left && x <= r.right && y >= r.top && y <= r.bottom && !!(img.currentSrc || img.src);
+  };
+  for (const el of document.elementsFromPoint(x, y).slice(0, 6)) {
     if (el.closest(".wall-drawer, .bpn, .wall-grip")) return null;
-    if (el instanceof HTMLImageElement && el.clientWidth >= 40 && el.clientHeight >= 40 && (el.currentSrc || el.src)) return el;
+    if (el instanceof HTMLImageElement) { if (covers(el)) return el; continue; }
+    const inner = Array.from(el.querySelectorAll("img")).find(covers);
+    if (inner) return inner;
   }
   return null;
 }
@@ -154,11 +176,14 @@ export default function MyWall({ uid, ko, compact, onClose }: {
   const [saved, setSaved] = useState(true);
   const [scale, setScale] = useState(1); // px per cm
   const [guides, setGuides] = useState<Guides>({ x: [], y: [] });
-  const [ghost, setGhost] = useState<{ src: string; x: number; y: number } | null>(null);
+  /* the picture carried from the page is moved directly, not by redrawing the wall */
+  const ghostRef = useRef<HTMLImageElement>(null);
   const [dropping, setDropping] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   /* while the wall's own edge is pulled, the drawing keeps its scale so the edge stays under the finger */
   const sizing = useRef(false);
+  const autoFitted = useRef(false);
+  const fitTimer = useRef<number | undefined>(undefined);
   const [sizingLabel, setSizingLabel] = useState<string | null>(null);
   const wallRef = useRef<HTMLDivElement>(null);
 
@@ -208,6 +233,25 @@ export default function MyWall({ uid, ko, compact, onClose }: {
       const width = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
       const height = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 22;
       if (width <= 0 || height <= 0) return;
+      /* a wall nobody has sized yet takes the drawer's own shape, so it fills
+         it side to side; its height stays a room's. Once per opening (or per
+         "fit to screen") - refitting whenever the stage changed would reshape
+         the wall under the member's hands, e.g. when the size bar appears */
+      if (!wall.sized && !autoFitted.current) {
+        /* while the drawer is still being pulled the stage keeps changing: fit
+           once it has held its size for a moment */
+        window.clearTimeout(fitTimer.current);
+        fitTimer.current = window.setTimeout(() => {
+          autoFitted.current = true;
+          const fitted = clamp(Math.round((wall.h * width) / height / 10) * 10, WALL_LIMITS.min, WALL_LIMITS.max);
+          if (Math.abs(fitted - wall.w) < 10) return;
+          setWall((w) => {
+            if (!w || w.sized) return w;
+            const next = { ...w, w: fitted };
+            return { ...next, pieces: next.pieces.map((p) => keepOn(p, next)) };
+          });
+        }, 350);
+      }
       setScale(Math.min(width / wall.w, height / wall.h));
     };
     fit();
@@ -243,7 +287,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         if (!current) return current;
         const w = widthFor(ratio, FIRST_LONG_SIDE);
         const raw = keepOn({ id: `p-${Date.now()}`, src, title, ratio, x: at.x - w / 2, y: at.y - (w * ratio) / 2, w }, current);
-        const s = snap(raw, current.pieces, current, SNAP_PX / scale);
+        const s = snap(raw, current.pieces, current, reachFor(scale));
         const piece = settle(keepOn({ ...raw, x: s.x, y: s.y }, current), current.pieces, current);
         window.setTimeout(() => setSelected(piece.id), 0);
         return { ...current, pieces: [...current.pieces, piece] };
@@ -264,10 +308,21 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     let swallowClick = false;
     document.documentElement.classList.add("wall-open");
 
+    const showGhost = (src: string | null, x = 0, y = 0) => {
+      const g = ghostRef.current;
+      if (!g) return;
+      if (!src) { g.style.display = "none"; g.removeAttribute("src"); return; }
+      if (!g.getAttribute("src")) g.src = getOptimizedImageUrl(src, 240);
+      g.style.display = "block";
+      g.style.left = `${x}px`;
+      g.style.top = `${y}px`;
+    };
+    let over = false;
+    const setOver = (next: boolean) => { if (next !== over) { over = next; setDropping(next); } };
     const lift = (x: number, y: number) => {
       if (!press) return;
       press.active = true;
-      setGhost({ src: press.src, x, y });
+      showGhost(press.src, x, y);
       navigator.vibrate?.(8);
     };
     const down = (e: PointerEvent) => {
@@ -293,8 +348,8 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         }
         return;
       }
-      setGhost({ src: press.src, x: e.clientX, y: e.clientY });
-      setDropping(!!live.current.toWallCm(e.clientX, e.clientY));
+      showGhost(press.src, e.clientX, e.clientY);
+      setOver(!!live.current.toWallCm(e.clientX, e.clientY));
     };
     const up = (e: PointerEvent) => {
       if (!press || e.pointerId !== press.id) return;
@@ -306,14 +361,14 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         if (at) live.current.hangFromPage(press.src, press.title, at);
       }
       press = null;
-      setGhost(null);
-      setDropping(false);
+      showGhost(null);
+      setOver(false);
     };
     const cancel = () => {
       if (press) window.clearTimeout(press.timer);
       press = null;
-      setGhost(null);
-      setDropping(false);
+      showGhost(null);
+      setOver(false);
     };
     /* a picture that was carried is not also opened */
     const click = (e: MouseEvent) => {
@@ -325,7 +380,10 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     /* while a picture is held the page stays still, and the browser's own
        picture drag and long-press menu stay out of the way */
     const touchMove = (e: TouchEvent) => { if (press?.active) e.preventDefault(); };
-    const noNativeDrag = (e: DragEvent) => { if (e.target instanceof HTMLImageElement && !e.target.closest(".wall-drawer")) e.preventDefault(); };
+    /* the browser's own drag of a picture - or of the link round it - would take the pointer away */
+    const noNativeDrag = (e: DragEvent) => {
+      if (press || (e.target instanceof HTMLImageElement && !e.target.closest(".wall-drawer"))) e.preventDefault();
+    };
     const noMenu = (e: Event) => { if (press?.touch) e.preventDefault(); };
 
     document.addEventListener("pointerdown", down, true);
@@ -367,7 +425,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
       setWall((w) => {
         if (!w) return w;
         const raw = keepOn({ ...piece, x: start.px + (e.clientX - start.x) / scale, y: start.py + (e.clientY - start.y) / scale }, w);
-        const s = snap(raw, w.pieces.filter((p) => p.id !== piece.id), w, SNAP_PX / scale);
+        const s = snap(raw, w.pieces.filter((p) => p.id !== piece.id), w, reachFor(scale));
         setGuides(s.guides);
         return { ...w, pieces: w.pieces.map((p) => (p.id === piece.id ? keepOn({ ...p, x: s.x, y: s.y }, w) : p)) };
       });
@@ -405,7 +463,8 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         let width = clamp(Math.max(Math.abs(at.x - anchor.x), Math.abs(at.y - anchor.y) / piece.ratio), MIN_WIDTH, room);
         /* the growing edges are caught by the wall's edges and other prints' edges */
         const others = w.pieces.filter((p) => p.id !== piece.id);
-        const reach = SNAP_PX / scale;
+        const reach = reachFor(scale);
+        const GAP = gapOf(w);
         const xs = [GAP, w.w - GAP, ...others.flatMap((o) => [o.x - GAP, o.x + o.w + GAP, o.x, o.x + o.w])];
         const ys = [GAP, w.h - GAP, ...others.flatMap((o) => [o.y - GAP, o.y + heightOf(o) + GAP, o.y, o.y + heightOf(o)])];
         const edgeX = left ? anchor.x - width : anchor.x + width;
@@ -453,7 +512,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         const nw = sides === "h" ? w.w : clamp(Math.round(start.w + (e.clientX - start.x) / start.s), WALL_LIMITS.min, WALL_LIMITS.max);
         const nh = sides === "w" ? w.h : clamp(Math.round(start.h + (e.clientY - start.y) / start.s), WALL_LIMITS.min, WALL_LIMITS.max);
         setSizingLabel(`${nw} × ${nh} cm`);
-        const next = { ...w, w: nw, h: nh };
+        const next = { ...w, w: nw, h: nh, sized: true };
         return { ...next, pieces: next.pieces.map((p) => keepOn(p, next)) };
       });
     };
@@ -487,7 +546,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     if (!Number.isFinite(value) || value <= 0) return;
     setWall((w) => {
       if (!w) return w;
-      const next = { ...w, [side]: clamp(Math.round(value), WALL_LIMITS.min, WALL_LIMITS.max) };
+      const next = { ...w, [side]: clamp(Math.round(value), WALL_LIMITS.min, WALL_LIMITS.max), sized: true };
       return { ...next, pieces: next.pieces.map((p) => keepOn(p, next)) };
     });
   };
@@ -528,6 +587,21 @@ export default function MyWall({ uid, ko, compact, onClose }: {
                 />
               ))}
             </div>
+            {wall.sized && (
+              <button type="button" className="mw-fit" onClick={() => { autoFitted.current = false; setWall({ ...wall, sized: false }); }}>
+                {t({ ko: "화면에 맞추기", en: "Fit to screen" })}
+              </button>
+            )}
+            {/* snug: prints sit edge to edge; off, a hair apart */}
+            <button
+              type="button"
+              className="mw-tight"
+              aria-pressed={wall.tight !== false}
+              onClick={() => setWall({ ...wall, tight: wall.tight === false })}
+            >
+              <i aria-hidden="true" />
+              {t({ ko: "딱 붙이기", en: "Snug" })}
+            </button>
             <span className="mw-status">{saved ? t({ ko: "저장됨", en: "Saved" }) : t({ ko: "저장 중", en: "Saving" })}</span>
           </div>
         )}
@@ -601,7 +675,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         </div>
       )}
 
-      {ghost && <img className="mw-ghost" src={getOptimizedImageUrl(ghost.src, 240)} alt="" style={{ left: ghost.x, top: ghost.y }} />}
+      <img ref={ghostRef} className="mw-ghost" alt="" style={{ display: "none" }} />
     </div>
   );
 }

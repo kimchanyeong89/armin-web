@@ -9,6 +9,7 @@ import {
   collectionGroup,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   increment,
   query,
@@ -21,11 +22,12 @@ import {
   type Query,
 } from "firebase/firestore";
 import {
+  EmailAuthProvider,
   GoogleAuthProvider,
   OAuthProvider,
   deleteUser,
+  reauthenticateWithCredential,
   reauthenticateWithPopup,
-  signOut,
   type User,
 } from "firebase/auth";
 import { auth, db } from "../../firebase";
@@ -43,79 +45,108 @@ async function wipe(source: Query<DocumentData> | CollectionReference<DocumentDa
   await Promise.all(snapshot.docs.map((d) => deleteDoc(d.ref).catch(() => undefined)));
 }
 
+/* 한 단계가 실패해도(예: 여러 사람 기록을 가로지르는 조회에 색인이 없을 때) 나머지는 계속 지운다 */
+async function step(name: string, run: () => Promise<void>): Promise<void> {
+  try {
+    await run();
+  } catch (error) {
+    console.warn(`[deleteAccount] ${name} 건너뜀`, error);
+  }
+}
+
 export async function deleteAccountData(uid: string): Promise<void> {
   // 1. 내 서랍
   for (const name of USER_SUBCOLLECTIONS) {
-    await wipe(collection(db, "users", uid, name));
+    await step(name, () => wipe(collection(db, "users", uid, name)));
   }
-  const playlists = await getDocs(collection(db, "users", uid, "playlists"));
-  for (const playlist of playlists.docs) {
-    await wipe(collection(db, "users", uid, "playlists", playlist.id, "items"));
-    await deleteDoc(playlist.ref).catch(() => undefined);
-  }
+  await step("playlists", async () => {
+    const playlists = await getDocs(collection(db, "users", uid, "playlists"));
+    for (const playlist of playlists.docs) {
+      await wipe(collection(db, "users", uid, "playlists", playlist.id, "items"));
+      await deleteDoc(playlist.ref).catch(() => undefined);
+    }
+  });
 
   // 2. 남에게 보이던 것
   await deleteDoc(doc(db, "public_profiles", uid)).catch(() => undefined);
-  await wipe(query(collection(db, "public_playlists"), where("ownerUid", "==", uid)));
+  await step("public_playlists", () => wipe(query(collection(db, "public_playlists"), where("ownerUid", "==", uid))));
 
   // 3. 내가 쓴 글 — 달린 댓글을 먼저 지운다. 글이 없어지면 규칙이 댓글 삭제를 막는다.
-  const posts = await getDocs(query(collection(db, "community_posts"), where("authorId", "==", uid)));
-  for (const post of posts.docs) {
-    await wipe(collection(db, "community_posts", post.id, "comments"));
-    await wipe(collection(db, "community_posts", post.id, "likes"));
-    await deleteDoc(post.ref).catch(() => undefined);
-  }
+  await step("posts", async () => {
+    const posts = await getDocs(query(collection(db, "community_posts"), where("authorId", "==", uid)));
+    for (const post of posts.docs) {
+      await wipe(collection(db, "community_posts", post.id, "comments"));
+      await wipe(collection(db, "community_posts", post.id, "likes"));
+      await deleteDoc(post.ref).catch(() => undefined);
+    }
+  });
 
   // 4. 남의 글에 단 댓글과 좋아요. 글의 숫자도 같이 내린다.
-  const comments = await getDocs(query(collectionGroup(db, "comments"), where("authorId", "==", uid)));
-  for (const comment of comments.docs) {
-    const parent = comment.ref.parent.parent;
-    await deleteDoc(comment.ref).catch(() => undefined);
-    if (parent) await updateDoc(parent, { commentCount: increment(-1) }).catch(() => undefined);
-  }
+  await step("comments", async () => {
+    const comments = await getDocs(query(collectionGroup(db, "comments"), where("authorId", "==", uid)));
+    for (const comment of comments.docs) {
+      const parent = comment.ref.parent.parent;
+      await deleteDoc(comment.ref).catch(() => undefined);
+      if (parent) await updateDoc(parent, { commentCount: increment(-1) }).catch(() => undefined);
+    }
+  });
   // 작품에 단 감상(최상위 comments)은 필드 이름이 userId 다.
-  await wipe(query(collection(db, "comments"), where("userId", "==", uid)));
+  await step("artwork comments", () => wipe(query(collection(db, "comments"), where("userId", "==", uid))));
 
-  const likes = await getDocs(query(collectionGroup(db, "likes"), where("userId", "==", uid)));
-  for (const like of likes.docs) {
-    const parent = like.ref.parent.parent;
-    await deleteDoc(like.ref).catch(() => undefined);
-    if (parent) await updateDoc(parent, { likes: increment(-1) }).catch(() => undefined);
-  }
+  await step("likes", async () => {
+    const likes = await getDocs(query(collectionGroup(db, "likes"), where("userId", "==", uid)));
+    for (const like of likes.docs) {
+      const parent = like.ref.parent.parent;
+      await deleteDoc(like.ref).catch(() => undefined);
+      if (parent) await updateDoc(parent, { likes: increment(-1) }).catch(() => undefined);
+    }
+  });
 
   // 5. 별점과 한 줄 평 — 평균에서도 빼야 해서 한 묶음으로 지운다.
-  const reviews = await getDocs(query(collectionGroup(db, "reviews"), where("uid", "==", uid)));
-  for (const review of reviews.docs) {
-    const subjectKey = review.ref.parent.parent?.id;
-    if (!subjectKey) continue;
-    await runTransaction(db, async (tx) => {
-      const current = await tx.get(review.ref);
-      if (!current.exists()) return;
-      const rating = Number(current.data().rating) || 0;
-      tx.delete(review.ref);
-      tx.set(
-        doc(db, "rating_stats", subjectKey),
-        { ratingSum: increment(-rating), totalRatings: increment(-1), updatedAt: serverTimestamp() },
-        { merge: true },
-      );
-    }).catch(() => undefined);
-  }
+  await step("reviews", async () => {
+    const reviews = await getDocs(query(collectionGroup(db, "reviews"), where("uid", "==", uid)));
+    for (const review of reviews.docs) {
+      const subjectKey = review.ref.parent.parent?.id;
+      if (!subjectKey) continue;
+      await runTransaction(db, async (tx) => {
+        const current = await tx.get(review.ref);
+        if (!current.exists()) return;
+        const rating = Number(current.data().rating) || 0;
+        tx.delete(review.ref);
+        tx.set(
+          doc(db, "rating_stats", subjectKey),
+          { ratingSum: increment(-rating), totalRatings: increment(-1), updatedAt: serverTimestamp() },
+          { merge: true },
+        );
+      }).catch(() => undefined);
+    }
+  });
 
   // 6. 프로필 문서는 마지막에. 위 단계가 이 문서를 읽는 규칙을 탈 수 있다.
   await deleteDoc(doc(db, "users", uid)).catch(() => undefined);
 }
 
-/** 로그인한 지 오래되면 파이어베이스가 계정 삭제를 거절한다. 웹에서는 다시 로그인해 이어간다. */
+/* 파이어베이스는 로그인한 지 5분쯤 지난 계정의 삭제를 거절한다. 여유를 두고 4분. */
+const RECENT_MS = 4 * 60 * 1000;
+
+/** 로그인한 지 오래됐으면 본인 확인을 다시 한다. 네이버 계정은 화면 없이, 구글·애플은 웹에서 팝업으로. */
 async function reauthenticate(user: User): Promise<boolean> {
-  // 앱 웹뷰에서는 팝업이 뜨지 않는다. 다시 로그인하라고 안내하는 쪽으로 넘긴다.
-  if (isMobileAppContainer()) return false;
   const providerId = user.providerData[0]?.providerId;
-  const provider =
-    providerId === "google.com" ? new GoogleAuthProvider()
-    : providerId === "apple.com" ? new OAuthProvider("apple.com")
-    : null;
-  if (!provider) return false;
   try {
+    /* 네이버로 가입한 계정은 네이버 고유 ID로 만든 비밀번호 계정이라(LoginCallbackPage) 화면 없이 다시 확인된다 */
+    if (providerId === "password" && user.email) {
+      const naverId = (await getDoc(doc(db, "users", user.uid))).data()?.naverId;
+      if (!naverId) return false;
+      await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, `naver_login_${naverId}_secure_!`));
+      return true;
+    }
+    // 앱 웹뷰에서는 팝업이 뜨지 않는다.
+    if (isMobileAppContainer()) return false;
+    const provider =
+      providerId === "google.com" ? new GoogleAuthProvider()
+      : providerId === "apple.com" ? new OAuthProvider("apple.com")
+      : null;
+    if (!provider) return false;
     await reauthenticateWithPopup(user, provider);
     return true;
   } catch {
@@ -126,25 +157,19 @@ async function reauthenticate(user: User): Promise<boolean> {
 export type DeleteResult = "done" | "needs-signin";
 
 /**
- * 기록을 먼저 지우고 로그인 정보를 지운다. 순서를 바꾸면 로그인이 사라져
- * 기록을 지울 권한도 함께 사라진다.
+ * 본인 확인이 먼저다. 로그인이 오래됐고 다시 확인할 수 없으면 아무것도 지우지
+ * 않고 돌아간다 - 기록만 지워지고 계정이 남는 반쪽 삭제를 막는다.
+ * 그다음 기록을 지우고 마지막에 로그인 정보를 지운다(순서를 바꾸면 기록을 지울 권한이 사라진다).
  */
 export async function deleteAccount(): Promise<DeleteResult> {
   const user = auth.currentUser;
   if (!user) throw new Error("로그인 상태가 아닙니다.");
 
-  await deleteAccountData(user.uid);
+  const signedInAt = Date.parse(user.metadata.lastSignInTime || "");
+  const recent = Number.isFinite(signedInAt) && Date.now() - signedInAt < RECENT_MS;
+  if (!recent && !(await reauthenticate(user))) return "needs-signin";
 
-  try {
-    await deleteUser(user);
-    return "done";
-  } catch (error) {
-    if ((error as { code?: string }).code !== "auth/requires-recent-login") throw error;
-    if (await reauthenticate(user)) {
-      await deleteUser(user);
-      return "done";
-    }
-    await signOut(auth).catch(() => undefined);
-    return "needs-signin";
-  }
+  await deleteAccountData(user.uid);
+  await deleteUser(user);
+  return "done";
 }

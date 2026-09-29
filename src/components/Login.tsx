@@ -1,10 +1,11 @@
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GoogleAuthProvider, OAuthProvider, browserLocalPersistence, getRedirectResult, setPersistence, signInWithPopup, signInWithRedirect, signInWithCredential } from 'firebase/auth';
 import { auth } from "../firebase";
 import "./loginRedesign.css";
+import { APPLE_SIGNIN_READY } from "../config/features";
 import { useLanguage } from "../contexts/LanguageContext";
 import { isMobileAppContainer, requestExternalMobileLogin, startGoogleCustomOAuth } from "../utils/mobileAppAuth";
 
@@ -26,6 +27,8 @@ const Login: React.FC = () => {
   const isExternalBrowserFlow = query.get("externalBrowser") === "1";
   const isMobileContainer = useMemo(() => isMobileAppContainer(), [query]);
   const externalProvider = query.get("provider");
+  /* "다른 네이버 아이디로": Naver shows its login screen instead of signing the current ID straight in */
+  const naverReauthFromQuery = query.get("naverReauth") === "1";
   const shouldAutoStartProvider =
     query.get("start") === "1" &&
     (externalProvider === "google" || externalProvider === "apple" || externalProvider === "naver");
@@ -94,6 +97,8 @@ const Login: React.FC = () => {
     }
   }, [user, navigate, redirectTarget, isMobileContainer, query]);
 
+  /* the initialised SDK, for "another Naver ID" - it builds a login-screen URL with the same state check */
+  const naverLoginRef = useRef<any>(null);
   // Initialize Naver Login SDK to use its proper authorization method (handling state/CSRF)
   useEffect(() => {
     const initNaver = () => {
@@ -115,6 +120,7 @@ const Login: React.FC = () => {
       });
 
       naverLogin.init();
+      naverLoginRef.current = naverLogin;
     };
 
     initNaver();
@@ -161,8 +167,8 @@ const Login: React.FC = () => {
   }, [t, postAuthFlowLog]);
 
   const requestExternalAuth = useCallback(
-    (provider: "google" | "apple" | "naver") => {
-      const opened = requestExternalMobileLogin(provider);
+    (provider: "google" | "apple" | "naver", options?: { naverReauth?: boolean }) => {
+      const opened = requestExternalMobileLogin(provider, options);
       if (opened) {
         setLoginHint(
           t({
@@ -175,18 +181,23 @@ const Login: React.FC = () => {
     [t],
   );
 
-  const handleNaverLogin = useCallback((options?: { fromAutoStart?: boolean; silent?: boolean; attempt?: number }) => {
+  const handleNaverLogin = useCallback((options?: { fromAutoStart?: boolean; silent?: boolean; attempt?: number; reauth?: boolean }) => {
     const fromAutoStart = options?.fromAutoStart === true;
     const silent = options?.silent === true;
     const attempt = options?.attempt ?? 0;
+    const reauth = options?.reauth === true || naverReauthFromQuery;
 
     if (isMobileContainer && !isExternalBrowserFlow && !fromAutoStart && !shouldAutoStartProvider) {
-      requestExternalAuth("naver");
+      requestExternalAuth("naver", { naverReauth: reauth });
       return;
     }
 
-    const naverButton = document.querySelector('#naverIdLogin > a') as HTMLElement;
-    if (naverButton) {
+    const naverButton = document.querySelector('#naverIdLogin > a') as HTMLAnchorElement | null;
+    const reauthUrl = reauth && naverLoginRef.current?.generateReauthenticateUrl?.();
+    if (reauthUrl) {
+      /* Naver's own "sign in again" address: its login screen even when an ID is already signed in */
+      window.location.href = reauthUrl;
+    } else if (naverButton) {
       naverButton.click();
     } else {
       if (fromAutoStart && attempt < 30) {
@@ -200,9 +211,16 @@ const Login: React.FC = () => {
         alert(t({ ko: "네이버 로그인 초기화 중입니다. 잠시 후 다시 시도해주세요.", en: "Naver login is initializing. Please try again shortly." }));
       }
     }
-  }, [isExternalBrowserFlow, isMobileContainer, requestExternalAuth, shouldAutoStartProvider, t]);
+  }, [isExternalBrowserFlow, isMobileContainer, naverReauthFromQuery, requestExternalAuth, shouldAutoStartProvider, t]);
 
   const handleLoginWithProvider = useCallback(async (providerType: 'google' | 'apple', forceRedirect = false) => {
+    if (providerType === 'apple' && !APPLE_SIGNIN_READY) {
+      setLoginHint(t({
+        ko: "Apple 로그인은 아직 준비 중입니다. 지금은 Google이나 네이버로 로그인해 주세요.",
+        en: "Sign in with Apple isn't ready yet. Please use Google or Naver for now.",
+      }));
+      return;
+    }
     // Determine whether to use redirect or popup:
     // - Apple: always redirect (because Apple Sign-In popup is notoriously buggy on many platforms)
     // - normal web & external browser: prefer popup, fallback to redirect if blocked
@@ -697,6 +715,9 @@ const Login: React.FC = () => {
               <span className="lg-providers__go" aria-hidden="true"><i /></span>
             </button>
           </div>
+          <button type="button" className="lg-alt" onClick={() => handleNaverLogin({ reauth: true })} disabled={pendingProvider !== null}>
+            {t({ ko: "다른 네이버 아이디로 로그인", en: "Use a different Naver ID" })}
+          </button>
 
           {loginHint ? (
             <div

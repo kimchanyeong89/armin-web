@@ -2058,9 +2058,17 @@
     /* the mark fills only the middle of its square (about 77% wide, 43% tall,
        starting a fifth of the way down), so a bigger box alone just pushed it
        down; the box grows and is pulled up and left by that empty margin */
-    .ig-home-logo svg {
+    .ig-home-logo {
         width: 168px;
         height: 168px;
         margin: -26px 0 0 -14px;
+    }
+    /* the COLLY app injects ".mobile-app-host svg { max-width: 100% !important }";
+       with the box sized by its content that squeezed the mark to ~20px, so
+       the box has its own size and the mark is let out of that rule */
+    .ig-header .ig-home-logo svg {
+        width: 168px;
+        height: 168px;
+        max-width: none !important;
     }
 }

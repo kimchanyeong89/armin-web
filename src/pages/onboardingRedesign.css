@@ -143,6 +143,12 @@
   animation: ob-pick-in .38s cubic-bezier(.16,1,.3,1) both, ob-pick-glow 2.4s ease-in-out .38s infinite; box-shadow: inset 0 0 0 2px var(--ob-gold); }
 .ob-empty { padding: 26px 0; text-align: center; font-size: 12.5px; color: var(--ob-dim); }
 
+/* account settings on a profile edit: a faint folded line under the name */
+.ob-account { margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--ob-line); }
+.ob .ob-account__toggle { font-size: 12px; font-weight: 600; color: var(--ob-dim); transition: color .16s ease; }
+.ob .ob-account__toggle:hover { color: var(--ob-fg2); }
+.ob-account__toggle span { margin-left: 4px; font-size: 10px; }
+
 /* step three: the picture under a round window, the gold ring its edge */
 /* size: − and + either side of a gold thread with a gold point on it */
 .ob-zoom { display: grid; grid-template-columns: 32px minmax(0,1fr) 32px; align-items: center; gap: 8px; width: 100%; max-width: 292px; margin: 16px auto 22px; }
