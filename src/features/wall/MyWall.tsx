@@ -33,17 +33,26 @@ interface Wall {
 type Corner = "nw" | "ne" | "sw" | "se";
 type Guides = { x: number[]; y: number[] };
 
-const DEFAULT_WALL: Wall = { w: 300, h: 240, color: "#ece8df", pieces: [] };
+/* a first wall has the proportions of the screen it is made on - tall on a
+   phone, the window's shape on a computer - at a room's height of 240cm */
+const CREAM = "#f1e8d4";
+const defaultWall = (): Wall => ({
+  w: Math.min(1000, Math.max(100, Math.round((240 * window.innerWidth) / Math.max(1, window.innerHeight) / 10) * 10)),
+  h: 240,
+  color: CREAM,
+  pieces: [],
+});
 const WALL_LIMITS = { min: 100, max: 1000 };
 /* print sizes by the long side, as poster shops sell them */
 const LONG_SIDES = [40, 50, 70, 100];
 const FIRST_LONG_SIDE = 50;
 const MIN_WIDTH = 10;
 /* the hair between two prints, and between a print and the wall's edge, in cm */
-const GAP = 2;
+const GAP = 1;
 /* how near, on screen, a print has to come to catch an edge */
 const SNAP_PX = 10;
 const COLORS = [
+  { value: CREAM, ko: "미색", en: "Cream" },
   { value: "#ece8df", ko: "화이트", en: "White" },
   { value: "#b9b1a4", ko: "웜 그레이", en: "Warm grey" },
   { value: "#8d9784", ko: "세이지", en: "Sage" },
@@ -148,6 +157,9 @@ export default function MyWall({ uid, ko, compact, onClose }: {
   const [ghost, setGhost] = useState<{ src: string; x: number; y: number } | null>(null);
   const [dropping, setDropping] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
+  /* while the wall's own edge is pulled, the drawing keeps its scale so the edge stays under the finger */
+  const sizing = useRef(false);
+  const [sizingLabel, setSizingLabel] = useState<string | null>(null);
   const wallRef = useRef<HTMLDivElement>(null);
 
   const ref = doc(getFirestore(), `users/${uid}/profile/wall`);
@@ -158,9 +170,9 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     getDoc(ref)
       .then((snap) => {
         const stored = snap.data()?.wall as Wall | undefined;
-        if (live) setWall(stored && Array.isArray(stored.pieces) ? { ...DEFAULT_WALL, ...stored } : DEFAULT_WALL);
+        if (live) setWall(stored && Array.isArray(stored.pieces) ? { ...defaultWall(), ...stored } : defaultWall());
       })
-      .catch(() => live && setWall(DEFAULT_WALL));
+      .catch(() => live && setWall(defaultWall()));
     return () => {
       live = false;
     };
@@ -190,6 +202,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     const stage = stageRef.current;
     if (!stage || !wall) return;
     const fit = () => {
+      if (sizing.current) return;
       /* inside the stage's padding, with room under the wall for the metre */
       const cs = getComputedStyle(stage);
       const width = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
@@ -389,12 +402,66 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         if (!w) return w;
         const at = pointerCm(e.clientX, e.clientY);
         const room = Math.min(left ? anchor.x : w.w - anchor.x, (up ? anchor.y : w.h - anchor.y) / piece.ratio);
-        const width = clamp(Math.max(Math.abs(at.x - anchor.x), Math.abs(at.y - anchor.y) / piece.ratio), MIN_WIDTH, room);
+        let width = clamp(Math.max(Math.abs(at.x - anchor.x), Math.abs(at.y - anchor.y) / piece.ratio), MIN_WIDTH, room);
+        /* the growing edges are caught by the wall's edges and other prints' edges */
+        const others = w.pieces.filter((p) => p.id !== piece.id);
+        const reach = SNAP_PX / scale;
+        const xs = [GAP, w.w - GAP, ...others.flatMap((o) => [o.x - GAP, o.x + o.w + GAP, o.x, o.x + o.w])];
+        const ys = [GAP, w.h - GAP, ...others.flatMap((o) => [o.y - GAP, o.y + heightOf(o) + GAP, o.y, o.y + heightOf(o)])];
+        const edgeX = left ? anchor.x - width : anchor.x + width;
+        const edgeY = up ? anchor.y - width * piece.ratio : anchor.y + width * piece.ratio;
+        let best: { w: number; d: number; gx?: number; gy?: number } | null = null;
+        for (const X of xs) {
+          const d = Math.abs(X - edgeX);
+          const cw = left ? anchor.x - X : X - anchor.x;
+          if (d <= reach && cw >= MIN_WIDTH && cw <= room && (!best || d < best.d)) best = { w: cw, d, gx: X };
+        }
+        for (const Y of ys) {
+          const d = Math.abs(Y - edgeY);
+          const cw = (up ? anchor.y - Y : Y - anchor.y) / piece.ratio;
+          if (d <= reach && cw >= MIN_WIDTH && cw <= room && (!best || d < best.d)) best = { w: cw, d, gy: Y };
+        }
+        if (best) width = best.w;
+        setGuides({ x: best?.gx !== undefined ? [best.gx] : [], y: best?.gy !== undefined ? [best.gy] : [] });
         const next = { ...piece, w: width, x: left ? anchor.x - width : anchor.x, y: up ? anchor.y - width * piece.ratio : anchor.y };
         return { ...w, pieces: w.pieces.map((p) => (p.id === piece.id ? next : p)) };
       });
     };
     const end = () => {
+      setGuides({ x: [], y: [] });
+      target.removeEventListener("pointermove", move);
+      target.removeEventListener("pointerup", end);
+      target.removeEventListener("pointercancel", end);
+    };
+    target.addEventListener("pointermove", move);
+    target.addEventListener("pointerup", end);
+    target.addEventListener("pointercancel", end);
+  };
+
+  /* the wall's right edge, foot or corner pulled: its width, height or both follow */
+  const startWallResize = (event: React.PointerEvent, sides: "w" | "h" | "wh") => {
+    event.stopPropagation();
+    event.preventDefault();
+    if (!wall) return;
+    const target = event.currentTarget as HTMLElement;
+    target.setPointerCapture(event.pointerId);
+    sizing.current = true;
+    const start = { x: event.clientX, y: event.clientY, w: wall.w, h: wall.h, s: scale };
+    const move = (e: PointerEvent) => {
+      setWall((w) => {
+        if (!w) return w;
+        const nw = sides === "h" ? w.w : clamp(Math.round(start.w + (e.clientX - start.x) / start.s), WALL_LIMITS.min, WALL_LIMITS.max);
+        const nh = sides === "w" ? w.h : clamp(Math.round(start.h + (e.clientY - start.y) / start.s), WALL_LIMITS.min, WALL_LIMITS.max);
+        setSizingLabel(`${nw} × ${nh} cm`);
+        const next = { ...w, w: nw, h: nh };
+        return { ...next, pieces: next.pieces.map((p) => keepOn(p, next)) };
+      });
+    };
+    const end = () => {
+      sizing.current = false;
+      setSizingLabel(null);
+      /* fit the finished wall to the stage again */
+      setWall((w) => w && { ...w });
       target.removeEventListener("pointermove", move);
       target.removeEventListener("pointerup", end);
       target.removeEventListener("pointercancel", end);
@@ -498,6 +565,11 @@ export default function MyWall({ uid, ko, compact, onClose }: {
                     ))}
                 </figure>
               ))}
+              {/* the wall's own edges: pull the right side, the foot or the corner to size it */}
+              <i className="mw-edge mw-edge--w" onPointerDown={(e) => startWallResize(e, "w")} aria-hidden="true" />
+              <i className="mw-edge mw-edge--h" onPointerDown={(e) => startWallResize(e, "h")} aria-hidden="true" />
+              <i className="mw-edge mw-edge--wh" onPointerDown={(e) => startWallResize(e, "wh")} aria-hidden="true" />
+              {sizingLabel && <span className="mw-sizing">{sizingLabel}</span>}
               {/* the lines a moving print has caught */}
               {guides.x.map((x) => <span key={`gx${x}`} className="mw-guide mw-guide--x" style={{ left: x * scale }} />)}
               {guides.y.map((y) => <span key={`gy${y}`} className="mw-guide mw-guide--y" style={{ top: y * scale }} />)}

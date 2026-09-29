@@ -2051,12 +2051,16 @@
 }
 
 /* The home mark on a phone: the 72px box draws a mark about 50px wide and a
-   13px wordmark, which reads as a speck on a small screen; 100px still read
-   small (9/28). Larger there; the KO | EN switch on the same row sits far
-   enough right to leave it room. */
+   13px wordmark, which reads as a speck on a small screen; 100px and 128px
+   still read small (9/28). Larger there; the KO | EN switch on the same row
+   sits far enough right to leave it room. */
 @media (max-width: 768px) {
+    /* the mark fills only the middle of its square (about 77% wide, 43% tall,
+       starting a fifth of the way down), so a bigger box alone just pushed it
+       down; the box grows and is pulled up and left by that empty margin */
     .ig-home-logo svg {
-        width: 128px;
-        height: 128px;
+        width: 168px;
+        height: 168px;
+        margin: -26px 0 0 -14px;
     }
 }

@@ -12,6 +12,7 @@ import type { ProfileImageCrop } from "../types/Profile";
 import { useLanguage } from "../contexts/LanguageContext";
 import TasteStep, { TASTE_GOAL } from "../features/onboarding/TasteStep";
 import DateWheel from "../features/onboarding/DateWheel";
+import { useArtistI18n } from "../i18n/artistLocalization";
 import { Search, X } from "lucide-react";
 import "./onboardingRedesign.css";
 
@@ -204,6 +205,8 @@ const OnboardingPage: React.FC = () => {
   const [firstTime, setFirstTime] = useState(false);
   const [tasteCount, setTasteCount] = useState(0);
   const { language } = useLanguage();
+  /* the Korean names of artists, for a search typed in Hangul */
+  const artistKo = useArtistI18n();
 
   const [nickname, setNickname] = useState("");
   const [birthDateInput, setBirthDateInput] = useState("");
@@ -541,8 +544,27 @@ const OnboardingPage: React.FC = () => {
       if (defaultSet.length > 0) setSelectedArtist(defaultSet[0]);
       return;
     }
-    const matched = allArtists.filter(artist => normalize(artist.name).includes(query));
-    matched.sort((a, b) => {
+    /* a name typed in Hangul ("모네", "고흐") is read through the Korean names the
+       search page uses (i18n/artists.json): every artist whose Korean name holds
+       it, the closest first - a whole name, then one ending with it, then one
+       starting with it */
+    const hangul = /[가-힣]/.test(artistSearchQuery);
+    /* one key for "Claude Monet", "Monet, Claude" and "Claude Monét" */
+    const nameKey = (name: string) => name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/,/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
+    const koRank = new Map<string, number>();
+    if (hangul && artistKo) {
+      const q = artistSearchQuery.replace(/\s+/g, "");
+      for (const [en, koRaw] of Object.entries(artistKo)) {
+        const ko = koRaw.replace(/\s+/g, "");
+        if (ko.includes(q)) koRank.set(nameKey(en), ko === q ? 4 : ko.endsWith(q) ? 3 : ko.startsWith(q) ? 2 : 1);
+      }
+    }
+    const rankOf = (name: string) => koRank.get(nameKey(name)) || 0;
+    const matched = hangul
+      ? allArtists.filter((artist) => rankOf(artist.name) > 0).sort((a, b) => rankOf(b.name) - rankOf(a.name))
+      : allArtists.filter(artist => normalize(artist.name).includes(query));
+    if (!hangul) matched.sort((a, b) => {
       const aName = normalize(a.name), bName = normalize(b.name);
       if (aName === query && bName !== query) return -1;
       if (bName === query && aName !== query) return 1;
@@ -554,7 +576,7 @@ const OnboardingPage: React.FC = () => {
     setRecommendedArtists(limited);
     if (limited.length > 0) setSelectedArtist(limited[0]);
     else setSelectedArtist(null);
-  }, [artistSearchQuery, searchByBirthday, allArtists]);
+  }, [artistSearchQuery, searchByBirthday, allArtists, artistKo]);
 
   // Update selectedImage when selectedArtist changes
   useEffect(() => {

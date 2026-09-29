@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import MyWall from "./MyWall";
+import WallGrip from "./WallGrip";
 import { setWallHeight, useWallHeight } from "./wallPull";
 import "./myWall.css";
 
 /* The wall, on every page. It is pulled up from the tab bar by the handle
-   that stands on the bar (BottomPageNavigator's `grip`) and stays as far out
-   as it was pulled, so the page above it can still be browsed and any of its
-   pictures picked up and hung. */
-
-/* the handle stands this tall on the tab bar; the sheet starts above it */
-const GRIP_HEIGHT = 27;
+   that stands on the bar (BottomPageNavigator's `grip`); once out, the handle
+   rides the wall's top edge. It stays as far out as it was pulled, so the
+   page above it can still be browsed and any of its pictures picked up and hung. */
 
 export default function WallDrawer({ uid, ko, compact }: { uid: string; ko: boolean; compact: boolean }) {
   const height = useWallHeight();
@@ -31,7 +29,9 @@ export default function WallDrawer({ uid, ko, compact }: { uid: string; ko: bool
 
   if (height === 0) return null;
   return (
-    <div className="wall-drawer" style={{ height, bottom: barSpace + GRIP_HEIGHT }}>
+    <div className="wall-drawer" style={{ height, bottom: barSpace }}>
+      {/* the handle rides the wall's top edge while it is out */}
+      <WallGrip ko={ko} place="sheet" />
       <MyWall uid={uid} ko={ko} compact={compact || height < 420} onClose={() => setWallHeight(0)} />
     </div>
   );

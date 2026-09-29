@@ -131,9 +131,16 @@
 .ob-chosen span { display: block; margin-top: 4px; font: 500 11px var(--ob-mono); color: var(--ob-dim); }
 .ob-works { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 6px; margin-bottom: 18px; }
 .ob .ob-works button { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: var(--ob-line); }
-.ob-works img { display: block; width: 100%; height: 100%; object-fit: cover; }
-/* the chosen work: a gold bar along its foot, not a frame */
-.ob-works button[aria-pressed="true"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--ob-gold); }
+.ob-works img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .32s cubic-bezier(.16,1,.3,1); }
+/* the chosen work: a gold frame snaps in round it and then breathes, and the
+   picture draws back a little inside it */
+@keyframes ob-pick-in { from { opacity: 0; transform: scale(1.12); } to { opacity: 1; transform: none; } }
+@keyframes ob-pick-glow { 0%, 100% { box-shadow: inset 0 0 0 2px var(--ob-gold), 0 0 0 0 rgba(var(--ob-gold-rgb), 0); }
+  50% { box-shadow: inset 0 0 0 2px var(--ob-gold), 0 0 16px 2px rgba(var(--ob-gold-rgb), .45); } }
+.ob-works button[aria-pressed="true"] { overflow: visible; z-index: 1; }
+.ob-works button[aria-pressed="true"] img { transform: scale(.9); }
+.ob-works button[aria-pressed="true"]::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  animation: ob-pick-in .38s cubic-bezier(.16,1,.3,1) both, ob-pick-glow 2.4s ease-in-out .38s infinite; box-shadow: inset 0 0 0 2px var(--ob-gold); }
 .ob-empty { padding: 26px 0; text-align: center; font-size: 12.5px; color: var(--ob-dim); }
 
 /* step three: the picture under a round window, the gold ring its edge */
