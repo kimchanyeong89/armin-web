@@ -1149,7 +1149,8 @@ const MyPage: React.FC = () => {
   /* the playlist whose share sheet is open */
   const [sharingPlaylistId, setSharingPlaylistId] = useState<string | null>(null);
   /* deleting the open playlist asks once more in place: "ask", then "busy" while it goes */
-  const [playlistDelete, setPlaylistDelete] = useState<null | "ask" | "busy">(null);
+  /* deleting a playlist asks once more in place - on its card or on its open row */
+  const [playlistDelete, setPlaylistDelete] = useState<{ id: string; busy?: boolean } | null>(null);
   useEffect(() => setPlaylistDelete(null), [activePlaylist?.id]);
 
   const [userScore, setUserScore] = useState(0);
@@ -2380,8 +2381,24 @@ const MyPage: React.FC = () => {
 
   /* a playlist drawn as the exhibition and museum cards are: its cover, name
      and count, with sharing and the slideshow as round marks on the cover */
+  const removePlaylist = async (id: string) => {
+    if (!user) return;
+    setPlaylistDelete({ id, busy: true });
+    try {
+      await deletePlaylist(user.uid, id);
+      setPlaylists((prev) => prev.filter((playlist) => playlist.id !== id));
+      if (activePlaylist?.id === id) setActivePlaylist(null);
+    } catch (error) {
+      console.error("Error deleting playlist", error);
+      alert(t({ ko: "플레이리스트를 삭제하지 못했습니다.", en: "Could not delete the playlist." }));
+    } finally {
+      setPlaylistDelete(null);
+    }
+  };
+
   const renderPlaylistCard = (playlist: any) => {
     const count = playlist.items?.length || 0;
+    const asking = playlistDelete?.id === playlist.id;
     const open = () => {
       setViewMode("artworks");
       setActivePlaylist(playlist);
@@ -2452,7 +2469,32 @@ const MyPage: React.FC = () => {
           >
             <Play size={13} strokeWidth={2.1} />
           </button>
+          <button
+            type="button"
+            title={t({ ko: "플레이리스트 삭제", en: "Delete playlist" })}
+            aria-label={t({ ko: "플레이리스트 삭제", en: "Delete playlist" })}
+            onClick={(event) => {
+              event.stopPropagation();
+              setPlaylistDelete({ id: playlist.id });
+            }}
+            style={{ ...mark, color: asking ? lime : "#fff" }}
+          >
+            <Trash2 size={13} strokeWidth={2.1} />
+          </button>
         </div>
+
+        {asking && (
+          /* asked once more on the card itself: the cover dims, two words at its foot */
+          <div className="mp-plask" onClick={(event) => event.stopPropagation()} onKeyDown={(event) => event.stopPropagation()}>
+            <span>{t({ ko: "이 플레이리스트를 삭제할까요?", en: "Delete this playlist?" })}</span>
+            <span className="mp-plask__acts">
+              <button type="button" className="mp-plask__yes" disabled={playlistDelete?.busy} onClick={() => void removePlaylist(playlist.id)}>
+                {playlistDelete?.busy ? t({ ko: "삭제 중", en: "Deleting" }) : t({ ko: "삭제", en: "Delete" })}
+              </button>
+              <button type="button" onClick={() => setPlaylistDelete(null)}>{t({ ko: "취소", en: "Cancel" })}</button>
+            </span>
+          </div>
+        )}
 
         <div style={{ padding: "8px 9px" }}>
           <div style={{ fontSize: 12, fontWeight: 600, color: pageText, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -2732,37 +2774,20 @@ const MyPage: React.FC = () => {
               <Share2 size={12} strokeWidth={2} aria-hidden="true" />
               {activePlaylist.shared ? t({ ko: "공개 중", en: "Public" }) : t({ ko: "공유", en: "Share" })}
             </button>
-            <button
-              type="button"
-              className={playlistDelete ? "mp-act mp-act--gold" : "mp-act"}
-              disabled={playlistDelete === "busy"}
-              onClick={async () => {
-                if (!playlistDelete) return setPlaylistDelete("ask");
-                if (!user) return;
-                setPlaylistDelete("busy");
-                const id = activePlaylist.id;
-                try {
-                  await deletePlaylist(user.uid, id);
-                  setPlaylists((prev) => prev.filter((playlist) => playlist.id !== id));
-                  setActivePlaylist(null);
-                } catch (error) {
-                  console.error("Error deleting playlist", error);
-                  alert(t({ ko: "플레이리스트를 삭제하지 못했습니다.", en: "Could not delete the playlist." }));
-                } finally {
-                  setPlaylistDelete(null);
-                }
-              }}
-            >
-              <Trash2 size={12} strokeWidth={2} aria-hidden="true" />
-              {playlistDelete === "busy"
-                ? t({ ko: "삭제 중", en: "Deleting" })
-                : playlistDelete
-                  ? t({ ko: "정말 삭제", en: "Delete for good" })
-                  : t({ ko: "삭제", en: "Delete" })}
-            </button>
-            {playlistDelete === "ask" && (
-              <button type="button" className="mp-act" onClick={() => setPlaylistDelete(null)}>
-                {t({ ko: "취소", en: "Cancel" })}
+            {playlistDelete?.id === activePlaylist.id ? (
+              <>
+                <button type="button" className="mp-act mp-act--gold" disabled={playlistDelete?.busy} onClick={() => void removePlaylist(activePlaylist.id)}>
+                  <Trash2 size={12} strokeWidth={2} aria-hidden="true" />
+                  {playlistDelete?.busy ? t({ ko: "삭제 중", en: "Deleting" }) : t({ ko: "정말 삭제", en: "Delete for good" })}
+                </button>
+                <button type="button" className="mp-act" onClick={() => setPlaylistDelete(null)}>
+                  {t({ ko: "취소", en: "Cancel" })}
+                </button>
+              </>
+            ) : (
+              <button type="button" className="mp-act" onClick={() => setPlaylistDelete({ id: activePlaylist.id })}>
+                <Trash2 size={12} strokeWidth={2} aria-hidden="true" />
+                {t({ ko: "삭제", en: "Delete" })}
               </button>
             )}
           </span>

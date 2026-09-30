@@ -9,18 +9,26 @@
 /* the sheet stands on the handle, over the floating profile button (250012) */
 .wall-drawer { position: fixed; left: 0; right: 0; z-index: 250020; display: flex; background: #080808;
   border-radius: 18px 18px 0 0; border-top: 1px solid rgba(244,241,234,.14); box-shadow: 0 -20px 50px rgba(0,0,0,.55); }
-/* the wall's own edges: a slim gold tab at the middle of the right side and the
-   foot, and a point at the corner - pull to size the wall */
+/* the wall's own edges: a slim gold tab at the middle of every side and a
+   point at every corner - pull any of them to size the wall */
 .mw-edge { position: absolute; z-index: 4; touch-action: none; }
 .mw-edge::after { content: ""; position: absolute; top: 50%; left: 50%; border-radius: 3px; background: var(--acc); opacity: .75;
   transform: translate(-50%, -50%); transition: opacity .16s ease; }
 .mw-edge:hover::after { opacity: 1; }
-.mw-edge--w { top: 0; bottom: 0; right: -14px; width: 20px; cursor: ew-resize; }
-.mw-edge--w::after { width: 4px; height: 36px; }
-.mw-edge--h { left: 0; right: 0; bottom: -14px; height: 20px; cursor: ns-resize; }
-.mw-edge--h::after { width: 36px; height: 4px; }
-.mw-edge--wh { right: -16px; bottom: -16px; width: 24px; height: 24px; cursor: nwse-resize; }
-.mw-edge--wh::after { width: 9px; height: 9px; border-radius: 50%; }
+.mw-edge--e, .mw-edge--w { top: 12px; bottom: 12px; width: 20px; cursor: ew-resize; }
+.mw-edge--e { right: -14px; }
+.mw-edge--w { left: -14px; }
+.mw-edge--e::after, .mw-edge--w::after { width: 4px; height: 36px; }
+.mw-edge--n, .mw-edge--s { left: 12px; right: 12px; height: 20px; cursor: ns-resize; }
+.mw-edge--n { top: -14px; }
+.mw-edge--s { bottom: -14px; }
+.mw-edge--n::after, .mw-edge--s::after { width: 36px; height: 4px; }
+.mw-edge--ne, .mw-edge--nw, .mw-edge--se, .mw-edge--sw { width: 24px; height: 24px; }
+.mw-edge--nw { left: -16px; top: -16px; cursor: nwse-resize; }
+.mw-edge--se { right: -16px; bottom: -16px; cursor: nwse-resize; }
+.mw-edge--ne { right: -16px; top: -16px; cursor: nesw-resize; }
+.mw-edge--sw { left: -16px; bottom: -16px; cursor: nesw-resize; }
+.mw-edge--ne::after, .mw-edge--nw::after, .mw-edge--se::after, .mw-edge--sw::after { width: 9px; height: 9px; border-radius: 50%; }
 .mw-sizing { position: absolute; right: 8px; bottom: 8px; z-index: 5; padding: 4px 8px; background: rgba(8,8,8,.8); color: var(--acc);
   font: 700 11px var(--num); pointer-events: none; }
 
@@ -37,8 +45,11 @@
   color: var(--bpn-ink, rgba(255,255,255,.5)); font: 700 9px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .1em;
   cursor: grab; touch-action: none; transition: color .16s ease; }
 /* on the bar: the bar's own glass and blur, so the two read as one surface */
-.wall-grip--bar { background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)), var(--bpn-glass, rgba(20,20,18,.68));
+/* lighter than the bar itself, so it sits quietly on it */
+.wall-grip--bar { background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02)), rgba(20,20,18,.34);
   -webkit-backdrop-filter: blur(26px) saturate(165%) contrast(1.04); backdrop-filter: blur(26px) saturate(165%) contrast(1.04); }
+.wall-grip--bar span { opacity: .7; transition: opacity .16s ease; }
+.wall-grip--bar:hover span { opacity: 1; }
 /* on the open wall: the wall's ground */
 .wall-grip--sheet { background: #080808; color: rgba(244,241,234,.5); }
 .wall-grip__edge { position: absolute; left: 0; top: 0; width: 140px; height: 31px; overflow: visible; pointer-events: none; }
@@ -47,12 +58,11 @@
 .wall-grip:active { cursor: grabbing; }
 /* the handle being pulled after the wall took over: kept for the pull, not shown */
 .wall-grip.is-away { opacity: 0; }
-.wall-grip i { display: block; width: 34px; height: 4px; border-radius: 2px; background: #d4a547;
-  box-shadow: 0 0 10px rgba(212,165,71,.55); animation: wall-grip-nudge 3.6s ease-in-out infinite;
+.wall-grip i { display: block; width: 34px; height: 4px; border-radius: 2px; background: rgba(212,165,71,.6); animation: wall-grip-nudge 3.6s ease-in-out infinite;
   transition: width .24s cubic-bezier(.16,1,.3,1); }
 .wall-grip--sheet i { animation: none; }
 .wall-grip:hover { color: #d4a547; }
-.wall-grip:hover i { width: 46px; animation: none; }
+.wall-grip:hover i { width: 46px; animation: none; background: #d4a547; }
 .wall-grip:focus { outline: none; }
 .wall-grip:focus-visible i { width: 46px; }
 
@@ -105,6 +115,7 @@ html.wall-open img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 .mw-tight[aria-pressed="true"] i::after { transform: translateX(12px); background: var(--acc); }
 .mw .mw-fit { font-size: 12px; font-weight: 600; color: var(--ink-3); text-decoration: underline; text-underline-offset: 3px; transition: color .16s ease; }
 .mw .mw-fit:hover, .mw .mw-tight:hover { color: var(--acc); }
+.mw .mw-fit--gold { color: var(--acc); text-decoration: none; }
 .mw-status { margin-left: auto; font: 600 10px var(--num); letter-spacing: 0.08em; color: var(--ink-3); }
 
 /* the stage centres the wall; the room is the wall and its metre under it */
@@ -119,7 +130,33 @@ html.wall-open img { -webkit-user-drag: none; -webkit-touch-callout: none; }
 .mw-wall.is-dark .mw-empty { color: rgba(255, 255, 255, 0.42); }
 .mw-piece { position: absolute; cursor: grab; touch-action: none; box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.45); }
 .mw-piece:active { cursor: grabbing; }
-.mw-piece img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+/* the print shows its kept part: the whole picture sits inside, placed and clipped */
+.mw-piece__view { position: absolute; inset: 0; display: block; overflow: hidden; }
+.mw-piece img { position: absolute; display: block; max-width: none; pointer-events: none; }
+/* cropping: the trimmed parts show faintly, the kept part is outlined with gold brackets and edges */
+.mw-piece.is-crop { z-index: 3; cursor: default; outline: 1px dashed rgba(212,165,71,.9); outline-offset: 0; }
+.mw-piece__whole { opacity: .28; }
+.mw-crop { position: absolute; z-index: 2; touch-action: none; }
+.mw-crop::after { content: ""; position: absolute; background: var(--acc); box-shadow: 0 0 0 1px rgba(8,8,8,.55); }
+.mw-crop--w, .mw-crop--e { top: 16px; bottom: 16px; width: 22px; cursor: ew-resize; }
+.mw-crop--w { left: -11px; }
+.mw-crop--e { right: -11px; }
+.mw-crop--w::after, .mw-crop--e::after { top: 50%; left: 9px; width: 4px; height: 28px; margin-top: -14px; border-radius: 2px; }
+.mw-crop--n, .mw-crop--s { left: 16px; right: 16px; height: 22px; cursor: ns-resize; }
+.mw-crop--n { top: -11px; }
+.mw-crop--s { bottom: -11px; }
+.mw-crop--n::after, .mw-crop--s::after { left: 50%; top: 9px; width: 28px; height: 4px; margin-left: -14px; border-radius: 2px; }
+.mw-crop--nw, .mw-crop--ne, .mw-crop--sw, .mw-crop--se { width: 24px; height: 24px; }
+.mw-crop--nw::after, .mw-crop--ne::after, .mw-crop--sw::after, .mw-crop--se::after { width: 14px; height: 14px; background: none; box-shadow: none;
+  border: 0 solid var(--acc); }
+.mw-crop--nw { left: -6px; top: -6px; cursor: nwse-resize; }
+.mw-crop--nw::after { left: 4px; top: 4px; border-width: 3px 0 0 3px; }
+.mw-crop--ne { right: -6px; top: -6px; cursor: nesw-resize; }
+.mw-crop--ne::after { right: 4px; top: 4px; border-width: 3px 3px 0 0; }
+.mw-crop--sw { left: -6px; bottom: -6px; cursor: nesw-resize; }
+.mw-crop--sw::after { left: 4px; bottom: 4px; border-width: 0 0 3px 3px; }
+.mw-crop--se { right: -6px; bottom: -6px; cursor: nwse-resize; }
+.mw-crop--se::after { right: 4px; bottom: 4px; border-width: 0 3px 3px 0; }
 .mw-piece.is-on { outline: 1.5px solid var(--acc); outline-offset: 3px; z-index: 2; }
 /* the chosen print's corners: gold points that pull it larger or smaller */
 .mw-corner { position: absolute; z-index: 1; width: 22px; height: 22px; touch-action: none; }

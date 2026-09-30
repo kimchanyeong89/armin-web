@@ -8,8 +8,9 @@ import "./myWall.css";
    on it at a real size in centimetres, so the wall shows what bought posters
    would look like. Everything is kept in centimetres - the wall, each print's
    place and width - so a later print order can read the sizes from here.
-   Prints snap to the wall's edges and to each other, a hair apart, and grow
-   from their corners without changing shape. */
+   Prints snap to the wall's edges and to each other (the snap can be turned
+   off), grow from their corners without changing shape, and can be cropped on
+   the wall - a frame or margin trimmed away - without touching the picture. */
 
 interface Piece {
   id: string;
@@ -21,20 +22,28 @@ interface Piece {
   x: number;
   y: number;
   w: number;
+  /** what is trimmed off each side, as a share of the whole picture; only on this wall */
+  crop?: Crop;
+  /** height / width of the whole picture, once it has been cropped */
+  imgRatio?: number;
 }
+
+interface Crop { l: number; t: number; r: number; b: number }
 
 interface Wall {
   w: number;
   h: number;
   color: string;
   pieces: Piece[];
-  /** prints sit edge to edge (the default); off, a hair apart */
-  tight?: boolean;
+  /** prints are caught by edges and never overlap (the default); off, they go where they are let go */
+  snap?: boolean;
   /** the member set the wall's size; until then it takes the drawer's shape */
   sized?: boolean;
 }
 
 type Corner = "nw" | "ne" | "sw" | "se";
+/* the sides of the wall or of a crop being pulled: n(orth), s, e, w and the corners */
+type Sides = "n" | "s" | "e" | "w" | "ne" | "nw" | "se" | "sw";
 type Guides = { x: number[]; y: number[] };
 
 /* a first wall has the proportions of the screen it is made on - tall on a
@@ -55,9 +64,9 @@ const LONG_SIDES = [40, 50, 70, 100];
 const firstLongSide = (wall: { w: number; h: number }, phone: boolean) =>
   clamp(Math.round(Math.min(wall.w, wall.h) * (phone ? 0.3 : 0.4)), 40, 150);
 const MIN_WIDTH = 10;
-/* the space between two prints, and between a print and the wall's edge, in
-   cm: none when the wall is set to snug (the default), a hair when it isn't */
-const gapOf = (wall: { tight?: boolean }) => (wall.tight === false ? 1 : 0);
+/* the least of a picture a crop keeps, on either axis */
+const MIN_KEEP = 0.1;
+const snapOn = (wall: { snap?: boolean }) => wall.snap !== false;
 /* how near a print has to come to catch an edge: 10px on screen, but never
    more than 3cm - on a small drawing 10px is a long way, and every line
    within it would hold the print still */
@@ -88,15 +97,14 @@ const keepOn = (p: Piece, wall: { w: number; h: number }): Piece => ({
    beside another print, or in line with another print's edges or middle.
    The lines it caught are returned so they can be drawn while it moves. */
 function snap(p: Piece, others: Piece[], wall: Wall, reach: number): { x: number; y: number; guides: Guides } {
-  const GAP = gapOf(wall);
   const w = p.w;
   const h = heightOf(p);
-  const xs: Array<[at: number, line: number]> = [[GAP, 0], [wall.w - GAP - w, wall.w], [(wall.w - w) / 2, wall.w / 2]];
-  const ys: Array<[at: number, line: number]> = [[GAP, 0], [wall.h - GAP - h, wall.h], [(wall.h - h) / 2, wall.h / 2]];
+  const xs: Array<[at: number, line: number]> = [[0, 0], [wall.w - w, wall.w], [(wall.w - w) / 2, wall.w / 2]];
+  const ys: Array<[at: number, line: number]> = [[0, 0], [wall.h - h, wall.h], [(wall.h - h) / 2, wall.h / 2]];
   for (const o of others) {
     const oh = heightOf(o);
-    xs.push([o.x + o.w + GAP, o.x + o.w + GAP / 2], [o.x - w - GAP, o.x - GAP / 2], [o.x, o.x], [o.x + o.w - w, o.x + o.w], [o.x + (o.w - w) / 2, o.x + o.w / 2]);
-    ys.push([o.y + oh + GAP, o.y + oh + GAP / 2], [o.y - h - GAP, o.y - GAP / 2], [o.y, o.y], [o.y + oh - h, o.y + oh], [o.y + (oh - h) / 2, o.y + oh / 2]);
+    xs.push([o.x + o.w, o.x + o.w], [o.x - w, o.x], [o.x, o.x], [o.x + o.w - w, o.x + o.w], [o.x + (o.w - w) / 2, o.x + o.w / 2]);
+    ys.push([o.y + oh, o.y + oh], [o.y - h, o.y], [o.y, o.y], [o.y + oh - h, o.y + oh], [o.y + (oh - h) / 2, o.y + oh / 2]);
   }
   const pick = (value: number, options: Array<[number, number]>) => {
     let best: [number, number] | null = null;
@@ -112,51 +120,34 @@ function snap(p: Piece, others: Piece[], wall: Wall, reach: number): { x: number
 }
 
 /* A print let go on top of another is moved to the nearest free place beside
-   it - left, right, above or below, a hair apart - so prints never overlap. */
+   it - left, right, above or below, edge to edge - so prints never overlap. */
 function settle(p: Piece, others: Piece[], wall: Wall): Piece {
-  const GAP = gapOf(wall);
   /* prints that only touch do not overlap; a hundredth of a cm allows for rounding */
-  const e = GAP / 2 - 0.01;
+  const e = -0.01;
   const overlaps = (a: Piece, b: Piece) =>
     a.x < b.x + b.w + e && a.x + a.w + e > b.x && a.y < b.y + heightOf(b) + e && a.y + heightOf(a) + e > b.y;
   const hit = others.find((o) => overlaps(p, o));
   if (!hit) return p;
   const h = heightOf(p);
   const places = [
-    { ...p, x: hit.x + hit.w + GAP },
-    { ...p, x: hit.x - p.w - GAP },
-    { ...p, y: hit.y + heightOf(hit) + GAP },
-    { ...p, y: hit.y - h - GAP },
+    { ...p, x: hit.x + hit.w },
+    { ...p, x: hit.x - p.w },
+    { ...p, y: hit.y + heightOf(hit) },
+    { ...p, y: hit.y - h },
   ].filter((c) => c.x >= 0 && c.y >= 0 && c.x + c.w <= wall.w && c.y + heightOf(c) <= wall.h && !others.some((o) => overlaps(c, o)));
   if (!places.length) return p;
   places.sort((a, b) => Math.hypot(a.x - p.x, a.y - p.y) - Math.hypot(b.x - p.x, b.y - p.y));
   return places[0];
 }
 
-/* Snug turned on or off: prints that sat against each other (or against the
-   wall's edge) at the old spacing are laid out again at the new one, in their
-   order - left to right, then top to bottom - so a row of joined prints opens
-   into hair-spaced prints and closes again. Prints that stood apart stay put. */
-function respace(wall: Wall, from: number, to: number): Wall {
-  const touch = 0.6; // cm of slack when deciding two prints were set together
-  const overlapY = (a: Piece, b: Piece) => a.y < b.y + heightOf(b) && b.y < a.y + heightOf(a);
-  const overlapX = (a: Piece, b: Piece) => a.x < b.x + b.w && b.x < a.x + a.w;
-  const moved = new Map(wall.pieces.map((p) => [p.id, { ...p }]));
-  const byX = [...wall.pieces].sort((a, b) => a.x - b.x);
-  for (const p of byX) {
-    const cur = moved.get(p.id)!;
-    const left = byX.find((o) => o.id !== p.id && overlapY(o, p) && Math.abs(p.x - (o.x + o.w) - from) < touch);
-    if (left) { const l = moved.get(left.id)!; cur.x = l.x + l.w + to; }
-    else if (Math.abs(p.x - from) < touch) cur.x = to;
-  }
-  const byY = [...wall.pieces].sort((a, b) => a.y - b.y);
-  for (const p of byY) {
-    const cur = moved.get(p.id)!;
-    const above = byY.find((o) => o.id !== p.id && overlapX(o, p) && Math.abs(p.y - (o.y + heightOf(o)) - from) < touch);
-    if (above) { const a = moved.get(above.id)!; cur.y = a.y + heightOf(a) + to; }
-    else if (Math.abs(p.y - from) < touch) cur.y = to;
-  }
-  return { ...wall, pieces: wall.pieces.map((p) => keepOn(moved.get(p.id)!, wall)) };
+/* The whole picture behind a print: its size and top-left in cm. A crop
+   keeps the whole picture where it is and shows only part of it. */
+const NO_CROP: Crop = { l: 0, t: 0, r: 0, b: 0 };
+function wholeOf(p: Piece) {
+  const c = p.crop || NO_CROP;
+  const ratio = p.imgRatio ?? p.ratio;
+  const w = p.w / (1 - c.l - c.r);
+  return { c, ratio, w, h: w * ratio, x: p.x - c.l * w, y: p.y - c.t * w * ratio };
 }
 
 /* the picture's own address when it was shown through the image proxy */
@@ -203,6 +194,8 @@ export default function MyWall({ uid, ko, compact, onClose }: {
   const t = (copy: { ko: string; en: string }) => (ko ? copy.ko : copy.en);
   const [wall, setWall] = useState<Wall | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  /* the print being cropped (a double-click on it), if any */
+  const [cropping, setCropping] = useState<string | null>(null);
   const [saved, setSaved] = useState(true);
   const [scale, setScale] = useState(1); // px per cm
   const [guides, setGuides] = useState<Guides>({ x: [], y: [] });
@@ -215,6 +208,9 @@ export default function MyWall({ uid, ko, compact, onClose }: {
   const autoFitted = useRef(false);
   const fitTimer = useRef<number | undefined>(undefined);
   const [sizingLabel, setSizingLabel] = useState<string | null>(null);
+  /* while a wall edge is pulled the wall stays centred in the stage, so it is
+     shifted by half its growth to keep the far edge still and the pulled one under the pointer */
+  const [roomShift, setRoomShift] = useState({ x: 0, y: 0 });
   const wallRef = useRef<HTMLDivElement>(null);
 
   const ref = doc(getFirestore(), `users/${uid}/profile/wall`);
@@ -292,6 +288,10 @@ export default function MyWall({ uid, ko, compact, onClose }: {
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
+      if (cropping && (event.key === "Escape" || event.key === "Enter")) {
+        setCropping(null);
+        return;
+      }
       if (event.key === "Escape") onClose();
       if ((event.key === "Delete" || event.key === "Backspace") && selected && !(event.target instanceof HTMLInputElement)) {
         setWall((w) => w && { ...w, pieces: w.pieces.filter((p) => p.id !== selected) });
@@ -300,7 +300,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, selected]);
+  }, [onClose, selected, cropping]);
 
   const toWallCm = (clientX: number, clientY: number) => {
     const box = wallRef.current?.getBoundingClientRect();
@@ -317,8 +317,11 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         if (!current) return current;
         const w = widthFor(ratio, firstLongSide(current, coarsePointer()));
         const raw = keepOn({ id: `p-${Date.now()}`, src, title, ratio, x: at.x - w / 2, y: at.y - (w * ratio) / 2, w }, current);
-        const s = snap(raw, current.pieces, current, reachFor(scale));
-        const piece = settle(keepOn({ ...raw, x: s.x, y: s.y }, current), current.pieces, current);
+        let piece = raw;
+        if (snapOn(current)) {
+          const s = snap(raw, current.pieces, current, reachFor(scale));
+          piece = settle(keepOn({ ...raw, x: s.x, y: s.y }, current), current.pieces, current);
+        }
         window.setTimeout(() => setSelected(piece.id), 0);
         return { ...current, pieces: [...current.pieces, piece] };
       });
@@ -455,7 +458,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
       setWall((w) => {
         if (!w) return w;
         const raw = keepOn({ ...piece, x: start.px + (e.clientX - start.x) / scale, y: start.py + (e.clientY - start.y) / scale }, w);
-        const s = snap(raw, w.pieces.filter((p) => p.id !== piece.id), w, reachFor(scale));
+        const s = snapOn(w) ? snap(raw, w.pieces.filter((p) => p.id !== piece.id), w, reachFor(scale)) : { ...raw, guides: { x: [], y: [] } };
         setGuides(s.guides);
         return { ...w, pieces: w.pieces.map((p) => (p.id === piece.id ? keepOn({ ...p, x: s.x, y: s.y }, w) : p)) };
       });
@@ -463,7 +466,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     const end = () => {
       setGuides({ x: [], y: [] });
       setWall((w) => {
-        if (!w) return w;
+        if (!w || !snapOn(w)) return w;
         const others = w.pieces.filter((p) => p.id !== piece.id);
         return { ...w, pieces: w.pieces.map((p) => (p.id === piece.id ? settle(p, others, w) : p)) };
       });
@@ -493,10 +496,9 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         let width = clamp(Math.max(Math.abs(at.x - anchor.x), Math.abs(at.y - anchor.y) / piece.ratio), MIN_WIDTH, room);
         /* the growing edges are caught by the wall's edges and other prints' edges */
         const others = w.pieces.filter((p) => p.id !== piece.id);
-        const reach = reachFor(scale);
-        const GAP = gapOf(w);
-        const xs = [GAP, w.w - GAP, ...others.flatMap((o) => [o.x - GAP, o.x + o.w + GAP, o.x, o.x + o.w])];
-        const ys = [GAP, w.h - GAP, ...others.flatMap((o) => [o.y - GAP, o.y + heightOf(o) + GAP, o.y, o.y + heightOf(o)])];
+        const reach = snapOn(w) ? reachFor(scale) : -1;
+        const xs = [0, w.w, ...others.flatMap((o) => [o.x, o.x + o.w])];
+        const ys = [0, w.h, ...others.flatMap((o) => [o.y, o.y + heightOf(o)])];
         const edgeX = left ? anchor.x - width : anchor.x + width;
         const edgeY = up ? anchor.y - width * piece.ratio : anchor.y + width * piece.ratio;
         let best: { w: number; d: number; gx?: number; gy?: number } | null = null;
@@ -527,28 +529,35 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     target.addEventListener("pointercancel", end);
   };
 
-  /* the wall's right edge, foot or corner pulled: its width, height or both follow */
-  const startWallResize = (event: React.PointerEvent, sides: "w" | "h" | "wh") => {
+  /* any edge or corner of the wall pulled: its width, height or both follow.
+     Pulled from the left or the top, the prints keep their places on the wall
+     as it grows or shrinks on that side. */
+  const startWallResize = (event: React.PointerEvent, sides: Sides) => {
     event.stopPropagation();
     event.preventDefault();
     if (!wall) return;
     const target = event.currentTarget as HTMLElement;
     target.setPointerCapture(event.pointerId);
     sizing.current = true;
-    const start = { x: event.clientX, y: event.clientY, w: wall.w, h: wall.h, s: scale };
+    const start = { x: event.clientX, y: event.clientY, w: wall.w, h: wall.h, s: scale, pieces: wall.pieces };
+    const east = sides.includes("e"), west = sides.includes("w"), north = sides.includes("n"), south = sides.includes("s");
     const move = (e: PointerEvent) => {
+      const dx = (e.clientX - start.x) / start.s, dy = (e.clientY - start.y) / start.s;
+      const nw = east ? clamp(Math.round(start.w + dx), WALL_LIMITS.min, WALL_LIMITS.max) : west ? clamp(Math.round(start.w - dx), WALL_LIMITS.min, WALL_LIMITS.max) : start.w;
+      const nh = south ? clamp(Math.round(start.h + dy), WALL_LIMITS.min, WALL_LIMITS.max) : north ? clamp(Math.round(start.h - dy), WALL_LIMITS.min, WALL_LIMITS.max) : start.h;
+      const shiftX = west ? nw - start.w : 0, shiftY = north ? nh - start.h : 0;
+      setSizingLabel(`${nw} × ${nh} cm`);
+      setRoomShift({ x: ((east ? 1 : west ? -1 : 0) * (nw - start.w) * start.s) / 2, y: ((south ? 1 : north ? -1 : 0) * (nh - start.h) * start.s) / 2 });
       setWall((w) => {
         if (!w) return w;
-        const nw = sides === "h" ? w.w : clamp(Math.round(start.w + (e.clientX - start.x) / start.s), WALL_LIMITS.min, WALL_LIMITS.max);
-        const nh = sides === "w" ? w.h : clamp(Math.round(start.h + (e.clientY - start.y) / start.s), WALL_LIMITS.min, WALL_LIMITS.max);
-        setSizingLabel(`${nw} × ${nh} cm`);
         const next = { ...w, w: nw, h: nh, sized: true };
-        return { ...next, pieces: next.pieces.map((p) => keepOn(p, next)) };
+        return { ...next, pieces: start.pieces.map((p) => keepOn({ ...p, x: p.x + shiftX, y: p.y + shiftY }, next)) };
       });
     };
     const end = () => {
       sizing.current = false;
       setSizingLabel(null);
+      setRoomShift({ x: 0, y: 0 });
       /* fit the finished wall to the stage again */
       setWall((w) => w && { ...w });
       target.removeEventListener("pointermove", move);
@@ -559,6 +568,63 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     target.addEventListener("pointerup", end);
     target.addEventListener("pointercancel", end);
   };
+
+  /* Cropping: the whole picture stays still and a side (or two, at a corner)
+     of what shows is pulled in or out. With Alt / Option held, the opposite
+     side moves by the same amount, so a frame comes off both sides evenly. */
+  const startCrop = (event: React.PointerEvent, piece: Piece, sides: Sides) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const target = event.currentTarget as HTMLElement;
+    target.setPointerCapture(event.pointerId);
+    const whole = wholeOf(piece);
+    const c0 = whole.c;
+    const move = (e: PointerEvent) => {
+      const at = pointerCm(e.clientX, e.clientY);
+      const fx = (at.x - whole.x) / whole.w, fy = (at.y - whole.y) / whole.h;
+      const c = { ...c0 };
+      const even = e.altKey;
+      if (sides.includes("w")) { c.l = fx; if (even) c.r = c0.r + (fx - c0.l); }
+      if (sides.includes("e")) { c.r = 1 - fx; if (even) c.l = c0.l + (1 - fx - c0.r); }
+      if (sides.includes("n")) { c.t = fy; if (even) c.b = c0.b + (fy - c0.t); }
+      if (sides.includes("s")) { c.b = 1 - fy; if (even) c.t = c0.t + (1 - fy - c0.b); }
+      /* never past the picture, and always some of it left */
+      c.l = clamp(c.l, 0, 1 - MIN_KEEP); c.r = clamp(c.r, 0, 1 - MIN_KEEP - c.l);
+      c.t = clamp(c.t, 0, 1 - MIN_KEEP); c.b = clamp(c.b, 0, 1 - MIN_KEEP - c.t);
+      const keepW = 1 - c.l - c.r, keepH = 1 - c.t - c.b;
+      const next: Piece = {
+        ...piece,
+        crop: c,
+        imgRatio: whole.ratio,
+        ratio: (whole.ratio * keepH) / keepW,
+        w: whole.w * keepW,
+        x: whole.x + c.l * whole.w,
+        y: whole.y + c.t * whole.h,
+      };
+      setWall((w) => w && { ...w, pieces: w.pieces.map((p) => (p.id === piece.id ? next : p)) });
+    };
+    const end = () => {
+      target.removeEventListener("pointermove", move);
+      target.removeEventListener("pointerup", end);
+      target.removeEventListener("pointercancel", end);
+    };
+    target.addEventListener("pointermove", move);
+    target.addEventListener("pointerup", end);
+    target.addEventListener("pointercancel", end);
+  };
+
+  /* the whole picture back, where it was */
+  const uncrop = (id: string) =>
+    setWall((w) => w && {
+      ...w,
+      pieces: w.pieces.map((p) => {
+        if (p.id !== id || !p.crop) return p;
+        const whole = wholeOf(p);
+        /* the fields are dropped, not set to undefined - Firestore refuses undefined */
+        const { crop: _crop, imgRatio: _imgRatio, ...rest } = p;
+        return keepOn({ ...rest, ratio: whole.ratio, w: whole.w, x: whole.x, y: whole.y }, w);
+      }),
+    });
 
   const resize = (id: string, longSide: number) =>
     setWall((w) => w && {
@@ -584,6 +650,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
   const remove = (id: string) => {
     setWall((w) => w && { ...w, pieces: w.pieces.filter((p) => p.id !== id) });
     setSelected(null);
+    setCropping(null);
   };
 
   const dark = wall ? wall.color === "#2a2a2a" : false;
@@ -622,18 +689,11 @@ export default function MyWall({ uid, ko, compact, onClose }: {
                 {t({ ko: "화면에 맞추기", en: "Fit to screen" })}
               </button>
             )}
-            {/* snug: prints sit edge to edge; off, a hair apart */}
-            <button
-              type="button"
-              className="mw-tight"
-              aria-pressed={wall.tight !== false}
-              onClick={() => {
-                const next = { ...wall, tight: wall.tight === false };
-                setWall(respace(next, gapOf(wall), gapOf(next)));
-              }}
-            >
+            {/* snap: prints are caught by edges and each other; off, they stay where they are let go.
+                Turning it on or off leaves the prints already hung as they are. */}
+            <button type="button" className="mw-tight" aria-pressed={snapOn(wall)} onClick={() => setWall({ ...wall, snap: !snapOn(wall) })}>
               <i aria-hidden="true" />
-              {t({ ko: "딱 붙이기", en: "Snug" })}
+              {t({ ko: "스냅", en: "Snap" })}
             </button>
             <span className="mw-status">{saved ? t({ ko: "저장됨", en: "Saved" }) : t({ ko: "저장 중", en: "Saving" })}</span>
           </div>
@@ -643,9 +703,9 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         </button>
       </header>
 
-      <div className="mw-stage" ref={stageRef} onPointerDown={() => setSelected(null)}>
+      <div className="mw-stage" ref={stageRef} onPointerDown={() => { setSelected(null); setCropping(null); }}>
         {wall && (
-          <div className="mw-room" style={{ width: wall.w * scale }}>
+          <div className="mw-room" style={{ width: wall.w * scale, transform: roomShift.x || roomShift.y ? `translate(${roomShift.x}px, ${roomShift.y}px)` : undefined }}>
             <div
               className={`mw-wall${dark ? " is-dark" : ""}${dropping ? " is-dropping" : ""}`}
               ref={wallRef}
@@ -658,24 +718,45 @@ export default function MyWall({ uid, ko, compact, onClose }: {
                     : t({ ko: "어느 화면의 작품이든 벽으로 끌어오세요.", en: "Drag any work from any page onto the wall." })}
                 </p>
               )}
-              {wall.pieces.map((p) => (
-                <figure
-                  key={p.id}
-                  className={p.id === selected ? "mw-piece is-on" : "mw-piece"}
-                  style={{ left: p.x * scale, top: p.y * scale, width: p.w * scale, height: heightOf(p) * scale }}
-                  onPointerDown={(e) => startMove(e, p)}
-                >
-                  <img src={getOptimizedImageUrl(p.src, 800)} alt={p.title} draggable={false} />
-                  {p.id === selected &&
-                    (["nw", "ne", "sw", "se"] as Corner[]).map((c) => (
-                      <i key={c} className={`mw-corner mw-corner--${c}`} onPointerDown={(e) => startResize(e, p, c)} aria-hidden="true" />
-                    ))}
-                </figure>
+              {wall.pieces.map((p) => {
+                const whole = wholeOf(p);
+                const crop = p.id === cropping;
+                /* the whole picture, placed so only the kept part shows through the print */
+                const picture = (faint?: boolean) => (
+                  <img
+                    src={getOptimizedImageUrl(p.src, 800)}
+                    alt={faint ? "" : p.title}
+                    draggable={false}
+                    className={faint ? "mw-piece__whole" : undefined}
+                    style={{ left: (whole.x - p.x) * scale, top: (whole.y - p.y) * scale, width: whole.w * scale, height: whole.h * scale }}
+                  />
+                );
+                return (
+                  <figure
+                    key={p.id}
+                    className={`mw-piece${p.id === selected ? " is-on" : ""}${crop ? " is-crop" : ""}`}
+                    style={{ left: p.x * scale, top: p.y * scale, width: p.w * scale, height: heightOf(p) * scale }}
+                    onPointerDown={(e) => (crop ? e.stopPropagation() : startMove(e, p))}
+                    onDoubleClick={() => { setSelected(p.id); setCropping(crop ? null : p.id); }}
+                  >
+                    {/* while cropping, the parts trimmed away show faintly around it */}
+                    {crop && picture(true)}
+                    <span className="mw-piece__view">{picture()}</span>
+                    {p.id === selected && !crop &&
+                      (["nw", "ne", "sw", "se"] as Corner[]).map((c) => (
+                        <i key={c} className={`mw-corner mw-corner--${c}`} onPointerDown={(e) => startResize(e, p, c)} aria-hidden="true" />
+                      ))}
+                    {crop &&
+                      (["n", "s", "e", "w", "nw", "ne", "sw", "se"] as Sides[]).map((side) => (
+                        <i key={side} className={`mw-crop mw-crop--${side}`} onPointerDown={(e) => startCrop(e, p, side)} aria-hidden="true" />
+                      ))}
+                  </figure>
+                );
+              })}
+              {/* the wall's own edges and corners: pull any of them to size it */}
+              {(["n", "s", "e", "w", "nw", "ne", "sw", "se"] as Sides[]).map((side) => (
+                <i key={side} className={`mw-edge mw-edge--${side}`} onPointerDown={(e) => startWallResize(e, side)} aria-hidden="true" />
               ))}
-              {/* the wall's own edges: pull the right side, the foot or the corner to size it */}
-              <i className="mw-edge mw-edge--w" onPointerDown={(e) => startWallResize(e, "w")} aria-hidden="true" />
-              <i className="mw-edge mw-edge--h" onPointerDown={(e) => startWallResize(e, "h")} aria-hidden="true" />
-              <i className="mw-edge mw-edge--wh" onPointerDown={(e) => startWallResize(e, "wh")} aria-hidden="true" />
               {sizingLabel && <span className="mw-sizing">{sizingLabel}</span>}
               {/* the lines a moving print has caught */}
               {guides.x.map((x) => <span key={`gx${x}`} className="mw-guide mw-guide--x" style={{ left: x * scale }} />)}
@@ -689,7 +770,22 @@ export default function MyWall({ uid, ko, compact, onClose }: {
         )}
       </div>
 
-      {chosen && (
+      {chosen && cropping === chosen.id ? (
+        <div className="mw-piecebar" onPointerDown={(e) => e.stopPropagation()}>
+          <p className="mw-piecebar__title">
+            {coarsePointer()
+              ? t({ ko: "가장자리를 끌어 자르세요", en: "Drag an edge to crop" })
+              : t({ ko: "가장자리를 끌어 자르세요 · Alt(⌥)를 누르면 양쪽이 같이", en: "Drag an edge to crop · hold Alt (⌥) for both sides" })}
+          </p>
+          <span className="mw-dims">
+            {Math.round(chosen.w)} × {Math.round(heightOf(chosen))} cm
+          </span>
+          {chosen.crop && (
+            <button type="button" className="mw-fit" onClick={() => uncrop(chosen.id)}>{t({ ko: "원래대로", en: "Reset" })}</button>
+          )}
+          <button type="button" className="mw-fit mw-fit--gold" onClick={() => setCropping(null)}>{t({ ko: "완료", en: "Done" })}</button>
+        </div>
+      ) : chosen && (
         <div className="mw-piecebar" onPointerDown={(e) => e.stopPropagation()}>
           <p className="mw-piecebar__title">{chosen.title || t({ ko: "작품", en: "Work" })}</p>
           <div className="mw-sizes" role="radiogroup" aria-label={t({ ko: "인쇄 크기", en: "Print size" })}>
@@ -702,6 +798,9 @@ export default function MyWall({ uid, ko, compact, onClose }: {
           <span className="mw-dims">
             {Math.round(chosen.w)} × {Math.round(heightOf(chosen))} cm
           </span>
+          <button type="button" className="mw-fit" onClick={() => setCropping(chosen.id)} title={t({ ko: "더블클릭으로도 자를 수 있어요", en: "Double-click a print to crop it too" })}>
+            {t({ ko: "자르기", en: "Crop" })}
+          </button>
           <button type="button" className="mw-remove" onClick={() => remove(chosen.id)} aria-label={t({ ko: "벽에서 떼기", en: "Take down" })}>
             <Trash2 size={16} strokeWidth={1.8} />
           </button>
