@@ -443,7 +443,9 @@
     transform: translateX(-50%);
     z-index: 20;
     pointer-events: none;
-    display: none;
+    /* phones too (9/30): the works·museums count sits on the top row */
+    display: block;
+    top: calc(24px + env(safe-area-inset-top, 0px));
 }
 
 @media (min-width: 640px) {
@@ -453,12 +455,14 @@
     }
 }
 
-/* a phone: the count is centred in the room between the logo (its box ends
-   at 84px) and the right edge, level with the mark, and loses its side rules
-   so nothing runs under the logo */
+/* a phone: the count sits in the middle of the top line, between the logo
+   (its box ends at 84px) and KO | EN, small, and without its side rules so
+   it touches neither */
 @media (max-width: 639px) {
-    .ig-top-center-hint { left: calc(50% + 35px); }
+    /* level with KO | EN, which stands at max(12px, safe area + 10px) and is ~30px tall */
+    .ig-top-center-hint { top: calc(max(12px, env(safe-area-inset-top, 0px) + 10px) + 8px); }
     .ig-top-center-hint .ig-line-h { display: none; }
+    .ig-top-center-hint span { font-size: 8.5px !important; letter-spacing: .08em !important; }
 }
 
 .ig-nowrap {

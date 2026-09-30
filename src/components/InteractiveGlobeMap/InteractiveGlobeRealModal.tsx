@@ -24,6 +24,7 @@ import { HeartOverlay } from "../HeartOverlay";
 import { ProductModal } from "../ProductModal";
 import { SHOW_SALES_UI } from "../../config/features";
 import CommentModal from "../CommentModal";
+import { openOutside } from "../../utils/openOutside";
 import { PlaylistModal } from "../PlaylistModal";
 import { ArtworkRecommendations } from "../ArtworkRecommendations";
 import type { Artwork as ProductArtwork } from "../../types/Artwork";
@@ -2310,6 +2311,7 @@ export function InteractiveGlobeRealModal({
                               href={selectedArtworkDetail.sourceUrl}
                               target="_blank"
                               rel="noreferrer"
+                              onClick={(e) => { if (openOutside(String(selectedArtworkDetail.sourceUrl))) e.preventDefault(); }}
                               style={{
                                 marginTop: '16px',
                                 display: 'inline-flex',

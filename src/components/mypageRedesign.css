@@ -162,12 +162,13 @@
    gap under the playlists. The band over the status bar is drawn only once
    the row has stuck (is-stuck, set on scroll). */
 .mp-tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; overflow-x: auto; scrollbar-width: none;
-  padding: 0 var(--mp-pad); background: rgba(8,8,8,.95);
-  -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-bottom: 1px solid var(--mp-rule); }
+  padding: 0 var(--mp-pad); background: var(--mp-ground); border-bottom: 1px solid var(--mp-rule); }
+/* solid, not glass: on an iPhone the blurred band painted see-through while
+   stuck, so the works scrolled visibly behind the tab labels */
 .mp-tabs.is-stuck { background: var(--mp-ground); box-shadow: 0 calc(-1 * env(safe-area-inset-top, 0px)) 0 0 var(--mp-ground); }
 .mp.is-light .mp-tabs.is-stuck { background: var(--mp-ground); box-shadow: 0 calc(-1 * env(safe-area-inset-top, 0px)) 0 0 var(--mp-ground); }
 .mp-tabs::-webkit-scrollbar { display: none; }
-.mp.is-light .mp-tabs { background: rgba(250,250,250,.95); }
+.mp.is-light .mp-tabs { background: var(--mp-ground); }
 .mp .mp-tabs button { position: relative; flex: 1 0 auto; display: inline-flex; flex-direction: row-reverse; align-items: baseline;
   justify-content: center; gap: 7px; padding: 14px 6px 12px; color: var(--mp-ink-3); transition: color .16s ease; }
 .mp .mp-tabs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--mp-gold);

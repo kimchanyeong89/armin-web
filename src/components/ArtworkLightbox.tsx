@@ -13,6 +13,7 @@ import { auth } from '../firebase';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useArtistI18n, getArtistDisplayName } from '../i18n/artistLocalization';
 import { getArtworkTitle, getArtworkDate, useArtworkI18n } from '../i18n/artworkLocalization';
+import { openOutside } from '../utils/openOutside';
 import './artworkLightbox.css';
 
 
@@ -809,7 +810,11 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         href={sourceUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        onClick={(e) => e.stopPropagation()}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            /* in the app, out to the phone's own browser */
+                                            if (openOutside(sourceUrl)) e.preventDefault();
+                                        }}
                                     >
                                         <span className="lb-src__mark" aria-hidden="true">
                                             <ArrowUpRight size={13} strokeWidth={2} />

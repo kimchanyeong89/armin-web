@@ -48,9 +48,9 @@
    catches: a bright bloom from above and a soft band across, which is what
    makes the bar read lighter than its tint alone */
 .wall-grip--bar { background:
-    radial-gradient(120% 150% at 50% -45%, rgba(255,255,255,.3), transparent 62%),
-    linear-gradient(96deg, transparent 15%, rgba(255,255,255,.08) 48%, transparent 72%),
-    linear-gradient(128deg, rgba(255,255,255,.13), transparent 38%, rgba(255,255,255,.04)),
+    radial-gradient(130% 160% at 50% -40%, rgba(255,255,255,.4), transparent 64%),
+    linear-gradient(96deg, transparent 10%, rgba(255,255,255,.1) 48%, transparent 80%),
+    linear-gradient(rgba(255,255,255,.09), rgba(255,255,255,.09)),
     var(--bpn-glass, rgba(20,20,18,.68));
   -webkit-backdrop-filter: blur(26px) saturate(165%) contrast(1.04); backdrop-filter: blur(26px) saturate(165%) contrast(1.04); }
 .wall-grip--bar span { opacity: .7; transition: opacity .16s ease; }
