@@ -246,7 +246,7 @@ export default function NearbyExhibitions({
   if (loading) {
     return (
       <div style={{ padding: 40, textAlign: "center", color: fgLow, fontSize: 12 }}>
-        {tr({ ko: "주변 전시를 불러오는 중입니다...", en: "Loading nearby exhibitions..." })}
+        {tr({ ko: "진행 중인 전시를 불러오는 중입니다...", en: "Loading exhibitions on now..." })}
       </div>
     );
   }
@@ -280,7 +280,7 @@ export default function NearbyExhibitions({
 
       {sortedAll.length === 0 ? (
         <div style={{ padding: "60px 24px", textAlign: "center", color: fgLow, fontSize: 12 }}>
-          {tr({ ko: "표시할 주변 전시가 없습니다.", en: "No nearby exhibitions to show." })}
+          {tr({ ko: "지금 진행 중인 전시가 없습니다.", en: "No exhibitions on right now." })}
         </div>
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, gap: 8 }}>
