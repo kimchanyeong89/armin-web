@@ -208,10 +208,21 @@ export default function MyWall({ uid, ko, compact, onClose }: {
   const autoFitted = useRef(false);
   const fitTimer = useRef<number | undefined>(undefined);
   const [sizingLabel, setSizingLabel] = useState<string | null>(null);
-  /* while a wall edge is pulled the wall stays centred in the stage, so it is
-     shifted by half its growth to keep the far edge still and the pulled one under the pointer */
-  const [roomShift, setRoomShift] = useState({ x: 0, y: 0 });
   const wallRef = useRef<HTMLDivElement>(null);
+  const roomRef = useRef<HTMLDivElement>(null);
+  /* while a wall edge is pulled the wall grows on both sides about its middle;
+     the stage does not always keep it centred (a wall taller than the stage
+     grows downward), so its middle is held where it was, on screen, by hand */
+  const sizeAnchor = useRef<{ cx: number; cy: number } | null>(null);
+  useLayoutEffect(() => {
+    const room = roomRef.current, el = wallRef.current;
+    if (!room || !el) return;
+    room.style.transform = "";
+    const a = sizeAnchor.current;
+    if (!a) return;
+    const b = el.getBoundingClientRect();
+    room.style.transform = `translate(${a.cx - (b.left + b.width / 2)}px, ${a.cy - (b.top + b.height / 2)}px)`;
+  });
 
   const ref = doc(getFirestore(), `users/${uid}/profile/wall`);
 
@@ -529,9 +540,11 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     target.addEventListener("pointercancel", end);
   };
 
-  /* any edge or corner of the wall pulled: its width, height or both follow.
-     Pulled from the left or the top, the prints keep their places on the wall
-     as it grows or shrinks on that side. */
+  /* Any edge or corner of the wall pulled: the wall grows or shrinks on both
+     opposite sides at once - pulling the top moves the foot too, pulling the
+     left moves the right - so it stays centred under the pointer. A print
+     against an edge rides with that edge; the others keep their place about
+     the middle. */
   const startWallResize = (event: React.PointerEvent, sides: Sides) => {
     event.stopPropagation();
     event.preventDefault();
@@ -539,25 +552,35 @@ export default function MyWall({ uid, ko, compact, onClose }: {
     const target = event.currentTarget as HTMLElement;
     target.setPointerCapture(event.pointerId);
     sizing.current = true;
+    const box = wallRef.current?.getBoundingClientRect();
+    if (box) sizeAnchor.current = { cx: box.left + box.width / 2, cy: box.top + box.height / 2 };
     const start = { x: event.clientX, y: event.clientY, w: wall.w, h: wall.h, s: scale, pieces: wall.pieces };
-    const east = sides.includes("e"), west = sides.includes("w"), north = sides.includes("n"), south = sides.includes("s");
+    const across = sides.includes("e") ? 1 : sides.includes("w") ? -1 : 0;
+    const down = sides.includes("s") ? 1 : sides.includes("n") ? -1 : 0;
+    const TOUCH = 0.5; // cm: a print this near an edge is against it
+    /* where a print goes on one axis when the wall's length there changes from `from` to `to` */
+    const follow = (at: number, size: number, from: number, to: number) =>
+      at <= TOUCH ? 0 : at + size >= from - TOUCH ? to - size : at + (to - from) / 2;
     const move = (e: PointerEvent) => {
-      const dx = (e.clientX - start.x) / start.s, dy = (e.clientY - start.y) / start.s;
-      const nw = east ? clamp(Math.round(start.w + dx), WALL_LIMITS.min, WALL_LIMITS.max) : west ? clamp(Math.round(start.w - dx), WALL_LIMITS.min, WALL_LIMITS.max) : start.w;
-      const nh = south ? clamp(Math.round(start.h + dy), WALL_LIMITS.min, WALL_LIMITS.max) : north ? clamp(Math.round(start.h - dy), WALL_LIMITS.min, WALL_LIMITS.max) : start.h;
-      const shiftX = west ? nw - start.w : 0, shiftY = north ? nh - start.h : 0;
+      const dx = ((e.clientX - start.x) / start.s) * across, dy = ((e.clientY - start.y) / start.s) * down;
+      /* each side moves as far as the pointer did, so the length changes by twice that */
+      const nw = across ? clamp(Math.round((start.w + 2 * dx) / 2) * 2, WALL_LIMITS.min, WALL_LIMITS.max) : start.w;
+      const nh = down ? clamp(Math.round((start.h + 2 * dy) / 2) * 2, WALL_LIMITS.min, WALL_LIMITS.max) : start.h;
       setSizingLabel(`${nw} × ${nh} cm`);
-      setRoomShift({ x: ((east ? 1 : west ? -1 : 0) * (nw - start.w) * start.s) / 2, y: ((south ? 1 : north ? -1 : 0) * (nh - start.h) * start.s) / 2 });
       setWall((w) => {
         if (!w) return w;
         const next = { ...w, w: nw, h: nh, sized: true };
-        return { ...next, pieces: start.pieces.map((p) => keepOn({ ...p, x: p.x + shiftX, y: p.y + shiftY }, next)) };
+        return {
+          ...next,
+          pieces: start.pieces.map((p) =>
+            keepOn({ ...p, x: follow(p.x, p.w, start.w, nw), y: follow(p.y, heightOf(p), start.h, nh) }, next)),
+        };
       });
     };
     const end = () => {
       sizing.current = false;
+      sizeAnchor.current = null;
       setSizingLabel(null);
-      setRoomShift({ x: 0, y: 0 });
       /* fit the finished wall to the stage again */
       setWall((w) => w && { ...w });
       target.removeEventListener("pointermove", move);
@@ -705,7 +728,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
 
       <div className="mw-stage" ref={stageRef} onPointerDown={() => { setSelected(null); setCropping(null); }}>
         {wall && (
-          <div className="mw-room" style={{ width: wall.w * scale, transform: roomShift.x || roomShift.y ? `translate(${roomShift.x}px, ${roomShift.y}px)` : undefined }}>
+          <div className="mw-room" ref={roomRef} style={{ width: wall.w * scale }}>
             <div
               className={`mw-wall${dark ? " is-dark" : ""}${dropping ? " is-dropping" : ""}`}
               ref={wallRef}

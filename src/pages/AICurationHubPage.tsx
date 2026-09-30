@@ -743,6 +743,13 @@ function CurationTab({
                 <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden", borderRadius: 12, marginBottom: 8, backgroundColor: "#1a1a1a" }}>
                   <img src={ex.image || NO_IMAGE_PLACEHOLDER_DARK} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
+                  {/* the match, small in the cover's lower corner - off the artist's line, which it used to crowd */}
+                  {typeof ex.matchScore === 'number' && (
+                    <span className="hub-read hub-read--cover">
+                      <i className="hub-dot" aria-hidden="true"><i /></i>
+                      <em>{(Math.max(0, Math.min(1, ex.matchScore)) * 100).toFixed(0)}%</em>
+                    </span>
+                  )}
                   <ExpandableActionMenu
                     isMobile={isMobile}
                     isLiked={Boolean(likedArtworkIds?.has(String(ex.id)) || likedArtworkIds?.has(normalizeArtworkIdForFirestore(ex.id)))}
@@ -761,18 +768,8 @@ function CurationTab({
                   <div style={{ fontSize: 13, fontWeight: 700, color: fg, lineHeight: 1.3, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                     {ex.title}
                   </div>
-                  {/* the match sits with the artist now, as a figure with a
-                      gold point that draws itself into a bar on hover */}
-                  <div style={{ marginTop: 4, display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 10, minWidth: 0 }}>
-                    <div style={{ flex: "0 1 auto", fontSize: 11, color: fgMed, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {ex.artist || tr({ ko: '알 수 없는 작가', en: 'Unknown Artist' })}
-                    </div>
-                    {typeof ex.matchScore === 'number' && (
-                      <span className="hub-read">
-                        <i className="hub-dot" aria-hidden="true"><i /></i>
-                        <em>{(Math.max(0, Math.min(1, ex.matchScore)) * 100).toFixed(0)}%</em>
-                      </span>
-                    )}
+                  <div style={{ marginTop: 4, fontSize: 11, color: fgMed, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {ex.artist || tr({ ko: '알 수 없는 작가', en: 'Unknown Artist' })}
                   </div>
                 </div>
               </div>

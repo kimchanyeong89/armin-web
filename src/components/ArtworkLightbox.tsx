@@ -873,7 +873,9 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                     if (container) container.scrollTop = 0;
                                 }
                             }}
-                            mode="grid"
+                            /* a phone gets one sideways row of small cards - two to a line read poorly */
+                            mode={isMobile ? "compact-horizontal" : "grid"}
+                            showHeading={false}
                             theme="dark"
                             likedArtworks={likedSet}
                             onToggleLike={handleToggleLike}

@@ -32,6 +32,8 @@ interface Props {
     onOpenProduct?: (artwork: Artwork) => void;
     onSaveToPlaylist?: (artwork: Artwork) => void;
     onOpenComments?: (artwork: Artwork) => void;
+    /** compact-horizontal only: false when the page already titles the row */
+    showHeading?: boolean;
 }
 
 export const ArtworkRecommendations: React.FC<Props> = ({
@@ -45,7 +47,8 @@ export const ArtworkRecommendations: React.FC<Props> = ({
     onToggleLike,
     onOpenProduct,
     onSaveToPlaylist,
-    onOpenComments
+    onOpenComments,
+    showHeading = true
 }) => {
     const [aiRecommendations, setAiRecommendations] = useState<any[]>([]);
     const museumCountryMap = useMemo(() => getMuseumCountryMap(), []);
@@ -277,7 +280,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
     const renderCard = (item: any, source: 'AI' | 'Meta', index: number = 0) => {
         const compact = mode === 'compact-horizontal';
         const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
-        const compactCardWidth = isMobileViewport ? 126 : 148;
+        const compactCardWidth = isMobileViewport ? 112 : 148;
         // Normalize data fields from various sources (Worker vs Local)
         const name = item.name || item.n || 'Untitled';
         const artist = item.artist || item.a || 'Unknown Artist';
@@ -513,9 +516,9 @@ export const ArtworkRecommendations: React.FC<Props> = ({
 
         return (
             <div style={{ ...style }} className="artwork-recommendations">
-                <h3 style={{ ...sectionHeaderStyle, fontSize: 10, marginBottom: 10, letterSpacing: '0.18em', color: theme === 'dark' ? 'rgba(255,255,255,0.76)' : 'rgba(0,0,0,0.62)' }}>
+                {showHeading && <h3 style={{ ...sectionHeaderStyle, fontSize: 10, marginBottom: 10, letterSpacing: '0.18em', color: theme === 'dark' ? 'rgba(255,255,255,0.76)' : 'rgba(0,0,0,0.62)' }}>
                     Similar Works <span style={{ fontSize: 8, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.44)' : 'rgba(0,0,0,0.36)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>Swipe</span>
-                </h3>
+                </h3>}
                 <div
                     className="armin-rec-scroll"
                     style={{

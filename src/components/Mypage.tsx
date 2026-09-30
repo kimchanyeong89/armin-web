@@ -31,7 +31,6 @@ import {
   Bookmark,
   Share2,
   Trash2,
-  Image as ImageIcon,
 } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
 
@@ -64,6 +63,7 @@ import {
   useCollectionCovers,
   ArtistWorkCount,
 } from "../features/mypage/savedItemArt";
+import PlaylistMenu from "./PlaylistMenu";
 import PlaylistShareSheet from "./PlaylistShareSheet";
 import { deletePlaylist, refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
 import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
@@ -2094,7 +2094,6 @@ const MyPage: React.FC = () => {
     /* any liked work can be the page's background */
     const heroCandidate = String(normalized.artworkId || normalized.id || "").trim();
     const heroId = heroOptionIds.has(heroCandidate) ? heroCandidate : null;
-    const isHero = !!heroId && heroId === selectedHeroArtworkId;
 
     const stableCardKey = String(
       rawItem?._docId || rawItem?.likeDocId || `${itemType}-${itemId}-${normalizeToken(String(normalized.title || "").toLowerCase()) || index}`,
@@ -2159,21 +2158,6 @@ const MyPage: React.FC = () => {
           >
             <BookmarkPlus size={12} strokeWidth={2.2} />
           </button>
-
-          {heroId && (
-            <button
-              onClick={(event) => {
-                event.stopPropagation();
-                void saveHeroBackgroundPreference(isHero ? null : heroId);
-              }}
-              aria-pressed={isHero}
-              title={isHero
-                ? t({ ko: "지금 배경 · 누르면 자동으로", en: "Current background · tap for auto" })
-                : t({ ko: "배경으로 쓰기", en: "Use as background" })}
-            >
-              <ImageIcon size={12} strokeWidth={2.2} />
-            </button>
-          )}
 
           {SHOW_SALES_UI && (
           <button
@@ -2398,7 +2382,6 @@ const MyPage: React.FC = () => {
 
   const renderPlaylistCard = (playlist: any) => {
     const count = playlist.items?.length || 0;
-    const asking = playlistDelete?.id === playlist.id;
     const open = () => {
       setViewMode("artworks");
       setActivePlaylist(playlist);
@@ -2444,18 +2427,13 @@ const MyPage: React.FC = () => {
         </div>
 
         <div style={{ position: "absolute", top: 8, right: 8, zIndex: 2, display: "grid", gap: 6 }}>
-          <button
-            type="button"
-            title={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
-            aria-label={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
-            onClick={(event) => {
-              event.stopPropagation();
-              setSharingPlaylistId(playlist.id);
-            }}
+          {/* share and delete behind one mark; the slideshow stays out */}
+          <PlaylistMenu
+            shared={playlist.shared === true}
+            onShare={() => setSharingPlaylistId(playlist.id)}
+            onDelete={() => removePlaylist(playlist.id)}
             style={mark}
-          >
-            <Share2 size={13} strokeWidth={2.1} color={playlist.shared ? lime : "#fff"} />
-          </button>
+          />
           <button
             type="button"
             title={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
@@ -2469,32 +2447,7 @@ const MyPage: React.FC = () => {
           >
             <Play size={13} strokeWidth={2.1} />
           </button>
-          <button
-            type="button"
-            title={t({ ko: "플레이리스트 삭제", en: "Delete playlist" })}
-            aria-label={t({ ko: "플레이리스트 삭제", en: "Delete playlist" })}
-            onClick={(event) => {
-              event.stopPropagation();
-              setPlaylistDelete({ id: playlist.id });
-            }}
-            style={{ ...mark, color: asking ? lime : "#fff" }}
-          >
-            <Trash2 size={13} strokeWidth={2.1} />
-          </button>
         </div>
-
-        {asking && (
-          /* asked once more on the card itself: the cover dims, two words at its foot */
-          <div className="mp-plask" onClick={(event) => event.stopPropagation()} onKeyDown={(event) => event.stopPropagation()}>
-            <span>{t({ ko: "이 플레이리스트를 삭제할까요?", en: "Delete this playlist?" })}</span>
-            <span className="mp-plask__acts">
-              <button type="button" className="mp-plask__yes" disabled={playlistDelete?.busy} onClick={() => void removePlaylist(playlist.id)}>
-                {playlistDelete?.busy ? t({ ko: "삭제 중", en: "Deleting" }) : t({ ko: "삭제", en: "Delete" })}
-              </button>
-              <button type="button" onClick={() => setPlaylistDelete(null)}>{t({ ko: "취소", en: "Cancel" })}</button>
-            </span>
-          </div>
-        )}
 
         <div style={{ padding: "8px 9px" }}>
           <div style={{ fontSize: 12, fontWeight: 600, color: pageText, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -2704,16 +2657,12 @@ const MyPage: React.FC = () => {
                         </small>
                       </span>
                     </button>
-                    <button
-                      type="button"
+                    <PlaylistMenu
                       className="mp-list__share"
-                      data-on={playlist.shared || undefined}
-                      title={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
-                      aria-label={t({ ko: "플레이리스트 공유", en: "Share playlist" })}
-                      onClick={() => setSharingPlaylistId(playlist.id)}
-                    >
-                      <Share2 size={12} strokeWidth={2.2} aria-hidden="true" />
-                    </button>
+                      shared={playlist.shared === true}
+                      onShare={() => setSharingPlaylistId(playlist.id)}
+                      onDelete={() => removePlaylist(playlist.id)}
+                    />
                   </li>
                 );
               })}

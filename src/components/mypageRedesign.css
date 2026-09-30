@@ -30,7 +30,6 @@
   transition: background .16s ease; }
 .mp-acts button:hover { background: rgba(0,0,0,.74); }
 /* the work that is the page's background */
-.mp-acts button[aria-pressed="true"] { color: var(--mp-gold); }
 
 /* ── the card: title and artist, always on, lower left ────────── */
 /* Written as longhand, not the `font` shorthand: a shorthand whose
@@ -211,16 +210,20 @@
   .mp-tabs span { font-size: 10px; letter-spacing: -0.01em; }
 }
 
-/* a playlist card asking whether to delete it: the cover dims, the question and two words sit at its foot */
-.mp-plask { position: absolute; inset: 0; z-index: 3; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px;
-  padding: 14px; background: linear-gradient(to bottom, rgba(8,8,8,.25), rgba(8,8,8,.9) 70%); cursor: default;
-  font-family: var(--mp-sans); color: #f4f1ea; word-break: keep-all; animation: mp-plask-in .2s ease backwards; }
-.mp-plask > span:first-child { font-size: 13px; font-weight: 600; line-height: 1.45; }
-.mp-plask__acts { display: flex; gap: 18px; }
-.mp .mp-plask button { margin: 0; padding: 0; border: 0; background: none; font: inherit; font-size: 12.5px; font-weight: 600;
-  color: rgba(244,241,234,.62); cursor: pointer; transition: color .16s ease; }
-.mp .mp-plask button:hover { color: var(--mp-gold); }
-.mp .mp-plask .mp-plask__yes { color: var(--mp-gold); }
-.mp .mp-plask button:disabled { opacity: .6; cursor: default; }
-.mp .mp-plask button:focus { outline: none; }
-@keyframes mp-plask-in { from { opacity: 0; } }
+/* a playlist's ⋮ menu: opened on the page under its mark - a small dark panel, words only, gold under the pointer */
+.pl-menu { position: fixed; z-index: 260100; display: grid; padding: 6px 0;
+  background: #0d0d0d; border: 1px solid rgba(244,241,234,.12); box-shadow: 0 14px 34px rgba(0,0,0,.5);
+  font-family: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; word-break: keep-all;
+  animation: pl-menu-in .16s ease backwards; }
+.pl-menu button { margin: 0; padding: 9px 14px; border: 0; border-radius: 0; background: none; text-align: left; cursor: pointer;
+  font: inherit; font-size: 13px; font-weight: 600; color: rgba(244,241,234,.78); transition: color .16s ease; }
+.pl-menu button:hover { color: #d4a547; }
+.pl-menu button:focus { outline: none; }
+.pl-menu button:focus-visible { color: #d4a547; }
+.pl-menu button:disabled { opacity: .6; cursor: default; }
+.pl-menu p { margin: 0; padding: 8px 14px 4px; font-size: 12.5px; line-height: 1.5; color: rgba(244,241,234,.9); }
+.pl-menu__row { display: flex; }
+.pl-menu__row button { padding-right: 6px; }
+.pl-menu .pl-menu__yes { color: #d4a547; }
+@keyframes pl-menu-in { from { opacity: 0; transform: translateY(-4px); } }
+

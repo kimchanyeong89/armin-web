@@ -62,10 +62,14 @@
 /* ── the match reading: a point that draws itself out ─────────── */
 .hub-read { flex: none; display: inline-flex; align-items: center; gap: 7px; }
 .hub-read em { font: 500 10px/1 var(--hub-mono); font-style: normal; letter-spacing: .04em; color: var(--hub-gold); font-variant-numeric: tabular-nums; }
+.hub-read--cover { position: absolute; left: 8px; bottom: 8px; gap: 5px; pointer-events: none; }
+.hub-read--cover em { font-size: 9px; color: rgba(240,200,120,.95); text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+.hub-read--cover .hub-dot { width: 14px; }
 .hub-dot { flex: none; display: flex; align-items: center; justify-content: flex-end; width: 22px; height: 4px; }
 .hub-dot i { display: block; width: 4px; height: 4px; border-radius: 50%; background: var(--hub-gold);
   transition: width .3s var(--hub-ease), height .3s var(--hub-ease), border-radius .3s var(--hub-ease); }
 .hub-card:hover .hub-dot i, .hub-card:focus-within .hub-dot i { width: 22px; height: 2px; border-radius: 1px; }
+.hub-card:hover .hub-read--cover .hub-dot i, .hub-card:focus-within .hub-read--cover .hub-dot i { width: 14px; }
 
 @media (prefers-reduced-motion: reduce) { .hub * { transition: none !important; } }
 
