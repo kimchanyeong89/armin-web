@@ -562,7 +562,20 @@ function CurationTab({
 }: CurationTabProps) {
   const isRandomMode = recommendMode === 'random';
   const isLoading = isRandomMode ? randomLoading : loading;
-  const displayArtworks = isRandomMode ? randomArtworks : userArtworks;
+  /* works already in the member's likes are left out. The likes are read
+     when a list arrives, not on every change, so a work liked here stays put
+     until the next list instead of vanishing under the finger. */
+  const likedNow = useRef(likedArtworkIds);
+  likedNow.current = likedArtworkIds;
+  const sourceArtworks = isRandomMode ? randomArtworks : userArtworks;
+  const displayArtworks = React.useMemo(
+    () => sourceArtworks.filter((ex) => {
+      const liked = likedNow.current;
+      return !(liked?.has(String(ex.id)) || liked?.has(normalizeArtworkIdForFirestore(ex.id)));
+    }),
+    // also once the likes themselves have loaded, if the list came first
+    [sourceArtworks, likedArtworkIds.size > 0], // eslint-disable-line react-hooks/exhaustive-deps
+  );
   // The cold-start taste picker is ONLY for users with zero likes. A user who
   // already has likes but got no recommendations (e.g. their liked artworks
   // aren't in the recommendation vector index yet, or a transient worker miss)

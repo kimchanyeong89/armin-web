@@ -177,6 +177,18 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
         onToggleLike(e, art);
     };
 
+    /* while the detail is open the fixed KO | EN switch steps aside (index.css,
+       data-overlay-panel), so it never sits on the detail's own controls */
+    useEffect(() => {
+        const root = document.documentElement;
+        const had = root.dataset.overlayPanel;
+        root.dataset.overlayPanel = "1";
+        return () => {
+            if (had === undefined) delete root.dataset.overlayPanel;
+            else root.dataset.overlayPanel = had;
+        };
+    }, []);
+
     // Reset animation + image-loaded state when artwork changes
     useEffect(() => {
         setAnimate(false);
@@ -790,15 +802,22 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                     </button>
                                 )}
                                 {sourceUrl && (
+                                    /* the museum's own page: the guide's circled ↗, the words, and
+                                       the site's name under them so it is clear where it leads */
                                     <a
-                                        className="lb-out"
+                                        className="lb-src"
                                         href={sourceUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        {language === 'ko' ? '미술관 원본 페이지' : "Museum's own page"}
-                                        <ArrowUpRight size={13} strokeWidth={2} aria-hidden="true" />
+                                        <span className="lb-src__mark" aria-hidden="true">
+                                            <ArrowUpRight size={13} strokeWidth={2} />
+                                        </span>
+                                        <span className="lb-src__text">
+                                            <b>{language === 'ko' ? '미술관 원본 페이지에서 보기' : "See it on the museum's site"}</b>
+                                            <small>{(() => { try { return new URL(sourceUrl).hostname.replace(/^www\./, ''); } catch { return ''; } })()}</small>
+                                        </span>
                                     </a>
                                 )}
                             </div>

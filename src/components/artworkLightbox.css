@@ -47,3 +47,17 @@
 .lb-out:hover { color: #d4a547; }
 .lb-out:focus { outline: none; }
 .lb-out:focus-visible { color: #d4a547; }
+
+/* the museum's own page: the reading guide's circled ↗ in gold, the words in
+   ink and the site's name small beneath - a clear way out, not a button */
+.lb-src { display: inline-flex; align-items: center; gap: 11px; padding: 2px 0; text-align: left; text-decoration: none; color: #f4f1ea; }
+.lb-src__mark { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid rgba(212, 165, 71, .55); color: #d4a547; transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+.lb-src__text { display: grid; gap: 3px; }
+.lb-src__text b { font-family: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", sans-serif; font-size: 13px; font-weight: 600;
+  line-height: 1.2; transition: color .16s ease; }
+.lb-src__text small { font-family: "Space Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: .04em; color: rgba(244, 241, 234, .45); }
+.lb-src:hover .lb-src__mark { background: #d4a547; border-color: #d4a547; color: #0b0b0b; }
+.lb-src:hover .lb-src__text b { color: #d4a547; }
+.lb-src:focus { outline: none; }
+.lb-src:focus-visible .lb-src__mark { box-shadow: 0 0 0 3px rgba(212, 165, 71, .35); }

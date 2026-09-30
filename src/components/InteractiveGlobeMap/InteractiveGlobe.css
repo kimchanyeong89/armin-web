@@ -453,6 +453,14 @@
     }
 }
 
+/* a phone: the count is centred in the room between the logo (its box ends
+   at 84px) and the right edge, level with the mark, and loses its side rules
+   so nothing runs under the logo */
+@media (max-width: 639px) {
+    .ig-top-center-hint { left: calc(50% + 35px); }
+    .ig-top-center-hint .ig-line-h { display: none; }
+}
+
 .ig-nowrap {
     white-space: nowrap;
 }

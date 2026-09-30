@@ -99,6 +99,22 @@ const Slideshow: React.FC<SlideshowProps> = ({ artworks, onClose }) => {
         };
     }, [enterFullscreen, leaveFullscreen]);
 
+    /* a browser that refused fullscreen on opening (the click that opened the
+       show was already spent) gets it on the first touch or key inside the show */
+    const onFirstGesture = useCallback(() => {
+        if (!document.fullscreenElement) void enterFullscreen();
+    }, [enterFullscreen]);
+    useEffect(() => {
+        const el = rootRef.current;
+        if (!el) return;
+        el.addEventListener('pointerdown', onFirstGesture, { once: true });
+        window.addEventListener('keydown', onFirstGesture, { once: true });
+        return () => {
+            el.removeEventListener('pointerdown', onFirstGesture);
+            window.removeEventListener('keydown', onFirstGesture);
+        };
+    }, [onFirstGesture, order.length > 0]); // eslint-disable-line react-hooks/exhaustive-deps
+
     const close = useCallback(() => {
         leaveFullscreen();
         onClose();
@@ -207,6 +223,7 @@ const Slideshow: React.FC<SlideshowProps> = ({ artworks, onClose }) => {
                             aria-label={isFullscreen ? t({ ko: '전체화면 끄기', en: 'Exit fullscreen' }) : t({ ko: '전체화면', en: 'Fullscreen' })}
                         >
                             {isFullscreen ? <Minimize2 size={15} strokeWidth={1.8} /> : <Maximize2 size={15} strokeWidth={1.8} />}
+                            {isFullscreen ? t({ ko: '전체화면 끄기', en: 'Exit full screen' }) : t({ ko: '전체화면', en: 'Full screen' })}
                         </button>
                     </div>
                 </footer>

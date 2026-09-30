@@ -44,15 +44,21 @@
   color: var(--bpn-ink, rgba(255,255,255,.5)); font: 700 8px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .1em;
   cursor: grab; touch-action: none; transition: color .16s ease; }
 /* on the bar: the bar's own glass and blur, so the two read as one surface */
-/* the bar's own glass - the same tint, sheen and blur - so the two read as one piece */
-.wall-grip--bar { background: linear-gradient(128deg, rgba(255,255,255,.13), transparent 38%, rgba(255,255,255,.04)), var(--bpn-glass, rgba(20,20,18,.68));
+/* the bar's own liquid glass - its tint and blur, and the same light it
+   catches: a bright bloom from above and a soft band across, which is what
+   makes the bar read lighter than its tint alone */
+.wall-grip--bar { background:
+    radial-gradient(120% 150% at 50% -45%, rgba(255,255,255,.3), transparent 62%),
+    linear-gradient(96deg, transparent 15%, rgba(255,255,255,.08) 48%, transparent 72%),
+    linear-gradient(128deg, rgba(255,255,255,.13), transparent 38%, rgba(255,255,255,.04)),
+    var(--bpn-glass, rgba(20,20,18,.68));
   -webkit-backdrop-filter: blur(26px) saturate(165%) contrast(1.04); backdrop-filter: blur(26px) saturate(165%) contrast(1.04); }
 .wall-grip--bar span { opacity: .7; transition: opacity .16s ease; }
 .wall-grip--bar:hover span { opacity: 1; }
 /* on the open wall: the wall's ground */
 .wall-grip--sheet { background: #080808; color: rgba(244,241,234,.5); }
 .wall-grip__edge { position: absolute; left: 0; top: 0; width: 112px; height: 25px; overflow: visible; pointer-events: none; }
-.wall-grip__edge path { fill: none; stroke: var(--bpn-edge, rgba(255,255,255,.16)); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.wall-grip__edge path { fill: none; stroke: var(--bpn-highlight, rgba(255,255,255,.2)); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .wall-grip--sheet .wall-grip__edge path { stroke: rgba(244,241,234,.14); }
 .wall-grip:active { cursor: grabbing; }
 /* the handle being pulled after the wall took over: kept for the pull, not shown */
