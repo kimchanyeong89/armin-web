@@ -4,7 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { findMuseumForArtwork } from '../utils/museumUtils';
 import { HeartOverlay } from './HeartOverlay';
 import { ArtworkRecommendations } from './ArtworkRecommendations';
-import { BookmarkPlus, ExternalLink, ShoppingBag } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { ExpandableActionMenu } from './ExpandableActionMenu';
 import LoginSelectionModal from './LoginSelectionModal';
 // import { buildSourceSet, useProxy } from '../utils/imageProxy'; // Unused
@@ -739,14 +739,16 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                             }));
                                         }}
                                     >
-                                        {shown}
+                                        <span className="lb-link__text">{shown}</span>
+                                        <ArrowRight className="lb-link__go" size={13} strokeWidth={2} aria-hidden="true" />
                                     </button>
                                 );
                             })()}
                         </div>
                         <div style={{ fontSize: 12, color: '#a8a8a8', marginTop: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                             {museumInfo.name && (
-                                <span>
+                                <span className="lb-held">
+                                    <i className="lb-held__dot" aria-hidden="true" />
                                     {museumInfo.id ? (
                                         <button
                                             type="button"
@@ -757,7 +759,8 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                                 navigate(`/interactive/world/city/${encodeURIComponent(museumInfo.id)}`);
                                             }}
                                         >
-                                            {museumInfo.name}
+                                            <span className="lb-link__text">{museumInfo.name}</span>
+                                            <ArrowRight className="lb-link__go" size={12} strokeWidth={2} aria-hidden="true" />
                                         </button>
                                     ) : museumInfo.name}
                                     {museumInfo.country ? ` · ${museumInfo.country}` : ''}
@@ -770,65 +773,36 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             )}
                         </div>
 
-                        <div style={{ display: 'flex', gap: 12, marginTop: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
-                            {showMuseumAction && (
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onViewInMuseum?.(artwork);
-                                    }}
-                                    style={{
-                                        padding: '10px 24px',
-                                        background: '#fff',
-                                        border: 'none',
-                                        borderRadius: 30,
-                                        color: '#000',
-                                        cursor: 'pointer',
-                                        fontSize: 14,
-                                        fontWeight: 600,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 8,
-                                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
-                                    }}
-                                >
-                                    View in Museum
-                                </button>
-                            )}
-
-                            {sourceUrl && (
-                                <a
-                                    href={sourceUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onClick={(e) => e.stopPropagation()}
-                                    style={{
-                                        padding: '10px 24px',
-                                        background: 'transparent',
-                                        border: '1px solid rgba(255,255,255,0.4)',
-                                        borderRadius: 30,
-                                        color: '#fff',
-                                        textDecoration: 'none',
-                                        fontSize: 14,
-                                        fontWeight: 500,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 6,
-                                        transition: 'background 0.2s, border-color 0.2s'
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-                                        e.currentTarget.style.borderColor = '#fff';
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.background = 'transparent';
-                                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
-                                    }}
-                                >
-                                    <span>🔗</span> View in Original Site
-                                </a>
-                            )}
-                        </div>
+                        {/* the ways out, as words with a mark: → stays in COLLY, ↗ opens the museum's own page */}
+                        {(showMuseumAction || sourceUrl) && (
+                            <div className="lb-outs">
+                                {showMuseumAction && (
+                                    <button
+                                        type="button"
+                                        className="lb-out"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onViewInMuseum?.(artwork);
+                                        }}
+                                    >
+                                        {language === 'ko' ? '미술관에서 보기' : 'View in museum'}
+                                        <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
+                                    </button>
+                                )}
+                                {sourceUrl && (
+                                    <a
+                                        className="lb-out"
+                                        href={sourceUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        {language === 'ko' ? '미술관 원본 페이지' : "Museum's own page"}
+                                        <ArrowUpRight size={13} strokeWidth={2} aria-hidden="true" />
+                                    </a>
+                                )}
+                            </div>
+                        )}
                     </div>
 
                     {/* Recommendations */}
@@ -846,23 +820,6 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                         }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div
-                            style={{
-                                borderRadius: 14,
-                                border: '1px solid rgba(255,255,255,0.14)',
-                                background: 'rgba(255,255,255,0.04)',
-                                padding: isMobile ? '12px 12px 13px' : '16px 18px 18px',
-                                marginBottom: 18,
-                            }}
-                        >
-                            <div style={{ color: 'rgba(255,255,255,0.98)', fontSize: isMobile ? 15 : 17, fontWeight: 700, letterSpacing: '-0.01em' }}>
-                                Similar Vibe
-                            </div>
-                            <div style={{ marginTop: 4, color: 'rgba(255,255,255,0.62)', fontSize: isMobile ? 11 : 12 }}>
-                                Related works selected by visual and metadata similarity.
-                            </div>
-                        </div>
-
                         <ArtworkRecommendations
                             artwork={artwork}
                             relatedArtworks={relatedArtworks}
@@ -875,7 +832,6 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             }}
                             /* a phone gets one sideways row of small cards - two to a line read poorly */
                             mode={isMobile ? "compact-horizontal" : "grid"}
-                            showHeading={false}
                             theme="dark"
                             likedArtworks={likedSet}
                             onToggleLike={handleToggleLike}

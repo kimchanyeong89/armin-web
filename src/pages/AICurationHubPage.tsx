@@ -697,12 +697,12 @@ function CurationTab({
         position: "sticky",
         top: "calc(45px + env(safe-area-inset-top, 0px))",
         zIndex: 15,
-        padding: "16px 20px 16px",
+        padding: "8px 20px 8px",
         backgroundColor: t ? "rgba(250,250,250,0.97)" : "rgba(8,8,8,0.97)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: `1px solid ${divider}`,
-        marginBottom: 24,
+        marginBottom: 12,
       }}>
         <div className="hub-mode">
           <div className="hub-mode__group" role="group">
@@ -743,7 +743,7 @@ function CurationTab({
                 <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden", borderRadius: 12, marginBottom: 8, backgroundColor: "#1a1a1a" }}>
                   <img src={ex.image || NO_IMAGE_PLACEHOLDER_DARK} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
-                  {/* the match, small in the cover's lower corner - off the artist's line, which it used to crowd */}
+                  {/* the match, small in the cover's upper right - off the artist's line, which it used to crowd */}
                   {typeof ex.matchScore === 'number' && (
                     <span className="hub-read hub-read--cover">
                       <i className="hub-dot" aria-hidden="true"><i /></i>
@@ -1250,18 +1250,10 @@ export default function AICurationHubPage() {
           ko: '좋아요와 컬렉션 기록을 바탕으로, 세계 미술관 소장품 가운데 지금 당신에게 맞는 작품을 골라 보여드립니다.',
           en: 'Built from your likes and collections, picked from museum holdings around the world.',
         })}</p>
-        <footer>
-          <span aria-hidden="true">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2.5 9.5 9.5 2.5M4 2.5h5.5V8" />
-            </svg>
-          </span>
-          <span>{tr({ ko: '작품 세 점을 고르면 추천이 시작됩니다', en: 'Pick three works and the picks begin' })}</span>
-        </footer>
       </section>
 
       {/* ── the curation switch: one bordered track, split in half ── */}
-      <div style={{ position: "sticky", top: 0, zIndex: 20, padding: "10px 20px 12px", paddingTop: "calc(10px + env(safe-area-inset-top, 0px))", backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
+      <div style={{ position: "sticky", top: 0, zIndex: 20, padding: "6px 20px 6px", paddingTop: "calc(6px + env(safe-area-inset-top, 0px))", backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div className="hub-switch" role="tablist">
           {([
             { id: "curation", label: tr({ ko: '나의 큐레이션', en: 'My Curation' }) },

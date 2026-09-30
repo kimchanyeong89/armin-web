@@ -1,304 +1,219 @@
-
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { ChevronLeft, ChevronRight, Maximize2, Minimize2, Pause, Play, X } from 'lucide-react';
 import { getOptimizedImageUrl } from '../utils/imageProxy';
 import { prettifyArtistName } from '../utils/canonicalArtist';
+import { useLanguage } from '../contexts/LanguageContext';
+import './slideshow.css';
+
+/* A playlist played as a slideshow. It starts playing at once, over the whole
+   screen: the work fills a black letterbox and nothing else shows. Moving the
+   mouse (or tapping, on a phone) brings the controls back for a moment - the
+   counter and close above, the work's name and the playing controls below.
+   On a phone it plays sideways: fullscreen and the landscape lock where the
+   browser allows them, and otherwise the stage itself is turned. */
 
 interface SlideshowProps {
     artworks: any[];
     onClose: () => void;
 }
 
-type Orientation = 'landscape' | 'portrait' | 'all';
+type Orientation = 'all' | 'landscape' | 'portrait';
+const DURATIONS = [10000, 30000, 60000, 180000, 300000, 1800000];
+const HIDE_AFTER = 2600;
+
+const durationLabel = (ms: number, ko: boolean) =>
+    ms < 60000 ? `${ms / 1000}${ko ? '초' : 's'}` : `${ms / 60000}${ko ? '분' : 'm'}`;
 
 const Slideshow: React.FC<SlideshowProps> = ({ artworks, onClose }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [playMode, setPlayMode] = useState<'sequential' | 'random'>('random');
-    const [orientationFilter, setOrientationFilter] = useState<Orientation>('all');
-
-    // Default duration: 1 minute (60000ms)
+    const { t, language } = useLanguage();
+    const ko = language === 'ko';
+    const [order, setOrder] = useState<any[]>([]);
+    const [index, setIndex] = useState(0);
+    const [playing, setPlaying] = useState(true);
+    const [playMode, setPlayMode] = useState<'random' | 'sequential'>('random');
+    const [orientation, setOrientation] = useState<Orientation>('all');
     const [duration, setDuration] = useState(60000);
-
-    const [filteredArtworks, setFilteredArtworks] = useState<any[]>([]);
-    const [showControls, setShowControls] = useState(true);
+    const [chrome, setChrome] = useState(true);
     const [isFullscreen, setIsFullscreen] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const rootRef = useRef<HTMLDivElement>(null);
+    const hideTimer = useRef<number | undefined>(undefined);
+    const touch = useRef<{ x: number; y: number } | null>(null);
 
-    // Filter artworks based on orientation preference and playMode
     useEffect(() => {
-        let newList = [...artworks];
-        if (playMode === 'random') {
-            newList = newList.sort(() => Math.random() - 0.5);
-        }
-        setFilteredArtworks(newList);
-        setCurrentIndex(0);
+        const list = [...artworks];
+        if (playMode === 'random') list.sort(() => Math.random() - 0.5);
+        setOrder(list);
+        setIndex(0);
     }, [artworks, playMode]);
 
-    const toggleFullscreen = () => {
-        if (!document.fullscreenElement) {
-            containerRef.current?.requestFullscreen().catch(err => {
-                console.error(`Error attempting to enable fullscreen: ${err.message}`);
-            });
-            setIsFullscreen(true);
-        } else {
-            document.exitFullscreen();
-            setIsFullscreen(false);
-        }
-    };
-
-    const nextSlide = useCallback(() => {
-        setCurrentIndex((prev) => (prev + 1) % filteredArtworks.length);
-    }, [filteredArtworks.length]);
-
-    const prevSlide = useCallback(() => {
-        setCurrentIndex((prev) => (prev - 1 + filteredArtworks.length) % filteredArtworks.length);
-    }, [filteredArtworks.length]);
-
-    // Autoplay
-    useEffect(() => {
-        let interval: NodeJS.Timeout;
-        if (isPlaying) {
-            interval = setInterval(nextSlide, duration);
-        }
-        return () => clearInterval(interval);
-    }, [isPlaying, nextSlide, duration]);
-
-    // Hide controls on inactivity
-    const handleMouseMove = () => {
-        setShowControls(true);
-        if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
-        controlsTimeoutRef.current = setTimeout(() => {
-            if (isPlaying) setShowControls(false);
-        }, 3000);
-    };
+    const next = useCallback(() => setIndex((i) => (order.length ? (i + 1) % order.length : 0)), [order.length]);
+    const prev = useCallback(() => setIndex((i) => (order.length ? (i - 1 + order.length) % order.length : 0)), [order.length]);
 
     useEffect(() => {
-        if (isPlaying) {
-            handleMouseMove();
-        } else {
-            setShowControls(true);
-            if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+        if (!playing || order.length < 2) return;
+        const timer = window.setInterval(next, duration);
+        return () => window.clearInterval(timer);
+    }, [playing, next, duration, order.length]);
+
+    /* the controls show for a moment after any movement, then leave the work alone */
+    const wake = useCallback(() => {
+        setChrome(true);
+        window.clearTimeout(hideTimer.current);
+        hideTimer.current = window.setTimeout(() => setChrome(false), HIDE_AFTER);
+    }, []);
+    useEffect(() => {
+        wake();
+        return () => window.clearTimeout(hideTimer.current);
+    }, [wake]);
+
+    /* fullscreen from the start; on a phone also try to hold it sideways */
+    const enterFullscreen = useCallback(async () => {
+        const el = rootRef.current as any;
+        try {
+            if (el?.requestFullscreen) await el.requestFullscreen();
+            else if (el?.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        } catch {
+            /* not allowed here (an iPhone, the app's web view): the page still fills the screen */
         }
+        try {
+            await (screen.orientation as any)?.lock?.('landscape');
+        } catch {
+            /* no lock: the stage is turned by the stylesheet instead */
+        }
+    }, []);
+    const leaveFullscreen = useCallback(() => {
+        try { (screen.orientation as any)?.unlock?.(); } catch { /* nothing to undo */ }
+        if (document.fullscreenElement) void document.exitFullscreen().catch(() => {});
+    }, []);
+
+    useEffect(() => {
+        void enterFullscreen();
+        const sync = () => setIsFullscreen(!!document.fullscreenElement);
+        document.addEventListener('fullscreenchange', sync);
+        document.documentElement.classList.add('slideshow-open');
         return () => {
-            if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+            document.removeEventListener('fullscreenchange', sync);
+            document.documentElement.classList.remove('slideshow-open');
+            leaveFullscreen();
         };
-    }, [isPlaying]);
+    }, [enterFullscreen, leaveFullscreen]);
 
+    const close = useCallback(() => {
+        leaveFullscreen();
+        onClose();
+    }, [leaveFullscreen, onClose]);
 
-    // Image loading and aspect ratio check
-    // We need to skip images that don't match the orientation filter
-    // This is tricky because we might not know the aspect ratio until load.
-    // We will check the current image. If it loads and is wrong orientation, we auto-skip.
+    useEffect(() => {
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && !document.fullscreenElement) close();
+            else if (e.key === 'ArrowRight') { next(); wake(); }
+            else if (e.key === 'ArrowLeft') { prev(); wake(); }
+            else if (e.key === ' ') { e.preventDefault(); setPlaying((p) => !p); wake(); }
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
+    }, [close, next, prev, wake]);
 
-    const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    /* a work of the wrong shape for the chosen orientation is passed over */
+    const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
         const img = e.currentTarget;
-        const isLandscape = img.naturalWidth >= img.naturalHeight;
-        const isPortrait = !isLandscape;
-
-        if (orientationFilter === 'landscape' && !isLandscape) {
-            // Skip to next immediately if playing, or just show it if paused? 
-            // Better to skip.
-            console.log("Skipping portrait image in landscape mode");
-            if (filteredArtworks.length > 1) nextSlide();
-        } else if (orientationFilter === 'portrait' && !isPortrait) {
-            console.log("Skipping landscape image in portrait mode");
-            if (filteredArtworks.length > 1) nextSlide();
-        }
+        const wide = img.naturalWidth >= img.naturalHeight;
+        if (order.length > 1 && ((orientation === 'landscape' && !wide) || (orientation === 'portrait' && wide))) next();
     };
 
-    const currentArtwork = filteredArtworks[currentIndex];
+    const work = order[index];
+    if (!work) return null;
 
-    if (!currentArtwork) return null;
+    const cycle = <T,>(list: T[], value: T) => list[(list.indexOf(value) + 1) % list.length];
+    const orientationLabel = {
+        all: t({ ko: '모든 방향', en: 'Any shape' }),
+        landscape: t({ ko: '가로 작품만', en: 'Landscape only' }),
+        portrait: t({ ko: '세로 작품만', en: 'Portrait only' }),
+    }[orientation];
+    const figure = (n: number) => String(n).padStart(2, '0');
 
-    return (
+    return createPortal(
         <div
-            ref={containerRef}
-            style={{
-                position: 'fixed',
-                top: 0, left: 0, right: 0, bottom: 0,
-                backgroundColor: '#000',
-                zIndex: 9999,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: showControls ? 'default' : 'none'
+            ref={rootRef}
+            className={`ss${chrome ? ' is-awake' : ''}`}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t({ ko: '슬라이드쇼', en: 'Slideshow' })}
+            onMouseMove={wake}
+            onPointerDown={(e) => { if (e.pointerType !== 'mouse') touch.current = { x: e.clientX, y: e.clientY }; }}
+            onPointerUp={(e) => {
+                const start = touch.current;
+                touch.current = null;
+                if (!start) return;
+                const dx = e.clientX - start.x, dy = e.clientY - start.y;
+                /* the stage may be turned a quarter on a phone: a swipe along its long side either way */
+                const along = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+                if (Math.abs(along) > 50) { (along < 0 ? next : prev)(); wake(); return; }
+                if ((e.target as HTMLElement).closest('button')) return;
+                if (chrome) { window.clearTimeout(hideTimer.current); setChrome(false); } else wake();
             }}
-            onMouseMove={handleMouseMove}
         >
-            {/* Background/Current Image */}
-            <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <div className="ss__stage">
                 <img
-                    key={currentArtwork.id || currentIndex} // Key ensures remount on change for animation
-                    src={getOptimizedImageUrl(currentArtwork.image, 2048)} // High quality
-                    alt={currentArtwork.title}
-                    style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'contain',
-                        animation: 'fadeIn 1s ease-in-out'
-                    }}
-                    onLoad={handleImageLoad}
+                    key={work.id || index}
+                    className="ss__work"
+                    src={getOptimizedImageUrl(work.image, 2048)}
+                    alt={work.title || ''}
+                    onLoad={onImageLoad}
+                    draggable={false}
                 />
-            </div>
 
-            {/* Info Overlay */}
-            <div style={{
-                position: 'absolute',
-                bottom: 40,
-                left: 40,
-                color: 'white',
-                opacity: showControls ? 1 : 0,
-                transition: 'opacity 0.5s ease',
-                textShadow: '0 2px 4px rgba(0,0,0,0.8)',
-                maxWidth: '80%'
-            }}>
-                <h2 style={{ fontSize: '2rem', margin: '0 0 10px 0', fontWeight: 300 }}>{currentArtwork.title}</h2>
-                <p style={{ fontSize: '1.2rem', margin: 0, opacity: 0.8 }}>{prettifyArtistName(currentArtwork.artist)}</p>
-                <p style={{ fontSize: '0.9rem', margin: '5px 0 0 0', opacity: 0.6 }}>{currentArtwork.year}</p>
-            </div>
+                <header className="ss__top">
+                    <span className="ss__count">{figure(index + 1)} <i>/</i> {figure(order.length)}</span>
+                    <button type="button" className="ss__close" onClick={close} aria-label={t({ ko: '닫기', en: 'Close' })}>
+                        <X size={22} strokeWidth={1.6} />
+                    </button>
+                </header>
 
-            {/* Controls Overlay */}
-            <div style={{
-                position: 'absolute',
-                top: 20,
-                right: 20,
-                display: 'flex',
-                gap: 15,
-                opacity: showControls ? 1 : 0,
-                transition: 'opacity 0.3s ease',
-                background: 'rgba(0,0,0,0.5)',
-                padding: '10px 20px',
-                borderRadius: 30,
-                backdropFilter: 'blur(10px)'
-            }}>
-                {/* Duration Selector */}
-                <select
-                    value={duration}
-                    onChange={(e) => setDuration(Number(e.target.value))}
-                    style={{
-                        background: 'transparent',
-                        color: 'white',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        borderRadius: 5,
-                        padding: '5px',
-                        fontSize: 14
-                    }}
-                >
-                    <option value={10000}>10s</option>
-                    <option value={30000}>30s</option>
-                    <option value={60000}>1m</option>
-                    <option value={180000}>3m</option>
-                    <option value={300000}>5m</option>
-                    <option value={1800000}>30m</option>
-                </select>
-
-                {/* Orientation Selector */}
-                <select
-                    value={orientationFilter}
-                    onChange={(e) => setOrientationFilter(e.target.value as Orientation)}
-                    style={{
-                        background: 'transparent',
-                        color: 'white',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        borderRadius: 5,
-                        padding: '5px',
-                        fontSize: 14
-                    }}
-                >
-                    <option value="all">All Orientations</option>
-                    <option value="landscape">Landscape Only</option>
-                    <option value="portrait">Portrait Only</option>
-                </select>
-
-                {/* Play Mode Selector */}
-                <select
-                    value={playMode}
-                    onChange={(e) => setPlayMode(e.target.value as 'sequential' | 'random')}
-                    style={{
-                        background: 'transparent',
-                        color: 'white',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        borderRadius: 5,
-                        padding: '5px',
-                        fontSize: 14
-                    }}
-                >
-                    <option value="sequential">Sequential</option>
-                    <option value="random">Random</option>
-                </select>
-
-                {/* Play/Pause */}
-                <button onClick={() => setIsPlaying(!isPlaying)} style={btnStyle}>
-                    {isPlaying ? '⏸ Pause' : '▶ Play'}
+                <button type="button" className="ss__side ss__side--prev" onClick={() => { prev(); wake(); }} aria-label={t({ ko: '이전 작품', en: 'Previous' })}>
+                    <ChevronLeft size={34} strokeWidth={1.3} />
+                </button>
+                <button type="button" className="ss__side ss__side--next" onClick={() => { next(); wake(); }} aria-label={t({ ko: '다음 작품', en: 'Next' })}>
+                    <ChevronRight size={34} strokeWidth={1.3} />
                 </button>
 
-                {/* Fullscreen */}
-                <button onClick={toggleFullscreen} style={btnStyle}>
-                    {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
-                </button>
-
-                {/* Close */}
-                <button onClick={onClose} style={{ ...btnStyle, color: '#ff6b6b' }}>
-                    ✕ Close
-                </button>
+                <footer className="ss__bottom">
+                    <div className="ss__caption">
+                        <h2>{work.title}</h2>
+                        <p>
+                            {prettifyArtistName(work.artist)}
+                            {work.year ? <span> · {work.year}</span> : null}
+                        </p>
+                    </div>
+                    <div className="ss__controls">
+                        <button type="button" className="ss__play" onClick={() => { setPlaying((p) => !p); wake(); }}>
+                            {playing ? <Pause size={15} strokeWidth={2} /> : <Play size={15} strokeWidth={2} />}
+                            {playing ? t({ ko: '일시정지', en: 'Pause' }) : t({ ko: '재생', en: 'Play' })}
+                        </button>
+                        <button type="button" onClick={() => { setDuration(cycle(DURATIONS, duration)); wake(); }}>
+                            {t({ ko: '간격', en: 'Every' })} <b>{durationLabel(duration, ko)}</b>
+                        </button>
+                        <button type="button" onClick={() => { setPlayMode(playMode === 'random' ? 'sequential' : 'random'); wake(); }}>
+                            {playMode === 'random' ? t({ ko: '무작위', en: 'Shuffle' }) : t({ ko: '순서대로', en: 'In order' })}
+                        </button>
+                        <button type="button" onClick={() => { setOrientation(cycle<Orientation>(['all', 'landscape', 'portrait'], orientation)); wake(); }}>
+                            {orientationLabel}
+                        </button>
+                        <button
+                            type="button"
+                            className="ss__full"
+                            onClick={() => { if (isFullscreen) leaveFullscreen(); else void enterFullscreen(); wake(); }}
+                            aria-label={isFullscreen ? t({ ko: '전체화면 끄기', en: 'Exit fullscreen' }) : t({ ko: '전체화면', en: 'Fullscreen' })}
+                        >
+                            {isFullscreen ? <Minimize2 size={15} strokeWidth={1.8} /> : <Maximize2 size={15} strokeWidth={1.8} />}
+                        </button>
+                    </div>
+                </footer>
             </div>
-
-            {/* Navigation Arrows (Visible on hover) */}
-            <button
-                onClick={prevSlide}
-                style={{
-                    position: 'absolute',
-                    left: 20,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'transparent',
-                    border: 'none',
-                    color: 'white',
-                    fontSize: '3rem',
-                    opacity: showControls ? 0.7 : 0,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s'
-                }}
-            >
-                ‹
-            </button>
-            <button
-                onClick={nextSlide}
-                style={{
-                    position: 'absolute',
-                    right: 20,
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    background: 'transparent',
-                    border: 'none',
-                    color: 'white',
-                    fontSize: '3rem',
-                    opacity: showControls ? 0.7 : 0,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s'
-                }}
-            >
-                ›
-            </button>
-
-            <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: scale(1.02); }
-          to { opacity: 1; transform: scale(1); }
-        }
-      `}</style>
-        </div>
+        </div>,
+        document.body,
     );
-};
-
-const btnStyle = {
-    background: 'transparent',
-    border: 'none',
-    color: 'white',
-    cursor: 'pointer',
-    fontSize: 14,
-    fontWeight: 600
 };
 
 export default Slideshow;

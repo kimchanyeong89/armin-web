@@ -11,7 +11,7 @@ import "./myWall.css";
 
 export default function WallDrawer({ uid, ko, compact }: { uid: string; ko: boolean; compact: boolean }) {
   const height = useWallHeight();
-  /* the sheet stands on the tab bar, which keeps its place under it */
+  /* the tab bar keeps its place over the sheet's foot */
   const [barSpace, setBarSpace] = useState(0);
   useEffect(() => {
     if (height === 0) return;
@@ -29,7 +29,9 @@ export default function WallDrawer({ uid, ko, compact }: { uid: string; ko: bool
 
   if (height === 0) return null;
   return (
-    <div className="wall-drawer" style={{ height, bottom: barSpace }}>
+    /* the sheet runs down to the screen's foot, under the tab bar, so nothing
+       of the page shows round the bar; its own content stops above the bar */
+    <div className="wall-drawer" style={{ height: height + barSpace, paddingBottom: barSpace }}>
       {/* the handle rides the wall's top edge while it is out */}
       <WallGrip ko={ko} place="sheet" />
       <MyWall uid={uid} ko={ko} compact={compact || height < 420} onClose={() => setWallHeight(0)} />

@@ -23,13 +23,11 @@
 .hub, .hub button, .hub input { font-family: var(--hub-sans); }
 
 /* ── the title block: one left-aligned column ─────────────────── */
-.hub-statement { padding: var(--page-top) 20px clamp(20px,3vw,28px); max-width: 44rem; }
-.hub-statement__meta { margin: 0 0 1.1rem; color: var(--hub-gold); font: 650 .66rem/1.2 var(--hub-mono); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+.hub-statement { padding: var(--page-top) 20px 10px; max-width: 44rem; }
+.hub-statement__meta { margin: 0 0 .6rem; color: var(--hub-gold); font: 650 .66rem/1.2 var(--hub-mono); letter-spacing: .04em; font-variant-numeric: tabular-nums; }
 .hub-statement h1 { margin: 0; max-width: 11ch; font: 700 clamp(2rem,7vw,3.2rem)/1.06 var(--hub-display); letter-spacing: -0.05em; text-wrap: balance; }
 /* the line under the title only - the label above it keeps its own margin */
-.hub-statement h1 + p { margin: 1.2rem 0 0; max-width: 30rem; font-size: clamp(.86rem,3.4vw,.95rem); line-height: 1.62; opacity: .6; text-wrap: pretty; }
-.hub-statement footer { display: flex; gap: .6rem; align-items: center; margin-top: 1.05rem; font-size: .72rem; opacity: .5; }
-.hub-statement footer > span:first-child { display: grid; width: 1.5rem; height: 1.5rem; flex: 0 0 auto; place-items: center; border: 1px solid currentColor; border-radius: 50%; color: var(--hub-gold); }
+.hub-statement h1 + p { margin: .7rem 0 0; max-width: 30rem; font-size: clamp(.86rem,3.4vw,.95rem); line-height: 1.62; opacity: .6; text-wrap: pretty; }
 
 /* ── the curation switch ──────────────────────────────────────── */
 /* no box round the pair: the chosen side is one cut plate, lightly tinted,
@@ -62,7 +60,7 @@
 /* ── the match reading: a point that draws itself out ─────────── */
 .hub-read { flex: none; display: inline-flex; align-items: center; gap: 7px; }
 .hub-read em { font: 500 10px/1 var(--hub-mono); font-style: normal; letter-spacing: .04em; color: var(--hub-gold); font-variant-numeric: tabular-nums; }
-.hub-read--cover { position: absolute; left: 8px; bottom: 8px; gap: 5px; pointer-events: none; }
+.hub-read--cover { position: absolute; right: 8px; top: 8px; gap: 5px; pointer-events: none; }
 .hub-read--cover em { font-size: 9px; color: rgba(240,200,120,.95); text-shadow: 0 1px 4px rgba(0,0,0,.6); }
 .hub-read--cover .hub-dot { width: 14px; }
 .hub-dot { flex: none; display: flex; align-items: center; justify-content: flex-end; width: 22px; height: 4px; }

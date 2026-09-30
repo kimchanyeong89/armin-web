@@ -7,7 +7,7 @@ import { followWallHeight, getWallHeight, setWallHeight, useWallHeight } from ".
    comes out exactly as far as it is pulled; a tap opens it halfway, or closes it.
    Its outline is one curve - flaring into its base on both sides - drawn as
    the clip of its glass and again as a hairline, with no line along the foot. */
-const SHAPE = "M0,30 C10,30 17,24 17,15 C17,6 23,0 32,0 L108,0 C117,0 123,6 123,15 C123,24 130,30 140,30";
+const SHAPE = "M0,24 C8,24 13.6,19.2 13.6,12 C13.6,4.8 18.4,0 25.6,0 L86.4,0 C93.6,0 98.4,4.8 98.4,12 C98.4,19.2 104,24 112,24";
 
 export default function WallGrip({ ko, place = "bar" }: { ko: boolean; place?: "bar" | "sheet" }) {
   const drag = useRef<{ y: number; from: number; moved: boolean } | null>(null);
@@ -52,7 +52,7 @@ export default function WallGrip({ ko, place = "bar" }: { ko: boolean; place?: "
       aria-label={ko ? "벽 꾸미기 - 끌어서 열기" : "My wall - pull to open"}
       title={ko ? "끌어서 벽 꾸미기" : "Pull out your wall"}
     >
-      <svg className="wall-grip__edge" viewBox="0 0 140 31" preserveAspectRatio="none" aria-hidden="true">
+      <svg className="wall-grip__edge" viewBox="0 0 112 25" preserveAspectRatio="none" aria-hidden="true">
         <path d={SHAPE} />
       </svg>
       <i aria-hidden="true" />

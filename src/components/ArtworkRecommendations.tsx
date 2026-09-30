@@ -4,6 +4,7 @@ import { getWeservUrl } from '../utils/imageProxy';
 import { exhibitions } from '../data/exhibitions';
 import { BookmarkPlus, ShoppingBag } from 'lucide-react';
 import { ExpandableActionMenu } from './ExpandableActionMenu';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 const recommendationCache = new Map<string, any[]>();
@@ -50,6 +51,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
     onOpenComments,
     showHeading = true
 }) => {
+    const { t: tl } = useLanguage();
     const [aiRecommendations, setAiRecommendations] = useState<any[]>([]);
     const museumCountryMap = useMemo(() => getMuseumCountryMap(), []);
     const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
@@ -493,32 +495,26 @@ export const ArtworkRecommendations: React.FC<Props> = ({
 
     if (effectiveAiRecommendations.length === 0 && effectiveMetaRecommendations.length === 0) return null;
 
-    const sectionHeaderStyle: React.CSSProperties = {
-        fontSize: 14,
-        fontWeight: 700,
-        color: theme === 'dark' ? '#fff' : '#333',
-        marginBottom: 12,
-        letterSpacing: '0.02em',
-        textAlign: 'left',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8
-    };
+    /* a rail's heading, as the redesigned detail draws it: a small gold label,
+       an optional note, a hairline and the count */
+    const railCap = (label: string, count: number, note?: string) => (
+        <h3 style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '0 0 12px', fontWeight: 400 }}>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 11, fontWeight: 700, letterSpacing: '.08em', color: theme === 'dark' ? '#d4a547' : '#a8781e' }}>{label}</span>
+            {note && <small style={{ fontSize: 11, color: theme === 'dark' ? 'rgba(244,241,234,.5)' : 'rgba(0,0,0,.45)' }}>{note}</small>}
+            <i style={{ flex: 1, height: 1, background: theme === 'dark' ? 'rgba(244,241,234,.14)' : 'rgba(0,0,0,.1)' }} />
+            <em style={{ fontFamily: "'Space Mono', monospace", fontStyle: 'normal', fontSize: 10, color: theme === 'dark' ? 'rgba(244,241,234,.45)' : 'rgba(0,0,0,.4)' }}>{String(count).padStart(2, '0')}</em>
+        </h3>
+    );
 
     if (mode === 'compact-horizontal') {
-        const compactItems: Array<{ item: any; source: 'AI' | 'Meta' }> = [
-            // When there are no real AI results, effectiveAiRecommendations is the metadata fallback — label it 'Meta'.
-            ...effectiveAiRecommendations.map((item) => ({ item, source: (hasRealAiRecommendations ? 'AI' : 'Meta') as 'AI' | 'Meta' })),
-            ...effectiveMetaRecommendations.map((item) => ({ item, source: 'Meta' as const })),
-        ];
+        const aiSource: 'AI' | 'Meta' = hasRealAiRecommendations ? 'AI' : 'Meta';
+        if (effectiveAiRecommendations.length === 0 && effectiveMetaRecommendations.length === 0) return null;
 
-        if (compactItems.length === 0) return null;
-
-        return (
-            <div style={{ ...style }} className="artwork-recommendations">
-                {showHeading && <h3 style={{ ...sectionHeaderStyle, fontSize: 10, marginBottom: 10, letterSpacing: '0.18em', color: theme === 'dark' ? 'rgba(255,255,255,0.76)' : 'rgba(0,0,0,0.62)' }}>
-                    Similar Works <span style={{ fontSize: 8, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.44)' : 'rgba(0,0,0,0.36)', textTransform: 'uppercase', letterSpacing: '0.14em' }}>Swipe</span>
-                </h3>}
+        /* one sideways row per kind: the works that look alike first, then the
+           artist's other works on the line under it */
+        const row = (items: any[], source: 'AI' | 'Meta', label: string, note?: string) => (
+            <div style={{ marginBottom: 14 }}>
+                {showHeading && railCap(label, items.length, note)}
                 <div
                     className="armin-rec-scroll"
                     style={{
@@ -531,8 +527,18 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         scrollbarColor: theme === 'dark' ? 'rgba(255,255,255,0.22) rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.22) rgba(0,0,0,0.05)',
                     }}
                 >
-                    {compactItems.map(({ item, source }, i) => renderCard(item, source, i))}
+                    {items.map((item, i) => renderCard(item, source, i))}
                 </div>
+            </div>
+        );
+
+        return (
+            <div style={{ ...style }} className="artwork-recommendations">
+                {effectiveAiRecommendations.length > 0 && (hasRealAiRecommendations
+                    ? row(effectiveAiRecommendations, aiSource, tl({ ko: 'AI 추천', en: 'AI picks' }), tl({ ko: '닮은 작품', en: 'look alike' }))
+                    : row(effectiveAiRecommendations, aiSource, tl({ ko: '관련된 작품', en: 'Related works' })))}
+                {effectiveMetaRecommendations.length > 0 &&
+                    row(effectiveMetaRecommendations, 'Meta', tl({ ko: '이 작가의 다른 작품', en: `More by ${artwork.artist}` }))}
                 <style>{`
                     .armin-rec-scroll::-webkit-scrollbar {
                         height: 6px;
@@ -577,12 +583,9 @@ export const ArtworkRecommendations: React.FC<Props> = ({
             {/* AI Recommendations (or metadata fallback labeled as Related) */}
             {effectiveAiRecommendations.length > 0 && (
                 <div style={{ marginBottom: 48 }}>
-                    <h3 style={sectionHeaderStyle}>
-                        {hasRealAiRecommendations
-                            ? <>Similar Vibe <span style={{ fontSize: 11, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.56)', textTransform: 'none' }}>Visually related works</span></>
-                            : <>Related Works <span style={{ fontSize: 11, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.56)', textTransform: 'none' }}>Same artist or period</span></>
-                        }
-                    </h3>
+                    {hasRealAiRecommendations
+                        ? railCap(tl({ ko: 'AI 추천', en: 'AI picks' }), effectiveAiRecommendations.length, tl({ ko: '닮은 작품', en: 'look alike' }))
+                        : railCap(tl({ ko: '관련된 작품', en: 'Related works' }), effectiveAiRecommendations.length, tl({ ko: '같은 작가·시대', en: 'same artist or period' }))}
                     <div style={mode === 'grid' ? {
                         display: 'grid',
                         gridTemplateColumns: `repeat(auto-fill, minmax(${isMobileViewport ? 128 : 160}px, 1fr))`,
@@ -602,9 +605,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
             {/* Metadata Recommendations */}
             {effectiveMetaRecommendations.length > 0 && (
                 <div>
-                    <h3 style={sectionHeaderStyle}>
-                        More by {artwork.artist}
-                    </h3>
+                    {railCap(tl({ ko: '이 작가의 다른 작품', en: `More by ${artwork.artist}` }), effectiveMetaRecommendations.length)}
                     <div style={mode === 'grid' ? {
                         display: 'grid',
                         gridTemplateColumns: `repeat(auto-fill, minmax(${isMobileViewport ? 128 : 160}px, 1fr))`,

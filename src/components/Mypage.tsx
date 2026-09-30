@@ -2622,9 +2622,9 @@ const MyPage: React.FC = () => {
           </button>
         </div>
 
-        {/* My Playlists: each list's cover, its name and how many works it holds.
-            Pressing one opens it in the grid; pressing it again closes it. The
-            round mark on its cover shares it. */}
+        {/* My Playlists: each list's cover and its name, nothing else - sharing
+            and deleting live on the cards in the Playlists tab. Pressing one opens
+            it in the grid; pressing it again closes it. */}
         <section className="mp-lists" id="mp-lists">
           {playlists.length > 0 ? (
             <ul>
@@ -2651,18 +2651,8 @@ const MyPage: React.FC = () => {
                       </span>
                       <span className="mp-list__text">
                         <b>{playlist.name}</b>
-                        <small>
-                          {figure(playlist.items?.length || 0)} {t({ ko: "작품", en: "works" })}
-                          {playlist.shared && <em> · {t({ ko: "공개", en: "Public" })}</em>}
-                        </small>
                       </span>
                     </button>
-                    <PlaylistMenu
-                      className="mp-list__share"
-                      shared={playlist.shared === true}
-                      onShare={() => setSharingPlaylistId(playlist.id)}
-                      onDelete={() => removePlaylist(playlist.id)}
-                    />
                   </li>
                 );
               })}

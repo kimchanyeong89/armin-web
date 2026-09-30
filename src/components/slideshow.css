@@ -1,0 +1,71 @@
+/* ══════════════════════════════════════════════════════════════
+   Slideshow — the work alone on black. Everything else (the counter
+   and close, the name, the playing controls) comes up only while the
+   pointer moves or after a tap, and leaves again.
+   ══════════════════════════════════════════════════════════════ */
+html.slideshow-open, html.slideshow-open body { overflow: hidden; }
+
+.ss { position: fixed; inset: 0; z-index: 2000000; background: #000; color: #f4f1ea; overflow: hidden;
+  font-family: "Wanted Sans Variable", "Wanted Sans", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  word-break: keep-all; cursor: none; touch-action: none; -webkit-user-select: none; user-select: none;
+  animation: ss-in .35s ease backwards; }
+.ss.is-awake { cursor: default; }
+.ss *, .ss *::before, .ss *::after { box-sizing: border-box; }
+.ss button { margin: 0; padding: 0; border: 0; border-radius: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+.ss button:focus { outline: none; }
+.ss button:focus-visible { color: #d4a547; }
+
+.ss__stage { position: absolute; inset: 0; }
+/* a phone held upright: the stage is turned a quarter, so the work plays sideways */
+@media (orientation: portrait) and (max-width: 900px) and (pointer: coarse) {
+  .ss__stage { inset: auto; top: 50%; left: 50%; width: 100vh; height: 100vw; width: 100dvh;
+    transform: translate(-50%, -50%) rotate(90deg); }
+}
+
+/* the letterbox: the work as large as the screen allows, never cut */
+.ss__work { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; animation: ss-work 1s ease both; }
+
+/* the chrome: two soft shades at the top and foot so words read over any work */
+.ss__top, .ss__bottom, .ss__side { opacity: 0; pointer-events: none; transition: opacity .35s ease; }
+.ss.is-awake .ss__top, .ss.is-awake .ss__bottom, .ss.is-awake .ss__side { opacity: 1; pointer-events: auto; }
+
+.ss__top { position: absolute; left: 0; right: 0; top: 0; display: flex; align-items: center; justify-content: space-between;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(22px, env(safe-area-inset-right, 0px)) 28px max(22px, env(safe-area-inset-left, 0px));
+  background: linear-gradient(to bottom, rgba(0,0,0,.55), transparent); }
+.ss__count { font: 600 12px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .08em; color: rgba(244,241,234,.8); }
+.ss__count i { font-style: normal; color: rgba(244,241,234,.35); }
+.ss .ss__close { display: grid; place-items: center; width: 40px; height: 40px; margin-right: -9px; color: rgba(244,241,234,.85); transition: color .16s ease; }
+.ss .ss__close:hover { color: #d4a547; }
+
+.ss .ss__side { position: absolute; top: 50%; display: grid; place-items: center; width: 56px; height: 96px; margin-top: -48px;
+  color: rgba(244,241,234,.7); transition: opacity .35s ease, color .16s ease; }
+.ss .ss__side:hover { color: #d4a547; }
+.ss__side--prev { left: max(6px, env(safe-area-inset-left, 0px)); }
+.ss__side--next { right: max(6px, env(safe-area-inset-right, 0px)); }
+
+.ss__bottom { position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between;
+  gap: 14px 28px; padding: 44px max(26px, env(safe-area-inset-right, 0px)) max(22px, env(safe-area-inset-bottom, 0px)) max(26px, env(safe-area-inset-left, 0px));
+  background: linear-gradient(to top, rgba(0,0,0,.7), transparent); }
+.ss__caption { min-width: 0; flex: 1 1 280px; }
+.ss__caption h2 { margin: 0; font: 700 clamp(18px, 2.2vw, 28px)/1.25 Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  letter-spacing: -0.02em; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.ss__caption p { margin: 6px 0 0; font-size: 13px; color: rgba(244,241,234,.66); }
+.ss__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; }
+.ss .ss__controls button { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: rgba(244,241,234,.72);
+  white-space: nowrap; transition: color .16s ease; }
+.ss .ss__controls button:hover { color: #d4a547; }
+.ss .ss__controls b { font: 700 12px/1 "Space Mono", ui-monospace, monospace; color: #d4a547; }
+.ss .ss__controls .ss__play { color: #f4f1ea; }
+
+/* narrow (a phone turned sideways, or a small window): smaller words, tighter rows */
+@media (max-height: 480px), (max-width: 640px) {
+  .ss__bottom { padding-top: 30px; gap: 8px 18px; }
+  .ss__caption h2 { font-size: 16px; -webkit-line-clamp: 1; }
+  .ss__caption p { font-size: 12px; margin-top: 3px; }
+  .ss__controls { gap: 8px 16px; }
+  .ss .ss__controls button { font-size: 12px; }
+}
+
+@keyframes ss-in { from { opacity: 0; } }
+@keyframes ss-work { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .ss, .ss__work { animation: none; } }
