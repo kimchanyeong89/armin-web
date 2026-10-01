@@ -17,3 +17,10 @@ export const SHOW_SALES_UI = false;
 // the button explains that instead of starting. Flip to `true` once Apple is
 // set up in Firebase (Services ID, Team ID, key) - nothing else to change.
 export const APPLE_SIGNIN_READY = false;
+
+// SHOW_PUBLIC_COLLECTIONS — anyone may browse other people's liked works and
+// playlists (/community/u/:uid). It needs the firestore.rules that open
+// users/{uid}/liked_artworks and playlists to be deployed first; until then
+// the shelf, the links to it and the privacy-policy paragraph stay hidden.
+// Flip to `true` once those rules are live - nothing else to change.
+export const SHOW_PUBLIC_COLLECTIONS = false;

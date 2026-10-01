@@ -282,6 +282,7 @@ function AtlasPostPage() {
       post={{
         title: post.title,
         category: post.category,
+        authorId: post.authorId,
         header: post.header,
         authorName: author.name,
         authorPhoto: author.photo,

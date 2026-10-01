@@ -33,6 +33,7 @@ const ArtistDistribution = lazy(() => import('./ArtistDistribution'));
 import { artworkPlace, type ArtistPlace } from './ArtistDistribution';
 import { artistKeyOf, loadArtistLife, loadArtistWorks } from '../utils/artistWorks';
 import { fetchTrending, reportSearchHit, type TrendingTerm } from '../utils/searchTrending';
+import CloseButton from './CloseButton';
 import { CollyLotusLoader } from './CollyMark';
 
 
@@ -5373,7 +5374,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 overflowX: 'clip',
                                 overflowY: 'visible',
                                 /* the redesign's page: its own ground, room for the tab bar at the foot */
-                                padding: isMobile ? '14px 0 110px' : '26px 0 110px',
+                                /* starts where every tab's page starts (index.css --page-top), clear of the notch and the corner's ×; room for the tab bar at the foot */
+                                padding: 'var(--page-top) 0 110px',
                                 background: bg,
                                 boxShadow: isDrawingGalleryMode ? '10px 12px 0 rgba(17,17,17,1)' : 'none',
                                 filter: isDrawingGalleryMode ? 'url(#dg-sketch-ui)' : 'none',
@@ -5384,13 +5386,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     The redesign's arrangement (/redesign/artist): a quiet label, the
                                     name, the life line, the encyclopaedia's paragraph — and the
                                     distribution abreast of them. Nothing stands behind the words. */}
-                                <button
-                                    type="button"
-                                    className="ag-close"
+                                <CloseButton
                                     onClick={closeArtistGallery}
-                                    aria-label={t({ ko: '닫기', en: 'Close' })}
-                                    title={t({ ko: '닫기', en: 'Close' })}
-                                >✕</button>
+                                    label={t({ ko: '닫기', en: 'Close' })}
+                                    light={isDrawingGalleryMode}
+                                    zIndex={galleryZIndex + 1}
+                                />
                                 <div className="ag-head" data-solo={artistGallery.artworks.length > 0 ? undefined : 'true'}>
                                     <div className="ag-head__main">
                                         <p className="ag-eyebrow"><span>{t({ ko: '작가', en: 'ARTIST' })}</span></p>

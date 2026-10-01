@@ -1,4 +1,7 @@
 import { useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { collectorPath } from "../../../features/collectors/publicCollection";
+import { SHOW_PUBLIC_COLLECTIONS } from "../../../config/features";
 import { ArrowLeft, MessageSquare, Trash2 } from "lucide-react";
 import { LikeIcon } from "../../../components/like/LikeIcon";
 import { normalizeCommunityCategory, normalizeCommunityHeaderType } from "../../../features/community/communityFeed";
@@ -12,6 +15,7 @@ export interface ArticlePost {
   title: string;
   category?: string;
   header?: { id?: string; type?: string; name?: string; image?: string | null } | null;
+  authorId?: string;
   authorName: string;
   authorPhoto?: string | null;
   authorPhotoCrop?: ProfileImageCrop | null;
@@ -118,7 +122,9 @@ export default function PostArticle({
         <h1>{post.title}</h1>
         <div className="ca-post__by">
           <RankAvatar rank={post.authorRank} name={post.authorName} src={post.authorPhoto} crop={post.authorPhotoCrop} size={30} />
-          <b>{post.authorName}</b>
+          {SHOW_PUBLIC_COLLECTIONS && post.authorId
+            ? <Link to={collectorPath(post.authorId)} className="ca-col__link"><b>{post.authorName}</b></Link>
+            : <b>{post.authorName}</b>}
         </div>
       </header>
 
@@ -142,7 +148,9 @@ export default function PostArticle({
                 <RankAvatar rank={c.rank} name={c.name || "?"} src={c.photo} crop={c.crop} size={26} />
                 <div>
                   <p className="ca-c__by">
-                    <b>{c.name || (ko ? "익명" : "Unknown")}</b>
+                    {SHOW_PUBLIC_COLLECTIONS && c.authorId
+                      ? <Link to={collectorPath(c.authorId)} className="ca-col__link"><b>{c.name || (ko ? "익명" : "Unknown")}</b></Link>
+                      : <b>{c.name || (ko ? "익명" : "Unknown")}</b>}
                     {c.at && <time>{ago(c.at, ko)}</time>}
                     {commentMenu && <span style={{ marginLeft: "auto" }}>{commentMenu(c)}</span>}
                   </p>

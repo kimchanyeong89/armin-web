@@ -279,3 +279,17 @@ html[data-overlay-panel] .app-language-toggle { opacity: 0; pointer-events: none
 .colly-rise > :nth-child(4) { animation-delay: .47s; }
 .colly-rise > :nth-child(n+5) { animation-delay: .56s; }
 @media (prefers-reduced-motion: reduce) { .colly-rise > * { animation: none; } }
+
+/* The one close button (CloseButton.tsx): a bare ×, no ring, gold under the
+   pointer. A full-screen layer's stands where KO | EN stands; a card's sits
+   in the card's corner. */
+.colly-close { display: grid; place-items: center; width: 40px; height: 40px; margin: 0; padding: 0; border: 0; border-radius: 0;
+  background: none; color: rgba(244, 241, 234, .82); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: color .16s ease; }
+.colly-close svg { filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .55)); }
+.colly-close:hover, .colly-close:focus-visible { color: #d4a547; }
+.colly-close:focus { outline: none; }
+.colly-close--light { color: rgba(17, 17, 15, .78); }
+.colly-close--light svg { filter: none; }
+.colly-close--screen { position: fixed; top: max(8px, calc(env(safe-area-inset-top, 0px) + 6px)); right: 8px; z-index: 260040; }
+.colly-close--corner { position: absolute; top: 8px; right: 8px; z-index: 3; }

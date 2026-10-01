@@ -1,6 +1,7 @@
 import type { SyntheticEvent } from "react";
 import { createPortal } from "react-dom";
-import { ArrowRight, ArrowUpRight, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import CloseButton from "./CloseButton";
 import { LikeIcon } from "./like/LikeIcon";
 import { ReviewPanel } from "./Ratings/ReviewPanel";
 import { useCloseOnEscape } from "./Ratings/useMyRating";
@@ -72,9 +73,7 @@ export default function NearbyExhibitionModal({
       onKeyDown={keep}
     >
       <div role="dialog" aria-modal="true" aria-label={ex.title} className="nem colly-glass" data-light={light}>
-        <button type="button" className="nem-close" onClick={onClose} aria-label={tr({ ko: "닫기", en: "Close" })}>
-          <X size={15} strokeWidth={2} />
-        </button>
+        <CloseButton placement="corner" onClick={onClose} label={tr({ ko: "닫기", en: "Close" })} light={!!light} />
 
         <div className="nem-scroll">
           <div className="nem-top">

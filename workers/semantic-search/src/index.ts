@@ -1749,6 +1749,25 @@ export default {
                 }
             }
 
+            /* An artwork's own museum page, for works saved before likes kept it.
+               GET /source-url?id=…[&ex=exhibitionId]. A second museum's work with the
+               same id is keyed "id␟exhibitionId" in D1, so those match too, the one
+               from the given exhibition first. */
+            if (url.pathname === '/source-url' && request.method === 'GET') {
+                const id = String(url.searchParams.get('id') || '').trim();
+                const ex = String(url.searchParams.get('ex') || '').trim();
+                if (!env.DB || !id) return Response.json({ url: '' }, { headers: corsHeaders });
+                try {
+                    const row = await env.DB.prepare(
+                        "SELECT source_url FROM artworks WHERE (id = ?1 OR substr(id, 1, length(?1) + 1) = ?1 || '\u241f') " +
+                        "AND source_url != '' ORDER BY (exhibition_id = ?2) DESC LIMIT 1",
+                    ).bind(id, ex).first() as { source_url?: string } | null;
+                    return Response.json({ url: row?.source_url || '' }, { headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=86400' } });
+                } catch (err: any) {
+                    return Response.json({ url: '', error: err?.message || String(err) }, { status: 500, headers: corsHeaders });
+                }
+            }
+
             if (url.pathname === '/search-text' && request.method === 'POST') {
                 if (!env.DB) {
                     return Response.json(

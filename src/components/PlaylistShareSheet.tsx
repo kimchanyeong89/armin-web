@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Check, Copy, Share2, X } from "lucide-react";
+import { Check, Copy, Share2 } from "lucide-react";
+import CloseButton from "./CloseButton";
 import { useLanguage } from "../contexts/LanguageContext";
 import { copyLink, sharePlaylist, sharedPlaylistUrl, unsharePlaylist } from "../features/playlists/sharedPlaylists";
 import "./playlistShare.css";
@@ -61,22 +62,20 @@ export default function PlaylistShareSheet({ uid, playlist, light, onClose, onCh
       }}
     >
       <div className="pls__card" role="dialog" aria-modal="true" aria-labelledby="pls-title">
+        <CloseButton placement="corner" onClick={onClose} label={t({ ko: "닫기", en: "Close" })} light={!!light} />
         <header>
           <span>{t({ ko: "플레이리스트 공유", en: "SHARE PLAYLIST" })}</span>
-          <button type="button" className="pls__close" onClick={onClose} aria-label={t({ ko: "닫기", en: "Close" })}>
-            <X size={16} strokeWidth={1.8} aria-hidden="true" />
-          </button>
         </header>
         <h2 id="pls-title">{playlist.name}</h2>
         <p className="pls__body">
           {shared
             ? t({
-                ko: "공개 중이에요. 링크를 받은 누구나 볼 수 있고, 커뮤니티의 플레이리스트에도 보여요.",
-                en: "Public: anyone with the link can see it, and it shows in the community's playlists.",
+                ko: "공유 중이에요. 링크를 받은 누구나 바로 열어 볼 수 있고, 커뮤니티의 플레이리스트 선반에도 올라가 있어요.",
+                en: "Shared: anyone with the link can open it, and it sits on the community's playlist shelf.",
               })
             : t({
-                ko: "공개하면 링크를 받은 누구나 이 플레이리스트를 볼 수 있어요. 커뮤니티의 플레이리스트에도 올라가요.",
-                en: "Once public, anyone with the link can see this playlist, and it shows in the community's playlists.",
+                ko: "링크를 만들면 받은 사람 누구나 이 플레이리스트를 바로 열어 볼 수 있어요. 커뮤니티의 플레이리스트 선반에도 올라가요.",
+                en: "With a link, anyone you send it to can open this playlist straight away, and it goes on the community's playlist shelf.",
               })}
         </p>
         {shared && <p className="pls__url">{url.replace(/^https?:\/\//, "")}</p>}
@@ -98,13 +97,13 @@ export default function PlaylistShareSheet({ uid, playlist, light, onClose, onCh
                 </button>
               )}
               <button type="button" className="pls__act pls__act--quiet" disabled={busy} onClick={() => void change(false)}>
-                {t({ ko: "비공개로 돌리기", en: "Make private" })}
+                {t({ ko: "공유 그만두기", en: "Stop sharing" })}
               </button>
             </>
           ) : (
             <button type="button" className="pls__cta" disabled={busy} onClick={() => void change(true)}>
               <span aria-hidden="true"><Share2 size={12} strokeWidth={2.2} /></span>
-              {busy ? t({ ko: "공개하는 중…", en: "Making it public…" }) : t({ ko: "공개하고 링크 만들기", en: "Make public and get the link" })}
+              {busy ? t({ ko: "공유하는 중…", en: "Sharing…" }) : t({ ko: "공유하고 링크 만들기", en: "Share and get the link" })}
             </button>
           )}
         </footer>

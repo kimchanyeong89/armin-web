@@ -722,7 +722,7 @@ export default function MyWall({ uid, ko, compact, onClose }: {
           </div>
         )}
         <button type="button" className="mw-close" onClick={onClose} aria-label={t({ ko: "닫기", en: "Close" })}>
-          <X size={20} strokeWidth={1.6} />
+          <X size={22} strokeWidth={1.6} />
         </button>
       </header>
 

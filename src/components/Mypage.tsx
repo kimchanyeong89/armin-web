@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useState, useRef } from "re
 import { RankInfo } from "./RankInfo";
 import "./mypageRedesign.css";
 import { useAuth } from "../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import {
   getFirestore,
@@ -66,6 +66,8 @@ import {
 import PlaylistMenu from "./PlaylistMenu";
 import PlaylistShareSheet from "./PlaylistShareSheet";
 import { deletePlaylist, refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
+import { collectorPath } from "../features/collectors/publicCollection";
+import { SHOW_PUBLIC_COLLECTIONS } from "../config/features";
 import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
 import { readPostCount, syncPublicProfile } from "../features/community/publicProfile";
 import { rankForScore, userActivityScore } from "../utils/communityRank";
@@ -2455,7 +2457,7 @@ const MyPage: React.FC = () => {
           </div>
           <div style={{ marginTop: 2, fontSize: 10, color: subText, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
             {figure(count)} {t({ ko: "작품", en: count === 1 ? "work" : "works" })}
-            {playlist.shared && <span style={{ color: lime }}> · {t({ ko: "공개", en: "Public" })}</span>}
+            {playlist.shared && <span style={{ color: lime }}> · {t({ ko: "공유 중", en: "Shared" })}</span>}
           </div>
         </div>
       </div>
@@ -2595,6 +2597,13 @@ const MyPage: React.FC = () => {
               </>
             )}
             <span className="mp-score">{t({ ko: "점수", en: "Score" })} <b>{userScore.toLocaleString()}</b></span>
+            {SHOW_PUBLIC_COLLECTIONS && user && (
+              <>
+                <i aria-hidden="true" />
+                {/* the page others see, where it can also be hidden */}
+                <Link to={collectorPath(user.uid)} className="mp-public">{t({ ko: "내 컬렉션", en: "My collection" })}</Link>
+              </>
+            )}
           </p>
         </div>
 
@@ -2711,7 +2720,7 @@ const MyPage: React.FC = () => {
               onClick={() => setSharingPlaylistId(activePlaylist.id)}
             >
               <Share2 size={12} strokeWidth={2} aria-hidden="true" />
-              {activePlaylist.shared ? t({ ko: "공개 중", en: "Public" }) : t({ ko: "공유", en: "Share" })}
+              {activePlaylist.shared ? t({ ko: "공유 중", en: "Shared" }) : t({ ko: "공유", en: "Share" })}
             </button>
             {playlistDelete?.id === activePlaylist.id ? (
               <>

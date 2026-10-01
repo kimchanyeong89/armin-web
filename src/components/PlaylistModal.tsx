@@ -4,7 +4,8 @@ import { refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { createPortal } from "react-dom";
-import { Plus, X } from "lucide-react";
+import { Plus } from "lucide-react";
+import CloseButton from "./CloseButton";
 import "./playlistShare.css";
 
 const normalizeArtworkIdForFirestore = (value: unknown): string => String(value ?? "").trim().replace(/\//g, "__");
@@ -167,11 +168,9 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
       }}
     >
       <div className="pls__card" role="dialog" aria-modal="true" aria-labelledby="pla-title">
+        <CloseButton placement="corner" onClick={onClose} label={t({ ko: "닫기", en: "Close" })} light={isLight} />
         <header>
           <span>{t({ ko: "플레이리스트에 담기", en: "ADD TO PLAYLIST" })}</span>
-          <button type="button" className="pls__close" onClick={onClose} aria-label={t({ ko: "닫기", en: "Close" })}>
-            <X size={16} strokeWidth={1.8} aria-hidden="true" />
-          </button>
         </header>
         <h2 id="pla-title">{title || t({ ko: "이 작품", en: "This item" })}</h2>
 
@@ -206,7 +205,7 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
                   <span className="pla__shot">{pl.coverImage ? <img src={pl.coverImage} alt="" loading="lazy" decoding="async" /> : null}</span>
                   <span className="pla__name">
                     <b>{pl.name}</b>
-                    {pl.shared === true && <small>{t({ ko: "공개", en: "PUBLIC" })}</small>}
+                    {pl.shared === true && <small>{t({ ko: "공유 중", en: "SHARED" })}</small>}
                   </span>
                   <span className="pla__put">
                     <Plus size={13} strokeWidth={2} aria-hidden="true" />

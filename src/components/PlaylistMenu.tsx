@@ -107,7 +107,7 @@ export default function PlaylistMenu({ shared, onShare, onDelete, className, sty
             ) : (
               <>
                 <button type="button" role="menuitem" onClick={() => { close(); onShare(); }}>
-                  {shared ? t({ ko: "공유 · 공개 중", en: "Share · public" }) : t({ ko: "공유", en: "Share" })}
+                  {shared ? t({ ko: "공유 중", en: "Shared" }) : t({ ko: "공유", en: "Share" })}
                 </button>
                 <button type="button" role="menuitem" onClick={() => setAsking(true)}>{t({ ko: "삭제", en: "Delete" })}</button>
               </>

@@ -1,9 +1,11 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Check, Link2, Play } from "lucide-react";
 import Slideshow from "../../../components/Slideshow";
 import { RankAvatar } from "../../../components/RankAvatar";
 import { useLanguage } from "../../../contexts/LanguageContext";
+import { collectorPath } from "../../../features/collectors/publicCollection";
+import { SHOW_PUBLIC_COLLECTIONS } from "../../../config/features";
 import { usePublicProfiles } from "../../../features/community/publicProfile";
 import {
   SHARED_ITEM_LIMIT,
@@ -49,7 +51,7 @@ export default function AtlasPlaylistPage() {
   const owner = list ? owners[list.ownerUid] : undefined;
 
   /* back to wherever the reader came from; a link opened on its own goes to the shelf */
-  const back = () => (location.key !== "default" ? navigate(-1) : navigate("/community?view=playlists"));
+  const back = () => (location.key !== "default" ? navigate(-1) : navigate("/community?view=curation"));
   const copy = async () => {
     if (!(await copyLink(sharedPlaylistUrl(id)))) return;
     setCopied(true);
@@ -91,7 +93,9 @@ export default function AtlasPlaylistPage() {
         <h1>{list.name}</h1>
         <div className="ca-pl__by">
           <RankAvatar rank={owner?.rank} name={name} src={owner?.photoURL} crop={owner?.photoCrop} size={22} />
-          <b>{name}</b>
+          {SHOW_PUBLIC_COLLECTIONS
+            ? <Link to={collectorPath(list.ownerUid)} className="ca-col__link"><b>{name}</b></Link>
+            : <b>{name}</b>}
           <i aria-hidden="true" />
           <em>{two(list.itemCount)} {ko ? "작품" : list.itemCount === 1 ? "work" : "works"}</em>
           {list.updatedAt && (

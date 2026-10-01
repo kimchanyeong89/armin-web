@@ -19,12 +19,10 @@
 .pls button:focus-visible { outline: 1px solid var(--acc); outline-offset: 3px; }
 .pls p, .pls h2 { margin: 0; }
 
-.pls__card { width: min(400px, 100%); padding: 14px 20px 20px; background: var(--panel); border: 1px solid var(--rule);
+.pls__card { position: relative; width: min(400px, 100%); padding: 14px 20px 20px; background: var(--panel); border: 1px solid var(--rule);
   box-shadow: 0 24px 60px rgba(0,0,0,.5); animation: pls-rise .32s cubic-bezier(.16,1,.3,1) backwards; }
-.pls__card header { display: flex; align-items: center; justify-content: space-between; min-height: 28px; }
+.pls__card header { display: flex; align-items: center; justify-content: space-between; min-height: 28px; padding-right: 36px; }
 .pls__card header span { font: 600 9.5px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .1em; color: var(--acc); }
-.pls .pls__close { display: grid; place-items: center; width: 28px; height: 28px; margin-right: -7px; color: var(--ink-2); transition: color .16s ease; }
-.pls .pls__close:hover { color: var(--acc); }
 .pls__card h2 { margin-top: 8px; font: 700 22px/1.2 Paperlogy, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; letter-spacing: -0.03em;
   overflow-wrap: anywhere; }
 .pls__body { margin-top: 10px; font-size: 13px; line-height: 1.6; color: var(--ink-2); }

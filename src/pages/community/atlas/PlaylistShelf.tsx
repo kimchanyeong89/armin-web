@@ -42,7 +42,7 @@ export default function PlaylistShelf({ ko }: { ko: boolean }) {
             : (ko ? "아직 공개된 플레이리스트가 없어요." : "No public playlists yet.")}
         </p>
         <div className="ca-empty__acts">
-          <Link to="/mypage">{ko ? "마이페이지에서 공개하기" : "Share one from My Page"}</Link>
+          <Link to="/mypage">{ko ? "마이페이지에서 공유하기" : "Share one from My Page"}</Link>
         </div>
       </div>
     );

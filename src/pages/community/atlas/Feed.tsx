@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ListMusic, MapPin, PenLine, TrendingUp } from "lucide-react";
+import { PenLine, TrendingUp } from "lucide-react";
 import { RankAvatar } from "../../../components/RankAvatar";
 import NearbyExhibitions from "../../../components/NearbyExhibitions";
 import {
@@ -14,16 +14,26 @@ import {
 import { getOptimizedImageUrl } from "../../../utils/imageProxy";
 import { textOf } from "./prose";
 import { CATEGORY_LABEL, TARGET_LABEL, ago, catStyle } from "./shared";
+import { SHOW_PUBLIC_COLLECTIONS } from "../../../config/features";
+import CollectorShelf from "./CollectorShelf";
 import PlaylistShelf from "./PlaylistShelf";
+
+/** the tab's three rooms: the board of posts, other people's curation (their
+    collections and shared playlists) and the exhibitions on now */
+export type FeedView = "posts" | "curation" | "exhibitions";
 
 export interface FeedState {
   sort: CommunitySort;
   category: "all" | CommunityCategory;
   target: CommunityHeaderType;
-  nearby: boolean;
-  /** the shelf of playlists their owners made public, shown in place of the posts */
-  playlists?: boolean;
+  view: FeedView;
 }
+
+const VIEWS: { id: FeedView; ko: string; en: string }[] = [
+  { id: "posts", ko: "이야기", en: "Talk" },
+  { id: "curation", ko: "큐레이션", en: "Curation" },
+  { id: "exhibitions", ko: "진행 중인 전시", en: "On now" },
+];
 
 const TARGETS: CommunityHeaderType[] = ["all", "museum", "artist", "artwork", "exhibition"];
 
@@ -69,10 +79,32 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
         <p className="ca-statement__meta">{ko ? "커뮤니티" : "COMMUNITY"}</p>
         <h1>{ko ? "전시를 본 사람들의 이야기." : "What people saw, in their words."}</h1>
         <p>{ko
-          ? "관람 후기와 전시 소식, 궁금한 점을 나누는 곳입니다. 주변 전시와 다른 사람의 플레이리스트도 여기서 볼 수 있습니다."
-          : "Reviews, exhibition news and questions from people who went. Nearby shows and shared playlists live here too."}</p>
+          ? "관람 후기와 전시 소식을 나누고, 다른 사람이 모은 작품과 지금 열리는 전시를 봅니다."
+          : "Reviews and news from people who went, what others collect, and the shows on now."}</p>
       </section>
 
+      {/* the three rooms, as the AI tab splits its two: cut-corner halves of one
+          track, the chosen one lit and marked with the gold point */}
+      <div className="ca-switch" role="tablist" aria-label={ko ? "커뮤니티 메뉴" : "Community"}>
+        {VIEWS.map((v) => (
+          <button key={v.id} type="button" role="tab" aria-selected={state.view === v.id}
+            className={state.view === v.id ? "is-active" : ""} onClick={() => set({ view: v.id })}>
+            <span className="ca-switch__inner">
+              <i className="ca-switch__dot" aria-hidden="true" />
+              <span className="ca-switch__label">{ko ? v.ko : v.en}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {state.view === "curation" ? (
+        <div className="ca-room">
+          {SHOW_PUBLIC_COLLECTIONS && <CollectorShelf ko={ko} />}
+          <PlaylistShelf ko={ko} />
+        </div>
+      ) : state.view === "exhibitions" ? (
+        <div className="ca-room ca-nearby"><NearbyExhibitions isLight={isLight} language={language} /></div>
+      ) : (<>
       <section className="ca-lead">
         <div>
           <div className="ca-sort" role="group" aria-label={ko ? "정렬" : "Sort"} data-i={state.sort === "popular" ? 1 : 0}>
@@ -86,12 +118,6 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
           </div>
         </div>
         <div className="ca-acts">
-          <button type="button" className="ca-act" aria-pressed={!!state.playlists} onClick={() => set({ playlists: !state.playlists, nearby: false })}>
-            <ListMusic size={13} strokeWidth={1.8} /><span>{ko ? "플레이리스트" : "Playlists"}</span>
-          </button>
-          <button type="button" className="ca-act" aria-pressed={state.nearby} onClick={() => set({ nearby: !state.nearby, playlists: false })}>
-            <MapPin size={13} strokeWidth={1.8} /><span>{ko ? "주변 전시" : "Nearby"}</span>
-          </button>
           <button type="button" className="ca-act ca-act--write" onClick={onWrite}>
             <PenLine size={13} strokeWidth={1.8} /><span>{ko ? "새 글" : "Write"}</span>
           </button>
@@ -101,10 +127,10 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
       <div className="ca-body">
         <div className="ca-rail" role="tablist" aria-label={ko ? "분류" : "Category"}>
           {rail.map((c) => {
-            const on = !state.nearby && !state.playlists && state.category === c;
+            const on = state.category === c;
             return (
               <button key={c} type="button" role="tab" aria-selected={on} style={c === "all" ? undefined : catStyle(c)}
-                onClick={() => set({ category: c, nearby: false, playlists: false, target: c === "리뷰" ? state.target : "all" })}>
+                onClick={() => set({ category: c, target: c === "리뷰" ? state.target : "all" })}>
                 <span className="ca-pt" aria-hidden="true"><i /></span>
                 <span>{c === "all" ? (ko ? "전체" : "All") : label(c)}</span>
                 <b>{c === "all" ? posts.length : counts[c]}</b>
@@ -114,11 +140,7 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
         </div>
 
         <div className="ca-board">
-          {state.playlists ? (
-            <PlaylistShelf ko={ko} />
-          ) : state.nearby ? (
-            <div className="ca-nearby"><NearbyExhibitions isLight={isLight} language={language} /></div>
-          ) : (
+          {(
             <>
               {state.category === "리뷰" && (
                 <div className="ca-targets" role="group" aria-label={ko ? "리뷰 대상" : "Review target"}>
@@ -188,6 +210,7 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
           )}
         </div>
       </div>
+      </>)}
     </div>
   );
 }

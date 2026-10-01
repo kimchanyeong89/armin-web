@@ -51,7 +51,8 @@ export const sharedPlaylistUrl = (playlistId: string) => `${window.location.orig
 
 const millis = (value: any) => (typeof value?.toMillis === "function" ? value.toMillis() : 0);
 
-const toItem = (docId: string, data: DocumentData): SharedPlaylistItem => ({
+/** One work as a playlist item or a like stores it, read the same way wherever it is shown. */
+export const toItem = (docId: string, data: DocumentData): SharedPlaylistItem => ({
   id: String(data.artworkId || data.id || docId),
   title: String(data.title || data.name || "Untitled"),
   artist: String(data.artist || ""),

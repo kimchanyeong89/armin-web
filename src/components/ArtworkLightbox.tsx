@@ -14,6 +14,9 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useArtistI18n, getArtistDisplayName } from '../i18n/artistLocalization';
 import { getArtworkTitle, getArtworkDate, useArtworkI18n } from '../i18n/artworkLocalization';
 import { openOutside } from '../utils/openOutside';
+import CloseButton from './CloseButton';
+import { isMobileAppContainer } from '../utils/mobileAppAuth';
+import { findSourceUrl } from '../utils/sourceUrl';
 import './artworkLightbox.css';
 
 
@@ -178,17 +181,10 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
         onToggleLike(e, art);
     };
 
-    /* while the detail is open the fixed KO | EN switch steps aside (index.css,
-       data-overlay-panel), so it never sits on the detail's own controls */
-    useEffect(() => {
-        const root = document.documentElement;
-        const had = root.dataset.overlayPanel;
-        root.dataset.overlayPanel = "1";
-        return () => {
-            if (had === undefined) delete root.dataset.overlayPanel;
-            else root.dataset.overlayPanel = had;
-        };
-    }, []);
+    /* a work saved without its museum page address: it is looked up in the
+       museum's collection file when the link is pressed */
+    const [sourceLookup, setSourceLookup] = useState<null | 'finding' | 'missing'>(null);
+    useEffect(() => setSourceLookup(null), [artwork]);
 
     // Reset animation + image-loaded state when artwork changes
     useEffect(() => {
@@ -228,7 +224,8 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                 id: found.id,
                 name: found.name,
                 country: found.country,
-                collection: collectionName
+                collection: collectionName,
+                entry: found,
             };
         }
         // Fallback to what's in the artwork object
@@ -238,7 +235,8 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             id: '',
             name: mName,
             country: artwork.country, // might be undefined
-            collection: ''
+            collection: '',
+            entry: null,
         };
     }, [artwork]);
 
@@ -269,6 +267,8 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
         artwork.objectUrl ||
         artwork.source
     );
+    /* without an address, the museum's collection files can still give one */
+    const canLookUpSource = !sourceUrl && !!museumInfo.entry?.permanentExhibitions?.some((p: any) => p?.collectionFile);
     const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
     const showPurchaseAction = Boolean(onPurchase) && !hidePurchaseAction;
     const showMuseumAction = Boolean(onViewInMuseum) && !hideMuseumAction;
@@ -787,7 +787,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                         </div>
 
                         {/* the ways out, as words with a mark: → stays in COLLY, ↗ opens the museum's own page */}
-                        {(showMuseumAction || sourceUrl) && (
+                        {(showMuseumAction || sourceUrl || canLookUpSource) && (
                             <div className="lb-outs">
                                 {showMuseumAction && (
                                     <button
@@ -802,18 +802,36 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
                                     </button>
                                 )}
-                                {sourceUrl && (
+                                {(sourceUrl || canLookUpSource) && (
                                     /* the museum's own page: the guide's circled ↗, the words, and
                                        the site's name under them so it is clear where it leads */
                                     <a
                                         className="lb-src"
-                                        href={sourceUrl}
+                                        href={sourceUrl || '#'}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        onClick={(e) => {
+                                        aria-busy={sourceLookup === 'finding' || undefined}
+                                        onClick={async (e) => {
                                             e.stopPropagation();
-                                            /* in the app, out to the phone's own browser */
-                                            if (openOutside(sourceUrl)) e.preventDefault();
+                                            if (sourceUrl) {
+                                                /* in the app, out to the phone's own browser */
+                                                if (openOutside(sourceUrl)) e.preventDefault();
+                                                return;
+                                            }
+                                            e.preventDefault();
+                                            if (sourceLookup === 'finding') return;
+                                            /* a browser blocks a window opened after waiting, so it is opened now and pointed later */
+                                            const win = isMobileAppContainer() ? null : window.open('', '_blank');
+                                            setSourceLookup('finding');
+                                            const found = await findSourceUrl(artwork, museumInfo.entry);
+                                            if (!found) {
+                                                win?.close();
+                                                setSourceLookup('missing');
+                                                return;
+                                            }
+                                            setSourceLookup(null);
+                                            if (win) { win.opener = null; win.location.href = found; }
+                                            else if (!openOutside(found)) window.open(found, '_blank', 'noopener');
                                         }}
                                     >
                                         <span className="lb-src__mark" aria-hidden="true">
@@ -821,7 +839,15 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         </span>
                                         <span className="lb-src__text">
                                             <b>{language === 'ko' ? '미술관 원본 페이지에서 보기' : "See it on the museum's site"}</b>
-                                            <small>{(() => { try { return new URL(sourceUrl).hostname.replace(/^www\./, ''); } catch { return ''; } })()}</small>
+                                            <small>
+                                                {sourceLookup === 'finding'
+                                                    ? (language === 'ko' ? '주소를 찾는 중…' : 'Finding the page…')
+                                                    : sourceLookup === 'missing'
+                                                        ? (language === 'ko' ? '이 작품은 원본 주소가 없습니다' : 'No page address for this work')
+                                                        : sourceUrl
+                                                            ? (() => { try { return new URL(sourceUrl).hostname.replace(/^www\./, ''); } catch { return ''; } })()
+                                                            : museumInfo.name}
+                                            </small>
                                         </span>
                                     </a>
                                 )}
@@ -866,33 +892,8 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     </div>
                 </div>
 
-                {/* Mobile Close Button (Fixed Top Right) */}
-                {
-                    isMobile && (
-                        <button
-                            onClick={onClose}
-                            style={{
-                                position: 'fixed',
-                                top: 'calc(env(safe-area-inset-top, 44px) + 12px)',
-                                right: 16,
-                                width: 40,
-                                height: 40,
-                                borderRadius: '50%',
-                                background: 'rgba(0,0,0,0.5)',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                color: '#fff',
-                                fontSize: 24,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                zIndex: 260030,
-                                backdropFilter: 'blur(4px)'
-                            }}
-                        >
-                            ×
-                        </button>
-                    )
-                }
+                {/* the way out, on every width, where KO | EN stands */}
+                <CloseButton onClick={onClose} label={language === 'ko' ? '닫기' : 'Close'} />
             </div >
 
             {/* Sign-in prompt — rendered above the lightbox so the user

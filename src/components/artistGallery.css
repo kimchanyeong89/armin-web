@@ -233,7 +233,4 @@
 }
 @media (prefers-reduced-motion: reduce) { .ag * { transition: none !important; } }
 
-/* the way out: a bare mark at the card's corner */
-.ag-close { position: absolute; top: 14px; right: var(--pad); z-index: 3; width: 28px; height: 28px; display: grid;
-  place-items: center; font-family: var(--num); font-size: 15px; line-height: 1; color: var(--ink-3); transition: color .16s ease; }
-.ag .ag-close:hover { color: var(--acc); }
+/* the way out is the app's one close (CloseButton), at the screen's top right */

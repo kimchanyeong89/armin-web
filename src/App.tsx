@@ -52,6 +52,7 @@ const CommunityPage = lazy(() => import("./pages/community/atlas/AtlasFeedPage")
 const WritePostPage = lazy(() => import("./pages/community/atlas/AtlasWritePage"));
 const PostDetailPage = lazy(() => import("./pages/community/atlas/AtlasPostPage"));
 const SharedPlaylistPage = lazy(() => import("./pages/community/atlas/AtlasPlaylistPage"));
+const CollectorPage = lazy(() => import("./pages/community/atlas/AtlasCollectorPage"));
 const ExhibitionsNearMePage = lazy(() => import("./pages/ExhibitionsNearMePage"));
 const AICurationHubPage = lazy(() => import("./pages/AICurationHubPage"));
 const GlobalSearchBar = lazy(() => import("./components/GlobalSearchBar"));
@@ -738,6 +739,7 @@ function AppContent() {
                 <Route path="/community/write" element={<WritePostPage />} />
                 <Route path="/community/post/:id" element={<PostDetailPage />} />
                 <Route path="/community/playlist/:id" element={<SharedPlaylistPage />} />
+                <Route path="/community/u/:uid" element={<CollectorPage />} />
                 <Route path="/ai" element={<AICurationHubPage />} />
                 <Route path="/search" element={<SearchPage />} />
                 <Route path="/cart" element={<CartPage />} />
@@ -1008,6 +1010,8 @@ function AppContent() {
           zIndex: 199900,
         }}
       >
+        {/* KO | EN stays (user, 10/1: "다시 살려줘" — it had been hidden on 9/30). The first
+            language still follows the device (LanguageContext); the switch changes it. */}
         <LanguageToggle light={isLightTheme} />
       </div>
     </div>
