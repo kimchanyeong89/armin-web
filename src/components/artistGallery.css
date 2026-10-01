@@ -125,8 +125,9 @@
 .ag[data-drawing="true"] .ag-donut__seg, .ag[data-drawing="true"] .ag-donut__rest { stroke: #ffffff; }
 
 /* a swatch, the name, a leader, a right-aligned percent */
-.ag-keys { flex: 1; min-width: 0; display: grid; gap: 5px; align-content: start; }
-.ag-keys li { display: flex; align-items: center; gap: 7px; font-size: 10.5px; color: var(--ink-2); cursor: pointer; }
+/* one column that shrinks with the screen, so a long museum name gives way (ellipsis) and the figure stays */
+.ag-keys { flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px; align-content: start; }
+.ag-keys li { display: flex; align-items: center; gap: 7px; min-width: 0; font-size: 10.5px; color: var(--ink-2); cursor: pointer; }
 .ag-keys li i { flex: none; width: 9px; height: 9px; border-radius: 1px; }
 .ag-keys li span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ag-keys li em { font-style: normal; color: var(--ink-3); }
@@ -140,7 +141,7 @@
 
 /* slide 2 — two columns, a count and a bar */
 .ag-tops { flex: 1; min-width: 0; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 7px 16px; align-content: start; }
-.ag-top { display: grid; gap: 3px; min-width: 0; cursor: pointer; }
+.ag-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; min-width: 0; cursor: pointer; }
 .ag-top__row { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; }
 .ag-top__row span { flex: 1; min-width: 0; font-size: 10px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ag-top__row u { text-decoration: none; color: var(--ink-3); }

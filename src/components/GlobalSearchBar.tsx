@@ -5357,6 +5357,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 zIndex: galleryZIndex,
                                 background: isDrawingGalleryMode ? '#ffffff' : '#080808',
                                 overflowY: 'auto',
+                                /* nothing inside may widen the page sideways: on an older iPhone
+                                   the card's overflow-x: clip is unknown, and the sliding rows then
+                                   widened the whole view so the page underneath showed at the right */
+                                overflowX: 'hidden',
                                 display: 'flex',
                                 alignItems: 'flex-start',
                                 justifyContent: 'center',
