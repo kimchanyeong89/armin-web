@@ -1,12 +1,16 @@
 import type { WeeklyPublishedFile } from '../types/weekly';
 import { isoWeek } from './iso-week';
+import { listPublished } from './weeklyStore';
 
 export async function fetchCurrentCuration(
   date: Date = new Date(),
   maxLookback = 12,
 ): Promise<WeeklyPublishedFile | null> {
-  // Try the current ISO week, then walk backwards so an unpublished week
-  // shows the most recent real curation instead of the placeholder sample.
+  // The newest curation published from /admin/weekly (Firestore), however many weeks back.
+  const [latest] = await listPublished(isoWeek(date), 1);
+  if (latest) return latest;
+  // Else the files of the weeks published before that: the current ISO week, then
+  // backwards, so an unpublished week shows the most recent real curation.
   let week = isoWeek(date);
   for (let i = 0; i < maxLookback; i++) {
     try {
@@ -77,12 +81,19 @@ export async function fetchArchiveList(
   date: Date = new Date(),
   maxLookback = 12,
 ): Promise<ArchiveEntry[]> {
+  // Published from /admin/weekly (Firestore), joined by the file weeks below; a week in both is the Firestore one.
+  const fromStore = (await listPublished(isoWeek(date))).map(summarizeAsEntry);
+  const withFiles = (files: ArchiveEntry[]) => {
+    const seen = new Set(fromStore.map((e) => e.week));
+    return [...fromStore, ...files.filter((e) => !seen.has(e.week))].sort((a, b) => b.week.localeCompare(a.week));
+  };
+
   // Preferred path: an explicit index file.
   try {
     const res = await fetch('/data/weekly-curations-index.json');
     if (res.ok) {
       const idx = await res.json() as ArchiveIndexFile;
-      return [...idx.entries].sort((a, b) => b.week.localeCompare(a.week));
+      return withFiles(idx.entries);
     }
   } catch {
     // Network error: fall through to enumeration.
@@ -103,7 +114,7 @@ export async function fetchArchiveList(
     }
     week = previousWeek(week);
   }
-  return entries.sort((a, b) => b.week.localeCompare(a.week));
+  return withFiles(entries);
 }
 
 // ── Special series list ─────────────────────────────────────────────────────

@@ -75,6 +75,8 @@ export async function buildIndex(): Promise<Index> {
     for (const r of rows) {
       const imageUrl = pickImageUrl(r);
       if (!imageUrl || !r.artist) continue;
+      // Archive records, not works: a letter's "Recipient\nEgon Schiele" is no artist.
+      if (/\n/.test(r.artist) || /^(recipient|sender|addressee)\b/i.test(r.artist)) continue;
       const artist = normalizeArtist(r.artist);
       const work: IndexedWork = {
         artwork_ref: `${collection}#${r.id ?? ''}`,

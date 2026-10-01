@@ -18,11 +18,11 @@ import type {
 } from '../types/weekly';
 import { isoWeek } from '../lib/iso-week';
 import { useIsAdmin, addAdminEmail, removeAdminEmail, BOOTSTRAP_ADMINS } from '../lib/admin';
+import { fetchProposal, fetchPublished, listProposalWeeks, publishWeekly } from '../lib/weeklyStore';
 
 // ── Week index ────────────────────────────────────────────────────────────
 // V1: hardcoded. TODO: have generator script emit
 // `public/data/weekly-proposals-index.json` listing weeks.
-const KNOWN_WEEKS: string[] = ['2026-W21', '2026-W20'];
 
 // ── Design tokens — match WeeklyCurationTab.tsx ──────────────────────────
 const COLOR_BG = '#0a0a0a';
@@ -76,11 +76,13 @@ function WeeklyProposalCardView({
   week,
   isPublished,
   onCopy,
+  onPublish,
 }: {
   card: WeeklyCard;
   week: string;
   isPublished: boolean;
   onCopy: (text: string, label: string) => void;
+  onPublish: (card: WeeklyCard) => void;
 }) {
   const navigate = useNavigate();
   const [showSpecialForm, setShowSpecialForm] = useState(false);
@@ -94,10 +96,7 @@ function WeeklyProposalCardView({
   const hero = card.works.find((w) => w.role === 'hero') ?? card.works[0];
   const heroUrl = hero?.image_url;
 
-  const publishWeekly = () => {
-    const cmd = `npm run weekly:publish -- --week ${week} --card ${card.id}`;
-    onCopy(cmd, 'Publish-as-Weekly command');
-  };
+  const publishWeekly = () => onPublish(card);
   const publishSpecial = () => {
     const safeSlug = slug.trim() || defaultSlug;
     const cmd = `npm run weekly:publish -- --week ${week} --card ${card.id} --type special --slug ${safeSlug}`;
@@ -580,13 +579,22 @@ function AdminListPanel({
 // ── Page component ────────────────────────────────────────────────────────
 const AdminWeeklyPage: React.FC = () => {
   const navigate = useNavigate();
-  const { isAdmin, loading: authLoading, isBootstrap, allAdmins } = useIsAdmin();
+  const { isAdmin, loading: authLoading, isBootstrap, allAdmins, email } = useIsAdmin();
 
-  const [week, setWeek] = useState<string>(() => {
-    // Prefer current ISO week if a proposal for it exists; else first known.
-    const current = isoWeek(new Date());
-    return KNOWN_WEEKS.includes(current) ? current : KNOWN_WEEKS[0] ?? current;
-  });
+  // Weeks with a pool, from the worker (the Sunday job) and the old files; the newest is shown first.
+  const [weeks, setWeeks] = useState<string[]>([]);
+  const [week, setWeek] = useState<string>('');
+  useEffect(() => {
+    if (!isAdmin) return;
+    let live = true;
+    listProposalWeeks().then((found) => {
+      if (!live) return;
+      setWeeks(found);
+      const current = isoWeek(new Date());
+      setWeek((w) => w || (found.includes(current) ? current : found[0] ?? current));
+    });
+    return () => { live = false; };
+  }, [isAdmin]);
   const [proposal, setProposal] = useState<WeeklyProposalFile | null>(null);
   const [published, setPublished] = useState<WeeklyPublishedFile | null>(null);
   const [dataLoading, setDataLoading] = useState(false);
@@ -603,7 +611,7 @@ const AdminWeeklyPage: React.FC = () => {
 
   // Load proposal + published for the selected week
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!isAdmin || !week) return;
     let cancelled = false;
     setDataLoading(true);
     setDataError(null);
@@ -612,25 +620,12 @@ const AdminWeeklyPage: React.FC = () => {
 
     (async () => {
       try {
-        const [propRes, pubRes] = await Promise.all([
-          fetch(`/data/weekly-proposals/${week}.json`, { cache: 'no-store' }),
-          fetch(`/data/weekly-curations/${week}.json`, { cache: 'no-store' }),
-        ]);
+        const [propJson, pubJson] = await Promise.all([fetchProposal(week), fetchPublished(week)]);
         if (cancelled) return;
-        // A missing /data/*.json is answered with the SPA fallback (HTTP 200,
-        // text/html) — res.ok is not enough, so require a real JSON body.
-        const [propText, pubText] = await Promise.all([propRes.text(), pubRes.text()]);
-        if (cancelled) return;
-        const propJson = propText.trimStart().startsWith('{')
-          ? (JSON.parse(propText) as WeeklyProposalFile)
-          : null;
-        const pubJson = pubText.trimStart().startsWith('{')
-          ? (JSON.parse(pubText) as WeeklyPublishedFile)
-          : null;
         if (propJson) {
           setProposal(propJson);
         } else {
-          setDataError(`No proposal file for ${week} (HTTP ${propRes.status})`);
+          setDataError(`No proposals for ${week} yet`);
         }
         setPublished(pubJson);
       } catch (err) {
@@ -654,6 +649,19 @@ const AdminWeeklyPage: React.FC = () => {
     },
     [toast],
   );
+
+  // Publishing is live at once (Firestore weekly_curations/{week}), so it asks first.
+  const handlePublish = async (card: WeeklyCard) => {
+    const name = card.title_ko || card.title_en || card.id;
+    const replacing = published && published.id !== card.id ? `\n\nThis replaces the published "${published.title_ko || published.title_en}".` : '';
+    if (!window.confirm(`Publish "${name}" as ${week}'s weekly curation? It goes live in the app now.${replacing}`)) return;
+    try {
+      setPublished(await publishWeekly(week, card, email ?? 'admin'));
+      toast.show(`Published: ${name}`);
+    } catch (err) {
+      toast.show(`Publish failed: ${String(err)}`);
+    }
+  };
 
   if (authLoading) {
     return (
@@ -734,11 +742,9 @@ const AdminWeeklyPage: React.FC = () => {
               maxWidth: 680,
             }}
           >
-            Review this week's proposal candidates. Choose one to publish as the Weekly curation,
-            or promote others to the Special series. Publishing happens via terminal — the buttons
-            below copy the exact <code style={{ color: COLOR_FG_MED }}>npm run weekly:publish</code>{' '}
-            invocation to your clipboard. Edit the proposal JSON in your editor first if you want
-            to tweak the title or intro before publishing.
+            New candidates arrive every Sunday morning. Choose one and press Publish as Weekly: it
+            goes live in the app at once, no deploy. Publishing another card for the same week
+            replaces it. Special series still publish from the terminal (the button copies the command).
           </div>
         </div>
 
@@ -768,7 +774,7 @@ const AdminWeeklyPage: React.FC = () => {
               border: `1px solid ${COLOR_BORDER_STRONG}`,
             }}
           >
-            {KNOWN_WEEKS.map((w) => (
+            {weeks.map((w) => (
               <option key={w} value={w}>
                 {w}
               </option>
@@ -827,6 +833,7 @@ const AdminWeeklyPage: React.FC = () => {
                 week={week}
                 isPublished={published?.id === card.id}
                 onCopy={handleCopy}
+                onPublish={handlePublish}
               />
             ))}
           </div>

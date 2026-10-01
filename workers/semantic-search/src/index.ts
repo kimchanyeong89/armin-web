@@ -32,6 +32,8 @@ import {
  *  - PUT  /taste-data       : (관리용) 전시·미술관 취향 데이터 교체
  *  - GET  /exhibitions-data : 미술관별 진행·예정·지난 전시 목록 (앱이 켜질 때 읽는다)
  *  - PUT  /exhibitions-data : (관리용) 매일 아침 전시 동기화가 목록을 바꾼다
+ *  - GET  /weekly-proposals[?week=] : 주간 큐레이션 후보(주 목록, 또는 그 주의 후보 묶음) — /admin/weekly 가 읽는다
+ *  - PUT  /weekly-proposals?week= : (관리용) 일요일 아침 작업이 그 주 후보를 올린다
  *  - POST /warm-jina        : 정밀 검색을 켤 때 Jina 인코더 미리 깨우기
  *  - GET  /budget-status    : (관리용) 오늘 요금 상한 카운터
  *  - GET  /status           : 서비스 상태 확인
@@ -738,6 +740,24 @@ async function loadTasteProfile(env: Env, userId: string): Promise<TasteProfile 
 // 매니페스트가 가리키는 키만 바꾼다. 매니페스트는 요청에서 몇 분 캐시되므로 직전 버전 하나를
 // 남겨 두어, 옛 매니페스트를 읽은 요청도 데이터를 찾게 한다.
 const TASTE_DATA_MANIFEST = 'taste-data:manifest';
+
+// ── 주간 큐레이션 후보 (GET/PUT /weekly-proposals) ─────────────────────────
+// 일요일 아침 작업(scripts/weekly/upload-proposals.mjs)이 그 주 후보를 올리고, 편집자가
+// /admin/weekly 에서 보고 하나를 골라 발행한다(발행본은 Firestore weekly_curations).
+const WEEKLY_PROPOSALS_PREFIX = 'weekly-proposals:';
+const WEEKLY_PROPOSALS_INDEX = 'weekly-proposals:index';
+const WEEK_ID = /^\d{4}-W\d{2}$/;
+
+/** Cards in a pool; throws when a card is not ready for the editor (no works, or copy missing). */
+function checkWeeklyPool(pool: any, week: string): number {
+    if (!pool || pool.week !== week) throw new Error('week does not match');
+    if (!Array.isArray(pool.cards) || pool.cards.length === 0) throw new Error('no cards');
+    for (const card of pool.cards) {
+        if (!card?.id || !Array.isArray(card.works) || card.works.length === 0) throw new Error(`card ${card?.id ?? '?'} has no works`);
+        if (!card.title_ko || !card.intro_ko || !card.title_en || !card.intro_en) throw new Error(`card ${card.id} has no copy`);
+    }
+    return pool.cards.length;
+}
 
 // ── 미술관별 전시 목록 (GET/PUT /exhibitions-data) ─────────────────────────
 const EXHIBITIONS_DATA_KEY = 'exhibitions-data';
@@ -1989,6 +2009,50 @@ export default {
             // 전시 목록은 앱 번들에도 들어 있지만, 여기 것이 있으면 앱이 그것으로 바꿔 끼운다.
             // 그래서 전시가 바뀌어도 앱을 다시 배포하지 않는다.
             // ──────────────────────────────────────────────
+            // ──────────────────────────────────────────────
+            // GET /weekly-proposals             후보가 있는 주 목록(최신 먼저)
+            // GET /weekly-proposals?week=W      그 주의 후보 묶음
+            // PUT /weekly-proposals?week=W (관리용)  일요일 아침 작업이 올린다. 이미 있으면 ?force=1
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/weekly-proposals' && request.method === 'GET') {
+                const week = url.searchParams.get('week');
+                const noStore = { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' };
+                if (!week) {
+                    return new Response((await env.TASTE_KV.get(WEEKLY_PROPOSALS_INDEX)) ?? '{"weeks":[]}', { headers: noStore });
+                }
+                if (!WEEK_ID.test(week)) return Response.json({ error: 'bad week' }, { status: 400, headers: corsHeaders });
+                const raw = await env.TASTE_KV.get(WEEKLY_PROPOSALS_PREFIX + week);
+                if (!raw) return Response.json({ error: 'no proposals for this week' }, { status: 404, headers: corsHeaders });
+                return new Response(raw, { headers: noStore });
+            }
+            if (url.pathname === '/weekly-proposals' && request.method === 'PUT') {
+                if (!isAdminRequest(request, env)) {
+                    return Response.json({ error: 'unauthorized' }, { status: 401, headers: corsHeaders });
+                }
+                const week = url.searchParams.get('week') ?? '';
+                if (!WEEK_ID.test(week)) return Response.json({ error: 'bad week' }, { status: 400, headers: corsHeaders });
+                const raw = await request.text();
+                let cards: number;
+                let generatedAt = '';
+                try {
+                    const pool = JSON.parse(raw);
+                    cards = checkWeeklyPool(pool, week);
+                    generatedAt = String(pool.generated_at ?? '');
+                } catch (err: any) {
+                    return Response.json({ error: `invalid proposals: ${err.message}` }, { status: 400, headers: corsHeaders });
+                }
+                // 한 번 올린 주는 실수로 덮지 않는다(편집자가 이미 보고 있을 수 있다). 다시 올리려면 ?force=1.
+                if (url.searchParams.get('force') !== '1' && (await env.TASTE_KV.get(WEEKLY_PROPOSALS_PREFIX + week))) {
+                    return Response.json({ error: `refused: ${week} already has proposals (pass ?force=1 to replace)` }, { status: 409, headers: corsHeaders });
+                }
+                await env.TASTE_KV.put(WEEKLY_PROPOSALS_PREFIX + week, raw);
+                const index = JSON.parse((await env.TASTE_KV.get(WEEKLY_PROPOSALS_INDEX)) ?? '{"weeks":[]}') as { weeks: { week: string; generated_at: string; cards: number }[] };
+                const weeks = [{ week, generated_at: generatedAt, cards }, ...index.weeks.filter((w) => w.week !== week)]
+                    .sort((a, b) => b.week.localeCompare(a.week));
+                await env.TASTE_KV.put(WEEKLY_PROPOSALS_INDEX, JSON.stringify({ weeks }));
+                return Response.json({ ok: true, week, cards }, { headers: corsHeaders });
+            }
+
             if (url.pathname === '/exhibitions-data' && request.method === 'GET') {
                 const cache = caches.default;
                 const cacheKey = new Request(url.origin + url.pathname);

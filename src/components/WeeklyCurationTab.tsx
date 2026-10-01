@@ -13,6 +13,7 @@ import {
   type ArchiveEntry,
   type SpecialEntry,
 } from "../lib/weekly";
+import { fetchProposal, fetchPublished } from "../lib/weeklyStore";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
 import SaveCurationButton from "./SaveCurationButton";
@@ -2230,23 +2231,17 @@ export default function WeeklyCurationTab({
         .catch(() => { if (!cancelled) { setEdition(WEEKLY_EDITIONS[0]); setEditionFile(null); } });
     };
 
-    const tryDeepLink = async (url: string): Promise<boolean> => {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) return false;
-        const file = await res.json() as WeeklyPublishedFile;
-        applyFile(file);
-        return true;
-      } catch {
-        return false;
-      }
+    const tryDeepLink = async (week: string): Promise<boolean> => {
+      const file = await fetchPublished(week);
+      if (!file) return false;
+      applyFile(file);
+      return true;
     };
 
     const tryPreview = async (cardId: string, week: string): Promise<boolean> => {
       try {
-        const res = await fetch(`/data/weekly-proposals/${week}.json`);
-        if (!res.ok) return false;
-        const proposal = await res.json() as { cards: WeeklyPublishedFile[] };
+        const proposal = await fetchProposal(week);
+        if (!proposal) return false;
         const card = (proposal.cards ?? []).find((c) => c.id === cardId);
         if (!card) return false;
         // Synthesise the same shape as a published file so the rendering
@@ -2270,7 +2265,7 @@ export default function WeeklyCurationTab({
         return;
       }
       if (weeklyParam) {
-        const ok = await tryDeepLink(`/data/weekly-curations/${weeklyParam}.json`);
+        const ok = await tryDeepLink(weeklyParam);
         if (!ok) { console.warn(`[WeeklyCurationTab] deep-link ?weekly=${weeklyParam} not found; falling back`); fallback(); }
         return;
       }
@@ -2307,9 +2302,8 @@ export default function WeeklyCurationTab({
 
   const handleSelectArchiveWeek = useCallback(async (week: string) => {
     try {
-      const res = await fetch(`/data/weekly-curations/${week}.json`);
-      if (!res.ok) return;
-      const file = await res.json() as WeeklyPublishedFile;
+      const file = await fetchPublished(week);
+      if (!file) return;
       setEdition(adaptPublishedToEdition(file));
       setEditionFile(file);
       setMode('this-week');

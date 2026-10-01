@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { access, mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { loadPersonas, PERSONA_IDS } from './personas';
 import { motifsForWeek } from './motif-calendar';
@@ -12,6 +12,7 @@ import { scoreWorkForPersona } from './selectors/persona-scorer';
 import { writeCardCopy } from './writer/llm-writer';
 import { matchByText } from './embedding/match';
 import { buildIndex } from './collection-index';
+import { isoWeek } from '../../src/lib/iso-week';
 import type { Persona } from './personas';
 import type {
   LensId, PersonaId, WeeklyCard, WeeklyProposalFile, WeeklyWork, Trigger,
@@ -26,7 +27,19 @@ const TREND_MATCH_THRESHOLD = 0.28;
 const CARD_WORK_COUNT = 12;
 
 function slug(s: string): string {
-  return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40);
+  const latin = s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40);
+  if (latin) return latin;
+  // A Korean trigger has no Latin letters: a short hash keeps two such cards apart.
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+  return `t${(h >>> 0).toString(36)}`;
+}
+
+/** The ISO week of the coming Monday: the Sunday-morning run proposes for the week ahead. */
+export function nextIsoWeek(now: Date = new Date()): string {
+  const d = new Date(now);
+  d.setUTCDate(d.getUTCDate() + (((8 - (d.getUTCDay() || 7)) % 7) || 7));
+  return isoWeek(d);
 }
 
 async function buildBaseCellCard(
@@ -179,18 +192,24 @@ async function buildTrendCard(
 
 export async function generateProposals(
   week: string,
-  opts: { outDir?: string } = {},
+  opts: { outDir?: string; trends?: boolean; force?: boolean } = {},
 ): Promise<string> {
   const outDir = opts.outDir ?? join(process.cwd(), 'public', 'data', 'weekly-proposals');
   await mkdir(outDir, { recursive: true });
+  // A pool the editor or the writer may already have worked on is never overwritten by accident.
+  const path = join(outDir, `${week}.json`);
+  if (!opts.force && await access(path).then(() => true, () => false)) {
+    throw new Error(`${path} exists (pass --force to regenerate)`);
+  }
   await buildIndex();   // warm up
 
   const personas = await loadPersonas();
   const [anniversaries, motifs, gTrends, nTrends] = await Promise.all([
     anniversaryArtistsForWeek(week),
     motifsForWeek(week),
-    fetchGoogleTrendsKR({ limit: 10 }),
-    fetchNaverTrendsKR(),
+    // Trending searches are mostly celebrities and headlines, which match no art: off unless asked.
+    opts.trends ? fetchGoogleTrendsKR({ limit: 10 }) : Promise.resolve([]),
+    opts.trends ? fetchNaverTrendsKR() : Promise.resolve([]),
   ]);
 
   const cards: WeeklyCard[] = [];
@@ -222,7 +241,6 @@ export async function generateProposals(
     generated_at: new Date().toISOString(),
     cards,
   };
-  const path = join(outDir, `${week}.json`);
   await writeFile(path, JSON.stringify(file, null, 2));
   return path;
 }
@@ -230,12 +248,13 @@ export async function generateProposals(
 // CLI entrypoint
 if (import.meta.url === `file://${process.argv[1]}`) {
   const argIdx = process.argv.indexOf('--week');
-  const week = argIdx >= 0 ? process.argv[argIdx + 1] : undefined;
-  if (!week) {
-    console.error('Usage: tsx generate-proposals.ts --week YYYY-Www');
+  const arg = argIdx >= 0 ? process.argv[argIdx + 1] : undefined;
+  const week = arg === 'next' ? nextIsoWeek() : arg;
+  if (!week || !/^\d{4}-W\d{2}$/.test(week)) {
+    console.error('Usage: tsx generate-proposals.ts --week YYYY-Www|next [--trends] [--force]');
     process.exit(1);
   }
-  generateProposals(week)
+  generateProposals(week, { trends: process.argv.includes('--trends'), force: process.argv.includes('--force') })
     .then((p) => console.log(`Wrote ${p}`))
     .catch((e) => { console.error(e); process.exit(1); });
 }
