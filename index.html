@@ -53,6 +53,19 @@
   <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
     charset="utf-8"></script>
   <title>Colly</title>
+    <!-- AdSense: 웹 방문자에게만 싣는다. 앱(웹뷰) 안의 광고는 AdMob 몫이라 여기서 부르면 구글 정책 위반이다. -->
+    <meta name="google-adsense-account" content="ca-pub-9310842552914381">
+    <script>
+      (function () {
+        var inApp = /SkeneApp|BiblyApp/.test(navigator.userAgent) || !!window.ReactNativeWebView;
+        if (inApp) return;
+        var s = document.createElement('script');
+        s.async = true;
+        s.crossOrigin = 'anonymous';
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9310842552914381';
+        document.head.appendChild(s);
+      })();
+    </script>
 </head>
 
 <body>

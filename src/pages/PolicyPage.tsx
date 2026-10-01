@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { SHOW_PUBLIC_COLLECTIONS } from "../config/features";
 
 // 개인정보처리방침·이용약관·지원. 스토어 심사가 요구하는 세 페이지라 껍데기는 같고 글만 다르다.
 // 앱 안에서도 열리므로 로그인 없이 보이고, 바깥 링크로 바로 들어와도 홈 인트로가 끼어들지 않는다.
@@ -17,7 +18,7 @@ export type PolicyDocId = "privacy" | "terms" | "support";
 const DOCS: Record<PolicyDocId, Doc> = {
   privacy: {
     title: { ko: "개인정보처리방침", en: "Privacy Policy" },
-    updated: { ko: "시행일 2026년 9월 20일", en: "Effective September 20, 2026" },
+    updated: { ko: "시행일 2026년 9월 20일 · 개정 2026년 9월 25일(4항 웹사이트 광고 추가, 2026년 10월 2일 시행)", en: "Effective September 20, 2026 · Revised September 25, 2026 (section 4, ads on the website, effective October 2, 2026)" },
     intro: {
       ko: "콜리(COLLY)는 전시와 작품을 찾아보는 서비스입니다. 아래는 콜리가 어떤 정보를 받고, 어디에 쓰고, 언제 지우는지 적은 것입니다.",
       en: "COLLY helps you find exhibitions and artworks. This page explains what we receive, what we use it for, and when we delete it.",
@@ -52,9 +53,13 @@ const DOCS: Record<PolicyDocId, Doc> = {
         h: { ko: "2. 쓰는 곳", en: "2. How we use it" },
         body: [
           {
-            ko: "로그인과 내 기록 동기화, 커뮤니티 운영과 신고 처리, 프린트 주문과 배송, 서비스 개선을 위한 통계에 씁니다. 광고에 쓰거나 다른 곳에 팔지 않습니다.",
-            en: "To sign you in and sync your records, to run the community and handle reports, to fulfil print orders, and to improve the service. We do not use it for advertising and we do not sell it.",
+            ko: "로그인과 내 기록 동기화, 커뮤니티 운영과 신고 처리, 프린트 주문과 배송, 서비스 개선을 위한 통계에 씁니다. 이 정보를 광고에 쓰거나 다른 곳에 팔지 않습니다. 웹사이트에 나오는 광고는 4항에 적었습니다.",
+            en: "To sign you in and sync your records, to run the community and handle reports, to fulfil print orders, and to improve the service. We do not use this information for advertising and we do not sell it. Ads shown on the website are described in section 4.",
           },
+          ...(SHOW_PUBLIC_COLLECTIONS ? [{
+            ko: "좋아한 작품과 만든 플레이리스트는 커뮤니티의 큐레이션 화면에서 누구나 볼 수 있습니다. 함께 보이는 것은 프로필 이름과 사진, 등급이고 이메일은 보이지 않습니다. 보이지 않게 하려면 마이페이지의 '내 컬렉션'에서 숨기면 됩니다.",
+            en: "The works you like and the playlists you build can be seen by anyone on the community's Curation page, together with your profile name, photo and level; your email is never shown. To keep them to yourself, hide them from My collection on My Page.",
+          }] : []),
         ],
       },
       {
@@ -65,6 +70,7 @@ const DOCS: Record<PolicyDocId, Doc> = {
             en: "· Google (Firebase Authentication, Firestore, Analytics) — authentication, data storage, usage statistics",
           },
           { ko: "· 토스페이먼츠 — 결제 처리", en: "· Toss Payments — payment processing" },
+          { ko: "· 구글(애드센스) — 웹사이트 광고 게재 (웹사이트 방문자만)", en: "· Google (AdSense) — ads on the website (website visitors only)" },
           { ko: "· 클라우드플레어 — 웹 서비스 전송", en: "· Cloudflare — web delivery" },
           {
             ko: "구글과 클라우드플레어의 서버는 미국을 비롯한 국외에 있을 수 있습니다. 서비스를 쓰는 데 필요한 범위에서만 맡기고, 맡긴 곳이 다른 목적으로 쓰지 못하게 합니다.",
@@ -73,7 +79,28 @@ const DOCS: Record<PolicyDocId, Doc> = {
         ],
       },
       {
-        h: { ko: "4. 보관과 파기", en: "4. Retention and deletion" },
+        h: { ko: "4. 웹사이트의 광고", en: "4. Ads on the website" },
+        body: [
+          {
+            ko: "콜리 웹사이트(colly.one)에는 구글 애드센스 광고가 나옵니다. iOS·안드로이드 앱 안에는 나오지 않습니다.",
+            en: "The COLLY website (colly.one) shows Google AdSense ads. They do not appear inside the iOS or Android app.",
+          },
+          {
+            ko: "· 구글을 비롯한 제3자 광고 사업자는 쿠키를 써서, 이용자가 이 사이트와 다른 사이트를 방문한 기록을 바탕으로 광고를 보여 줍니다.",
+            en: "· Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites.",
+          },
+          {
+            ko: "· 맞춤 광고는 구글 광고 설정(adssettings.google.com)에서 끌 수 있고, 다른 사업자의 맞춤 광고 쿠키는 aboutads.info/choices 에서 끌 수 있습니다.",
+            en: "· You can opt out of personalized advertising in Google Ads Settings (adssettings.google.com), and of other vendors' personalized-ad cookies at aboutads.info/choices.",
+          },
+          {
+            ko: "· 유럽경제지역·영국·스위스 방문자에게는 광고 쿠키를 쓰기 전에 동의를 먼저 묻습니다.",
+            en: "· Visitors from the EEA, the UK, and Switzerland are asked for consent before ad cookies are used.",
+          },
+        ],
+      },
+      {
+        h: { ko: "5. 보관과 파기", en: "5. Retention and deletion" },
         body: [
           {
             ko: "계정이 있는 동안 보관하고, 계정을 지우면 바로 지웁니다. 다만 전자상거래법이 요구하는 대금 결제와 계약 기록은 5년, 소비자 불만과 분쟁 처리 기록은 3년 동안 따로 보관합니다.",
@@ -86,7 +113,7 @@ const DOCS: Record<PolicyDocId, Doc> = {
         ],
       },
       {
-        h: { ko: "5. 이용자의 권리", en: "5. Your rights" },
+        h: { ko: "6. 이용자의 권리", en: "6. Your rights" },
         body: [
           {
             ko: "내 정보를 보고 고치고 지울 수 있습니다. 계정 삭제는 마이페이지에서 계정 삭제를 고르면 됩니다. 지우면 위에 적은 기록이 함께 사라지고 되돌릴 수 없습니다.",
@@ -99,7 +126,7 @@ const DOCS: Record<PolicyDocId, Doc> = {
         ],
       },
       {
-        h: { ko: "6. 안전조치", en: "6. Safeguards" },
+        h: { ko: "7. 안전조치", en: "7. Safeguards" },
         body: [
           {
             ko: "통신 구간은 HTTPS로 암호화하고, 데이터베이스 보안 규칙으로 본인 기록에만 접근하게 막습니다.",
@@ -108,7 +135,7 @@ const DOCS: Record<PolicyDocId, Doc> = {
         ],
       },
       {
-        h: { ko: "7. 만 14세 미만", en: "7. Children under 14" },
+        h: { ko: "8. 만 14세 미만", en: "8. Children under 14" },
         body: [
           {
             ko: "만 14세 미만은 가입할 수 없고, 아동의 정보를 따로 모으지 않습니다. 만 14세 미만이 가입한 사실을 알게 되면 계정과 기록을 지웁니다.",
@@ -117,7 +144,7 @@ const DOCS: Record<PolicyDocId, Doc> = {
         ],
       },
       {
-        h: { ko: "8. 문의와 변경", en: "8. Contact and changes" },
+        h: { ko: "9. 문의와 변경", en: "9. Contact and changes" },
         body: [
           {
             ko: `개인정보 보호책임자는 김찬영이고, 문의는 ${CONTACT_EMAIL} 로 받습니다.`,
