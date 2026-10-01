@@ -40,6 +40,23 @@ createRoot(document.getElementById('root')!).render(
     : <App />
 )
 
+// A page left open across a deploy (the phone app keeps its web view alive for hours) still
+// asks for the old build's page files, which no longer exist: the screen it opens stays blank.
+// When a page file fails to load, reload once onto the new build. A second failure within a
+// minute is a real error and is left to show, so this can never loop.
+window.addEventListener('vite:preloadError', (event) => {
+  const KEY = 'colly:reloaded-for-new-build';
+  try {
+    const last = Number(sessionStorage.getItem(KEY) || 0);
+    if (Date.now() - last < 60_000) return;
+    sessionStorage.setItem(KEY, String(Date.now()));
+  } catch {
+    return;
+  }
+  event.preventDefault();
+  window.location.reload();
+});
+
 // Unregister service workers as they are causing load failures
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(registrations => {
