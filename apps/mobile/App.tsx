@@ -111,7 +111,8 @@ true;
 `;
 
 // Tells the web login page this build can do Apple sign-in natively (iOS only; older builds lack it).
-const NATIVE_APPLE_MARK = Platform.OS === "ios" ? "\ndocument.documentElement.setAttribute('data-native-apple', '1'); true;" : "";
+// Runs first: RESPONSIVE_INJECTION can throw at document start (document.head is still null).
+const NATIVE_APPLE_MARK = Platform.OS === "ios" ? "document.documentElement.setAttribute('data-native-apple', '1');\n" : "";
 
 export default function App() {
   const webViewRef = useRef<WebView>(null);
@@ -398,7 +399,7 @@ export default function App() {
           source={{ uri: webAppUrl }}
           style={styles.webView}
           userAgent={IOS_SAFARI_USER_AGENT}
-          injectedJavaScriptBeforeContentLoaded={RESPONSIVE_INJECTION + NATIVE_APPLE_MARK}
+          injectedJavaScriptBeforeContentLoaded={NATIVE_APPLE_MARK + RESPONSIVE_INJECTION}
           onShouldStartLoadWithRequest={handleShouldStart}
           onMessage={handleWebMessage}
           onLoadStart={() => {
