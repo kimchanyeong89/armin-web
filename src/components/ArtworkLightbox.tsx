@@ -762,12 +762,19 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             {museumInfo.name && (
                                 <span className="lb-held">
                                     <i className="lb-held__dot" aria-hidden="true" />
-                                    {museumInfo.id ? (
+                                    {/* the one way to the museum: where the host can open the work inside
+                                        its museum (onViewInMuseum) the name does that; otherwise it opens
+                                        the museum on the map. There is no second "view in museum" button. */}
+                                    {museumInfo.id || showMuseumAction ? (
                                         <button
                                             type="button"
                                             className="lb-link"
                                             onClick={(e) => {
                                                 e.stopPropagation();
+                                                if (showMuseumAction) {
+                                                    onViewInMuseum?.(artwork);
+                                                    return;
+                                                }
                                                 onClose();
                                                 navigate(`/interactive/world/city/${encodeURIComponent(museumInfo.id)}`);
                                             }}
@@ -787,21 +794,8 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                         </div>
 
                         {/* the ways out, as words with a mark: → stays in COLLY, ↗ opens the museum's own page */}
-                        {(showMuseumAction || sourceUrl || canLookUpSource) && (
+                        {(sourceUrl || canLookUpSource) && (
                             <div className="lb-outs">
-                                {showMuseumAction && (
-                                    <button
-                                        type="button"
-                                        className="lb-out"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onViewInMuseum?.(artwork);
-                                        }}
-                                    >
-                                        {language === 'ko' ? '미술관에서 보기' : 'View in museum'}
-                                        <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
-                                    </button>
-                                )}
                                 {(sourceUrl || canLookUpSource) && (
                                     /* the museum's own page: the guide's circled ↗, the words, and
                                        the site's name under them so it is clear where it leads */

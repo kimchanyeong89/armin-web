@@ -441,6 +441,7 @@ export function InteractiveGlobeRealModal({
   const [detailArtworkOrigin, setDetailArtworkOrigin] = useState<Artwork | null>(null);
   const [playlistArtwork, setPlaylistArtwork] = useState<any | null>(null);
   const [activeFilter, setActiveFilter] = useState<ArtworkCategory | null>(null);
+  const [showAllCats, setShowAllCats] = useState(false);
   const [sortBy, setSortBy] = useState<SortMode>("default");
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -1809,7 +1810,7 @@ export function InteractiveGlobeRealModal({
         </div>
 
         {/* ── Works section header + filters ── */}
-        <div style={{ padding: `56px ${pad} 0` }}>
+        <div style={{ padding: `${isMobile ? 32 : 56}px ${pad} 0` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
             <div style={{ width: '24px', height: '1px', backgroundColor: dividerColor }} />
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', fontWeight: 700, color: fgLow, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Featured Works</span>
@@ -1818,7 +1819,8 @@ export function InteractiveGlobeRealModal({
             </span>
             <div style={{ flex: 1, height: '1px', backgroundColor: dividerColor }} />
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
+          {/* 휴대폰에서는 분류 칩을 뺀다(9/30) — 칩 줄이 미술관 소개와 작품 목록 사이를 벌려 둘을 한 화면에 볼 수 없었다. */}
+          <div style={{ display: isMobile ? 'none' : 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
               <button
                 onClick={() => {
@@ -1830,7 +1832,22 @@ export function InteractiveGlobeRealModal({
                 }}
                 style={{ cursor: 'pointer', padding: '7px 13px', fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: !activeFilter ? limeColor : fgMute, backgroundColor: !activeFilter ? limeBg : 'transparent', borderTop: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderRight: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderBottom: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderLeft: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, outline: 'none' }}
               >All</button>
-              {availableCategories.map((cat) => {
+              {/* 9/30: 한두 점짜리 분류(HECTOGRAPHY PEN 1 …)가 칩 여러 줄을 차지해 작품이 화면 밖으로
+                  밀렸다 — 많은 순으로 넷만 두고 나머지는 '+N'으로 접는다. 고른 분류는 늘 보인다. */}
+              {(() => {
+                const counted = availableCategories
+                  .map((cat) => ({ cat, n: mappedArtworks.filter((a) => a.category === cat).length }))
+                  .sort((a, b) => b.n - a.n);
+                const visible = showAllCats ? counted : counted.filter((c, i) => i < 4 || c.cat === activeFilter);
+                return [
+                  ...visible.map(({ cat }) => cat),
+                  ...(counted.length > visible.length ? ["__more__"] : []),
+                ].map((cat) => cat === "__more__" ? (
+                  <button key="__more__" onClick={() => setShowAllCats(true)}
+                    style={{ cursor: 'pointer', padding: '7px 11px', fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: '11px', letterSpacing: '0.14em', color: fgMute, background: 'transparent', border: `1px solid ${t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)"}`, outline: 'none' }}
+                  >+{counted.length - visible.length}</button>
+                ) : cat);
+              })().map((cat) => typeof cat !== "string" ? cat : (() => {
                 const count = mappedArtworks.filter((a) => a.category === cat).length;
                 const isActive = activeFilter === cat;
                 const bColor = isActive ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)");
@@ -1848,7 +1865,7 @@ export function InteractiveGlobeRealModal({
                     {cat}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: '8px', opacity: 0.6 }}>{count}</span>
                   </button>
                 );
-              })}
+              })())}
             </div>
           </div>
         </div>

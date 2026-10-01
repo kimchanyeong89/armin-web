@@ -36,18 +36,8 @@
 .lb-held { display: inline-flex; align-items: center; gap: 7px; flex-wrap: wrap; justify-content: center; }
 .lb-held__dot { flex: none; width: 6px; height: 6px; border-radius: 50%; background: #d4a547; }
 
-/* the ways out: words with an arrow, no pill - → stays in the app, ↗ leaves it */
+/* the way out to the museum's own page */
 .lb-outs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; margin-top: 18px; }
-.lb-out {
-  display: inline-flex; align-items: center; gap: 5px;
-  margin: 0; padding: 4px 0; border: 0; border-radius: 0; background: none; cursor: pointer;
-  font-family: "Space Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: .06em;
-  color: rgba(244, 241, 234, .72); text-decoration: none; transition: color .16s ease;
-}
-.lb-out:hover { color: #d4a547; }
-.lb-out:focus { outline: none; }
-.lb-out:focus-visible { color: #d4a547; }
-
 /* the museum's own page: the reading guide's circled ↗ in gold, the words in
    ink and the site's name small beneath - a clear way out, not a button */
 .lb-src { display: inline-flex; align-items: center; gap: 11px; padding: 2px 0; text-align: left; text-decoration: none; color: #f4f1ea; }

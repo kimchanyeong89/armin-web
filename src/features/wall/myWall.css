@@ -205,3 +205,14 @@ html.wall-open img { -webkit-user-drag: none; -webkit-touch-callout: none; }
   .mw-stage { padding: 14px 16px 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .mw *, .wall-grip, .wall-grip i { transition: none !important; animation: none !important; } }
+
+/* a phone: WebKit paints a blurred backdrop inside a clip-path as a flat dark
+   slab, so the handle there drops the blur and lets the page show through a
+   thinner tint - the same see-through glass the tab bar reads as */
+@media (pointer: coarse) {
+  .wall-grip--bar { -webkit-backdrop-filter: none; backdrop-filter: none;
+    background:
+      radial-gradient(130% 160% at 50% -40%, rgba(255,255,255,.34), transparent 64%),
+      linear-gradient(96deg, transparent 10%, rgba(255,255,255,.1) 48%, transparent 80%),
+      rgba(38,38,35,.5); }
+}

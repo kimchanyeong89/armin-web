@@ -706,7 +706,8 @@ export function Globe({
       projection
         .translate([
           w / 2 + activeOffset[0] * offsetScale + stage.shift * w,
-          h / 2 + activeOffset[1] * offsetScale,
+          // 휴대폰 세로 화면은 아래 탭바가 약 110px를 덮어, 화면 정중앙의 지구본이 처져 보였다(9/30) — 탭바 몫의 절반쯤 올린다.
+          h / 2 + activeOffset[1] * offsetScale - (w < 768 && h > w ? Math.min(w, h) * 0.1 : 0),
         ])
         .scale(baseScale * currentScaleRef.current)
         .rotate(rotationRef.current);
