@@ -1,9 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import * as WebBrowser from "expo-web-browser";
+import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { WebView } from "react-native-webview";
 import type { ShouldStartLoadRequest, WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
+
+// Entrance screen: keep the native splash (amber ground + lotus, app.json expo-splash-screen)
+// up until the first page has loaded, the same way the illog and Skene shells do.
+// COLLY is the only one whose splash ground (amber) differs from the web ground (#050505),
+// so fade it out instead of cutting.
+SplashScreen.preventAutoHideAsync().catch(() => {});
+SplashScreen.setOptions({ fade: true, duration: 400 });
 
 const DEFAULT_WEB_URL = "https://armin-web.pages.dev";
 const DEV_WEB_URL = "http://localhost:5181";
@@ -121,6 +129,17 @@ export default function App() {
   // Sign In. iOS doesn't fire OS deep links during ASWebAuthenticationSession
   // so it's not affected. We dedupe by deep-link URL within a short window.
   const lastConsumedAuthUrlRef = useRef<{ url: string; at: number } | null>(null);
+  const splashHiddenRef = useRef(false);
+  const hideSplash = useCallback(() => {
+    if (splashHiddenRef.current) return;
+    splashHiddenRef.current = true;
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
+  // Never keep the entrance screen past 6s, even if the first load never ends.
+  useEffect(() => {
+    const t = setTimeout(hideSplash, 6000);
+    return () => clearTimeout(t);
+  }, [hideSplash]);
 
   const webAppUrl = useMemo(() => {
     const raw = (process.env.EXPO_PUBLIC_WEB_APP_URL || "").trim();
@@ -373,6 +392,7 @@ export default function App() {
             }
             setIsLoading(false);
             hasCompletedFirstLoadRef.current = true;
+            hideSplash();
           }}
           onNavigationStateChange={(state) => {
             const currentUrl = String(state.url || "");
@@ -396,6 +416,7 @@ export default function App() {
           onError={() => {
             setLoadError(true);
             setIsLoading(false);
+            hideSplash();
           }}
           javaScriptEnabled
           javaScriptCanOpenWindowsAutomatically

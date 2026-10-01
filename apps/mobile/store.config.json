@@ -1,7 +1,7 @@
 {
   "configVersion": 0,
   "apple": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "release": {
       "automaticRelease": true
     },
@@ -27,10 +27,11 @@
         "promoText": "지구본을 돌려 300개 미술관의 전시와 소장품을 찾아봅니다.",
         "marketingUrl": "https://armin-web.pages.dev",
         "supportUrl": "https://armin-web.pages.dev/support",
-        "privacyPolicyUrl": "https://armin-web.pages.dev/privacy"
+        "privacyPolicyUrl": "https://armin-web.pages.dev/privacy",
+        "releaseNotes": "앱 아이콘을 앰버 바탕의 새 디자인으로 바꿨습니다."
       },
       "en-US": {
-        "title": "COLLY 콜리",
+        "title": "Colly 콜리",
         "subtitle": "The world's museums on a globe",
         "description": "COLLY brings the exhibitions and collections of museums worldwide into one screen.\n\n■ Globe\n300 museums sit on a globe. Spin it, pick a city, and see the museums there and what is on show right now.\n\n■ Exhibitions near you\nAllow location and exhibitions are listed nearest first, with dates, admission and closing days.\n\n■ Artworks and playlists\nLike the works that stay with you and gather them into playlists by theme. A playlist can be shared with a link.\n\n■ Curations\nThemed curations bring you works you would not have searched for.\n\n■ Community\nWrite what you saw and read what others wrote. Objectionable posts can be reported, and anyone you would rather not read can be blocked.\n\n■ Search\nFind by artist, title of a work, or museum name.\n\nExhibitions and artworks are open without an account. Likes, playlists and community posts need a sign-in with Apple, Google or Naver, and the account can be deleted inside the app at any time.\n\nMuseum schedules and admission change. Check the museum's own notice before you go.\n\nContact kietzland@gmail.com",
         "keywords": [
@@ -48,7 +49,8 @@
         "promoText": "Spin the globe and find what 300 museums are showing right now.",
         "marketingUrl": "https://armin-web.pages.dev",
         "supportUrl": "https://armin-web.pages.dev/support",
-        "privacyPolicyUrl": "https://armin-web.pages.dev/privacy"
+        "privacyPolicyUrl": "https://armin-web.pages.dev/privacy",
+        "releaseNotes": "Refreshed the app icon with a new amber design."
       }
     },
     "advisory": {

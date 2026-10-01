@@ -1,20 +1,15 @@
 {
   "expo": {
-    "name": "COLLY",
+    "name": "Colly",
     "slug": "armin-mobile",
     "scheme": "com.armin.mobile",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "platforms": [
       "ios",
       "android"
     ],
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#08070B"
-    },
     "ios": {
       "supportsTablet": true,
       "icon": "./assets/icon.png",
@@ -26,7 +21,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#08070B"
+        "backgroundColor": "#D4A547"
       },
       "package": "com.armin.mobile"
     },
@@ -47,7 +42,15 @@
       "expo-build-properties",
       "expo-image",
       "expo-status-bar",
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#D4A547",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 140
+        }
+      ]
     ]
   }
 }
