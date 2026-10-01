@@ -1995,15 +1995,18 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
     // User & Likes Logic
     const [currentUser, setCurrentUser] = useState<any>(null);
-    const [likedArtists, setLikedArtists] = useState<Set<string>>(new Set());
+    // Saved artists: document id → the artist's key, so "Chaim Soutine" and "Chaïm Soutine" are one artist.
+    const [likedArtists, setLikedArtists] = useState<Map<string, string>>(new Map());
+    const readLikedArtists = (docs: Array<{ id: string; data: () => any }>) =>
+        new Map(docs.map((d) => [d.id, artistFileKey(String(d.data()?.artist || d.id))]));
 
     // liked_artworks state + optimistic toggle are owned by the shared
     // useLikedArtworkSet hook (also used by AICurationHubPage). Aliased to the
     // prior local names so existing call sites need no change.
     const { likedIds: likedArtworks, isLiked: isArtworkLiked, toggleLike } = useLikedArtworkSet();
 
-    const artistGalleryLikeKey = artistGallery?.artist ? sanitizeArtistId(artistGallery.artist) : '';
-    const artistGalleryIsLiked = artistGalleryLikeKey ? likedArtists.has(artistGalleryLikeKey) : false;
+    const artistGalleryLikeKey = artistGallery?.artist ? artistFileKey(artistGallery.artist) : '';
+    const artistGalleryIsLiked = artistGalleryLikeKey ? [...likedArtists.values()].includes(artistGalleryLikeKey) : false;
 
     useEffect(() => {
         let unsubArtist: (() => void) | null = null;
@@ -2016,10 +2019,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             if (user) {
                 if (shouldLimitNetwork()) {
                     getDocs(collection(db, `users/${user.uid}/liked_artists`)).then((snap) => {
-                        const ids = new Set(snap.docs.map(doc => doc.id));
-                        setLikedArtists(ids);
+                        setLikedArtists(readLikedArtists(snap.docs));
                     }).catch(() => {
-                        setLikedArtists(new Set());
+                        setLikedArtists(new Map());
                     });
                     return;
                 }
@@ -2027,15 +2029,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 unsubArtist = onSnapshot(
                     collection(db, `users/${user.uid}/liked_artists`),
                     (snap) => {
-                        const ids = new Set(snap.docs.map(doc => doc.id));
-                        setLikedArtists(ids);
+                        setLikedArtists(readLikedArtists(snap.docs));
                     },
                     (error) => {
                         console.error('liked_artists snapshot listener failed:', error);
                     },
                 );
             } else {
-                setLikedArtists(new Set());
+                setLikedArtists(new Map());
             }
         });
         return () => {
@@ -2129,13 +2130,23 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         if (!artistName) return;
 
         const artistId = sanitizeArtistId(artistName);
+        const key = artistFileKey(artistName);
+        // every saved spelling of this artist, so unsaving clears them all
+        const savedIds = [...likedArtists].filter(([, k]) => k === key).map(([id]) => id);
 
+        // The button follows the press at once: on a phone the list is read only once (shouldLimitNetwork).
+        const before = likedArtists;
+        setLikedArtists((prev) => {
+            const next = new Map(prev);
+            if (savedIds.length) savedIds.forEach((id) => next.delete(id));
+            else next.set(artistId, key);
+            return next;
+        });
         try {
-            const ref = doc(db, `users/${currentUser.uid}/liked_artists/${artistId}`);
-            if (likedArtists.has(artistId)) {
-                await deleteDoc(ref);
+            if (savedIds.length) {
+                await Promise.all(savedIds.map((id) => deleteDoc(doc(db, `users/${currentUser.uid}/liked_artists/${id}`))));
             } else {
-                await setDoc(ref, {
+                await setDoc(doc(db, `users/${currentUser.uid}/liked_artists/${artistId}`), {
                     artist: artistName,
                     count: artistGallery.artworks.length,
                     image: artistGallery.artworks[0]?.image || '',
@@ -2143,6 +2154,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 });
             }
         } catch (error) {
+            setLikedArtists(before);
             console.error('Failed to toggle artist like:', error);
         }
     };

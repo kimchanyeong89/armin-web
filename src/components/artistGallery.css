@@ -49,11 +49,16 @@
 /* the name and, beside its first line, the lotus that keeps the artist - no words, no box; gold when kept */
 .ag-head__name { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
 .ag-head__name h1 { flex: 0 1 auto; min-width: 0; }
+/* the save mark: a white outline until saved, then filled gold. Unsaved, it swells
+   once a moment after the page opens, to say it can be pressed; a press pops it. */
+@keyframes ag-save-hint { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.24); } 70% { transform: scale(.96); } }
+@keyframes ag-save-pop { 0% { transform: scale(.82); } 55% { transform: scale(1.2); } 100% { transform: scale(1); } }
 .ag .ag-save { flex: none; display: grid; place-items: center; width: 40px; height: 40px; margin-top: calc(.35rem + 2px);
-  color: var(--ink-3); transition: color .16s ease, transform .2s cubic-bezier(.16,1,.3,1); }
-.ag .ag-save:hover { color: var(--acc); }
-.ag .ag-save.is-on { color: var(--acc); }
-.ag .ag-save:active { transform: scale(.92); }
+  color: var(--ink); transition: color .16s ease; animation: ag-save-hint .9s cubic-bezier(.16,1,.3,1) 1.1s 2 both; }
+.ag .ag-save.is-on { color: var(--acc); animation: ag-save-pop .42s cubic-bezier(.16,1,.3,1); }
+/* only a real pointer gets the gold hover: on a phone a tapped button keeps :hover and looked saved after unsaving */
+@media (hover: hover) { .ag .ag-save:not(.is-on):hover { color: var(--acc); } }
+@media (prefers-reduced-motion: reduce) { .ag .ag-save, .ag .ag-save.is-on { animation: none; } }
 .ag-note { font-family: var(--num); font-size: 10px; letter-spacing: .06em; color: var(--ink-3); }
 
 /* the encyclopaedia's paragraph, under a caption rule */

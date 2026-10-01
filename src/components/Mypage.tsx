@@ -49,6 +49,7 @@ import Slideshow from "./Slideshow";
 import { PlaylistModal } from "./PlaylistModal";
 import { RankAvatar } from "./RankAvatar";
 import { prettifyArtistName } from "../utils/canonicalArtist";
+import { artistFileKey } from "../utils/artistKey.js";
 import {
   ArtistInitial,
   MuseumArt,
@@ -1118,6 +1119,22 @@ const MyPageImage = React.memo(({ item, width = 600, style, disableBlur = true }
   return String(prevItem.title || prevItem.name || "") === String(nextItem.title || nextItem.name || "");
 });
 
+/** Saved artists, one card each: "Chaim Soutine" and "Chaïm Soutine" (saved before the
+ *  artist page keyed saves by artistFileKey) are one artist. The newest save stands for
+ *  the group and carries every document id, so unsaving clears them all. */
+const savedAt = (v: any) => (typeof v?.toMillis === "function" ? v.toMillis() : v instanceof Date ? v.getTime() : Number(v) || 0);
+function oneCardPerArtist(records: any[]): any[] {
+  const groups = new Map<string, any[]>();
+  for (const r of records) {
+    const key = artistFileKey(String(r.artist || r.id));
+    groups.set(key, [...(groups.get(key) ?? []), r]);
+  }
+  return [...groups.values()].map((group) => {
+    const newest = group.reduce((a, b) => (savedAt(b.likedAt) > savedAt(a.likedAt) ? b : a));
+    return { ...newest, sameIds: group.map((r) => r.id) };
+  });
+}
+
 const MyPage: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -1369,7 +1386,7 @@ const MyPage: React.FC = () => {
     );
     const unsubArtists = onSnapshot(
       collection(db, `users/${user.uid}/liked_artists`),
-      (snap) => setLikedArtists(snap.docs.map((record) => ({ id: record.id, ...record.data() }))),
+      (snap) => setLikedArtists(oneCardPerArtist(snap.docs.map((record) => ({ id: record.id, ...record.data() })))),
     );
 
     // Profile + playlists still load once — they don't have the "save from
@@ -1480,13 +1497,18 @@ const MyPage: React.FC = () => {
 
     const firestoreItemId = String(itemId).includes("/") ? String(itemId).replace(/\//g, "__") : String(itemId);
     const ref = doc(db, `users/${user.uid}/${collectionName}/${firestoreItemId}`);
+    // an artist saved under more than one spelling is one card: unsaving it clears every spelling
+    const sameArtist: string[] = itemType === "artist"
+      ? likedArtists.find((a) => a.id === itemId)?.sameIds ?? [firestoreItemId]
+      : [firestoreItemId];
 
     try {
       setUnlikedItems((prev) => new Set(prev).add(itemId));
       if (itemType === "artwork") {
         setLikedArtworks((prev) => prev.filter((art) => String(art.artworkId || art.id) !== String(itemId)));
       }
-      await deleteDoc(ref);
+      if (itemType === "artist") await Promise.all(sameArtist.map((id) => deleteDoc(doc(db, `users/${user.uid}/liked_artists/${id}`))));
+      else await deleteDoc(ref);
     } catch (error) {
       console.error("Error unliking item", error);
       setUnlikedItems((prev) => {
@@ -2267,6 +2289,8 @@ const MyPage: React.FC = () => {
           style={{
             aspectRatio: "4 / 5",
             display: "grid",
+            /* one cell the card's own size: an auto cell let Safari widen it to a wide logo's proportions */
+            gridTemplate: "minmax(0, 1fr) / minmax(0, 1fr)",
             placeItems: "center",
             overflow: "hidden",
             background: isLightTheme ? "#f1f1f1" : "#151515",
@@ -2593,16 +2617,6 @@ const MyPage: React.FC = () => {
               </>
             )}
             <span className="mp-score">{t({ ko: "점수", en: "Score" })} <b>{userScore.toLocaleString()}</b></span>
-            {SHOW_PUBLIC_COLLECTIONS && user && (
-              <>
-                <i aria-hidden="true" />
-                {/* one quiet way onto the community's Curation page: a gold point and two words */}
-                <button type="button" className="mp-public" onClick={() => setPublishing(true)}>
-                  <span className="mp-public__dot" aria-hidden="true" />
-                  {t({ ko: "큐레이션 올리기", en: "Put on Curation" })}
-                </button>
-              </>
-            )}
           </p>
         </div>
 
@@ -2634,7 +2648,10 @@ const MyPage: React.FC = () => {
             and deleting live on the cards in the Playlists tab. Pressing one opens
             it in the grid; pressing it again closes it. */}
         <section className="mp-lists" id="mp-lists">
-          {playlists.length > 0 ? (
+          {playlists.length === 0 && (
+            <p className="mp-lists__empty">{t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}</p>
+          )}
+          {(playlists.length > 0 || (SHOW_PUBLIC_COLLECTIONS && user)) && (
             <ul>
               {playlists.map((playlist) => {
                 const open = activePlaylist?.id === playlist.id;
@@ -2664,9 +2681,16 @@ const MyPage: React.FC = () => {
                   </li>
                 );
               })}
+              {/* the way onto the community's Curation page, as the row's last tile */}
+              {SHOW_PUBLIC_COLLECTIONS && user && (
+                <li className="mp-list mp-list--publish">
+                  <button type="button" className="mp-list__open" onClick={() => setPublishing(true)}>
+                    <span className="mp-list__shot" aria-hidden="true"><i>+</i></span>
+                    <span className="mp-list__text"><b>{t({ ko: "큐레이션 올리기", en: "Put on Curation" })}</b></span>
+                  </button>
+                </li>
+              )}
             </ul>
-          ) : (
-            <p className="mp-lists__empty">{t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}</p>
           )}
         </section>
       </section>

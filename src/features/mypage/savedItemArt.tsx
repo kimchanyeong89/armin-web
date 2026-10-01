@@ -259,9 +259,9 @@ export function MuseumArt({ museumId, name, color, accent }: {
         role="img"
         aria-label={name}
         style={{
+          /* a fixed box the logo is fitted into, centred: no aspect-ratio sizing, which Safari stretched */
           width: "68%",
-          maxHeight: "58%",
-          aspectRatio: `${logo.w} / ${logo.h}`,
+          height: "58%",
           backgroundColor: color,
           WebkitMaskImage: mask,
           maskImage: mask,
