@@ -13,6 +13,7 @@ import { LikeIcon } from "./like/LikeIcon";
 import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NearbyExhibitionModal from "./NearbyExhibitionModal";
+import { savedLocation } from "../utils/userLocation";
 import { bookingFor, type BookingChannel } from "../data/exhibitionBooking";
 import RatingEmblems from "./Ratings/RatingEmblems";
 import { averageRating, subjectKey } from "../features/ratings/ratingWrites";
@@ -80,7 +81,7 @@ export default function NearbyExhibitions({
   isLight,
   language,
   onOpenMuseum,
-  columns = 3,
+  columns,
 }: {
   isLight: boolean;
   language: string;
@@ -101,6 +102,21 @@ export default function NearbyExhibitions({
   const [items, setItems] = useState<NearbyItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [sortMode, setSortMode] = useState("taste");
+  /* a position granted after the list opened brings the distances in */
+  const [locationTick, setLocationTick] = useState(0);
+  useEffect(() => {
+    const again = () => setLocationTick((n) => n + 1);
+    window.addEventListener("colly:location", again);
+    return () => window.removeEventListener("colly:location", again);
+  }, []);
+  /* five across on a wide screen, three on a phone, unless the host sets it */
+  const [wide, setWide] = useState(() => (typeof window !== "undefined" ? window.innerWidth : 1024));
+  useEffect(() => {
+    const onResize = () => setWide(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  const cols = columns ?? (wide >= 1024 ? 5 : wide >= 640 ? 4 : 3);
   const [selectedEx, setSelectedEx] = useState<NearbyItem | null>(null);
 
   // Likes reuse users/{uid}/liked_exhibitions, which My Page already reads.
@@ -205,20 +221,20 @@ export default function NearbyExhibitions({
       setLoading(false);
     };
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => { uLat = pos.coords.latitude; uLng = pos.coords.longitude; processExhibitions(); },
-        () => processExhibitions(),
-      );
-    } else {
-      processExhibitions();
-    }
+    /* the position the app asked for on its first visit (utils/userLocation); this
+       list never asks itself - in the app's web view the prompt did not even show,
+       and the list waited for an answer that never came */
+    const here = savedLocation();
+    if (here) { uLat = here.lat; uLng = here.lng; }
+    processExhibitions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [language]);
+  }, [language, locationTick]);
 
+  /* by distance only when the visitor shared where they are */
+  const hasDistance = items.some((item) => item.distance !== undefined);
   const SORT_LABELS = [
     { id: "taste", label: tr({ ko: "취향맞춤순", en: "Taste Match" }) },
-    { id: "distance", label: tr({ ko: "거리순", en: "Distance" }) },
+    ...(hasDistance ? [{ id: "distance", label: tr({ ko: "거리순", en: "Distance" }) }] : []),
     { id: "popular", label: tr({ ko: "평점순", en: "Top Rated" }) },
     { id: "deadline", label: tr({ ko: "마감임박", en: "Ending Soon" }) },
     { id: "newest", label: tr({ ko: "최근등록순", en: "Newest" }) },
@@ -283,7 +299,7 @@ export default function NearbyExhibitions({
           {tr({ ko: "지금 진행 중인 전시가 없습니다.", en: "No exhibitions on right now." })}
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`, gap: 8 }}>
+        <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gap: 8 }}>
           {sortedAll.map((ex, idx) => (
             <motion.div
               // Keyed by the exhibition, not its position: live ratings re-sort

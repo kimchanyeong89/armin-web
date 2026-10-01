@@ -329,7 +329,7 @@ const DetailModal = memo(({
               <Tag>📍 {distanceKm < 1 ? `${Math.round(distanceKm * 1000)}m` : `${distanceKm}km`}</Tag>
             )}
             <Tag accent={exh.status === 'upcoming' ? 'blue' : 'green'}>
-              {exh.status === 'upcoming' ? '예정' : '진행중'}
+              {exh.status === 'upcoming' ? '예정' : '진행 중'}
             </Tag>
           </div>
 

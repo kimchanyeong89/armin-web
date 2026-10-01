@@ -28,9 +28,10 @@ function getInitialLanguage(): AppLanguage {
     // ignore storage access errors
   }
 
-  // COLLY is a Korean-first product: default to Korean and let the toggle
-  // (which is what gets stored above) be the only way into English.
-  return "ko";
+  // First visit follows the device: a phone set to Korean opens in Korean, anything else in English.
+  // The KO | EN toggle (stored above) overrides it from then on.
+  const langs = [...(navigator.languages || []), navigator.language].filter(Boolean);
+  return langs.length === 0 || /^ko\b/i.test(langs[0]) ? "ko" : "en";
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

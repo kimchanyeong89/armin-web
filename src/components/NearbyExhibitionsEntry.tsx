@@ -131,7 +131,7 @@ export default function NearbyExhibitionsEntry({ frame = "hybrid", sheetFrame = 
 
   if (!shows.length) return null;
 
-  const label = language === "ko" ? "현재 진행중인 전시" : "On view now";
+  const label = language === "ko" ? "현재 진행 중인 전시" : "On view now";
   const sub = language === "ko" ? "눌러서 지도에서 보기" : "Tap to see it on the map";
   const countText = language === "ko" ? `${shows.length}개` : String(shows.length);
 

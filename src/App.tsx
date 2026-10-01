@@ -16,6 +16,7 @@ import BottomPageNavigator, { MAIN_TABS, resolveMainTabIndex } from "./component
 import WallDrawer from "./features/wall/WallDrawer";
 import WallGrip from "./features/wall/WallGrip";
 import LanguageToggle from "./components/LanguageToggle";
+import { askLocationOnce } from "./utils/userLocation";
 // LogOut is unused here and was already unused before this change; left in place.
 import { LogOut } from "lucide-react";
 import { SHOW_SALES_UI } from "./config/features";
@@ -132,6 +133,24 @@ function AppContent() {
   const { user, loading: authLoading } = useAuth();
   const { language, t } = useLanguage();
   const { itemCount } = useCart();
+  /* where the visitor is, asked once on the first visit and kept (utils/userLocation) */
+  useEffect(() => { askLocationOnce(); }, []);
+  /* KO | EN belongs to the top of the page: it leaves as the page scrolls down
+     and comes back at the top, instead of riding over the content. Pages scroll
+     in their own boxes, so any scroll is heard (capture) and its box read. */
+  const [langAway, setLangAway] = useState(false);
+  useEffect(() => {
+    const onScroll = (event: Event) => {
+      const box = event.target as Element | Document;
+      const top = box instanceof Element ? box.scrollTop : window.scrollY;
+      /* small boxes (a sideways row, a list inside a card) do not count */
+      if (box instanceof Element && box.clientHeight < window.innerHeight * 0.6) return;
+      setLangAway(top > 40);
+    };
+    document.addEventListener("scroll", onScroll, { capture: true, passive: true });
+    return () => document.removeEventListener("scroll", onScroll, { capture: true } as EventListenerOptions);
+  }, []);
+  useEffect(() => { setLangAway(false); }, [location.pathname]);
   const languageMorphScopeRef = useRef<HTMLDivElement | null>(null);
   const prevLanguageRef = useRef(language);
 
@@ -1002,7 +1021,7 @@ function AppContent() {
           below the profile cluster (z 250012) and full-screen overlays so it
           never covers their close buttons, yet above page content. */}
       <div
-        className="app-language-toggle"
+        className={langAway ? "app-language-toggle is-away" : "app-language-toggle"}
         style={{
           position: 'fixed',
           top: 'max(12px, calc(env(safe-area-inset-top, 0px) + 10px))',

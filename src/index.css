@@ -265,7 +265,9 @@ body[data-home="true"] {
    language switch is fixed above every layer, so it has to step aside rather
    than sit on the panel's close button. */
 html[data-overlay-panel] .app-language-toggle { opacity: 0; pointer-events: none; }
-.app-language-toggle { transition: opacity .18s ease; }
+.app-language-toggle { transition: opacity .18s ease, transform .24s ease; }
+/* scrolled down: KO | EN stays with the top of the page (App, langAway) */
+.app-language-toggle.is-away { opacity: 0; transform: translateY(-8px); pointer-events: none; }
 
 /* A tab's opening lines rise in one after another as the tab opens — the
    motion the map's reading guide gives its own lines (GUIDE_MOTION and
