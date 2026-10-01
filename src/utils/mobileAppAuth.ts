@@ -77,6 +77,11 @@ export function isMobileAppContainer(): boolean {
   return !!getBridge();
 }
 
+// iOS builds from 1.0.2 sign in with Apple through the native sheet (apps/mobile App.tsx marks the page).
+export function hasNativeAppleSignIn(): boolean {
+  return typeof document !== "undefined" && document.documentElement.getAttribute("data-native-apple") === "1";
+}
+
 const PRODUCTION_WEB_URL = "https://armin-web.pages.dev";
 
 export function buildExternalLoginUrl(provider: MobileAuthProvider, options?: { naverReauth?: boolean }): string {

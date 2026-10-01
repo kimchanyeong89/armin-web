@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ActivityIndicator, Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import * as WebBrowser from "expo-web-browser";
+import * as AppleAuthentication from "expo-apple-authentication";
+import * as Crypto from "expo-crypto";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { WebView } from "react-native-webview";
@@ -107,6 +109,9 @@ const RESPONSIVE_INJECTION = `
 })();
 true;
 `;
+
+// Tells the web login page this build can do Apple sign-in natively (iOS only; older builds lack it).
+const NATIVE_APPLE_MARK = Platform.OS === "ios" ? "\ndocument.documentElement.setAttribute('data-native-apple', '1'); true;" : "";
 
 export default function App() {
   const webViewRef = useRef<WebView>(null);
@@ -228,6 +233,27 @@ export default function App() {
     return true;
   };
 
+  const signInWithAppleNative = async () => {
+    try {
+      const rawNonce = Crypto.randomUUID();
+      const hashedNonce = await Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, rawNonce);
+      const c = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+        nonce: hashedNonce,
+      });
+      if (!c.identityToken) return;
+      const detail = { provider: "apple", idToken: c.identityToken, rawNonce };
+      webViewRef.current?.injectJavaScript(
+        `window.dispatchEvent(new CustomEvent('auth:mobile-credential', { detail: ${JSON.stringify(detail)} })); true;`,
+      );
+    } catch (e) {
+      if ((e as { code?: string }).code !== "ERR_REQUEST_CANCELED") console.warn("[AUTH] Apple sign-in failed", e);
+    }
+  };
+
   const handleWebMessage = (event: WebViewMessageEvent) => {
     const raw = String(event.nativeEvent.data || "").trim();
     if (!raw) return;
@@ -244,6 +270,13 @@ export default function App() {
 
       if (payload.type === "DEBUG_BRIDGE") {
         console.log("[WV:" + (payload.level || "log") + "]", payload.message || "");
+        return;
+      }
+
+      // Apple on iOS: the native sheet, not the browser. Firebase gets Apple's idToken plus the
+      // raw nonce whose SHA-256 went to Apple — no Services ID or web redirect needed.
+      if (payload.type === "OPEN_EXTERNAL_LOGIN" && payload.provider === "apple" && Platform.OS === "ios") {
+        signInWithAppleNative();
         return;
       }
 
@@ -365,7 +398,7 @@ export default function App() {
           source={{ uri: webAppUrl }}
           style={styles.webView}
           userAgent={IOS_SAFARI_USER_AGENT}
-          injectedJavaScriptBeforeContentLoaded={RESPONSIVE_INJECTION}
+          injectedJavaScriptBeforeContentLoaded={RESPONSIVE_INJECTION + NATIVE_APPLE_MARK}
           onShouldStartLoadWithRequest={handleShouldStart}
           onMessage={handleWebMessage}
           onLoadStart={() => {

@@ -11,11 +11,10 @@
 // one-line change with no other wiring.
 export const SHOW_SALES_UI = false;
 
-// APPLE_SIGNIN_READY — whether "Continue with Apple" can finish. Apple is not
-// yet turned on in Firebase Authentication (only Google is, as of 2026-09-29),
-// so the sign-in fails half-way and throws the member back out. While false,
-// the button explains that instead of starting. Flip to `true` once Apple is
-// set up in Firebase (Services ID, Team ID, key) - nothing else to change.
+// APPLE_SIGNIN_READY — whether "Continue with Apple" can finish on the WEB. Firebase has Apple
+// turned on for the iOS app only (bundle id com.armin.mobile, 2026-10-01): the iOS build signs in
+// with the native sheet and needs no flag (see hasNativeAppleSignIn). The web redirect flow still
+// needs a Services ID, Team ID and key in Firebase; flip this to `true` once those are set.
 export const APPLE_SIGNIN_READY = false;
 
 // SHOW_PUBLIC_COLLECTIONS — anyone may browse other people's liked works and

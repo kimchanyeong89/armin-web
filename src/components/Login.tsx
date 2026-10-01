@@ -7,7 +7,7 @@ import { auth } from "../firebase";
 import "./loginRedesign.css";
 import { APPLE_SIGNIN_READY } from "../config/features";
 import { useLanguage } from "../contexts/LanguageContext";
-import { isMobileAppContainer, requestExternalMobileLogin, startGoogleCustomOAuth } from "../utils/mobileAppAuth";
+import { hasNativeAppleSignIn, isMobileAppContainer, requestExternalMobileLogin, startGoogleCustomOAuth } from "../utils/mobileAppAuth";
 
 const AUTO_START_KEY_PREFIX = "auth:auto-start:";
 const REDIRECT_LOCK_PREFIX = "auth:redirect-lock:";
@@ -22,6 +22,8 @@ const Login: React.FC = () => {
   const [loginHint, setLoginHint] = useState<string | null>(null);
   const [pendingProvider, setPendingProvider] = useState<"google" | "apple" | "naver" | null>(null);
   const [manualDeepLinkFallback, setManualDeepLinkFallback] = useState<string | null>(null);
+  const [emailOpen, setEmailOpen] = useState(false);
+  const [emailBusy, setEmailBusy] = useState(false);
 
   const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const isExternalBrowserFlow = query.get("externalBrowser") === "1";
@@ -213,8 +215,27 @@ const Login: React.FC = () => {
     }
   }, [isExternalBrowserFlow, isMobileContainer, naverReauthFromQuery, requestExternalAuth, shouldAutoStartProvider, t]);
 
+  // Email + password: existing accounts only (no sign-up here). Kept for accounts made in the
+  // Firebase console, such as the App Review demo account.
+  const handleEmailLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get("email") || "").trim();
+    const password = String(form.get("password") || "");
+    if (!email || !password) return;
+    setEmailBusy(true);
+    try {
+      const { signInWithEmailAndPassword } = await import("firebase/auth");
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch {
+      setLoginHint(t({ ko: "이메일 또는 비밀번호가 맞지 않습니다.", en: "The email or password is incorrect." }));
+    } finally {
+      setEmailBusy(false);
+    }
+  };
+
   const handleLoginWithProvider = useCallback(async (providerType: 'google' | 'apple', forceRedirect = false) => {
-    if (providerType === 'apple' && !APPLE_SIGNIN_READY) {
+    if (providerType === 'apple' && !APPLE_SIGNIN_READY && !hasNativeAppleSignIn()) {
       setLoginHint(t({
         ko: "Apple 로그인은 아직 준비 중입니다. 지금은 Google이나 네이버로 로그인해 주세요.",
         en: "Sign in with Apple isn't ready yet. Please use Google or Naver for now.",
@@ -718,6 +739,16 @@ const Login: React.FC = () => {
           <button type="button" className="lg-alt" onClick={() => handleNaverLogin({ reauth: true })} disabled={pendingProvider !== null}>
             {t({ ko: "다른 네이버 아이디로 로그인", en: "Use a different Naver ID" })}
           </button>
+          <button type="button" className="lg-alt" onClick={() => setEmailOpen((v) => !v)}>
+            {t({ ko: "이메일로 로그인", en: "Sign in with email" })}
+          </button>
+          {emailOpen && (
+            <form className="lg-email" onSubmit={handleEmailLogin}>
+              <input name="email" type="email" autoComplete="username" placeholder={t({ ko: "이메일", en: "Email" })} required />
+              <input name="password" type="password" autoComplete="current-password" placeholder={t({ ko: "비밀번호", en: "Password" })} required />
+              <button type="submit" disabled={emailBusy}>{t({ ko: "로그인", en: "Sign in" })}</button>
+            </form>
+          )}
 
           {loginHint ? (
             <div

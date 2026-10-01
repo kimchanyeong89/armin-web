@@ -41,6 +41,15 @@
 .lg .lg-alt:hover:not(:disabled) { color: var(--lg-gold); }
 .lg .lg-alt:disabled { opacity: .5; cursor: default; }
 
+/* email sign-in: opened from the quiet line, ruled like the providers */
+.lg-email { display: grid; gap: 8px; margin: 12px 0 4px; }
+.lg-email input { width: 100%; box-sizing: border-box; height: 46px; padding: 0 12px; border: 1px solid var(--lg-hair); border-radius: 8px;
+  background: transparent; color: var(--lg-fg); font: 500 15px/1 var(--lg-sans); }
+.lg-email input:focus { outline: none; border-color: var(--lg-gold); }
+.lg-email button { height: 46px; border: 0; border-radius: 8px; background: var(--lg-gold); color: #080808; cursor: pointer;
+  font: 700 14px/1 var(--lg-display); }
+.lg-email button:disabled { opacity: .5; cursor: default; }
+
 .lg-foot { margin-top: 18px; font-size: 11px; line-height: 1.7; color: var(--lg-dim); }
 
 @media (prefers-reduced-motion: reduce) { .lg * { transition: none !important; } }
