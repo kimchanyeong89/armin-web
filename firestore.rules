@@ -25,15 +25,18 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-    // A collection — liked artworks and playlists — is open to everyone unless
-    // its owner hid it (public_profiles/{uid}.hidden). Only the owner writes.
-    function collectionShown(userId) {
+    // Liked artworks are private unless their owner chose to put them on the
+    // community's Curation page (public_profiles/{uid}.likesPublic). Playlists
+    // go public one by one through their public copies (public_playlists).
+    // Only the owner writes either.
+    function likesShown(userId) {
       let card = /databases/$(database)/documents/public_profiles/$(userId);
-      return !exists(card) || get(card).data.get('hidden', false) != true;
+      return exists(card) && get(card).data.get('likesPublic', false) == true
+        && get(card).data.get('hidden', false) != true;
     }
 
     match /users/{userId}/liked_artworks/{artworkId} {
-      allow read: if (request.auth != null && request.auth.uid == userId) || collectionShown(userId);
+      allow read: if (request.auth != null && request.auth.uid == userId) || likesShown(userId);
       allow write: if request.auth != null && request.auth.uid == userId;
     }
 
@@ -62,10 +65,10 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
-    // Playlists and their items: open like liked_artworks, owner writes.
+    // Playlists and their items: the owner only (a playlist made public is read
+    // from its copy in public_playlists).
     match /users/{userId}/playlists/{document=**} {
-      allow read: if (request.auth != null && request.auth.uid == userId) || collectionShown(userId);
-      allow write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
     // Allow authenticated users to read/write their own saved_curations subcollection
@@ -173,8 +176,9 @@ service cloud.firestore {
     match /public_profiles/{userId} {
       allow read: if true;
       allow write: if request.auth != null && request.auth.uid == userId
-        && request.resource.data.keys().hasOnly(['name', 'photoURL', 'photoCrop', 'rank', 'hidden', 'updatedAt'])
-        && request.resource.data.get('hidden', false) is bool;
+        && request.resource.data.keys().hasOnly(['name', 'photoURL', 'photoCrop', 'rank', 'hidden', 'likesPublic', 'updatedAt'])
+        && request.resource.data.get('hidden', false) is bool
+        && request.resource.data.get('likesPublic', false) is bool;
     }
 
     // A playlist its owner made public: a copy of its name, cover and works that
