@@ -1,5 +1,4 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState, useRef } from "react";
-import { SaveIcon } from "./like/SaveIcon";
 import { RankInfo } from "./RankInfo";
 import "./mypageRedesign.css";
 import { useAuth } from "../contexts/AuthContext";
@@ -20,6 +19,7 @@ import {
 import {
   ArrowLeft,
   ArrowRight,
+  BookmarkPlus,
   ListMusic,
   MapPin,
   Pencil,
@@ -2182,7 +2182,7 @@ const MyPage: React.FC = () => {
             }}
             title="Save to Playlist"
           >
-            <SaveIcon size={12} strokeWidth={2.2} />
+            <BookmarkPlus size={12} strokeWidth={2.2} />
           </button>
 
           {SHOW_SALES_UI && (

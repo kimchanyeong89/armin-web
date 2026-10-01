@@ -1,7 +1,7 @@
 import { Fragment, useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
 import { SaveIcon } from './like/SaveIcon';
 import { createPortal } from 'react-dom';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, BookmarkPlus } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus, looksNonEnglish, warmPreciseSearch } from '../utils/siglipSearch';
 import { searchTextServer } from '../utils/serverKeywordSearch';
@@ -5598,7 +5598,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                             aria-label={t({ ko: '플레이리스트에 추가', en: 'Save to playlist' })}
                                                                             onClick={(e) => { e.stopPropagation(); e.preventDefault(); setPlaylistArtwork(art); }}
                                                                         >
-                                                                            <SaveIcon size={14} strokeWidth={2} />
+                                                                            <BookmarkPlus size={14} strokeWidth={2} />
                                                                         </button>
                                                                         <span
                                                                             onClick={(e) => e.stopPropagation()}

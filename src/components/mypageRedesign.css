@@ -29,6 +29,12 @@
   background: rgba(0,0,0,.5); color: #fff; cursor: pointer; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   transition: background .16s ease; }
 .mp-acts button:hover { background: rgba(0,0,0,.74); }
+/* a computer's cards are large: the like and playlist marks grow with them (a phone keeps 22px) */
+@media (min-width: 768px) {
+  .mp-acts { right: 10px; top: 10px; gap: 6px; }
+  .mp-acts button { width: 34px; height: 34px; }
+  .mp-acts button svg { width: 17px; height: 17px; }
+}
 /* the work that is the page's background */
 
 /* ── the card: title and artist, always on, lower left ────────── */
