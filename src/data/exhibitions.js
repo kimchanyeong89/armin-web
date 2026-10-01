@@ -3776,6 +3776,30 @@ export const exhibitions = [
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3672087&listType=list",
         status: "ongoing",
         sourceId: "3672087"
+      },
+      {
+        id: "national-museum-korea-2026-3763678",
+        title: "모던 아트의 탄생 - 스위스 쿤스트하우스 취리히 소장품 특별전",
+        description: "국립중앙박물관은 스위스 쿤스트하우스 취리히(Kunsthaus Zurich), 서울신문과 함께 <모던 아트의 탄생 - 스위스 쿤스트하우스 취리히 소장품 특별전>을 공동 개최합니다. 이번 전시는 18세기에서 20세기에 전개된 유럽 미술사의 흐름을 한눈에 보여주는 전시입니다. 모던 아트가 본격적으로 시작하기 전부터 아방가르드로 나아가는 200년의 큰 흐름을 다루는 이번 전시에는 모네, 샤갈, 마티스, 피카소, 브랑쿠시, 칸딘스키, 마그리트, 달리 등 대표적인 작가들의 작품 85점이 출품됩니다. 호들러와 클레, 자코메티 등 스위스 출신의 대표적인 예술가들도 소개됩니다.",
+        venue: "특별전시실 1",
+        startDate: "2026-11-27",
+        endDate: "2027-04-18",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-3763678-a6b25e3d.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=upcomming&exhiSpThemId=3763678&listType=list",
+        status: "upcoming",
+        sourceId: "3763678"
+      },
+      {
+        id: "national-museum-korea-2026-3763677",
+        title: "마리 앙투아네트 스타일",
+        description: "국립중앙박물관은 영국 빅토리아 앨버트 박물관과 특별전 <마리 앙투아네트 스타일>을 공동 개최합니다. 이번 전시는 18세기 프랑스 왕비 마리 앙투아네트가 패션과 공간, 취향을 통해 스스로를 연출하며 당대의 미감을 형성한 데서 출발해, 사치와 향락의 상징이자 동경의 대상, 혁명의 희생자이자 패션 아이콘으로 엇갈리게 소비되어 온 다양한 이미지를 함께 보여줍니다. 나아가 이러한 이미지가 예술과 패션, 대중문화 속에서 어떻게 반복되고 변주되며, 오늘날까지 이어지고 있는지를 조명합니다.",
+        venue: "특별전시실2",
+        startDate: "2026-12-18",
+        endDate: "2027-03-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-3763677-2174881f.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=upcomming&exhiSpThemId=3763677&listType=list",
+        status: "upcoming",
+        sourceId: "3763677"
       }
     ],
     pastExhibitions: [
@@ -4097,7 +4121,7 @@ export const exhibitions = [
         venue: "서소문본관",
         startDate: "2026-10-21",
         endDate: "2027-02-21",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1559068-0c899101.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/seoul-museum-of-art-2026-1559068-f4487e3c.jpg",
         officialUrl: "https://sema.seoul.go.kr",
         status: "upcoming",
         sourceId: "1559068"
@@ -6175,18 +6199,6 @@ export const exhibitions = [
         sourceId: "202508210001995"
       },
       {
-        id: "mmca-gwacheon-2026-202408210001821",
-        title: "로드 무비: 1945년 이후 한·일 미술",
-        description: "1945년부터 동시대까지 80년간 이어온 한·일 미술 교류사를 조망하는 전시",
-        venue: "과천관",
-        startDate: "2026-05-14",
-        endDate: "2026-09-27",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-gwacheon-2026-202408210001821-2a46043c.jpg",
-        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202408210001821",
-        status: "ongoing",
-        sourceId: "202408210001821"
-      },
-      {
         id: "mmca-gwacheon-2026-202601060002026",
         title: "과천관 40주년 프로젝트: 빛의 상상들",
         description: "과천관 개관 40주년을 기념하여 ‘빛‘을 주제로 한 장소특정적 설치 프로젝트",
@@ -6197,9 +6209,33 @@ export const exhibitions = [
         officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202601060002026",
         status: "ongoing",
         sourceId: "202601060002026"
+      },
+      {
+        id: "mmca-gwacheon-2027-202609230002096",
+        title: "박석원",
+        description: "60여 년 동안 한국 추상 조각을 전개한 박석원 작가의 회고전",
+        venue: "과천관",
+        startDate: "2027-02-18",
+        endDate: "2027-06-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-gwacheon-2027-202609230002096-3d7f4f6d.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=2&exhId=202609230002096",
+        status: "upcoming",
+        sourceId: "202609230002096"
       }
     ],
     pastExhibitions: [
+      {
+        id: "mmca-gwacheon-2026-202408210001821",
+        title: "로드 무비: 1945년 이후 한·일 미술",
+        description: "1945년부터 동시대까지 80년간 이어온 한·일 미술 교류사를 조망하는 전시",
+        venue: "과천관",
+        startDate: "2026-05-14",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-gwacheon-2026-202408210001821-2a46043c.jpg",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/exhibitionsDetail.do?exhFlag=1&exhId=202408210001821",
+        status: "past",
+        sourceId: "202408210001821"
+      },
       {
         id: "mmca-gwacheon-2026-artbank",
         title: "미술은행 20주년 특별전 «돌아온 미래: 형태와 생각의 발현»",
@@ -6240,19 +6276,6 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "leeum-2026-orozco",
-        title: "가브리엘 오로스코: 정원",
-        titleEn: "Gabriel Orozco: Garden",
-        description: "멕시코 작가 가브리엘 오로스코의 신규 커미션 야외 작품. 리움 야외 데크를 자연 지향적이고 공공 접근 가능한 공간으로 재구성하는 설치 프로젝트.",
-        venue: "야외 데크",
-        startDate: "2026-04-03",
-        endDate: "2026-09-30",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-museum-2026-97-986b75f1.jpg",
-        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
-        status: "ongoing",
-        sourceId: "97"
-      },
-      {
         id: "leeum-museum-2026-93",
         title: "다른 공간 안으로: 여성 작가들의 공감각적 환경 1956-1976",
         description: "《다른 공간 안으로: 여성 작가들의 공감각적 환경 1956–1976》은 전후 현대미술사가 오랫동안 지나쳐 온 여성 작가들의 환경 작업을 체계적으로 재조명하는 국제기획전입니다. '환경(ambiente/environment)'은 관람자가 공간 안으로 걸어 들어가 빛, 소리, 색, 공기, 움직임을 온몸으로 경험하는 몰입형 예술 형식입니다. 관람자는 대상(object)을 바라보는 대신 공간 자체를 경험하며, 그 안으로 들어서는 순간 비로소 작품은 완성됩니다. 1949년 루치오 폰타나(Lucio Fontana)가 처음 선보인 '환경(ambiente)'은 이후 20여 년간 여러 작가들에게 급진적인 실험의 장이었으나, 1976년 베니스 비엔날레를 기점으로 서서히 ‘설치’라는 용어로 흡수되며 그 고유의 역사를 잃었습니다.",
@@ -6279,6 +6302,19 @@ export const exhibitions = [
       }
     ],
     pastExhibitions: [
+      {
+        id: "leeum-2026-orozco",
+        title: "가브리엘 오로스코: 정원",
+        titleEn: "Gabriel Orozco: Garden",
+        description: "멕시코 작가 가브리엘 오로스코의 신규 커미션 야외 작품. 리움 야외 데크를 자연 지향적이고 공공 접근 가능한 공간으로 재구성하는 설치 프로젝트.",
+        venue: "야외 데크",
+        startDate: "2026-04-03",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-museum-2026-97-986b75f1.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
+        status: "past",
+        sourceId: "97"
+      },
       {
         id: "leeum-2026-sehgal",
         title: "티노 세갈 개인전",
@@ -6362,19 +6398,6 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "dmuseum-2025-home2",
-        title: "취향가옥 2: Art in Life, Life in Art 2",
-        titleEn: "A House of Taste 2: Art in Life, Life in Art 2",
-        description: "디뮤지엄 개관 10주년 기념 대형전. 약 600점의 작품이 영화감독·차 소믈리에·출판 에디터·패션 디렉터·건축가의 상상 속 집 5곳에 배치된다. 백남준의 'Apple Tree'(1995), 이우환, 하종현, 로이 리히텐슈타인, 올라퍼 엘리아슨 등 참여.",
-        venue: "디뮤지엄",
-        startDate: "2025-06-28",
-        endDate: "2026-09-20",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/d-museum-2025-prg202506050001-1346784f.jpg",
-        officialUrl: "http://www.daelimmuseum.org",
-        status: "ongoing",
-        sourceId: "PRG202506050001"
-      },
-      {
         id: "d-museum-2026-prg202607280001",
         title: "PUBLIC ART SPACE: 김기린",
         titleEn: "PUBLIC ART SPACE: Kim Guiline",
@@ -6387,7 +6410,21 @@ export const exhibitions = [
         sourceId: "PRG202607280001"
       }
     ],
-    pastExhibitions: []
+    pastExhibitions: [
+      {
+        id: "dmuseum-2025-home2",
+        title: "취향가옥 2: Art in Life, Life in Art 2",
+        titleEn: "A House of Taste 2: Art in Life, Life in Art 2",
+        description: "디뮤지엄 개관 10주년 기념 대형전. 약 600점의 작품이 영화감독·차 소믈리에·출판 에디터·패션 디렉터·건축가의 상상 속 집 5곳에 배치된다. 백남준의 'Apple Tree'(1995), 이우환, 하종현, 로이 리히텐슈타인, 올라퍼 엘리아슨 등 참여.",
+        venue: "디뮤지엄",
+        startDate: "2025-06-28",
+        endDate: "2026-09-20",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/d-museum-2025-prg202506050001-1346784f.jpg",
+        officialUrl: "http://www.daelimmuseum.org",
+        status: "past",
+        sourceId: "PRG202506050001"
+      }
+    ]
   },
 
   {
@@ -6554,18 +6591,6 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "hangaram-art-museum-2026-78392",
-        title: "스페인의 거장 고야: 이성이 잠들 때, 괴물이 깨어난다",
-        titleEn: "Francisco Goya",
-        venue: "한가람미술관 제7전시실",
-        startDate: "2026-06-26",
-        endDate: "2026-09-30",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78392-62cb464d.jpg",
-        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78392",
-        status: "ongoing",
-        sourceId: "78392"
-      },
-      {
         id: "hangaram-art-museum-2026-78112",
         title: "와일드스미스 그림책 원화展",
         titleEn: "Brian Wildsmith Exhibition: A Master of Picture Books",
@@ -6590,18 +6615,6 @@ export const exhibitions = [
         sourceId: "78093"
       },
       {
-        id: "hangaram-art-museum-2026-76454",
-        title: "이완 - 나는 쓴다",
-        titleEn: "Ewan: I Write, to find myself",
-        venue: "서울서예박물관 제3전시실",
-        startDate: "2026-07-17",
-        endDate: "2026-09-27",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-76454-47c326b3.jpg",
-        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76454",
-        status: "ongoing",
-        sourceId: "76454"
-      },
-      {
         id: "hangaram-2026-spain",
         title: "스페인 미술 500년",
         titleEn: "500 Years of Spanish Art",
@@ -6611,8 +6624,20 @@ export const exhibitions = [
         endDate: "2027-01-20",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77679-35d1e4cd.jpg",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77679",
-        status: "upcoming",
+        status: "ongoing",
         sourceId: "77679"
+      },
+      {
+        id: "hangaram-art-museum-2026-78092",
+        title: "[유연홍 개인전] 추억, 그리고 그리움",
+        titleEn: "Yoo Yeonhong Solo Exhibition : Memories and Longing",
+        venue: "서울서예박물관 제3전시실",
+        startDate: "2026-10-03",
+        endDate: "2026-10-16",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78092-c5667322.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78092",
+        status: "upcoming",
+        sourceId: "78092"
       },
       {
         id: "hangaram-art-museum-2026-78313",
@@ -6640,6 +6665,30 @@ export const exhibitions = [
       }
     ],
     pastExhibitions: [
+      {
+        id: "hangaram-art-museum-2026-78392",
+        title: "스페인의 거장 고야: 이성이 잠들 때, 괴물이 깨어난다",
+        titleEn: "Francisco Goya",
+        venue: "한가람미술관 제7전시실",
+        startDate: "2026-06-26",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78392-62cb464d.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78392",
+        status: "past",
+        sourceId: "78392"
+      },
+      {
+        id: "hangaram-art-museum-2026-76454",
+        title: "이완 - 나는 쓴다",
+        titleEn: "Ewan: I Write, to find myself",
+        venue: "서울서예박물관 제3전시실",
+        startDate: "2026-07-17",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-76454-47c326b3.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76454",
+        status: "past",
+        sourceId: "76454"
+      },
       {
         id: "hangaram-2026-botero",
         title: "페르난도 보테로: 형태의 미학",
@@ -6674,32 +6723,12 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "ddp-gallery-2026-35f08742",
-        title: "BtheB 뷰티기획전<BEAUTY, TRANSLATED>",
-        description: "아름다움은 하나의 기준으로 설명되지 않습니다. 수분과 진정, 컬러와 표현, 기술과 진단, 회복과 리추얼처럼 서로 다른 뷰티의 언어는 저마다의 방식으로 아름다움을 말합니다. 이번 전시는 그 다양한 뷰티의 언어를 하나의 공간 안에서 읽고, 해석하고, 경험하는 전시입니다. 제품을 단순히 나열하는 대신, 각기 다른 아름다움의 방식을 키워드와 문장, 장면으로 번역해 보여줍니다. Beauty cannot be explained through a single standard. Hydration and soothing, color and expression, technology and diagnosis, recovery and ritual—each language of beauty expresses beauty in it",
-        startDate: "2026-06-13",
-        endDate: "2026-09-27",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-35f08742-102013fd.jpg",
-        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
-        status: "ongoing"
-      },
-      {
         id: "ddp-gallery-2026-0c0ec93a",
         title: "아기상어 비밀 초대장: 비커밍 샤크",
         description: "6월, 오직 ‘상어’만 입장 가능한 비밀 통로가 DDP에 열린다! 전세계 2억 8천만 구독자가 사랑한 캐릭터 ‘아기상어’의 세계최초 AI체험형 전시 상어로 변신해 바닷속 스페셜 게스트가 될 준비 되셨나요?",
         startDate: "2026-06-18",
         endDate: "2026-12-19",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-0c0ec93a-dae68855.jpg",
-        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
-        status: "ongoing"
-      },
-      {
-        id: "ddp-gallery-2026-54d6036f",
-        title: "LALARECIPE x MeME : Happiness Recipe for Every Skin",
-        description: "B the B DOWNTOWN에서 라라레서피와 MeME 작가가 만나 뷰티와 아트를 연결한 특별한 협업 전시를 선보입니다. 이번 전시는 MeME 작가의 ‘Problem Me, Solution ME’와 라라레서피의 ‘Happiness Recipe’를 연결해, 나를 이해하고 돌보며 나만의 행복을 발견하는 과정을 감각적인 공간으로 풀어냈습니다. 팝아트와 K-Beauty가 어우러진 전시 공간은 YUZU VITA C, CHERRY GLOW & SUNSCREEN, MATCHA PDRN, BAKUCHIOL 등 총 4개의 테마존으로 구성됩니다. 각 공간에서는 다채로운 색감과 독특한 텍스처의 뷰티 제품을 직접 경험하고, MeME 작가의 대표 캐릭터와 작품을 함께 만나볼 수 있습니다. 관람객이 직접 참여하며 전시를 즐길 수 있",
-        startDate: "2026-08-01",
-        endDate: "2026-09-30",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-54d6036f-388a01f3.jpg",
         officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
         status: "ongoing"
       },
@@ -6711,9 +6740,48 @@ export const exhibitions = [
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-b9c83085-d55d77d2.jpg",
         officialUrl: "https://www.ddp.or.kr/index.html?menuno=240&siteno=2&bbsno=614&boardno=15&bbstopno=614&act=view&subno=1",
         status: "ongoing"
+      },
+      {
+        id: "ddp-gallery-2026-bb021b14",
+        title: "현대카드 컬처프로젝트 31 웨인 티보 전 <The Order of Things>",
+        startDate: "2026-09-19",
+        endDate: "2027-02-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-bb021b14-b286f746.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240&siteno=2&bbsno=610&boardno=15&bbstopno=610&act=view&subno=1",
+        status: "ongoing"
+      },
+      {
+        id: "ddp-gallery-2026-b98ab5f4",
+        title: "한국의 색: COLOR OF KOREA",
+        description: "전통을 과거의 유산으로만 바라보지 않고, 오늘날에도 계속 만들어지고 사용되며 변화하는 ‘살아 있는 문화’로 조명하다.",
+        startDate: "2026-09-23",
+        endDate: "2026-10-06",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-b98ab5f4-e69d91ce.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240&siteno=2&bbsno=615&boardno=15&bbstopno=615&act=view&subno=1",
+        status: "ongoing"
       }
     ],
     pastExhibitions: [
+      {
+        id: "ddp-gallery-2026-54d6036f",
+        title: "LALARECIPE x MeME : Happiness Recipe for Every Skin",
+        description: "B the B DOWNTOWN에서 라라레서피와 MeME 작가가 만나 뷰티와 아트를 연결한 특별한 협업 전시를 선보입니다. 이번 전시는 MeME 작가의 ‘Problem Me, Solution ME’와 라라레서피의 ‘Happiness Recipe’를 연결해, 나를 이해하고 돌보며 나만의 행복을 발견하는 과정을 감각적인 공간으로 풀어냈습니다. 팝아트와 K-Beauty가 어우러진 전시 공간은 YUZU VITA C, CHERRY GLOW & SUNSCREEN, MATCHA PDRN, BAKUCHIOL 등 총 4개의 테마존으로 구성됩니다. 각 공간에서는 다채로운 색감과 독특한 텍스처의 뷰티 제품을 직접 경험하고, MeME 작가의 대표 캐릭터와 작품을 함께 만나볼 수 있습니다. 관람객이 직접 참여하며 전시를 즐길 수 있",
+        startDate: "2026-08-01",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-54d6036f-388a01f3.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
+        status: "past"
+      },
+      {
+        id: "ddp-gallery-2026-35f08742",
+        title: "BtheB 뷰티기획전<BEAUTY, TRANSLATED>",
+        description: "아름다움은 하나의 기준으로 설명되지 않습니다. 수분과 진정, 컬러와 표현, 기술과 진단, 회복과 리추얼처럼 서로 다른 뷰티의 언어는 저마다의 방식으로 아름다움을 말합니다. 이번 전시는 그 다양한 뷰티의 언어를 하나의 공간 안에서 읽고, 해석하고, 경험하는 전시입니다. 제품을 단순히 나열하는 대신, 각기 다른 아름다움의 방식을 키워드와 문장, 장면으로 번역해 보여줍니다. Beauty cannot be explained through a single standard. Hydration and soothing, color and expression, technology and diagnosis, recovery and ritual—each language of beauty expresses beauty in it",
+        startDate: "2026-06-13",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-35f08742-102013fd.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
+        status: "past"
+      },
       {
         id: "ddp-2026-btheb",
         title: "BtheB 뷰티기획전 <Beauty For All>",
@@ -6768,7 +6836,8 @@ export const exhibitions = [
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Gyeongbokgung_palace.jpg/1280px-Gyeongbokgung_palace.jpg",
     floorPlan: "",
     permanentExhibitions: [],
-    temporaryExhibitions: [
+    temporaryExhibitions: [],
+    pastExhibitions: [
       {
         id: "daelim-2025-tanaami-dpublic",
         title: "PUBLIC ART SPACE: 케이이치 타나아미",
@@ -6778,10 +6847,8 @@ export const exhibitions = [
         endDate: "2026-09-20",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/daelim-2025-tanaami-dpublic.jpg",
         officialUrl: "https://www.daelimmuseum.org/exhibition/current",
-        status: "ongoing"
-      }
-    ],
-    pastExhibitions: [
+        status: "past"
+      },
       {
         id: "daelim-2025-petra",
         title: "페트라 콜린스: fangirl",
@@ -6839,7 +6906,7 @@ export const exhibitions = [
         venue: "그라운드시소 이스트",
         startDate: "2026-07-17",
         endDate: "2026-11-29",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1345-d82a5a5b.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1345-bddd872c.jpg",
         officialUrl: "https://www.groundseesaw.co.kr/product/detail.html?product_no=1345&cate_no=47",
         status: "ongoing",
         sourceId: "1345"
@@ -6850,7 +6917,7 @@ export const exhibitions = [
         venue: "그라운드시소 이스트",
         startDate: "2026-07-17",
         endDate: "2026-11-29",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1344-f3b2eb14.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1344-605e8bd1.jpg",
         officialUrl: "https://www.groundseesaw.co.kr/product/detail.html?product_no=1344&cate_no=47",
         status: "ongoing",
         sourceId: "1344"
@@ -6872,9 +6939,9 @@ export const exhibitions = [
         venue: "그라운드시소 센트럴",
         startDate: "2026-09-23",
         endDate: "2027-03-01",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1351-62b3e117.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-1354-62b3e117.jpg",
         officialUrl: "https://www.groundseesaw.co.kr/product/detail.html?product_no=1351&cate_no=47",
-        status: "upcoming",
+        status: "ongoing",
         sourceId: "1351"
       }
     ],

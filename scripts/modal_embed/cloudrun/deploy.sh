@@ -40,7 +40,10 @@ gcloud run deploy "$SERVICE" \
   --max-instances 1 \
   --port 8080 \
   --timeout 120 \
-  --concurrency 4 \
+  # 한 번에 하나만. 꺼져 있던 서버에 요청이 몰리면 모델을 불러오는 20초 동안 쌓였다가 한꺼번에 돌며
+  # 메모리를 넘겨 Killed 로 죽고, 다시 켜지면 또 쌓이기를 반복했다(2026-09-16~30). 넘치는 요청은
+  # 바로 429 를 받아 워커가 SigLIP 으로 넘긴다.
+  --concurrency 1 \
   --allow-unauthenticated \
   --set-env-vars "JINA_ENCODER_TOKEN=$JINA_ENCODER_TOKEN" \
   --execution-environment gen2

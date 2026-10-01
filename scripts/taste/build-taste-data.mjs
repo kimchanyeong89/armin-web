@@ -187,7 +187,10 @@ async function buildExhibitions(store) {
   log(`전시 ${items.length}건 — 지난 이웃 재사용 ${items.length - toSearch.length}건, 새로 검색 ${toSearch.length}건`);
 
   const failures = [];
-  await mapPool(toSearch, 3, async (item) => {
+  // 하나씩 묻는다. Jina 인코더는 한 번에 하나만 처리하고(동시에 돌면 메모리를 넘겨 죽었다), 워커는 8초 안에
+  // 답이 없으면 SigLIP 결과를 준다. 여럿을 보내면 줄 뒤쪽이 매번 SigLIP 으로 넘어가 실패로 센다.
+  // 꺼져 있던 인코더가 깨는 첫 20초는 withRetries 의 재시도가 기다려 준다.
+  await mapPool(toSearch, 1, async (item) => {
     try {
       const data = await withRetries(async () => {
         // 관리 토큰을 붙이면 워커의 요금 상한(속도 제한·하루 총량) 계산에서 빠진다

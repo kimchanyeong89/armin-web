@@ -30,6 +30,8 @@ import {
  *  - POST /delete-ids       : Vectorize에서 벡터 삭제
  *  - POST /vectors-by-ids   : (관리용) 작품 벡터 조회 — 취향 데이터 빌드용
  *  - PUT  /taste-data       : (관리용) 전시·미술관 취향 데이터 교체
+ *  - GET  /exhibitions-data : 미술관별 진행·예정·지난 전시 목록 (앱이 켜질 때 읽는다)
+ *  - PUT  /exhibitions-data : (관리용) 매일 아침 전시 동기화가 목록을 바꾼다
  *  - POST /warm-jina        : 정밀 검색을 켤 때 Jina 인코더 미리 깨우기
  *  - GET  /budget-status    : (관리용) 오늘 요금 상한 카운터
  *  - GET  /status           : 서비스 상태 확인
@@ -736,6 +738,24 @@ async function loadTasteProfile(env: Env, userId: string): Promise<TasteProfile 
 // 매니페스트가 가리키는 키만 바꾼다. 매니페스트는 요청에서 몇 분 캐시되므로 직전 버전 하나를
 // 남겨 두어, 옛 매니페스트를 읽은 요청도 데이터를 찾게 한다.
 const TASTE_DATA_MANIFEST = 'taste-data:manifest';
+
+// ── 미술관별 전시 목록 (GET/PUT /exhibitions-data) ─────────────────────────
+const EXHIBITIONS_DATA_KEY = 'exhibitions-data';
+/** Seconds a copy of the list may be served from the edge or the browser before it is read again. */
+const EXHIBITIONS_DATA_MAX_AGE = 300;
+
+/** Shows across every museum's current and past lists; throws when the shape is wrong. */
+function countExhibitionShows(museums: unknown): number {
+    if (!museums || typeof museums !== 'object') throw new Error('museums must be an object');
+    let n = 0;
+    for (const lists of Object.values(museums as Record<string, any>)) {
+        if (!Array.isArray(lists?.temporaryExhibitions) || !Array.isArray(lists?.pastExhibitions)) {
+            throw new Error('each museum needs temporaryExhibitions and pastExhibitions arrays');
+        }
+        n += lists.temporaryExhibitions.length + lists.pastExhibitions.length;
+    }
+    return n;
+}
 type TasteDataKind = 'exhibitions' | 'museums';
 
 interface TasteDataManifest {
@@ -1961,6 +1981,54 @@ export default {
                     if (retired && retired !== key && retired !== manifest.previous[kind]) ctx.waitUntil(env.TASTE_KV.delete(retired));
                 }
                 return Response.json({ success: true, key, bytes: raw.length }, { headers: corsHeaders });
+            }
+
+            // ──────────────────────────────────────────────
+            // GET /exhibitions-data            앱이 켜질 때 읽는 미술관별 전시 목록
+            // PUT /exhibitions-data (관리용)   scripts/exhibitions/publish-live.mjs 가 매일 아침 바꾼다
+            // 전시 목록은 앱 번들에도 들어 있지만, 여기 것이 있으면 앱이 그것으로 바꿔 끼운다.
+            // 그래서 전시가 바뀌어도 앱을 다시 배포하지 않는다.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/exhibitions-data' && request.method === 'GET') {
+                const cache = caches.default;
+                const cacheKey = new Request(url.origin + url.pathname);
+                const hit = await cache.match(cacheKey);
+                if (hit) return hit;
+                const raw = await env.TASTE_KV.get(EXHIBITIONS_DATA_KEY);
+                if (!raw) return Response.json({ error: 'no exhibitions data yet' }, { status: 404, headers: corsHeaders });
+                const res = new Response(raw, {
+                    headers: { ...corsHeaders, 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': `public, max-age=${EXHIBITIONS_DATA_MAX_AGE}` },
+                });
+                ctx.waitUntil(cache.put(cacheKey, res.clone()));
+                return res;
+            }
+            if (url.pathname === '/exhibitions-data' && request.method === 'PUT') {
+                if (!isAdminRequest(request, env)) {
+                    return Response.json({ error: 'unauthorized' }, { status: 401, headers: corsHeaders });
+                }
+                const raw = await request.text();
+                let shows: number;
+                let museums: number;
+                try {
+                    const data = JSON.parse(raw) as { version?: unknown; museums?: unknown };
+                    if (typeof data.version !== 'string' || !data.version) throw new Error('version missing');
+                    shows = countExhibitionShows(data.museums);
+                    museums = Object.keys(data.museums as object).length;
+                    if (!museums) throw new Error('no museums');
+                } catch (err: any) {
+                    return Response.json({ error: `invalid exhibitions data: ${err.message}` }, { status: 400, headers: corsHeaders });
+                }
+                // 수집이 크게 망가진 날 목록을 통째로 비우지 않는다. 정말 줄었다면 ?force=1.
+                const previous = await env.TASTE_KV.get(EXHIBITIONS_DATA_KEY);
+                if (previous && url.searchParams.get('force') !== '1') {
+                    const before = countExhibitionShows((JSON.parse(previous) as { museums?: unknown }).museums);
+                    if (shows < before * 0.5) {
+                        return Response.json({ error: `refused: ${shows} shows, was ${before} (pass ?force=1 if intended)` }, { status: 409, headers: corsHeaders });
+                    }
+                }
+                await env.TASTE_KV.put(EXHIBITIONS_DATA_KEY, raw);
+                ctx.waitUntil(caches.default.delete(new Request(url.origin + url.pathname)));
+                return Response.json({ success: true, museums, shows, bytes: raw.length }, { headers: corsHeaders });
             }
 
             // ──────────────────────────────────────────────

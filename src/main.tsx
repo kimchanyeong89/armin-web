@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+// Before App: swaps in the morning's exhibition lists and moves ended shows to the past lists.
+import './data/liveExhibitions'
 import App from './App.tsx'
 import { isGlobeLabPath } from './globe-lab/model'
 import { isPreviewPath } from './redesign/model'
