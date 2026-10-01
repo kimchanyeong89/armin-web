@@ -18,7 +18,7 @@ export type PolicyDocId = "privacy" | "terms" | "support";
 const DOCS: Record<PolicyDocId, Doc> = {
   privacy: {
     title: { ko: "개인정보처리방침", en: "Privacy Policy" },
-    updated: { ko: "시행일 2026년 9월 20일 · 개정 2026년 9월 25일(4항 웹사이트 광고 추가, 2026년 10월 2일 시행)", en: "Effective September 20, 2026 · Revised September 25, 2026 (section 4, ads on the website, effective October 2, 2026)" },
+    updated: { ko: "시행일 2026년 9월 20일 · 개정 2026년 9월 25일(4항 웹사이트 광고 추가, 2026년 10월 2일 시행) · 개정 2026년 10월 1일(2항 좋아요·플레이리스트 공개)", en: "Effective September 20, 2026 · Revised September 25, 2026 (section 4, ads on the website, effective October 2, 2026) · Revised October 1, 2026 (section 2, liked works and playlists are public)" },
     intro: {
       ko: "콜리(COLLY)는 전시와 작품을 찾아보는 서비스입니다. 아래는 콜리가 어떤 정보를 받고, 어디에 쓰고, 언제 지우는지 적은 것입니다.",
       en: "COLLY helps you find exhibitions and artworks. This page explains what we receive, what we use it for, and when we delete it.",

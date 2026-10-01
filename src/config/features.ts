@@ -22,5 +22,5 @@ export const APPLE_SIGNIN_READY = false;
 // playlists (/community/u/:uid). It needs the firestore.rules that open
 // users/{uid}/liked_artworks and playlists to be deployed first; until then
 // the shelf, the links to it and the privacy-policy paragraph stay hidden.
-// Flip to `true` once those rules are live - nothing else to change.
-export const SHOW_PUBLIC_COLLECTIONS = false;
+// Those rules went live on 2026-10-01; set back to `false` to hide it again.
+export const SHOW_PUBLIC_COLLECTIONS = true;
