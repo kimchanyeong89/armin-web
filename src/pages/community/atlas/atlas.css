@@ -442,3 +442,15 @@
 }
 /* a room other than the board: its content starts under the switch */
 .ca-room { min-width: 0; }
+
+/* the Curation room's door for the reader: the guide's circled mark and a line */
+.ca .ca-invite { display: flex; align-items: center; gap: 12px; width: 100%; margin: 0 0 18px; padding: 14px 0;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); text-align: left; }
+.ca-invite__mark { flex: none; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--acc) 55%, transparent); color: var(--acc); font: 400 18px/1 var(--num);
+  transition: background .2s ease, color .2s ease; }
+.ca-invite__text { display: grid; gap: 3px; min-width: 0; }
+.ca-invite__text b { font: 700 15px/1.2 var(--display); letter-spacing: -0.01em; color: var(--ink); }
+.ca-invite__text small { font-size: 12px; color: var(--ink-3); }
+.ca .ca-invite:hover .ca-invite__mark { background: var(--acc); color: #0b0b0b; }
+.ca .ca-invite:hover .ca-invite__text b { color: var(--acc); }

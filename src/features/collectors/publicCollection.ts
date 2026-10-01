@@ -8,6 +8,7 @@ import {
   orderBy,
   query,
   setDoc,
+  where,
   type DocumentData,
 } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -15,10 +16,12 @@ import type { PublicProfile } from "../community/publicProfile";
 import { toItem, type SharedPlaylistItem } from "../playlists/sharedPlaylists";
 
 /**
- * Someone's collection — the works they liked and their playlists — as anyone
- * may see it. Nothing is copied: firestore.rules lets everyone read
- * users/{uid}/liked_artworks and users/{uid}/playlists unless the owner set
- * public_profiles/{uid}.hidden, so the page always shows the collection as it is.
+ * Someone's curation — the works they liked and their playlists — as far as
+ * they chose to show it. Nothing is public by default (10/1):
+ * - the liked works open when the owner turns on public_profiles/{uid}.likesPublic
+ *   (firestore.rules likesShown); they are read live, never copied;
+ * - a playlist opens on its own when the owner shares it, and others read its
+ *   public copy (public_playlists, sharedPlaylists.ts).
  */
 
 /** A work as the collection holds it: the fields every view reads, over the stored record. */
@@ -29,10 +32,13 @@ export interface CollectorPlaylist {
   name: string;
   coverImage: string;
   items: CollectedWork[];
+  /** the owner shared it (it has a public copy) */
+  shared?: boolean;
 }
 
 export interface Collection {
-  card: (PublicProfile & { hidden?: boolean }) | null;
+  card: (PublicProfile & { hidden?: boolean; likesPublic?: boolean }) | null;
+  /** the liked works are not on show (the owner has not chosen to show them) */
   hidden: boolean;
   likes: CollectedWork[];
   playlists: CollectorPlaylist[];
@@ -59,21 +65,34 @@ const newestFirst = (field: string) => (a: { data: () => DocumentData }, b: { da
 
 const readCard = async (uid: string) => {
   const snap = await getDoc(doc(db, "public_profiles", uid));
-  return snap.exists() ? (snap.data() as PublicProfile & { hidden?: boolean }) : null;
+  return snap.exists() ? (snap.data() as PublicProfile & { hidden?: boolean; likesPublic?: boolean }) : null;
 };
 
-/** One person's collection. A hidden one comes back empty unless the reader is its owner. */
+/** whether a card puts its owner's liked works on show */
+export const likesOnShow = (card: { hidden?: boolean; likesPublic?: boolean } | null | undefined) =>
+  card?.likesPublic === true && card?.hidden !== true;
+
+/** One person's curation as the reader may see it: everything for its owner;
+    for anyone else the liked works only when on show, and the shared playlists. */
 export async function readCollection(uid: string, readerUid?: string | null): Promise<Collection> {
   const card = await readCard(uid);
-  const hidden = card?.hidden === true;
-  if (hidden && readerUid !== uid) return { card, hidden, likes: [], playlists: [] };
+  const own = !!readerUid && readerUid === uid;
+  const hidden = !likesOnShow(card);
 
-  const [likeSnap, listSnap] = await Promise.all([
-    getDocs(collection(db, "users", uid, "liked_artworks")),
-    getDocs(collection(db, "users", uid, "playlists")),
-  ]);
-  const likes = [...likeSnap.docs].sort(newestFirst("likedAt")).map((d) => work(d.id, d.data()));
-  const playlists = await Promise.all(
+  /* read apart, so one closed side never takes the other down */
+  const likes = own || !hidden
+    ? await getDocs(collection(db, "users", uid, "liked_artworks"))
+      .then((snap) => [...snap.docs].sort(newestFirst("likedAt")).map((d) => work(d.id, d.data())))
+      .catch(() => [] as CollectedWork[])
+    : [];
+  const playlists = own ? await readOwnPlaylists(uid).catch(() => []) : await readSharedPlaylists(uid).catch(() => []);
+  return { card, hidden, likes, playlists };
+}
+
+/** The owner's own playlists, every one of them. */
+async function readOwnPlaylists(uid: string): Promise<CollectorPlaylist[]> {
+  const listSnap = await getDocs(collection(db, "users", uid, "playlists"));
+  return Promise.all(
     [...listSnap.docs].sort(newestFirst("createdAt")).map(async (d) => {
       const items = await getDocs(collection(db, "users", uid, "playlists", d.id, "items"));
       /* a playlist may also hold exhibitions, museums or artists; the collection shows its works */
@@ -82,18 +101,28 @@ export async function readCollection(uid: string, readerUid?: string | null): Pr
         .sort(newestFirst("addedAt"))
         .map((item) => work(item.id, item.data()));
       const data = d.data();
-      return { id: d.id, name: String(data.name || ""), coverImage: String(data.coverImage || works[0]?.image || ""), items: works };
+      return { id: d.id, name: String(data.name || ""), coverImage: String(data.coverImage || works[0]?.image || ""), items: works, shared: data.shared === true };
     }),
   );
-  return { card, hidden, likes, playlists };
 }
 
-/** People with a public collection, whoever liked a work most recently first. */
+/** Someone else's playlists: the ones they shared, from their public copies. */
+async function readSharedPlaylists(uid: string): Promise<CollectorPlaylist[]> {
+  const snap = await getDocs(query(collection(db, "public_playlists"), where("ownerUid", "==", uid)));
+  return [...snap.docs].sort(newestFirst("updatedAt")).map((d) => {
+    const data = d.data();
+    const items = (Array.isArray(data.items) ? data.items : []).map((item: DocumentData) => ({ ...item, ...toItem(String(item.id || ""), item) }));
+    return { id: d.id, name: String(data.name || ""), coverImage: String(data.coverImage || items[0]?.image || ""), items, shared: true };
+  });
+}
+
+/** People who put their liked works on show, whoever liked a work most recently first. */
 export async function listCollectors(max = 36): Promise<Collector[]> {
-  const cards = await getDocs(query(collection(db, "public_profiles"), orderBy("updatedAt", "desc"), limit(max)));
+  /* one equality, no order: no composite index needed; the order is set below */
+  const cards = await getDocs(query(collection(db, "public_profiles"), where("likesPublic", "==", true), limit(max)));
   const found = await Promise.all(
     cards.docs
-      .filter((d) => d.data().hidden !== true)
+      .filter((d) => likesOnShow(d.data()))
       .map(async (d): Promise<Collector | null> => {
         const likes = collection(db, "users", d.id, "liked_artworks");
         try {
@@ -113,7 +142,12 @@ export async function listCollectors(max = 36): Promise<Collector[]> {
   return found.filter((c): c is Collector => !!c).sort((a, b) => latestAt(b) - latestAt(a));
 }
 
-/** Hides the signed-in user's collection from everyone else, or shows it again. */
-export async function setCollectionHidden(uid: string, hidden: boolean): Promise<void> {
-  await setDoc(doc(db, "public_profiles", uid), { hidden }, { merge: true });
+/** Puts the signed-in user's liked works on the Curation page, or takes them off. */
+export async function setLikesPublic(uid: string, on: boolean): Promise<void> {
+  await setDoc(doc(db, "public_profiles", uid), { likesPublic: on, hidden: !on }, { merge: true });
+}
+
+/** Whether the signed-in user's liked works are on show. */
+export async function readLikesPublic(uid: string): Promise<boolean> {
+  return likesOnShow(await readCard(uid));
 }

@@ -21,7 +21,7 @@ export default function CommunityAtlasApp() {
   const ko = language === "ko";
   const navigate = useNavigate();
   const store = useStudyStore();
-  const [feed, setFeed] = useState<FeedState>({ sort: "latest", category: "all", target: "all", nearby: false });
+  const [feed, setFeed] = useState<FeedState>({ sort: "latest", category: "all", target: "all", view: "posts" });
   const { posts: live, loading } = useCommunityFeed(feed.sort);
 
   /* the live feed with what was written here laid over it */

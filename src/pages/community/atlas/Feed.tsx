@@ -16,6 +16,7 @@ import { textOf } from "./prose";
 import { CATEGORY_LABEL, TARGET_LABEL, ago, catStyle } from "./shared";
 import { SHOW_PUBLIC_COLLECTIONS } from "../../../config/features";
 import CollectorShelf from "./CollectorShelf";
+import CurationInvite from "./CurationInvite";
 import PlaylistShelf from "./PlaylistShelf";
 
 /** the tab's three rooms: the board of posts, other people's curation (their
@@ -99,6 +100,7 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
 
       {state.view === "curation" ? (
         <div className="ca-room">
+          {SHOW_PUBLIC_COLLECTIONS && <CurationInvite ko={ko} />}
           {SHOW_PUBLIC_COLLECTIONS && <CollectorShelf ko={ko} />}
           <PlaylistShelf ko={ko} />
         </div>

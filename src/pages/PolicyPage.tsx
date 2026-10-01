@@ -18,7 +18,7 @@ export type PolicyDocId = "privacy" | "terms" | "support";
 const DOCS: Record<PolicyDocId, Doc> = {
   privacy: {
     title: { ko: "개인정보처리방침", en: "Privacy Policy" },
-    updated: { ko: "시행일 2026년 9월 20일 · 개정 2026년 9월 25일(4항 웹사이트 광고 추가, 2026년 10월 2일 시행) · 개정 2026년 10월 1일(2항 좋아요·플레이리스트 공개)", en: "Effective September 20, 2026 · Revised September 25, 2026 (section 4, ads on the website, effective October 2, 2026) · Revised October 1, 2026 (section 2, liked works and playlists are public)" },
+    updated: { ko: "시행일 2026년 9월 20일 · 개정 2026년 9월 25일(4항 웹사이트 광고 추가, 2026년 10월 2일 시행) · 개정 2026년 10월 1일(2항 좋아요·플레이리스트는 본인이 고른 것만 공개)", en: "Effective September 20, 2026 · Revised September 25, 2026 (section 4, ads on the website, effective October 2, 2026) · Revised October 1, 2026 (section 2, liked works and playlists are shown only when you choose)" },
     intro: {
       ko: "콜리(COLLY)는 전시와 작품을 찾아보는 서비스입니다. 아래는 콜리가 어떤 정보를 받고, 어디에 쓰고, 언제 지우는지 적은 것입니다.",
       en: "COLLY helps you find exhibitions and artworks. This page explains what we receive, what we use it for, and when we delete it.",
@@ -57,8 +57,8 @@ const DOCS: Record<PolicyDocId, Doc> = {
             en: "To sign you in and sync your records, to run the community and handle reports, to fulfil print orders, and to improve the service. We do not use this information for advertising and we do not sell it. Ads shown on the website are described in section 4.",
           },
           ...(SHOW_PUBLIC_COLLECTIONS ? [{
-            ko: "좋아한 작품과 만든 플레이리스트는 커뮤니티의 큐레이션 화면에서 누구나 볼 수 있습니다. 함께 보이는 것은 프로필 이름과 사진, 등급이고 이메일은 보이지 않습니다. 보이지 않게 하려면 마이페이지의 '내 컬렉션'에서 숨기면 됩니다.",
-            en: "The works you like and the playlists you build can be seen by anyone on the community's Curation page, together with your profile name, photo and level; your email is never shown. To keep them to yourself, hide them from My collection on My Page.",
+            ko: "좋아한 작품과 플레이리스트는 기본으로 나만 봅니다. 마이페이지나 커뮤니티 큐레이션 화면의 '큐레이션 올리기'에서 직접 켠 것(좋아한 작품 묶음, 고른 플레이리스트)만 누구나 볼 수 있고, 끄면 바로 내려갑니다. 함께 보이는 것은 프로필 이름과 사진, 등급이고 이메일은 보이지 않습니다.",
+            en: "The works you like and your playlists are private by default. Only what you switch on under 'Put on Curation' (on My Page or the community's Curation page) - your liked works as one set, or playlists you pick - can be seen by anyone, and it comes off as soon as you switch it off. Shown with it are your profile name, photo and level; your email is never shown.",
           }] : []),
         ],
       },

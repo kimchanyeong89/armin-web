@@ -9,12 +9,12 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import {
   readCollection,
-  setCollectionHidden,
   type CollectedWork,
   type Collection,
   type CollectorPlaylist,
 } from "../../../features/collectors/publicCollection";
 import { useLikedArtworkSet } from "../../../hooks/useLikedArtworkSet";
+import CurationPublishSheet from "../../../features/collectors/CurationPublishSheet";
 import { prettifyArtistName } from "../../../utils/canonicalArtist";
 import { getOptimizedImageUrl } from "../../../utils/imageProxy";
 import { two, useHomeTheme } from "./shared";
@@ -44,7 +44,8 @@ export default function AtlasCollectorPage() {
   const [viewing, setViewing] = useState<CollectedWork | null>(null);
   const [saving, setSaving] = useState<CollectedWork | null>(null);
   const [playFrom, setPlayFrom] = useState<number | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [choosing, setChoosing] = useState(false);
+  const [reload, setReload] = useState(0);
   const own = !!user && !user.isAnonymous && user.uid === uid;
 
   useEffect(() => {
@@ -55,22 +56,9 @@ export default function AtlasCollectorPage() {
       .then((c) => { if (live) setFound(c); })
       .catch(() => { if (live) setFound(null); });
     return () => { live = false; };
-  }, [uid, user?.uid]);
+  }, [uid, user?.uid, reload]);
 
   const back = () => (location.key !== "default" ? navigate(-1) : navigate("/community?view=curation"));
-
-  const toggleHidden = async () => {
-    if (!found || !own) return;
-    setBusy(true);
-    try {
-      await setCollectionHidden(uid, !found.hidden);
-      setFound({ ...found, hidden: !found.hidden });
-    } catch {
-      /* the switch stays where it was */
-    } finally {
-      setBusy(false);
-    }
-  };
 
   const shell = (body: ReactNode) => (
     <div className="ca ca--app" data-light={isLight || undefined}>
@@ -96,9 +84,12 @@ export default function AtlasCollectorPage() {
   }
 
   const name = found.card?.name || (ko ? "익명" : "Unknown");
-  if (found.hidden && !own) {
-    return shell(<p className="ca-empty">{ko ? `${name} 님은 컬렉션을 숨겨 두었어요.` : `${name} keeps their collection hidden.`}</p>);
+  /* others see only what the owner put on show: the liked works if switched on, the shared playlists */
+  if (found.hidden && found.playlists.length === 0 && !own) {
+    return shell(<p className="ca-empty">{ko ? `${name} 님은 아직 큐레이션을 올리지 않았어요.` : `${name} hasn't put anything on show yet.`}</p>);
   }
+  const likesShown = own || !found.hidden;
+  const shownTab = likesShown ? tab : "playlists";
 
   const works = openList ? openList.items : found.likes;
   const playing = playFrom === null ? null : [...works.slice(playFrom), ...works.slice(0, playFrom)];
@@ -142,13 +133,16 @@ export default function AtlasCollectorPage() {
         </div>
         {own && (
           <p className="ca-col__own">
-            {found.hidden
-              ? (ko ? "숨겨 두었어요. 지금은 나만 볼 수 있어요." : "Hidden. Only you can see this page.")
-              : (ko ? "다른 사람에게 이렇게 보여요." : "This is how others see your collection.")}
-            <button type="button" disabled={busy} onClick={() => void toggleHidden()}>
-              {found.hidden ? (ko ? "다시 공개하기" : "Show it again") : (ko ? "숨기기" : "Hide it")}
+            {ko
+              ? "다른 사람에게는 큐레이션에 올린 것만 보여요."
+              : "Others see only what you put on Curation."}
+            <button type="button" onClick={() => setChoosing(true)}>
+              {ko ? "올릴 것 고르기" : "Choose what to show"}
             </button>
           </p>
+        )}
+        {choosing && user && (
+          <CurationPublishSheet uid={user.uid} onClose={() => { setChoosing(false); setReload((n) => n + 1); }} />
         )}
       </section>
 
@@ -175,16 +169,18 @@ export default function AtlasCollectorPage() {
         </>
       ) : (
         <>
-          <div className="ca-sort ca-sort--wide" role="group" aria-label={ko ? "보기" : "View"} data-i={tab === "playlists" ? 1 : 0}>
-            <button type="button" aria-pressed={tab === "likes"} onClick={() => setTab("likes")}>
-              {ko ? "좋아요" : "Likes"}
-            </button>
-            <button type="button" aria-pressed={tab === "playlists"} onClick={() => setTab("playlists")}>
+          <div className="ca-sort ca-sort--wide" role="group" aria-label={ko ? "보기" : "View"} data-i={shownTab === "playlists" && likesShown ? 1 : 0}>
+            {likesShown && (
+              <button type="button" aria-pressed={shownTab === "likes"} onClick={() => setTab("likes")}>
+                {ko ? "좋아요" : "Likes"}
+              </button>
+            )}
+            <button type="button" aria-pressed={shownTab === "playlists"} onClick={() => setTab("playlists")}>
               {ko ? "플레이리스트" : "Playlists"}
             </button>
             <i className="ca-sort__bar" aria-hidden="true" />
           </div>
-          {tab === "likes" ? (
+          {shownTab === "likes" ? (
             grid(found.likes)
           ) : found.playlists.length === 0 ? (
             <p className="ca-empty">{ko ? "아직 만든 플레이리스트가 없어요." : "No playlists yet."}</p>

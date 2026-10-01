@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useState, useRef } from "re
 import { RankInfo } from "./RankInfo";
 import "./mypageRedesign.css";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../contexts/LanguageContext";
 import {
   getFirestore,
@@ -66,7 +66,7 @@ import {
 import PlaylistMenu from "./PlaylistMenu";
 import PlaylistShareSheet from "./PlaylistShareSheet";
 import { deletePlaylist, refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
-import { collectorPath } from "../features/collectors/publicCollection";
+import CurationPublishSheet from "../features/collectors/CurationPublishSheet";
 import { SHOW_PUBLIC_COLLECTIONS } from "../config/features";
 import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
 import { readPostCount, syncPublicProfile } from "../features/community/publicProfile";
@@ -1150,6 +1150,8 @@ const MyPage: React.FC = () => {
   const [activePlaylistItems, setActivePlaylistItems] = useState<any[]>([]);
   /* the playlist whose share sheet is open */
   const [sharingPlaylistId, setSharingPlaylistId] = useState<string | null>(null);
+  /* the curation sheet: which of my likes and playlists are on show */
+  const [publishing, setPublishing] = useState(false);
   /* deleting the open playlist asks once more in place: "ask", then "busy" while it goes */
   /* deleting a playlist asks once more in place - on its card or on its open row */
   const [playlistDelete, setPlaylistDelete] = useState<{ id: string; busy?: boolean } | null>(null);
@@ -2600,8 +2602,11 @@ const MyPage: React.FC = () => {
             {SHOW_PUBLIC_COLLECTIONS && user && (
               <>
                 <i aria-hidden="true" />
-                {/* the page others see, where it can also be hidden */}
-                <Link to={collectorPath(user.uid)} className="mp-public">{t({ ko: "내 컬렉션", en: "My collection" })}</Link>
+                {/* one quiet way onto the community's Curation page: a gold point and two words */}
+                <button type="button" className="mp-public" onClick={() => setPublishing(true)}>
+                  <span className="mp-public__dot" aria-hidden="true" />
+                  {t({ ko: "큐레이션 올리기", en: "Put on Curation" })}
+                </button>
               </>
             )}
           </p>
@@ -2936,6 +2941,10 @@ const MyPage: React.FC = () => {
       {/* account deletion lives in the profile edit (the pencil by the name),
           under 계정 관리 - out of reach of a stray tap at the page's foot */}
       <div style={{ height: 110 }} aria-hidden="true" />
+
+      {publishing && user && (
+        <CurationPublishSheet uid={user.uid} onClose={() => setPublishing(false)} onChange={() => void fetchPlaylists()} />
+      )}
 
       {showSlideshow && (
         <Slideshow artworks={activePlaylist ? activePlaylistItems : likedArtworks} onClose={() => setShowSlideshow(false)} />

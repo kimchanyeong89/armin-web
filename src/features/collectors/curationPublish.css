@@ -1,0 +1,24 @@
+/* The curation sheet: the share sheet's panel (playlistShare.css .pls), with
+   one row per thing that can go on show and a switch at its end. */
+.cps { z-index: 260210; }
+.cps .pls__card { width: min(440px, 100%); }
+.cps-list { margin: 14px 0 0; padding: 0; list-style: none; max-height: min(46vh, 380px); overflow-y: auto; scrollbar-width: thin; }
+.cps-list li + li { border-top: 1px solid var(--rule); }
+.cps .cps-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 0; text-align: left; }
+.cps-row__shot { flex: none; display: grid; place-items: center; width: 38px; height: 38px; overflow: hidden; background: var(--rule);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px); }
+.cps-row__shot:empty::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--acc); }
+.cps-row__shot img { width: 100%; height: 100%; object-fit: cover; }
+.cps-row__name { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.cps-row__name b { font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cps-row__name small { font: 600 10px/1.2 "Space Mono", ui-monospace, monospace; letter-spacing: .04em; color: var(--ink-3); }
+/* the switch: the wall's "snap" switch, gold when on */
+.cps-switch { position: relative; flex: none; width: 30px; height: 16px; border-radius: 8px; background: rgba(244,241,234,.16); transition: background .2s ease; }
+.cps-switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ink-2); transition: transform .24s cubic-bezier(.16,1,.3,1), background .2s ease; }
+.cps-row[aria-checked="true"] .cps-switch { background: color-mix(in srgb, var(--acc) 38%, transparent); }
+.cps-row[aria-checked="true"] .cps-switch::after { transform: translateX(14px); background: var(--acc); }
+.cps-row[aria-checked="true"] .cps-row__name b { color: var(--acc); }
+.cps .pls__card footer { justify-content: space-between; }
+.cps-count { font: 600 10px/1 "Space Mono", ui-monospace, monospace; letter-spacing: .06em; color: var(--ink-3); }
+.cps .pls__act { text-decoration: none; }

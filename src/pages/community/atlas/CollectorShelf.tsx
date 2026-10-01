@@ -16,13 +16,21 @@ export default function CollectorShelf({ ko }: { ko: boolean }) {
   const [people, setPeople] = useState<Collector[] | null>(null);
   const { blocked } = useBlockedUsers();
 
+  /* the reader putting their own likes on show (CurationInvite) redraws the shelf */
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const again = () => setTick((n) => n + 1);
+    window.addEventListener("colly:curation", again);
+    return () => window.removeEventListener("colly:curation", again);
+  }, []);
+
   useEffect(() => {
     let live = true;
     listCollectors()
       .then((found) => { if (live) setPeople(found); })
       .catch(() => { if (live) setPeople([]); });
     return () => { live = false; };
-  }, []);
+  }, [tick]);
 
   if (!people) {
     return <p className="ca-empty" role="status" aria-live="polite">{ko ? "불러오는 중…" : "Loading…"}</p>;
