@@ -1,0 +1,43 @@
+{
+  "about": "로컬 SigLIP 임베딩 원본(embedding_results/*.jsonl)의 R2 백업. 2026-10-01 로컬에서 지웠다. 앱(검색·추천·취향)은 이 파일을 쓰지 않는다 — 벡터는 Cloudflare Vectorize 에 있다.",
+  "neededFor": [
+    "취향 기준선(scripts/taste/background.json)을 새로 만들 때",
+    "지도용 미술관 요약(npm run taste:museums)",
+    "Vectorize 인덱스를 처음부터 다시 만들 때"
+  ],
+  "restore": [
+    "R2 키는 루트 .env 의 R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY (깃에 없음 — 비밀번호 관리 앱에 보관)",
+    "버킷 colly-backups(비공개) 의 embeddings/*.jsonl.zst 를 받아 embedding_results/ 에 둔다",
+    "zstd -d --long=27 <파일>.zst  (풀린 파일의 sha256 이 아래 originalSha256 과 같아야 한다)"
+  ],
+  "brokenVectors": "scripts/.state/vectors-broken-nan.json 의 작품들은 벡터가 NaN·비정상 크기라 다시 임베딩해야 한다(존 손 경 박물관 등 32점).",
+  "createdAt": "2026-10-01T05:28:59.674Z",
+  "bucket": "colly-backups",
+  "prefix": "embeddings/",
+  "files": [
+    {
+      "name": "siglip_embeddings.jsonl",
+      "originalBytes": 226492416,
+      "originalSha256": "655ba7d64106bc2402dba958f94c1b243d9f066378c0341623542936fdbed407",
+      "key": "embeddings/siglip_embeddings.jsonl.zst",
+      "compressedBytes": 90889685,
+      "compressedSha256": "168af5381a82cd15ec20eadb635f121490b96ba1459054efff78baf6635b7887"
+    },
+    {
+      "name": "siglip_targeted_embeddings.jsonl",
+      "originalBytes": 389277329,
+      "originalSha256": "cedb58a415cdd58c4e4486866f07490a8dcac2d433a45288fadec39e138a4ba7",
+      "key": "embeddings/siglip_targeted_embeddings.jsonl.zst",
+      "compressedBytes": 141405729,
+      "compressedSha256": "bd8e0e04947f1f2d428f68a3f05bbb6dd225a1b2c2ad473cda2d6cec0ec94654"
+    },
+    {
+      "name": "siglip_missing_permanent_embeddings.jsonl",
+      "originalBytes": 8035124233,
+      "originalSha256": "2b2e03cc2818543ea50e0c9de879d4e584af2baf5a2c88f0d3041a38b360c172",
+      "key": "embeddings/siglip_missing_permanent_embeddings.jsonl.zst",
+      "compressedBytes": 3205140968,
+      "compressedSha256": "6be667a20f5b0aa544ce9abfc38d8fee3ae85b509e4c9d0afb53306a4c10bc47"
+    }
+  ]
+}

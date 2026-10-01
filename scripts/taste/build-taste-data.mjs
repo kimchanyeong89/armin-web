@@ -41,7 +41,10 @@ import {
 } from '../../workers/semantic-search/src/taste.ts';
 
 const ROOT = resolve(fileURLToPath(import.meta.url), '../../..');
-const CACHE = join(ROOT, 'scripts/taste/.cache');
+// 폴더 이름을 .cache 로 두지 않는다 — ~/bin/mac-cleanup.sh 가 매일 09:13 에 깃이 무시하는 .cache 폴더를 지운다(2026-09-30·10-01 두 번 사라짐).
+const CACHE = join(ROOT, 'scripts/taste/.store');
+// 전시 점수의 기준선(배경 군집 48개). 저장소에 커밋해 둔다 — 다시 만들려면 로컬 임베딩 파일(8GB, R2 에 백업)이 있어야 한다.
+const BACKGROUND_FILE = join(ROOT, 'scripts/taste/background.json');
 const WORKER = process.env.TASTE_WORKER_URL || 'https://armin-semantic-search.armin-art.workers.dev';
 const VECTOR_FILES = ['siglip_embeddings.jsonl', 'siglip_targeted_embeddings.jsonl', 'siglip_missing_permanent_embeddings.jsonl']
   .map((f) => join(ROOT, 'embedding_results', f));
@@ -212,7 +215,7 @@ async function buildExhibitions(store) {
   const fetched = await fetchVectors(missing, store.absent, (id, v) => store.vectors.set(id, v));
   log(`이웃 작품 ${neighborIds.length}점 — 벡터 새로 받음 ${fetched}점, 없음 ${neighborIds.filter((id) => store.absent.has(id)).length}점`);
 
-  const background = readJson(join(CACHE, 'background.json'), null);
+  const background = readJson(BACKGROUND_FILE, null);
   if (!background) throw new Error('배경 군집이 없습니다. 먼저 --museums 로 한 번 만드세요.');
   const bgFlat = unpackInt8(background.centroids);
   const bgCount = bgFlat.length / DIM;
@@ -314,9 +317,10 @@ async function buildMuseums(store, wantMuseums = true) {
     log(`로컬 벡터 ${file.split('/').pop()} 읽음 (누적 ${localIds.size}점)`);
   }
 
+  if (!corpus.pool.length) throw new Error('로컬 임베딩 파일이 없어 배경 군집을 만들 수 없습니다. R2 백업(scripts/taste/embeddings-backup.json 참고)에서 embedding_results 로 받으세요.');
   if (!wantMuseums) {
     const background = kMeans(corpus.pool, BACKGROUND_K);
-    writeJson(join(CACHE, 'background.json'), { builtAt: new Date().toISOString(), centroids: packInt8(background.centroids) });
+    writeJson(BACKGROUND_FILE, { builtAt: new Date().toISOString(), centroids: packInt8(background.centroids) });
     log(`배경 군집 ${background.centroids.length}개 만듦 (미술관 요약은 건너뜀)`);
     return null;
   }
@@ -365,7 +369,7 @@ async function buildMuseums(store, wantMuseums = true) {
   }
 
   const background = kMeans(corpus.pool, BACKGROUND_K);
-  writeJson(join(CACHE, 'background.json'), { builtAt: new Date().toISOString(), centroids: packInt8(background.centroids) });
+  writeJson(BACKGROUND_FILE, { builtAt: new Date().toISOString(), centroids: packInt8(background.centroids) });
   log(`미술관 요약 ${museums.length}곳 (벡터 ${MUSEUM_MIN_ARTWORKS}점 미만이라 뺀 곳 ${tooFew.length}), 배경 군집 ${background.centroids.length}개`);
   return { version: '', museums, vectors: packInt8(prototypes), sample: packInt8(corpus.sample) };
 }
@@ -402,7 +406,7 @@ async function main() {
   try {
     if (MUSEUMS) await publish('museums', await buildMuseums(store));
     // 전시 기준점은 배경 군집을 쓴다. 지도를 안 쓰더라도 이것만은 한 번 만들어야 한다.
-    else if (!existsSync(join(CACHE, 'background.json'))) await buildMuseums(store, false);
+    else if (!existsSync(BACKGROUND_FILE)) await buildMuseums(store, false);
     await publish('exhibitions', await buildExhibitions(store));
   } finally {
     saveVectorCache(store);
