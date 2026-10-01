@@ -329,7 +329,7 @@ const DetailModal = memo(({
               <Tag>📍 {distanceKm < 1 ? `${Math.round(distanceKm * 1000)}m` : `${distanceKm}km`}</Tag>
             )}
             <Tag accent={exh.status === 'upcoming' ? 'blue' : 'green'}>
-              {exh.status === 'upcoming' ? '예정' : '진행 중'}
+              {exh.status === 'upcoming' ? '예정' : '진행중'}
             </Tag>
           </div>
 
@@ -591,7 +591,7 @@ export default function ExhibitionsNearMePage({ exhibitions }: Props) {
 
       {/* 진행중 */}
       {ongoing.length > 0 && (
-        <Section title={`진행 중 · ${ongoing.length}`}>
+        <Section title={`진행중 · ${ongoing.length}`}>
           {ongoing.map(item => (
             <ExhibitionCard
               key={item.exhibition.id}

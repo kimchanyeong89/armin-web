@@ -46,11 +46,14 @@
   font-size: clamp(2rem,4.2vw,3.2rem); font-weight: 700; line-height: 1.04; letter-spacing: -0.05em; }
 .ag-head__life { margin-top: .5rem; font-family: var(--num); font-size: 10px; letter-spacing: .06em; color: var(--ink-3); }
 .ag-head__acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px; margin-top: 1rem; }
-/* a mark and a word, gold when it is on — no box */
-.ag .ag-act { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: var(--ink-2);
-  white-space: nowrap; transition: color .16s ease; }
-.ag .ag-act:hover { color: var(--acc); }
-.ag .ag-act.is-on { color: var(--acc); }
+/* the name and, beside its first line, the lotus that keeps the artist - no words, no box; gold when kept */
+.ag-head__name { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.ag-head__name h1 { flex: 0 1 auto; min-width: 0; }
+.ag .ag-save { flex: none; display: grid; place-items: center; width: 40px; height: 40px; margin-top: calc(.35rem + 2px);
+  color: var(--ink-3); transition: color .16s ease, transform .2s cubic-bezier(.16,1,.3,1); }
+.ag .ag-save:hover { color: var(--acc); }
+.ag .ag-save.is-on { color: var(--acc); }
+.ag .ag-save:active { transform: scale(.92); }
 .ag-note { font-family: var(--num); font-size: 10px; letter-spacing: .06em; color: var(--ink-3); }
 
 /* the encyclopaedia's paragraph, under a caption rule */

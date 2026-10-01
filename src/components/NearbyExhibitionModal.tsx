@@ -90,16 +90,20 @@ export default function NearbyExhibitionModal({
             <div className="nem-info">
               <p className="nem-kicker">
                 <b>{ex.venue}</b>
-                {ex.tasteMatch !== undefined && (
-                  <>
-                    <i aria-hidden="true" />
-                    <span>{tr({ ko: `취향 일치 ${ex.tasteMatch}%`, en: `${ex.tasteMatch}% taste match` })}</span>
-                  </>
-                )}
               </p>
               <h2 className="nem-title">{ex.title}</h2>
 
               <dl className="nem-facts">
+                {/* the taste match as a figure and a bar, first among the facts */}
+                {ex.tasteMatch !== undefined && (
+                  <div className="nem-match">
+                    <dt>{tr({ ko: "내 취향과", en: "YOUR TASTE" })}</dt>
+                    <dd>
+                      <b>{ex.tasteMatch}<small>%</small></b>
+                      <i aria-hidden="true"><u style={{ width: `${Math.max(0, Math.min(100, ex.tasteMatch))}%` }} /></i>
+                    </dd>
+                  </div>
+                )}
                 {ex.period && (
                   <div>
                     <dt>{tr({ ko: "기간", en: "DATES" })}</dt>

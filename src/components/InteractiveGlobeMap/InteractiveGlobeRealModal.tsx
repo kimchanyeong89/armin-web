@@ -14,8 +14,9 @@
 // Base body font (line ~1454): Inter, sans-serif
 // ═════════════════════════════════════════════════════════════════════════
 import React, { useState, useMemo, useEffect, useRef, useCallback } from "react";
+import { SaveIcon } from "../like/SaveIcon";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookmarkPlus, ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { LikeIcon } from "../like/LikeIcon";
 import type { Theme } from "./types";
 import { getOptimizedImageUrl } from "../../utils/imageProxy";
@@ -2168,7 +2169,7 @@ export function InteractiveGlobeRealModal({
                             title="Save to Playlist"
                             style={actionButtonStyle}
                           >
-                            <BookmarkPlus size={isMobile ? 12 : 14} strokeWidth={2.2} />
+                            <SaveIcon size={isMobile ? 12 : 14} strokeWidth={2.2} />
                           </button>
                           {SHOW_SALES_UI && (
                           <button

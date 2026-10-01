@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import type { Artwork } from '../types/Artwork';
 import { getWeservUrl } from '../utils/imageProxy';
 import { exhibitions } from '../data/exhibitions';
-import { BookmarkPlus, ShoppingBag } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import { ExpandableActionMenu } from './ExpandableActionMenu';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -303,6 +303,9 @@ export const ArtworkRecommendations: React.FC<Props> = ({
         const country = getCountry(museum);
         const cardId = String(item.id || `${name}-${artist}-${year}`);
         const likedKey = String(item.id || item.artworkId || item.semanticId || item.semantic_id || cardId);
+        /* the search index sends short keys (e = exhibition, u = page, d = date);
+           the detail reads the long ones, so they are spelled out here - without
+           them the opened work showed only its title and artist */
         const actionableArtwork = {
             ...item,
             id: likedKey,
@@ -311,8 +314,12 @@ export const ArtworkRecommendations: React.FC<Props> = ({
             title: name,
             artist,
             image,
+            museum: museum || item.museum,
             museumName: museum,
-            year,
+            year: year || item.d || '',
+            date: item.date || item.d || year || '',
+            exhibitionId: item.exhibitionId || item.e || item.sourceCollection || '',
+            sourceUrl: item.sourceUrl || item.u || item.detailUrl || '',
         } as Artwork;
         const isCardLiked = Boolean(likedArtworks) && [
             likedKey,

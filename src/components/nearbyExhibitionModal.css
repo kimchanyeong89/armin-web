@@ -67,7 +67,15 @@
   border-bottom: 1px solid var(--rule); }
 .nem-facts dt { font: 600 9.5px/1.8 var(--num); letter-spacing: 0.12em; color: var(--acc); }
 .nem-facts dd { font: 500 13px/1.5 var(--num); font-variant-numeric: tabular-nums; color: var(--ink); }
-.nem-about { margin-top: 18px; font-size: 13.5px; line-height: 1.8; color: var(--ink-2); white-space: pre-line; }
+/* the description, set to be read: a little larger, a measure of about 60 characters, the ink one step up */
+.nem-about { margin-top: 20px; max-width: 60ch; font-size: 14.5px; line-height: 1.85; letter-spacing: -0.005em; color: var(--ink);
+  opacity: .86; white-space: pre-line; word-break: keep-all; overflow-wrap: anywhere; }
+/* the taste match: a large gold figure over a thin bar */
+.nem-match dd { display: grid; gap: 6px; min-width: 120px; }
+.nem-match b { font: 700 26px/1 "Space Mono", ui-monospace, monospace; letter-spacing: -0.02em; color: var(--acc); }
+.nem-match b small { margin-left: 2px; font-size: 13px; }
+.nem-match i { display: block; height: 2px; background: var(--hair); }
+.nem-match u { display: block; height: 100%; background: var(--acc); text-decoration: none; }
 
 .nem-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: auto; padding-top: 26px; }
 /* booking: the one filled plate in the modal, cut at the corners like the map's

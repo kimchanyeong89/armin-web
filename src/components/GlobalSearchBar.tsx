@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
+import { SaveIcon } from './like/SaveIcon';
 import { createPortal } from 'react-dom';
-import { ShoppingBag, BookmarkPlus } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus, looksNonEnglish, warmPreciseSearch } from '../utils/siglipSearch';
 import { searchTextServer } from '../utils/serverKeywordSearch';
@@ -5399,21 +5400,24 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 <div className="ag-head" data-solo={artistGallery.artworks.length > 0 ? undefined : 'true'}>
                                     <div className="ag-head__main">
                                         <p className="ag-eyebrow"><span>{t({ ko: '작가', en: 'ARTIST' })}</span></p>
-                                        <h1 ref={galleryNameRef} style={galleryNameSize ? { fontSize: galleryNameSize } : undefined}>
-                                            {getArtistDisplayName(artistGallery.artist, language, artistMap)}
-                                        </h1>
-                                        {artistLifeLine && <p className="ag-head__life">{artistLifeLine}</p>}
-                                        <div className="ag-head__acts">
+                                        {/* the name, and beside it the one mark that keeps the artist (no words) */}
+                                        <div className="ag-head__name">
+                                            <h1 ref={galleryNameRef} style={galleryNameSize ? { fontSize: galleryNameSize } : undefined}>
+                                                {getArtistDisplayName(artistGallery.artist, language, artistMap)}
+                                            </h1>
                                             <button
                                                 type="button"
-                                                className={artistGalleryIsLiked ? 'ag-act is-on' : 'ag-act'}
+                                                className={artistGalleryIsLiked ? 'ag-save is-on' : 'ag-save'}
                                                 onClick={toggleLikeArtist}
+                                                aria-pressed={artistGalleryIsLiked}
+                                                aria-label={artistGalleryIsLiked ? t({ ko: '저장한 작가 · 누르면 해제', en: 'Saved artist · tap to remove' }) : t({ ko: '작가 저장', en: 'Save artist' })}
+                                                title={artistGalleryIsLiked ? t({ ko: '저장한 작가', en: 'Saved' }) : t({ ko: '작가 저장', en: 'Save artist' })}
                                             >
-                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                                    <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" fill={artistGalleryIsLiked ? 'currentColor' : 'none'} />
-                                                </svg>
-                                                {artistGalleryIsLiked ? t({ ko: '팔로잉', en: 'Following' }) : t({ ko: '작가 팔로우', en: 'Follow artist' })}
+                                                <SaveIcon saved={artistGalleryIsLiked} size={26} strokeWidth={1.6} />
                                             </button>
+                                        </div>
+                                        {artistLifeLine && <p className="ag-head__life">{artistLifeLine}</p>}
+                                        <div className="ag-head__acts">
                                             {artistGallery.isLoading && (
                                                 <span className="ag-note">{t({ ko: '전체 컬렉션 불러오는 중…', en: 'Syncing the full collection…' })}</span>
                                             )}
@@ -5582,7 +5586,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                             aria-label={t({ ko: '플레이리스트에 추가', en: 'Save to playlist' })}
                                                                             onClick={(e) => { e.stopPropagation(); e.preventDefault(); setPlaylistArtwork(art); }}
                                                                         >
-                                                                            <BookmarkPlus size={14} strokeWidth={2} />
+                                                                            <SaveIcon size={14} strokeWidth={2} />
                                                                         </button>
                                                                         <span
                                                                             onClick={(e) => e.stopPropagation()}

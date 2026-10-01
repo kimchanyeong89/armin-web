@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   MapPin, Calendar, X,
-  Navigation, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw
+  Navigation, Star, MessageCircle, ShoppingBag, Shuffle, RotateCw
 } from "lucide-react";
 import { LikeIcon } from "../components/like/LikeIcon";
 import WeeklyCurationTab from '../components/WeeklyCurationTab';

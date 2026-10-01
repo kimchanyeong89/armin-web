@@ -262,7 +262,7 @@ export default function NearbyExhibitions({
   if (loading) {
     return (
       <div style={{ padding: 40, textAlign: "center", color: fgLow, fontSize: 12 }}>
-        {tr({ ko: "진행 중인 전시를 불러오는 중입니다...", en: "Loading exhibitions on now..." })}
+        {tr({ ko: "진행중인 전시를 불러오는 중입니다...", en: "Loading exhibitions on now..." })}
       </div>
     );
   }
@@ -296,7 +296,7 @@ export default function NearbyExhibitions({
 
       {sortedAll.length === 0 ? (
         <div style={{ padding: "60px 24px", textAlign: "center", color: fgLow, fontSize: 12 }}>
-          {tr({ ko: "지금 진행 중인 전시가 없습니다.", en: "No exhibitions on right now." })}
+          {tr({ ko: "지금 진행중인 전시가 없습니다.", en: "No exhibitions on right now." })}
         </div>
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`, gap: 8 }}>
@@ -320,6 +320,22 @@ export default function NearbyExhibitions({
                   onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }}
                 />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
+                {/* the taste match, a bare figure in the poster's corner - the card's words below keep their room */}
+                {ex.tasteMatch !== undefined && (
+                  <span
+                    title={tr({ ko: "내 취향과 맞는 정도", en: "How well it matches your taste" })}
+                    style={{
+                      position: "absolute", top: 6, right: 6, display: "inline-flex", alignItems: "center", gap: 4,
+                      padding: "3px 6px 3px 5px", background: "rgba(8,8,8,0.72)",
+                      clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                      fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, lineHeight: 1, letterSpacing: "0.02em",
+                      color: "#F0C878", pointerEvents: "none",
+                    }}
+                  >
+                    <i style={{ width: 4, height: 4, borderRadius: "50%", background: "#D4A547", boxShadow: "0 0 0 2px rgba(212,165,71,0.25)" }} />
+                    {ex.tasteMatch}%
+                  </span>
+                )}
                 <button
                   type="button"
                   aria-label={tr({ ko: "좋아요", en: "Like" })}
@@ -345,11 +361,6 @@ export default function NearbyExhibitions({
               <div style={{ padding: "10px 8px", backgroundColor: t ? "rgba(0,0,0,0.02)" : "rgba(255,255,255,0.02)" }}>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 6, marginBottom: 4, minWidth: 0 }}>
                   <div style={{ fontSize: 10, color: fgLow, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>{String(ex.venue || "")}</div>
-                  {ex.tasteMatch !== undefined && (
-                    <span style={{ marginLeft: "auto", flexShrink: 0, fontSize: 10, fontWeight: 600, color: t ? "#8A6B1F" : "#D4A547" }}>
-                      {tr({ ko: `취향 ${ex.tasteMatch}%`, en: `${ex.tasteMatch}% match` })}
-                    </span>
-                  )}
                 </div>
                 <div style={{ fontSize: 13, fontWeight: 700, color: fg, lineHeight: 1.25, marginBottom: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{ex.title}</div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

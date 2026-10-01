@@ -67,7 +67,7 @@
 /* as tall as what stands on it: the page top, the owner, the playlists - no
    more, so the saved works below show on arrival */
 .mp-stage { position: relative; isolation: isolate; display: grid; align-content: end;
-  padding: var(--page-top) var(--mp-pad) 14px; }
+  padding: var(--page-top) var(--mp-pad) calc(14px + env(safe-area-inset-top, 0px)); }
 /* a computer has the room: the chosen picture gets a longer stage (a phone keeps it short) */
 @media (min-width: 768px) { .mp-stage { min-height: min(64vh, 620px); } }
 .mp-stage__cover { position: absolute; inset: 0; z-index: -2; display: block; width: 100%; height: 100%; object-fit: cover;
@@ -158,15 +158,16 @@
 .mp-lists__empty { font-size: 12px; color: var(--mp-ink-3); }
 
 /* ── the six counted tabs: over the whole width, each centred in its share ── */
-/* no top padding: on a notched phone that padding opened a status-bar-high
-   gap under the playlists. The band over the status bar is drawn only once
-   the row has stuck (is-stuck, set on scroll). */
-.mp-tabs { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; overflow-x: auto; scrollbar-width: none;
-  padding: 0 var(--mp-pad); background: var(--mp-ground); border-bottom: 1px solid var(--mp-rule); }
+/* The row sticks to the very top and carries the status bar's band itself
+   (padding-top = the notch), so once stuck there is no gap above it - on any
+   phone, whether or not a scroll handler noticed. At rest the same band is
+   pulled up over the stage's foot (negative margin), where the stage already
+   fades into the ground and keeps that much room below its content. */
+.mp-tabs { position: sticky; top: 0; z-index: 5; display: flex; overflow-x: auto; scrollbar-width: none;
+  padding: env(safe-area-inset-top, 0px) var(--mp-pad) 0; margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+  background: var(--mp-ground); border-bottom: 1px solid var(--mp-rule); }
 /* solid, not glass: on an iPhone the blurred band painted see-through while
    stuck, so the works scrolled visibly behind the tab labels */
-.mp-tabs.is-stuck { background: var(--mp-ground); box-shadow: 0 calc(-1 * env(safe-area-inset-top, 0px)) 0 0 var(--mp-ground); }
-.mp.is-light .mp-tabs.is-stuck { background: var(--mp-ground); box-shadow: 0 calc(-1 * env(safe-area-inset-top, 0px)) 0 0 var(--mp-ground); }
 .mp-tabs::-webkit-scrollbar { display: none; }
 .mp.is-light .mp-tabs { background: var(--mp-ground); }
 .mp .mp-tabs button { position: relative; flex: 1 0 auto; display: inline-flex; flex-direction: row-reverse; align-items: baseline;

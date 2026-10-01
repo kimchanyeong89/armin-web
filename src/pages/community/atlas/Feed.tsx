@@ -33,7 +33,7 @@ export interface FeedState {
 const VIEWS: { id: FeedView; ko: string; en: string }[] = [
   { id: "posts", ko: "이야기", en: "Talk" },
   { id: "curation", ko: "큐레이션", en: "Curation" },
-  { id: "exhibitions", ko: "진행 중인 전시", en: "On now" },
+  { id: "exhibitions", ko: "진행중인 전시", en: "On now" },
 ];
 
 const TARGETS: CommunityHeaderType[] = ["all", "museum", "artist", "artwork", "exhibition"];

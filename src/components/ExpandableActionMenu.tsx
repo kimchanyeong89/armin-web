@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { SaveIcon } from "./like/SaveIcon";
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookmarkPlus, ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
 import { SHOW_SALES_UI } from '../config/features';
 
@@ -103,7 +104,7 @@ export function ExpandableActionMenu({
                 style={btnStyle}
                 title="Save to Playlist"
               >
-                <BookmarkPlus size={iconSize} strokeWidth={2.2} />
+                <SaveIcon size={iconSize} strokeWidth={2.2} />
               </motion.button>
             )}
           </>

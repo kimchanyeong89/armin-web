@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState, useRef } from "react";
+import { SaveIcon } from "./like/SaveIcon";
 import { RankInfo } from "./RankInfo";
 import "./mypageRedesign.css";
 import { useAuth } from "../contexts/AuthContext";
@@ -19,7 +20,6 @@ import {
 import {
   ArrowLeft,
   ArrowRight,
-  BookmarkPlus,
   ListMusic,
   MapPin,
   Pencil,
@@ -2160,7 +2160,7 @@ const MyPage: React.FC = () => {
             }}
             title="Save to Playlist"
           >
-            <BookmarkPlus size={12} strokeWidth={2.2} />
+            <SaveIcon size={12} strokeWidth={2.2} />
           </button>
 
           {SHOW_SALES_UI && (
@@ -2470,12 +2470,6 @@ const MyPage: React.FC = () => {
     const el = scrollContainerRef.current;
     if (!el) return;
     leaving.current.scrollTop = el.scrollTop;
-    // the tab row covers the status bar only once it has stuck under it
-    const tabsEl = tabsRef.current;
-    if (tabsEl) {
-      const stuckAt = el.getBoundingClientRect().top + parseFloat(getComputedStyle(tabsEl).top || "0");
-      tabsEl.classList.toggle("is-stuck", tabsEl.getBoundingClientRect().top <= stuckAt + 0.5);
-    }
     
     // Start loading early and in smaller chunks for smoother visual cadence.
     if (el.scrollHeight - el.scrollTop - el.clientHeight < 1800) {
