@@ -20,6 +20,7 @@ import { averageRating, subjectKey } from "../features/ratings/ratingWrites";
 import { useAllRatingStats } from "../features/ratings/useRatings";
 import { museumMapPath } from "../utils/museumMapPath";
 import { useTasteScores } from "../features/taste/useTasteScores";
+import { CollyLotusLoader } from "./CollyMark";
 import { exhibitions } from "../data/exhibitions";
 import { NO_IMAGE_PLACEHOLDER_DARK } from "../utils/noImagePlaceholder";
 import { getExhibitionDisplayDescription, getExhibitionDisplayTitle } from "../i18n/exhibitionLocalization";
@@ -240,8 +241,19 @@ export default function NearbyExhibitions({
     { id: "newest", label: tr({ ko: "최근등록순", en: "Newest" }) },
   ];
 
-  // How each show matches the signed-in user's liked artworks; null until they have a taste.
+  // How each show matches the signed-in user's liked artworks: undefined while it is worked out, null when there is no taste.
   const taste = useTasteScores();
+  // Sorted by taste, the list waits for the scores instead of showing one order and then another;
+  // past ten seconds it shows anyway, by rating.
+  const [tasteWaitOver, setTasteWaitOver] = useState(false);
+  const waitingForTaste = sortMode === "taste" && taste === undefined && !tasteWaitOver;
+  const [waitLine, setWaitLine] = useState(0);
+  useEffect(() => {
+    if (!waitingForTaste) return;
+    const giveUp = window.setTimeout(() => setTasteWaitOver(true), 10000);
+    const turn = window.setInterval(() => setWaitLine((n) => n + 1), 1800);
+    return () => { window.clearTimeout(giveUp); window.clearInterval(turn); };
+  }, [waitingForTaste]);
 
   const sortedAll = useMemo(() => {
     const arr = items.map((item) => {
@@ -259,10 +271,26 @@ export default function NearbyExhibitions({
     return arr;
   }, [items, sortMode, statsById, taste]);
 
-  if (loading) {
+  if (loading || waitingForTaste) {
+    const lines: Copy[] = [
+      { ko: "좋아요한 작품을 살펴보고 있어요", en: "Looking through the works you liked" },
+      { ko: "AI가 취향에 맞는 전시를 고르고 있어요", en: "AI is picking the shows that suit your taste" },
+      { ko: "전시마다 적합도를 계산하고 있어요", en: "Working out how well each show matches" },
+    ];
     return (
-      <div style={{ padding: 40, textAlign: "center", color: fgLow, fontSize: 12 }}>
-        {tr({ ko: "진행중인 전시를 불러오는 중입니다...", en: "Loading exhibitions on now..." })}
+      <div role="status" style={{ display: "grid", justifyItems: "center", gap: 14, padding: "56px 24px", textAlign: "center" }}>
+        <CollyLotusLoader size={56} />
+        {waitingForTaste && (
+          <motion.p
+            key={waitLine % lines.length}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ margin: 0, color: fgLow, fontSize: 12.5, lineHeight: 1.6, wordBreak: "keep-all" }}
+          >
+            {tr(lines[waitLine % lines.length])}
+          </motion.p>
+        )}
       </div>
     );
   }

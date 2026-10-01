@@ -15,8 +15,9 @@ import { useLikedArtworks } from '../../hooks/useLikedArtworks';
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 /** Hearts often come in bursts; wait for a pause before asking again. */
 const SETTLE_MS = 1200;
-/** The exhibition data is rebuilt daily, so a kept answer older than this is asked again. */
-const KEPT_FOR_MS = 6 * 60 * 60 * 1000;
+/** A taste moves only when the likes do (a new like changes the key and asks again), so the
+ *  answer is kept for a day: the exhibition data is rebuilt daily, and a day picks up the new shows. */
+const KEPT_FOR_MS = 24 * 60 * 60 * 1000;
 const STORAGE_PREFIX = 'colly:taste-scores:';
 
 export interface TasteScores {
@@ -85,8 +86,9 @@ function fetchTasteScores(key: string, userId: string, likedIds: string[]): Prom
 /** Weekly curation saves an artwork as `collection#id`; the vector index knows it by the id alone. */
 const vectorIdOf = (likedId: string) => likedId.slice(likedId.indexOf('#') + 1);
 
-export function useTasteScores(): TasteScores | null {
-  const { user } = useAuth();
+/** The scores; `undefined` while a taste is on its way, `null` when there is none (signed out, no likes, failed). */
+export function useTasteScores(): TasteScores | null | undefined {
+  const { user, loading: authLoading } = useAuth();
   const { loading, ids } = useLikedArtworks();
   const userId = user?.uid ?? null;
   const likedIds = useMemo(() => Array.from(new Set(Array.from(ids, vectorIdOf))).sort(), [ids]);
@@ -110,7 +112,10 @@ export function useTasteScores(): TasteScores | null {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
+  if (authLoading) return undefined;
   if (!userId || (!loading && !likedIds.length)) return null;
   // While a changed like list settles, the last answer for this user stays on screen.
-  return answer?.key.startsWith(`${userId}\n`) ? answer.scores : null;
+  if (answer?.key.startsWith(`${userId}\n`)) return answer.scores;
+  // An answer kept on this device for these likes is used from the first paint, so the list never reorders.
+  return (key && readKept(userId, fingerprint(key))) || undefined;
 }
