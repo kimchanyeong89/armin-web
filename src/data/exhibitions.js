@@ -3859,7 +3859,30 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "jeonju-collection", name: "국립전주박물관 회화 컬렉션", name_en: "Jeonju National Museum Paintings", title: "국립전주박물관 회화 컬렉션", title_en: "Jeonju National Museum Paintings Collection", description: "국립전주박물관 소장 회화 컬렉션 (382점)", description_en: "Jeonju National Museum paintings collection (382 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "jeonju-museum.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "jeonju-national-museum-2026-1713",
+        title: "[테마전] 짓고 쓰다 - 건축과 기록",
+        venue: "상설전시관 2층 전주와 조선왕실실",
+        startDate: "2026-09-08",
+        endDate: "2026-12-07",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jeonju-national-museum-2026-1713-173a5bde.png",
+        officialUrl: "https://jeonju.museum.go.kr/special.es?mid=a10201010000&seq=1713&act=view",
+        status: "ongoing",
+        sourceId: "1713"
+      },
+      {
+        id: "jeonju-national-museum-2026-1711",
+        title: "[특별전] 도량道場으로의 귀환, 전주 서고사 나한",
+        venue: "국립전주박물관 기획전시실",
+        startDate: "2026-09-16",
+        endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jeonju-national-museum-2026-1711-81f2e166.jpg",
+        officialUrl: "https://jeonju.museum.go.kr/special.es?mid=a10201010000&seq=1711&act=view",
+        status: "ongoing",
+        sourceId: "1711"
+      }
+    ],
     pastExhibitions: [],
     rooms: {}
   },
@@ -3883,7 +3906,32 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "gwangju-collection", name: "국립광주박물관 회화 컬렉션", name_en: "Gwangju National Museum Paintings", title: "국립광주박물관 회화 컬렉션", title_en: "Gwangju National Museum Paintings Collection", description: "국립광주박물관 소장 회화 컬렉션 (331점)", description_en: "Gwangju National Museum paintings collection (331 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "gwangju-museum.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "gwangju-national-museum-2026-181",
+        title: "도기陶器, 우리를 담은 질그릇",
+        description: "깊어가는 올여름, 국립광주박물관은 특별전 '도기陶器, 우리를 담은 질그릇'을 개최합니다. 우리네 일상생활 속 가장 가까이, 오랜 세월 함께해 온 도기를 다시 들여다봅니다. 실용성과 미감, 그리고 그 전통이 이어져 온 도기에 담긴 이야기를 만나보시기 바랍니다. ※ 개막식: 2026. 7. 28.(화) 16:00 ※ 휴관일: 2026. 9. 14.(월), 25.(금, 추석)",
+        venue: "본관 1층 특별전시실",
+        startDate: "2026-07-29",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/gwangju-national-museum-2026-181-46787834.jpg",
+        officialUrl: "https://gwangju.museum.go.kr/prog/specialDisplay/kor/sub02_02/s/new/view.do?cntNo=181",
+        status: "ongoing",
+        sourceId: "181"
+      },
+      {
+        id: "gwangju-national-museum-2026-182",
+        title: "제37회 어린이 문화유산 그리기 대회 우수작품전",
+        description: "제37회 어린이 문화유산 그리기 대회 입상작 전시(50점)",
+        venue: "국립광주박물관 도자문화관 1층 로비",
+        startDate: "2026-10-31",
+        endDate: "2026-12-06",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/gwangju-national-museum-2026-182-a6b85ee6.jpg",
+        officialUrl: "https://gwangju.museum.go.kr/prog/specialDisplay/kor/sub02_02/s/new/view.do?cntNo=182",
+        status: "upcoming",
+        sourceId: "182"
+      }
+    ],
     pastExhibitions: [],
     rooms: {}
   },
@@ -5499,6 +5547,18 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
+        id: "lee-jung-seop-museum-2026-12940",
+        title: "이중섭 아카이브 전시 5부: 1956-1986년",
+        startDate: "2026-09-02",
+        endDate: "2027-01-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/lee-jung-seop-museum-2026-12940-dcf86f31.jpg",
+        officialUrl: "https://culture.seogwipo.go.kr/jslee/show/current.htm?act=view&seq=12940",
+        status: "ongoing",
+        sourceId: "12940"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "jungseob-2026-archive4",
         title: "이중섭 아카이브 전시 4부: 1955-1956년",
         titleEn: "Lee Jung-seob Archive Exhibition Part 4: 1955–1956",
@@ -5507,10 +5567,9 @@ export const exhibitions = [
         endDate: "2026-08-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jungseob-2026-archive4.jpg",
         officialUrl: "http://culture.seogwipo.go.kr/jslee/",
-        status: "ongoing"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
   {
     id: "gidang-art-museum",
@@ -5530,7 +5589,8 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "gidang-collection", name: "소장품", title: "기당 소장품", description: "변시지를 비롯한 근현대 회화·서예 소장품 상설전.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gidang-collection.json" }
     ],
-    temporaryExhibitions: [
+    temporaryExhibitions: [],
+    pastExhibitions: [
       {
         id: "gidang-2026-daily",
         title: "소장품전 〈일상의 온도〉",
@@ -5540,10 +5600,9 @@ export const exhibitions = [
         endDate: "2026-05-10",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/gidang-2026-daily.png",
         officialUrl: "http://culture.seogwipo.go.kr/gidang/",
-        status: "ongoing"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
   {
     id: "soam-memorial-hall",
@@ -5618,17 +5677,6 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
-        id: "kimtschangyeul-2026-waterstones",
-        title: "김창열과 한용진: 물방울과 돌",
-        titleEn: "Kim Tschang-yeul & Han Yongjin: Waterdrops & Stones",
-        description: "김창열의 물방울 회화와 조각가 한용진의 작품 15점을 함께 선보이는 2인전. 물방울과 돌이라는 대비되는 자연 소재를 통해 두 작가의 조형 언어를 대화시킨다.",
-        startDate: "2026-03-24",
-        endDate: "2026-06-14",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kimtschangyeul-2026-waterstones.jpg",
-        officialUrl: "https://kimtschang-yeul.jeju.go.kr/",
-        status: "ongoing"
-      },
-      {
         id: "kimtschangyeul-2026-10years",
         title: "10/10: 미술관 10년의 선택",
         titleEn: "10/10: A Decade's Selection at the Museum",
@@ -5638,9 +5686,45 @@ export const exhibitions = [
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kimtschangyeul-2026-10years.jpg",
         officialUrl: "https://kimtschang-yeul.jeju.go.kr/",
         status: "ongoing"
+      },
+      {
+        id: "kim-tschang-yeul-art-museum-2026-138",
+        title: "은은한 문제: 김창열의 신문지 작업",
+        titleEn: "Subtle Matter: Newspaper Works by Kim Tschangyeul",
+        venue: "김창열미술관 1전시실",
+        startDate: "2026-04-28",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kim-tschang-yeul-art-museum-2026-138-f6011c6b.jpg",
+        officialUrl: "https://kimtschang-yeul.jeju.go.kr/offExDetail.do?idx=138&menuNum=3100",
+        status: "ongoing",
+        sourceId: "138"
+      },
+      {
+        id: "kim-tschang-yeul-art-museum-2026-140",
+        title: "파리의 화가 김창열",
+        titleEn: "Kim Tschangyeul: A Painter in Paris",
+        venue: "김창열미술관 2, 3전시실, 영상실",
+        startDate: "2026-06-30",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kim-tschang-yeul-art-museum-2026-140-fb45de4b.jpg",
+        officialUrl: "https://kimtschang-yeul.jeju.go.kr/offExDetail.do?idx=140&menuNum=3100",
+        status: "ongoing",
+        sourceId: "140"
       }
     ],
-    pastExhibitions: []
+    pastExhibitions: [
+      {
+        id: "kimtschangyeul-2026-waterstones",
+        title: "김창열과 한용진: 물방울과 돌",
+        titleEn: "Kim Tschang-yeul & Han Yongjin: Waterdrops & Stones",
+        description: "김창열의 물방울 회화와 조각가 한용진의 작품 15점을 함께 선보이는 2인전. 물방울과 돌이라는 대비되는 자연 소재를 통해 두 작가의 조형 언어를 대화시킨다.",
+        startDate: "2026-03-24",
+        endDate: "2026-06-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kimtschangyeul-2026-waterstones.jpg",
+        officialUrl: "https://kimtschang-yeul.jeju.go.kr/",
+        status: "past"
+      }
+    ]
   }
   ,
   {
@@ -6496,6 +6580,58 @@ export const exhibitions = [
         status: "ongoing"
       },
       {
+        id: "busan-museum-art-2026-20260921142919611",
+        title: "젊은 시각 새로운 시선 해외전",
+        startDate: "2026-08-23",
+        endDate: "2026-10-07",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/busan-museum-art-2026-20260921142919611-380a9855.png",
+        officialUrl: "https://art.busan.go.kr/tblTsite07Display/viewNowClient.nm?id=20260921142919611",
+        status: "ongoing",
+        sourceId: "20260921142919611"
+      },
+      {
+        id: "busan-museum-art-2026-20260911100642819",
+        title: "Future Museology 퓨쳐뮤지올로지",
+        startDate: "2026-09-17",
+        endDate: "2027-03-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/busan-museum-art-2026-20260911100642819-5536514a.png",
+        officialUrl: "https://art.busan.go.kr/tblTsite07Display/viewNowClient.nm?id=20260911100642819",
+        status: "ongoing",
+        sourceId: "20260911100642819"
+      },
+      {
+        id: "busan-museum-art-2026-20260913112010274",
+        title: "그러나 우리는 아직도 이 바다 높은 물결 위에 있다 Still We are Borne on These Waves:1945-1953",
+        startDate: "2026-09-17",
+        endDate: "2027-02-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/busan-museum-art-2026-20260913112010274-b272a2b0.png",
+        officialUrl: "https://art.busan.go.kr/tblTsite07Display/viewNowClient.nm?id=20260913112010274",
+        status: "ongoing",
+        sourceId: "20260913112010274"
+      },
+      {
+        id: "busan-museum-art-2026-2026091311062417",
+        title: "안전기지 Safe Base",
+        startDate: "2026-09-17",
+        endDate: "2027-05-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/busan-museum-art-2026-2026091311062417-c994b886.png",
+        officialUrl: "https://art.busan.go.kr/tblTsite07Display/viewNowClient.nm?id=2026091311062417",
+        status: "ongoing",
+        sourceId: "2026091311062417"
+      },
+      {
+        id: "busan-museum-art-2026-2026091311114793",
+        title: "이 모든 어제의 미술관에게 Dear All The Yesterdays",
+        startDate: "2026-09-17",
+        endDate: "2027-03-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/busan-museum-art-2026-2026091311114793-92cb93ab.png",
+        officialUrl: "https://art.busan.go.kr/tblTsite07Display/viewNowClient.nm?id=2026091311114793",
+        status: "ongoing",
+        sourceId: "2026091311114793"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "bma-2026-looplab",
         title: "2026 LOOP LAB BUSAN",
         titleEn: "2026 LOOP LAB BUSAN",
@@ -6504,10 +6640,9 @@ export const exhibitions = [
         endDate: "2026-06-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/bma-2026-looplab.jpg",
         officialUrl: "https://art.busan.go.kr/tblTsite07Display/listFutureClient.nm",
-        status: "upcoming"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -6537,16 +6672,19 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
-        id: "jmoa-2025-ujumo",
-        title: "제주도립미술관 중정프로젝트 《우주목(宇宙木)》",
-        titleEn: "JMOA Courtyard Project: Cosmic Tree",
-        description: "제주도립미술관 중정에 설치된 야외 설치 프로젝트. 제주의 자연과 우주를 잇는 거대한 나무 형상의 조형물을 통해 생명·공간·시간의 순환을 탐구한다.",
-        startDate: "2025-08-05",
-        endDate: "2026-05-10",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jmoa-2026-ujumo.jpg",
-        officialUrl: "https://www.jeju.go.kr/jmoa/show/current.htm",
-        status: "ongoing"
-      },
+        id: "jmoa-2026-biennale",
+        title: "2026 제5회 제주비엔날레",
+        titleEn: "5th Jeju Biennale 2026",
+        description: "주제 '허끄곡 모닥치곡 이야홍: 변용의 기술'. 19개국 70팀 참여. 제주도립미술관·관덕정·제주도청 옛 터·제주아트플랫폼 등 7개 분산 거점에서 개최. 제주의 돌 문화·신화·유배의 역사를 현대미술로 재해석한다.",
+        startDate: "2026-08-25",
+        endDate: "2026-11-15",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jeju-museum-art-2026-18962-b0548a87.jpg",
+        officialUrl: "https://www.jeju.go.kr/jmoa/",
+        status: "ongoing",
+        sourceId: "18962"
+      }
+    ],
+    pastExhibitions: [
       {
         id: "jmoa-2026-boundary",
         title: "경계 위의 그녀",
@@ -6556,21 +6694,20 @@ export const exhibitions = [
         endDate: "2026-08-02",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jmoa-2026-boundary.png",
         officialUrl: "https://www.jeju.go.kr/jmoa/show/current.htm",
-        status: "upcoming"
+        status: "past"
       },
       {
-        id: "jmoa-2026-biennale",
-        title: "2026 제5회 제주비엔날레",
-        titleEn: "5th Jeju Biennale 2026",
-        description: "주제 '허끄곡 모닥치곡 이야홍: 변용의 기술'. 19개국 70팀 참여. 제주도립미술관·관덕정·제주도청 옛 터·제주아트플랫폼 등 7개 분산 거점에서 개최. 제주의 돌 문화·신화·유배의 역사를 현대미술로 재해석한다.",
-        startDate: "2026-08-25",
-        endDate: "2026-11-15",
-        coverImage: "",
-        officialUrl: "https://www.jeju.go.kr/jmoa/",
-        status: "upcoming"
+        id: "jmoa-2025-ujumo",
+        title: "제주도립미술관 중정프로젝트 《우주목(宇宙木)》",
+        titleEn: "JMOA Courtyard Project: Cosmic Tree",
+        description: "제주도립미술관 중정에 설치된 야외 설치 프로젝트. 제주의 자연과 우주를 잇는 거대한 나무 형상의 조형물을 통해 생명·공간·시간의 순환을 탐구한다.",
+        startDate: "2025-08-05",
+        endDate: "2026-05-10",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jmoa-2026-ujumo.jpg",
+        officialUrl: "https://www.jeju.go.kr/jmoa/show/current.htm",
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -6999,28 +7136,6 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "jejumodern-2026-kimheungsoo",
-        title: "김흥수: 어디서 본 듯한",
-        titleEn: "Kim Heung-soo: Familiar Yet Strange",
-        description: "한국 작가 김흥수의 개인전.",
-        startDate: "2026-04-03",
-        endDate: "2026-10-25",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-kimheungsoo.jpg",
-        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
-        status: "ongoing"
-      },
-      {
-        id: "jejumodern-2026-parkhanna",
-        title: "박한나: 태양의 소실점에서",
-        titleEn: "Park Han-na: At the Vanishing Point of the Sun",
-        description: "한국 작가 박한나의 개인전.",
-        startDate: "2026-03-24",
-        endDate: "2026-09-13",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-parkhanna.jpg",
-        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
-        status: "ongoing"
-      },
-      {
         id: "jejumodern-2026-parkkwangjin",
         title: "박광진: 형상, 시가 되다",
         titleEn: "Park Kwang-jin: Form Becomes Poetry",
@@ -7032,6 +7147,63 @@ export const exhibitions = [
         status: "ongoing"
       },
       {
+        id: "jejumodern-2026-kimheungsoo",
+        title: "김흥수: 어디서 본 듯한",
+        titleEn: "Kim Heung-soo: Familiar Yet Strange",
+        description: "한국 작가 김흥수의 개인전.",
+        startDate: "2026-04-03",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-kimheungsoo.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
+        status: "ongoing"
+      },
+      {
+        id: "jeju-contemporary-art-museum-2026-18938",
+        title: "공공수장고 미디어아트_곶자왈: 숨결의 시간",
+        venue: "공공수장고",
+        startDate: "2026-06-02",
+        endDate: "2026-11-01",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jeju-contemporary-art-museum-2026-18938-0f9c5368.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/shows/current.htm?act=view&seq=18938",
+        status: "ongoing",
+        sourceId: "18938"
+      },
+      {
+        id: "jeju-contemporary-art-museum-2026-18989",
+        title: "마음이 알록달록",
+        venue: "제1기획전시실, 제2기획전시실, 특별전시실",
+        startDate: "2026-07-10",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jeju-contemporary-art-museum-2026-18989-90bb0368.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/shows/current.htm?act=view&seq=18989",
+        status: "ongoing",
+        sourceId: "18989"
+      },
+      {
+        id: "jeju-contemporary-art-museum-2026-19164",
+        title: "김수민: 데이터의 변주",
+        venue: "1평미술관",
+        startDate: "2026-09-22",
+        endDate: "2027-03-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jeju-contemporary-art-museum-2026-19164-a72b3a7f.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/shows/current.htm?act=view&seq=19164",
+        status: "ongoing",
+        sourceId: "19164"
+      }
+    ],
+    pastExhibitions: [
+      {
+        id: "jejumodern-2026-parkhanna",
+        title: "박한나: 태양의 소실점에서",
+        titleEn: "Park Han-na: At the Vanishing Point of the Sun",
+        description: "한국 작가 박한나의 개인전.",
+        startDate: "2026-03-24",
+        endDate: "2026-09-13",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-parkhanna.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
+        status: "past"
+      },
+      {
         id: "jejumodern-2026-mediaart",
         title: "공공수장고 미디어아트: 해와 달의 노래",
         titleEn: "Public Archive Media Art: Song of Sun and Moon",
@@ -7040,10 +7212,9 @@ export const exhibitions = [
         endDate: "2026-05-31",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-mediaart.jpg",
         officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
-        status: "ongoing"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -7580,7 +7751,18 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "moca-busan-collection", name: "Collection", name_en: "Collection", title: "Museum of Contemporary Art Busan — Collection", title_en: "Museum of Contemporary Art Busan — Collection", description: "172점 — 영상121·회화21·사진12·드로잉9·혼합매체8·판화1.", description_en: "172 works — video, painting, photograph, drawing, mixed_media_2d, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "moca-busan-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "moca-busan-2026-1751560",
+        title: "소장품섬_심준섭: 기관의 순환",
+        startDate: "2026-08-29",
+        endDate: "2026-11-01",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/moca-busan-2026-1751560-4068efc0.jpg",
+        officialUrl: "https://www.busan.go.kr/moca/exhibition01/1751560",
+        status: "ongoing",
+        sourceId: "1751560"
+      }
+    ],
     pastExhibitions: [],
     exhibitions: []
   },
@@ -7953,7 +8135,20 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "korea-manhwa-collection", name: "Collection", name_en: "Collection", title: "Korea Manhwa Museum — Collection", title_en: "Korea Manhwa Museum — Collection", description: "23점 — 드로잉23.", description_en: "23 works — drawing.", startDate: "Permanent", endDate: "Permanent", collectionFile: "korea-manhwa-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "korea-manhwa-2026-160",
+        title: "무림(武林)",
+        description: "무림(武林) The Forest of Martial Arts 무림(武林)은 저마다의 뜻을 품은 이들이 모여 성장하고 선택해 나가는 무협의 세계입니다. 이곳은 언제나 거창한 이름과 명성으로 가득했습니다. 천하제일의 검, 불로장생의 비약, 전설의 문파라는 화려한 수식어 뒤에는 권위와 편견이 쌓여갑니다. 우리 역시 그 화려함으로 사람을 가늠하곤 하지만, 진짜 강함과 가치는 그 이름을 걷어낸 자리에서 드러납니다. 그렇다면 강함이 곧 절대적 선(善)이 되는 곳을 과연 진정한 무림이라 부를 수 있을까요? 무협에서 강함은 단순히 상대를 이기는 힘만을 의미하지 않습니다. 두려움 앞에서 물러서지 않는 용기, 힘을 올바르게 사용하려는 고민, 그리고 자신이 옳다고 믿는 것을 지키려는 정의가 함께 담겨 있습니다. 기획전시 은 2",
+        venue: "제2기획전시실",
+        startDate: "2026-09-18",
+        endDate: "2027-08-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/korea-manhwa-2026-160-f5f6d614.jpg",
+        officialUrl: "https://www.komacon.kr/comicsmuseum/show/plan_view.asp?eh_no=160",
+        status: "ongoing",
+        sourceId: "160"
+      }
+    ],
     pastExhibitions: [],
     exhibitions: []
   },

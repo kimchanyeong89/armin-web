@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * sync.mjs — 수도권 미술관 전시 정보를 수집해 src/data/exhibitions.js 를 갱신한다.
+ * sync.mjs — 국내 미술관 전시 정보를 수집해 src/data/exhibitions.js 를 갱신한다.
  *
  * 사용법:
  *   node scripts/exhibitions/sync.mjs                 # 전체 수집 + 파일 반영
@@ -262,7 +262,7 @@ function renderSummary(report) {
   const lines = [];
   const count = (t) => report.changes.filter((c) => c.type === t).length;
 
-  lines.push(`## 🎨 수도권 미술관 전시 동기화 — ${report.today}`);
+  lines.push(`## 🎨 국내 미술관 전시 동기화 — ${report.today}`);
   lines.push('');
   lines.push(
     `**추가 ${count('added')}** · **갱신 ${count('updated')}** · ` +
@@ -355,7 +355,7 @@ function renderSummary(report) {
 }
 
 async function main() {
-  log(`\n🎨 수도권 미술관 전시 동기화 — 기준일 ${TODAY}`);
+  log(`\n🎨 국내 미술관 전시 동기화 — 기준일 ${TODAY}`);
   if (DRY_RUN) log('   (dry-run: 파일을 쓰지 않습니다)');
 
   const report = {
