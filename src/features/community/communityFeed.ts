@@ -109,10 +109,7 @@ export function toCommunityFeedPost(id: string, data: Record<string, any>): Comm
   } as CommunityFeedPost;
 }
 
+/** Only real posts: an empty category stays empty rather than filled with made-up samples (10/2). */
 export function mergeCommunityPosts(remotePosts: CommunityFeedPost[], sort: CommunitySort): CommunityFeedPost[] {
-  const categoriesWithContent = new Set(remotePosts.map((post) => normalizeCommunityCategory(post.category)));
-  const fallbackSamples = SAMPLE_COMMUNITY_FEED_POSTS.filter(
-    (sample) => !categoriesWithContent.has(normalizeCommunityCategory(sample.category)),
-  );
-  return sortCommunityPosts([...fallbackSamples, ...remotePosts], sort);
+  return sortCommunityPosts(remotePosts, sort);
 }

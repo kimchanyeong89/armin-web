@@ -2685,8 +2685,8 @@ const MyPage: React.FC = () => {
               {SHOW_PUBLIC_COLLECTIONS && user && (
                 <li className="mp-list mp-list--publish">
                   <button type="button" className="mp-list__open" onClick={() => setPublishing(true)}>
-                    <span className="mp-list__shot" aria-hidden="true"><i>+</i></span>
-                    <span className="mp-list__text"><b>{t({ ko: "큐레이션 올리기", en: "Put on Curation" })}</b></span>
+                    <span className="mp-list__shot" aria-hidden="true"><i>→</i></span>
+                    <span className="mp-list__text"><b>{t({ ko: "큐레이션 공유하기", en: "Share as Curation" })}</b></span>
                   </button>
                 </li>
               )}

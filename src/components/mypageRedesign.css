@@ -233,10 +233,16 @@
 @keyframes pl-menu-in { from { opacity: 0; transform: translateY(-4px); } }
 
 
-/* "put on Curation": the playlist row's last tile - a gold-tinted cover with a circled plus, its name on two lines */
+/* "share as Curation": the playlist row's last tile - a gold-tinted cover with a circled arrow (a way out to the
+   community, not another playlist), its name on two lines */
 .mp-list--publish .mp-list__shot { display: grid; place-items: center; background: rgba(212,165,71,.12); }
 .mp-list--publish .mp-list__shot i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid var(--mp-gold); font: 400 17px/1 var(--mp-mono); font-style: normal; color: var(--mp-gold);
+  border: 1px solid var(--mp-gold); font: 400 15px/1 var(--mp-mono); font-style: normal; color: var(--mp-gold);
   transition: background .16s ease, color .16s ease; }
 .mp-list--publish:hover .mp-list__shot i { background: var(--mp-gold); color: var(--mp-ground); }
+/* the arrow nudges outward twice when the row appears, to say "this sends it out" */
+@keyframes mp-share-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+.mp-list--publish .mp-list__shot i { animation: mp-share-nudge .7s ease-in-out .9s 2; }
+.mp-list--publish:hover .mp-list__shot i { transform: translateX(3px); animation: none; transition: transform .2s ease, background .16s ease, color .16s ease; }
+@media (prefers-reduced-motion: reduce) { .mp-list--publish .mp-list__shot i { animation: none; } }
 .mp-list--publish .mp-list__text b { white-space: normal; line-height: 1.25; color: var(--mp-gold); }
