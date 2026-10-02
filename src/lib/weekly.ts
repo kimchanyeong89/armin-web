@@ -1,27 +1,16 @@
 import type { WeeklyPublishedFile } from '../types/weekly';
 import { isoWeek } from './iso-week';
-import { listPublished } from './weeklyStore';
+import { fetchPublished, listPublished } from './weeklyStore';
 
-export async function fetchCurrentCuration(
-  date: Date = new Date(),
-  maxLookback = 12,
-): Promise<WeeklyPublishedFile | null> {
-  // The newest curation published from /admin/weekly (Firestore), however many weeks back.
-  const [latest] = await listPublished(isoWeek(date), 1);
-  if (latest) return latest;
-  // Else the files of the weeks published before that: the current ISO week, then
-  // backwards, so an unpublished week shows the most recent real curation.
-  let week = isoWeek(date);
-  for (let i = 0; i < maxLookback; i++) {
-    try {
-      const res = await fetch(`/data/weekly-curations/${week}.json`);
-      if (res.ok) return await res.json() as WeeklyPublishedFile;
-    } catch {
-      // Network error on this week — fall through and try the previous one.
-    }
-    week = previousWeek(week);
-  }
-  return null;
+/** Weeks published as files before /admin/weekly existed. */
+const PUBLISHED_FILE_WEEKS = ['2026-W21', '2026-W20'];
+
+/**
+ * This week's curation, or null. Only the current ISO week counts: once a week is
+ * over its curation belongs to the archive, never to "this week".
+ */
+export async function fetchCurrentCuration(date: Date = new Date()): Promise<WeeklyPublishedFile | null> {
+  return fetchPublished(isoWeek(date));
 }
 
 // ── Archive list ────────────────────────────────────────────────────────────
@@ -38,23 +27,6 @@ export interface ArchiveEntry {
   published_at: string;
 }
 
-interface ArchiveIndexFile {
-  updated_at: string;
-  entries: ArchiveEntry[];
-}
-
-/** Decrement an ISO week by one. */
-function previousWeek(week: string): string {
-  const [yStr, wStr] = week.split('-W');
-  const year = parseInt(yStr, 10);
-  const w = parseInt(wStr, 10);
-  if (w > 1) return `${year}-W${String(w - 1).padStart(2, '0')}`;
-  // Wrap to previous year. ISO years have 52 or 53 weeks; assume 52 unless
-  // the previous year's W53 file exists. The fallback path below will skip
-  // missing files anyway, so 52 is a safe default.
-  return `${year - 1}-W52`;
-}
-
 function summarizeAsEntry(file: WeeklyPublishedFile): ArchiveEntry {
   const hero = file.works.find((w) => w.role === 'hero') ?? file.works[0];
   return {
@@ -68,53 +40,25 @@ function summarizeAsEntry(file: WeeklyPublishedFile): ArchiveEntry {
   };
 }
 
-/**
- * Fetch the archive list of published weekly curations, newest first.
- *
- * 1) Try `/data/weekly-curations-index.json` (preferred; not yet generated
- *    in V1 — handled gracefully).
- * 2) Fallback: enumerate weeks going backwards from `date`, requesting each
- *    `<week>.json` file. Stop after `maxLookback` attempts, return only the
- *    ones that 200.
- */
-export async function fetchArchiveList(
-  date: Date = new Date(),
-  maxLookback = 12,
-): Promise<ArchiveEntry[]> {
-  // Published from /admin/weekly (Firestore), joined by the file weeks below; a week in both is the Firestore one.
-  const fromStore = (await listPublished(isoWeek(date))).map(summarizeAsEntry);
-  const withFiles = (files: ArchiveEntry[]) => {
-    const seen = new Set(fromStore.map((e) => e.week));
-    return [...fromStore, ...files.filter((e) => !seen.has(e.week))].sort((a, b) => b.week.localeCompare(a.week));
-  };
-
-  // Preferred path: an explicit index file.
-  try {
-    const res = await fetch('/data/weekly-curations-index.json');
-    if (res.ok) {
-      const idx = await res.json() as ArchiveIndexFile;
-      return withFiles(idx.entries);
-    }
-  } catch {
-    // Network error: fall through to enumeration.
-  }
-
-  // Fallback: probe backwards from current week.
-  const entries: ArchiveEntry[] = [];
-  let week = isoWeek(date);
-  for (let i = 0; i < maxLookback; i++) {
+/** Past weekly curations (weeks before `date`'s week), newest first. */
+export async function fetchArchiveList(date: Date = new Date()): Promise<ArchiveEntry[]> {
+  const thisWeek = isoWeek(date);
+  // Published from /admin/weekly (Firestore), joined by the file weeks; a week in both is the Firestore one.
+  const fromStore = (await listPublished(thisWeek)).map(summarizeAsEntry);
+  const seen = new Set(fromStore.map((e) => e.week));
+  const fromFiles: ArchiveEntry[] = [];
+  for (const week of PUBLISHED_FILE_WEEKS) {
+    if (seen.has(week)) continue;
     try {
       const res = await fetch(`/data/weekly-curations/${week}.json`);
-      if (res.ok) {
-        const file = await res.json() as WeeklyPublishedFile;
-        entries.push(summarizeAsEntry(file));
-      }
+      if (res.ok) fromFiles.push(summarizeAsEntry(await res.json() as WeeklyPublishedFile));
     } catch {
-      // Skip and continue.
+      // Skip a file that is out of reach.
     }
-    week = previousWeek(week);
   }
-  return withFiles(entries);
+  return [...fromStore, ...fromFiles]
+    .filter((e) => e.week < thisWeek)
+    .sort((a, b) => b.week.localeCompare(a.week));
 }
 
 // ── Special series list ─────────────────────────────────────────────────────

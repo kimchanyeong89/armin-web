@@ -1,85 +1,46 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fetchCurrentCuration, fetchArchiveList, fetchSpecialList } from './weekly';
 
+// Firestore is out of reach in tests, so these exercise the file path.
+const file = (week: string, title: string) => ({
+  week, id: week, persona_id: 'yuna-choi', lens: 'biographical',
+  trigger: { type: 'anniversary', value: '', source: '' },
+  title_en: title, title_ko: title, intro_en: '', intro_ko: '', subtitle_chip: '',
+  published_at: '2026-05-13T00:00:00Z', published_by: 'test',
+  works: [{ role: 'hero', image_url: `http://x/${week}.jpg` }],
+});
+const serve = (files: Record<string, unknown>) => {
+  global.fetch = vi.fn(async (url: any) => {
+    const body = files[url];
+    return body
+      ? { ok: true, json: async () => body, text: async () => JSON.stringify(body) }
+      : { ok: false, status: 404, text: async () => '' };
+  }) as any;
+};
+
 describe('fetchCurrentCuration', () => {
-  it('fetches the JSON for the current ISO week', async () => {
-    const sample = { week: '2026-W20', id: 'x', title_en: 'T' };
-    global.fetch = vi.fn(async (url: any) => ({
-      ok: true,
-      json: async () => sample,
-    })) as any;
-    const data = await fetchCurrentCuration();
-    expect(data?.week).toBe('2026-W20');
-    expect((global.fetch as any).mock.calls[0][0]).toContain('/data/weekly-curations/');
-  });
-
-  it('returns null when the file is missing (404)', async () => {
-    global.fetch = vi.fn(async () => ({ ok: false, status: 404 })) as any;
-    expect(await fetchCurrentCuration()).toBeNull();
-  });
-
-  it('falls back to the most recent previous week when the current week has no file', async () => {
-    // 2026-05-21 is ISO week 21; W21 is unpublished, W20 exists.
-    const week20 = { week: '2026-W20', id: 'prev', title_en: 'Prev' };
-    global.fetch = vi.fn(async (url: any) => {
-      if (url === '/data/weekly-curations/2026-W20.json') {
-        return { ok: true, json: async () => week20 };
-      }
-      return { ok: false, status: 404 };
-    }) as any;
+  it("returns the current week's curation", async () => {
+    serve({ '/data/weekly-curations/2026-W21.json': file('2026-W21', 'This') });
     const data = await fetchCurrentCuration(new Date('2026-05-21T00:00:00Z'));
-    expect(data?.week).toBe('2026-W20');
+    expect(data?.week).toBe('2026-W21');
+  });
+
+  it('returns null once the week is over, even when an older week exists', async () => {
+    serve({ '/data/weekly-curations/2026-W20.json': file('2026-W20', 'Prev') });
+    expect(await fetchCurrentCuration(new Date('2026-05-21T00:00:00Z'))).toBeNull();
   });
 });
 
 describe('fetchArchiveList', () => {
-  it('returns entries from the index file when present, newest-first', async () => {
-    const index = {
-      updated_at: '2026-05-15T00:00:00Z',
-      entries: [
-        { week: '2026-W18', title_en: 'A', title_ko: 'ㄱ', persona_id: 'yuna-choi', hero_image_url: '', works_count: 6, published_at: '2026-04-29T00:00:00Z' },
-        { week: '2026-W20', title_en: 'C', title_ko: 'ㄷ', persona_id: 'yuna-choi', hero_image_url: '', works_count: 6, published_at: '2026-05-13T00:00:00Z' },
-        { week: '2026-W19', title_en: 'B', title_ko: 'ㄴ', persona_id: 'yuna-choi', hero_image_url: '', works_count: 6, published_at: '2026-05-06T00:00:00Z' },
-      ],
-    };
-    global.fetch = vi.fn(async (url: any) => {
-      if (url === '/data/weekly-curations-index.json') {
-        return { ok: true, json: async () => index };
-      }
-      return { ok: false };
-    }) as any;
-
-    const out = await fetchArchiveList();
-    expect(out.map((e) => e.week)).toEqual(['2026-W20', '2026-W19', '2026-W18']);
-  });
-
-  it('falls back to enumerating recent weeks when no index exists', async () => {
-    const week20 = {
-      week: '2026-W20', id: 'a', persona_id: 'yuna-choi', lens: 'biographical',
-      trigger: { type: 'anniversary', value: '', source: '' },
-      title_en: 'Twenty', title_ko: '이십',
-      intro_en: '', intro_ko: '', subtitle_chip: '',
-      published_at: '2026-05-13T00:00:00Z', published_by: 'test',
-      works: [{ role: 'hero', image_url: 'http://x/20.jpg' }],
-    };
-    const week18 = {
-      week: '2026-W18', id: 'c', persona_id: 'yuna-choi', lens: 'biographical',
-      trigger: { type: 'anniversary', value: '', source: '' },
-      title_en: 'Eighteen', title_ko: '십팔',
-      intro_en: '', intro_ko: '', subtitle_chip: '',
-      published_at: '2026-04-29T00:00:00Z', published_by: 'test',
-      works: [{ role: 'hero', image_url: 'http://x/18.jpg' }],
-    };
-    global.fetch = vi.fn(async (url: any) => {
-      if (url === '/data/weekly-curations-index.json') return { ok: false, status: 404 };
-      if (url === '/data/weekly-curations/2026-W20.json') return { ok: true, json: async () => week20 };
-      if (url === '/data/weekly-curations/2026-W18.json') return { ok: true, json: async () => week18 };
-      return { ok: false, status: 404 };
-    }) as any;
-
-    const out = await fetchArchiveList(new Date('2026-05-15T00:00:00Z'), 4);
-    expect(out.map((e) => e.week)).toEqual(['2026-W20', '2026-W18']);
-    expect(out[0].hero_image_url).toBe('http://x/20.jpg');
+  it('lists only weeks before the current one, newest first', async () => {
+    serve({
+      '/data/weekly-curations/2026-W20.json': file('2026-W20', 'Twenty'),
+      '/data/weekly-curations/2026-W21.json': file('2026-W21', 'TwentyOne'),
+    });
+    expect((await fetchArchiveList(new Date('2026-05-21T00:00:00Z'))).map((e) => e.week)).toEqual(['2026-W20']);
+    const later = await fetchArchiveList(new Date('2026-10-01T00:00:00Z'));
+    expect(later.map((e) => e.week)).toEqual(['2026-W21', '2026-W20']);
+    expect(later[0].hero_image_url).toBe('http://x/2026-W21.jpg');
   });
 });
 

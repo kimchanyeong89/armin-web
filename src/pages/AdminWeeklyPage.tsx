@@ -54,10 +54,11 @@ const HEADING: React.CSSProperties = {
 
 // ── Persona name lookup ───────────────────────────────────────────────────
 const PERSONA_NAMES: Record<PersonaId, string> = {
-  'yuna-choi': 'Yuna Choi',
-  'marco-rinaldi': 'Marco Rinaldi',
-  'anika-voss': 'Anika Voss',
+  'yuna-choi': '최유나',
+  'marco-rinaldi': '마르코 리날디',
+  'anika-voss': '아니카 보스',
 };
+const LENS_KO: Record<string, string> = { biographical: '작가 기념일', thematic: '주제', dialogue: '두 작가 대화' };
 
 // ── Toast ─────────────────────────────────────────────────────────────────
 function useToast() {
@@ -100,13 +101,13 @@ function WeeklyProposalCardView({
   const publishSpecial = () => {
     const safeSlug = slug.trim() || defaultSlug;
     const cmd = `npm run weekly:publish -- --week ${week} --card ${card.id} --type special --slug ${safeSlug}`;
-    onCopy(cmd, 'Publish-as-Special command');
+    onCopy(cmd, '특집 발행 명령어');
     setShowSpecialForm(false);
   };
 
   const titleMissing = !card.title_en && !card.title_ko;
   const introMissing = !card.intro_en && !card.intro_ko;
-  const introPreview = (card.intro_en || card.intro_ko || '').slice(0, 200);
+  const introPreview = (card.intro_ko || card.intro_en || '').slice(0, 200);
 
   return (
     <div
@@ -188,11 +189,11 @@ function WeeklyProposalCardView({
                 color: '#000',
               }}
             >
-              PUBLISHED
+              발행됨
             </span>
           )}
           <span style={{ ...LABEL, fontSize: 10, color: COLOR_FG_MED }}>
-            {PERSONA_NAMES[card.persona_id]} · {card.lens}
+            {PERSONA_NAMES[card.persona_id]} · {LENS_KO[card.lens] ?? card.lens}
           </span>
           <span style={{ ...LABEL, fontSize: 9, color: COLOR_FG_FAINT }}>
             {card.trigger.type}: {card.trigger.value}
@@ -210,9 +211,9 @@ function WeeklyProposalCardView({
               lineHeight: 1.25,
             }}
           >
-            {titleMissing ? '(empty — needs writing)' : card.title_en || '(en missing)'}
+            {titleMissing ? '(제목 없음)' : card.title_ko || '(한국어 제목 없음)'}
           </div>
-          {!titleMissing && card.title_ko && (
+          {!titleMissing && card.title_en && (
             <div
               style={{
                 ...BODY,
@@ -221,7 +222,7 @@ function WeeklyProposalCardView({
                 marginTop: 2,
               }}
             >
-              {card.title_ko}
+              {card.title_en}
             </div>
           )}
         </div>
@@ -237,8 +238,8 @@ function WeeklyProposalCardView({
           }}
         >
           {introMissing
-            ? '(empty — needs writing)'
-            : introPreview + ((card.intro_en || card.intro_ko || '').length > 200 ? '…' : '')}
+            ? '(소개글 없음)'
+            : introPreview + ((card.intro_ko || card.intro_en || '').length > 200 ? '…' : '')}
         </div>
 
         {/* Works row */}
@@ -304,7 +305,7 @@ function WeeklyProposalCardView({
               cursor: 'pointer',
             }}
           >
-            Preview →
+            미리보기 →
           </button>
           <button
             onClick={publishWeekly}
@@ -318,7 +319,7 @@ function WeeklyProposalCardView({
               cursor: 'pointer',
             }}
           >
-            Publish as Weekly
+            주간 큐레이션으로 발행
           </button>
           <button
             onClick={() => setShowSpecialForm((v) => !v)}
@@ -332,7 +333,7 @@ function WeeklyProposalCardView({
               cursor: 'pointer',
             }}
           >
-            Publish as Special {showSpecialForm ? '▲' : '▾'}
+            특집으로 발행 {showSpecialForm ? '▲' : '▾'}
           </button>
           <button
             onClick={() => setRawOpen((v) => !v)}
@@ -346,7 +347,7 @@ function WeeklyProposalCardView({
               cursor: 'pointer',
             }}
           >
-            {rawOpen ? 'Hide raw JSON' : 'View raw'}
+            {rawOpen ? '원본 닫기' : '원본 보기'}
           </button>
         </div>
 
@@ -644,7 +645,7 @@ const AdminWeeklyPage: React.FC = () => {
     (text: string, label: string) => {
       navigator.clipboard
         .writeText(text)
-        .then(() => toast.show(`Copied: ${label}. Paste into terminal.`))
+        .then(() => toast.show(`복사했습니다: ${label}. 터미널에 붙여 넣으세요.`))
         .catch(() => toast.show(`Copy failed. Command:\n${text}`));
     },
     [toast],
@@ -653,13 +654,13 @@ const AdminWeeklyPage: React.FC = () => {
   // Publishing is live at once (Firestore weekly_curations/{week}), so it asks first.
   const handlePublish = async (card: WeeklyCard) => {
     const name = card.title_ko || card.title_en || card.id;
-    const replacing = published && published.id !== card.id ? `\n\nThis replaces the published "${published.title_ko || published.title_en}".` : '';
-    if (!window.confirm(`Publish "${name}" as ${week}'s weekly curation? It goes live in the app now.${replacing}`)) return;
+    const replacing = published && published.id !== card.id ? `\n\n지금 발행된 「${published.title_ko || published.title_en}」을 대신합니다.` : '';
+    if (!window.confirm(`「${name}」을 ${week} 주간 큐레이션으로 발행할까요? 앱에 바로 반영됩니다.${replacing}`)) return;
     try {
       setPublished(await publishWeekly(week, card, email ?? 'admin'));
-      toast.show(`Published: ${name}`);
+      toast.show(`발행했습니다: ${name}`);
     } catch (err) {
-      toast.show(`Publish failed: ${String(err)}`);
+      toast.show(`발행 실패: ${String(err)}`);
     }
   };
 
@@ -727,10 +728,10 @@ const AdminWeeklyPage: React.FC = () => {
               marginBottom: 8,
             }}
           >
-            Weekly Curation Admin
+            주간 큐레이션 관리
           </div>
           <h1 style={{ ...HEADING, fontSize: 28, margin: 0, color: COLOR_FG }}>
-            Proposal review
+            후보 검토
           </h1>
           <div
             style={{
@@ -742,9 +743,9 @@ const AdminWeeklyPage: React.FC = () => {
               maxWidth: 680,
             }}
           >
-            New candidates arrive every Sunday morning. Choose one and press Publish as Weekly: it
-            goes live in the app at once, no deploy. Publishing another card for the same week
-            replaces it. Special series still publish from the terminal (the button copies the command).
+            매주 일요일 아침 다음 주 후보가 올라옵니다. 하나를 골라 주간 큐레이션으로 발행하면
+            그 주 월요일부터 앱의 이번 주 탭에 나옵니다(배포 필요 없음). 같은 주에 다른 카드를 발행하면
+            앞의 것을 대신합니다. 특집은 아직 터미널에서 발행합니다(버튼이 명령어를 복사합니다).
           </div>
         </div>
 
@@ -760,7 +761,7 @@ const AdminWeeklyPage: React.FC = () => {
             borderBottom: `1px solid ${COLOR_BORDER}`,
           }}
         >
-          <label style={{ ...LABEL, fontSize: 10, color: COLOR_FG_LOW }}>WEEK</label>
+          <label style={{ ...LABEL, fontSize: 10, color: COLOR_FG_LOW }}>주차</label>
           <select
             value={week}
             onChange={(e) => setWeek(e.target.value)}
@@ -782,14 +783,14 @@ const AdminWeeklyPage: React.FC = () => {
           </select>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ ...LABEL, fontSize: 10, color: COLOR_FG_LOW }}>STATUS:</span>
+            <span style={{ ...LABEL, fontSize: 10, color: COLOR_FG_LOW }}>상태</span>
             {published ? (
               <span style={{ ...BODY, fontSize: 12, color: COLOR_ACCENT_NEON }}>
-                Published · {published.title_en}
+                발행됨 · {published.title_ko || published.title_en}
               </span>
             ) : (
               <span style={{ ...BODY, fontSize: 12, color: COLOR_FG_FAINT, fontStyle: 'italic' }}>
-                Not yet published
+                아직 발행 전
               </span>
             )}
           </div>
@@ -798,7 +799,7 @@ const AdminWeeklyPage: React.FC = () => {
         {/* Content */}
         {dataLoading && (
           <div style={{ ...BODY, fontSize: 13, color: COLOR_FG_LOW, padding: 24 }}>
-            Loading proposals…
+            후보를 불러오는 중…
           </div>
         )}
         {dataError && !dataLoading && (
@@ -814,8 +815,8 @@ const AdminWeeklyPage: React.FC = () => {
           >
             {dataError}
             <div style={{ marginTop: 10, color: COLOR_FG_FAINT, fontSize: 11 }}>
-              Run <code style={{ color: COLOR_FG_MED }}>npm run weekly:generate</code> to create
-              proposals for this week.
+              <code style={{ color: COLOR_FG_MED }}>npm run weekly:generate</code> 로 이 주 후보를
+              만들 수 있습니다.
             </div>
           </div>
         )}
@@ -823,8 +824,8 @@ const AdminWeeklyPage: React.FC = () => {
         {!dataLoading && !dataError && proposal && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div style={{ ...LABEL, fontSize: 10, color: COLOR_FG_FAINT }}>
-              {proposal.cards.length} candidate{proposal.cards.length === 1 ? '' : 's'} · generated{' '}
-              {proposal.generated_at}
+              후보 {proposal.cards.length}장 · 생성{' '}
+              {new Date(proposal.generated_at).toLocaleString('ko-KR')}
             </div>
             {proposal.cards.map((card) => (
               <WeeklyProposalCardView

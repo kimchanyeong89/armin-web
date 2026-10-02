@@ -14,6 +14,7 @@ import {
   type SpecialEntry,
 } from "../lib/weekly";
 import { fetchProposal, fetchPublished } from "../lib/weeklyStore";
+import { isoWeek } from "../lib/iso-week";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
 import SaveCurationButton from "./SaveCurationButton";
@@ -92,196 +93,6 @@ export type WeeklyEdition = {
   works: WeeklyWork[];
 };
 
-// ── Sample data ────────────────────────────────────────────────────────────
-
-export const WEEKLY_EDITIONS: WeeklyEdition[] = [
-  {
-    id: 'wk-2026-19',
-    week: 19,
-    year: 2026,
-    date: 'May 5 – May 11, 2026',
-    dateKo: '2026년 5월 5일 — 5월 11일',
-    title: 'Things That Glow in Quiet Rooms',
-    titleKo: '조용한 방에서 빛나는 것들',
-    editorName: 'Yuna Choi',
-    editorNameKo: '최유나',
-    editorRole: 'Senior Editor, Armin',
-    intro: `There is a particular quality of light that painters have always chased — not the blazing noon, not the dramatic storm, but the in-between: the lamp left on in an empty room, the last sliver of afternoon, the glow that has nowhere urgent to go. This week's curation gathers twelve works across four centuries that share that quality. They ask you to slow down. To let your eyes rest. To notice the warmth in a painted shadow.`,
-    introKo: `화가들이 늘 쫓아온 특별한 빛이 있습니다. 타오르는 정오도, 극적인 폭풍도 아닌 그 사이 어딘가 — 빈 방에 홀로 켜진 등, 오후의 마지막 조각, 서두르지 않아도 되는 빛. 이번 주 큐레이션은 4세기에 걸쳐 그 질감을 공유하는 열두 점의 작품을 모았습니다.`,
-    theme: 'Light & Interior',
-    themeKo: '빛과 실내',
-    workCount: 10,
-    works: [
-      {
-        id: 'wk1', seed: 'weekly-vermeer-1', idx: 1,
-        title: 'Woman Reading a Letter',
-        titleKo: '편지를 읽는 여인',
-        artist: 'Johannes Vermeer',
-        artistKo: '요하네스 페르메이르',
-        year: '1663',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '46.5 × 39 cm',
-        museum: 'Rijksmuseum',
-        museumCity: 'Amsterdam',
-        description: 'A woman stands at a window, absorbed in a letter, her face softly lit from the left. Vermeer catches the room in suspension — a moment so private it feels almost wrong to look. The pale blue of her jacket, the pearls, the map on the wall: everything holds its breath.',
-        descriptionKo: '창가에 선 여인이 편지에 빠져 있고, 그녀의 얼굴은 왼쪽에서 오는 빛으로 부드럽게 밝혀집니다. 페르메이르는 방 전체를 정지 상태로 포착합니다. 너무도 사적인 순간이라 바라보는 것조차 미안할 것 같습니다.',
-        aspect: 1.19,
-        highlight: true,
-      },
-      {
-        id: 'wk2', seed: 'weekly-hammershoi', idx: 2,
-        title: 'Interior, Strandgade 30',
-        titleKo: '실내, 스트란가데 30번지',
-        artist: 'Vilhelm Hammershøi',
-        artistKo: '빌헬름 함메르쇼이',
-        year: '1901',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '55.8 × 46.5 cm',
-        museum: 'Tate Modern',
-        museumCity: 'London',
-        description: 'Hammershøi painted the same Copenhagen apartment over and over, each time finding a different quality of grey. Here a woman stands with her back to us. The door is slightly open. Whether she is arriving or leaving is uncertain — and that uncertainty is the whole point.',
-        descriptionKo: '함메르쇼이는 코펜하겐의 같은 아파트를 반복해서 그리며, 매번 회색의 다른 질을 발견했습니다. 여기서 한 여인이 우리에게 등을 돌리고 서 있고, 문은 살짝 열려 있습니다.',
-        aspect: 1.2,
-      },
-      {
-        id: 'wk3', seed: 'weekly-hopper', idx: 3,
-        title: 'Morning Sun',
-        titleKo: '아침 햇살',
-        artist: 'Edward Hopper',
-        artistKo: '에드워드 호퍼',
-        year: '1952',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '71.4 × 101.9 cm',
-        museum: 'Columbus Museum of Art',
-        museumCity: 'Columbus',
-        description: 'A woman sits upright on a bed, legs stretched out, eyes fixed on a window we cannot see. The light is sharp and unforgiving, casting her in clarity. Hopper finds loneliness not in darkness but in too much light — the exposure of an ordinary morning.',
-        descriptionKo: '한 여인이 침대에 꼿꼿이 앉아 우리가 볼 수 없는 창문을 응시합니다. 빛은 날카롭고 가차 없이 그녀를 선명하게 드러냅니다. 호퍼는 어둠이 아닌 너무 많은 빛 속에서 고독을 발견합니다.',
-        aspect: 1.43,
-      },
-      {
-        id: 'wk4', seed: 'weekly-de-hooch', idx: 4,
-        title: 'A Woman and Her Maid in a Courtyard',
-        titleKo: '안뜰의 여인과 하녀',
-        artist: 'Pieter de Hooch',
-        artistKo: '피터르 더 호흐',
-        year: '1660–1661',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '73.7 × 62.6 cm',
-        museum: 'National Gallery',
-        museumCity: 'London',
-        description: 'Light passes through an archway and spills into a shaded courtyard, where two women pause mid-task. De Hooch was a master of thresholds — the moment between inside and out, between shade and sun, between motion and stillness.',
-        descriptionKo: '빛이 아치 너머로 그늘진 안뜰에 쏟아지고, 두 여인이 일을 멈추고 잠시 서 있습니다. 더 호흐는 경계의 순간—안과 밖, 그늘과 햇빛, 움직임과 정지—의 대가였습니다.',
-        aspect: 1.18,
-      },
-      {
-        id: 'wk5', seed: 'weekly-vuillard', idx: 5,
-        title: 'The Suitor',
-        titleKo: '구혼자',
-        artist: 'Édouard Vuillard',
-        artistKo: '에두아르 뷔야르',
-        year: '1893',
-        medium: 'Oil on board',
-        mediumKo: '보드에 유화',
-        dimensions: '46 × 55 cm',
-        museum: "Musée d'Orsay",
-        museumCity: 'Paris',
-        description: 'Vuillard dissolves his figures into patterned wallpaper and textile. A standing figure — the suitor — merges with the striped wall behind him. The room swallows the people. It is decoration as portraiture, intimacy as camouflage.',
-        descriptionKo: '뷔야르는 인물들을 무늬 있는 벽지와 직물 속으로 용해시킵니다. 서 있는 인물—구혼자—은 뒤의 줄무늬 벽과 합쳐집니다. 방이 사람들을 삼킵니다.',
-        aspect: 1.2,
-      },
-      {
-        id: 'wk6', seed: 'weekly-bonnard', idx: 6,
-        title: 'The Bathroom',
-        titleKo: '욕실',
-        artist: 'Pierre Bonnard',
-        artistKo: '피에르 보나르',
-        year: '1932',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '121 × 118 cm',
-        museum: 'Museum of Modern Art',
-        museumCity: 'New York',
-        description: "Bonnard's palette here is hallucinatory — yellows and greens that seem to radiate warmth from inside the paint itself. His wife Marthe is a small figure in a very large light. The room seems more alive than anyone in it.",
-        descriptionKo: '보나르의 팔레트는 환각적입니다 — 물감 자체에서 온기가 발산되는 것 같은 황색과 녹색. 그의 아내 마르트는 광활한 빛 속의 작은 형상입니다. 방이 그 안의 누구보다 더 살아 있는 듯합니다.',
-        aspect: 1.03,
-      },
-      {
-        id: 'wk7', seed: 'weekly-gwen-john', idx: 7,
-        title: "A Corner of the Artist's Room in Paris",
-        titleKo: '파리의 작업실 한 모퉁이',
-        artist: 'Gwen John',
-        artistKo: '그웬 존',
-        year: '1907–1909',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '31.7 × 26.7 cm',
-        museum: 'Sheffield Museums',
-        museumCity: 'Sheffield',
-        description: 'A tiny painting of an almost-empty room: a wicker chair, a window, diffuse light. Gwen John spent years in this room, and she painted it as if it were enough. It is enough. The restraint here is a kind of devotion.',
-        descriptionKo: '거의 비어있는 방의 작은 그림 — 등나무 의자 하나, 창문, 퍼진 빛. 그웬 존은 이 방에서 수년을 보내며, 그것으로 충분하다는 듯 그렸습니다. 그것으로 충분합니다.',
-        aspect: 1.19,
-      },
-      {
-        id: 'wk8', seed: 'weekly-morandi', idx: 8,
-        title: 'Still Life with Objects in Tones of Grey',
-        titleKo: '회색 조의 정물',
-        artist: 'Giorgio Morandi',
-        artistKo: '조르조 모란디',
-        year: '1953',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '30 × 40 cm',
-        museum: 'Museo Morandi',
-        museumCity: 'Bologna',
-        description: 'Morandi spent a lifetime painting bottles. The same bottles, over and over, in different lights. By 1953 the distinctions between them had almost dissolved — the bottles lean on each other like old friends who no longer need to speak.',
-        descriptionKo: '모란디는 평생 병을 그렸습니다. 같은 병들을, 반복해서, 다른 빛 속에서. 1953년이 되자 그것들의 구분이 거의 사라졌습니다 — 병들은 더 이상 말이 필요 없는 오랜 친구들처럼 서로에게 기대어 있습니다.',
-        aspect: 1.33,
-      },
-      {
-        id: 'wk9', seed: 'weekly-diebenkorn', idx: 9,
-        title: 'Interior with View of the Ocean',
-        titleKo: '바다가 보이는 실내',
-        artist: 'Richard Diebenkorn',
-        artistKo: '리처드 디벤코른',
-        year: '1957',
-        medium: 'Oil on canvas',
-        mediumKo: '캔버스에 유화',
-        dimensions: '132.4 × 140.3 cm',
-        museum: 'Phillips Collection',
-        museumCity: 'Washington D.C.',
-        description: 'A room in California, a window, a chair, a table. Beyond the frame, the Pacific. Diebenkorn makes architecture of sunlight — the walls are not walls but fields of colour in conversation with the sky. Interior painting at its most expanded.',
-        descriptionKo: '캘리포니아의 방 하나, 창문, 의자, 탁자. 프레임 너머 태평양. 디벤코른은 햇빛으로 건축을 만듭니다 — 벽은 벽이 아니라 하늘과 대화하는 색의 평원입니다.',
-        aspect: 0.94,
-      },
-      {
-        id: 'wk10', seed: 'weekly-martin', idx: 10,
-        title: 'Untitled #7',
-        titleKo: '무제 #7',
-        artist: 'Agnes Martin',
-        artistKo: '아그네스 마틴',
-        year: '1990',
-        medium: 'Acrylic and graphite on canvas',
-        mediumKo: '캔버스에 아크릴과 흑연',
-        dimensions: '182.9 × 182.9 cm',
-        museum: 'Pace Gallery',
-        museumCity: 'New York',
-        description: 'Six horizontal bands of pale colour — pink, white, again — separated by graphite lines you can barely see. Martin called this painting "happiness." It is not a painting about light. It is light, if light could be made to last.',
-        descriptionKo: '거의 보이지 않는 흑연 선으로 구분된 여섯 개의 옅은 색 가로 띠 — 분홍, 흰색, 다시. 마틴은 이 그림을 "행복"이라 불렀습니다. 빛에 관한 그림이 아닙니다. 빛이 지속될 수 있다면, 그것 자체입니다.',
-        aspect: 1,
-      },
-    ],
-  },
-];
-
-// ── Adapter: WeeklyPublishedFile → WeeklyEdition ──────────────────────────
-// The internal WeeklyEdition shape has richer fields (medium, dimensions,
-// museumCity, aspect, korean translations of artist/medium) than the
-// published file carries. We fill missing fields with safe defaults so the
-// existing JSX renders without modification.
 
 const PERSONA_NAMES: Record<PersonaId, { en: string; ko: string; role: string }> = {
   'yuna-choi':     { en: 'Yuna Choi',     ko: '최유나',  role: 'Senior Editor, Armin' },
@@ -1987,142 +1798,6 @@ function SpecialGrid({
   );
 }
 
-// ── Curation carousel — horizontal quick-nav strip under the section header ─
-// Recent weekly curations + special exhibitions as thumbnails; click to load.
-function WeeklyCarousel({
-  archiveEntries, specialEntries, activeKey, isMobile,
-  onSelectWeek, onSelectSpecial, langKo, fg, fgFaint, divider,
-}: {
-  archiveEntries: ArchiveEntry[];
-  specialEntries: SpecialEntry[];
-  activeKey: string | null;
-  isMobile: boolean;
-  onSelectWeek: (week: string) => void;
-  onSelectSpecial: (slug: string) => void;
-  langKo: boolean;
-  fg: string;
-  fgFaint: string;
-  divider: string;
-}) {
-  const accent = '#D4A547';
-  const fgLow = 'rgba(244,241,234,0.55)';
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [hovKey, setHovKey] = useState<string | null>(null);
-
-  const items = [
-    ...archiveEntries.map((e) => ({
-      key: `week:${e.week}`,
-      eyebrow: e.week.replace('-W', ' · WEEK '),
-      title: langKo ? e.title_ko : e.title_en,
-      image: e.hero_image_url,
-      onClick: () => onSelectWeek(e.week),
-    })),
-    ...specialEntries.map((e) => ({
-      key: `special:${e.slug}`,
-      eyebrow: `Special · ${e.lens}`,
-      title: langKo ? e.title_ko : e.title_en,
-      image: e.hero_image_url,
-      onClick: () => onSelectSpecial(e.slug),
-    })),
-  ];
-  if (items.length === 0) return null;
-
-  const PAD = 'clamp(20px, 4vw, 56px)';
-  const nudge = (dir: number) =>
-    scrollRef.current?.scrollBy({ left: dir * 380, behavior: 'smooth' });
-
-  return (
-    <div style={{ borderBottom: `0.5px solid ${divider}`, padding: 'clamp(16px,2.4vw,22px) 0' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: `0 ${PAD}`, marginBottom: 12 }}>
-        <span style={{ ...LABEL, fontSize: 9, color: fgFaint, whiteSpace: 'nowrap' }}>
-          § Browse · 둘러보기
-        </span>
-        <div style={{ flex: 1, height: '0.5px', background: divider }} />
-        {!isMobile && [-1, 1].map((dir) => (
-          <button
-            key={dir}
-            type="button"
-            aria-label={dir < 0 ? 'Scroll left' : 'Scroll right'}
-            onClick={() => nudge(dir)}
-            style={{
-              width: 26, height: 26, flex: '0 0 auto',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'transparent', border: `0.5px solid ${divider}`,
-              borderRadius: 999, color: fgLow, cursor: 'pointer',
-              fontSize: 14, lineHeight: 1, padding: 0,
-              transition: 'color 0.15s, border-color 0.15s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = accent; e.currentTarget.style.borderColor = accent; }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = fgLow; e.currentTarget.style.borderColor = divider; }}
-          >
-            {dir < 0 ? '‹' : '›'}
-          </button>
-        ))}
-      </div>
-
-      <div
-        ref={scrollRef}
-        style={{
-          display: 'flex', gap: 12, overflowX: 'auto',
-          scrollbarWidth: 'none',
-          padding: `0 ${PAD}`,
-        }}
-      >
-        {items.map((it) => {
-          const active = it.key === activeKey;
-          const hov = hovKey === it.key;
-          return (
-            <button
-              key={it.key}
-              type="button"
-              onClick={it.onClick}
-              onMouseEnter={() => setHovKey(it.key)}
-              onMouseLeave={() => setHovKey(null)}
-              style={{
-                flex: '0 0 auto', width: 172,
-                padding: 0, cursor: 'pointer', textAlign: 'left',
-                background: 'rgba(255,255,255,0.02)',
-                border: `0.5px solid ${active ? accent : divider}`,
-                outline: hov && !active ? `1px solid ${accent}` : '1px solid transparent',
-                transition: 'outline 0.15s, border-color 0.15s',
-              }}
-            >
-              <div style={{ position: 'relative', aspectRatio: '3 / 2', overflow: 'hidden', background: 'rgba(255,255,255,0.03)' }}>
-                {it.image ? (
-                  <img
-                    src={it.image}
-                    alt={it.title}
-                    loading="lazy"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-                  />
-                ) : null}
-              </div>
-              <div style={{ padding: '8px 10px 10px' }}>
-                <div style={{
-                  ...LABEL, fontSize: 8, marginBottom: 4,
-                  color: active ? accent : fgFaint,
-                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                }}>
-                  {it.eyebrow}
-                </div>
-                <div style={{
-                  ...HEADING, fontSize: 12, lineHeight: 1.3, color: fg,
-                  letterSpacing: '-0.01em',
-                  display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-                  overflow: 'hidden',
-                }}>
-                  {it.title}
-                </div>
-              </div>
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 // ── Main exported component ────────────────────────────────────────────────
 
 export type WeeklyCurationTabProps = {
@@ -2147,13 +1822,18 @@ export default function WeeklyCurationTab({
   // a Vite HMR cycle and we keep rendering an old adapter's output (which is
   // what caused the "imageUrl missing → gradient-only" bug). Falling back to
   // hardcoded is now explicit: only if fetch resolves to null.
-  const [edition, setEdition] = useState<WeeklyEdition | null>(null);
+  const [current, setCurrent] = useState<WeeklyEdition | null>(null);
   // Keep the raw published file alongside the adapted edition so the
   // "Save this curation" button can persist the canonical shape without
   // needing to refetch.
-  const [editionFile, setEditionFile] = useState<WeeklyPublishedFile | null>(null);
+  const [currentFile, setCurrentFile] = useState<WeeklyPublishedFile | null>(null);
+  // True once this week's lookup has answered (with a curation or with none).
+  const [currentLoaded, setCurrentLoaded] = useState(false);
+  // A past week or special opened from its list; shown under that tab, never under "this week".
+  const [pastPick, setPastPick] = useState<{ edition: WeeklyEdition; file: WeeklyPublishedFile } | null>(null);
   const [selectedWork, setSelectedWork] = useState<WeeklyWork | null>(null);
   const [langKo, setLangKo] = useState(language === 'ko');
+  useEffect(() => { setLangKo(language === 'ko'); }, [language]);
   // Per-work saves persist to Firestore (users/{uid}/liked_artworks). The
   // local Set used to live here was non-persistent and shared no state with
   // the rest of the app; now we subscribe to the user's likes via the hook
@@ -2165,6 +1845,8 @@ export default function WeeklyCurationTab({
   // Top-nav mode + archive/special data (kept above the early return below
   // so hook order stays stable across renders).
   const [mode, setMode] = useState<WeeklyMode>('this-week');
+  const edition = mode === 'this-week' ? current : pastPick?.edition ?? null;
+  const editionFile = mode === 'this-week' ? currentFile : pastPick?.file ?? null;
   const [archiveEntries, setArchiveEntries] = useState<ArchiveEntry[]>([]);
   const [archiveLoading, setArchiveLoading] = useState(true);
   const [specialEntries, setSpecialEntries] = useState<SpecialEntry[]>([]);
@@ -2210,32 +1892,25 @@ export default function WeeklyCurationTab({
 
     const applyFile = (file: WeeklyPublishedFile) => {
       if (cancelled) return;
-      const adapted = adaptPublishedToEdition(file);
-      // eslint-disable-next-line no-console
-      console.log('[WeeklyCurationTab] adapted live curation', {
-        week: file.week, id: file.id, works: adapted.works.length,
-        firstImageUrl: adapted.works[0]?.imageUrl,
-      });
-      setEdition(adapted);
-      setEditionFile(file);
+      setCurrent(adaptPublishedToEdition(file));
+      setCurrentFile(file);
+      setCurrentLoaded(true);
     };
 
-    const fallback = () => {
-      if (cancelled) return;
+    const loadCurrent = () => {
       fetchCurrentCuration()
         .then((file: WeeklyPublishedFile | null) => {
           if (cancelled) return;
           if (file) applyFile(file);
-          else { setEdition(WEEKLY_EDITIONS[0]); setEditionFile(null); }
+          else setCurrentLoaded(true);
         })
-        .catch(() => { if (!cancelled) { setEdition(WEEKLY_EDITIONS[0]); setEditionFile(null); } });
+        .catch(() => { if (!cancelled) setCurrentLoaded(true); });
     };
 
-    const tryDeepLink = async (week: string): Promise<boolean> => {
-      const file = await fetchPublished(week);
-      if (!file) return false;
-      applyFile(file);
-      return true;
+    const openPast = (file: WeeklyPublishedFile, tab: WeeklyMode) => {
+      if (cancelled) return;
+      setPastPick({ edition: adaptPublishedToEdition(file), file });
+      setMode(tab);
     };
 
     const tryPreview = async (cardId: string, week: string): Promise<boolean> => {
@@ -2261,20 +1936,21 @@ export default function WeeklyCurationTab({
     (async () => {
       if (previewCardId && previewWeek) {
         const ok = await tryPreview(previewCardId, previewWeek);
-        if (!ok) { console.warn(`[WeeklyCurationTab] preview ?preview=${previewCardId}&week=${previewWeek} not found; falling back`); fallback(); }
+        if (!ok) { console.warn(`[WeeklyCurationTab] preview ?preview=${previewCardId}&week=${previewWeek} not found; falling back`); loadCurrent(); }
         return;
       }
-      if (weeklyParam) {
-        const ok = await tryDeepLink(weeklyParam);
-        if (!ok) { console.warn(`[WeeklyCurationTab] deep-link ?weekly=${weeklyParam} not found; falling back`); fallback(); }
-        return;
+      loadCurrent();
+      // Deep links to a past week or a special open it under its own tab.
+      if (weeklyParam && weeklyParam !== isoWeek(new Date())) {
+        const file = await fetchPublished(weeklyParam);
+        if (file) openPast(file, 'archive');
       }
       if (specialParam) {
-        const ok = await tryDeepLink(`/data/special-series/${specialParam}.json`);
-        if (!ok) { console.warn(`[WeeklyCurationTab] deep-link ?special=${specialParam} not found; falling back`); fallback(); }
-        return;
+        try {
+          const res = await fetch(`/data/special-series/${specialParam}.json`);
+          if (res.ok) openPast(await res.json() as WeeklyPublishedFile, 'special');
+        } catch { /* stay on this week */ }
       }
-      fallback();
     })();
 
     return () => { cancelled = true; };
@@ -2304,9 +1980,7 @@ export default function WeeklyCurationTab({
     try {
       const file = await fetchPublished(week);
       if (!file) return;
-      setEdition(adaptPublishedToEdition(file));
-      setEditionFile(file);
-      setMode('this-week');
+      setPastPick({ edition: adaptPublishedToEdition(file), file });
       if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
       // Silent failure: leave the user on archive view.
@@ -2320,9 +1994,7 @@ export default function WeeklyCurationTab({
       // Special-series files extend the WeeklyCard shape with the same
       // published-file fields adaptPublishedToEdition expects.
       const file = await res.json() as WeeklyPublishedFile;
-      setEdition(adaptPublishedToEdition(file));
-      setEditionFile(file);
-      setMode('this-week');
+      setPastPick({ edition: adaptPublishedToEdition(file), file });
       if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
       // Silent failure.
@@ -2377,27 +2049,7 @@ export default function WeeklyCurationTab({
     [editionFile, langKo, likedIds],
   );
 
-  // Skeleton: brief flash while fetching. MUST come after every hook above —
-  // React's rules-of-hooks require the hook count to be identical across
-  // renders. Putting this early-return earlier caused "Rendered more hooks
-  // than during the previous render."
-  if (!edition) {
-    return (
-      <div style={{
-        padding: 'clamp(40px,6vw,80px)',
-        textAlign: 'center',
-        color: 'rgba(244,241,234,0.4)',
-        fontFamily: "'Space Mono', monospace",
-        fontSize: 11,
-        letterSpacing: '0.12em',
-        textTransform: 'uppercase',
-      }}>
-        Loading this week's curation…
-      </div>
-    );
-  }
-
-  const currentIdx = selectedWork ? edition.works.findIndex(w => w.id === selectedWork.id) : -1;
+  const currentIdx = selectedWork && edition ? edition.works.findIndex(w => w.id === selectedWork.id) : -1;
 
   const tokens = { t, fg, fgMed, fgLow, fgFaint, divider };
 
@@ -2426,7 +2078,7 @@ export default function WeeklyCurationTab({
   const topNav = chromeless ? null : (
     <WeeklyTopNav
       mode={mode}
-      setMode={setMode}
+      setMode={(m) => { setMode(m); setPastPick(null); }}
       langKo={langKo}
       fg={fg}
       fgLow={fgLow}
@@ -2434,27 +2086,20 @@ export default function WeeklyCurationTab({
     />
   );
 
-  // Quick-nav carousel key for the currently-shown edition (highlights it).
-  const activeKey: string | null = editionFile
-    ? ((editionFile as { slug?: string }).slug
-        ? `special:${(editionFile as { slug?: string }).slug}`
-        : `week:${editionFile.week}`)
-    : null;
-
-  const carousel = chromeless ? null : (
-    <WeeklyCarousel
-      archiveEntries={archiveEntries}
-      specialEntries={specialEntries}
-      activeKey={activeKey}
-      isMobile={isMobile}
-      onSelectWeek={handleSelectArchiveWeek}
-      onSelectSpecial={handleSelectSpecial}
-      langKo={langKo}
-      fg={fg}
-      fgFaint={fgFaint}
-      divider={divider}
-    />
-  );
+  // Over a past week or special: back to the list it came from.
+  const backLink = mode !== 'this-week' && pastPick && !chromeless ? (
+    <div style={{ padding: '14px clamp(20px,4vw,56px) 0' }}>
+      <button
+        type="button"
+        onClick={() => setPastPick(null)}
+        style={{ ...LABEL, fontSize: 10, background: 'none', border: 'none', padding: 0, color: fgLow, cursor: 'pointer' }}
+        onMouseEnter={(e) => { e.currentTarget.style.color = '#D4A547'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.color = fgLow; }}
+      >
+        ← {mode === 'archive' ? (langKo ? '지난 주 목록' : 'Past weeks') : (langKo ? '특집 목록' : 'Specials')}
+      </button>
+    </div>
+  ) : null;
 
   const archiveView = (
     <ArchiveGrid
@@ -2546,18 +2191,38 @@ export default function WeeklyCurationTab({
     </div>
   ) : null;
 
+  // Nothing to show as an edition: a tab's list, this week still loading, or no curation this week.
+  if (!edition) {
+    const quiet: React.CSSProperties = { padding: 'clamp(40px,6vw,80px)', textAlign: 'center' };
+    const body = mode === 'archive' ? archiveView
+      : mode === 'special' ? specialView
+      : !currentLoaded ? (
+        <div style={{ ...quiet, ...LABEL, fontSize: 11, color: fgFaint }}>
+          {langKo ? '이번 주 큐레이션을 불러오는 중…' : "Loading this week's curation…"}
+        </div>
+      ) : (
+        <div style={quiet}>
+          <p style={{ ...BODY, fontSize: 15, color: fgMed, margin: '0 0 18px' }}>
+            {langKo ? '이번 주 큐레이션은 준비 중입니다.' : "This week's curation is on its way."}
+          </p>
+          <button
+            type="button"
+            onClick={() => setMode('archive')}
+            style={{ ...LABEL, fontSize: 10, background: 'none', border: 'none', padding: 0, color: '#D4A547', cursor: 'pointer' }}
+          >
+            {langKo ? '지난 큐레이션 보기 →' : 'See past curations →'}
+          </button>
+        </div>
+      );
+    return <div style={{ paddingBottom: 80 }}>{topNav}{body}{subscribeModal}{authToast}{museumOverlay}</div>;
+  }
+
   // ── Mobile layout ────────────────────────────────────────────────────────
   if (isMobile) {
-    if (mode === 'archive') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}{museumOverlay}</div>;
-    }
-    if (mode === 'special') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}{museumOverlay}</div>;
-    }
     return (
       <div style={{ paddingBottom: 80 }}>
         {topNav}
-        {carousel}
+        {backLink}
         <MobileEditionHeader edition={edition} langKo={langKo} {...tokens} />
 
         {/* Top Save-Curation button — same component as the footer below.
@@ -2636,17 +2301,11 @@ export default function WeeklyCurationTab({
   }
 
   // ── Desktop layout ───────────────────────────────────────────────────────
-  if (mode === 'archive') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}{museumOverlay}</div>;
-  }
-  if (mode === 'special') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}{museumOverlay}</div>;
-  }
 
   return (
     <div style={{ paddingBottom: 80 }}>
       {topNav}
-      {carousel}
+      {backLink}
       <EditionHeader
         edition={edition}
         langKo={langKo}
