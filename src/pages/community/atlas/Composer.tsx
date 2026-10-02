@@ -277,7 +277,7 @@ export default function Composer({ ko, onPublish, onCancel }: {
     fig.dataset.kind = f.type;
     if (f.image) {
       const img = document.createElement("img");
-      img.src = getOptimizedImageUrl(f.image, f.type === "exhibition" ? 320 : 900);
+      img.src = getOptimizedImageUrl(f.image, f.type === "exhibition" ? 480 : 900);
       img.alt = f.name;
       fig.append(img);
     }
@@ -285,8 +285,14 @@ export default function Composer({ ko, onPublish, onCancel }: {
     const b = document.createElement("b");
     b.textContent = f.year ? `${f.name} (${f.year})` : f.name;
     cap.append(b);
-    const line = [f.artist, f.museum, f.period].filter(Boolean).join(" · ");
-    if (line) cap.append(document.createTextNode(line));
+    if (f.type === "exhibition") {
+      /* an exhibition's record under its poster: the house, then the dates on their own line */
+      if (f.museum) cap.append(document.createTextNode(f.museum));
+      if (f.period) { if (f.museum) cap.append(document.createElement("br")); cap.append(document.createTextNode(f.period)); }
+    } else {
+      const line = [f.artist, f.museum, f.period].filter(Boolean).join(" · ");
+      if (line) cap.append(document.createTextNode(line));
+    }
     fig.append(cap);
 
     mention.range.deleteContents();

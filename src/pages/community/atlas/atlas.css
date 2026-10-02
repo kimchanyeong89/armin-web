@@ -326,13 +326,18 @@
 .ca-prose img { display: block; max-width: 100%; max-height: 68vh; width: auto; height: auto; }
 .ca-prose figcaption { margin-top: 11px; max-width: 32rem; text-align: center; font-size: 11.5px; line-height: 1.6; color: var(--ink-3); }
 .ca-prose figcaption b { display: block; margin-bottom: 2px; font-size: 13px; font-weight: 600; line-height: 1.45; color: var(--ink); }
-/* an attached exhibition: a compact card - the poster small at the left, its name, house and dates beside it */
-.ca-prose figure[data-kind="exhibition"] { grid-template-columns: 76px minmax(0,1fr); align-items: center; justify-items: start; gap: 14px;
-  width: min(100%, 30rem); justify-self: center; margin: 1.6em auto; padding: 10px; background: color-mix(in srgb, var(--ink) 4%, transparent);
-  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
-.ca-prose figure[data-kind="exhibition"] img { width: 76px; height: 101px; max-height: none; object-fit: cover; }
-.ca-prose figure[data-kind="exhibition"] figcaption { margin: 0; max-width: none; text-align: left; font: 500 10.5px/1.55 var(--num); letter-spacing: .02em; color: var(--ink-3); }
-.ca-prose figure[data-kind="exhibition"] figcaption b { margin-bottom: 4px; font: 650 14px/1.35 var(--display); letter-spacing: -0.01em; color: var(--ink); }
+/* an attached exhibition: its poster, large, at the left of the column with its record under it
+   (name, house, dates), and the writer's words running beside it, as a magazine sets a picture */
+.ca-prose figure[data-kind="exhibition"] { float: left; clear: both; display: block; width: clamp(132px, 38%, 220px);
+  /* its top meets the first line of the words beside it (the paragraph gap plus half the leading) */
+  margin: calc(1.1em + 7px) 22px 16px 0; }
+.ca-prose figure[data-kind="exhibition"] img { width: 100%; height: auto; max-height: none; }
+.ca-prose figure[data-kind="exhibition"] figcaption { margin-top: 9px; max-width: none; text-align: left;
+  font: 500 10.5px/1.6 var(--num); letter-spacing: .02em; color: var(--ink-3); }
+.ca-prose figure[data-kind="exhibition"] figcaption b { margin-bottom: 4px; font: 650 13.5px/1.35 var(--display); letter-spacing: -0.01em; color: var(--ink); }
+/* whatever follows a run of floated posters starts below them */
+.ca-prose::after { content: ""; display: block; clear: both; }
+.ca-prose :is(h2, h3, hr, blockquote) { clear: both; }
 .ca-prose > :first-child { margin-top: 0; }
 /* in a post the reading column starts on the title's left edge */
 .ca-post .ca-prose { margin-left: 0; }
