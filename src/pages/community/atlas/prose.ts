@@ -111,3 +111,30 @@ export function textOf(content = "", max = Infinity): string {
   root.querySelectorAll("br").forEach((n) => n.replaceWith(" "));
   return (root.textContent || "").replace(/https?:\/\/\S+/g, " ").replace(/[\s​]+/g, " ").trim().slice(0, max);
 }
+
+/* An attached exhibition and the words written after it read as one: the poster in a column at
+   the left, those words beside it, until the next attachment or heading. Floats could not do it -
+   a short paragraph let the next one ride up beside the poster before. Reading only; the composer
+   keeps the plain run of blocks. */
+export function pairExhibitions(html: string): string {
+  if (!html.includes('data-kind="exhibition"')) return html;
+  const root = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html").body.firstElementChild;
+  if (!root) return html;
+  const doc = root.ownerDocument;
+  [...root.querySelectorAll(':scope > figure[data-kind="exhibition"]')].forEach((fig) => {
+    const pair = doc.createElement("div");
+    pair.className = "ca-pair";
+    const words = doc.createElement("div");
+    words.className = "ca-pair__words";
+    fig.replaceWith(pair);
+    pair.append(fig, words);
+    let next = pair.nextElementSibling;
+    while (next && !/^(FIGURE|H2|H3|HR)$/.test(next.tagName)) {
+      const move = next;
+      next = next.nextElementSibling;
+      words.append(move);
+    }
+    if (!words.childElementCount) words.remove();
+  });
+  return root.innerHTML;
+}
