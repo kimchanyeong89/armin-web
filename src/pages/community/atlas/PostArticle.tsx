@@ -7,7 +7,7 @@ import { ArrowLeft, MessageSquare, Trash2 } from "lucide-react";
 import { LikeIcon } from "../../../components/like/LikeIcon";
 import { normalizeCommunityCategory, normalizeCommunityHeaderType } from "../../../features/community/communityFeed";
 import { getOptimizedImageUrl } from "../../../utils/imageProxy";
-import { pairExhibitions, toProse } from "./prose";
+import { toProse } from "./prose";
 import { CATEGORY_LABEL, TARGET_LABEL, ago, catStyle, two } from "./shared";
 import { RankAvatar } from "../../../components/RankAvatar";
 import type { ProfileImageCrop } from "../../../types/Profile";
@@ -118,7 +118,7 @@ export default function PostArticle({
       ...lost.map((pid) => ({ root: null, rootId: pid, replies: (replies.get(pid) ?? []).sort(asc) })),
     ];
   }, [comments]);
-  const html = useMemo(() => pairExhibitions(toProse(post.content || "")), [post.content]);
+  const html = useMemo(() => toProse(post.content || ""), [post.content]);
   const k = ko ? "ko" : "en";
   const cat = normalizeCommunityCategory(post.category);
   const h = post.header;

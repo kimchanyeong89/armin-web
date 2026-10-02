@@ -326,32 +326,13 @@
 .ca-prose img { display: block; max-width: 100%; max-height: 68vh; width: auto; height: auto; }
 .ca-prose figcaption { margin-top: 11px; max-width: 32rem; text-align: center; font-size: 11.5px; line-height: 1.6; color: var(--ink-3); }
 .ca-prose figcaption b { display: block; margin-bottom: 2px; font-size: 13px; font-weight: 600; line-height: 1.45; color: var(--ink); }
-/* an attached exhibition: its poster, large, at the left of the column with its record under it
-   (name, house, dates), and the writer's words running beside it, as a magazine sets a picture */
-.ca-prose figure[data-kind="exhibition"] { float: left; clear: both; display: block; width: clamp(132px, 38%, 220px);
-  /* its top meets the first line of the words beside it (the paragraph gap plus half the leading) */
-  margin: calc(1.1em + 7px) 22px 16px 0; }
-.ca-prose figure[data-kind="exhibition"] { justify-items: start; }
+/* an attached exhibition: its poster in the middle of the column, its record (name, house, dates)
+   under it on the poster's left edge, and the words go on below - never beside it */
+.ca-prose figure[data-kind="exhibition"] { display: grid; justify-items: start; width: clamp(200px, 56%, 320px); margin: 2em auto; }
 .ca-prose figure[data-kind="exhibition"] img { width: 100%; height: auto; max-height: none; }
-.ca-prose figure[data-kind="exhibition"] figcaption { width: 100%; margin-top: 9px; max-width: none; text-align: left;
+.ca-prose figure[data-kind="exhibition"] figcaption { width: 100%; margin-top: 10px; max-width: none; text-align: left;
   font: 500 10.5px/1.6 var(--num); letter-spacing: .02em; color: var(--ink-3); }
-.ca-prose figure[data-kind="exhibition"] figcaption b { margin-bottom: 4px; font: 650 13.5px/1.35 var(--display); letter-spacing: -0.01em; color: var(--ink); }
-/* in a post an exhibition and its words sit side by side (prose.ts pairExhibitions) */
-.ca-prose { counter-reset: ca-pair; }
-.ca-pair { counter-increment: ca-pair; display: grid; grid-template-columns: clamp(124px, 36%, 220px) minmax(0, 1fr); gap: 0 clamp(18px, 3vw, 32px); align-items: center; }
-/* in a post of several, each exhibition's words open with its number and a short gold rule */
-.ca-pair__words::before { content: counter(ca-pair, decimal-leading-zero); display: inline-block; margin-bottom: 12px; padding-right: 30px;
-  font: 600 11px/1 var(--num); letter-spacing: .08em; color: var(--acc);
-  background: linear-gradient(var(--acc), var(--acc)) right center / 20px 1px no-repeat; }
-.ca-pair:only-of-type .ca-pair__words::before { display: none; }
-.ca-pair__words { color: var(--ink-2); }
-.ca-prose .ca-pair figure[data-kind="exhibition"] { float: none; width: auto; margin: 7px 0 0; }
-.ca-pair__words > :first-child { margin-top: 0; }
-.ca-pair__words > * + * { margin-top: 1.1em; }
-.ca-prose > .ca-pair + *, .ca-prose > * + .ca-pair { margin-top: 1.6em; }
-/* whatever follows a run of floated posters starts below them */
-.ca-prose::after { content: ""; display: block; clear: both; }
-.ca-prose :is(h2, h3, hr, blockquote) { clear: both; }
+.ca-prose figure[data-kind="exhibition"] figcaption b { margin-bottom: 4px; font: 650 14px/1.35 var(--display); letter-spacing: -0.01em; color: var(--ink); }
 .ca-prose > :first-child { margin-top: 0; }
 /* in a post the reading column starts on the title's left edge */
 .ca-post .ca-prose { margin-left: 0; }
@@ -506,30 +487,47 @@
 .ca-crow__who small { font: 500 10px/1.2 var(--num); letter-spacing: .03em; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ca .ca-crow__who:hover b { color: var(--acc); }
 /* follow: words only, gold when following - no box */
-.ca .ca-follow { flex: none; padding: 6px 0; font-size: 12px; font-weight: 650; color: var(--ink-2); transition: color .16s ease; }
+.ca .ca-follow { flex: none; display: inline-flex; align-items: center; gap: 7px; padding: 6px 0; font-size: 12px; font-weight: 650;
+  color: var(--ink-2); transition: color .2s ease; }
 .ca .ca-follow:hover, .ca .ca-follow[aria-pressed="true"] { color: var(--acc); }
-.ca .ca-follow[aria-pressed="true"]::before { content: "● "; font-size: 8px; vertical-align: 2px; }
+.ca-follow--mine { font: 600 10px/1 var(--num); letter-spacing: .06em; color: var(--ink-3); }
+/* the mark: a gold ring with a plus; following, the ring fills and the plus spins out as a check draws in */
+.ca-follow__mark { width: 20px; height: 20px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.ca-follow__mark circle { stroke: var(--acc); stroke-width: 1.3; fill: transparent; transition: fill .3s ease; }
+.ca-follow__mark path { stroke-width: 1.6; transform-origin: 10px 10px; }
+.ca-follow__plus { stroke: var(--acc); transition: transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease; }
+.ca-follow__check { stroke: var(--g, #080808); stroke-dasharray: 12; stroke-dashoffset: 12; transition: stroke-dashoffset .35s ease .12s; }
+.ca-follow[aria-pressed="true"] .ca-follow__mark circle { fill: var(--acc); }
+.ca-follow[aria-pressed="true"] .ca-follow__plus { opacity: 0; transform: rotate(90deg) scale(.4); }
+.ca-follow[aria-pressed="true"] .ca-follow__check { stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) { .ca-follow__mark *, .ca-follow__mark circle { transition: none; } }
 .ca-crow.is-following .ca-crow__who b::after { content: ""; display: inline-block; width: 5px; height: 5px; margin-left: 7px; border-radius: 50%; background: var(--acc); vertical-align: 3px; }
 .ca-crow__lane { position: relative; min-width: 0; }
 .ca-crow__strip { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
 .ca-crow__strip::-webkit-scrollbar { display: none; }
-.ca-crow__strip > * { flex: none; width: clamp(104px, 28vw, 150px); aspect-ratio: 1; scroll-snap-align: start; }
-.ca .ca-crow__work { display: block; overflow: hidden; border-radius: 8px; background: var(--soft); }
+.ca-crow__strip > * { flex: none; width: clamp(104px, 28vw, 150px); scroll-snap-align: start; }
+/* a work: its picture square, its title and artist under it */
+.ca .ca-crow__work { display: grid; gap: 7px; align-content: start; min-width: 0; color: inherit; }
+.ca-crow__shot { display: block; aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: var(--soft); }
 .ca-crow__work img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); transition: filter .3s ease, transform .4s ease; }
+.ca-crow__cap { display: grid; gap: 2px; min-width: 0; }
+.ca-crow__cap b { font: 600 12px/1.35 var(--display); letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.ca-crow__cap small { font-size: 10.5px; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ca .ca-crow__work:hover .ca-crow__cap b { color: var(--acc); }
 .ca-crow__work:hover img { filter: none; transform: scale(1.04); }
-.ca .ca-crow__more { display: grid; place-content: center; gap: 6px; border-radius: 8px; background: color-mix(in srgb, var(--acc) 10%, transparent);
+.ca .ca-crow__more { display: grid; place-content: center; gap: 6px; aspect-ratio: 1; align-self: start; border-radius: 8px; background: color-mix(in srgb, var(--acc) 10%, transparent);
   color: var(--acc); font-size: 12.5px; font-weight: 650; transition: background .16s ease; }
 .ca-crow__more small { font: 500 10px/1 var(--num); color: var(--ink-3); }
 .ca .ca-crow__more:hover { background: color-mix(in srgb, var(--acc) 18%, transparent); }
 /* slide arrows: on a computer, at the lane's ends, over the works */
-.ca .ca-crow__nav { position: absolute; top: 50%; z-index: 1; display: none; place-items: center; width: 30px; height: 30px; margin-top: -15px;
+.ca .ca-crow__nav { position: absolute; top: calc(clamp(104px, 28vw, 150px) / 2); z-index: 1; display: none; place-items: center; width: 30px; height: 30px; margin-top: -15px;
   border-radius: 50%; background: rgba(8,8,8,.62); color: #f4f1ea; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .ca-crow__nav--prev { left: 6px; }
 .ca-crow__nav--next { right: 6px; }
 @media (hover: hover) { .ca-crow__lane:hover .ca-crow__nav { display: grid; } }
 .ca-crow__all { display: grid; gap: 10px; }
 .ca-crow__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
-.ca-crow__grid > * { aspect-ratio: 1; }
+.ca-crow__grid { row-gap: 14px; }
 .ca-crow__fold { justify-self: end; }
 
 /* an attachment's artist and museum: underlined links to their pages */

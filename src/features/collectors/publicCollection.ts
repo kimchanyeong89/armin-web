@@ -8,6 +8,7 @@ import {
   orderBy,
   query,
   setDoc,
+  Timestamp,
   where,
   type DocumentData,
 } from "firebase/firestore";
@@ -126,13 +127,18 @@ export async function listCollectors(max = 36, recentCount = 12): Promise<Collec
       .map(async (d): Promise<Collector | null> => {
         const likes = collection(db, "users", d.id, "liked_artworks");
         try {
-          const [count, latest] = await Promise.all([
+          /* likedAt is a server time on most hearts and a number on some; Firestore orders
+             each type apart (every server time before any number), so read each newest-first
+             and merge, or the latest numbered hearts never reach the front */
+          const [count, stamped, numbered] = await Promise.all([
             getCountFromServer(likes),
-            getDocs(query(likes, orderBy("likedAt", "desc"), limit(recentCount))),
+            getDocs(query(likes, where("likedAt", ">", new Timestamp(0, 0)), orderBy("likedAt", "desc"), limit(recentCount))),
+            getDocs(query(likes, where("likedAt", ">", 0), orderBy("likedAt", "desc"), limit(recentCount))),
           ]);
           const likeCount = count.data().count;
           if (likeCount === 0) return null;
-          return { uid: d.id, card: d.data() as PublicProfile, likeCount, recent: latest.docs.map((w) => work(w.id, w.data())) };
+          const recent = [...stamped.docs, ...numbered.docs].sort(newestFirst("likedAt")).slice(0, recentCount);
+          return { uid: d.id, card: d.data() as PublicProfile, likeCount, recent: recent.map((w) => work(w.id, w.data())) };
         } catch {
           return null;
         }

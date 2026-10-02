@@ -63,7 +63,8 @@ export default function CurationRows({ ko }: { ko: boolean }) {
     ]).then(([people, lists]) => {
       if (!live) return;
       const likeRows: Row[] = people.map((p) => ({
-        kind: "likes", ownerUid: p.uid, title: ko ? "좋아요한 작품" : "Liked works",
+        /* a person's liked works read as their curation: its title is drawn with their name (CurationRow) */
+        kind: "likes", ownerUid: p.uid, title: "",
         key: curationKey({ kind: "likes", ownerUid: p.uid }), count: p.likeCount, works: p.recent, all: null,
         path: collectorPath(p.uid), card: p.card, at: when(p.recent[0]?.likedAt),
       }));
@@ -115,6 +116,8 @@ function CurationRow({ row, card, ko, uid, following }: {
   const [busy, setBusy] = useState(false);
   const name = card?.name || (ko ? "익명" : "Unknown");
   const mine = uid === row.ownerUid;
+  /* liked works are "<name>'s curation"; a shared playlist keeps its own name */
+  const title = row.kind === "likes" ? (ko ? `${name}의 큐레이션` : `${name}'s curation`) : row.title;
 
   const more = async () => {
     setOpen(true);
@@ -132,7 +135,7 @@ function CurationRow({ row, card, ko, uid, following }: {
     setBusy(true);
     try {
       if (following) await unfollowCuration(uid, row);
-      else await followCuration(uid, row);
+      else await followCuration(uid, { ...row, title });
     } catch {
       window.alert(ko ? "저장하지 못했어요. 잠시 후 다시 해 주세요." : "Couldn't save that. Please try again.");
     } finally {
@@ -141,12 +144,19 @@ function CurationRow({ row, card, ko, uid, following }: {
   };
 
   const slide = (dir: 1 | -1) => strip.current?.scrollBy({ left: dir * strip.current.clientWidth * 0.8, behavior: "smooth" });
+  /* a work as the app's lists show one: the picture, then its title and artist under it */
   const tile = (w: CollectedWork, i: number) => (
-    <Link key={`${w.id}-${i}`} to={row.path} className="ca-crow__work" title={[w.title, w.artist].filter(Boolean).join(" — ")}>
-      {w.image && (
-        <img src={getOptimizedImageUrl(String(w.image), 240)} alt="" loading="lazy" decoding="async"
-          onError={(event) => { event.currentTarget.style.visibility = "hidden"; }} />
-      )}
+    <Link key={`${w.id}-${i}`} to={row.path} className="ca-crow__work">
+      <span className="ca-crow__shot">
+        {w.image && (
+          <img src={getOptimizedImageUrl(String(w.image), 240)} alt="" loading="lazy" decoding="async"
+            onError={(event) => { event.currentTarget.style.visibility = "hidden"; }} />
+        )}
+      </span>
+      <span className="ca-crow__cap">
+        <b>{String(w.title || (ko ? "제목 없음" : "Untitled"))}</b>
+        {w.artist && <small>{String(w.artist)}</small>}
+      </span>
     </Link>
   );
 
@@ -156,13 +166,21 @@ function CurationRow({ row, card, ko, uid, following }: {
         <Link to={row.path} className="ca-crow__who">
           <RankAvatar rank={card?.rank} name={name} src={card?.photoURL} crop={card?.photoCrop} size={30} />
           <span>
-            <b>{row.title}</b>
+            <b>{title}</b>
             <small>{name} · {two(row.count)}{ko ? "점" : ""}</small>
           </span>
         </Link>
-        {!mine && (
+        {mine ? (
+          <span className="ca-follow ca-follow--mine">{ko ? "내 큐레이션" : "Yours"}</span>
+        ) : (
           <button type="button" className="ca-follow" aria-pressed={following} disabled={busy} onClick={() => void toggleFollow()}>
-            {following ? (ko ? "팔로잉" : "Following") : (ko ? "팔로우" : "Follow")}
+            {/* the mark turns: a plus spins away as the circle fills and a check draws in */}
+            <svg className="ca-follow__mark" viewBox="0 0 20 20" aria-hidden="true">
+              <circle cx="10" cy="10" r="8.5" />
+              <path className="ca-follow__plus" d="M10 6.2v7.6M6.2 10h7.6" />
+              <path className="ca-follow__check" d="M6.3 10.3l2.5 2.5 4.9-5.2" />
+            </svg>
+            <span>{following ? (ko ? "팔로잉" : "Following") : (ko ? "팔로우" : "Follow")}</span>
           </button>
         )}
       </div>
@@ -217,7 +235,7 @@ export function FollowedCurations({ ko, uid }: { ko: boolean; uid: string }) {
         }
         const collection = await readCollection(r.ownerUid, uid);
         if (!collection.likes.length) return null;
-        return { ...r, title: ko ? "좋아요한 작품" : "Liked works", count: collection.likes.length, works: collection.likes.slice(0, STRIP),
+        return { ...r, title: "", count: collection.likes.length, works: collection.likes.slice(0, STRIP),
           all: collection.likes, path: collectorPath(r.ownerUid), card: collection.card ?? undefined, at: 0 };
       } catch {
         return null;
