@@ -36,7 +36,9 @@ export function LikeIcon({
       size={size}
       strokeWidth={Math.min(strokeWidth, MAX_STROKE)}
       color={liked ? color : emptyColor}
-      style={style}
+      /* drawn larger in the same place: the button and its circle keep their size, the lotus fills
+         more of it (10/2 "too small to read") - a transform takes no room, so nothing around it moves */
+      style={{ transform: "scale(1.35)", ...style }}
       className={className}
       /* cropped to the lotus itself: it fills more of its button's circle (10/2, "a little larger") */
       viewBox="1.5 2 21 21"
