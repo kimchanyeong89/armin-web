@@ -20,6 +20,7 @@ import { averageRating, subjectKey } from "../features/ratings/ratingWrites";
 import { useAllRatingStats } from "../features/ratings/useRatings";
 import { museumMapPath } from "../utils/museumMapPath";
 import { useTasteScores } from "../features/taste/useTasteScores";
+import { TasteMatchBar } from "../features/taste/TasteMatchBar";
 import { CollyLotusLoader } from "./CollyMark";
 import { exhibitions } from "../data/exhibitions";
 import { NO_IMAGE_PLACEHOLDER_DARK } from "../utils/noImagePlaceholder";
@@ -348,21 +349,9 @@ export default function NearbyExhibitions({
                   onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }}
                 />
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
-                {/* the taste match, a bare figure in the poster's corner - the card's words below keep their room */}
+                {/* the taste match: a dotted line across the poster's top with a gold bar as long as the match */}
                 {ex.tasteMatch !== undefined && (
-                  <span
-                    title={tr({ ko: "내 취향과 맞는 정도", en: "How well it matches your taste" })}
-                    style={{
-                      position: "absolute", top: 6, right: 6, display: "inline-flex", alignItems: "center", gap: 4,
-                      padding: "3px 6px 3px 5px", background: "rgba(8,8,8,0.72)",
-                      clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
-                      fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, lineHeight: 1, letterSpacing: "0.02em",
-                      color: "#F0C878", pointerEvents: "none",
-                    }}
-                  >
-                    <i style={{ width: 4, height: 4, borderRadius: "50%", background: "#D4A547", boxShadow: "0 0 0 2px rgba(212,165,71,0.25)" }} />
-                    {ex.tasteMatch}%
-                  </span>
+                  <TasteMatchBar value={ex.tasteMatch} title={tr({ ko: "내 취향과 맞는 정도", en: "How well it matches your taste" })} />
                 )}
                 <button
                   type="button"

@@ -47,9 +47,15 @@ async function main() {
     museums[m.id] = { temporaryExhibitions, pastExhibitions };
     shows += temporaryExhibitions.length + pastExhibitions.length;
   }
-  const payload = { version: new Date().toISOString(), museums };
+  // 지금 워커에 올라간 취향 점수 데이터의 버전. 앱은 기기에 보관한 점수가 이 버전으로 만든 것이 아니면
+  // 다시 묻는다(새 전시가 들어온 날 점수가 비지 않게). daily.sh 는 취향 빌드를 이 스크립트보다 먼저 돌린다.
+  const published = (() => {
+    try { return JSON.parse(readFileSync(join(ROOT, 'scripts/taste/.store/published.json'), 'utf8')); } catch { return {}; }
+  })();
+  const tasteVersion = String(published.exhibitions?.key || '').split(':').pop() || undefined;
+  const payload = { version: new Date().toISOString(), tasteVersion, museums };
   const body = JSON.stringify(payload);
-  const summary = `미술관 ${Object.keys(museums).length}곳 · 전시 ${shows}건 · ${(body.length / 1024).toFixed(0)}KB`;
+  const summary = `미술관 ${Object.keys(museums).length}곳 · 전시 ${shows}건 · ${(body.length / 1024).toFixed(0)}KB · 취향 데이터 ${tasteVersion || '없음'}`;
 
   if (DRY_RUN) {
     console.log(`dry-run — ${summary}`);

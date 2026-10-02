@@ -22,7 +22,8 @@ type Phase = 'upcoming' | 'ongoing' | 'past';
 interface Show { id?: string; startDate?: string; endDate?: string; status?: string }
 interface Lists { temporaryExhibitions: Show[]; pastExhibitions: Show[] }
 interface Museum { id: string; temporaryExhibitions?: Show[]; pastExhibitions?: Show[] }
-interface LiveData { version: string; museums: Record<string, Lists> }
+/** tasteVersion: the taste-score data built for these lists (see useTasteScores). */
+interface LiveData { version: string; tasteVersion?: string; museums: Record<string, Lists> }
 
 const ISO_DAY = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -94,11 +95,25 @@ function readKept(): LiveData | null {
 }
 
 let appliedVersion: string | null = null;
+let tasteVersion: string | null = null;
+
+/** Fired when a newer set of lists has been swapped in after the page started. */
+export const LIVE_EXHIBITIONS_EVENT = 'colly:live-exhibitions';
+
+/**
+ * The version of the taste-score data built for the lists on screen, or null before any
+ * uploaded lists are known. The morning job builds the scores first and then uploads the
+ * lists carrying this version, so a kept score answer of another version predates today's shows.
+ */
+export function liveTasteVersion(): string | null {
+  return tasteVersion;
+}
 
 const kept = typeof window !== 'undefined' ? readKept() : null;
 if (kept) {
   applyLive(kept);
   appliedVersion = kept.version;
+  tasteVersion = kept.tasteVersion ?? null;
 } else {
   settleByDate();
 }
@@ -110,6 +125,8 @@ if (typeof window !== 'undefined') {
       if (!isLiveData(data) || data.version === appliedVersion) return;
       applyLive(data);
       appliedVersion = data.version;
+      tasteVersion = data.tasteVersion ?? null;
+      window.dispatchEvent(new Event(LIVE_EXHIBITIONS_EVENT));
       try {
         localStorage.setItem(KEPT_KEY, JSON.stringify(data));
       } catch {

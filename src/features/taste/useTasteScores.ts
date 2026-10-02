@@ -11,12 +11,15 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useLikedArtworks } from '../../hooks/useLikedArtworks';
+import { LIVE_EXHIBITIONS_EVENT, liveTasteVersion } from '../../data/liveExhibitions';
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 /** Hearts often come in bursts; wait for a pause before asking again. */
 const SETTLE_MS = 1200;
 /** A taste moves only when the likes do (a new like changes the key and asks again), so the
- *  answer is kept for a day: the exhibition data is rebuilt daily, and a day picks up the new shows. */
+ *  answer is kept for a day. A morning that brings new shows asks again sooner: the uploaded
+ *  exhibition lists name the score data built for them (liveTasteVersion), and an answer older
+ *  than that is not used. */
 const KEPT_FOR_MS = 24 * 60 * 60 * 1000;
 const STORAGE_PREFIX = 'colly:taste-scores:';
 
@@ -26,6 +29,8 @@ export interface TasteScores {
   /** Museums holding the most of the user's taste, best first; `lift` is how many times their share. */
   museums: { id: string; lift: number }[];
   likedCount: number;
+  /** Which uploaded data the answer was scored against (versions are sortable timestamps). */
+  dataVersions?: { exhibitions?: string | null; museums?: string | null };
 }
 
 /** The answer for the latest like list, shared by every caller. A failed answer is dropped so the next mount retries. */
@@ -43,7 +48,12 @@ function readKept(userId: string, likes: string): TasteScores | null {
     const raw = localStorage.getItem(STORAGE_PREFIX + userId);
     if (!raw) return null;
     const kept = JSON.parse(raw) as { likes: string; savedAt: number; scores: TasteScores };
-    return kept.likes === likes && Date.now() - kept.savedAt < KEPT_FOR_MS ? kept.scores : null;
+    if (kept.likes !== likes || Date.now() - kept.savedAt >= KEPT_FOR_MS) return null;
+    // Scored before today's exhibition lists were built: new shows would have no score, so ask again.
+    const live = liveTasteVersion();
+    const scoredOn = kept.scores.dataVersions?.exhibitions;
+    if (live && (!scoredOn || scoredOn < live)) return null;
+    return kept.scores;
   } catch {
     return null;
   }
@@ -94,6 +104,16 @@ export function useTasteScores(): TasteScores | null | undefined {
   const likedIds = useMemo(() => Array.from(new Set(Array.from(ids, vectorIdOf))).sort(), [ids]);
   const key = userId && !loading && likedIds.length ? `${userId}\n${likedIds.join('\n')}` : '';
   const [answer, setAnswer] = useState<{ key: string; scores: TasteScores | null } | null>(null);
+  // Newer exhibition lists arriving after the page started may come with newer scores.
+  const [listsSeen, setListsSeen] = useState(0);
+  useEffect(() => {
+    const onLists = () => {
+      answers.clear();
+      setListsSeen((n) => n + 1);
+    };
+    window.addEventListener(LIVE_EXHIBITIONS_EVENT, onLists);
+    return () => window.removeEventListener(LIVE_EXHIBITIONS_EVENT, onLists);
+  }, []);
 
   useEffect(() => {
     if (!key || !userId) return;
@@ -110,7 +130,7 @@ export function useTasteScores(): TasteScores | null | undefined {
     };
     // likedIds is part of key.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
+  }, [key, listsSeen]);
 
   if (authLoading) return undefined;
   if (!userId || (!loading && !likedIds.length)) return null;

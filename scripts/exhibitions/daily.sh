@@ -1,5 +1,5 @@
 #!/bin/zsh
-# 매일 아침 국내 미술관 전시 동기화(수도권·부산·제주·호남 26곳) → 앱이 읽는 전시 목록 올리기 → 취향 데이터 다시 만들기.
+# 매일 아침 국내 미술관 전시 동기화(수도권·부산·제주·호남 26곳) → 취향 데이터 다시 만들기 → 앱이 읽는 전시 목록 올리기.
 # launchd(~/Library/LaunchAgents/com.kietzsche.colly-exhibitions.plist)가 하루 네 번 부르고,
 # 그날 한 번 성공하면 나머지는 건너뛴다. 맥이 꺼져 있던 날은 켜진 뒤 첫 차례에 따라잡는다.
 #
@@ -47,16 +47,17 @@ if ! node scripts/exhibitions/sync.mjs --summary "$DIR/$TODAY.md" >> "$LOG" 2>&1
 fi
 log "OK 전시 동기화"
 
-if ! node scripts/exhibitions/publish-live.mjs >> "$LOG" 2>&1; then
-  log "FAIL 전시 목록 올리기(publish-live.mjs)"; exit 1
-fi
-log "OK 전시 목록 올림"
-print -r -- "$TODAY" > "$STAMP"
-
-# 취향 점수는 전시 목록과 따로 간다. 실패해도 목록은 이미 올라갔고, 어제 점수가 그대로 쓰인다.
+# 취향 점수를 목록보다 먼저 만든다 — 목록에 오늘 점수 데이터의 버전을 싣고, 앱은 그 버전이 바뀌면 점수를 다시 묻는다.
+# 실패해도 목록은 올린다(어제 점수가 그대로 쓰인다).
 if node scripts/taste/build-taste-data.mjs >> "$LOG" 2>&1; then
   log "OK 취향 데이터"
 else
   log "WARN 취향 데이터 실패 — 어제 점수를 그대로 쓴다"
 fi
+
+if ! node scripts/exhibitions/publish-live.mjs >> "$LOG" 2>&1; then
+  log "FAIL 전시 목록 올리기(publish-live.mjs)"; exit 1
+fi
+log "OK 전시 목록 올림"
+print -r -- "$TODAY" > "$STAMP"
 log "DONE"

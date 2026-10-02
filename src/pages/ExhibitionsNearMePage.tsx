@@ -25,6 +25,7 @@ import { ReviewPanel } from '../components/Ratings/ReviewPanel';
 import { averageRating, subjectKey } from '../features/ratings/ratingWrites';
 import { useAllRatingStats } from '../features/ratings/useRatings';
 import { useTasteScores } from '../features/taste/useTasteScores';
+import { TasteMatchBar } from '../features/taste/TasteMatchBar';
 import { useLikedArtworks } from '../hooks/useLikedArtworks';
 
 // ─── 타입 ──────────────────────────────────────────────────────────────────
@@ -187,24 +188,13 @@ const ExhibitionCard = memo(({
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 36,
           }}>🎨</div>
         )}
-        {/* 취향 일치 배지 */}
-        {tasteScore !== null && (
-          <div style={{
-            position: 'absolute', top: 8, right: 8,
-            padding: '4px 8px', borderRadius: 10,
-            background: scoreBg(tasteScore),
-            backdropFilter: 'blur(8px)',
-            border: `1px solid ${scoreColor(tasteScore)}33`,
-          }}>
-            <span style={{ fontSize: 11, fontWeight: 700, color: scoreColor(tasteScore) }}>
-              취향 {tasteScore}%
-            </span>
-          </div>
-        )}
+        {/* 취향 일치 — 포스터 위쪽 가장자리의 점선과 금색 막대 */}
+        {tasteScore !== null && <TasteMatchBar value={tasteScore} title="내 취향과 맞는 정도" />}
         {/* 종료 임박 배지 */}
         {isUrgent && (
           <div style={{
-            position: 'absolute', top: 8, left: 8,
+            // 취향 막대(위쪽 약 24px) 아래에 둔다
+            position: 'absolute', top: tasteScore !== null ? 26 : 8, left: 8,
             padding: '3px 7px', borderRadius: 8,
             background: 'rgba(220,60,60,0.85)', backdropFilter: 'blur(4px)',
             fontSize: 10, fontWeight: 600, color: '#fff',
