@@ -76,7 +76,9 @@ async function buildBaseCellCard(
     // back through this persona's own theme keywords so Marco / Anika can
     // still produce a thematic card even when the calendar motif isn't theirs.
     const queries = [
-      ...motifs.map((m) => ({ label: `${m.en} / ${m.ko}`, query: m.en, source: 'motif-calendar.json' as const })),
+      // A motif with picture descriptions becomes its own keyword card (generateProposals).
+      ...motifs.filter((m) => !m.queries?.length)
+        .map((m) => ({ label: `${m.en} / ${m.ko}`, query: m.en, source: 'motif-calendar.json' as const })),
       ...persona.taste.themes.map((t) => ({ label: t, query: t, source: 'persona-themes' as const })),
     ];
     let best: { trigger: Trigger; works: Awaited<ReturnType<typeof buildThematicLens>>; avg: number } | null = null;
@@ -275,6 +277,14 @@ export async function generateProposals(
       const c = await buildBaseCellCard(personas[pid], lens, anniversaries, motifs);
       if (c) cards.push(c);
     }
+  }
+
+  // Keyword cards from the week's planned keywords (data/motif-calendar.json "weekly")
+  // The three editors take turns, so a week's keyword cards are not all signed by one.
+  const planned = motifs.filter((m) => m.queries?.length);
+  for (const [i, m] of planned.entries()) {
+    const c = await buildKeywordCard({ ko: m.ko, en: m.en }, m.queries!, { persona: PERSONA_IDS[i % PERSONA_IDS.length] });
+    if (c) cards.push(c);
   }
 
   // Trend cards — try each persona for top 3 of each source

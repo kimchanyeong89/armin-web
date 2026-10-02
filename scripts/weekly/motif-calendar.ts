@@ -10,6 +10,8 @@ export { isoWeek, weekRange };
 export interface Motif {
   en: string;
   ko: string;
+  /** Picture descriptions for the image search; a motif with them becomes a keyword card. */
+  queries?: string[];
 }
 
 interface MotifCalendar {

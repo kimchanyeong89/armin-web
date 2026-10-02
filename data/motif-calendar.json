@@ -14,5 +14,47 @@
     "11": [{"en": "portrait", "ko": "초상"}, {"en": "memory", "ko": "기억"}],
     "12": [{"en": "stillness before year end", "ko": "한 해의 끝"}, {"en": "snow at night", "ko": "밤눈"}]
   },
-  "weekly": {}
+  "_weekly_note": "Keywords of the week (2026-10-02). Each becomes a keyword card: queries are picture descriptions for the image search, tested to find 12+ works. Plan ahead 8 weeks; a keyword is not reused within a year.",
+  "weekly": {
+    "2026-W42": [
+      {"en": "chrysanthemums", "ko": "국화", "queries": ["a still life painting of chrysanthemums in a vase", "a painting of a garden full of chrysanthemums"]},
+      {"en": "ducks and waterbirds", "ko": "오리와 물새", "queries": ["a painting of wild ducks on a pond", "a painting of swans on a lake"]},
+      {"en": "autumn fruit", "ko": "가을 과일", "queries": ["a still life painting of persimmons", "a still life painting of apples and pears on a table"]}
+    ],
+    "2026-W43": [
+      {"en": "mist and frost", "ko": "안개와 서리", "queries": ["a painting of a misty morning landscape", "a painting of hoarfrost on fields at dawn"]},
+      {"en": "reeds and grasses", "ko": "갈대와 억새", "queries": ["a painting of tall reeds by a river in autumn", "a painting of a field of tall grass blowing in the wind"]},
+      {"en": "grape harvest", "ko": "포도 수확", "queries": ["a painting of a grape harvest in a vineyard", "a painting of people picking grapes"]}
+    ],
+    "2026-W44": [
+      {"en": "vanitas", "ko": "바니타스", "queries": ["a vanitas still life painting with a skull and a candle", "a still life painting with a skull and an hourglass"]},
+      {"en": "masks", "ko": "가면", "queries": ["a painting of people wearing masks at a carnival", "a painting of a masked figure in costume"]},
+      {"en": "crows", "ko": "까마귀", "queries": ["a painting of crows flying over a bare field", "a painting of black crows in a winter tree"]}
+    ],
+    "2026-W45": [
+      {"en": "vegetable market", "ko": "채소 시장", "queries": ["a painting of a vegetable market with cabbages", "a painting of a market stall selling vegetables"]},
+      {"en": "firewood", "ko": "땔감", "queries": ["a painting of people gathering firewood in a forest", "a painting of a woodcutter carrying logs"]},
+      {"en": "by the fire", "ko": "난롯가", "queries": ["a painting of a family sitting by a fireplace", "a painting of a person warming hands by a stove"]}
+    ],
+    "2026-W46": [
+      {"en": "reading", "ko": "책 읽는 사람", "queries": ["a painting of a woman reading a book", "a painting of a man reading by a window"]},
+      {"en": "a walk in the park", "ko": "공원 산책", "queries": ["a painting of people strolling in a park in autumn", "a painting of a couple walking along an avenue of trees"]},
+      {"en": "the hunt", "ko": "사냥", "queries": ["a painting of a hunting party with dogs in a forest", "a painting of hunters returning with game"]}
+    ],
+    "2026-W47": [
+      {"en": "study", "ko": "공부하는 사람", "queries": ["a painting of a student studying at a desk", "a painting of a scholar writing at a desk"]},
+      {"en": "rainy streets", "ko": "비 오는 거리", "queries": ["a painting of a city street in the rain with umbrellas", "a painting of a wet street at night reflecting lights"]},
+      {"en": "lamplight", "ko": "등불", "queries": ["a painting of a room lit by an oil lamp at night", "a painting of people sitting around a lamp in the evening"]}
+    ],
+    "2026-W48": [
+      {"en": "first snow", "ko": "첫눈", "queries": ["a painting of a village under freshly fallen snow", "a painting of snow falling on a town street"]},
+      {"en": "tea", "ko": "차 한 잔", "queries": ["a painting of people drinking tea", "a still life painting of a teapot and cups"]},
+      {"en": "knitting and sewing", "ko": "뜨개질과 바느질", "queries": ["a painting of a woman knitting by a window", "a painting of a woman sewing"]}
+    ],
+    "2026-W49": [
+      {"en": "skating", "ko": "스케이트", "queries": ["a painting of people ice skating on a frozen river", "a painting of skaters on a frozen canal"]},
+      {"en": "winter coats", "ko": "겨울 외투", "queries": ["a portrait painting of a woman in a fur coat and hat", "a painting of people in heavy winter coats walking in the cold"]},
+      {"en": "winter night", "ko": "겨울 밤", "queries": ["a painting of a snowy landscape at night under the moon", "a painting of a lit window in a snowy night"]}
+    ]
+  }
 }

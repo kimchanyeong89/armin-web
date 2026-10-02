@@ -13,4 +13,10 @@ describe('motif calendar', () => {
     expect(typeof m[0].en).toBe('string');
     expect(typeof m[0].ko).toBe('string');
   });
+
+  it('a planned week carries keywords with picture descriptions', async () => {
+    const m = await motifsForWeek('2026-W42');
+    expect(m.length).toBe(3);
+    expect(m.every((k) => (k.queries?.length ?? 0) >= 2)).toBe(true);
+  });
 });
