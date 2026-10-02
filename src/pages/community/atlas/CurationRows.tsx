@@ -8,8 +8,10 @@ import {
   collectorPath, listCollectors, readCollection, type CollectedWork,
 } from "../../../features/collectors/publicCollection";
 import {
-  curationKey, followCuration, unfollowCuration, useFollowedCurations, type CurationRef,
+  curationKey, followCuration, unfollowCuration, useFollowedCurationList, useFollowedCurations, type CurationRef,
 } from "../../../features/collectors/followCuration";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase";
 import { usePublicProfiles, type PublicProfile } from "../../../features/community/publicProfile";
 import { useBlockedUsers } from "../../../features/community/moderation";
 import { listSharedPlaylists, sharedPlaylistPath } from "../../../features/playlists/sharedPlaylists";
@@ -188,5 +190,61 @@ function CurationRow({ row, card, ko, uid, following }: {
         </div>
       )}
     </li>
+  );
+}
+
+/**
+ * The curations the reader follows, as the same rows - shown on My Page
+ * under their own curations. A playlist whose owner stopped sharing it, or
+ * liked works taken off show, simply drop out.
+ */
+export function FollowedCurations({ ko, uid }: { ko: boolean; uid: string }) {
+  const refs = useFollowedCurationList(uid);
+  const [rows, setRows] = useState<Row[] | null>(null);
+  const refKey = refs.map((r) => r.key).join("|");
+
+  useEffect(() => {
+    let live = true;
+    Promise.all(refs.map(async (r): Promise<Row | null> => {
+      try {
+        if (r.kind === "playlist" && r.playlistId) {
+          const snap = await getDoc(doc(db, "public_playlists", r.playlistId));
+          if (!snap.exists()) return null;
+          const data = snap.data();
+          const items = (Array.isArray(data.items) ? data.items : []) as CollectedWork[];
+          return { ...r, title: String(data.name || r.title), count: Number(data.itemCount || items.length), works: items.slice(0, STRIP),
+            all: items, path: sharedPlaylistPath(r.playlistId), at: 0 };
+        }
+        const collection = await readCollection(r.ownerUid, uid);
+        if (!collection.likes.length) return null;
+        return { ...r, title: ko ? "좋아요한 작품" : "Liked works", count: collection.likes.length, works: collection.likes.slice(0, STRIP),
+          all: collection.likes, path: collectorPath(r.ownerUid), card: collection.card ?? undefined, at: 0 };
+      } catch {
+        return null;
+      }
+    })).then((found) => { if (live) setRows(found.filter((x): x is Row => !!x)); });
+    return () => { live = false; };
+    // refKey stands for the list
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refKey, uid, ko]);
+
+  const cards = usePublicProfiles((rows || []).filter((r) => !r.card).map((r) => r.ownerUid));
+  if (!rows) return null;
+
+  return (
+    <section className="ca-shelf" aria-label={ko ? "팔로우한 큐레이션" : "Following"}>
+      <header className="ca-shelf__cap">
+        <span>{ko ? "팔로우한 큐레이션" : "FOLLOWING"}</span>
+        <i aria-hidden="true" />
+        <em>{two(rows.length)}</em>
+      </header>
+      {rows.length === 0 ? (
+        <p className="ca-empty">{ko ? "커뮤니티 큐레이션 칸에서 마음에 드는 큐레이션을 팔로우하면 여기에 모입니다." : "Follow curations in the community to gather them here."}</p>
+      ) : (
+        <ul className="ca-crows">
+          {rows.map((r) => <CurationRow key={r.key} row={r} card={r.card ?? cards[r.ownerUid]} ko={ko} uid={uid} following />)}
+        </ul>
+      )}
+    </section>
   );
 }

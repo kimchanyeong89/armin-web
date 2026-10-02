@@ -41,7 +41,22 @@ interface Found {
   artist?: string;
   year?: string;
   museum?: string;
+  /** the museum's id in the app's data, so the attachment can link to it */
+  museumId?: string;
   period?: string;
+}
+
+/* The attachment's links are kept as /artist/<name> and /museum/<id>; the post page
+   turns them into the artist page and the museum on the map when pressed (PostArticle). */
+export const artistLink = (name: string) => `/artist/${encodeURIComponent(name)}`;
+export const museumLink = (id: string) => `/museum/${encodeURIComponent(id)}`;
+/** a museum's id from the name a search result carries (English or Korean) */
+function museumIdFor(name?: string): string | undefined {
+  const n = String(name || "").trim().toLowerCase();
+  if (!n) return undefined;
+  const hit = (exhibitions as any[]).find((m) =>
+    [m.name, m.name_ko, m.nameKo].some((x) => x && String(x).trim().toLowerCase() === n));
+  return hit ? String(hit.id) : undefined;
 }
 
 const SUBJECTS: CommunityHeaderType[] = ["all", "museum", "artist", "artwork", "exhibition"];
@@ -79,7 +94,7 @@ function findLocal(q: string, ko: boolean, kinds: HeaderType[] | null): Found[] 
         const period = showPeriod(e.startDate, e.endDate);
         out.push({
           key: `show-${m.id}-${e.id || title}`, id: String(e.id || title), type: "exhibition", name: title, image: e.coverImage || e.image,
-          sub: [house, period].filter(Boolean).join(" · "), museum: house, period,
+          sub: [house, period].filter(Boolean).join(" · "), museum: house, museumId: String(m.id), period,
         });
       }
       for (const e of m.permanentExhibitions || []) {
@@ -88,7 +103,7 @@ function findLocal(q: string, ko: boolean, kinds: HeaderType[] | null): Found[] 
         const period = e.startDate || e.endDate ? `${e.startDate || "?"} – ${e.endDate || "?"}` : "";
         out.push({
           key: `exhibition-${e.id}`, id: String(e.id), type: "exhibition", name: title, image: e.image,
-          sub: [m.name, period].filter(Boolean).join(" · "), museum: m.name, period,
+          sub: [m.name, period].filter(Boolean).join(" · "), museum: m.name, museumId: String(m.id), period,
         });
       }
     }
@@ -155,6 +170,7 @@ export default function Composer({ ko, onPublish, onCancel }: {
         key: `artwork-${a.id}`, id: String(a.id), type: "artwork" as const,
         name: tidy(a.name || a.n || a.title) || "Untitled", image: a.image || a.i || undefined,
         artist: tidy(a.artist || a.a), year: tidy(a.year || a.d), museum: tidy(a.museumName || a.m),
+        museumId: museumIdFor(tidy(a.museumName || a.m)),
       }));
       const people: Found[] = (artists || []).slice(0, 12).map((x: any) => ({
         key: `artist-${String(x.artist || "").toLowerCase()}`, id: `artist-${String(x.artist || "").toLowerCase()}`,
@@ -285,13 +301,25 @@ export default function Composer({ ko, onPublish, onCancel }: {
     const b = document.createElement("b");
     b.textContent = f.year ? `${f.name} (${f.year})` : f.name;
     cap.append(b);
+    /* the artist and the museum are links (underlined) to their pages */
+    const linked = (text: string, href?: string) => {
+      if (!href) return document.createTextNode(text);
+      const a = document.createElement("a");
+      a.href = href;
+      a.textContent = text;
+      return a;
+    };
+    const museumNode = f.museum ? linked(f.museum, f.museumId ? museumLink(f.museumId) : undefined) : null;
     if (f.type === "exhibition") {
       /* an exhibition's record under its poster: the house, then the dates on their own line */
-      if (f.museum) cap.append(document.createTextNode(f.museum));
-      if (f.period) { if (f.museum) cap.append(document.createElement("br")); cap.append(document.createTextNode(f.period)); }
+      if (museumNode) cap.append(museumNode);
+      if (f.period) { if (museumNode) cap.append(document.createElement("br")); cap.append(document.createTextNode(f.period)); }
     } else {
-      const line = [f.artist, f.museum, f.period].filter(Boolean).join(" · ");
-      if (line) cap.append(document.createTextNode(line));
+      const parts: Node[] = [];
+      if (f.artist) parts.push(linked(f.artist, artistLink(f.artist)));
+      if (museumNode) parts.push(museumNode);
+      if (f.period) parts.push(document.createTextNode(f.period));
+      parts.forEach((node, i) => { if (i) cap.append(document.createTextNode(" · ")); cap.append(node); });
     }
     fig.append(cap);
 

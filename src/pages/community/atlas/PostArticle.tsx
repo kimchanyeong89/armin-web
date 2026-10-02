@@ -1,5 +1,6 @@
-import { useMemo, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { useMemo, useState, type FormEvent, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { museumMapPath } from "../../../utils/museumMapPath";
 import { collectorPath } from "../../../features/collectors/publicCollection";
 import { SHOW_PUBLIC_COLLECTIONS } from "../../../config/features";
 import { ArrowLeft, MessageSquare, Trash2 } from "lucide-react";
@@ -80,6 +81,22 @@ export default function PostArticle({
   onDeleteComment?: (comment: ArticleComment) => void;
 }) {
   const [text, setText] = useState("");
+  const navigate = useNavigate();
+  /* an attachment's artist (/artist/<name>) opens the artist page over this one, its museum
+     (/museum/<id>) the museum on the map; any other in-app link goes through the router */
+  const followProseLink = (event: MouseEvent<HTMLDivElement>) => {
+    const a = (event.target as HTMLElement).closest("a");
+    const href = a?.getAttribute("href") || "";
+    if (!a || !href.startsWith("/") || href.startsWith("//")) return;
+    event.preventDefault();
+    const [, kind, rest] = href.match(/^\/(artist|museum)\/(.+)$/) || [];
+    if (kind === "artist") {
+      window.dispatchEvent(new CustomEvent("open-artist-gallery", { detail: { artist: decodeURIComponent(rest) }, cancelable: true }));
+    } else if (kind === "museum") {
+      const path = museumMapPath(decodeURIComponent(rest));
+      if (path) navigate(path);
+    } else navigate(href);
+  };
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
   const [editing, setEditing] = useState<string | null>(null);
@@ -214,7 +231,7 @@ export default function PostArticle({
       </header>
 
       {html
-        ? <div className="ca-prose" dangerouslySetInnerHTML={{ __html: html }} />
+        ? <div className="ca-prose" onClick={followProseLink} dangerouslySetInnerHTML={{ __html: html }} />
         : <div className="ca-prose"><p>{ko ? "내용이 없습니다." : "No content available."}</p></div>}
 
       <div className="ca-post__acts">

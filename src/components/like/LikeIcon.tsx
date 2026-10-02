@@ -38,6 +38,8 @@ export function LikeIcon({
       color={liked ? color : emptyColor}
       style={style}
       className={className}
+      /* cropped to the lotus itself: it fills more of its button's circle (10/2, "a little larger") */
+      viewBox="1.5 2 21 21"
     />
   );
 }

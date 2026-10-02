@@ -331,12 +331,20 @@
 .ca-prose figure[data-kind="exhibition"] { float: left; clear: both; display: block; width: clamp(132px, 38%, 220px);
   /* its top meets the first line of the words beside it (the paragraph gap plus half the leading) */
   margin: calc(1.1em + 7px) 22px 16px 0; }
+.ca-prose figure[data-kind="exhibition"] { justify-items: start; }
 .ca-prose figure[data-kind="exhibition"] img { width: 100%; height: auto; max-height: none; }
-.ca-prose figure[data-kind="exhibition"] figcaption { margin-top: 9px; max-width: none; text-align: left;
+.ca-prose figure[data-kind="exhibition"] figcaption { width: 100%; margin-top: 9px; max-width: none; text-align: left;
   font: 500 10.5px/1.6 var(--num); letter-spacing: .02em; color: var(--ink-3); }
 .ca-prose figure[data-kind="exhibition"] figcaption b { margin-bottom: 4px; font: 650 13.5px/1.35 var(--display); letter-spacing: -0.01em; color: var(--ink); }
 /* in a post an exhibition and its words sit side by side (prose.ts pairExhibitions) */
-.ca-pair { display: grid; grid-template-columns: clamp(124px, 36%, 220px) minmax(0, 1fr); gap: 0 20px; align-items: start; }
+.ca-prose { counter-reset: ca-pair; }
+.ca-pair { counter-increment: ca-pair; display: grid; grid-template-columns: clamp(124px, 36%, 220px) minmax(0, 1fr); gap: 0 clamp(18px, 3vw, 32px); align-items: center; }
+/* in a post of several, each exhibition's words open with its number and a short gold rule */
+.ca-pair__words::before { content: counter(ca-pair, decimal-leading-zero); display: inline-block; margin-bottom: 12px; padding-right: 30px;
+  font: 600 11px/1 var(--num); letter-spacing: .08em; color: var(--acc);
+  background: linear-gradient(var(--acc), var(--acc)) right center / 20px 1px no-repeat; }
+.ca-pair:only-of-type .ca-pair__words::before { display: none; }
+.ca-pair__words { color: var(--ink-2); }
 .ca-prose .ca-pair figure[data-kind="exhibition"] { float: none; width: auto; margin: 7px 0 0; }
 .ca-pair__words > :first-child { margin-top: 0; }
 .ca-pair__words > * + * { margin-top: 1.1em; }
@@ -523,3 +531,11 @@
 .ca-crow__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
 .ca-crow__grid > * { aspect-ratio: 1; }
 .ca-crow__fold { justify-self: end; }
+
+/* an attachment's artist and museum: underlined links to their pages */
+.ca-prose figcaption a { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.ca-prose figcaption a:hover { color: var(--acc); text-decoration-color: var(--acc); }
+
+/* the community's curation rows set inside My Page (FollowedCurations): its tokens, not its page */
+.ca.ca--embed { min-height: 0; background: none; padding: 8px 10px 96px; }

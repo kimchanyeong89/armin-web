@@ -39,7 +39,11 @@ function clean(node: Element) {
       if (!keep) el.removeAttribute(a.name);
     });
     if (tag === "A") {
-      if (/^(https?:|mailto:|\/)/i.test(el.getAttribute("href") || "")) {
+      const href = el.getAttribute("href") || "";
+      /* a link inside the app (an attachment's artist or museum) stays in the app; the post page routes it */
+      if (/^\/(?!\/)/.test(href)) {
+        /* kept as is */
+      } else if (/^(https?:|mailto:)/i.test(href)) {
         el.setAttribute("target", "_blank");
         el.setAttribute("rel", "noopener noreferrer");
       } else el.removeAttribute("href");

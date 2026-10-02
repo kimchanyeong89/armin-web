@@ -240,12 +240,14 @@
   border: 1px solid var(--mp-gold); font-style: normal; color: var(--mp-gold);
   transition: background .16s ease, color .16s ease; }
 .mp-list--publish:hover .mp-list__shot i { background: var(--mp-gold); color: var(--mp-ground); }
-/* the arrow nudges outward twice when the row appears, to say "this sends it out" */
-@keyframes mp-share-nudge { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(2px, -2px); } }
-.mp-list--publish .mp-list__shot i svg { display: block; transition: transform .2s ease; animation: mp-share-nudge .7s ease-in-out .9s 2; }
-.mp-list--publish:hover .mp-list__shot i svg { transform: translate(1.5px, -1.5px); }
-.mp-list--publish:hover .mp-list__shot i { animation: none; transition: transform .2s ease, background .16s ease, color .16s ease; }
-@media (prefers-reduced-motion: reduce) { .mp-list--publish .mp-list__shot i svg { animation: none; } }
+/* the arrow keeps moving on: it runs forward and back, the speed lines flicker behind it */
+@keyframes mp-go-run { 0%, 100% { transform: translateX(-1.5px); } 50% { transform: translateX(2px); } }
+@keyframes mp-go-trail { 0%, 100% { opacity: .25; transform: translateX(1px); } 50% { opacity: .9; transform: translateX(-1.5px); } }
+.mp-list--publish .mp-list__shot i svg { display: block; overflow: visible; }
+.mp-list--publish .mp-go__arrow { animation: mp-go-run 1.6s ease-in-out infinite; }
+.mp-list--publish .mp-go__trail { animation: mp-go-trail 1.6s ease-in-out infinite; }
+.mp-list--publish:hover .mp-list__shot i { transition: background .16s ease, color .16s ease; }
+@media (prefers-reduced-motion: reduce) { .mp-list--publish .mp-go__arrow, .mp-list--publish .mp-go__trail { animation: none; } }
 .mp-list--publish .mp-list__text b { white-space: normal; line-height: 1.25; color: var(--mp-gold); }
 
 /* saved artists: portraits, paintings and photographs mixed - one tone for all of them,

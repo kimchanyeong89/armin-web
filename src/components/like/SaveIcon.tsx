@@ -14,6 +14,7 @@ export function SaveIcon({
   color = "currentColor",
   style,
   className,
+  viewBox = "0 0 24 24",
 }: {
   saved?: boolean;
   size?: number;
@@ -21,12 +22,14 @@ export function SaveIcon({
   color?: string;
   style?: React.CSSProperties;
   className?: string;
+  /** a tighter box draws the lotus larger in the same space (LikeIcon) */
+  viewBox?: string;
 }) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox={viewBox}
       fill="none"
       stroke={color}
       strokeWidth={strokeWidth}

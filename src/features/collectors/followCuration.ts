@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { collection, deleteDoc, doc, onSnapshot, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
@@ -22,21 +22,34 @@ export const curationKey = (ref: Pick<CurationRef, "kind" | "ownerUid" | "playli
 
 const followedRef = (uid: string) => collection(db, "users", uid, "followed_curations");
 
-/** The keys of the curations the reader follows, kept live; empty when signed out. */
-export function useFollowedCurations(uid: string | null | undefined): Set<string> {
-  const [keys, setKeys] = useState<Set<string>>(new Set());
+/** The curations the reader follows, newest follow first, kept live; empty when signed out. */
+export function useFollowedCurationList(uid: string | null | undefined): (CurationRef & { key: string })[] {
+  const [list, setList] = useState<(CurationRef & { key: string })[]>([]);
   useEffect(() => {
     if (!uid) {
-      setKeys(new Set());
+      setList([]);
       return;
     }
     return onSnapshot(
       followedRef(uid),
-      (snap) => setKeys(new Set(snap.docs.map((d) => d.id))),
-      () => setKeys(new Set()),
+      (snap) => setList(
+        [...snap.docs]
+          .sort((a, b) => (b.data().followedAt?.toMillis?.() ?? Date.now()) - (a.data().followedAt?.toMillis?.() ?? Date.now()))
+          .map((d) => {
+            const data = d.data();
+            return { key: d.id, kind: data.kind, ownerUid: data.ownerUid, playlistId: data.playlistId ?? undefined, title: String(data.title || "") };
+          }),
+      ),
+      () => setList([]),
     );
   }, [uid]);
-  return keys;
+  return list;
+}
+
+/** The keys of the curations the reader follows, kept live; empty when signed out. */
+export function useFollowedCurations(uid: string | null | undefined): Set<string> {
+  const list = useFollowedCurationList(uid);
+  return useMemo(() => new Set(list.map((c) => c.key)), [list]);
 }
 
 export async function followCuration(uid: string, ref: CurationRef): Promise<void> {

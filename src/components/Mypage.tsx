@@ -68,6 +68,8 @@ import PlaylistMenu from "./PlaylistMenu";
 import PlaylistShareSheet from "./PlaylistShareSheet";
 import { deletePlaylist, refreshSharedPlaylist } from "../features/playlists/sharedPlaylists";
 import CurationPublishSheet from "../features/collectors/CurationPublishSheet";
+import { FollowedCurations } from "../pages/community/atlas/CurationRows";
+import "../pages/community/atlas/atlas.css";
 import { SHOW_PUBLIC_COLLECTIONS } from "../config/features";
 import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
 import { readCommunityActivity, readPostCount, syncPublicProfile } from "../features/community/publicProfile";
@@ -2688,11 +2690,11 @@ const MyPage: React.FC = () => {
                 <li className="mp-list mp-list--publish">
                   <button type="button" className="mp-list__open" onClick={() => setPublishing(true)}>
                     <span className="mp-list__shot" aria-hidden="true">
-                      {/* sending out: a cut-corner frame left open at its upper right, an arrow leaving through it */}
+                      {/* on its way: an arrow running right with speed lines behind it */}
                       <i>
-                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M11 5H7.5L5 7.5V19h11.5l2.5-2.5V13" />
-                          <path d="M13 11l7-7M14.5 4H20v5.5" />
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                          <g className="mp-go__trail"><path d="M3 9h4M1.5 12h5M3 15h4" /></g>
+                          <g className="mp-go__arrow"><path d="M9.5 12h11M15.5 6.5 21 12l-5.5 5.5" /></g>
                         </svg>
                       </i>
                     </span>
@@ -2921,23 +2923,31 @@ const MyPage: React.FC = () => {
           </div>
         )
       ) : viewMode === "playlists" && !activePlaylist ? (
-        sortedItems.length === 0 ? (
-          <div style={{ padding: "48px 20px 90px", textAlign: "center", color: subText }}>
-            {t({ ko: "아직 큐레이션이 없습니다.", en: "No curations yet." })}
-          </div>
-        ) : (
-          /* the same grid as the exhibition and museum cards, in the same sort */
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
-              gap: 8,
-              padding: "2px 10px 96px",
-            }}
-          >
-            {sortedItems.map((playlist) => renderPlaylistCard(playlist))}
-          </div>
-        )
+        <>
+          {sortedItems.length === 0 ? (
+            <div style={{ padding: "48px 20px 90px", textAlign: "center", color: subText }}>
+              {t({ ko: "아직 큐레이션이 없습니다.", en: "No curations yet." })}
+            </div>
+          ) : (
+            /* the same grid as the exhibition and museum cards, in the same sort */
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : "repeat(4, 1fr)",
+                gap: 8,
+                padding: "2px 10px 24px",
+              }}
+            >
+              {sortedItems.map((playlist) => renderPlaylistCard(playlist))}
+            </div>
+          )}
+          {/* the curations this member follows, as the community draws them */}
+          {user && (
+            <div className="ca ca--embed mp-followed" data-light={isLightTheme || undefined}>
+              <FollowedCurations ko={language === "ko"} uid={user.uid} />
+            </div>
+          )}
+        </>
       ) : sortedItems.length === 0 ? (
         <div style={{ padding: "48px 20px 90px", textAlign: "center", color: subText }}>
           No {activePlaylist ? "items in this playlist" : viewMode} saved yet.
