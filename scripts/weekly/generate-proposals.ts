@@ -199,16 +199,33 @@ async function buildTrendCard(
  * description, not a bare word ("harvest" finds noise, "a painting of peasants
  * harvesting wheat" finds harvests), so the caller passes one or more such
  * descriptions; the best match of each work across them decides its order.
+ * With `titlePattern`, works whose title matches it rank above every image match.
  * Up to 12 works make the card and the next 12 go to `alternates` for the editor.
  */
 export async function buildKeywordCard(
   keyword: { ko: string; en: string },
   queries: string[],
-  opts: { persona?: PersonaId; maxPerArtist?: number } = {},
+  opts: { persona?: PersonaId; maxPerArtist?: number; titlePattern?: string } = {},
 ): Promise<WeeklyCard | null> {
   const idx = await buildIndex();
   const byRef = new Map(idx.all.map((w) => [w.artwork_ref, w]));
   const best = new Map<string, number>();
+  // A story (a myth, a scripture, a novel) is told by the title, not by the picture:
+  // the image search cannot tell Odysseus from any sailor, so titles that name it come first.
+  // Titles bunch up in a few big collections, so they are taken in turns across collections.
+  if (opts.titlePattern) {
+    const re = new RegExp(opts.titlePattern, 'i');
+    const byCollection = new Map<string, string[]>();
+    for (const w of idx.all) {
+      if (!w.image_url || !re.test(w.title)) continue;
+      byCollection.set(w.source_collection, [...(byCollection.get(w.source_collection) ?? []), w.artwork_ref]);
+    }
+    const lists = [...byCollection.values()];
+    let rank = 0;
+    for (let i = 0; lists.some((l) => i < l.length); i++) {
+      for (const l of lists) if (i < l.length) best.set(l[i], 2 - (rank++) / 1e6);
+    }
+  }
   for (const q of queries) {
     for (const m of await matchByText(q, { topK: 80 })) {
       if (m.similarity > (best.get(m.artwork_ref) ?? -1)) best.set(m.artwork_ref, m.similarity);
