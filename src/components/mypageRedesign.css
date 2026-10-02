@@ -31,9 +31,9 @@
 .mp-acts button:hover { background: rgba(0,0,0,.74); }
 /* a computer's cards are large: the like and playlist marks grow with them (a phone keeps 22px) */
 @media (min-width: 768px) {
-  .mp-acts { right: 10px; top: 10px; gap: 6px; }
-  .mp-acts button { width: 34px; height: 34px; }
-  .mp-acts button svg { width: 17px; height: 17px; }
+  .mp-acts { right: 8px; top: 8px; gap: 4px; }
+  .mp-acts button { width: 28px; height: 28px; }
+  .mp-acts button svg { width: 14px; height: 14px; }
 }
 /* the work that is the page's background */
 
