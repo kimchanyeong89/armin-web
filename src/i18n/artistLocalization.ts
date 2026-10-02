@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { AppLanguage } from "../contexts/LanguageContext";
 import { getCanonicalName, prettifyArtistName } from "../utils/canonicalArtist";
+import { artistFileKey } from "../utils/artistKey.js";
 
 /**
  * 작가명 한국어화. 권위 데이터(Wikidata ko 레이블)만 사용한다.
@@ -16,6 +17,9 @@ type ArtistEntry = { name_ko?: string; wikiId?: string; source?: string };
 export type ArtistI18nMap = Record<string, string>; // normalized name → name_ko
 
 let cache: ArtistI18nMap | null = null;
+/* Korean names read from the head of the artists' Korean bios (scripts/i18n/build-artist-bio-names.mjs),
+   keyed by artistFileKey: shown when Wikidata has no label, never used to read a Korean search */
+let bioNames: Record<string, string> = {};
 let inflight: Promise<ArtistI18nMap> | null = null;
 
 function normalize(name: string): string {
@@ -30,9 +34,12 @@ function loadArtistMap(): Promise<ArtistI18nMap> {
   // build) would otherwise be served forever, leaving the map empty so Korean
   // artist queries ("고흐") never resolve to English ("Vincent van Gogh") and
   // return almost nothing. Revalidation is cheap (304) and loads once per session.
-  inflight = fetch("/data/i18n/artists.json", { cache: "no-cache" })
+  const bio = fetch("/data/i18n/artist-names-bio.json", { cache: "no-cache" })
     .then((res) => (res.ok ? res.json() : {}))
-    .then((raw: Record<string, ArtistEntry>) => {
+    .then((names: Record<string, string>) => { bioNames = names && typeof names === "object" ? names : {}; })
+    .catch(() => {});
+  inflight = Promise.all([fetch("/data/i18n/artists.json", { cache: "no-cache" }).then((res) => (res.ok ? res.json() : {})), bio])
+    .then(([raw]: [Record<string, ArtistEntry>, unknown]) => {
       const map: ArtistI18nMap = {};
       for (const [name, entry] of Object.entries(raw)) {
         if (entry && entry.name_ko) map[normalize(name)] = entry.name_ko;
@@ -93,7 +100,10 @@ export function getArtistDisplayName(
       if (swapped) return swapped;
     }
   }
-  // No authoritative Korean label — fall back to the normalized English display
+  // 4) No Wikidata label: the Korean name the artist's Korean bio opens with.
+  const fromBio = bioNames[artistFileKey(value)];
+  if (fromBio) return fromBio;
+  // No Korean name at all — fall back to the normalized English display
   // form (un-inverted) instead of the raw "Last, First" the corpus stored.
   return prettifyArtistName(value);
 }

@@ -48,7 +48,7 @@ import CommentModal from "./CommentModal";
 import Slideshow from "./Slideshow";
 import { PlaylistModal } from "./PlaylistModal";
 import { RankAvatar } from "./RankAvatar";
-import { prettifyArtistName } from "../utils/canonicalArtist";
+import { getArtistDisplayName, useArtistI18n } from "../i18n/artistLocalization";
 import { artistFileKey } from "../utils/artistKey.js";
 import {
   ArtistInitial,
@@ -1141,6 +1141,8 @@ const MyPage: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { t, language } = useLanguage();
+  /* the artists' Korean names (the same table the artist page uses) */
+  const artistMap = useArtistI18n();
 
   const [loading, setLoading] = useState(true);
   const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
@@ -2261,7 +2263,7 @@ const MyPage: React.FC = () => {
       fallback = <MuseumArt museumId={logoId} name={title} color={markColor} accent={lime} />;
     } else {
       artistName = String(rawItem.artist || rawItem.name || "");
-      title = prettifyArtistName(artistName) || artistName;
+      title = getArtistDisplayName(artistName, language, artistMap) || artistName;
       const works = Number(rawItem.count || 0);
       subtitle = works
         ? `${works.toLocaleString()} ${t({ ko: "작품", en: works === 1 ? "work" : "works" })}`
