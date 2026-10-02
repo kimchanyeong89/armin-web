@@ -44,15 +44,20 @@ export function rankForScore(score: number): string {
   return current;
 }
 
-/** What earns a level: a liked artwork counts 1, a liked exhibition 2, a community post 5. */
+/** What earns a level: a liked artwork counts 1, a liked exhibition 2, a community post 5,
+ *  a comment 2 and a like given to someone's post 1. */
 export function userActivityScore({
   likedArtworks = 0,
   likedExhibitions = 0,
   posts = 0,
+  comments = 0,
+  postLikes = 0,
 }: {
   likedArtworks?: number;
   likedExhibitions?: number;
   posts?: number;
+  comments?: number;
+  postLikes?: number;
 }): number {
-  return likedArtworks + likedExhibitions * 2 + posts * 5;
+  return likedArtworks + likedExhibitions * 2 + posts * 5 + Math.max(0, comments) * 2 + Math.max(0, postLikes);
 }

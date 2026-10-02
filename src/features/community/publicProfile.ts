@@ -4,6 +4,7 @@ import {
   doc,
   getCountFromServer,
   getDoc,
+  increment,
   onSnapshot,
   query,
   serverTimestamp,
@@ -46,14 +47,34 @@ export async function readPostCount(uid: string): Promise<number> {
   return current + legacy;
 }
 
-/** Likes and posts counted on the server: the score My Page shows. */
+/** Community activity kept on the member's own record (users/{uid}.activity), counted as it happens. */
+export type ActivityKind = "comments" | "postLikes";
+
+/** Adds to (or, with -1, takes from) the member's community activity; a failure only costs the point. */
+export function bumpActivity(uid: string, kind: ActivityKind, delta: 1 | -1): void {
+  setDoc(doc(db, "users", uid), { activity: { [kind]: increment(delta) } }, { merge: true }).catch(() => {});
+}
+
+/** The member's comments and likes given, from their own record. */
+export async function readCommunityActivity(uid: string): Promise<{ comments: number; postLikes: number }> {
+  try {
+    const snap = await getDoc(doc(db, "users", uid));
+    const a = (snap.exists() ? snap.data().activity : null) || {};
+    return { comments: Number(a.comments) || 0, postLikes: Number(a.postLikes) || 0 };
+  } catch {
+    return { comments: 0, postLikes: 0 };
+  }
+}
+
+/** Likes, posts, comments and likes given: the score My Page shows. */
 export async function readActivityScore(uid: string): Promise<number> {
-  const [likedArtworks, likedExhibitions, posts] = await Promise.all([
+  const [likedArtworks, likedExhibitions, posts, activity] = await Promise.all([
     countOrZero(collection(db, "users", uid, "liked_artworks")),
     countOrZero(collection(db, "users", uid, "liked_exhibitions")),
     readPostCount(uid),
+    readCommunityActivity(uid),
   ]);
-  return userActivityScore({ likedArtworks, likedExhibitions, posts });
+  return userActivityScore({ likedArtworks, likedExhibitions, posts, ...activity });
 }
 
 /** The signed-in user's card as it should read now, from their own profile and score. */

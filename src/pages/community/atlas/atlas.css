@@ -487,3 +487,39 @@
 .ca-row__title { display: flex; align-items: baseline; min-width: 0; }
 .ca-row__tt { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ca-row__cc { flex: none; margin-left: 6px; font: 600 11px/1 var(--num); letter-spacing: .02em; color: var(--acc); vertical-align: 1px; }
+
+/* ── the curation room: one row per curation, its works sliding to the right ── */
+.ca-crows { display: grid; gap: 26px; margin: 0; padding: 0; list-style: none; }
+.ca-crow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding-bottom: 22px; border-bottom: 1px solid var(--rule); }
+.ca-crow__head { display: flex; align-items: center; justify-content: space-between; gap: 14px; min-width: 0; }
+.ca .ca-crow__who { display: flex; align-items: center; gap: 10px; min-width: 0; color: inherit; }
+.ca-crow__who > span { display: grid; gap: 3px; min-width: 0; }
+.ca-crow__who b { font: 650 15px/1.3 var(--display); letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.ca-crow__who small { font: 500 10px/1.2 var(--num); letter-spacing: .03em; color: var(--ink-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ca .ca-crow__who:hover b { color: var(--acc); }
+/* follow: words only, gold when following - no box */
+.ca .ca-follow { flex: none; padding: 6px 0; font-size: 12px; font-weight: 650; color: var(--ink-2); transition: color .16s ease; }
+.ca .ca-follow:hover, .ca .ca-follow[aria-pressed="true"] { color: var(--acc); }
+.ca .ca-follow[aria-pressed="true"]::before { content: "● "; font-size: 8px; vertical-align: 2px; }
+.ca-crow.is-following .ca-crow__who b::after { content: ""; display: inline-block; width: 5px; height: 5px; margin-left: 7px; border-radius: 50%; background: var(--acc); vertical-align: 3px; }
+.ca-crow__lane { position: relative; min-width: 0; }
+.ca-crow__strip { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; }
+.ca-crow__strip::-webkit-scrollbar { display: none; }
+.ca-crow__strip > * { flex: none; width: clamp(104px, 28vw, 150px); aspect-ratio: 1; scroll-snap-align: start; }
+.ca .ca-crow__work { display: block; overflow: hidden; border-radius: 8px; background: var(--soft); }
+.ca-crow__work img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); transition: filter .3s ease, transform .4s ease; }
+.ca-crow__work:hover img { filter: none; transform: scale(1.04); }
+.ca .ca-crow__more { display: grid; place-content: center; gap: 6px; border-radius: 8px; background: color-mix(in srgb, var(--acc) 10%, transparent);
+  color: var(--acc); font-size: 12.5px; font-weight: 650; transition: background .16s ease; }
+.ca-crow__more small { font: 500 10px/1 var(--num); color: var(--ink-3); }
+.ca .ca-crow__more:hover { background: color-mix(in srgb, var(--acc) 18%, transparent); }
+/* slide arrows: on a computer, at the lane's ends, over the works */
+.ca .ca-crow__nav { position: absolute; top: 50%; z-index: 1; display: none; place-items: center; width: 30px; height: 30px; margin-top: -15px;
+  border-radius: 50%; background: rgba(8,8,8,.62); color: #f4f1ea; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.ca-crow__nav--prev { left: 6px; }
+.ca-crow__nav--next { right: 6px; }
+@media (hover: hover) { .ca-crow__lane:hover .ca-crow__nav { display: grid; } }
+.ca-crow__all { display: grid; gap: 10px; }
+.ca-crow__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+.ca-crow__grid > * { aspect-ratio: 1; }
+.ca-crow__fold { justify-self: end; }

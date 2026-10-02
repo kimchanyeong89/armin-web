@@ -117,7 +117,7 @@ async function readSharedPlaylists(uid: string): Promise<CollectorPlaylist[]> {
 }
 
 /** People who put their liked works on show, whoever liked a work most recently first. */
-export async function listCollectors(max = 36): Promise<Collector[]> {
+export async function listCollectors(max = 36, recentCount = 12): Promise<Collector[]> {
   /* one equality, no order: no composite index needed; the order is set below */
   const cards = await getDocs(query(collection(db, "public_profiles"), where("likesPublic", "==", true), limit(max)));
   const found = await Promise.all(
@@ -128,7 +128,7 @@ export async function listCollectors(max = 36): Promise<Collector[]> {
         try {
           const [count, latest] = await Promise.all([
             getCountFromServer(likes),
-            getDocs(query(likes, orderBy("likedAt", "desc"), limit(4))),
+            getDocs(query(likes, orderBy("likedAt", "desc"), limit(recentCount))),
           ]);
           const likeCount = count.data().count;
           if (likeCount === 0) return null;

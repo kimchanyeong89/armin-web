@@ -70,7 +70,7 @@ import { deletePlaylist, refreshSharedPlaylist } from "../features/playlists/sha
 import CurationPublishSheet from "../features/collectors/CurationPublishSheet";
 import { SHOW_PUBLIC_COLLECTIONS } from "../config/features";
 import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
-import { readPostCount, syncPublicProfile } from "../features/community/publicProfile";
+import { readCommunityActivity, readPostCount, syncPublicProfile } from "../features/community/publicProfile";
 import { rankForScore, userActivityScore } from "../utils/communityRank";
 import type { ProfileImageCrop } from "../types/Profile";
 import { ensureSharedSearchWorkerLoaded } from "../utils/searchWorkerRuntime";
@@ -1409,11 +1409,12 @@ const MyPage: React.FC = () => {
 
     const calculateScore = async () => {
       /* posts are counted on the server; the formula is the one the community card uses */
-      const posts = await readPostCount(user.uid);
+      const [posts, activity] = await Promise.all([readPostCount(user.uid), readCommunityActivity(user.uid)]);
       const score = userActivityScore({
         likedArtworks: likedArtworks.length,
         likedExhibitions: likedExhibitions.length,
         posts,
+        ...activity,
       });
 
       setUserScore(score);

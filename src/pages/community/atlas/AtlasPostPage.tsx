@@ -21,6 +21,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { shouldLimitNetwork } from "../../../utils/network";
 import { resolveCommunityRank } from "../../../utils/communityRank";
 import {
+  bumpActivity,
   shownAuthor,
   storedAuthor,
   syncPublicProfile,
@@ -205,6 +206,7 @@ function AtlasPostPage() {
         return true;
       });
       setLiked(now);
+      bumpActivity(user.uid, "postLikes", now ? 1 : -1);
       /* the live subscription brings the new count; only the one-off read needs it set by hand */
       if (constrained) {
         setPost((prev: any) => (prev ? { ...prev, likes: Math.max(0, Number(prev.likes || 0) + (now ? 1 : -1)) } : prev));
@@ -241,6 +243,7 @@ function AtlasPostPage() {
         ...(parentId ? { parentId } : {}),
       });
       await updateDoc(doc(db, "community_posts", id), { commentCount: increment(1) });
+      bumpActivity(user.uid, "comments", 1);
       /* a one-off read gets no live update: the optimistic copy takes its real id */
       setComments((prev) => prev.map((c) => (c.id === optimistic.id ? { ...c, id: ref.id } : c)));
       return true;
@@ -277,6 +280,7 @@ function AtlasPostPage() {
     try {
       await deleteDoc(doc(db, "community_posts", id, "comments", c.id));
       await updateDoc(doc(db, "community_posts", id), { commentCount: increment(-1) });
+      bumpActivity(user.uid, "comments", -1);
       setComments((prev) => prev.filter((x) => x.id !== c.id));
       setPost((prev: any) => (prev ? { ...prev, commentCount: Math.max(0, Number(prev.commentCount || 0) - 1) } : prev));
     } catch (error) {

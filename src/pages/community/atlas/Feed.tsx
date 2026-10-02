@@ -15,9 +15,8 @@ import { getOptimizedImageUrl } from "../../../utils/imageProxy";
 import { textOf } from "./prose";
 import { CATEGORY_LABEL, TARGET_LABEL, ago, catStyle } from "./shared";
 import { SHOW_PUBLIC_COLLECTIONS } from "../../../config/features";
-import CollectorShelf from "./CollectorShelf";
 import CurationInvite from "./CurationInvite";
-import PlaylistShelf from "./PlaylistShelf";
+import CurationRows from "./CurationRows";
 
 /** the tab's three rooms: the board of posts, other people's curation (their
     collections and shared playlists) and the exhibitions on now */
@@ -101,8 +100,7 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
       {state.view === "curation" ? (
         <div className="ca-room">
           {SHOW_PUBLIC_COLLECTIONS && <CurationInvite ko={ko} />}
-          {SHOW_PUBLIC_COLLECTIONS && <CollectorShelf ko={ko} />}
-          <PlaylistShelf ko={ko} />
+          <CurationRows ko={ko} />
         </div>
       ) : state.view === "exhibitions" ? (
         <div className="ca-room ca-nearby"><NearbyExhibitions isLight={isLight} language={language} /></div>
