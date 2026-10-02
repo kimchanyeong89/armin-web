@@ -100,6 +100,12 @@ const PERSONA_NAMES: Record<PersonaId, { en: string; ko: string; role: string }>
   'anika-voss':    { en: 'Anika Voss',    ko: '아니카 보스', role: 'Contributing Editor, Armin' },
 };
 
+/** An editor's display name; an unknown id shows as is. */
+function personaName(id: string, langKo: boolean): string {
+  const p = PERSONA_NAMES[id as PersonaId];
+  return p ? (langKo ? p.ko : p.en) : id;
+}
+
 function parseIsoWeek(weekStr: string): { year: number; week: number } {
   // e.g. "2026-W19" → { year: 2026, week: 19 }
   const m = /^(\d{4})-W(\d{1,2})$/.exec(weekStr);
@@ -1714,7 +1720,7 @@ function ArchiveGrid({
             imageUrl={entry.hero_image_url}
             eyebrow={weekLabel}
             titlePrimary={langKo ? entry.title_ko : entry.title_en}
-            titleSecondary={`${entry.persona_id} · ${worksCount}${langKo ? '점' : ' works'}`}
+            titleSecondary={`${personaName(entry.persona_id, langKo)} · ${worksCount}${langKo ? '점' : ' works'}`}
             locked={locked}
             onClick={locked ? onLockedClick : () => onSelectWeek(entry.week)}
             fg={fg}
@@ -1784,7 +1790,7 @@ function SpecialGrid({
             imageUrl={entry.hero_image_url}
             eyebrow={`SPECIAL · ${entry.lens.toUpperCase()}`}
             titlePrimary={langKo ? entry.title_ko : entry.title_en}
-            titleSecondary={`${entry.persona_id} · ${entry.source_week}`}
+            titleSecondary={`${personaName(entry.persona_id, langKo)} · ${entry.source_week}`}
             locked={locked}
             onClick={locked ? onLockedClick : () => onSelectSpecial(entry.slug)}
             fg={fg}
