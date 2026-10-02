@@ -25,6 +25,8 @@ const TREND_MATCH_THRESHOLD = 0.28;
 // biographical arc (early/mid/late) and gives thematic enough cross-artist
 // variety without overwhelming the reader.
 const CARD_WORK_COUNT = 12;
+// Fewer works than this do not make a curation (editorial rule, 2026-10-02).
+const MIN_WORKS = 7;
 
 function slug(s: string): string {
   const latin = s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40);
@@ -54,7 +56,7 @@ async function buildBaseCellCard(
     let best: { artist: string; score: number } | null = null;
     for (const a of anniversaries) {
       const works = await buildBiographicalLens(a.name, { count: CARD_WORK_COUNT });
-      if (works.length < 6) continue;
+      if (works.length < MIN_WORKS) continue;
       const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
       if (!best || avg > best.score) best = { artist: a.name, score: avg };
     }
@@ -63,7 +65,7 @@ async function buildBaseCellCard(
     const works = await buildBiographicalLens(best.artist, { count: CARD_WORK_COUNT });
     const trigger: Trigger = {
       type: 'anniversary',
-      value: `${best.artist} · ${aMatch.kind} ${aMatch.date}`,
+      value: `${best.artist} · ${aMatch.kind} ${aMatch.date} · ${aMatch.years}주년`,
       source: 'artists-dates.json',
     };
     return await emitCard(persona, lens, trigger, works, best.score);
@@ -80,7 +82,7 @@ async function buildBaseCellCard(
     let best: { trigger: Trigger; works: Awaited<ReturnType<typeof buildThematicLens>>; avg: number } | null = null;
     for (const q of queries) {
       const works = await buildThematicLens(q.query, { count: CARD_WORK_COUNT });
-      if (works.length < 6) continue;
+      if (works.length < MIN_WORKS) continue;
       const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
       if (avg < QUALITY_THRESHOLD) continue;
       if (!best || avg > best.avg) {
@@ -107,7 +109,7 @@ async function buildBaseCellCard(
         const a = anniversaries[i];
         const b = anniversaries[j];
         const works = await buildDialogueLens(a.name, b.name, { perArtist: 5 });
-        if (works.length < 6) continue;
+        if (works.length < MIN_WORKS) continue;
         const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
         if (avg < QUALITY_THRESHOLD) continue;
         if (!best || avg > best.avg) best = { a, b, works, avg };
@@ -116,7 +118,7 @@ async function buildBaseCellCard(
     if (!best) return null;
     const trigger: Trigger = {
       type: 'anniversary',
-      value: `${best.a.name} × ${best.b.name}`,
+      value: `${best.a.name} ${best.a.years}주년 × ${best.b.name} ${best.b.years}주년`,
       source: 'artists-dates.json',
     };
     return await emitCard(persona, lens, trigger, best.works, best.avg);
@@ -178,7 +180,7 @@ async function buildTrendCard(
   const top = matches[0];
   if (!top || top.similarity < TREND_MATCH_THRESHOLD) return null;
   const works = await buildThematicLens(term, { count: CARD_WORK_COUNT });
-  if (works.length < 6) return null;
+  if (works.length < MIN_WORKS) return null;
   const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
   if (avg < QUALITY_THRESHOLD) return null;
   const trigger: Trigger = {
