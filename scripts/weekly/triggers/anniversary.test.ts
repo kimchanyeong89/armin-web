@@ -3,9 +3,9 @@ import { anniversaryArtistsForWeek, isRoundAnniversary } from './anniversary';
 import { isoWeek } from '../../../src/lib/iso-week';
 
 describe('anniversary trigger', () => {
-  it('counts only round anniversaries: 10, 20, 25, 50, 60 and every 100', () => {
-    expect([10, 20, 25, 50, 60, 100, 200, 500].every(isRoundAnniversary)).toBe(true);
-    expect([1, 30, 75, 150, 162, 167, 557].some(isRoundAnniversary)).toBe(false);
+  it('counts only round anniversaries: 10, 20, 25, 50, 60, 150 and every 100', () => {
+    expect([10, 20, 25, 50, 60, 100, 150, 200, 500].every(isRoundAnniversary)).toBe(true);
+    expect([1, 30, 75, 162, 167, 250, 557].some(isRoundAnniversary)).toBe(false);
   });
 
   it('finds Munch (born 1863.12.12) in his 200th-birthday week, not in an ordinary year', async () => {

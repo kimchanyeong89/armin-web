@@ -192,6 +192,59 @@ async function buildTrendCard(
   return await emitCard(persona, 'thematic', trigger, works, avg);
 }
 
+/**
+ * A card for a keyword of the week (2026-10-02). The image search wants a picture
+ * description, not a bare word ("harvest" finds noise, "a painting of peasants
+ * harvesting wheat" finds harvests), so the caller passes one or more such
+ * descriptions; the best match of each work across them decides its order.
+ * Up to 12 works make the card and the next 12 go to `alternates` for the editor.
+ */
+export async function buildKeywordCard(
+  keyword: { ko: string; en: string },
+  queries: string[],
+  opts: { persona?: PersonaId; maxPerArtist?: number } = {},
+): Promise<WeeklyCard | null> {
+  const idx = await buildIndex();
+  const byRef = new Map(idx.all.map((w) => [w.artwork_ref, w]));
+  const best = new Map<string, number>();
+  for (const q of queries) {
+    for (const m of await matchByText(q, { topK: 80 })) {
+      if (m.similarity > (best.get(m.artwork_ref) ?? -1)) best.set(m.artwork_ref, m.similarity);
+    }
+  }
+  const perArtist = new Map<string, number>();
+  const seen = new Set<string>();
+  const picked: NonNullable<ReturnType<typeof byRef.get>>[] = [];
+  for (const [ref] of [...best].sort((a, b) => b[1] - a[1])) {
+    const w = byRef.get(ref);
+    if (!w || !w.image_url || !w.title || !w.artist) continue;
+    // The same work can sit in a collection twice (two records, one painting).
+    const key = `${w.artist}|${w.title}|${w.year}`.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const n = perArtist.get(w.artist) ?? 0;
+    if (n >= (opts.maxPerArtist ?? 2)) continue;
+    perArtist.set(w.artist, n + 1);
+    picked.push(w);
+    if (picked.length >= CARD_WORK_COUNT * 2) break;
+  }
+  if (picked.length < MIN_WORKS) return null;
+  const works = picked.slice(0, CARD_WORK_COUNT);
+  const personas = await loadPersonas();
+  const avgFor = (p: Persona) => works.reduce((s, w) => s + scoreWorkForPersona(w, p), 0) / works.length;
+  const persona = opts.persona
+    ? personas[opts.persona]
+    : PERSONA_IDS.map((id) => personas[id]).sort((a, b) => avgFor(b) - avgFor(a))[0];
+  const trigger: Trigger = { type: 'keyword', value: `${keyword.ko} / ${keyword.en}`, source: queries.join(' | ') };
+  const card = await emitCard(persona, 'thematic', trigger, works, avgFor(persona));
+  card.id = `${persona.id}__keyword__${slug(keyword.en)}`;
+  card.alternates = picked.slice(CARD_WORK_COUNT).map((w, i) => ({
+    position: i + 1, artwork_ref: w.artwork_ref, artist: w.artist, title: w.title, year: w.year,
+    image_url: w.image_url, source_collection: w.source_collection, source_url: w.source_url, lqip: w.lqip,
+  }));
+  return card;
+}
+
 export async function generateProposals(
   week: string,
   opts: { outDir?: string; trends?: boolean; force?: boolean } = {},

@@ -19,9 +19,9 @@ export interface AnniversaryMatch {
 /**
  * Only round anniversaries make a candidate: a birth or death date falls in almost
  * every week, a 50th or a 100th does not, and those suit a special edition.
- * Editorial rule (2026-10-02): 10, 20, 25, 50, 60, and every 100 (100, 200, 300…).
+ * Editorial rule (2026-10-02): 10, 20, 25, 50, 60, 150, and every 100 (100, 200, 300…).
  */
-const ROUND_YEARS = [10, 20, 25, 50, 60];
+const ROUND_YEARS = [10, 20, 25, 50, 60, 150];
 export function isRoundAnniversary(years: number): boolean {
   return ROUND_YEARS.includes(years) || (years > 0 && years % 100 === 0);
 }

@@ -2,7 +2,8 @@ export type PersonaId = 'yuna-choi' | 'marco-rinaldi' | 'anika-voss';
 
 export type LensId = 'biographical' | 'thematic' | 'dialogue';
 
-export type TriggerType = 'anniversary' | 'motif' | 'trend-google' | 'trend-naver';
+// 'keyword': a word for the week chosen by the editor (season, a date, a story), matched by image search.
+export type TriggerType = 'anniversary' | 'motif' | 'trend-google' | 'trend-naver' | 'keyword';
 
 export interface Trigger {
   type: TriggerType;

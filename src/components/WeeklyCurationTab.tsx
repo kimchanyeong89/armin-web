@@ -2,9 +2,9 @@
 // Sub-tab of the AI section alongside My Curation & Nearby Exhibition.
 
 import React, { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Lock, ArrowUpRight } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
 import {
   fetchCurrentCuration,
@@ -15,6 +15,8 @@ import {
 } from "../lib/weekly";
 import { fetchProposal, fetchPublished } from "../lib/weeklyStore";
 import { isoWeek } from "../lib/iso-week";
+import { artistPath } from "../redesign/artwork/WorkDetail";
+import { getArtistDisplayName, useArtistI18n } from "../i18n/artistLocalization";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
 import SaveCurationButton from "./SaveCurationButton";
@@ -72,6 +74,7 @@ export type WeeklyWork = {
   aspect: number;
   highlight?: boolean;
   imageUrl?: string;   // real artwork image (R2 URL). When absent, ArtworkPlaceholder renders gradient only.
+  sourceUrl?: string;  // the museum's own page for the work
 };
 
 export type WeeklyEdition = {
@@ -161,6 +164,7 @@ export function adaptPublishedToEdition(file: WeeklyPublishedFile): WeeklyEditio
       aspect: 1.2,
       highlight: w.role === 'hero',
       imageUrl: w.image_url,
+      sourceUrl: w.source_url,
     })),
   };
 }
@@ -473,7 +477,7 @@ function EditionHeader({
 
 function HeroWork({
   work, total, langKo, saved, onSave, onClick, onMuseumClick,
-  t, fg, fgMed, fgLow, fgFaint, divider,
+  fg, fgMed, fgFaint, divider,
 }: {
   work: WeeklyWork;
   total: number;
@@ -491,7 +495,6 @@ function HeroWork({
 }) {
   const [hov, setHov] = useState(false);
   const accent = '#D4A547';
-  const accentText = t ? '#8A6B1F' : '#D4A547';
 
   return (
     <div style={{ padding: '40px clamp(20px,4vw,56px) 0', maxWidth: 1080, margin: '0 auto' }}>
@@ -546,79 +549,105 @@ function HeroWork({
         </div>
 
         {/* Info panel */}
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div style={{ ...LABEL, fontSize: 10, color: accentText, marginBottom: 12 }}>
-            {work.artist} · {work.year}
-          </div>
-          <h2 style={{
-            ...HEADING,
-            fontSize: 'clamp(1.4rem,2vw,2.1rem)',
-            color: fg,
-            lineHeight: 1.06,
-            letterSpacing: '-0.028em',
-            marginBottom: 6,
-          }}>
-            {langKo ? work.titleKo : work.title}
-          </h2>
-          <p style={{ ...BODY, fontSize: 12, color: fgFaint, marginBottom: 20 }}>
-            {langKo ? work.title : work.titleKo}
-          </p>
-
-          <div style={{ height: '0.5px', background: divider, marginBottom: 18 }} />
-
-          <p style={{ ...BODY, fontSize: 13, color: fgMed, lineHeight: 1.9, marginBottom: 20 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+          <WorkRecord work={work} langKo={langKo} size="lg" onMuseumClick={onMuseumClick} fg={fg} fgMed={fgMed} fgFaint={fgFaint} />
+          <p style={{ ...BODY, fontSize: 14.5, color: fgMed, lineHeight: 1.85, margin: 0 }}>
             {langKo ? work.descriptionKo : work.description}
           </p>
-
-          <div style={{ height: '0.5px', background: divider, marginBottom: 18 }} />
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24 }}>
-            {([
-              ['Artist', `${work.artist} (${work.artistKo})`],
-              ['Year', work.year],
-              ['Medium', langKo ? work.mediumKo : work.medium],
-              ['Size', work.dimensions],
-              ['Museum', <MuseumLink
-                collectionId={work.museum}
-                suffix={work.museumCity || undefined}
-                onClick={onMuseumClick}
-                color={fgMed}
-                size={13}
-              />],
-            ] as [string, React.ReactNode][]).map(([k, v]) => (
-              <div key={k} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                <span style={{ ...LABEL, fontSize: 9, color: fgFaint, minWidth: 50, paddingTop: 2, flexShrink: 0 }}>{k}</span>
-                <span style={{ ...BODY, fontSize: 13, color: fgMed, lineHeight: 1.5 }}>{v}</span>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', gap: 8 }}>
-            <button onClick={(e) => { e.stopPropagation(); onSave(); }} style={{
-              flex: 1, padding: '11px 0',
-              border: `1px solid ${saved ? accent : divider}`,
-              background: 'transparent',
-              color: saved ? accentText : fgLow,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
-              cursor: 'pointer',
-              ...LABEL, fontSize: 10,
-              transition: 'border-color 0.15s, color 0.15s',
-            }}>
-              <LikeIcon liked={saved} size={13} />
-              {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
-            </button>
-            <button onClick={onClick} style={{
-              flex: 2, padding: '11px 0',
-              background: accent, color: '#0c0c0a',
-              border: 'none', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
-              ...LABEL, fontSize: 10,
-            }}>
-              View detail <ChevronRight size={12} color="#0c0c0a" />
-            </button>
-          </div>
+          <WorkActions langKo={langKo} saved={saved} onSave={onSave} onOpen={onClick} fgFaint={fgFaint} />
         </div>
       </div>
+    </div>
+  );
+}
+
+// ── Work record + actions (shared by the four work layouts) ─────────────────
+// Stated the way the artwork detail states a work (redesign/artwork/WorkDetail):
+// title, then the artist and the museum as links, the year on its own line,
+// no field labels and no all-caps mono. Actions are plain text, no boxes.
+
+function RecordLink({ children, to, href, onClick, fg }: {
+  children: React.ReactNode; to?: string; href?: string; onClick?: () => void; fg: string;
+}) {
+  const [hov, setHov] = useState(false);
+  const style: React.CSSProperties = {
+    color: hov ? '#D4A547' : fg, background: 'none', border: 'none', padding: 0, font: 'inherit', cursor: 'pointer',
+    textDecoration: 'underline', textUnderlineOffset: 3, textDecorationThickness: 1,
+    textDecorationColor: hov ? '#D4A547' : 'rgba(244,241,234,0.28)', transition: 'color .15s',
+  };
+  const events = {
+    onMouseEnter: () => setHov(true),
+    onMouseLeave: () => setHov(false),
+  };
+  if (to) return <Link to={to} style={style} {...events} onClick={(e) => e.stopPropagation()}>{children}</Link>;
+  if (href) return <a href={href} target="_blank" rel="noopener noreferrer" style={style} {...events} onClick={(e) => e.stopPropagation()}>{children}</a>;
+  return <button type="button" style={style} {...events} onClick={(e) => { e.stopPropagation(); onClick?.(); }}>{children}</button>;
+}
+
+function WorkRecord({ work, langKo, size, onMuseumClick, fg, fgMed, fgFaint }: {
+  work: WeeklyWork; langKo: boolean; size: 'lg' | 'md' | 'sm';
+  onMuseumClick?: (collectionId: string) => void;
+  fg: string; fgMed: string; fgFaint: string;
+}) {
+  const artistMap = useArtistI18n();
+  const artist = getArtistDisplayName(work.artist, langKo ? 'ko' : 'en', artistMap);
+  const titleSize = size === 'lg' ? 'clamp(1.35rem,1.9vw,1.85rem)' : size === 'md' ? 'clamp(1.08rem,1.45vw,1.32rem)' : 15;
+  const lineSize = size === 'sm' ? 12.5 : 14;
+  return (
+    <div>
+      <h3 style={{
+        ...HEADING, fontSize: titleSize, color: fg, lineHeight: 1.22, letterSpacing: '-0.018em', margin: 0,
+        ...(size === 'sm' ? { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const, overflow: 'hidden' } : {}),
+      }}>
+        {work.title}
+      </h3>
+      {work.artist && (
+        <p style={{ ...BODY, fontSize: lineSize, color: fgMed, margin: '7px 0 0' }}>
+          <RecordLink to={artistPath(work.artist)} fg={fgMed}>{artist}</RecordLink>
+        </p>
+      )}
+      {work.year && (
+        <p style={{ fontFamily: "'Space Mono', monospace", fontSize: size === 'sm' ? 10.5 : 11.5, letterSpacing: '0.03em', color: fgFaint, margin: '6px 0 0' }}>
+          {work.year}
+        </p>
+      )}
+      <p style={{ ...BODY, fontSize: lineSize - 1, color: fgFaint, margin: '4px 0 0', display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '2px 14px' }}>
+        {onMuseumClick
+          ? <RecordLink onClick={() => onMuseumClick(work.museum)} fg={fgFaint}>{museumDisplayName(work.museum)}</RecordLink>
+          : <span>{museumDisplayName(work.museum)}</span>}
+        {work.sourceUrl && size !== 'sm' && (
+          <RecordLink href={work.sourceUrl} fg={fgFaint}>
+            {langKo ? '원본 페이지' : 'Museum page'} <ArrowUpRight size={11} strokeWidth={2} style={{ verticalAlign: '-1px' }} />
+          </RecordLink>
+        )}
+      </p>
+    </div>
+  );
+}
+
+function WorkActions({ langKo, saved, onSave, onOpen, fgFaint, size = 13 }: {
+  langKo: boolean; saved: boolean; onSave: () => void; onOpen: () => void; fgFaint: string; size?: number;
+}) {
+  const btn = (on: boolean): React.CSSProperties => ({
+    ...BODY, fontSize: size - 0.5, background: 'none', border: 'none', padding: 0, cursor: 'pointer',
+    color: on ? '#D4A547' : fgFaint, display: 'inline-flex', alignItems: 'center', gap: 6, transition: 'color .15s',
+  });
+  const hover = (e: React.MouseEvent<HTMLButtonElement>, on: boolean, keep: boolean) => {
+    e.currentTarget.style.color = on || keep ? '#D4A547' : fgFaint;
+  };
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
+      <button type="button" style={btn(saved)}
+        onClick={(e) => { e.stopPropagation(); onSave(); }}
+        onMouseEnter={(e) => hover(e, true, saved)} onMouseLeave={(e) => hover(e, false, saved)}>
+        <LikeIcon liked={saved} size={size} />
+        {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '저장' : 'Save')}
+      </button>
+      <button type="button" style={btn(false)}
+        onClick={(e) => { e.stopPropagation(); onOpen(); }}
+        onMouseEnter={(e) => hover(e, true, false)} onMouseLeave={(e) => hover(e, false, false)}>
+        {langKo ? '크게 보기' : 'View'} <ChevronRight size={size - 1} />
+      </button>
     </div>
   );
 }
@@ -627,7 +656,7 @@ function HeroWork({
 
 function WorkRow({
   work, index, langKo, saved, onSave, onClick, onMuseumClick,
-  t, fg, fgMed, fgLow, fgFaint, divider,
+  fg, fgMed, fgFaint, divider,
 }: {
   work: WeeklyWork;
   index: number;
@@ -645,7 +674,6 @@ function WorkRow({
 }) {
   const [hov, setHov] = useState(false);
   const accent = '#D4A547';
-  const accentText = t ? '#8A6B1F' : '#D4A547';
   const isEven = index % 2 === 0;
 
   return (
@@ -686,77 +714,12 @@ function WorkRow({
       </div>
 
       {/* Info */}
-      <div style={{ order: isEven ? 1 : 0, display: 'flex', flexDirection: 'column' }}>
-        <div style={{ ...LABEL, fontSize: 9, color: accentText, marginBottom: 10 }}>
-          {work.artist} · {work.year}
-        </div>
-        <h3 style={{
-          ...HEADING,
-          fontSize: 'clamp(1rem,1.6vw,1.5rem)',
-          color: fg,
-          lineHeight: 1.1,
-          letterSpacing: '-0.022em',
-          marginBottom: 4,
-        }}>
-          {langKo ? work.titleKo : work.title}
-        </h3>
-        <p style={{ ...BODY, fontSize: 12, color: fgFaint, marginBottom: 18 }}>
-          {langKo ? work.title : work.titleKo}
-        </p>
-
-        <p style={{
-          ...BODY,
-          fontSize: 'clamp(12px,1.1vw,14px)',
-          color: fgMed,
-          lineHeight: 1.85,
-          marginBottom: 20,
-        }}>
+      <div style={{ order: isEven ? 1 : 0, display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <WorkRecord work={work} langKo={langKo} size="md" onMuseumClick={onMuseumClick} fg={fg} fgMed={fgMed} fgFaint={fgFaint} />
+        <p style={{ ...BODY, fontSize: 'clamp(13.5px,1.1vw,14.5px)', color: fgMed, lineHeight: 1.85, margin: 0 }}>
           {langKo ? work.descriptionKo : work.description}
         </p>
-
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginBottom: 16 }}>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{langKo ? work.mediumKo : work.medium}</span>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{work.dimensions}</span>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>
-            <MuseumLink
-              collectionId={work.museum}
-              suffix={work.museumCity || undefined}
-              onClick={onMuseumClick}
-              color={fgFaint}
-              size={9}
-            />
-          </span>
-        </div>
-
-        <div style={{ height: '0.5px', background: divider, marginBottom: 14 }} />
-
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={(e) => { e.stopPropagation(); onSave(); }} style={{
-            padding: '7px 14px',
-            border: `1px solid ${saved ? accent : divider}`,
-            background: 'transparent',
-            color: saved ? accentText : fgFaint,
-            display: 'flex', alignItems: 'center', gap: 6,
-            cursor: 'pointer',
-            ...LABEL, fontSize: 9,
-            transition: 'border-color 0.15s, color 0.15s',
-          }}>
-            <LikeIcon liked={saved} size={11} />
-            {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
-          </button>
-          <button onClick={(e) => { e.stopPropagation(); onClick(); }} style={{
-            padding: '7px 14px',
-            border: `1px solid ${hov ? accent : divider}`,
-            background: 'transparent',
-            color: hov ? accentText : fgFaint,
-            display: 'flex', alignItems: 'center', gap: 6,
-            cursor: 'pointer',
-            ...LABEL, fontSize: 9,
-            transition: 'border-color 0.15s, color 0.15s',
-          }}>
-            View detail <ChevronRight size={10} color="currentColor" />
-          </button>
-        </div>
+        <WorkActions langKo={langKo} saved={saved} onSave={onSave} onOpen={onClick} fgFaint={fgFaint} />
       </div>
     </article>
   );
@@ -1104,7 +1067,7 @@ function MobileEditionHeader({
 
 function MobileHeroWork({
   work, total, langKo, saved, onSave, onClick, onMuseumClick,
-  t, fg, fgMed, fgLow, fgFaint, divider,
+  fg, fgMed, fgFaint, divider,
 }: {
   work: WeeklyWork; total: number; langKo: boolean;
   saved: boolean; onSave: () => void; onClick: () => void;
@@ -1112,7 +1075,6 @@ function MobileHeroWork({
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
   const accent = '#D4A547';
-  const accentText = t ? '#8A6B1F' : '#D4A547';
 
   return (
     <div style={{ padding: '14px 16px 0' }}>
@@ -1141,53 +1103,12 @@ function MobileHeroWork({
       </div>
 
       {/* Info */}
-      <div style={{ paddingTop: 12, paddingBottom: 14 }}>
-        <div style={{ ...LABEL, fontSize: 10, color: accentText, marginBottom: 6 }}>
-          {work.artist} · {work.year}
-        </div>
-        <h2 style={{ ...HEADING, fontSize: 18, color: fg, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: 4 }}>
-          {langKo ? work.titleKo : work.title}
-        </h2>
-        <p style={{ ...BODY, fontSize: 12, color: fgFaint, marginBottom: 10 }}>
-          {langKo ? work.title : work.titleKo}
-        </p>
-        <p style={{ ...BODY, fontSize: 13, color: fgMed, lineHeight: 1.75, marginBottom: 12 }}>
+      <div style={{ paddingTop: 14, paddingBottom: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
+        <WorkRecord work={work} langKo={langKo} size="md" onMuseumClick={onMuseumClick} fg={fg} fgMed={fgMed} fgFaint={fgFaint} />
+        <p style={{ ...BODY, fontSize: 14, color: fgMed, lineHeight: 1.8, margin: 0 }}>
           {langKo ? work.descriptionKo : work.description}
         </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', marginBottom: 14 }}>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>
-            <MuseumLink
-              collectionId={work.museum}
-              onClick={onMuseumClick}
-              color={fgFaint}
-              size={9}
-            />
-          </span>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{work.museumCity}</span>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{work.dimensions}</span>
-        </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={onSave} style={{
-            flex: 1, padding: '9px 0',
-            border: `1px solid ${saved ? accent : divider}`,
-            background: 'transparent', cursor: 'pointer',
-            color: saved ? accentText : fgLow,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-            ...LABEL, fontSize: 10,
-          }}>
-            <LikeIcon liked={saved} size={13} />
-            {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
-          </button>
-          <button onClick={onClick} style={{
-            flex: 2, padding: '9px 0',
-            background: accent, color: '#0c0c0a',
-            border: 'none', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-            ...LABEL, fontSize: 10,
-          }}>
-            View detail <ChevronRight size={11} color="#0c0c0a" />
-          </button>
-        </div>
+        <WorkActions langKo={langKo} saved={saved} onSave={onSave} onOpen={onClick} fgFaint={fgFaint} />
       </div>
     </div>
   );
@@ -1197,7 +1118,7 @@ function MobileHeroWork({
 
 function MobileWorkCard({
   work, index, langKo, saved, onSave, onClick, onMuseumClick,
-  t, fg, fgMed, fgLow, fgFaint, divider,
+  t, fg, fgMed, fgFaint, divider,
 }: {
   work: WeeklyWork; index: number; langKo: boolean;
   saved: boolean; onSave: () => void; onClick: () => void;
@@ -1205,8 +1126,6 @@ function MobileWorkCard({
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
   const [pressed, setPressed] = useState(false);
-  const accent = '#D4A547';
-  const accentText = t ? '#8A6B1F' : '#D4A547';
   const pressedBg = t ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.04)';
 
   return (
@@ -1239,61 +1158,15 @@ function MobileWorkCard({
         </div>
 
         {/* Info */}
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ ...LABEL, fontSize: 9, color: accentText, marginBottom: 4 }}>
-            {work.artist} · {work.year}
-          </div>
-          <h3 style={{
-            ...HEADING, fontSize: 14, color: fg, lineHeight: 1.2, letterSpacing: '-0.015em',
-            marginBottom: 3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-          }}>
-            {langKo ? work.titleKo : work.title}
-          </h3>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <WorkRecord work={work} langKo={langKo} size="sm" onMuseumClick={onMuseumClick} fg={fg} fgMed={fgMed} fgFaint={fgFaint} />
           <p style={{
-            ...BODY, fontSize: 11, color: fgFaint, marginBottom: 7,
-            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-          }}>
-            {langKo ? work.title : work.titleKo}
-          </p>
-          <p style={{
-            ...BODY, fontSize: 12, color: fgMed, lineHeight: 1.65,
-            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
-            marginBottom: 8,
+            ...BODY, fontSize: 13, color: fgMed, lineHeight: 1.7, margin: 0,
+            display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
           }}>
             {langKo ? work.descriptionKo : work.description}
           </p>
-          <div style={{ ...LABEL, fontSize: 9, color: fgFaint, marginBottom: 9 }}>
-            <MuseumLink
-              collectionId={work.museum}
-              onClick={onMuseumClick}
-              color={fgFaint}
-              size={9}
-            />
-            {work.museumCity ? ` · ${work.museumCity}` : ''}
-          </div>
-          <div style={{ display: 'flex', gap: 6 }}>
-            <button onClick={(e) => { e.stopPropagation(); onSave(); }} style={{
-              padding: '6px 10px',
-              border: `1px solid ${saved ? accent : divider}`,
-              background: 'transparent', cursor: 'pointer',
-              color: saved ? accentText : fgFaint,
-              display: 'flex', alignItems: 'center', gap: 5,
-              ...LABEL, fontSize: 9,
-            }}>
-              <LikeIcon liked={saved} size={11} />
-              {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
-            </button>
-            <button onClick={onClick} style={{
-              padding: '6px 10px',
-              border: `1px solid ${divider}`,
-              background: 'transparent', cursor: 'pointer',
-              color: fgFaint,
-              display: 'flex', alignItems: 'center', gap: 5,
-              ...LABEL, fontSize: 9,
-            }}>
-              Detail <ChevronRight size={10} color="currentColor" />
-            </button>
-          </div>
+          <WorkActions langKo={langKo} saved={saved} onSave={onSave} onOpen={onClick} fgFaint={fgFaint} size={12} />
         </div>
       </div>
     </article>
