@@ -191,7 +191,10 @@ export default function Feed({ posts, loading, ko, language, isLight = false, st
                               {label(cat)}
                               {hot && <em className="ca-hot"><TrendingUp size={10} strokeWidth={2} />{ko ? "인기" : "HOT"}</em>}
                             </span>
-                            <span className="ca-row__title">{post.title}</span>
+                            <span className="ca-row__title">
+                              <span className="ca-row__tt">{post.title}</span>
+                              {post.commentCount > 0 && <span className="ca-row__cc" aria-label={ko ? `댓글 ${post.commentCount}개` : `${post.commentCount} comments`}>[{post.commentCount}]</span>}
+                            </span>
                             <span className="ca-row__ex">{excerpts.get(post.id) || (ko ? "내용 미리보기가 없습니다." : "No preview available.")}</span>
                             <span className="ca-row__meta">{name} · {ago(post.createdAt, ko)}</span>
                           </span>

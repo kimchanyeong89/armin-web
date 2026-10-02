@@ -153,11 +153,11 @@
 /* a playlist: its cover with softened corners, as the exhibition and museum
    cards are cut, and its name under it */
 .mp-list { position: relative; }
-.mp .mp-list__open { display: grid; gap: 5px; text-align: left; }
+.mp .mp-list__open { display: grid; justify-items: center; gap: 5px; text-align: center; }
 .mp-list__shot { display: block; width: 60px; aspect-ratio: 1; overflow: hidden; border-radius: 7px; background: var(--mp-rule); }
 .mp-list__shot > * { filter: saturate(.72); transition: filter .3s ease; }
 .mp-list:hover .mp-list__shot > *, .mp-list.is-open .mp-list__shot > * { filter: none; }
-.mp-list__text { display: grid; gap: 1px; width: 60px; min-width: 0; }
+.mp-list__text { display: grid; justify-items: center; gap: 1px; width: 60px; min-width: 0; text-align: center; }
 .mp-list__text b { font-family: var(--mp-display); font-size: 11px; font-weight: 600; color: var(--mp-ink); white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
 .mp-list:hover .mp-list__text b, .mp-list.is-open .mp-list__text b { color: var(--mp-gold); }
@@ -237,12 +237,18 @@
    community, not another playlist), its name on two lines */
 .mp-list--publish .mp-list__shot { display: grid; place-items: center; background: rgba(212,165,71,.12); }
 .mp-list--publish .mp-list__shot i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
-  border: 1px solid var(--mp-gold); font: 400 15px/1 var(--mp-mono); font-style: normal; color: var(--mp-gold);
+  border: 1px solid var(--mp-gold); font-style: normal; color: var(--mp-gold);
   transition: background .16s ease, color .16s ease; }
 .mp-list--publish:hover .mp-list__shot i { background: var(--mp-gold); color: var(--mp-ground); }
 /* the arrow nudges outward twice when the row appears, to say "this sends it out" */
-@keyframes mp-share-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
-.mp-list--publish .mp-list__shot i { animation: mp-share-nudge .7s ease-in-out .9s 2; }
-.mp-list--publish:hover .mp-list__shot i { transform: translateX(3px); animation: none; transition: transform .2s ease, background .16s ease, color .16s ease; }
-@media (prefers-reduced-motion: reduce) { .mp-list--publish .mp-list__shot i { animation: none; } }
+@keyframes mp-share-nudge { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(2px, -2px); } }
+.mp-list--publish .mp-list__shot i svg { display: block; transition: transform .2s ease; animation: mp-share-nudge .7s ease-in-out .9s 2; }
+.mp-list--publish:hover .mp-list__shot i svg { transform: translate(1.5px, -1.5px); }
+.mp-list--publish:hover .mp-list__shot i { animation: none; transition: transform .2s ease, background .16s ease, color .16s ease; }
+@media (prefers-reduced-motion: reduce) { .mp-list--publish .mp-list__shot i svg { animation: none; } }
 .mp-list--publish .mp-list__text b { white-space: normal; line-height: 1.25; color: var(--mp-gold); }
+
+/* saved artists: portraits, paintings and photographs mixed - one tone for all of them,
+   their colour back under a real pointer */
+.mp-saved--artist img { filter: grayscale(1) contrast(1.06); transition: filter .35s ease; }
+@media (hover: hover) { .mp-saved--artist:hover img { filter: none; } }

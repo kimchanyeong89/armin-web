@@ -1869,8 +1869,8 @@ const MyPage: React.FC = () => {
       { id: "exhibitions" as const, ko: "전시", en: "Exhibitions", icon: Calendar, count: allExhibitions.length },
       { id: "museums" as const, ko: "미술관", en: "Museums", icon: MapPin, count: likedMuseums.length },
       { id: "artists" as const, ko: "작가", en: "Artists", icon: User, count: likedArtists.length },
-      { id: "playlists" as const, ko: "플레이리스트", en: "Playlists", icon: ListMusic, count: playlists.length },
-      { id: "curations" as const, ko: "큐레이션", en: "Curations", icon: Bookmark, count: savedCurations.length },
+      { id: "playlists" as const, ko: "큐레이션", en: "Curations", icon: ListMusic, count: playlists.length },
+      { id: "curations" as const, ko: "주간 전시", en: "Weekly", icon: Bookmark, count: savedCurations.length },
     ],
     [likedArtworks.length, allExhibitions.length, likedMuseums.length, likedArtists.length, playlists.length, savedCurations.length],
   );
@@ -2237,7 +2237,7 @@ const MyPage: React.FC = () => {
       if (standing) {
         kicker = t({ ko: "상설", en: "PERMANENT" });
         kickerColor = lime;
-        title = t({ ko: "소장품", en: "Collection" });
+        title = t({ ko: "상설 컬렉션", en: "Permanent Collection" });
         subtitle = house;
         sources = [collectionCover(collectionCovers, standing.collectionFile), rawItem.image, museum?.representativeImage];
       } else {
@@ -2275,6 +2275,7 @@ const MyPage: React.FC = () => {
     return (
       <div
         key={`${viewMode}-${itemId}-${index}`}
+        className={artistCard ? "mp-saved mp-saved--artist" : "mp-saved"}
         onClick={() => openItem(rawItem, viewMode)}
         style={{
           position: "relative",
@@ -2402,7 +2403,7 @@ const MyPage: React.FC = () => {
       if (activePlaylist?.id === id) setActivePlaylist(null);
     } catch (error) {
       console.error("Error deleting playlist", error);
-      alert(t({ ko: "플레이리스트를 삭제하지 못했습니다.", en: "Could not delete the playlist." }));
+      alert(t({ ko: "큐레이션을 삭제하지 못했습니다.", en: "Could not delete the curation." }));
     } finally {
       setPlaylistDelete(null);
     }
@@ -2627,7 +2628,7 @@ const MyPage: React.FC = () => {
             onClick={() => document.getElementById("mp-lists")?.scrollIntoView({ behavior: "smooth", block: "start" })}
           >
             <i className="mp-dot" aria-hidden="true" />
-            <span>{t({ ko: "플레이리스트", en: "My Playlists" })}</span>
+            <span>{t({ ko: "큐레이션", en: "My Curations" })}</span>
             <b>{figure(playlists.length)}</b>
             <u aria-hidden="true" />
             <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
@@ -2649,7 +2650,7 @@ const MyPage: React.FC = () => {
             it in the grid; pressing it again closes it. */}
         <section className="mp-lists" id="mp-lists">
           {playlists.length === 0 && (
-            <p className="mp-lists__empty">{t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}</p>
+            <p className="mp-lists__empty">{t({ ko: "아직 큐레이션이 없습니다.", en: "No curations yet." })}</p>
           )}
           {(playlists.length > 0 || (SHOW_PUBLIC_COLLECTIONS && user)) && (
             <ul>
@@ -2685,7 +2686,15 @@ const MyPage: React.FC = () => {
               {SHOW_PUBLIC_COLLECTIONS && user && (
                 <li className="mp-list mp-list--publish">
                   <button type="button" className="mp-list__open" onClick={() => setPublishing(true)}>
-                    <span className="mp-list__shot" aria-hidden="true"><i>→</i></span>
+                    <span className="mp-list__shot" aria-hidden="true">
+                      {/* sending out: a cut-corner frame left open at its upper right, an arrow leaving through it */}
+                      <i>
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M11 5H7.5L5 7.5V19h11.5l2.5-2.5V13" />
+                          <path d="M13 11l7-7M14.5 4H20v5.5" />
+                        </svg>
+                      </i>
+                    </span>
                     <span className="mp-list__text"><b>{t({ ko: "큐레이션 공유하기", en: "Share as Curation" })}</b></span>
                   </button>
                 </li>
@@ -2782,7 +2791,7 @@ const MyPage: React.FC = () => {
       {viewMode === "curations" ? (
         savedCurations.length === 0 ? (
           <div style={{ padding: "48px 20px 90px", textAlign: "center", color: subText }}>
-            {t({ ko: "저장한 큐레이션이 없습니다.", en: "No curations saved yet." })}
+            {t({ ko: "저장한 주간 전시가 없습니다.", en: "No weekly picks saved yet." })}
           </div>
         ) : (
           <div
@@ -2854,7 +2863,7 @@ const MyPage: React.FC = () => {
                     >
                       {c.type === "special"
                         ? t({ ko: "스페셜", en: "Special" })
-                        : t({ ko: "주간 큐레이션", en: "Weekly" })}
+                        : t({ ko: "주간 전시", en: "Weekly" })}
                       {" · "}
                       {personaName}
                     </div>
@@ -2900,7 +2909,7 @@ const MyPage: React.FC = () => {
                       title={title}
                       subtitle={c.type === "special"
                         ? t({ ko: "스페셜 큐레이션", en: "Special curation" })
-                        : t({ ko: "주간 큐레이션", en: "Weekly curation" })}
+                        : t({ ko: "주간 전시", en: "Weekly" })}
                       size={14}
                       color={subText}
                     />
@@ -2913,7 +2922,7 @@ const MyPage: React.FC = () => {
       ) : viewMode === "playlists" && !activePlaylist ? (
         sortedItems.length === 0 ? (
           <div style={{ padding: "48px 20px 90px", textAlign: "center", color: subText }}>
-            {t({ ko: "아직 플레이리스트가 없습니다.", en: "No playlists yet." })}
+            {t({ ko: "아직 큐레이션이 없습니다.", en: "No curations yet." })}
           </div>
         ) : (
           /* the same grid as the exhibition and museum cards, in the same sort */

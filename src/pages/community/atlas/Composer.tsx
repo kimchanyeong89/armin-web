@@ -46,6 +46,15 @@ interface Found {
 
 const SUBJECTS: CommunityHeaderType[] = ["all", "museum", "artist", "artwork", "exhibition"];
 
+const today = () => new Date().toISOString().slice(0, 10);
+/** "2026.06.19 – 10.11": the end drops its year when it is the same year */
+function showPeriod(start?: string, end?: string): string {
+  const d = (v?: string) => String(v || "").slice(0, 10).replace(/-/g, ".");
+  const [s, e] = [d(start), d(end)];
+  if (!s && !e) return "";
+  return `${s || "?"} – ${e && s && e.slice(0, 4) === s.slice(0, 4) ? e.slice(5) : e || "?"}`;
+}
+
 /* Museums and their permanent exhibitions, from the app's own data — the live
    header search reads the same list. Korean names are matched as well, so a
    museum can be found by the name people type here. */
@@ -62,6 +71,17 @@ function findLocal(q: string, ko: boolean, kinds: HeaderType[] | null): Found[] 
       });
     }
     if (!kinds || kinds.includes("exhibition")) {
+      /* shows on now (the morning's live lists): their poster, house and dates go with them */
+      const house = (ko && (m.name_ko || m.nameKo)) || m.name;
+      for (const e of m.temporaryExhibitions || []) {
+        const title = String(e.title || e.name || "");
+        if (!title.toLowerCase().includes(needle) || (e.endDate && String(e.endDate) < today())) continue;
+        const period = showPeriod(e.startDate, e.endDate);
+        out.push({
+          key: `show-${m.id}-${e.id || title}`, id: String(e.id || title), type: "exhibition", name: title, image: e.coverImage || e.image,
+          sub: [house, period].filter(Boolean).join(" · "), museum: house, period,
+        });
+      }
       for (const e of m.permanentExhibitions || []) {
         const title = String(e.name || e.title || "");
         if (!title.toLowerCase().includes(needle)) continue;
@@ -253,9 +273,11 @@ export default function Composer({ ko, onPublish, onCancel }: {
     if (!ed || !mention) return;
     const fig = document.createElement("figure");
     fig.contentEditable = "false";
+    /* an exhibition is a compact card (poster, name, house, dates); a work is shown whole */
+    fig.dataset.kind = f.type;
     if (f.image) {
       const img = document.createElement("img");
-      img.src = getOptimizedImageUrl(f.image, 900);
+      img.src = getOptimizedImageUrl(f.image, f.type === "exhibition" ? 320 : 900);
       img.alt = f.name;
       fig.append(img);
     }

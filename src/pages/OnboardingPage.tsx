@@ -206,6 +206,11 @@ const OnboardingPage: React.FC = () => {
   const [firstTime, setFirstTime] = useState(false);
   const [tasteCount, setTasteCount] = useState(0);
   const [accountOpen, setAccountOpen] = useState(false);
+  /* a member editing their profile lands on one screen of what they can change:
+     the name saves on its own; only "change the picture" walks the date, artist and crop steps */
+  const [hub, setHub] = useState(false);
+  const [savedName, setSavedName] = useState("");
+  const [savingName, setSavingName] = useState(false);
   const { language } = useLanguage();
   /* the Korean names of artists, for a search typed in Hangul */
   const artistKo = useArtistI18n();
@@ -329,6 +334,8 @@ const OnboardingPage: React.FC = () => {
         /* a member who finished the profile but left during taste goes straight back to it */
         const onboarded = !!data.isOnboarded;
         setFirstTime(!onboarded);
+        setSavedName(String(data.nickname || user.displayName || ""));
+        if (onboarded) setHub(true);
         if (!onboarded && data.birthDate && data.photoURL) setStep(3);
       };
       loadUser();
@@ -653,6 +660,18 @@ const OnboardingPage: React.FC = () => {
     } catch (err: any) { alert("저장 실패: " + err.message); } finally { setLoading(false); }
   };
 
+  const saveName = async () => {
+    const name = nickname.trim();
+    if (!user || !name || name === savedName) return;
+    setSavingName(true);
+    try {
+      await setDoc(doc(getFirestore(), "users", user.uid), { nickname: name, displayName: name, updatedAt: new Date() }, { merge: true });
+      try { await updateProfile(user, { displayName: name }); } catch (e) { }
+      window.dispatchEvent(new CustomEvent('profile-updated'));
+      navigate('/mypage', { replace: true });
+    } catch (err: any) { alert("저장 실패: " + err.message); } finally { setSavingName(false); }
+  };
+
   const finishOnboarding = async () => {
     if (!user) return;
     try {
@@ -779,6 +798,68 @@ const OnboardingPage: React.FC = () => {
   ][step];
   const photoOf = (artist: any) => thumbUrl(artist?.artworks?.[0] || artist?.image || '', 120);
 
+  if (hub && !firstTime) {
+    const photo = initialUserPref.current?.photoURL || user?.photoURL || '';
+    return (
+      <div className="ob ob--hub">
+        <div className="ob-top">
+          <span className="ob-top__mark" aria-hidden="true" />
+          <span />
+          <button type="button" className="ob-top__mark" onClick={() => navigate('/mypage')} aria-label="닫기">×</button>
+        </div>
+        <div className="ob-col ob-hub">
+          <section className="ob-statement">
+            <p className="ob-statement__meta">COLLY · 계정 수정</p>
+            <h1>{'바꿀 것만\n고치세요.'}</h1>
+          </section>
+
+          <div className="ob-me">
+            {photo ? <img src={thumbUrl(photo, 128)} alt="" loading="lazy" decoding="async" /> : <span className="ob-hub__nophoto" aria-hidden="true" />}
+            <label>
+              <span>이름</span>
+              <input
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value.slice(0, 24))}
+                placeholder={user?.displayName || '이름'}
+                maxLength={24}
+                autoComplete="nickname"
+              />
+            </label>
+          </div>
+
+          <dl className="ob-hub__facts">
+            <div><dt>생일</dt><dd>{birthDateInput || '—'}</dd></div>
+            <div><dt>이메일</dt><dd>{user?.email || '—'}</dd></div>
+          </dl>
+
+          <button type="button" className="ob-hub__picture" onClick={() => { setHub(false); setStep(0); }}>
+            <span>
+              <b>프로필 사진 바꾸기</b>
+              <small>생일과 작가를 다시 골라 새 그림으로 바꿉니다</small>
+            </span>
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <div className="ob-account">
+            <button type="button" className="ob-account__toggle" aria-expanded={accountOpen} onClick={() => setAccountOpen((v) => !v)}>
+              계정 관리 <span aria-hidden="true">{accountOpen ? "▴" : "▾"}</span>
+            </button>
+            {accountOpen && <DeleteAccountSection />}
+          </div>
+        </div>
+        <nav className="ob-nav" aria-label="저장">
+          <button type="button" className="ob-nav__btn ob-nav__btn--back" onClick={() => navigate('/mypage')}>
+            <span aria-hidden="true">←</span>돌아가기
+          </button>
+          <button type="button" className="ob-nav__btn ob-nav__btn--next" onClick={() => void saveName()}
+            disabled={savingName || !nickname.trim() || nickname.trim() === savedName}>
+            {savingName ? '저장 중' : '이름 저장'}<span aria-hidden="true">→</span>
+          </button>
+        </nav>
+      </div>
+    );
+  }
+
   return (
     <div className="ob">
       <div className="ob-top">
@@ -823,15 +904,6 @@ const OnboardingPage: React.FC = () => {
               </div>
             )}
 
-            {/* editing an existing profile: account settings, folded away on the first screen, so nothing has to load first */}
-            {!firstTime && (
-              <div className="ob-account">
-                <button type="button" className="ob-account__toggle" aria-expanded={accountOpen} onClick={() => setAccountOpen((v) => !v)}>
-                  계정 관리 <span aria-hidden="true">{accountOpen ? "▴" : "▾"}</span>
-                </button>
-                {accountOpen && <DeleteAccountSection />}
-              </div>
-            )}
 
           </div>
         </div>
@@ -1005,7 +1077,8 @@ const OnboardingPage: React.FC = () => {
 
       {/* back and on, in the same place on every step: back at the left, on at the right */}
       <nav className="ob-nav" aria-label="단계 이동">
-        <button type="button" className="ob-nav__btn ob-nav__btn--back" onClick={() => setStep(step - 1)} hidden={step === 0}>
+        <button type="button" className="ob-nav__btn ob-nav__btn--back"
+          onClick={() => (step === 0 ? setHub(true) : setStep(step - 1))} hidden={step === 0 && firstTime}>
           <span aria-hidden="true">←</span>이전
         </button>
         <button type="button" className="ob-nav__btn ob-nav__btn--next" onClick={nav.go} disabled={nav.disabled}>

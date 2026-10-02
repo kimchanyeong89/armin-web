@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
@@ -43,6 +44,8 @@ interface Comment {
   authorPhotoURL?: string | null;
   authorRank?: string;
   createdAt?: any;
+  parentId?: string | null;
+  editedAt?: any;
 }
 
 function toDate(value: any): Date | null {
@@ -211,7 +214,7 @@ function AtlasPostPage() {
     }
   };
 
-  const onComment = async (text: string): Promise<boolean> => {
+  const onComment = async (text: string, parentId?: string): Promise<boolean> => {
     if (!user || !id || isSample) return false;
     if (hasBannedWords(text)) {
       window.alert(t(BANNED_NOTICE));
@@ -225,17 +228,21 @@ function AtlasPostPage() {
       authorId: user.uid,
       ...author,
       createdAt: new Date(),
+      ...(parentId ? { parentId } : {}),
     };
     setComments((prev) => [optimistic, ...prev]);
     setPost((prev: any) => (prev ? { ...prev, commentCount: Number(prev.commentCount || 0) + 1 } : prev));
     try {
-      await addDoc(collection(db, "community_posts", id, "comments"), {
+      const ref = await addDoc(collection(db, "community_posts", id, "comments"), {
         text,
         authorId: user.uid,
         ...author,
         createdAt: serverTimestamp(),
+        ...(parentId ? { parentId } : {}),
       });
       await updateDoc(doc(db, "community_posts", id), { commentCount: increment(1) });
+      /* a one-off read gets no live update: the optimistic copy takes its real id */
+      setComments((prev) => prev.map((c) => (c.id === optimistic.id ? { ...c, id: ref.id } : c)));
       return true;
     } catch (error) {
       console.error("Error adding comment", error);
@@ -244,6 +251,37 @@ function AtlasPostPage() {
       return false;
     } finally {
       setSending(false);
+    }
+  };
+
+  /* the writer's own comment: its words change in place (rules: author, text and editedAt only) */
+  const onEditComment = async (commentId: string, text: string): Promise<boolean> => {
+    if (!user || !id) return false;
+    if (hasBannedWords(text)) {
+      window.alert(t(BANNED_NOTICE));
+      return false;
+    }
+    try {
+      await updateDoc(doc(db, "community_posts", id, "comments", commentId), { text, editedAt: serverTimestamp() });
+      setComments((prev) => prev.map((c) => (c.id === commentId ? { ...c, text, editedAt: new Date() } : c)));
+      return true;
+    } catch (error) {
+      console.error("Error editing comment", error);
+      window.alert(t({ ko: "수정하지 못했습니다.", en: "Couldn't save the change." }));
+      return false;
+    }
+  };
+  const onDeleteComment = async (c: { id: string }) => {
+    if (!user || !id) return;
+    if (!window.confirm(t({ ko: "이 댓글을 삭제할까요?", en: "Delete this comment?" }))) return;
+    try {
+      await deleteDoc(doc(db, "community_posts", id, "comments", c.id));
+      await updateDoc(doc(db, "community_posts", id), { commentCount: increment(-1) });
+      setComments((prev) => prev.filter((x) => x.id !== c.id));
+      setPost((prev: any) => (prev ? { ...prev, commentCount: Math.max(0, Number(prev.commentCount || 0) - 1) } : prev));
+    } catch (error) {
+      console.error("Error deleting comment", error);
+      window.alert(t({ ko: "삭제하지 못했습니다.", en: "Couldn't delete the comment." }));
     }
   };
 
@@ -299,7 +337,10 @@ function AtlasPostPage() {
           photo: c.authorPhotoURL,
           rank: c.authorRank,
         });
-        return { id: c.id, authorId: c.authorId, name: by.name, photo: by.photo, crop: by.crop, rank: by.rank, text: c.text, at: toDate(c.createdAt) };
+        return {
+          id: c.id, authorId: c.authorId, name: by.name, photo: by.photo, crop: by.crop, rank: by.rank, text: c.text,
+          at: toDate(c.createdAt), parentId: c.parentId ?? null, edited: !!c.editedAt,
+        };
       })}
       commentCount={Number(post.commentCount || 0)}
       liked={liked}
@@ -318,8 +359,11 @@ function AtlasPostPage() {
         ? <ModerationMenu targetType="post" targetId={id} targetPath={`community_posts/${id}`} authorId={post.authorId} ko={ko} />
         : undefined}
       commentMenu={!isSample && id
-        ? (c) => <ModerationMenu targetType="comment" targetId={c.id} targetPath={`community_posts/${id}/comments/${c.id}`} authorId={c.authorId} ko={ko} />
+        ? (c, own) => <ModerationMenu targetType="comment" targetId={c.id} targetPath={`community_posts/${id}/comments/${c.id}`} authorId={c.authorId} ko={ko} own={own} />
         : undefined}
+      myUid={user?.uid ?? null}
+      onEditComment={onEditComment}
+      onDeleteComment={onDeleteComment}
     />,
   );
 }

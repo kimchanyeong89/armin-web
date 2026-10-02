@@ -170,14 +170,14 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
       <div className="pls__card" role="dialog" aria-modal="true" aria-labelledby="pla-title">
         <CloseButton placement="corner" onClick={onClose} label={t({ ko: "닫기", en: "Close" })} light={isLight} />
         <header>
-          <span>{t({ ko: "플레이리스트에 담기", en: "ADD TO PLAYLIST" })}</span>
+          <span>{t({ ko: "큐레이션에 담기", en: "ADD TO PLAYLIST" })}</span>
         </header>
         <h2 id="pla-title">{title || t({ ko: "이 작품", en: "This item" })}</h2>
 
         <div className="pla__new">
           <input
             type="text"
-            placeholder={t({ ko: "새 플레이리스트 이름", en: "New playlist name" })}
+            placeholder={t({ ko: "새 큐레이션 이름", en: "New playlist name" })}
             value={newPlaylistName}
             onChange={(e) => setNewPlaylistName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && void handleCreateAndSave()}
@@ -189,14 +189,14 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
           </button>
         </div>
 
-        <p className="pla__label">{t({ ko: "내 플레이리스트", en: "YOUR PLAYLISTS" })}</p>
+        <p className="pla__label">{t({ ko: "내 큐레이션", en: "YOUR PLAYLISTS" })}</p>
 
         {!user ? (
-          <p className="pls__body">{t({ ko: "로그인하면 플레이리스트에 담을 수 있어요.", en: "Sign in to save items to playlists." })}</p>
+          <p className="pls__body">{t({ ko: "로그인하면 큐레이션에 담을 수 있어요.", en: "Sign in to save items to playlists." })}</p>
         ) : loading ? (
           <p className="pls__body">{t({ ko: "불러오는 중…", en: "Loading…" })}</p>
         ) : playlists.length === 0 ? (
-          <p className="pls__body">{t({ ko: "아직 플레이리스트가 없어요. 위에서 첫 목록을 만들어 보세요.", en: "No playlists yet. Create your first one above." })}</p>
+          <p className="pls__body">{t({ ko: "아직 큐레이션이 없어요. 위에서 첫 큐레이션을 만들어 보세요.", en: "No playlists yet. Create your first one above." })}</p>
         ) : (
           <ul className="pla__list">
             {playlists.map((pl) => (

@@ -73,7 +73,7 @@ export function useBlockedUsers() {
  * 차단은 내 목록에 들어가 그 자리에서 사라진다.
  */
 export default function ModerationMenu({
-  targetType, targetId, targetPath, authorId, ko, onBlock,
+  targetType, targetId, targetPath, authorId, ko, onBlock, own,
 }: {
   targetType: "post" | "comment";
   targetId: string;
@@ -81,6 +81,8 @@ export default function ModerationMenu({
   authorId?: string;
   ko: boolean;
   onBlock?: (uid: string) => void;
+  /** the reader's own comment: edit and delete take the place of report and block */
+  own?: { edit: () => void; remove: () => void } | null;
 }) {
   const { user } = useAuth();
   const { block } = useBlockedUsers();
@@ -132,9 +134,19 @@ export default function ModerationMenu({
   if (!open) {
     return (
       <button type="button" style={{ ...link, letterSpacing: "0.1em" }} onClick={() => setOpen(true)}
-        aria-label={ko ? "신고하거나 차단하기" : "Report or block"}>
+        aria-label={own ? (ko ? "수정하거나 삭제하기" : "Edit or delete") : (ko ? "신고하거나 차단하기" : "Report or block")}>
         ···
       </button>
+    );
+  }
+
+  if (own) {
+    return (
+      <span style={{ display: "inline-flex", gap: 10, alignItems: "center" }}>
+        <button type="button" style={link} onClick={() => { setOpen(false); own.edit(); }}>{ko ? "수정" : "Edit"}</button>
+        <button type="button" style={link} onClick={() => { setOpen(false); own.remove(); }}>{ko ? "삭제" : "Delete"}</button>
+        <button type="button" style={link} onClick={() => setOpen(false)}>{ko ? "닫기" : "Close"}</button>
+      </span>
     );
   }
 

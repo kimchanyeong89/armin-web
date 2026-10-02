@@ -65,7 +65,7 @@ export default function PlaylistMenu({ shared, onShare, onDelete, className, sty
         style={style}
         aria-haspopup="menu"
         aria-expanded={!!at}
-        aria-label={t({ ko: "플레이리스트 메뉴", en: "Playlist menu" })}
+        aria-label={t({ ko: "큐레이션 메뉴", en: "Playlist menu" })}
         title={t({ ko: "공유 · 삭제", en: "Share · Delete" })}
         onClick={toggle}
       >
@@ -82,7 +82,7 @@ export default function PlaylistMenu({ shared, onShare, onDelete, className, sty
           >
             {asking ? (
               <>
-                <p>{t({ ko: "이 플레이리스트를 삭제할까요?", en: "Delete this playlist?" })}</p>
+                <p>{t({ ko: "이 큐레이션을 삭제할까요?", en: "Delete this playlist?" })}</p>
                 <div className="pl-menu__row">
                   <button
                     type="button"

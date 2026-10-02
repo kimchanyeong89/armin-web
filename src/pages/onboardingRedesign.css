@@ -228,3 +228,19 @@
   .ob-nav { padding-left: 16px; padding-right: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { .ob * { transition: none !important; animation: none !important; } }
+
+/* ── editing a profile: one screen of what can change ── */
+.ob-col.ob-hub { flex: 1; min-height: 0; overflow-y: auto; }
+.ob-hub__nophoto { flex: none; width: 48px; height: 48px; border-radius: 50%; background: var(--ob-line); }
+.ob-hub__facts { margin: 0 0 22px; }
+.ob-hub__facts div { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--ob-line); }
+.ob-hub__facts dt { font-size: 11.5px; font-weight: 600; color: var(--ob-dim); }
+.ob-hub__facts dd { margin: 0; font: 500 12.5px/1.4 var(--ob-mono); letter-spacing: .02em; text-align: right; overflow-wrap: anywhere; }
+/* the way to a new picture: a line of words and a gold arrow, no box */
+.ob .ob-hub__picture { display: flex; align-items: center; justify-content: space-between; gap: 14px; width: 100%;
+  margin-bottom: 18px; padding: 14px 0; border-top: 1px solid var(--ob-line); border-bottom: 1px solid var(--ob-line);
+  text-align: left; transition: color .16s ease; }
+.ob-hub__picture b { display: block; font-size: 14px; font-weight: 650; }
+.ob-hub__picture small { display: block; margin-top: 3px; font-size: 11.5px; color: var(--ob-dim); }
+.ob-hub__picture > span:last-child { font: 400 18px/1 var(--ob-mono); color: var(--ob-gold); }
+.ob .ob-hub__picture:hover { color: var(--ob-gold); }

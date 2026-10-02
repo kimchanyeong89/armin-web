@@ -33,7 +33,9 @@ function clean(node: Element) {
       return;
     }
     [...el.attributes].forEach((a) => {
-      const keep = (tag === "A" && a.name === "href") || (tag === "IMG" && (a.name === "src" || a.name === "alt"));
+      const keep = (tag === "A" && a.name === "href") || (tag === "IMG" && (a.name === "src" || a.name === "alt"))
+        /* what an attachment is, so an exhibition can be drawn as a compact card */
+        || (tag === "FIGURE" && a.name === "data-kind" && /^(artwork|exhibition|museum|artist)$/.test(a.value));
       if (!keep) el.removeAttribute(a.name);
     });
     if (tag === "A") {

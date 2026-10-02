@@ -64,17 +64,17 @@ export default function PlaylistShareSheet({ uid, playlist, light, onClose, onCh
       <div className="pls__card" role="dialog" aria-modal="true" aria-labelledby="pls-title">
         <CloseButton placement="corner" onClick={onClose} label={t({ ko: "닫기", en: "Close" })} light={!!light} />
         <header>
-          <span>{t({ ko: "플레이리스트 공유", en: "SHARE PLAYLIST" })}</span>
+          <span>{t({ ko: "큐레이션 공유", en: "SHARE PLAYLIST" })}</span>
         </header>
         <h2 id="pls-title">{playlist.name}</h2>
         <p className="pls__body">
           {shared
             ? t({
-                ko: "공유 중이에요. 링크를 받은 누구나 바로 열어 볼 수 있고, 커뮤니티의 플레이리스트 선반에도 올라가 있어요.",
+                ko: "공유 중이에요. 링크를 받은 누구나 바로 열어 볼 수 있고, 커뮤니티 큐레이션에도 올라가 있어요.",
                 en: "Shared: anyone with the link can open it, and it sits on the community's playlist shelf.",
               })
             : t({
-                ko: "링크를 만들면 받은 사람 누구나 이 플레이리스트를 바로 열어 볼 수 있어요. 커뮤니티의 플레이리스트 선반에도 올라가요.",
+                ko: "링크를 만들면 받은 사람 누구나 이 큐레이션을 바로 열어 볼 수 있어요. 커뮤니티 큐레이션에도 올라가요.",
                 en: "With a link, anyone you send it to can open this playlist straight away, and it goes on the community's playlist shelf.",
               })}
         </p>

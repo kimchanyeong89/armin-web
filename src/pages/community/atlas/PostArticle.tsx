@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent, type ReactNode } from "react";
+import { useMemo, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { collectorPath } from "../../../features/collectors/publicCollection";
 import { SHOW_PUBLIC_COLLECTIONS } from "../../../config/features";
@@ -34,6 +34,15 @@ export interface ArticleComment {
   rank?: string;
   text: string;
   at: Date | null;
+  /** a reply names the comment it answers; replies go one level deep */
+  parentId?: string | null;
+  edited?: boolean;
+}
+
+/** What the reader may do with their own comment — handed to the page's comment menu. */
+export interface OwnCommentActions {
+  edit: () => void;
+  remove: () => void;
 }
 
 const stamp = (d: Date) =>
@@ -46,7 +55,7 @@ const stamp = (d: Date) =>
  */
 export default function PostArticle({
   post, ko, comments, commentCount, liked, onLike, onComment, commentBlocked, sending, onBack, onDelete,
-  postMenu, commentMenu,
+  postMenu, commentMenu, myUid, onEditComment, onDeleteComment,
 }: {
   post: ArticlePost;
   ko: boolean;
@@ -54,8 +63,8 @@ export default function PostArticle({
   commentCount: number;
   liked: boolean;
   onLike: () => void;
-  /** resolves true once the comment is taken, so the field can clear */
-  onComment: (text: string) => boolean | Promise<boolean>;
+  /** resolves true once the comment is taken, so the field can clear; a reply carries its parent's id */
+  onComment: (text: string, parentId?: string) => boolean | Promise<boolean>;
   /** set when commenting is not possible here — the field says why */
   commentBlocked?: string;
   sending?: boolean;
@@ -63,10 +72,35 @@ export default function PostArticle({
   onDelete?: () => void;
   /** 글의 신고·차단 — 페이지가 넘겨준다 */
   postMenu?: ReactNode;
-  /** 댓글마다의 신고·차단 */
-  commentMenu?: (comment: ArticleComment) => ReactNode;
+  /** 댓글마다의 신고·차단 — 내 댓글이면 수정·삭제(own) */
+  commentMenu?: (comment: ArticleComment, own: OwnCommentActions | null) => ReactNode;
+  /** the reader, so their own comments can be edited and deleted */
+  myUid?: string | null;
+  onEditComment?: (id: string, text: string) => boolean | Promise<boolean>;
+  onDeleteComment?: (comment: ArticleComment) => void;
 }) {
   const [text, setText] = useState("");
+  const [replyTo, setReplyTo] = useState<string | null>(null);
+  const [replyText, setReplyText] = useState("");
+  const [editing, setEditing] = useState<string | null>(null);
+  const [draft, setDraft] = useState("");
+  /* top-level comments newest first; each one's replies under it, oldest first.
+     A reply whose comment was deleted stays, under a line saying so. */
+  const threads = useMemo(() => {
+    const ids = new Set(comments.map((c) => c.id));
+    const replies = new Map<string, ArticleComment[]>();
+    const roots: ArticleComment[] = [];
+    for (const c of comments) {
+      if (c.parentId) replies.set(c.parentId, [...(replies.get(c.parentId) ?? []), c]);
+      else roots.push(c);
+    }
+    const lost = [...replies.keys()].filter((pid) => !ids.has(pid));
+    const asc = (a: ArticleComment, b: ArticleComment) => (a.at?.getTime() ?? 0) - (b.at?.getTime() ?? 0);
+    return [
+      ...roots.map((c) => ({ root: c as ArticleComment | null, rootId: c.id, replies: (replies.get(c.id) ?? []).sort(asc) })),
+      ...lost.map((pid) => ({ root: null, rootId: pid, replies: (replies.get(pid) ?? []).sort(asc) })),
+    ];
+  }, [comments]);
   const html = useMemo(() => toProse(post.content || ""), [post.content]);
   const k = ko ? "ko" : "en";
   const cat = normalizeCommunityCategory(post.category);
@@ -79,6 +113,57 @@ export default function PostArticle({
     const body = text.trim();
     if (!body || sending || commentBlocked) return;
     if (await onComment(body)) setText("");
+  };
+  const sendReply = async (e: FormEvent | KeyboardEvent, parentId: string) => {
+    e.preventDefault();
+    const body = replyText.trim();
+    if (!body || sending || commentBlocked) return;
+    if (await onComment(body, parentId)) { setReplyText(""); setReplyTo(null); }
+  };
+  const saveEdit = async (e: FormEvent | KeyboardEvent, id: string) => {
+    e.preventDefault();
+    const body = draft.trim();
+    if (!body || !onEditComment) return;
+    if (await onEditComment(id, body)) setEditing(null);
+  };
+
+  const renderComment = (c: ArticleComment, isReply: boolean) => {
+    const mine = !!myUid && c.authorId === myUid;
+    const own: OwnCommentActions | null = mine
+      ? { edit: () => { setEditing(c.id); setDraft(c.text); }, remove: () => onDeleteComment?.(c) }
+      : null;
+    return (
+      <div className="ca-c">
+        <RankAvatar rank={c.rank} name={c.name || "?"} src={c.photo} crop={c.crop} size={isReply ? 22 : 26} />
+        <div>
+          <p className="ca-c__by">
+            {SHOW_PUBLIC_COLLECTIONS && c.authorId
+              ? <Link to={collectorPath(c.authorId)} className="ca-col__link"><b>{c.name || (ko ? "익명" : "Unknown")}</b></Link>
+              : <b>{c.name || (ko ? "익명" : "Unknown")}</b>}
+            {c.at && <time>{ago(c.at, ko)}</time>}
+            {c.edited && <small className="ca-c__edited">{ko ? "수정됨" : "edited"}</small>}
+            {commentMenu && <span style={{ marginLeft: "auto" }}>{commentMenu(c, own)}</span>}
+          </p>
+          {editing === c.id ? (
+            <form className="ca-cbox ca-cbox--reply" onSubmit={(e) => void saveEdit(e, c.id)}>
+              <textarea rows={2} autoFocus value={draft} onChange={(e) => setDraft(e.target.value)} aria-label={ko ? "댓글 수정" : "Edit comment"}
+                onKeyDown={(e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) void saveEdit(e, c.id); }} />
+              <span className="ca-cbox__acts">
+                <button type="button" className="ca-cact" onClick={() => setEditing(null)}>{ko ? "취소" : "Cancel"}</button>
+                <button type="submit" className="ca-send" disabled={!draft.trim() || draft.trim() === c.text}>{ko ? "저장" : "Save"}</button>
+              </span>
+            </form>
+          ) : (
+            <p className="ca-c__text">{c.text}</p>
+          )}
+          {!isReply && !commentBlocked && editing !== c.id && (
+            <button type="button" className="ca-cact ca-c__reply" onClick={() => { setReplyTo(c.id); setReplyText(""); }}>
+              {ko ? "답글" : "Reply"}
+            </button>
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -141,21 +226,29 @@ export default function PostArticle({
 
       <section className="ca-comments" aria-label={ko ? "댓글" : "Comments"}>
         <header className="ca-cap"><span>{ko ? "댓글" : "Comments"}</span><i /><b>{two(comments.length)}</b></header>
-        {comments.length > 0 && (
+        {threads.length > 0 && (
           <ul className="ca-clist">
-            {comments.map((c) => (
-              <li key={c.id}>
-                <RankAvatar rank={c.rank} name={c.name || "?"} src={c.photo} crop={c.crop} size={26} />
-                <div>
-                  <p className="ca-c__by">
-                    {SHOW_PUBLIC_COLLECTIONS && c.authorId
-                      ? <Link to={collectorPath(c.authorId)} className="ca-col__link"><b>{c.name || (ko ? "익명" : "Unknown")}</b></Link>
-                      : <b>{c.name || (ko ? "익명" : "Unknown")}</b>}
-                    {c.at && <time>{ago(c.at, ko)}</time>}
-                    {commentMenu && <span style={{ marginLeft: "auto" }}>{commentMenu(c)}</span>}
-                  </p>
-                  <p className="ca-c__text">{c.text}</p>
-                </div>
+            {threads.map(({ root, rootId, replies }) => (
+              <li key={rootId} className="ca-thread">
+                {root ? renderComment(root, false) : <p className="ca-c__gone">{ko ? "삭제된 댓글입니다." : "This comment was deleted."}</p>}
+                {(replies.length > 0 || replyTo === rootId) && (
+                  <ul className="ca-replies">
+                    {replies.map((r) => <li key={r.id}>{renderComment(r, true)}</li>)}
+                    {replyTo === rootId && (
+                      <li>
+                        <form className="ca-cbox ca-cbox--reply" onSubmit={(e) => void sendReply(e, rootId)}>
+                          <textarea rows={2} autoFocus value={replyText} onChange={(e) => setReplyText(e.target.value)}
+                            placeholder={ko ? "답글을 입력하세요…" : "Write a reply…"} aria-label={ko ? "답글" : "Reply"}
+                            onKeyDown={(e) => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) void sendReply(e, rootId); }} />
+                          <span className="ca-cbox__acts">
+                            <button type="button" className="ca-cact" onClick={() => { setReplyTo(null); setReplyText(""); }}>{ko ? "취소" : "Cancel"}</button>
+                            <button type="submit" className="ca-send" disabled={!replyText.trim() || !!sending}>{ko ? "등록" : "Post"}</button>
+                          </span>
+                        </form>
+                      </li>
+                    )}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>
