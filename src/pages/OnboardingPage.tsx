@@ -942,7 +942,7 @@ const OnboardingPage: React.FC = () => {
                 autoComplete="off"
               />
               {!searchByBirthday && (
-                <button type="button" onClick={() => { setArtistSearchQuery(''); setSearchByBirthday(true); }} aria-label="지우고 생일로 찾기">
+                <button type="button" onClick={() => { setArtistSearchQuery(''); setSearchByBirthday(!skipBirth); }} aria-label={skipBirth ? "검색어 지우기" : "지우고 생일로 찾기"}>
                   <X size={16} strokeWidth={1.8} />
                 </button>
               )}
