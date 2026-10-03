@@ -81,6 +81,10 @@
 /* step one: three wheels side by side, the chosen row between two gold
    lines across all three, the rows above and below fading out */
 .ob-date { margin-bottom: 26px; }
+/* the birthday is optional: a quiet line under the wheels moves on without it */
+.ob .ob-skip { display: block; margin: 14px 0 0; padding: 6px 0; border: 0; background: none; cursor: pointer;
+  font: 500 13px/1.4 var(--ob-sans, inherit); color: var(--ob-dim, rgba(244,241,234,0.55)); text-decoration: underline; text-underline-offset: 3px; }
+.ob .ob-skip:hover { color: var(--ob-gold); }
 .ob-date__read { margin: 0 0 12px; font: 700 1.35rem/1.2 var(--ob-display); letter-spacing: -0.03em; color: var(--ob-gold); }
 .ob-date__wheels { position: relative; display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 6px; }
 .ob-date__wheels::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; margin-top: -22px; pointer-events: none;

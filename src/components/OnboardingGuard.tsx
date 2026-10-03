@@ -27,9 +27,9 @@ export const OnboardingGuard = () => {
                 const ref = doc(db, 'users', user.uid);
                 const snap = await getDoc(ref);
 
-                // If user doc missing, or not marked onboarded, OR missing critical info like birthDate
+                // If user doc missing or not marked onboarded (the birthday is optional)
                 const data = snap.data();
-                if (!snap.exists() || !data?.isOnboarded || !data?.birthDate) {
+                if (!snap.exists() || !data?.isOnboarded) {
                     // If we are redirecting, clear the session cache so we re-check next time (until they complete it)
                     sessionStorage.removeItem(`onboarded_${user.uid}`);
                     navigate('/onboarding');

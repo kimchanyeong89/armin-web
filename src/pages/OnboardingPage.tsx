@@ -238,6 +238,8 @@ const OnboardingPage: React.FC = () => {
   const [artistDataLoading, setArtistDataLoading] = useState(true); // true while collection files are fetching
 
   const [searchByBirthday, setSearchByBirthday] = useState(true);
+  /* the birthday is optional (App Review 5.1.1(v)): skipping it picks the artist by name instead */
+  const [skipBirth, setSkipBirth] = useState(false);
   const [artistSearchQuery, setArtistSearchQuery] = useState('');
   const [allArtists, setAllArtists] = useState<any[]>([]);
   const [workerArtistArtworks, setWorkerArtistArtworks] = useState<Record<string, string[]>>({});
@@ -336,7 +338,7 @@ const OnboardingPage: React.FC = () => {
         setFirstTime(!onboarded);
         setSavedName(String(data.nickname || user.displayName || ""));
         if (onboarded) setHub(true);
-        if (!onboarded && data.birthDate && data.photoURL) setStep(3);
+        if (!onboarded && data.photoURL) setStep(3);
       };
       loadUser();
     }
@@ -631,7 +633,7 @@ const OnboardingPage: React.FC = () => {
   const cropScaleFactor = cropPreviewSize / 240;
 
   const handleSubmit = async () => {
-    if (!user || birthDateInput.length !== 10) return;
+    if (!user) return;
     const safeNickname = nickname?.trim() || user.displayName || user.email?.split('@')[0] || 'Art Explorer';
     const latestCrop = cropRef.current || { x: 0, y: 0, scale: 1 };
     const normalizedCrop = {
@@ -648,7 +650,7 @@ const OnboardingPage: React.FC = () => {
       /* on a first sign-in the profile is kept now and the member is
          onboarded only when the taste step ends */
       await setDoc(doc(db, "users", user.uid), {
-        nickname: safeNickname, birthDate: birthDateInput, photoURL: selectedImage,
+        nickname: safeNickname, ...(skipBirth ? {} : { birthDate: birthDateInput }), photoURL: selectedImage,
         displayName: safeNickname, email: user.email, ...(firstTime ? {} : { isOnboarded: true }),
         updatedAt: new Date(), soulmateArtist: selectedArtist ? selectedArtist.name : null,
         profileImageCrop: normalizedCrop
@@ -753,6 +755,7 @@ const OnboardingPage: React.FC = () => {
     setSavingBirth(true);
     try {
       await setDoc(doc(getFirestore(), "users", user.uid), { birthDate: birthDateInput, updatedAt: new Date() }, { merge: true });
+      setSkipBirth(false);
       setSearchByBirthday(true);
       setStep(1);
     } catch (err: any) { alert("저장 실패: " + err.message); } finally { setSavingBirth(false); }
@@ -877,7 +880,7 @@ const OnboardingPage: React.FC = () => {
             <section className="ob-statement">
               <p className="ob-statement__meta">{`COLLY · 시작하기 1/${stepCount}`}</p>
               <h1>{'생일을\n알려 주세요.'}</h1>
-              <p>생일 무렵 세상을 떠난 예술가를 찾아, 그 작품으로 프로필 사진을 꾸밉니다.</p>
+              <p>생일 무렵 세상을 떠난 예술가를 찾아, 그 작품으로 프로필 사진을 꾸밉니다. 선택 사항이라 건너뛰어도 됩니다.</p>
             </section>
 
             {/* three wheels, as a phone sets a date: what rests between the gold lines is chosen */}
@@ -889,6 +892,11 @@ const OnboardingPage: React.FC = () => {
                 <DateWheel label="일" values={days} value={birthDay} onChange={setBirthDay} format={(v) => `${v}일`} />
               </div>
             </div>
+
+            <button type="button" className="ob-skip"
+              onClick={() => { setSkipBirth(true); setSearchByBirthday(false); setStep(1); }}>
+              생일 없이 계속하기
+            </button>
 
             {bornArtists.length > 0 && (
               <div>
@@ -928,7 +936,7 @@ const OnboardingPage: React.FC = () => {
                 value={artistSearchQuery}
                 onChange={(e) => {
                   setArtistSearchQuery(e.target.value);
-                  setSearchByBirthday(e.target.value.trim().length === 0);
+                  setSearchByBirthday(!skipBirth && e.target.value.trim().length === 0);
                 }}
                 placeholder="작가 이름으로 직접 찾기"
                 autoComplete="off"
