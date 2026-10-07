@@ -15,6 +15,7 @@ export function SaveIcon({
   style,
   className,
   viewBox = "0 0 24 24",
+  fillWhenSaved = true,
 }: {
   saved?: boolean;
   size?: number;
@@ -24,6 +25,8 @@ export function SaveIcon({
   className?: string;
   /** a tighter box draws the lotus larger in the same space (LikeIcon) */
   viewBox?: string;
+  /** false: a kept mark stays an outline and only takes its colour (LikeIcon) */
+  fillWhenSaved?: boolean;
 }) {
   return (
     <svg
@@ -47,8 +50,8 @@ export function SaveIcon({
           rx="2.3"
           ry="5.1"
           transform={`rotate(${angle} 12 15.6)`}
-          fill={saved ? color : "none"}
-          fillOpacity={saved ? (angle === 0 ? 1 : 0.85) : undefined}
+          fill={saved && fillWhenSaved ? color : "none"}
+          fillOpacity={saved && fillWhenSaved ? (angle === 0 ? 1 : 0.85) : undefined}
         />
       ))}
       <path d="M5.2 19.6 C9 19.1 15 19.1 18.8 19.6" />

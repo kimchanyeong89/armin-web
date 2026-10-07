@@ -4,7 +4,8 @@ import { SaveIcon } from "./SaveIcon";
 /* The one mark for "I like this", on every like button in the app. Since
    2026-10-02 it is the COLLY lotus, the same drawing as SaveIcon - the shape
    lives there, so changing it changes likes and saves together. Not liked: the
-   outline in emptyColor. Liked: the petals filled in color.
+   outline in emptyColor. Liked: the same outline drawn in color - the strokes take
+   the colour, the petals are not filled (10/7: filled, the lotus read as a blob).
    (Before: a heart, then the map tab's globe on 9/28.) */
 
 /* the lotus is drawn with finer lines than lucide's icons; the heavier strokes
@@ -42,6 +43,7 @@ export function LikeIcon({
       className={className}
       /* cropped to the lotus itself: it fills more of its button's circle (10/2, "a little larger") */
       viewBox="1.5 2 21 21"
+      fillWhenSaved={false}
     />
   );
 }
