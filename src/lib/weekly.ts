@@ -2,8 +2,9 @@ import type { WeeklyPublishedFile } from '../types/weekly';
 import { isoWeek } from './iso-week';
 import { fetchPublished, listPublished } from './weeklyStore';
 
-/** Weeks published as files before /admin/weekly existed. */
-const PUBLISHED_FILE_WEEKS = ['2026-W21', '2026-W20'];
+/** Weeks published as files before /admin/weekly existed, to list among past weeks. The May weeks
+ *  ('2026-W21', '2026-W20') were taken off the list on 2026-10-07; their files stay, so saved copies still open. */
+const PUBLISHED_FILE_WEEKS: string[] = [];
 
 /**
  * This week's curation, or null. Only the current ISO week counts: once a week is

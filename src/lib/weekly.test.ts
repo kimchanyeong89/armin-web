@@ -32,15 +32,12 @@ describe('fetchCurrentCuration', () => {
 });
 
 describe('fetchArchiveList', () => {
-  it('lists only weeks before the current one, newest first', async () => {
+  it('leaves the file weeks off the list', async () => {
     serve({
       '/data/weekly-curations/2026-W20.json': file('2026-W20', 'Twenty'),
       '/data/weekly-curations/2026-W21.json': file('2026-W21', 'TwentyOne'),
     });
-    expect((await fetchArchiveList(new Date('2026-05-21T00:00:00Z'))).map((e) => e.week)).toEqual(['2026-W20']);
-    const later = await fetchArchiveList(new Date('2026-10-01T00:00:00Z'));
-    expect(later.map((e) => e.week)).toEqual(['2026-W21', '2026-W20']);
-    expect(later[0].hero_image_url).toBe('http://x/2026-W21.jpg');
+    expect(await fetchArchiveList(new Date('2026-10-01T00:00:00Z'))).toEqual([]);
   });
 });
 
