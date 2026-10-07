@@ -374,7 +374,7 @@ function EditionHeader({
             ...LABEL, fontSize: 9,
             background: accent, color: '#000',
             padding: '3px 9px',
-          }}>Weekly Curation</span>
+          }}>{langKo ? '주간 전시' : 'Weekly Exhibition'}</span>
           <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
         </div>
 
@@ -736,7 +736,7 @@ function MobileEditionHeader({
       {/* Eyebrow */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
         <span style={{ ...LABEL, fontSize: 9, background: accent, color: '#0c0c0a', padding: '2px 8px' }}>
-          Weekly Curation
+          {langKo ? '주간 전시' : 'Weekly Exhibition'}
         </span>
         <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
       </div>
@@ -1558,8 +1558,8 @@ export default function WeeklyCurationTab({
         subject={{ kind: 'curation', id: editionFile.id }}
         title={(langKo ? editionFile.title_ko : editionFile.title_en) || editionFile.title_en || editionFile.title_ko}
         subtitle={(editionFile as unknown as { slug?: string }).slug
-          ? (langKo ? '스페셜 큐레이션' : 'Special curation')
-          : (langKo ? '주간 큐레이션' : 'Weekly curation')}
+          ? (langKo ? '특집 전시' : 'Special exhibition')
+          : (langKo ? '주간 전시' : 'Weekly exhibition')}
         size={14}
         color={fgMed}
       />
@@ -1709,19 +1709,19 @@ export default function WeeklyCurationTab({
       : mode === 'special' ? specialView
       : !currentLoaded ? (
         <div style={{ ...quiet, ...LABEL, fontSize: 11, color: fgFaint }}>
-          {langKo ? '이번 주 큐레이션을 불러오는 중…' : "Loading this week's curation…"}
+          {langKo ? '이번 주 전시를 불러오는 중…' : "Loading this week's exhibition…"}
         </div>
       ) : (
         <div style={quiet}>
           <p style={{ ...BODY, fontSize: 15, color: fgMed, margin: '0 0 18px' }}>
-            {langKo ? '이번 주 큐레이션은 준비 중입니다.' : "This week's curation is on its way."}
+            {langKo ? '이번 주 전시는 준비 중입니다.' : "This week's exhibition is on its way."}
           </p>
           <button
             type="button"
             onClick={() => setMode('archive')}
             style={{ ...LABEL, fontSize: 10, background: 'none', border: 'none', padding: 0, color: '#D4A547', cursor: 'pointer' }}
           >
-            {langKo ? '지난 큐레이션 보기 →' : 'See past curations →'}
+            {langKo ? '지난 전시 보기 →' : 'See past weeks →'}
           </button>
         </div>
       );

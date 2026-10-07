@@ -666,13 +666,13 @@ function CurationTab({
             <h2>{tr({ ko: '로그인하면 AI 추천을 받을 수 있습니다.', en: 'Sign in to get AI picks.' })}</h2>
             <p className="hub-lead__body">
               {tr({
-                ko: '작품을 많이 저장할수록 추천이 정밀해집니다. 주간 큐레이션은 로그인하지 않아도 볼 수 있습니다.',
+                ko: '작품을 많이 저장할수록 추천이 정밀해집니다. 주간 전시는 로그인하지 않아도 볼 수 있습니다.',
                 en: 'The more works you save, the sharper the picks get. The weekly curation is open to everyone.',
               })}
             </p>
             <div className="hub-signin__row">
               <a className="hub-signin__go" href="/login">{tr({ ko: '로그인', en: 'Sign in' })} <span aria-hidden="true">↗</span></a>
-              <button type="button" onClick={onBrowseWeekly}>{tr({ ko: '주간 큐레이션 보기', en: 'See the weekly curation' })}</button>
+              <button type="button" onClick={onBrowseWeekly}>{tr({ ko: '주간 전시 보기', en: 'See the weekly exhibition' })}</button>
             </div>
           </div>
         );
@@ -1258,7 +1258,7 @@ export default function AICurationHubPage() {
       {/* ── the title block: one left-aligned column ── */}
       <section className="hub-statement colly-rise">
         <p className="hub-statement__meta">AI</p>
-        <h1>{tr({ ko: '당신의 취향을 읽는 큐레이션.', en: 'Curation that reads your taste.' })}</h1>
+        <h1>{tr({ ko: '당신의 취향을 읽는 추천.', en: 'Picks that read your taste.' })}</h1>
         <p>{tr({
           ko: '좋아요와 컬렉션 기록을 바탕으로, 세계 미술관 소장품 가운데 지금 당신에게 맞는 작품을 골라 보여드립니다.',
           en: 'Built from your likes and collections, picked from museum holdings around the world.',
@@ -1269,8 +1269,8 @@ export default function AICurationHubPage() {
       <div style={{ position: "sticky", top: 0, zIndex: 20, padding: "6px 20px 6px", paddingTop: "calc(6px + env(safe-area-inset-top, 0px))", backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div className="hub-switch" role="tablist">
           {([
-            { id: "curation", label: tr({ ko: '나의 큐레이션', en: 'My Curation' }) },
-            { id: "weekly",   label: tr({ ko: '주간 큐레이션', en: 'Weekly' }) },
+            { id: "curation", label: tr({ ko: '나의 추천', en: 'For You' }) },
+            { id: "weekly",   label: tr({ ko: '주간 전시', en: 'Weekly' }) },
           ]).map(({ id, label }) => (
             <button key={id} type="button" role="tab" aria-selected={activeTab === id}
               className={activeTab === id ? "is-active" : ""}

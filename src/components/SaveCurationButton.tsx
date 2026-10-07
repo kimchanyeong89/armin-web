@@ -64,8 +64,8 @@ export default function SaveCurationButton({ file, langKo }: SaveCurationButtonP
   const disabled = busy || savedLoading;
 
   const label = isSaved
-    ? langKo ? '저장됨 · Saved' : 'Saved · 저장됨'
-    : langKo ? '큐레이션 저장 · Save this collection' : 'Save this collection · 큐레이션 저장';
+    ? langKo ? '저장됨' : 'Saved'
+    : langKo ? '전시 저장' : 'Save this exhibition';
 
   return (
     <div
