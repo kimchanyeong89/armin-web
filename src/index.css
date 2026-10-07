@@ -295,3 +295,9 @@ html[data-overlay-panel] .app-language-toggle { opacity: 0; pointer-events: none
 .colly-close--light svg { filter: none; }
 .colly-close--screen { position: fixed; top: max(8px, calc(env(safe-area-inset-top, 0px) + 6px)); right: 8px; z-index: 260040; }
 .colly-close--corner { position: absolute; top: 8px; right: 8px; z-index: 3; }
+
+/* The add-to-playlist mark, drawn larger in place to sit level with the like lotus beside it
+   (LikeIcon draws the lotus at 1.35x). A transform takes no room, so buttons keep their size. */
+svg.lucide-bookmark-plus {
+  transform: scale(1.25);
+}
