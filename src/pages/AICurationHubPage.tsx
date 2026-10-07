@@ -1258,7 +1258,7 @@ export default function AICurationHubPage() {
       {/* ── the title block: one left-aligned column ── */}
       <section className="hub-statement colly-rise">
         <p className="hub-statement__meta">AI</p>
-        <h1>{tr({ ko: '당신의 취향을 읽는 추천.', en: 'Picks that read your taste.' })}</h1>
+        <h1>{language === 'ko' ? <>당신의 취향을<br />읽는 추천.</> : 'Picks that read your taste.'}</h1>
         <p>{tr({
           ko: '좋아요와 컬렉션 기록을 바탕으로, 세계 미술관 소장품 가운데 지금 당신에게 맞는 작품을 골라 보여드립니다.',
           en: 'Built from your likes and collections, picked from museum holdings around the world.',
@@ -1269,7 +1269,7 @@ export default function AICurationHubPage() {
       <div style={{ position: "sticky", top: 0, zIndex: 20, padding: "6px 20px 6px", paddingTop: "calc(6px + env(safe-area-inset-top, 0px))", backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div className="hub-switch" role="tablist">
           {([
-            { id: "curation", label: tr({ ko: '나의 추천', en: 'For You' }) },
+            { id: "curation", label: tr({ ko: 'AI 추천', en: 'AI Picks' }) },
             { id: "weekly",   label: tr({ ko: '주간 전시', en: 'Weekly' }) },
           ]).map(({ id, label }) => (
             <button key={id} type="button" role="tab" aria-selected={activeTab === id}
