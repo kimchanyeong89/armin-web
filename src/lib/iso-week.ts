@@ -27,3 +27,14 @@ export function weekRange(week: string): { start: Date; end: Date } {
   end.setUTCDate(start.getUTCDate() + 6);
   return { start, end };
 }
+
+/** "2026-W41" → "10월 2주차 (10/5~11)": the month and week-of-month of the week's Thursday. */
+export function weekLabel(week: string): string {
+  if (!/^\d{4}-W\d{2}$/.test(week)) return week;
+  const { start, end } = weekRange(week);
+  const thu = new Date(start);
+  thu.setUTCDate(start.getUTCDate() + 3);
+  const nth = Math.ceil(thu.getUTCDate() / 7);
+  const endDay = end.getUTCMonth() === start.getUTCMonth() ? `${end.getUTCDate()}` : `${end.getUTCMonth() + 1}/${end.getUTCDate()}`;
+  return `${thu.getUTCMonth() + 1}월 ${nth}주차 (${start.getUTCMonth() + 1}/${start.getUTCDate()}~${endDay})`;
+}

@@ -16,7 +16,7 @@ import type {
   WeeklyPublishedFile,
   PersonaId,
 } from '../types/weekly';
-import { isoWeek } from '../lib/iso-week';
+import { isoWeek, weekLabel } from '../lib/iso-week';
 import { useIsAdmin, addAdminEmail, removeAdminEmail, BOOTSTRAP_ADMINS } from '../lib/admin';
 import { fetchProposal, fetchPublished, listProposalWeeks, publishWeekly } from '../lib/weeklyStore';
 
@@ -626,7 +626,7 @@ const AdminWeeklyPage: React.FC = () => {
         if (propJson) {
           setProposal(propJson);
         } else {
-          setDataError(`No proposals for ${week} yet`);
+          setDataError(`${weekLabel(week)} 후보가 아직 없습니다`);
         }
         setPublished(pubJson);
       } catch (err) {
@@ -655,7 +655,7 @@ const AdminWeeklyPage: React.FC = () => {
   const handlePublish = async (card: WeeklyCard) => {
     const name = card.title_ko || card.title_en || card.id;
     const replacing = published && published.id !== card.id ? `\n\n지금 발행된 「${published.title_ko || published.title_en}」을 대신합니다.` : '';
-    if (!window.confirm(`「${name}」을 ${week} 주간 큐레이션으로 발행할까요? 앱에 바로 반영됩니다.${replacing}`)) return;
+    if (!window.confirm(`「${name}」을 ${weekLabel(week)} 주간 큐레이션으로 발행할까요? 앱에 바로 반영됩니다.${replacing}`)) return;
     try {
       setPublished(await publishWeekly(week, card, email ?? 'admin'));
       toast.show(`발행했습니다: ${name}`);
@@ -777,7 +777,7 @@ const AdminWeeklyPage: React.FC = () => {
           >
             {weeks.map((w) => (
               <option key={w} value={w}>
-                {w}
+                {weekLabel(w)}
               </option>
             ))}
           </select>

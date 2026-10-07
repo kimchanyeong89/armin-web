@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-22T03:23:13.046Z",
+  "updated_at": "2026-10-07T06:17:16.403Z",
   "entries": [
     {
       "slug": "albrecht-d-rer-carlo-crivelli",
@@ -40,6 +40,16 @@
       "published_at": "2026-05-22T03:23:13.046Z",
       "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-gemaeldegalerie-collection/smb-gemaeldegalerie-864831-31cbe47d-imageUrl.webp",
       "source_week": "2026-W21"
+    },
+    {
+      "slug": "the-voyage-of-odysseus",
+      "title_en": "The Voyage of Odysseus",
+      "title_ko": "오디세우스의 여정",
+      "persona_id": "marco-rinaldi",
+      "lens": "thematic",
+      "published_at": "2026-10-07T06:17:16.403Z",
+      "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cma-collection/156420-e97f3b5c-imageUrl.webp",
+      "source_week": "2026-W41"
     }
   ]
 }

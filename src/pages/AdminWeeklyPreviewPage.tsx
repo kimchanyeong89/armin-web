@@ -13,6 +13,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import WeeklyCurationTab from '../components/WeeklyCurationTab';
 import { useIsAdmin } from '../lib/admin';
+import { weekLabel } from '../lib/iso-week';
 
 const COLOR_BG = '#0a0a0a';
 const COLOR_FG = '#f4f1ea';
@@ -128,7 +129,7 @@ const AdminWeeklyPreviewPage: React.FC = () => {
           Back to admin
         </button>
         <div style={{ ...LABEL, fontSize: 9, color: COLOR_ACCENT }}>
-          Preview · {week} · {cardId.split('__').slice(0, 2).join(' × ')}
+          Preview · {weekLabel(week)} · {cardId.split('__').slice(0, 2).join(' × ')}
         </div>
         <div style={{ flex: 1 }} />
         <div style={{ ...LABEL, fontSize: 9, color: COLOR_FG_FAINT }}>not yet published</div>
