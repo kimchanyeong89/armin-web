@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronRight, Lock, ArrowUpRight } from "lucide-react";
+import { ChevronRight, ArrowUpRight } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
 import {
   fetchCurrentCuration,
@@ -84,6 +84,8 @@ export type WeeklyEdition = {
   id: string;
   /** ISO week ("2026-W41"); a special keeps the week its card came from. */
   weekId: string;
+  /** a special, not a week's exhibition */
+  special: boolean;
   date: string;
   dateKo: string;
   title: string;
@@ -105,12 +107,6 @@ const PERSONA_NAMES: Record<PersonaId, { en: string; ko: string; role: string }>
   'marco-rinaldi': { en: 'Marco Rinaldi', ko: '마르코 리날디', role: 'Editor at Large, Colly' },
   'anika-voss':    { en: 'Anika Voss',    ko: '아니카 보스', role: 'Contributing Editor, Colly' },
 };
-
-/** An editor's display name; an unknown id shows as is. */
-function personaName(id: string, langKo: boolean): string {
-  const p = PERSONA_NAMES[id as PersonaId];
-  return p ? (langKo ? p.ko : p.en) : id;
-}
 
 function formatPublishedDate(isoTimestamp: string, langKo: 'ko' | 'en'): string {
   const d = new Date(isoTimestamp);
@@ -140,6 +136,7 @@ export function adaptPublishedToEdition(file: WeeklyPublishedFile): WeeklyEditio
   return {
     id: file.id,
     weekId: file.week ?? (file as unknown as { source_week?: string }).source_week ?? '',
+    special: !!(file as unknown as { slug?: string }).slug,
     date: formatPublishedDate(file.published_at, 'en'),
     dateKo: formatPublishedDate(file.published_at, 'ko'),
     title: file.title_en,
@@ -374,7 +371,7 @@ function EditionHeader({
             ...LABEL, fontSize: 9,
             background: accent, color: '#000',
             padding: '3px 9px',
-          }}>{langKo ? '주간 전시' : 'Weekly Exhibition'}</span>
+          }}>{edition.special ? (langKo ? '특집 전시' : 'Special Exhibition') : (langKo ? '주간 전시' : 'Weekly Exhibition')}</span>
           <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
         </div>
 
@@ -736,7 +733,7 @@ function MobileEditionHeader({
       {/* Eyebrow */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
         <span style={{ ...LABEL, fontSize: 9, background: accent, color: '#0c0c0a', padding: '2px 8px' }}>
-          {langKo ? '주간 전시' : 'Weekly Exhibition'}
+          {edition.special ? (langKo ? '특집 전시' : 'Special Exhibition') : (langKo ? '주간 전시' : 'Weekly Exhibition')}
         </span>
         <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
       </div>
@@ -909,9 +906,9 @@ function WeeklyTopNav({
 }) {
   const accent = '#D4A547';
   const tabs: Array<{ id: WeeklyMode; label: string; labelKo: string }> = [
-    { id: 'this-week', label: 'This Week',  labelKo: '이번 주' },
-    { id: 'archive',   label: 'Archive',    labelKo: '지난 주' },
-    { id: 'special',   label: 'Special',    labelKo: '특집' },
+    // weekly covers this week and any earlier week picked from the strip ('archive')
+    { id: 'this-week', label: 'Weekly',  labelKo: '주간' },
+    { id: 'special',   label: 'Special', labelKo: '특집' },
   ];
   const fgFaint = 'rgba(244,241,234,0.55)';
 
@@ -946,7 +943,7 @@ function WeeklyTopNav({
         }}
       >
         {tabs.map(tab => {
-          const active = mode === tab.id;
+          const active = (mode === 'special') === (tab.id === 'special');
           return (
             <button
               key={tab.id}
@@ -995,242 +992,15 @@ function WeeklyTopNav({
   );
 }
 
-// ── Grid card (shared by Archive + Special) ───────────────────────────────
-
-function GridCard({
-  imageUrl, eyebrow, titlePrimary, titleSecondary, locked, onClick,
-  fg, fgMed, fgFaint, divider,
-}: {
-  imageUrl: string;
-  eyebrow: string;
-  titlePrimary: string;
-  titleSecondary: string;
-  locked: boolean;
-  onClick: () => void;
-  fg: string;
-  fgMed: string;
-  fgFaint: string;
-  divider: string;
-}) {
-  const accent = '#D4A547';
-  const [hov, setHov] = useState(false);
-
-  return (
-    <div
-      onClick={onClick}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        position: 'relative',
-        cursor: 'pointer',
-        border: `0.5px solid ${divider}`,
-        background: 'rgba(255,255,255,0.02)',
-        overflow: 'hidden',
-        outline: hov ? `1px solid ${accent}` : '1px solid transparent',
-        transition: 'outline 0.15s',
-      }}
-    >
-      <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: 'rgba(255,255,255,0.03)' }}>
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt={titlePrimary}
-            loading="lazy"
-            style={{
-              width: '100%', height: '100%', objectFit: 'cover', display: 'block',
-              filter: locked ? 'grayscale(0.6) brightness(0.5)' : 'none',
-              transition: 'filter 0.2s',
-            }}
-            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
-          />
-        ) : null}
-        {locked && (
-          <div style={{
-            position: 'absolute', inset: 0,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            pointerEvents: 'none',
-          }}>
-            <Lock size={28} color="rgba(255,255,255,0.9)" />
-          </div>
-        )}
-      </div>
-      <div style={{ padding: 16 }}>
-        <div style={{ ...LABEL, fontSize: 9, color: accent, marginBottom: 6 }}>
-          {eyebrow}
-        </div>
-        <h3 style={{
-          ...HEADING, fontSize: 16, lineHeight: 1.25, color: fg,
-          letterSpacing: '-0.018em', marginBottom: 4,
-        }}>
-          {titlePrimary}
-        </h3>
-        <p style={{ ...BODY, fontSize: 11, color: fgMed, marginTop: 0 }}>
-          {titleSecondary}
-        </p>
-        {locked && (
-          <div style={{
-            marginTop: 10,
-            ...LABEL, fontSize: 8, color: fgFaint,
-          }}>
-            구독자 전용 · Subscribers only
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ── Archive grid ──────────────────────────────────────────────────────────
-
-function ArchiveGrid({
-  entries, loading, langKo, onSelectWeek, onLockedClick, isSubscriber,
-  fg, fgMed, fgFaint, divider,
-}: {
-  entries: ArchiveEntry[];
-  loading: boolean;
-  langKo: boolean;
-  onSelectWeek: (week: string) => void;
-  onLockedClick: () => void;
-  isSubscriber: boolean;
-  fg: string;
-  fgMed: string;
-  fgFaint: string;
-  divider: string;
-}) {
-  if (loading) {
-    return (
-      <div style={{
-        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
-        ...LABEL, fontSize: 11, color: fgFaint,
-      }}>
-        Loading archive…
-      </div>
-    );
-  }
-
-  if (entries.length === 0) {
-    return (
-      <div style={{
-        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
-        ...LABEL, fontSize: 11, color: fgFaint,
-      }}>
-        No archived editions yet.
-      </div>
-    );
-  }
-
-  // Most-recent 4 unlocked; everything older is locked.
-  const UNLOCKED_COUNT = 4;
-
-  return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-      gap: 16,
-      padding: 'clamp(20px, 4vw, 32px)',
-    }}>
-      {entries.map((entry, i) => {
-        // Subscribers see everything; otherwise the position-based rule applies.
-        const locked = PAYWALL_ENABLED && !isSubscriber && i >= UNLOCKED_COUNT;
-                const worksCount = entry.works_count;
-        return (
-          <GridCard
-            key={entry.week}
-            imageUrl={entry.hero_image_url}
-            eyebrow={weekLabel(entry.week, langKo)}
-            titlePrimary={langKo ? entry.title_ko : entry.title_en}
-            titleSecondary={`${personaName(entry.persona_id, langKo)} · ${worksCount}${langKo ? '점' : ' works'}`}
-            locked={locked}
-            onClick={locked ? onLockedClick : () => onSelectWeek(entry.week)}
-            fg={fg}
-            fgMed={fgMed}
-            fgFaint={fgFaint}
-            divider={divider}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
-// ── Special series grid ───────────────────────────────────────────────────
-
-function SpecialGrid({
-  entries, loading, langKo, onSelectSpecial, onLockedClick, isSubscriber,
-  fg, fgMed, fgFaint, divider,
-}: {
-  entries: SpecialEntry[];
-  loading: boolean;
-  langKo: boolean;
-  onSelectSpecial: (slug: string) => void;
-  onLockedClick: () => void;
-  isSubscriber: boolean;
-  fg: string;
-  fgMed: string;
-  fgFaint: string;
-  divider: string;
-}) {
-  if (loading) {
-    return (
-      <div style={{
-        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
-        ...LABEL, fontSize: 11, color: fgFaint,
-      }}>
-        Loading specials…
-      </div>
-    );
-  }
-
-  if (entries.length === 0) {
-    return (
-      <div style={{
-        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
-        ...LABEL, fontSize: 11, color: fgFaint,
-      }}>
-        {langKo ? '특집이 곧 공개됩니다.' : 'Special editions coming soon.'}
-      </div>
-    );
-  }
-
-  const UNLOCKED_COUNT = 1;
-
-  return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-      gap: 16,
-      padding: 'clamp(20px, 4vw, 32px)',
-    }}>
-      {entries.map((entry, i) => {
-        const locked = PAYWALL_ENABLED && !isSubscriber && i >= UNLOCKED_COUNT;
-        return (
-          <GridCard
-            key={entry.slug}
-            imageUrl={entry.hero_image_url}
-            eyebrow={`SPECIAL · ${entry.lens.toUpperCase()}`}
-            titlePrimary={langKo ? entry.title_ko : entry.title_en}
-            titleSecondary={`${personaName(entry.persona_id, langKo)} · ${weekLabel(entry.source_week, langKo)}`}
-            locked={locked}
-            onClick={locked ? onLockedClick : () => onSelectSpecial(entry.slug)}
-            fg={fg}
-            fgMed={fgMed}
-            fgFaint={fgFaint}
-            divider={divider}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
 // ── Curation strip ─────────────────────────────────────────────────────────
 
-/** Every weekly curation, newest first, as thumbnails to slide through: picture, name, week. */
-function CurationStrip({ entries, activeWeek, langKo, onSelect, fg, fgFaint }: {
-  entries: Pick<ArchiveEntry, 'week' | 'title_en' | 'title_ko' | 'hero_image_url'>[];
-  activeWeek: string;
+/** The tab's exhibitions, newest first, as small thumbnails to slide through: picture, name, week.
+ *  `id` is a week for a weekly exhibition and a slug for a special. */
+function CurationStrip({ entries, activeId, langKo, onSelect, fg, fgFaint }: {
+  entries: { id: string; week: string; title_en: string; title_ko: string; hero_image_url: string }[];
+  activeId: string;
   langKo: boolean;
-  onSelect: (week: string) => void;
+  onSelect: (id: string) => void;
   fg: string;
   fgFaint: string;
 }) {
@@ -1241,12 +1011,12 @@ function CurationStrip({ entries, activeWeek, langKo, onSelect, fg, fgFaint }: {
       overscrollBehaviorX: 'contain', padding: '16px clamp(20px,4vw,56px) 4px', scrollPaddingInline: 'clamp(20px,4vw,56px)',
     }}>
       {entries.map((entry) => {
-        const active = entry.week === activeWeek;
+        const active = entry.id === activeId;
         return (
           <button
-            key={entry.week}
+            key={entry.id}
             type="button"
-            onClick={() => onSelect(entry.week)}
+            onClick={() => onSelect(entry.id)}
             style={{
               flex: 'none', width: 'clamp(132px, 34vw, 176px)', scrollSnapAlign: 'start',
               background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer',
@@ -1580,16 +1350,20 @@ export default function WeeklyCurationTab({
         fgLow={fgLow}
         divider={divider}
       />
+      {/* the specials tab slides through specials only; the other tabs through the weekly exhibitions */}
       <CurationStrip
-        entries={[
-          ...(currentFile ? [{ week: currentFile.week, title_en: currentFile.title_en, title_ko: currentFile.title_ko, hero_image_url: currentHero?.image_url ?? '' }] : []),
-          ...archiveEntries,
-        ]}
-        activeWeek={mode === 'special' ? '' : edition?.weekId ?? ''}
+        entries={mode === 'special'
+          ? specialEntries.map((e) => ({ ...e, id: e.slug, week: e.source_week }))
+          : [
+            ...(currentFile ? [{ id: currentFile.week, week: currentFile.week, title_en: currentFile.title_en, title_ko: currentFile.title_ko, hero_image_url: currentHero?.image_url ?? '' }] : []),
+            ...archiveEntries.map((e) => ({ ...e, id: e.week })),
+          ]}
+        activeId={mode === 'special' ? (pastPick?.file as unknown as { slug?: string } | undefined)?.slug ?? '' : edition?.weekId ?? ''}
         langKo={langKo}
-        onSelect={(week) => {
-          if (week === currentFile?.week) { setMode('this-week'); setPastPick(null); }
-          else { setMode('archive'); void handleSelectArchiveWeek(week); }
+        onSelect={(id) => {
+          if (mode === 'special') void handleSelectSpecial(id);
+          else if (id === currentFile?.week) { setMode('this-week'); setPastPick(null); }
+          else { setMode('archive'); void handleSelectArchiveWeek(id); }
         }}
         fg={fg}
         fgFaint={fgFaint}
@@ -1597,50 +1371,10 @@ export default function WeeklyCurationTab({
     </>
   );
 
-  // Over a past week or special: back to the list it came from.
-  const backLink = mode !== 'this-week' && pastPick && !chromeless ? (
-    <div style={{ padding: '14px clamp(20px,4vw,56px) 0' }}>
-      <button
-        type="button"
-        onClick={() => setPastPick(null)}
-        style={{ ...LABEL, fontSize: 10, background: 'none', border: 'none', padding: 0, color: fgLow, cursor: 'pointer' }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = '#D4A547'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = fgLow; }}
-      >
-        ← {mode === 'archive' ? (langKo ? '지난 주 목록' : 'Past weeks') : (langKo ? '특집 목록' : 'Specials')}
-      </button>
-    </div>
-  ) : null;
-
-  const archiveView = (
-    <ArchiveGrid
-      entries={archiveEntries}
-      loading={archiveLoading}
-      langKo={langKo}
-      onSelectWeek={handleSelectArchiveWeek}
-      onLockedClick={() => handleLockedClick('archive')}
-      isSubscriber={isSubscriber}
-      fg={fg}
-      fgMed={fgMed}
-      fgFaint={fgFaint}
-      divider={divider}
-    />
-  );
-
-  const specialView = (
-    <SpecialGrid
-      entries={specialEntries}
-      loading={specialLoading}
-      langKo={langKo}
-      onSelectSpecial={handleSelectSpecial}
-      onLockedClick={() => handleLockedClick('special')}
-      isSubscriber={isSubscriber}
-      fg={fg}
-      fgMed={fgMed}
-      fgFaint={fgFaint}
-      divider={divider}
-    />
-  );
+  // The specials tab has no list page (the strip above is the list): the newest special opens by itself.
+  useEffect(() => {
+    if (mode === 'special' && !pastPick && specialEntries.length > 0) void handleSelectSpecial(specialEntries[0].slug);
+  }, [mode, pastPick, specialEntries, handleSelectSpecial]);
 
   // Rendered alongside every layout branch so it's available regardless
   // of where the click came from.
@@ -1705,24 +1439,23 @@ export default function WeeklyCurationTab({
   // Nothing to show as an edition: a tab's list, this week still loading, or no curation this week.
   if (!edition) {
     const quiet: React.CSSProperties = { padding: 'clamp(40px,6vw,80px)', textAlign: 'center' };
-    const body = mode === 'archive' ? archiveView
-      : mode === 'special' ? specialView
+    const body = mode === 'archive' ? (
+        <div style={{ ...quiet, ...LABEL, fontSize: 11, color: fgFaint }}>{langKo ? '불러오는 중…' : 'Loading…'}</div>
+      )
+      : mode === 'special' ? (
+        <div style={{ ...quiet, ...LABEL, fontSize: 11, color: fgFaint }}>
+          {specialLoading || specialEntries.length > 0 ? (langKo ? '불러오는 중…' : 'Loading…') : (langKo ? '아직 특집 전시가 없습니다.' : 'No specials yet.')}
+        </div>
+      )
       : !currentLoaded ? (
         <div style={{ ...quiet, ...LABEL, fontSize: 11, color: fgFaint }}>
           {langKo ? '이번 주 전시를 불러오는 중…' : "Loading this week's exhibition…"}
         </div>
       ) : (
         <div style={quiet}>
-          <p style={{ ...BODY, fontSize: 15, color: fgMed, margin: '0 0 18px' }}>
+          <p style={{ ...BODY, fontSize: 15, color: fgMed, margin: 0 }}>
             {langKo ? '이번 주 전시는 준비 중입니다.' : "This week's exhibition is on its way."}
           </p>
-          <button
-            type="button"
-            onClick={() => setMode('archive')}
-            style={{ ...LABEL, fontSize: 10, background: 'none', border: 'none', padding: 0, color: '#D4A547', cursor: 'pointer' }}
-          >
-            {langKo ? '지난 전시 보기 →' : 'See past weeks →'}
-          </button>
         </div>
       );
     return <div style={{ paddingBottom: 80 }}>{topNav}{body}{subscribeModal}{authToast}{museumOverlay}</div>;
@@ -1733,7 +1466,6 @@ export default function WeeklyCurationTab({
     return (
       <div style={{ paddingBottom: 80 }}>
         {topNav}
-        {backLink}
         <MobileEditionHeader edition={edition} langKo={langKo} {...tokens} />
 
         {/* Top Save-Curation button — same component as the footer below.
@@ -1800,7 +1532,6 @@ export default function WeeklyCurationTab({
   return (
     <div style={{ paddingBottom: 80 }}>
       {topNav}
-      {backLink}
       <EditionHeader
         edition={edition}
         langKo={langKo}
