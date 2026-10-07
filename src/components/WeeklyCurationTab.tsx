@@ -1,10 +1,10 @@
 // Weekly Curation — editor-curated online exhibition, refreshed every week.
 // Sub-tab of the AI section alongside My Curation & Nearby Exhibition.
 
-import React, { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Lock, ArrowUpRight } from "lucide-react";
+import { ChevronRight, Lock, ArrowUpRight } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
 import {
   fetchCurrentCuration,
@@ -14,11 +14,14 @@ import {
   type SpecialEntry,
 } from "../lib/weekly";
 import { fetchProposal, fetchPublished } from "../lib/weeklyStore";
-import { isoWeek } from "../lib/iso-week";
+import { isoWeek, weekLabel } from "../lib/iso-week";
 import { artistPath } from "../redesign/artwork/WorkDetail";
 import { getArtistDisplayName, useArtistI18n } from "../i18n/artistLocalization";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
+import { ArtworkLightbox } from "./ArtworkLightbox";
+import { PlaylistModal } from "./PlaylistModal";
+import { useLikedArtworkSet } from "../hooks/useLikedArtworkSet";
 import SaveCurationButton from "./SaveCurationButton";
 import RatingEmblems from "./Ratings/RatingEmblems";
 import { museumDisplayName } from "../lib/museum-names";
@@ -79,8 +82,8 @@ export type WeeklyWork = {
 
 export type WeeklyEdition = {
   id: string;
-  week: number;
-  year: number;
+  /** ISO week ("2026-W41"); a special keeps the week its card came from. */
+  weekId: string;
   date: string;
   dateKo: string;
   title: string;
@@ -98,22 +101,15 @@ export type WeeklyEdition = {
 
 
 const PERSONA_NAMES: Record<PersonaId, { en: string; ko: string; role: string }> = {
-  'yuna-choi':     { en: 'Yuna Choi',     ko: '최유나',  role: 'Senior Editor, Armin' },
-  'marco-rinaldi': { en: 'Marco Rinaldi', ko: '마르코 리날디', role: 'Editor at Large, Armin' },
-  'anika-voss':    { en: 'Anika Voss',    ko: '아니카 보스', role: 'Contributing Editor, Armin' },
+  'yuna-choi':     { en: 'Yuna Choi',     ko: '최유나',  role: 'Senior Editor, Colly' },
+  'marco-rinaldi': { en: 'Marco Rinaldi', ko: '마르코 리날디', role: 'Editor at Large, Colly' },
+  'anika-voss':    { en: 'Anika Voss',    ko: '아니카 보스', role: 'Contributing Editor, Colly' },
 };
 
 /** An editor's display name; an unknown id shows as is. */
 function personaName(id: string, langKo: boolean): string {
   const p = PERSONA_NAMES[id as PersonaId];
   return p ? (langKo ? p.ko : p.en) : id;
-}
-
-function parseIsoWeek(weekStr: string): { year: number; week: number } {
-  // e.g. "2026-W19" → { year: 2026, week: 19 }
-  const m = /^(\d{4})-W(\d{1,2})$/.exec(weekStr);
-  if (!m) return { year: new Date().getFullYear(), week: 1 };
-  return { year: parseInt(m[1], 10), week: parseInt(m[2], 10) };
 }
 
 function formatPublishedDate(isoTimestamp: string, langKo: 'ko' | 'en'): string {
@@ -125,14 +121,25 @@ function formatPublishedDate(isoTimestamp: string, langKo: 'ko' | 'en'): string 
   return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
+/** A curation's work in the shape the app's artwork detail reads. */
+function toArtwork(work: WeeklyWork) {
+  return {
+    id: work.id,
+    title: work.title,
+    artist: work.artist,
+    image: work.imageUrl ?? '',
+    museumName: museumDisplayName(work.museum),
+    year: work.year,
+    sourceUrl: work.sourceUrl,
+  };
+}
+
 export function adaptPublishedToEdition(file: WeeklyPublishedFile): WeeklyEdition {
-  const { year, week } = parseIsoWeek(file.week);
-  const persona = PERSONA_NAMES[file.persona_id] ?? { en: file.persona_id, ko: file.persona_id, role: 'Editor, Armin' };
+  const persona = PERSONA_NAMES[file.persona_id] ?? { en: file.persona_id, ko: file.persona_id, role: 'Editor, Colly' };
 
   return {
     id: file.id,
-    week,
-    year,
+    weekId: file.week ?? (file as unknown as { source_week?: string }).source_week ?? '',
     date: formatPublishedDate(file.published_at, 'en'),
     dateKo: formatPublishedDate(file.published_at, 'ko'),
     title: file.title_en,
@@ -335,11 +342,10 @@ function SectionRule({ label, divider }: { label?: string; divider: string }) {
 // ── Edition header ─────────────────────────────────────────────────────────
 
 function EditionHeader({
-  edition, langKo, setLangKo, t, fg, fgMed, fgLow, fgFaint, divider,
+  edition, langKo, t, fg, fgMed, fgLow, fgFaint, divider,
 }: {
   edition: WeeklyEdition;
   langKo: boolean;
-  setLangKo: (v: boolean) => void;
   t: boolean;
   fg: string;
   fgMed: string;
@@ -430,7 +436,7 @@ function EditionHeader({
             ['Theme', edition.themeKo],
             ['Works', `${edition.workCount}점`],
             ['Period', '4 Centuries'],
-            ['Edition', `Week ${edition.week}`],
+            ['Edition', weekLabel(edition.weekId, langKo)],
           ] as [string, string][]).map(([k, v]) => (
             <div key={k} style={{ background: t ? '#FAFAFA' : '#080808', padding: '13px 16px' }}>
               <div style={{ ...LABEL, fontSize: 9, color: fgFaint, marginBottom: 5 }}>{k}</div>
@@ -439,26 +445,11 @@ function EditionHeader({
           ))}
         </div>
 
-        {/* Language toggle */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>Language</span>
-          <div style={{ display: 'flex', border: `1px solid ${divider}` }}>
-            {([['EN', false], ['한국어', true]] as [string, boolean][]).map(([label, isKo]) => (
-              <button key={label} onClick={() => setLangKo(isKo)} style={{
-                padding: '5px 12px',
-                background: langKo === isKo ? accent : 'transparent',
-                color: langKo === isKo ? '#0c0c0a' : fgFaint,
-                border: 'none',
-                cursor: 'pointer',
-                ...LABEL, fontSize: 9,
-                transition: 'background 0.12s, color 0.12s',
-              }}>{label}</button>
-            ))}
-          </div>
           {/* Live indicator */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
             <div style={{ width: 5, height: 5, background: accentText, animation: 'wk-pulse 2s ease-in-out infinite' }} />
-            <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>WEEK {edition.week} · {edition.year}</span>
+            <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{weekLabel(edition.weekId, langKo)}</span>
           </div>
         </div>
       </div>
@@ -725,278 +716,6 @@ function WorkRow({
   );
 }
 
-// ── Weekly Lightbox ────────────────────────────────────────────────────────
-
-function WeeklyLightbox({
-  work, edition, langKo, saved, onSave, onClose, onPrev, onNext, onMuseumClick,
-}: {
-  work: WeeklyWork;
-  edition: WeeklyEdition;
-  langKo: boolean;
-  saved: boolean;
-  onSave: () => void;
-  onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-  onMuseumClick?: (collectionId: string) => void;
-}) {
-  const currentIdx = edition.works.findIndex(w => w.id === work.id);
-  const total = edition.works.length;
-  const atFirst = currentIdx === 0;
-  const atLast = currentIdx === total - 1;
-  const accent = '#D4A547';
-  const [hoverPrev, setHoverPrev] = useState(false);
-  const [hoverNext, setHoverNext] = useState(false);
-  const touchStartX = useRef<number | null>(null);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') onPrev();
-      if (e.key === 'ArrowRight') onNext();
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [onClose, onPrev, onNext]);
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0]?.clientX ?? null;
-  };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const dx = (e.changedTouches[0]?.clientX ?? 0) - touchStartX.current;
-    if (Math.abs(dx) > 50) {
-      if (dx < 0) onNext();
-      else onPrev();
-    }
-    touchStartX.current = null;
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.18 }}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 9000,
-        background: 'rgba(6,6,5,0.97)',
-        backdropFilter: 'blur(16px)',
-        display: 'flex', flexDirection: 'column',
-      }}
-    >
-      {/* Top bar */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '14px 24px', borderBottom: '1px solid rgba(255,255,255,0.07)',
-        flexShrink: 0,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <button onClick={onClose} style={{
-            color: 'rgba(255,255,255,0.5)',
-            display: 'flex', alignItems: 'center', gap: 7,
-            background: 'none', border: 'none', cursor: 'pointer',
-            ...LABEL, fontSize: 10,
-          }}>
-            <X size={15} color="currentColor" /> Close
-          </button>
-          <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.1)' }} />
-          <span style={{ ...LABEL, fontSize: 10, color: 'rgba(244,241,234,0.55)' }}>
-            Weekly Curation · Week {edition.week}
-          </span>
-        </div>
-      </div>
-
-      {/* Body */}
-      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 400px', overflow: 'hidden' }}>
-        {/* Artwork */}
-        <div
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-          style={{
-            position: 'relative',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: 40, overflow: 'hidden',
-          }}
-        >
-          <div style={{
-            maxHeight: '80vh',
-            width: `min(${Math.round(work.aspect * 560)}px, 90%)`,
-          }}>
-            <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} imageUrl={work.imageUrl} alt={`${work.artist} — ${work.title}`} style={{ width: '100%' }} />
-          </div>
-
-          {/* Overlay: Prev */}
-          <button
-            onClick={onPrev}
-            disabled={atFirst}
-            aria-label="Previous artwork"
-            onMouseEnter={() => setHoverPrev(true)}
-            onMouseLeave={() => setHoverPrev(false)}
-            style={{
-              position: 'absolute',
-              left: 24, top: '50%',
-              transform: 'translateY(-50%)',
-              width: 56, height: 56,
-              borderRadius: '50%',
-              background: atFirst
-                ? 'rgba(0,0,0,0.25)'
-                : (hoverPrev ? 'rgba(0,0,0,0.70)' : 'rgba(0,0,0,0.45)'),
-              backdropFilter: 'blur(20px)',
-              border: `1px solid rgba(255,255,255,${atFirst ? 0.08 : (hoverPrev ? 0.32 : 0.18)})`,
-              color: `rgba(255,255,255,${atFirst ? 0.25 : 0.92})`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: atFirst ? 'default' : 'pointer',
-              transition: 'background 0.18s, border-color 0.18s, color 0.18s',
-              opacity: atFirst ? 0.45 : 1,
-              zIndex: 5,
-            }}
-          >
-            <ChevronLeft size={28} strokeWidth={1.75} color="currentColor" />
-          </button>
-
-          {/* Overlay: Next */}
-          <button
-            onClick={onNext}
-            disabled={atLast}
-            aria-label="Next artwork"
-            onMouseEnter={() => setHoverNext(true)}
-            onMouseLeave={() => setHoverNext(false)}
-            style={{
-              position: 'absolute',
-              right: 24, top: '50%',
-              transform: 'translateY(-50%)',
-              width: 56, height: 56,
-              borderRadius: '50%',
-              background: atLast
-                ? 'rgba(0,0,0,0.25)'
-                : (hoverNext ? 'rgba(0,0,0,0.70)' : 'rgba(0,0,0,0.45)'),
-              backdropFilter: 'blur(20px)',
-              border: `1px solid rgba(255,255,255,${atLast ? 0.08 : (hoverNext ? 0.32 : 0.18)})`,
-              color: `rgba(255,255,255,${atLast ? 0.25 : 0.92})`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: atLast ? 'default' : 'pointer',
-              transition: 'background 0.18s, border-color 0.18s, color 0.18s',
-              opacity: atLast ? 0.45 : 1,
-              zIndex: 5,
-            }}
-          >
-            <ChevronRight size={28} strokeWidth={1.75} color="currentColor" />
-          </button>
-
-          {/* Overlay: Position counter */}
-          <div style={{
-            position: 'absolute',
-            bottom: 24, left: '50%',
-            transform: 'translateX(-50%)',
-            padding: '8px 16px',
-            borderRadius: 999,
-            background: 'rgba(0,0,0,0.55)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.15)',
-            color: 'rgba(255,255,255,0.95)',
-            fontFamily: "'Space Mono', monospace",
-            fontSize: 11,
-            letterSpacing: '0.15em',
-            zIndex: 5,
-            pointerEvents: 'none',
-          }}>
-            {String(currentIdx + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-          </div>
-        </div>
-
-        {/* Info panel */}
-        <div style={{
-          borderLeft: '1px solid rgba(255,255,255,0.07)',
-          display: 'flex', flexDirection: 'column', overflowY: 'auto',
-          background: 'rgba(255,255,255,0.02)',
-        }}>
-          <div style={{ padding: '28px 24px', flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
-              <span style={{ ...LABEL, fontSize: 9, background: accent, color: '#000', padding: '3px 8px' }}>
-                Week {edition.week}
-              </span>
-              <span style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)' }}>{edition.dateKo}</span>
-            </div>
-
-            <div style={{ ...LABEL, fontSize: 10, color: accent, marginBottom: 10 }}>
-              {work.artist} ({work.artistKo}) · {work.year}
-            </div>
-
-            <h2 style={{ ...HEADING, fontSize: 22, color: 'rgba(244,241,234,0.96)', lineHeight: 1.1, marginBottom: 5 }}>
-              {langKo ? work.titleKo : work.title}
-            </h2>
-            <p style={{ ...BODY, fontSize: 12, color: 'rgba(244,241,234,0.55)', marginBottom: 22 }}>
-              {langKo ? work.title : work.titleKo}
-            </p>
-
-            <div style={{ height: '0.5px', background: 'rgba(255,255,255,0.07)', marginBottom: 18 }} />
-
-            <p style={{ ...BODY, fontSize: 13, color: 'rgba(244,241,234,0.80)', lineHeight: 1.9, marginBottom: 22 }}>
-              {langKo ? work.descriptionKo : work.description}
-            </p>
-
-            <div style={{ height: '0.5px', background: 'rgba(255,255,255,0.07)', marginBottom: 18 }} />
-
-            {([
-              ['Medium', langKo ? work.mediumKo : work.medium],
-              ['Size', work.dimensions],
-              ['Museum', <MuseumLink
-                collectionId={work.museum}
-                onClick={onMuseumClick}
-                color="rgba(244,241,234,0.80)"
-                size={13}
-              />],
-              ['City', work.museumCity],
-            ] as [string, React.ReactNode][]).map(([k, v]) => (
-              <div key={k} style={{ marginBottom: 12 }}>
-                <div style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)', marginBottom: 3 }}>{k}</div>
-                <div style={{ ...BODY, fontSize: 13, color: 'rgba(244,241,234,0.80)' }}>{v}</div>
-              </div>
-            ))}
-
-            <div style={{ height: '0.5px', background: 'rgba(255,255,255,0.07)', margin: '16px 0' }} />
-
-            <button onClick={onSave} style={{
-              width: '100%',
-              display: 'flex', alignItems: 'center', gap: 9, padding: '11px 14px',
-              border: `1px solid ${saved ? accent : 'rgba(255,255,255,0.12)'}`,
-              background: 'transparent', cursor: 'pointer',
-              color: saved ? accent : 'rgba(244,241,234,0.80)',
-              ...LABEL, fontSize: 10,
-              transition: 'border-color 0.15s, color 0.15s',
-            }}>
-              <LikeIcon liked={saved} size={14} />
-              {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
-            </button>
-          </div>
-
-          {/* Progress dots */}
-          <div style={{
-            borderTop: '1px solid rgba(255,255,255,0.07)',
-            padding: '14px 18px',
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          }}>
-            <span style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)' }}>
-              {String(currentIdx + 1).padStart(2, '0')} of {edition.workCount} works
-            </span>
-            <div style={{ display: 'flex', gap: 4 }}>
-              {edition.works.map((_, i) => (
-                <div key={i} style={{
-                  width: i === currentIdx ? 14 : 4,
-                  height: 4,
-                  background: i === currentIdx ? accent : 'rgba(255,255,255,0.18)',
-                  transition: 'width 0.22s, background 0.22s',
-                }} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 // ── Mobile edition header ──────────────────────────────────────────────────
 
 function MobileEditionHeader({
@@ -1170,178 +889,6 @@ function MobileWorkCard({
         </div>
       </div>
     </article>
-  );
-}
-
-// ── Mobile work detail (full-screen) ──────────────────────────────────────
-
-function MobileWorkDetail({
-  work, edition, langKo, saved, onSave, onClose, onPrev, onNext, currentIdx, onMuseumClick,
-  t, fg, fgMed, fgLow, fgFaint, divider,
-}: {
-  work: WeeklyWork; edition: WeeklyEdition; langKo: boolean;
-  saved: boolean; onSave: () => void; onClose: () => void;
-  onPrev: () => void; onNext: () => void; currentIdx: number;
-  onMuseumClick?: (collectionId: string) => void;
-  t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
-}) {
-  const accent = '#D4A547';
-  const accentText = t ? '#8A6B1F' : '#D4A547';
-  const bg = t ? '#FAFAFA' : '#080808';
-  const bg2 = t ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.025)';
-  const total = edition.works.length;
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') onPrev();
-      if (e.key === 'ArrowRight') onNext();
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [onClose, onPrev, onNext]);
-
-  return (
-    <motion.div
-      initial={{ x: '100%' }}
-      animate={{ x: 0 }}
-      exit={{ x: '100%' }}
-      transition={{ type: 'spring', stiffness: 380, damping: 36 }}
-      style={{
-        position: 'fixed', inset: 0, zIndex: 9000,
-        background: bg,
-        display: 'flex', flexDirection: 'column',
-        overflowY: 'auto',
-      }}
-    >
-      {/* Top bar — safe-area-aware so Back/Save clear the notch */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        paddingTop: 'calc(env(safe-area-inset-top, 0px) + 10px)',
-        paddingBottom: 10,
-        paddingLeft: 16,
-        paddingRight: 16,
-        borderBottom: `1px solid ${divider}`,
-        background: bg2,
-        flexShrink: 0,
-        position: 'sticky', top: 0, zIndex: 10,
-      }}>
-        <button onClick={onClose} style={{
-          display: 'flex', alignItems: 'center', gap: 6,
-          background: 'none', border: 'none', cursor: 'pointer',
-          ...LABEL, fontSize: 10, color: fgLow,
-        }}>
-          <ChevronLeft size={14} color="currentColor" /> Back
-        </button>
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: fgFaint }}>
-          {String(currentIdx + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
-        </span>
-        <button onClick={onSave} style={{
-          background: 'none', border: 'none', cursor: 'pointer',
-          ...LABEL, fontSize: 10,
-          color: saved ? accentText : fgLow,
-          display: 'flex', alignItems: 'center', gap: 5,
-        }}>
-          <LikeIcon liked={saved} size={14} />
-          {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
-        </button>
-      </div>
-
-      {/* Artwork image with prev/next arrows */}
-      <div style={{ position: 'relative', background: t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.03)' }}>
-        <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} imageUrl={work.imageUrl} alt={`${work.artist} — ${work.title}`} style={{ width: '100%' }} />
-        <button onClick={onPrev} disabled={currentIdx === 0} style={{
-          position: 'absolute', left: 0, top: 0, bottom: 0, width: 48,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'none', border: 'none', cursor: currentIdx === 0 ? 'default' : 'pointer',
-          opacity: currentIdx === 0 ? 0.2 : 0.75,
-        }}>
-          <ChevronLeft size={22} color={fg} />
-        </button>
-        <button onClick={onNext} disabled={currentIdx === total - 1} style={{
-          position: 'absolute', right: 0, top: 0, bottom: 0, width: 48,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: 'none', border: 'none', cursor: currentIdx === total - 1 ? 'default' : 'pointer',
-          opacity: currentIdx === total - 1 ? 0.2 : 0.75,
-        }}>
-          <ChevronRight size={22} color={fg} />
-        </button>
-      </div>
-
-      {/* Progress dots */}
-      <div style={{
-        display: 'flex', justifyContent: 'center', gap: 4, padding: '10px 0',
-        background: t ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.03)',
-      }}>
-        {Array.from({ length: total }).map((_, i) => (
-          <div key={i} style={{
-            width: i === currentIdx ? 14 : 4, height: 4,
-            background: i === currentIdx ? accent : (t ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.18)'),
-            transition: 'width 0.22s',
-          }} />
-        ))}
-      </div>
-
-      {/* Info */}
-      <div style={{ padding: '18px 16px', paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 48px)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-          <span style={{ ...LABEL, fontSize: 9, background: accent, color: '#0c0c0a', padding: '3px 8px' }}>
-            Week {edition.week}
-          </span>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
-        </div>
-
-        <div style={{ ...LABEL, fontSize: 11, color: accentText, marginBottom: 8 }}>
-          {work.artist} ({work.artistKo}) · {work.year}
-        </div>
-        <h2 style={{ ...HEADING, fontSize: 20, color: fg, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: 4 }}>
-          {langKo ? work.titleKo : work.title}
-        </h2>
-        <p style={{ ...BODY, fontSize: 12, color: fgFaint, marginBottom: 16 }}>
-          {langKo ? work.title : work.titleKo}
-        </p>
-
-        <div style={{ height: '0.5px', background: divider, marginBottom: 16 }} />
-
-        <p style={{ ...BODY, fontSize: 14, color: fgMed, lineHeight: 1.85, marginBottom: 18 }}>
-          {langKo ? work.descriptionKo : work.description}
-        </p>
-
-        <div style={{ height: '0.5px', background: divider, marginBottom: 16 }} />
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
-          {([
-            ['Medium', langKo ? work.mediumKo : work.medium],
-            ['Size', work.dimensions],
-            ['Museum', <MuseumLink
-              collectionId={work.museum}
-              onClick={onMuseumClick}
-              color={fgMed}
-              size={13}
-            />],
-            ['City', work.museumCity],
-          ] as [string, React.ReactNode][]).map(([k, v]) => (
-            <div key={k} style={{ display: 'flex', gap: 12 }}>
-              <span style={{ ...LABEL, fontSize: 9, color: fgFaint, minWidth: 50, paddingTop: 2 }}>{k}</span>
-              <span style={{ ...BODY, fontSize: 13, color: fgMed, flex: 1, lineHeight: 1.4 }}>{v}</span>
-            </div>
-          ))}
-        </div>
-
-        <button onClick={onSave} style={{
-          width: '100%', padding: '13px 0',
-          border: `1px solid ${saved ? accent : divider}`,
-          background: 'transparent', cursor: 'pointer',
-          color: saved ? accentText : fgMed,
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-          ...LABEL, fontSize: 11,
-          transition: 'border-color 0.15s, color 0.15s',
-        }}>
-          <LikeIcon liked={saved} size={15} />
-          {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
-        </button>
-      </div>
-    </motion.div>
   );
 }
 
@@ -1585,13 +1132,12 @@ function ArchiveGrid({
       {entries.map((entry, i) => {
         // Subscribers see everything; otherwise the position-based rule applies.
         const locked = PAYWALL_ENABLED && !isSubscriber && i >= UNLOCKED_COUNT;
-        const weekLabel = entry.week.replace('-W', ' · WEEK ');
-        const worksCount = entry.works_count;
+                const worksCount = entry.works_count;
         return (
           <GridCard
             key={entry.week}
             imageUrl={entry.hero_image_url}
-            eyebrow={weekLabel}
+            eyebrow={weekLabel(entry.week, langKo)}
             titlePrimary={langKo ? entry.title_ko : entry.title_en}
             titleSecondary={`${personaName(entry.persona_id, langKo)} · ${worksCount}${langKo ? '점' : ' works'}`}
             locked={locked}
@@ -1663,7 +1209,7 @@ function SpecialGrid({
             imageUrl={entry.hero_image_url}
             eyebrow={`SPECIAL · ${entry.lens.toUpperCase()}`}
             titlePrimary={langKo ? entry.title_ko : entry.title_en}
-            titleSecondary={`${personaName(entry.persona_id, langKo)} · ${entry.source_week}`}
+            titleSecondary={`${personaName(entry.persona_id, langKo)} · ${weekLabel(entry.source_week, langKo)}`}
             locked={locked}
             onClick={locked ? onLockedClick : () => onSelectSpecial(entry.slug)}
             fg={fg}
@@ -1671,6 +1217,54 @@ function SpecialGrid({
             fgFaint={fgFaint}
             divider={divider}
           />
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Curation strip ─────────────────────────────────────────────────────────
+
+/** Every weekly curation, newest first, as thumbnails to slide through: picture, name, week. */
+function CurationStrip({ entries, activeWeek, langKo, onSelect, fg, fgFaint }: {
+  entries: Pick<ArchiveEntry, 'week' | 'title_en' | 'title_ko' | 'hero_image_url'>[];
+  activeWeek: string;
+  langKo: boolean;
+  onSelect: (week: string) => void;
+  fg: string;
+  fgFaint: string;
+}) {
+  if (entries.length === 0) return null;
+  return (
+    <div style={{
+      display: 'flex', gap: 12, overflowX: 'auto', scrollSnapType: 'x mandatory', scrollbarWidth: 'none',
+      overscrollBehaviorX: 'contain', padding: '16px clamp(20px,4vw,56px) 4px', scrollPaddingInline: 'clamp(20px,4vw,56px)',
+    }}>
+      {entries.map((entry) => {
+        const active = entry.week === activeWeek;
+        return (
+          <button
+            key={entry.week}
+            type="button"
+            onClick={() => onSelect(entry.week)}
+            style={{
+              flex: 'none', width: 'clamp(132px, 34vw, 176px)', scrollSnapAlign: 'start',
+              background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer',
+            }}
+          >
+            <div style={{ aspectRatio: '4 / 3', overflow: 'hidden', background: '#111', outline: active ? '1px solid #D4A547' : 'none' }}>
+              {entry.hero_image_url && (
+                <img src={entry.hero_image_url} alt="" loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              )}
+            </div>
+            <div style={{
+              ...BODY, fontSize: 13, fontWeight: 500, color: active ? '#D4A547' : fg, marginTop: 8,
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+            }}>
+              {langKo ? entry.title_ko : entry.title_en}
+            </div>
+            <div style={{ ...BODY, fontSize: 11, color: fgFaint, marginTop: 2 }}>{weekLabel(entry.week, langKo)}</div>
+          </button>
         );
       })}
     </div>
@@ -1710,9 +1304,11 @@ export default function WeeklyCurationTab({
   const [currentLoaded, setCurrentLoaded] = useState(false);
   // A past week or special opened from its list; shown under that tab, never under "this week".
   const [pastPick, setPastPick] = useState<{ edition: WeeklyEdition; file: WeeklyPublishedFile } | null>(null);
-  const [selectedWork, setSelectedWork] = useState<WeeklyWork | null>(null);
-  const [langKo, setLangKo] = useState(language === 'ko');
-  useEffect(() => { setLangKo(language === 'ko'); }, [language]);
+  // The work whose detail is open: the app's own artwork detail, so it may move on to a similar work outside this curation.
+  const [viewing, setViewing] = useState<any | null>(null);
+  const [savingToPlaylist, setSavingToPlaylist] = useState<any | null>(null);
+  const { toggleLike } = useLikedArtworkSet();
+  const langKo = language === 'ko';
   // Per-work saves persist to Firestore (users/{uid}/liked_artworks). The
   // local Set used to live here was non-persistent and shared no state with
   // the rest of the app; now we subscribe to the user's likes via the hook
@@ -1928,7 +1524,26 @@ export default function WeeklyCurationTab({
     [editionFile, langKo, likedIds],
   );
 
-  const currentIdx = selectedWork && edition ? edition.works.findIndex(w => w.id === selectedWork.id) : -1;
+  // A work's detail, as everywhere in the app (like, save to a playlist, the museum's page, similar works).
+  const workDetail = viewing && (
+    <>
+      <ArtworkLightbox
+        artwork={viewing}
+        onClose={() => setViewing(null)}
+        isLiked={likedIds.has(viewing.id)}
+        onToggleLike={(_event, artwork) => {
+          const work = edition?.works.find((w) => w.id === artwork.id);
+          void (work ? toggleSave(work) : toggleLike(artwork));
+        }}
+        onSaveToPlaylist={setSavingToPlaylist}
+        hideMuseumAction
+        hidePurchaseAction
+        likedArtworksList={edition?.works.map(toArtwork) ?? []}
+        onChangeArtwork={setViewing}
+      />
+      {savingToPlaylist && <PlaylistModal isOpen onClose={() => setSavingToPlaylist(null)} item={savingToPlaylist} itemType="artwork" />}
+    </>
+  );
 
   const tokens = { t, fg, fgMed, fgLow, fgFaint, divider };
 
@@ -1954,15 +1569,32 @@ export default function WeeklyCurationTab({
   // When chromeless (standalone preview from /admin/weekly/preview), the
   // This Week / Archive / Special strip is suppressed — the page caller
   // already has its own header chrome (back button etc.).
+  const currentHero = currentFile?.works.find((w) => w.role === 'hero') ?? currentFile?.works[0];
   const topNav = chromeless ? null : (
-    <WeeklyTopNav
-      mode={mode}
-      setMode={(m) => { setMode(m); setPastPick(null); }}
-      langKo={langKo}
-      fg={fg}
-      fgLow={fgLow}
-      divider={divider}
-    />
+    <>
+      <WeeklyTopNav
+        mode={mode}
+        setMode={(m) => { setMode(m); setPastPick(null); }}
+        langKo={langKo}
+        fg={fg}
+        fgLow={fgLow}
+        divider={divider}
+      />
+      <CurationStrip
+        entries={[
+          ...(currentFile ? [{ week: currentFile.week, title_en: currentFile.title_en, title_ko: currentFile.title_ko, hero_image_url: currentHero?.image_url ?? '' }] : []),
+          ...archiveEntries,
+        ]}
+        activeWeek={mode === 'special' ? '' : edition?.weekId ?? ''}
+        langKo={langKo}
+        onSelect={(week) => {
+          if (week === currentFile?.week) { setMode('this-week'); setPastPick(null); }
+          else { setMode('archive'); void handleSelectArchiveWeek(week); }
+        }}
+        fg={fg}
+        fgFaint={fgFaint}
+      />
+    </>
   );
 
   // Over a past week or special: back to the list it came from.
@@ -2118,7 +1750,7 @@ export default function WeeklyCurationTab({
           langKo={langKo}
           saved={likedIds.has(edition.works[0].id)}
           onSave={() => toggleSave(edition.works[0])}
-          onClick={() => setSelectedWork(edition.works[0])}
+          onClick={() => setViewing(toArtwork(edition.works[0]))}
           onMuseumClick={openMuseum}
           {...tokens}
         />
@@ -2143,7 +1775,7 @@ export default function WeeklyCurationTab({
               langKo={langKo}
               saved={likedIds.has(work.id)}
               onSave={() => toggleSave(work)}
-              onClick={() => setSelectedWork(work)}
+              onClick={() => setViewing(toArtwork(work))}
               onMuseumClick={openMuseum}
               {...tokens}
             />
@@ -2154,23 +1786,7 @@ export default function WeeklyCurationTab({
           <SaveCurationButton file={editionFile} langKo={langKo} />
         )}
 
-        <AnimatePresence>
-          {selectedWork && (
-            <MobileWorkDetail
-              work={selectedWork}
-              edition={edition}
-              langKo={langKo}
-              saved={likedIds.has(selectedWork.id)}
-              onSave={() => toggleSave(selectedWork)}
-              onClose={() => setSelectedWork(null)}
-              onPrev={() => { if (currentIdx > 0) setSelectedWork(edition.works[currentIdx - 1]); }}
-              onNext={() => { if (currentIdx < edition.works.length - 1) setSelectedWork(edition.works[currentIdx + 1]); }}
-              currentIdx={currentIdx}
-              onMuseumClick={openMuseum}
-              {...tokens}
-            />
-          )}
-        </AnimatePresence>
+        {workDetail}
         {subscribeModal}
 
         {authToast}
@@ -2188,7 +1804,6 @@ export default function WeeklyCurationTab({
       <EditionHeader
         edition={edition}
         langKo={langKo}
-        setLangKo={setLangKo}
         {...tokens}
       />
 
@@ -2206,7 +1821,7 @@ export default function WeeklyCurationTab({
         langKo={langKo}
         saved={likedIds.has(edition.works[0].id)}
         onSave={() => toggleSave(edition.works[0])}
-        onClick={() => setSelectedWork(edition.works[0])}
+        onClick={() => setViewing(toArtwork(edition.works[0]))}
         onMuseumClick={openMuseum}
         {...tokens}
       />
@@ -2222,7 +1837,7 @@ export default function WeeklyCurationTab({
               langKo={langKo}
               saved={likedIds.has(work.id)}
               onSave={() => toggleSave(work)}
-              onClick={() => setSelectedWork(work)}
+              onClick={() => setViewing(toArtwork(work))}
               onMuseumClick={openMuseum}
               {...tokens}
             />
@@ -2234,25 +1849,7 @@ export default function WeeklyCurationTab({
         <SaveCurationButton file={editionFile} langKo={langKo} />
       )}
 
-      <AnimatePresence>
-        {selectedWork && (
-          <WeeklyLightbox
-            work={selectedWork}
-            edition={edition}
-            langKo={langKo}
-            saved={likedIds.has(selectedWork.id)}
-            onSave={() => toggleSave(selectedWork)}
-            onClose={() => setSelectedWork(null)}
-            onPrev={() => {
-              if (currentIdx > 0) setSelectedWork(edition.works[currentIdx - 1]);
-            }}
-            onNext={() => {
-              if (currentIdx < edition.works.length - 1) setSelectedWork(edition.works[currentIdx + 1]);
-            }}
-            onMuseumClick={openMuseum}
-          />
-        )}
-      </AnimatePresence>
+        {workDetail}
       {subscribeModal}
 
       {authToast}

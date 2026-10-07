@@ -28,13 +28,13 @@ export function weekRange(week: string): { start: Date; end: Date } {
   return { start, end };
 }
 
-/** "2026-W41" → "10월 2주차 (10/5~11)": the month and week-of-month of the week's Thursday. */
-export function weekLabel(week: string): string {
-  if (!/^\d{4}-W\d{2}$/.test(week)) return week;
-  const { start, end } = weekRange(week);
-  const thu = new Date(start);
-  thu.setUTCDate(start.getUTCDate() + 3);
+/** "2026-W41" → "10월 2주차 (W41)" (en: "Oct week 2 (W41)"): the month and week-of-month of the week's Thursday. */
+export function weekLabel(week: string, ko = true): string {
+  const m = /^\d{4}-W(\d{2})$/.exec(week ?? '');
+  if (!m) return week ?? '';
+  const thu = new Date(weekRange(week).start);
+  thu.setUTCDate(thu.getUTCDate() + 3);
   const nth = Math.ceil(thu.getUTCDate() / 7);
-  const endDay = end.getUTCMonth() === start.getUTCMonth() ? `${end.getUTCDate()}` : `${end.getUTCMonth() + 1}/${end.getUTCDate()}`;
-  return `${thu.getUTCMonth() + 1}월 ${nth}주차 (${start.getUTCMonth() + 1}/${start.getUTCDate()}~${endDay})`;
+  const month = ko ? `${thu.getUTCMonth() + 1}월` : thu.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
+  return ko ? `${month} ${nth}주차 (W${m[1]})` : `${month} week ${nth} (W${m[1]})`;
 }
