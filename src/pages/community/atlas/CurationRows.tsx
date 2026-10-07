@@ -16,6 +16,10 @@ import { usePublicProfiles, type PublicProfile } from "../../../features/communi
 import { useBlockedUsers } from "../../../features/community/moderation";
 import { listSharedPlaylists, sharedPlaylistPath } from "../../../features/playlists/sharedPlaylists";
 import { getOptimizedImageUrl } from "../../../utils/imageProxy";
+import { ArtworkLightbox } from "../../../components/ArtworkLightbox";
+import { PlaylistModal } from "../../../components/PlaylistModal";
+import { useLikedArtworkSet } from "../../../hooks/useLikedArtworkSet";
+import { getArtistDisplayName, useArtistI18n } from "../../../i18n/artistLocalization";
 import { two } from "./shared";
 
 const STRIP = 12;
@@ -107,6 +111,31 @@ export default function CurationRows({ ko }: { ko: boolean }) {
   );
 }
 
+/** A work's detail, as everywhere in the app: like, save, and on to the next work of the same curation.
+    Mounted only while a work is open, so a page of rows keeps no like listeners of its own. */
+function WorkDetail({ work, works, onChange, onClose }: {
+  work: CollectedWork; works: CollectedWork[]; onChange: (next: CollectedWork | null) => void; onClose: () => void;
+}) {
+  const { isLiked, toggleLike } = useLikedArtworkSet();
+  const [saving, setSaving] = useState<CollectedWork | null>(null);
+  return (
+    <>
+      <ArtworkLightbox
+        artwork={work}
+        onClose={onClose}
+        isLiked={isLiked(work.id)}
+        onToggleLike={(_event, artwork) => void toggleLike(artwork)}
+        onSaveToPlaylist={(artwork) => setSaving(artwork)}
+        hideMuseumAction
+        hidePurchaseAction
+        likedArtworksList={works}
+        onChangeArtwork={onChange}
+      />
+      {saving && <PlaylistModal isOpen onClose={() => setSaving(null)} item={saving} itemType="artwork" />}
+    </>
+  );
+}
+
 function CurationRow({ row, card, ko, uid, following }: {
   row: Row; card?: PublicProfile; ko: boolean; uid: string | null; following: boolean;
 }) {
@@ -114,6 +143,7 @@ function CurationRow({ row, card, ko, uid, following }: {
   const [open, setOpen] = useState(false);
   const [all, setAll] = useState<CollectedWork[] | null>(row.all);
   const [busy, setBusy] = useState(false);
+  const [viewing, setViewing] = useState<CollectedWork | null>(null);
   const name = card?.name || (ko ? "익명" : "Unknown");
   const mine = uid === row.ownerUid;
   /* liked works are "<name>'s curation"; a shared playlist keeps its own name */
@@ -144,20 +174,30 @@ function CurationRow({ row, card, ko, uid, following }: {
   };
 
   const slide = (dir: 1 | -1) => strip.current?.scrollBy({ left: dir * strip.current.clientWidth * 0.8, behavior: "smooth" });
-  /* a work as the app's lists show one: the picture, then its title and artist under it */
+  const artistMap = useArtistI18n();
+  const picture = (w: CollectedWork, width: number) => w.image && (
+    <img src={getOptimizedImageUrl(String(w.image), width)} alt="" loading="lazy" decoding="async"
+      onError={(event) => { event.currentTarget.style.visibility = "hidden"; }} />
+  );
+  const words = (w: CollectedWork) => (
+    <span className="ca-crow__cap">
+      <b>{String(w.title || (ko ? "제목 없음" : "Untitled"))}</b>
+      {w.artist && <small>{getArtistDisplayName(String(w.artist), ko ? "ko" : "en", artistMap)}</small>}
+    </span>
+  );
+  /* in the strip: the picture, then its title and artist under it. Pressing a work opens its detail. */
   const tile = (w: CollectedWork, i: number) => (
-    <Link key={`${w.id}-${i}`} to={row.path} className="ca-crow__work">
-      <span className="ca-crow__shot">
-        {w.image && (
-          <img src={getOptimizedImageUrl(String(w.image), 240)} alt="" loading="lazy" decoding="async"
-            onError={(event) => { event.currentTarget.style.visibility = "hidden"; }} />
-        )}
-      </span>
-      <span className="ca-crow__cap">
-        <b>{String(w.title || (ko ? "제목 없음" : "Untitled"))}</b>
-        {w.artist && <small>{String(w.artist)}</small>}
-      </span>
-    </Link>
+    <button type="button" key={`${w.id}-${i}`} className="ca-crow__work" onClick={() => setViewing(w)}>
+      <span className="ca-crow__shot">{picture(w, 240)}</span>
+      {words(w)}
+    </button>
+  );
+  /* opened whole: My Page's grid - the picture filling its square, title and artist on it at the lower left */
+  const card5 = (w: CollectedWork, i: number) => (
+    <button type="button" key={`${w.id}-${i}`} className="ca-crow__card" onClick={() => setViewing(w)}>
+      {picture(w, 400)}
+      {words(w)}
+    </button>
   );
 
   return (
@@ -203,10 +243,11 @@ function CurationRow({ row, card, ko, uid, following }: {
         </div>
       ) : (
         <div className="ca-crow__all">
-          {all ? <div className="ca-crow__grid">{all.map(tile)}</div> : <p className="ca-empty" role="status">{ko ? "불러오는 중…" : "Loading…"}</p>}
+          {all ? <div className="ca-crow__grid">{all.map(card5)}</div> : <p className="ca-empty" role="status">{ko ? "불러오는 중…" : "Loading…"}</p>}
           <button type="button" className="ca-cact ca-crow__fold" onClick={() => setOpen(false)}>{ko ? "접기" : "Fold"}</button>
         </div>
       )}
+      {viewing && <WorkDetail work={viewing} works={all ?? row.works} onChange={setViewing} onClose={() => setViewing(null)} />}
     </li>
   );
 }

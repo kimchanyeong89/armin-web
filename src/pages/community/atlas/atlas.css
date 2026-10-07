@@ -507,7 +507,7 @@
 .ca-crow__strip::-webkit-scrollbar { display: none; }
 .ca-crow__strip > * { flex: none; width: clamp(104px, 28vw, 150px); scroll-snap-align: start; }
 /* a work: its picture square, its title and artist under it */
-.ca .ca-crow__work { display: grid; gap: 7px; align-content: start; min-width: 0; color: inherit; }
+.ca .ca-crow__work { display: grid; gap: 7px; align-content: start; min-width: 0; color: inherit; text-align: left; }
 .ca-crow__shot { display: block; aspect-ratio: 1; overflow: hidden; border-radius: 8px; background: var(--soft); }
 .ca-crow__work img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); transition: filter .3s ease, transform .4s ease; }
 .ca-crow__cap { display: grid; gap: 2px; min-width: 0; }
@@ -526,8 +526,18 @@
 .ca-crow__nav--next { right: 6px; }
 @media (hover: hover) { .ca-crow__lane:hover .ca-crow__nav { display: grid; } }
 .ca-crow__all { display: grid; gap: 10px; }
-.ca-crow__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
-.ca-crow__grid { row-gap: 14px; }
+/* opened whole, as My Page lists works: squares edge to edge, five across at most, the title and
+   artist on the picture at the lower left over a dark fade */
+.ca-crow__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+@media (min-width: 768px) { .ca-crow__grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.ca .ca-crow__card { position: relative; display: block; aspect-ratio: 1; overflow: hidden; background: var(--soft); text-align: left; }
+.ca-crow__card img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.ca-crow__card:hover img { transform: scale(1.04); }
+.ca-crow__card::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(0,0,0,.76) 0%, transparent 54%); }
+.ca-crow__card .ca-crow__cap { position: absolute; left: 9px; right: 9px; bottom: 8px; z-index: 1; }
+.ca-crow__card .ca-crow__cap b { color: #fff; font-size: 12.5px; }
+.ca-crow__card .ca-crow__cap small { color: rgba(255,255,255,.72); }
 .ca-crow__fold { justify-self: end; }
 
 /* an attachment's artist and museum: underlined links to their pages */
