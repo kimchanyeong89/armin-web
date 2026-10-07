@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { AppLanguage } from "../contexts/LanguageContext";
 import { getCanonicalName, prettifyArtistName } from "../utils/canonicalArtist";
-import { artistFileKey } from "../utils/artistKey.js";
+import { artistFileKey, artistShardOf } from "../utils/artistKey.js";
 
 /**
  * 작가명 한국어화. 권위 데이터(Wikidata ko 레이블)만 사용한다.
@@ -20,7 +20,40 @@ let cache: ArtistI18nMap | null = null;
 /* Korean names read from the head of the artists' Korean bios (scripts/i18n/build-artist-bio-names.mjs),
    keyed by artistFileKey: shown when Wikidata has no label, never used to read a Korean search */
 let bioNames: Record<string, string> = {};
+/* Korean spellings for everyone else (scripts/i18n/build-artist-ko-names.mts), same key, shown last:
+   artists with a page of their own come in one file, the long tail in 512 shards read when one of
+   its artists is first shown */
+let koNames: Record<string, string> = {};
+const koShards = new Map<string, Record<string, string> | null>(); // null while it is on its way
+const shardListeners = new Set<() => void>();
+let shardNotice: ReturnType<typeof setTimeout> | null = null;
 let inflight: Promise<ArtistI18nMap> | null = null;
+
+/** The long-tail Korean spelling for a key, if its shard is here; else asks for the shard. */
+function tailName(key: string): string | undefined {
+  const id = artistShardOf(key);
+  const shard = koShards.get(id);
+  if (shard) return shard[key];
+  if (shard === undefined && typeof fetch === "function") {
+    koShards.set(id, null);
+    fetch(`/data/i18n/artist-names-ko/${id}.json`)
+      .then((res) => (res.ok ? res.json() : {}))
+      .catch(() => ({}))
+      .then((names: Record<string, string>) => {
+        koShards.set(id, names && typeof names === "object" ? names : {});
+        /* several shards land together when a grid opens: tell the screens once */
+        if (!shardNotice) {
+          shardNotice = setTimeout(() => {
+            shardNotice = null;
+            /* a new map object, so whatever memoises on the map draws the names again */
+            if (cache) cache = { ...cache };
+            shardListeners.forEach((tell) => tell());
+          }, 60);
+        }
+      });
+  }
+  return undefined;
+}
 
 function normalize(name: string): string {
   return name.toLowerCase().replace(/\s+/g, " ").trim();
@@ -38,8 +71,12 @@ function loadArtistMap(): Promise<ArtistI18nMap> {
     .then((res) => (res.ok ? res.json() : {}))
     .then((names: Record<string, string>) => { bioNames = names && typeof names === "object" ? names : {}; })
     .catch(() => {});
-  inflight = Promise.all([fetch("/data/i18n/artists.json", { cache: "no-cache" }).then((res) => (res.ok ? res.json() : {})), bio])
-    .then(([raw]: [Record<string, ArtistEntry>, unknown]) => {
+  const ko = fetch("/data/i18n/artist-names-ko.json", { cache: "no-cache" })
+    .then((res) => (res.ok ? res.json() : {}))
+    .then((names: Record<string, string>) => { koNames = names && typeof names === "object" ? names : {}; })
+    .catch(() => {});
+  inflight = Promise.all([fetch("/data/i18n/artists.json", { cache: "no-cache" }).then((res) => (res.ok ? res.json() : {})), bio, ko])
+    .then(([raw]: [Record<string, ArtistEntry>, unknown, unknown]) => {
       const map: ArtistI18nMap = {};
       for (const [name, entry] of Object.entries(raw)) {
         if (entry && entry.name_ko) map[normalize(name)] = entry.name_ko;
@@ -101,9 +138,13 @@ export function getArtistDisplayName(
     }
   }
   // 4) No Wikidata label: the Korean name the artist's Korean bio opens with.
-  const fromBio = bioNames[artistFileKey(value)];
+  const key = artistFileKey(value);
+  const fromBio = bioNames[key];
   if (fromBio) return fromBio;
-  // No Korean name at all — fall back to the normalized English display
+  // 5) Everyone else: the Korean spelling of the name (official usage where there is one, else its sound).
+  const spelled = koNames[key] || (key ? tailName(key) : undefined);
+  if (spelled) return spelled;
+  // No Korean name (yet) — fall back to the normalized English display
   // form (un-inverted) instead of the raw "Last, First" the corpus stored.
   return prettifyArtistName(value);
 }
@@ -152,6 +193,12 @@ export function useArtistI18n(): ArtistI18nMap | null {
     return () => {
       active = false;
     };
+  }, []);
+  /* a long-tail shard arrived: draw again with the names it brought */
+  useEffect(() => {
+    const tell = () => setMap(cache);
+    shardListeners.add(tell);
+    return () => { shardListeners.delete(tell); };
   }, []);
   return map;
 }

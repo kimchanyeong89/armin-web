@@ -15,7 +15,7 @@ import {
 } from "../../../features/collectors/publicCollection";
 import { useLikedArtworkSet } from "../../../hooks/useLikedArtworkSet";
 import CurationPublishSheet from "../../../features/collectors/CurationPublishSheet";
-import { prettifyArtistName } from "../../../utils/canonicalArtist";
+import { getArtistDisplayName, useArtistI18n } from "../../../i18n/artistLocalization";
 import { getOptimizedImageUrl } from "../../../utils/imageProxy";
 import { two, useHomeTheme } from "./shared";
 import "./atlas.css";
@@ -35,6 +35,7 @@ export default function AtlasCollectorPage() {
   const { user } = useAuth();
   const { language } = useLanguage();
   const ko = language === "ko";
+  const artistMap = useArtistI18n();
   const isLight = useHomeTheme();
   const { isLiked, toggleLike } = useLikedArtworkSet();
   /* undefined while loading; null when it could not be read */
@@ -109,7 +110,7 @@ export default function AtlasCollectorPage() {
               <span className="ca-pl__shade" aria-hidden="true" />
               <span className="mp-name-line">
                 <b>{item.title}</b>
-                <small>{prettifyArtistName(item.artist) || item.museumName}</small>
+                <small>{getArtistDisplayName(item.artist, language, artistMap) || item.museumName}</small>
               </span>
             </button>
           </li>

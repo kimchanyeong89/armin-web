@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ChevronLeft, ChevronRight, Maximize2, Minimize2, Pause, Play, X } from 'lucide-react';
 import { getOptimizedImageUrl } from '../utils/imageProxy';
-import { prettifyArtistName } from '../utils/canonicalArtist';
+import { getArtistDisplayName, useArtistI18n } from '../i18n/artistLocalization';
 import { useLanguage } from '../contexts/LanguageContext';
 import './slideshow.css';
 
@@ -28,6 +28,7 @@ const durationLabel = (ms: number, ko: boolean) =>
 const Slideshow: React.FC<SlideshowProps> = ({ artworks, onClose }) => {
     const { t, language } = useLanguage();
     const ko = language === 'ko';
+    const artistMap = useArtistI18n();
     const [order, setOrder] = useState<any[]>([]);
     const [index, setIndex] = useState(0);
     const [playing, setPlaying] = useState(true);
@@ -198,7 +199,7 @@ const Slideshow: React.FC<SlideshowProps> = ({ artworks, onClose }) => {
                     <div className="ss__caption">
                         <h2>{work.title}</h2>
                         <p>
-                            {prettifyArtistName(work.artist)}
+                            {getArtistDisplayName(work.artist, language, artistMap)}
                             {work.year ? <span> · {work.year}</span> : null}
                         </p>
                     </div>

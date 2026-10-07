@@ -14,7 +14,7 @@ import {
   sharedPlaylistUrl,
   type SharedPlaylist,
 } from "../../../features/playlists/sharedPlaylists";
-import { prettifyArtistName } from "../../../utils/canonicalArtist";
+import { getArtistDisplayName, useArtistI18n } from "../../../i18n/artistLocalization";
 import { getOptimizedImageUrl } from "../../../utils/imageProxy";
 import { ago, two, useHomeTheme } from "./shared";
 import "./atlas.css";
@@ -32,6 +32,7 @@ export default function AtlasPlaylistPage() {
   const location = useLocation();
   const { language } = useLanguage();
   const ko = language === "ko";
+  const artistMap = useArtistI18n();
   const isLight = useHomeTheme();
   /* undefined while loading; null when the playlist is private or gone */
   const [list, setList] = useState<SharedPlaylist | null | undefined>(undefined);
@@ -139,7 +140,7 @@ export default function AtlasPlaylistPage() {
                 <span className="ca-pl__shade" aria-hidden="true" />
                 <span className="mp-name-line">
                   <b>{item.title}</b>
-                  <small>{prettifyArtistName(item.artist) || item.museumName}</small>
+                  <small>{getArtistDisplayName(item.artist, language, artistMap) || item.museumName}</small>
                 </span>
               </button>
             </li>
