@@ -80,6 +80,24 @@ for (const f of readdirSync(join(PUB, 'artists/shards'))) {
   for (const works of Object.values<any[]>(read(join(PUB, 'artists/shards', f)))) add(works[0]?.a, works.length, () => String(works[0]?.m || ''));
 }
 
+/* collections whose artists the search index never saw: it reads `artist`, while some museums keep
+   them elsewhere (MNK Kraków: authors: [{ id, name }]) and index every work as "Unknown". The app
+   reads those fields itself (InteractiveGlobeRealModal.resolveArtist), so the names do reach the screen. */
+const fromIndex = new Set(artists.keys());
+const text = (v: any): string => (typeof v === 'string' ? v.trim() : Array.isArray(v) ? text(v.map((x) => (x && typeof x === 'object' ? x.name : x)).find((x) => typeof x === 'string' && x.trim())) : v && typeof v === 'object' ? text(v.name) : '');
+const artistOf = (w: any): string => [w?.artist, w?.maker, w?.attribution, w?.creator, w?.author, w?.a, w?.authors, w?.autor, w?.raw?.authors, w?.raw?.artist, w?.raw?.author]
+  .map(text).find((t) => t && !/^(unknown|unknown artist|n\/a|-+)$/i.test(t)) || '';
+for (const f of readdirSync(join(PUB, 'data')).filter((f) => f.endsWith('.json') && !/^(search-|video-|artist|museum)|manifest|prefix|removed|backup/.test(f))) {
+  let rows: any;
+  try { rows = read(join(PUB, 'data', f)); } catch { continue; }
+  const list: any[] | null = Array.isArray(rows) ? rows : Array.isArray(rows?.artworks) ? rows.artworks : Array.isArray(rows?.items) ? rows.items : null;
+  if (!list) continue;
+  const count = new Map<string, number>();
+  for (const w of list) { const name = artistOf(w); if (name) count.set(name, (count.get(name) || 0) + 1); }
+  const museum = String(list[0]?.museum || list[0]?.m || list[0]?.museumName || f.replace(/(-collection)?\.json$/, ''));
+  for (const [name, n] of count) if (!fromIndex.has(artistFileKey(name))) add(name, n, () => museum);
+}
+
 const PROGRESS_FILE = OUT || PROGRESS; // --out: a trial run that keeps its answers apart
 const done: Record<string, string> = existsSync(PROGRESS_FILE) ? read(PROGRESS_FILE) : {};
 /* names checked by hand (scripts/i18n/artist-ko-overrides.json) win over the model's and are never asked */

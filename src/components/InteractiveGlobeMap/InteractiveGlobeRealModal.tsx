@@ -454,6 +454,12 @@ export function InteractiveGlobeRealModal({
   const [commentArtworkId, setCommentArtworkId] = useState<string | null>(null);
   const colCount = useColumnCount();
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  /* this full page keeps KO | EN: the city panel under it had hidden the switch (data-overlay-panel),
+     and a museum's names are where the language matters. index.css moves it clear of the badge. */
+  useEffect(() => {
+    document.documentElement.dataset.museumModal = "1";
+    return () => { delete document.documentElement.dataset.museumModal; };
+  }, []);
   const isNarrowMobile = typeof window !== "undefined" && window.innerWidth < 540;
   const shouldShowHoverMetadata = !isMobile;
   const [realArtworks, setRealArtworks] = useState<any[]>([]);
@@ -805,6 +811,10 @@ export function InteractiveGlobeRealModal({
         return artworkCandidates[0] || normalizedCandidates[0] || '';
       };
 
+      /* a list of author records ({ id, name, role… }, MNK Kraków): their names, never the ids -
+         flattening the record gave its first value, the id, as the artist ("60546") */
+      const authorNames = (list: unknown): unknown =>
+        Array.isArray(list) ? list.map((x) => (x && typeof x === "object" ? (x as any).name : x)) : list;
       const resolveArtist = (a: any): string => {
         return pickMeaningfulText(
           a?.artist,
@@ -813,9 +823,9 @@ export function InteractiveGlobeRealModal({
           a?.creator,
           a?.author,
           a?.a,
-          a?.authors,
+          authorNames(a?.authors),
           a?.autor,
-          a?.raw?.authors,
+          authorNames(a?.raw?.authors),
           a?.raw?.artist,
           a?.raw?.author
         ) || "Unknown Artist";
@@ -1587,7 +1597,7 @@ export function InteractiveGlobeRealModal({
       data-globe-detail-modal
       data-theme={theme}
       style={{
-        position: 'fixed', inset: 0, zIndex: 100, overflow: 'hidden',
+        position: 'fixed', inset: 0, zIndex: 100, overflow: 'hidden', userSelect: 'text', WebkitUserSelect: 'text',
         fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif",
         backgroundColor: bgColor,
       }}
@@ -2243,7 +2253,18 @@ export function InteractiveGlobeRealModal({
                             {getArtworkTitle(selectedArtworkDetail, language, titleMap)}
                           </div>
                           <div style={{ marginTop: isMobile ? '8px' : '10px', fontSize: isMobile ? '12px' : '13px', color: fgMed }}>
-                            {getArtistDisplayName(selectedArtworkDetail.artist, language, artistMap)}
+                            {/* the artist's name leads to their page, as it does everywhere else; an unknown maker has none */}
+                            {/unknown|anonym|미상/i.test(String(selectedArtworkDetail.artist || '')) || !selectedArtworkDetail.artist ? (
+                              getArtistDisplayName(selectedArtworkDetail.artist, language, artistMap)
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent('open-artist-gallery', { detail: { artist: selectedArtworkDetail.artist }, cancelable: true })); }}
+                                style={{ all: 'unset', cursor: 'pointer', color: 'inherit', textDecoration: 'underline', textDecorationColor: 'rgba(212,165,71,.55)', textUnderlineOffset: '4px' }}
+                              >
+                                {getArtistDisplayName(selectedArtworkDetail.artist, language, artistMap)}
+                              </button>
+                            )}
                           </div>
                           <div style={{ marginTop: '4px', fontFamily: "'Space Mono', monospace", fontSize: isMobile ? '10px' : '11px', color: fgLow }}>
                             {getDateKo(formatArtworkYear(selectedArtworkDetail.year) || selectedArtworkDetail.year, language)}

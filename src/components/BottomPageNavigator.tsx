@@ -125,7 +125,7 @@ export default function BottomPageNavigator({
                 />
               )}
               {iconSet ? (
-                <NavIcon set={iconSet} id={item.id} className="bpn-mobile-icon" size={isNarrow ? 14 : 15} strokeWidth={isActive ? 1.9 : 1.45} />
+                <NavIcon set={iconSet} id={item.id} className="bpn-mobile-icon" size={isNarrow ? 20 : 22} active={isActive} />
               ) : (
               <item.Icon
                 className="bpn-mobile-icon"

@@ -266,6 +266,10 @@ body[data-home="true"] {
    than sit on the panel's close button. */
 html[data-overlay-panel] .app-language-toggle { opacity: 0; pointer-events: none; }
 .app-language-toggle { transition: opacity .18s ease, transform .24s ease; }
+/* a museum's full page (InteractiveGlobeRealModal): the switch shows again, on the BACK row, left of the PERMANENT badge */
+html[data-museum-modal] .app-language-toggle:not(.is-away) { opacity: 1; pointer-events: auto; }
+html[data-museum-modal] .app-language-toggle { top: calc(env(safe-area-inset-top, 0px) + 20px) !important; right: 148px !important; }
+@media (max-width: 767px) { html[data-museum-modal] .app-language-toggle { right: 104px !important; } }
 /* the page is moving: KO | EN lifts away, and settles back when it rests (App, langAway) */
 .app-language-toggle { transition: opacity .32s ease, transform .42s cubic-bezier(.16,1,.3,1); }
 .app-language-toggle.is-away { opacity: 0; transform: translateY(-10px); pointer-events: none; transition: opacity .16s ease, transform .2s ease; }
