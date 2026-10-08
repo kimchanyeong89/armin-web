@@ -241,8 +241,9 @@ export async function resolveArtistAlias(query: string): Promise<string | null> 
   let best: { key: string; rank: number; works: number } | null = null;
   for (const [koRaw, key, works] of Array.isArray(rows) ? rows : []) {
     const ko = koRaw.replace(/[\s,()·]+/g, "");
-    /* the whole name, or one whole word of it (a surname): never a fragment inside a word */
-    const rank = ko === q ? 3 : koRaw.split(/[\s,()·]+/).includes(query.trim()) ? 2 : 0;
+    /* the whole name only. One word of a name is not enough: "마리아" is a subject before it is
+       anyone's first name, and narrowing that search to one Maria would hide what was asked for. */
+    const rank = ko === q ? 3 : 0;
     if (!rank) continue;
     if (!best || rank > best.rank || (rank === best.rank && works > best.works)) best = { key, rank, works };
   }

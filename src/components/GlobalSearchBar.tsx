@@ -2782,11 +2782,20 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             return;
         }
 
+        const typedQuery = searchQuery;
         const requestSeq = ++semanticSearchRequestSeqRef.current;
         const isStaleRequest = () => {
             if (requestSeq !== semanticSearchRequestSeqRef.current) return true;
-            return normalizeLookupText(queryRef.current || '') !== normalizeLookupText(searchQuery || '');
+            return normalizeLookupText(queryRef.current || '') !== normalizeLookupText(typedQuery || '');
         };
+        /* A name as the screens show it (the Korean spelling of any artist, the Latin spelling of a name
+           filed in another script) is searched as the name the works are filed under - the AI search
+           read "유제프 차이코프스키" as a mood, and "Lee Jung-seob" matched nothing filed as 이중섭. */
+        const filedName = resolveKoreanToEnglishArtist(typedQuery, artistMapRef.current)
+            || resolveLatinAlias(typedQuery)
+            || await resolveArtistAlias(typedQuery);
+        if (isStaleRequest()) return;
+        if (filedName) searchQuery = filedName;
 
         setIsAILoading(true);
         ensureWorker();
