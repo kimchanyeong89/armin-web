@@ -34,9 +34,9 @@ import { db, auth } from "../../firebase";
 import { isMobileAppContainer } from "../../utils/mobileAppAuth";
 import ArButton from "../ArButton";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { useArtistI18n, getArtistDisplayName } from "../../i18n/artistLocalization";
+import { isNotAName, useArtistI18n, getArtistDisplayName } from "../../i18n/artistLocalization";
 import { getArtworkTitle, useArtworkI18n } from "../../i18n/artworkLocalization";
-import { getDateKo } from "../../i18n/dateLocalization";
+import { centuryLabel, getDateKo } from "../../i18n/dateLocalization";
 import { getMediumKo } from "../../i18n/mediumGlossary";
 import { getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
 import RatingEmblems from "../Ratings/RatingEmblems";
@@ -191,6 +191,9 @@ const normalizeSearchText = (value?: string): string =>
 
 const formatArtworkYear = (value?: string) => {
   if (!value) return "";
+  /* a century in Roman numerals ("4. ćwierć XVIII w.") is not a year: its quarter was read as one */
+  const century = centuryLabel(value);
+  if (century) return century;
   const normalized = value
     .replace(/[a-zA-Z]+/g, " ")
     .replace(/[^0-9\- ]+/g, " ")
@@ -211,6 +214,7 @@ const formatArtworkYear = (value?: string) => {
     }
   }
   const trimmed = last.replace(/^0+/, "");
+  if ((trimmed || last).length < 3 && /[A-Za-z\u00c0-\u024f]/.test(value)) return "";
   return trimmed || last;
 };
 
@@ -2254,7 +2258,7 @@ export function InteractiveGlobeRealModal({
                           </div>
                           <div style={{ marginTop: isMobile ? '8px' : '10px', fontSize: isMobile ? '12px' : '13px', color: fgMed }}>
                             {/* the artist's name leads to their page, as it does everywhere else; an unknown maker has none */}
-                            {/unknown|anonym|미상/i.test(String(selectedArtworkDetail.artist || '')) || !selectedArtworkDetail.artist ? (
+                            {/unknown|anonym|미상/i.test(String(selectedArtworkDetail.artist || '')) || !selectedArtworkDetail.artist || isNotAName(selectedArtworkDetail.artist) ? (
                               getArtistDisplayName(selectedArtworkDetail.artist, language, artistMap)
                             ) : (
                               <button

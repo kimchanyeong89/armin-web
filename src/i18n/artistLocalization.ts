@@ -95,6 +95,12 @@ function loadArtistMap(): Promise<ArtistI18nMap> {
  * 작가명을 표시용으로 변환. KO 모드에서 권위 번역이 있으면 한국어, 아니면 원문.
  * map은 useArtistI18n()이 제공한다(없으면 원문 폴백).
  */
+/** A value in the artist field that is no name at all: only numbers (a year, an id) or a web address. */
+export function isNotAName(name: string | undefined | null): boolean {
+  const value = String(name || "").trim();
+  return /^[\d\s.,/\-–()?]+$/.test(value) || /^(https?:\/\/|www\.)/i.test(value);
+}
+
 export function getArtistDisplayName(
   name: string | undefined | null,
   language: AppLanguage,
@@ -102,6 +108,8 @@ export function getArtistDisplayName(
 ): string {
   const value = String(name || "").trim();
   if (!value) return value;
+  /* some museums left a year, an id or a link in the artist field: shown as an unknown maker (10/8) */
+  if (isNotAName(value)) return language === "ko" ? "작가 미상" : "Unknown artist";
   // EN mode (or KO before the map loads): still normalize the DISPLAY form so
   // surname-first / shouted variants ("Monet, Claude", "MATISSE Henri") render
   // as the unified "Given Surname". prettify keeps qualifiers ("after …") intact.

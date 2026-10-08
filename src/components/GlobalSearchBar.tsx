@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
 import { SaveIcon } from './like/SaveIcon';
+import { centuryLabel } from '../i18n/dateLocalization';
 import { createPortal } from 'react-dom';
 import { ShoppingBag, BookmarkPlus } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -113,6 +114,9 @@ const getExhibitionTokens = (entry?: { [key: string]: any } | null) => {
 
 const formatArtworkYear = (value?: string) => {
     if (!value) return '';
+    /* a century in Roman numerals ("4. ćwierć XVIII w.") is not a year: its quarter was read as one */
+    const century = centuryLabel(value);
+    if (century) return century;
     const normalized = value
         .replace(/[a-zA-Z]+/g, ' ')
         .replace(/[^0-9\- ]+/g, ' ')
@@ -133,6 +137,7 @@ const formatArtworkYear = (value?: string) => {
         }
     }
     const trimmed = last.replace(/^0+/, '');
+    if ((trimmed || last).length < 3 && /[A-Za-z\u00c0-\u024f]/.test(value)) return '';
     return trimmed || last;
 };
 

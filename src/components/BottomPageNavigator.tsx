@@ -1,9 +1,8 @@
-import { Globe2, Search, Sparkles, User, Users } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import type { MobileChromeTweakId } from "./mobileChromeTweaks";
-import { NavIcon, readNavIconSet } from "./NavIcons";
+import { NavIcon } from "./NavIcons";
 import "./BottomPageNavigator.css";
 
 export type MainTab = {
@@ -11,15 +10,14 @@ export type MainTab = {
   label: string;
   shortLabel: string;
   path: string;
-  Icon: typeof Globe2;
 };
 
 export const MAIN_TABS: MainTab[] = [
-  { id: "map", label: "Globe", shortLabel: "Globe", path: "/", Icon: Globe2 },
-  { id: "community", label: "Community", shortLabel: "Comm", path: "/community", Icon: Users },
-  { id: "ai", label: "AI", shortLabel: "AI", path: "/ai", Icon: Sparkles },
-  { id: "profile", label: "Profile", shortLabel: "Profile", path: "/mypage", Icon: User },
-  { id: "search", label: "Search", shortLabel: "Search", path: "/search", Icon: Search },
+  { id: "map", label: "Globe", shortLabel: "Globe", path: "/" },
+  { id: "community", label: "Community", shortLabel: "Comm", path: "/community" },
+  { id: "ai", label: "AI", shortLabel: "AI", path: "/ai" },
+  { id: "profile", label: "Profile", shortLabel: "Profile", path: "/mypage" },
+  { id: "search", label: "Search", shortLabel: "Search", path: "/search" },
 ];
 
 type BottomPageNavigatorProps = {
@@ -60,8 +58,6 @@ export default function BottomPageNavigator({
   lightMode = false,
   grip,
 }: BottomPageNavigatorProps) {
-  /* pictogram proposals, tried with ?navicons=a|b|c (NavIcons.tsx) */
-  const [iconSet] = useState(readNavIconSet);
   const { language } = useLanguage();
   const [viewportWidth, setViewportWidth] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth : 1280,
@@ -124,15 +120,7 @@ export default function BottomPageNavigator({
                   className="bpn-mobile-active"
                 />
               )}
-              {iconSet ? (
-                <NavIcon set={iconSet} id={item.id} className="bpn-mobile-icon" size={isNarrow ? 20 : 22} active={isActive} />
-              ) : (
-              <item.Icon
-                className="bpn-mobile-icon"
-                size={isNarrow ? 14 : 15}
-                strokeWidth={isActive ? 2.5 : 1.75}
-              />
-              )}
+              <NavIcon id={item.id} className="bpn-mobile-icon" size={isNarrow ? 20 : 22} active={isActive} />
               <span className="bpn-mobile-label">{shortLabel}</span>
             </button>
           );
