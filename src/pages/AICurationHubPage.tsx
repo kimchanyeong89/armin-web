@@ -770,6 +770,7 @@ function CurationTab({
                     onToggleLike={(e) => onToggleLike(ex)}
                     onOpenProduct={(e) => onOpenProduct(ex)}
                     onOpenPlaylist={(e) => onOpenPlaylist(ex)}
+                    arImage={ex.image}
                     iconSize={13}
                     buttonSize={29}
                   />

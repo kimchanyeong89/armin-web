@@ -465,6 +465,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         onToggleLike={(e) => onToggleLike && onToggleLike(e, actionableArtwork)}
                         onOpenProduct={onOpenProduct ? (e) => onOpenProduct(actionableArtwork) : undefined}
                         onOpenPlaylist={onSaveToPlaylist ? (e) => onSaveToPlaylist(actionableArtwork) : undefined}
+                        arImage={actionableArtwork.image}
                         iconSize={actionIconSize}
                         buttonSize={actionButtonSize}
                         buttonBg="rgba(0,0,0,0.56)"

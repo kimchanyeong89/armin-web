@@ -36,6 +36,7 @@ import { artistKeyOf, loadArtistLife, loadArtistWorks } from '../utils/artistWor
 import { fetchTrending, reportSearchHit, type TrendingTerm } from '../utils/searchTrending';
 import CloseButton from './CloseButton';
 import { CollyLotusLoader } from './CollyMark';
+import ArButton from './ArButton';
 
 
 export type SearchableArtwork = {
@@ -5600,6 +5601,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                         >
                                                                             <BookmarkPlus size={14} strokeWidth={2} />
                                                                         </button>
+                                                                        <ArButton image={art.image} />
                                                                         <span
                                                                             onClick={(e) => e.stopPropagation()}
                                                                             style={{ display: 'grid', placeItems: 'center', width: 22, height: 21 }}

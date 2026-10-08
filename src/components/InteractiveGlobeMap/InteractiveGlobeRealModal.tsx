@@ -32,7 +32,7 @@ import { collection, onSnapshot, doc, deleteDoc, setDoc, serverTimestamp, increm
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { db, auth } from "../../firebase";
 import { isMobileAppContainer } from "../../utils/mobileAppAuth";
-import { hasNativeAr, openNativeAr } from "../../utils/nativeAr";
+import ArButton from "../ArButton";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useArtistI18n, getArtistDisplayName } from "../../i18n/artistLocalization";
 import { getArtworkTitle, useArtworkI18n } from "../../i18n/artworkLocalization";
@@ -2160,6 +2160,7 @@ export function InteractiveGlobeRealModal({
                         />
                         <div style={{ position: 'absolute', inset: 0, transition: 'border 0.2s', borderTop: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderRight: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderBottom: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderLeft: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent' }} />
                         <div style={{ position: 'absolute', bottom: isMobile ? 6 : 8, right: isMobile ? 6 : 8, display: 'flex', alignItems: 'center', gap: isMobile ? 1 : 2, zIndex: 2, pointerEvents: 'auto' }}>
+                          <ArButton image={aw.image} style={actionButtonStyle} fontSize={isMobile ? 9 : 10} />
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -2288,18 +2289,11 @@ export function InteractiveGlobeRealModal({
                               </svg>
                             </button>
                             )}
-                            {hasNativeAr() && selectedArtworkDetail.image && (
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                openNativeAr(String(selectedArtworkDetail.image), language);
-                              }}
-                              title={L("카메라로 내 공간에 걸어 보기", "View in your space")}
-                              style={{ cursor: 'pointer', width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 15, padding: 0, color: fgHigh, fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: '0.04em' }}
-                            >
-                              AR
-                            </button>
-                            )}
+                            <ArButton
+                              image={selectedArtworkDetail.image}
+                              fontSize={10}
+                              style={{ cursor: 'pointer', width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 15, padding: 0, color: fgHigh }}
+                            />
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();

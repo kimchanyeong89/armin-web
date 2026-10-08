@@ -16,7 +16,6 @@ import { getArtworkTitle, getArtworkDate, useArtworkI18n } from '../i18n/artwork
 import { openOutside } from '../utils/openOutside';
 import CloseButton from './CloseButton';
 import { isMobileAppContainer } from '../utils/mobileAppAuth';
-import { hasNativeAr, openNativeAr } from '../utils/nativeAr';
 import { findSourceUrl } from '../utils/sourceUrl';
 import './artworkLightbox.css';
 
@@ -699,7 +698,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 onToggleLike={(e) => handleToggleLike(e, artwork)}
                                 onOpenProduct={showPurchaseAction ? (e) => onPurchase?.(artwork) : undefined}
                                 onOpenPlaylist={onSaveToPlaylist ? (e) => onSaveToPlaylist(artwork) : undefined}
-                                onOpenAr={hasNativeAr() && (artwork.originalImage || artwork.image) ? () => openNativeAr(String(artwork.originalImage || artwork.image), language) : undefined}
+                                arImage={artwork.originalImage || artwork.image}
                                 iconSize={actionIconSize}
                                 buttonSize={actionButtonSize}
                                 buttonBg="rgba(0,0,0,0.56)"

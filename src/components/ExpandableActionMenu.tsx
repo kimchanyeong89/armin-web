@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BookmarkPlus, ShoppingBag } from "lucide-react";
 import { LikeIcon } from "./like/LikeIcon";
 import { SHOW_SALES_UI } from '../config/features';
+import { useLanguage } from '../contexts/LanguageContext';
+import { hasNativeAr, openNativeAr } from '../utils/nativeAr';
 
 interface ExpandableActionMenuProps {
   isMobile: boolean;
@@ -10,7 +12,8 @@ interface ExpandableActionMenuProps {
   onToggleLike: (e: React.MouseEvent) => void;
   onOpenProduct?: (e: React.MouseEvent) => void;
   onOpenPlaylist?: (e: React.MouseEvent) => void;
-  onOpenAr?: (e: React.MouseEvent) => void;
+  /** the artwork's picture: with it, and inside the app, an AR button joins the row */
+  arImage?: string | null;
   iconSize?: number;
   buttonSize?: number;
   buttonBg?: string;
@@ -23,13 +26,15 @@ export function ExpandableActionMenu({
   onToggleLike,
   onOpenProduct,
   onOpenPlaylist,
-  onOpenAr,
+  arImage,
   iconSize = 13,
   buttonSize = 29,
   buttonBg = "rgba(0,0,0,0.58)",
   buttonColor = "#fff"
 }: ExpandableActionMenuProps) {
   const [expanded, setExpanded] = useState(false);
+  const { language } = useLanguage();
+  const showAr = Boolean(arImage) && hasNativeAr();
 
   const btnStyle = {
     width: buttonSize,
@@ -90,7 +95,7 @@ export function ExpandableActionMenu({
               </motion.button>
             )}
 
-            {onOpenAr && (
+            {showAr && (
               <motion.button
                 key="ar"
                 initial={isMobile ? { opacity: 0, x: 35, scale: 0.8, zIndex: 2 } : { opacity: 1, x: 0, scale: 1, zIndex: 2 }}
@@ -99,7 +104,7 @@ export function ExpandableActionMenu({
                 transition={{ duration: 0.25, ease: "easeOut" }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  onOpenAr(e);
+                  openNativeAr(String(arImage), language);
                   if (isMobile) setExpanded(false);
                 }}
                 style={{ ...btnStyle, fontFamily: "'Space Mono', monospace", fontSize: Math.round(iconSize * 0.72), fontWeight: 700, letterSpacing: '0.04em' }}
