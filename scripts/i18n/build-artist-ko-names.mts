@@ -37,7 +37,7 @@ const OUT = arg('--out');
 /* --en: the other direction. Artists whose names are written in Hangul, Han or kana get a Latin
    spelling for the English screens (public/data/i18n/artist-names-en.json, one file: about 4,000). */
 const EN = process.argv.includes('--en');
-const CJK = /[가-힣\u3040-\u30ff\u4e00-\u9fff]/;
+const CJK = /[가-힣\u3040-\u30ff\u4e00-\u9fff\u0400-\u04ff\u0370-\u03ff\u0590-\u06ff\u0e00-\u0e7f]/; // Hangul, kana, Han, and Cyrillic, Greek, Hebrew, Arabic, Thai
 const EXPORT = arg('--export'); // write the names still to do ([{key,n,m,works}]) for another engine, and stop
 const IMPORT = arg('--import'); // take another engine's answers ({key: Korean}) into the progress file
 const LIMIT = Number(arg('--limit') || 0);
@@ -220,5 +220,25 @@ writeFileSync(join(PUB, 'data/i18n/artist-names-ko.json'), JSON.stringify(hot));
 for (let i = 0; i < 512; i += 1) {
   const id = i.toString(16).padStart(3, '0');
   writeFileSync(join(DIR, `${id}.json`), JSON.stringify(shards[id] || {}));
+}
+/* the way back, for search: a Korean spelling typed into the search box finds the name the works are
+   filed under. 512 files by the first two syllables of the name's first and last words (the given name
+   and the surname: what people type) -> [[Korean, key, works]]. Korean names start with few syllables,
+   so one syllable made files of over a megabyte.
+   (artistLocalization.resolveArtistAlias reads the one file a query needs.) */
+const FIND = join(PUB, 'data/i18n/artist-names-ko-find');
+mkdirSync(FIND, { recursive: true });
+const find: Record<string, [string, string, number][]> = {};
+const findShard = (word: string) => { let h = 0x811c9dc5; for (const ch of [...word].slice(0, 2)) { h ^= ch.codePointAt(0) || 0; h = Math.imul(h, 0x01000193) >>> 0; } return (h % 512).toString(16).padStart(3, '0'); };
+for (const a of artists.values()) {
+  const ko = done[a.key];
+  if (!ko || ko === '작가 미상') continue;
+  const words = ko.split(/[\s,()·]+/).filter((w) => /^[가-힣]/.test(w));
+  const firsts = new Set([words[0], words[words.length - 1]].filter(Boolean).map(findShard));
+  for (const id of firsts) (find[id] ??= []).push([ko, a.key, a.works]);
+}
+for (let i = 0; i < 512; i += 1) {
+  const id = i.toString(16).padStart(3, '0');
+  writeFileSync(join(FIND, `${id}.json`), JSON.stringify(find[id] || []));
 }
 console.log(`wrote ${Object.keys(hot).length} names (10+ works) and ${Object.values(shards).reduce((n, s) => n + Object.keys(s).length, 0)} in shards`);

@@ -27,7 +27,7 @@ let koNames: Record<string, string> = {};
 /* the other way round: Latin spellings for names written in Hangul, Han or kana (build-artist-ko-names.mts
    --en), same key, for the English screens - 이중섭 → Lee Jung-seob, 齐白石 → Qi Baishi */
 let enNames: Record<string, string> = {};
-const CJK = /[가-힣\u3040-\u30ff\u4e00-\u9fff]/;
+const CJK = /[가-힣\u3040-\u30ff\u4e00-\u9fff\u0400-\u04ff\u0370-\u03ff\u0590-\u06ff\u0e00-\u0e7f]/; // any script the English screens cannot read
 const koShards = new Map<string, Record<string, string> | null>(); // null while it is on its way
 const shardListeners = new Set<() => void>();
 let shardNotice: ReturnType<typeof setTimeout> | null = null;
@@ -201,6 +201,52 @@ export function resolveKoreanToEnglishArtist(
     }
   }
   return best ? best.en : null;
+}
+
+/* ── search by the names the screens show ──────────────────────────────────────────────────
+   The works are filed under the museums' own spelling ("Czajkowski, Józef", "이중섭"); the screens show
+   a Korean or a Latin spelling of it. A query typed in the shown spelling is turned back into the filed
+   one here, so "유제프 차이코프스키" and "Lee Jung-seob" find what the eye saw. */
+const squash = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/[^\p{L}\p{N}]+/gu, "");
+const asQuery = (key: string) => key.replace(/_/g, " ");
+const findShards = new Map<string, Promise<[string, string, number][]>>();
+let latinBack: Map<string, string> | null = null;
+
+/** A Latin query that is the English spelling of a name filed in Hangul, Han, kana or Cyrillic → that filed name. */
+export function resolveLatinAlias(query: string): string | null {
+  const q = squash(query);
+  if (q.length < 4 || CJK.test(query)) return null;
+  if (!latinBack || latinBack.size === 0) {
+    latinBack = new Map(Object.entries(enNames).map(([key, latin]) => [squash(latin), key]));
+  }
+  const key = latinBack.get(q);
+  return key ? asQuery(key) : null;
+}
+
+/** A Korean query that is the Korean spelling of an artist's name → the name the works are filed under. */
+export async function resolveArtistAlias(query: string): Promise<string | null> {
+  const q = query.replace(/\s+/g, "");
+  const first = query.trim()[0];
+  if (q.length < 2 || !first || !/[가-힣]/.test(first)) return null;
+  /* the Korean bios' names are in memory already */
+  for (const [key, ko] of Object.entries(bioNames)) if (ko.replace(/\s+/g, "") === q) return asQuery(key);
+  /* the file for this word's first two syllables - the same sum the build sorts names by */
+  let h = 0x811c9dc5;
+  for (const ch of [...query.trim().split(/\s+/)[0]].slice(0, 2)) { h ^= ch.codePointAt(0) || 0; h = Math.imul(h, 0x01000193) >>> 0; }
+  const id = (h % 512).toString(16).padStart(3, "0");
+  if (!findShards.has(id)) {
+    findShards.set(id, fetch(`/data/i18n/artist-names-ko-find/${id}.json`).then((res) => (res.ok ? res.json() : [])).catch(() => []));
+  }
+  const rows = await findShards.get(id)!;
+  let best: { key: string; rank: number; works: number } | null = null;
+  for (const [koRaw, key, works] of Array.isArray(rows) ? rows : []) {
+    const ko = koRaw.replace(/[\s,()·]+/g, "");
+    /* the whole name, or one whole word of it (a surname): never a fragment inside a word */
+    const rank = ko === q ? 3 : koRaw.split(/[\s,()·]+/).includes(query.trim()) ? 2 : 0;
+    if (!rank) continue;
+    if (!best || rank > best.rank || (rank === best.rank && works > best.works)) best = { key, rank, works };
+  }
+  return best ? asQuery(best.key) : null;
 }
 
 /**

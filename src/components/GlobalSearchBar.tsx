@@ -22,7 +22,7 @@ import { ArtworkLightbox } from './ArtworkLightbox';
 import { SearchWittyLoader } from './SearchWittyLoader';
 import { SHOW_SALES_UI } from '../config/features';
 import { useLanguage } from '../contexts/LanguageContext';
-import { useArtistI18n, getArtistDisplayName, resolveKoreanToEnglishArtist } from '../i18n/artistLocalization';
+import { useArtistI18n, getArtistDisplayName, resolveKoreanToEnglishArtist, resolveArtistAlias, resolveLatinAlias } from '../i18n/artistLocalization';
 import { getCanonicalName, prettifyArtistName } from '../utils/canonicalArtist';
 import { getArtworkTitle, useArtworkI18n } from '../i18n/artworkLocalization';
 import { getMuseumDisplayName } from '../i18n/museumLocalization';
@@ -3258,7 +3258,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     //     matches almost nothing locally. The server /search-text
                     //     translates the query before FTS5 matching, so it can
                     //     return real artworks ("Cat" works for "고양이").
-                    if (isLikelyMobileDevice() || looksNonEnglish(query)) {
+                    /* 3. A Latin query that is the English spelling of a name filed in another
+                          script ("Lee Jung-seob" for 이중섭): the local index has no such text. */
+                    const latinAlias = resolveLatinAlias(query);
+                    if (isLikelyMobileDevice() || looksNonEnglish(query) || latinAlias) {
                         // Non-Latin results are merged (not replaced) so the
                         // worker's tiny incidental match and the server's full
                         // set survive each other (see the RESULTS handler). That
@@ -3275,7 +3278,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                             // artist transliterations ("모네"→Monet), so a Korean name
                             // query found nothing. Resolve it to the English canonical
                             // here so the artwork search behaves like typing "monet".
-                            const serverQuery = resolveKoreanToEnglishArtist(startedQuery, artistMapRef.current) || startedQuery;
+                            /* then the names the screens show (Korean spellings of every artist, Latin
+                               spellings of names filed in other scripts) → the name the works are filed under */
+                            const serverQuery = resolveKoreanToEnglishArtist(startedQuery, artistMapRef.current)
+                                || latinAlias
+                                || await resolveArtistAlias(startedQuery)
+                                || startedQuery;
                             // Two-tier server augmentation:
                             //  Tier 1: D1 + FTS5 keyword search via /search-text.
                             //          Returns exact text/prefix matches (e.g.
