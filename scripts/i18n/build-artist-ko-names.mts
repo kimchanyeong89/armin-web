@@ -23,7 +23,7 @@ import { getCanonicalName } from '../../src/utils/canonicalArtist';
 
 const ROOT = resolve(fileURLToPath(import.meta.url), '../../..');
 const PUB = join(ROOT, 'public');
-const PROGRESS = join(ROOT, '.cache/artist-ko-names-progress.json');
+const PROGRESS = join(ROOT, `.cache/artist-${process.argv.includes('--en') ? 'en' : 'ko'}-names-progress.json`);
 const arg = (name: string) => { const i = process.argv.indexOf(name); return i < 0 ? null : process.argv[i + 1]; };
 /* --model/--batch/--parallel: the key's free tier allows few requests a day per model, so a run names
    the model whose quota it spends and packs more names into each request */
@@ -34,12 +34,16 @@ const BATCH = Number(arg('--batch') || 60);
 const PARALLEL = Number(arg('--parallel') || 8);
 const MIN_WORKS = Number(arg('--min-works') || 0);
 const OUT = arg('--out');
+/* --en: the other direction. Artists whose names are written in Hangul, Han or kana get a Latin
+   spelling for the English screens (public/data/i18n/artist-names-en.json, one file: about 4,000). */
+const EN = process.argv.includes('--en');
+const CJK = /[가-힣\u3040-\u30ff\u4e00-\u9fff]/;
 const EXPORT = arg('--export'); // write the names still to do ([{key,n,m,works}]) for another engine, and stop
 const IMPORT = arg('--import'); // take another engine's answers ({key: Korean}) into the progress file
 const LIMIT = Number(arg('--limit') || 0);
 const WRITE_ONLY = process.argv.includes('--write-only');
 /** an answer is kept when it reads as Korean ('' = "not a name", kept so it is not asked again) */
-const acceptable = (ko: string) => ko === '' || (/[가-힣]/.test(ko) && ko.length <= 80 && !/[\u3040-\u30ff\u4e00-\u9fff]/.test(ko));
+const acceptable = (ko: string) => ko === '' || (EN ? /[A-Za-z]/.test(ko) && ko.length <= 90 && !CJK.test(ko) : /[가-힣]/.test(ko) && ko.length <= 80 && !/[\u3040-\u30ff\u4e00-\u9fff]/.test(ko));
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const read = (p: string) => JSON.parse(readFileSync(p, 'utf8'));
 
@@ -49,6 +53,7 @@ const wikidata = new Set<string>();
 for (const [name, entry] of Object.entries<any>(read(join(PUB, 'data/i18n/artists.json')))) if (entry?.name_ko) wikidata.add(norm(name));
 const bioNames = read(join(PUB, 'data/i18n/artist-names-bio.json'));
 const named = (value: string) => {
+  if (EN) return !CJK.test(value); // only names in Hangul, Han or kana want a Latin spelling
   if (/[가-힣]/.test(value) || wikidata.has(norm(value))) return true;
   const canon = getCanonicalName(value);
   if (canon && wikidata.has(norm(canon))) return true;
@@ -101,7 +106,7 @@ for (const f of readdirSync(join(PUB, 'data')).filter((f) => f.endsWith('.json')
 const PROGRESS_FILE = OUT || PROGRESS; // --out: a trial run that keeps its answers apart
 const done: Record<string, string> = existsSync(PROGRESS_FILE) ? read(PROGRESS_FILE) : {};
 /* names checked by hand (scripts/i18n/artist-ko-overrides.json) win over the model's and are never asked */
-Object.assign(done, read(join(ROOT, 'scripts/i18n/artist-ko-overrides.json')));
+if (!EN) Object.assign(done, read(join(ROOT, 'scripts/i18n/artist-ko-overrides.json')));
 const todo = [...artists.values()].filter((a) => !(a.key in done) && a.works >= MIN_WORKS).sort((a, b) => b.works - a.works);
 console.log(`artists without a Korean name: ${artists.size}, already done: ${[...artists.keys()].filter((k) => k in done).length}, to do in this run: ${todo.length}`);
 
@@ -186,7 +191,15 @@ if (!WRITE_ONLY && !IMPORT) {
 
 if (OUT) process.exit(0);
 
-Object.assign(done, read(join(ROOT, 'scripts/i18n/artist-ko-overrides.json')));
+if (EN) {
+  const names: Record<string, string> = {};
+  for (const a of artists.values()) if (done[a.key]) names[a.key] = done[a.key];
+  writeFileSync(join(PUB, 'data/i18n/artist-names-en.json'), JSON.stringify(names));
+  console.log(`wrote ${Object.keys(names).length} Latin spellings`);
+  process.exit(0);
+}
+
+if (!EN) Object.assign(done, read(join(ROOT, 'scripts/i18n/artist-ko-overrides.json')));
 
 /* ── the app's files: artists with a page of their own in one file, the long tail in shards ── */
 const NOT_A_NAME = '-';

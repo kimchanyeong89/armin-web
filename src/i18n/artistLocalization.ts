@@ -24,6 +24,10 @@ let bioNames: Record<string, string> = {};
    artists with a page of their own come in one file, the long tail in 512 shards read when one of
    its artists is first shown */
 let koNames: Record<string, string> = {};
+/* the other way round: Latin spellings for names written in Hangul, Han or kana (build-artist-ko-names.mts
+   --en), same key, for the English screens - 이중섭 → Lee Jung-seob, 齐白石 → Qi Baishi */
+let enNames: Record<string, string> = {};
+const CJK = /[가-힣\u3040-\u30ff\u4e00-\u9fff]/;
 const koShards = new Map<string, Record<string, string> | null>(); // null while it is on its way
 const shardListeners = new Set<() => void>();
 let shardNotice: ReturnType<typeof setTimeout> | null = null;
@@ -75,8 +79,12 @@ function loadArtistMap(): Promise<ArtistI18nMap> {
     .then((res) => (res.ok ? res.json() : {}))
     .then((names: Record<string, string>) => { koNames = names && typeof names === "object" ? names : {}; })
     .catch(() => {});
-  inflight = Promise.all([fetch("/data/i18n/artists.json", { cache: "no-cache" }).then((res) => (res.ok ? res.json() : {})), bio, ko])
-    .then(([raw]: [Record<string, ArtistEntry>, unknown, unknown]) => {
+  const en = fetch("/data/i18n/artist-names-en.json", { cache: "no-cache" })
+    .then((res) => (res.ok ? res.json() : {}))
+    .then((names: Record<string, string>) => { enNames = names && typeof names === "object" ? names : {}; })
+    .catch(() => {});
+  inflight = Promise.all([fetch("/data/i18n/artists.json", { cache: "no-cache" }).then((res) => (res.ok ? res.json() : {})), bio, ko, en])
+    .then(([raw]: [Record<string, ArtistEntry>, unknown, unknown, unknown]) => {
       const map: ArtistI18nMap = {};
       for (const [name, entry] of Object.entries(raw)) {
         if (entry && entry.name_ko) map[normalize(name)] = entry.name_ko;
@@ -118,6 +126,11 @@ export function getArtistDisplayName(
   /* '-' in the names files marks a value judged to be no maker at all (a title, a date, a stock
      number in the artist field): an unknown maker in either language */
   const marked = () => { const k = artistFileKey(value); return k ? (koNames[k] || tailName(k)) === NOT_A_NAME : false; };
+  /* English screens: a name in Hangul, Han or kana is shown in its Latin spelling */
+  if (language === "en" && map && CJK.test(value)) {
+    const latin = enNames[artistFileKey(value)];
+    if (latin) return latin;
+  }
   if (language === "en" || !map) return map && marked() ? "Unknown artist" : prettifyArtistName(value);
   // A name already written in Hangul is in the target language — never run it
   // through the foreign→KO map. The Wikidata pipeline mis-matched some Korean

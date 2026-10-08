@@ -20,14 +20,17 @@ const arg = (name, fallback) => { const i = process.argv.indexOf(name); return i
 const PARALLEL = Number(arg('--parallel', 6));
 const CHUNK = Number(arg('--chunk', 250));
 const CODEX = arg('--codex', `${process.env.HOME}/.codex/plugins/.plugin-appserver/codex-cli/bin/codex`);
-const RULES = readFileSync(join(ROOT, 'scripts/i18n/artist-ko-names-rules.md'), 'utf8').trim();
+/* --lang en: the other way round - names written in Hangul, Han or kana, into the Latin alphabet */
+const LANG = arg('--lang', 'ko');
+const WHAT = LANG === 'en' ? '영문(로마자) 표기' : '한국어 표기';
+const RULES = readFileSync(join(ROOT, `scripts/i18n/artist-${LANG}-names-rules.md`), 'utf8').trim();
 const todo = JSON.parse(readFileSync(todoFile, 'utf8'));
 mkdirSync(outDir, { recursive: true });
 
-const task = (items) => `미술관 소장품의 작가 이름 칸에 적힌 값 ${items.length}개를 한국어 표기로 옮기는 작업이다.
+const task = (items) => `미술관 소장품의 작가 이름 칸에 적힌 값 ${items.length}개를 ${WHAT}로 옮기는 작업이다.
 
 입력은 아래 JSON 배열 [{"i":번호,"n":이름,"m":소장 미술관(출신 언어를 짐작하는 단서, 비어 있을 수 있음)}] 이다.
-출력은 같은 번호의 [{"i":번호,"ko":"한국어 표기"}] JSON 배열 하나뿐이다. ${items.length}개 번호를 빠짐없이 돌려준다. 설명·머리말·코드 울타리를 붙이지 않는다.
+출력은 같은 번호의 [{"i":번호,"ko":"${WHAT}"}] JSON 배열 하나뿐이다(칸 이름은 언제나 ko). ${items.length}개 번호를 빠짐없이 돌려준다. 설명·머리말·코드 울타리를 붙이지 않는다.
 웹 검색이나 스크립트를 쓰지 말고, 이름 하나하나를 직접 판단해서 적는다.
 
 규칙:
