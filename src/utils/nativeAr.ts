@@ -1,9 +1,9 @@
 import { getLightboxImage } from "./imageProxy";
 
 /**
- * AR in the COLLY iOS app: the artwork hung on a real surface (apps/mobile
- * modules/colly-ar). The app marks the page when its build has that screen;
- * browsers, Android and older builds get no AR button.
+ * AR in the COLLY app: the artwork hung on a real surface (apps/mobile
+ * modules/colly-ar, iOS and Android). The app marks the page when its build has
+ * that screen and the phone can run it; browsers and older builds get no AR button.
  */
 export function hasNativeAr(): boolean {
   return typeof document !== "undefined" && document.documentElement.getAttribute("data-native-ar") === "2";

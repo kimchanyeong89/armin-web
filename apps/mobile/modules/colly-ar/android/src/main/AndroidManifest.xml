@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <uses-permission android:name="android.permission.CAMERA" />
+  <!-- AR is an extra: phones without a camera or without ARCore still get the app. -->
+  <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+  <application>
+    <meta-data android:name="com.google.ar.core" android:value="optional" />
+    <activity
+      android:name="expo.modules.collyar.CollyArActivity"
+      android:exported="false"
+      android:screenOrientation="portrait"
+      android:configChanges="orientation|screenSize|keyboardHidden"
+      android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+  </application>
+</manifest>

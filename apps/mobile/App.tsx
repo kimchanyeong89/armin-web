@@ -115,9 +115,11 @@ true;
 // Runs first: RESPONSIVE_INJECTION can throw at document start (document.head is still null).
 const NATIVE_APPLE_MARK = Platform.OS === "ios" ? "document.documentElement.setAttribute('data-native-apple', '1');\n" : "";
 
-// Tells the web app this build has the AR screen (modules/colly-ar, iOS only); without the mark
-// the web shows no AR button. "2": build 32 used "1" for a flat camera overlay that is gone.
-const NATIVE_AR_MARK = CollyAr ? "document.documentElement.setAttribute('data-native-ar', '2');\n" : "";
+// Tells the web app this build has the AR screen (modules/colly-ar: ARKit on iOS, ARCore on
+// Android) and this phone can run it; without the mark the web shows no AR button.
+// "2": iOS build 32 used "1" for a flat camera overlay that is gone.
+const AR_READY = !!CollyAr && (CollyAr.isAvailable ? CollyAr.isAvailable() : true);
+const NATIVE_AR_MARK = AR_READY ? "document.documentElement.setAttribute('data-native-ar', '2');\n" : "";
 
 export default function App() {
   const webViewRef = useRef<WebView>(null);
