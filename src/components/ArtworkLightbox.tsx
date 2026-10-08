@@ -15,8 +15,8 @@ import { useArtistI18n, getArtistDisplayName } from '../i18n/artistLocalization'
 import { getArtworkTitle, getArtworkDate, useArtworkI18n } from '../i18n/artworkLocalization';
 import { openOutside } from '../utils/openOutside';
 import CloseButton from './CloseButton';
-import { isMobileAppContainer, hasNativeAr } from '../utils/mobileAppAuth';
-import ArCapture from './ArCapture';
+import { isMobileAppContainer } from '../utils/mobileAppAuth';
+import { hasNativeAr, openNativeAr } from '../utils/nativeAr';
 import { findSourceUrl } from '../utils/sourceUrl';
 import './artworkLightbox.css';
 
@@ -157,7 +157,6 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     const titleMap = useArtworkI18n();
     const [animate, setAnimate] = useState(false);
     const [imgLoaded, setImgLoaded] = useState(false);
-    const [arOpen, setArOpen] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
     // Track auth so the heart can prompt sign-in before the call site's
     // toggleLike runs (otherwise it's a silent no-op for guests, which
@@ -700,7 +699,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 onToggleLike={(e) => handleToggleLike(e, artwork)}
                                 onOpenProduct={showPurchaseAction ? (e) => onPurchase?.(artwork) : undefined}
                                 onOpenPlaylist={onSaveToPlaylist ? (e) => onSaveToPlaylist(artwork) : undefined}
-                                onOpenAr={hasNativeAr() && (artwork.originalImage || artwork.image) ? () => setArOpen(true) : undefined}
+                                onOpenAr={hasNativeAr() && (artwork.originalImage || artwork.image) ? () => openNativeAr(String(artwork.originalImage || artwork.image), language) : undefined}
                                 iconSize={actionIconSize}
                                 buttonSize={actionButtonSize}
                                 buttonBg="rgba(0,0,0,0.56)"
@@ -898,9 +897,6 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                 doesn't lose context when the heart requires auth. */}
             {showLoginModal && (
                 <LoginSelectionModal onClose={() => setShowLoginModal(false)} />
-            )}
-            {arOpen && (
-                <ArCapture imageUrl={String(artwork.originalImage || artwork.image)} title={String(artwork.title || '')} onClose={() => setArOpen(false)} />
             )}
         </>
     );

@@ -82,11 +82,6 @@ export function hasNativeAppleSignIn(): boolean {
   return typeof document !== "undefined" && document.documentElement.getAttribute("data-native-apple") === "1";
 }
 
-// iOS builds with camera + save-to-Photos (apps/mobile App.tsx marks the page). Older builds and browsers get no AR button.
-export function hasNativeAr(): boolean {
-  return typeof document !== "undefined" && document.documentElement.getAttribute("data-native-ar") === "1";
-}
-
 const PRODUCTION_WEB_URL = "https://armin-web.pages.dev";
 
 export function buildExternalLoginUrl(provider: MobileAuthProvider, options?: { naverReauth?: boolean }): string {

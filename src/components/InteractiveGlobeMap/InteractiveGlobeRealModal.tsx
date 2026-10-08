@@ -31,8 +31,8 @@ import type { Artwork as ProductArtwork } from "../../types/Artwork";
 import { collection, onSnapshot, doc, deleteDoc, setDoc, serverTimestamp, increment } from "firebase/firestore";
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { db, auth } from "../../firebase";
-import { isMobileAppContainer, hasNativeAr } from "../../utils/mobileAppAuth";
-import ArCapture from "../ArCapture";
+import { isMobileAppContainer } from "../../utils/mobileAppAuth";
+import { hasNativeAr, openNativeAr } from "../../utils/nativeAr";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { useArtistI18n, getArtistDisplayName } from "../../i18n/artistLocalization";
 import { getArtworkTitle, useArtworkI18n } from "../../i18n/artworkLocalization";
@@ -451,7 +451,6 @@ export function InteractiveGlobeRealModal({
   const [likedMuseumIds, setLikedMuseumIds] = useState<Set<string>>(new Set());
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [productArtwork, setProductArtwork] = useState<ProductArtwork | null>(null);
-  const [arArtwork, setArArtwork] = useState<{ image: string; title: string } | null>(null);
   const [commentArtworkId, setCommentArtworkId] = useState<string | null>(null);
   const colCount = useColumnCount();
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
@@ -2293,7 +2292,7 @@ export function InteractiveGlobeRealModal({
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setArArtwork({ image: String(selectedArtworkDetail.image), title: String(selectedArtworkDetail.title || '') });
+                                openNativeAr(String(selectedArtworkDetail.image), language);
                               }}
                               title={L("카메라로 내 공간에 걸어 보기", "View in your space")}
                               style={{ cursor: 'pointer', width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 15, padding: 0, color: fgHigh, fontFamily: "'Space Mono', monospace", fontSize: 10, fontWeight: 700, letterSpacing: '0.04em' }}
@@ -2460,10 +2459,6 @@ export function InteractiveGlobeRealModal({
             onSelectArtwork={setProductArtwork}
             onClose={() => setProductArtwork(null)}
           />
-        )}
-
-        {arArtwork && (
-          <ArCapture imageUrl={arArtwork.image} title={arArtwork.title} onClose={() => setArArtwork(null)} />
         )}
 
         {commentArtworkId && (
