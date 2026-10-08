@@ -16,7 +16,7 @@ import type {
   WeeklyPublishedFile,
   PersonaId,
 } from '../types/weekly';
-import { isoWeek, weekLabel } from '../lib/iso-week';
+import { liveFromLabel, liveWeek, weekLabel } from '../lib/iso-week';
 import { useIsAdmin, addAdminEmail, removeAdminEmail, BOOTSTRAP_ADMINS } from '../lib/admin';
 import { fetchProposal, fetchPublished, listProposalWeeks, publishWeekly } from '../lib/weeklyStore';
 
@@ -189,7 +189,7 @@ function WeeklyProposalCardView({
                 color: '#000',
               }}
             >
-              발행됨
+              확정됨
             </span>
           )}
           <span style={{ ...LABEL, fontSize: 10, color: COLOR_FG_MED }}>
@@ -319,7 +319,7 @@ function WeeklyProposalCardView({
               cursor: 'pointer',
             }}
           >
-            주간 큐레이션으로 발행
+            주간 전시로 확정
           </button>
           <button
             onClick={() => setShowSpecialForm((v) => !v)}
@@ -591,8 +591,8 @@ const AdminWeeklyPage: React.FC = () => {
     listProposalWeeks().then((found) => {
       if (!live) return;
       setWeeks(found);
-      const current = isoWeek(new Date());
-      setWeek((w) => w || (found.includes(current) ? current : found[0] ?? current));
+      // the newest pool: next week's, waiting to be confirmed
+      setWeek((w) => w || (found[0] ?? liveWeek()));
     });
     return () => { live = false; };
   }, [isAdmin]);
@@ -651,16 +651,18 @@ const AdminWeeklyPage: React.FC = () => {
     [toast],
   );
 
-  // Publishing is live at once (Firestore weekly_curations/{week}), so it asks first.
+  // Confirming writes Firestore weekly_curations/{week}. The app shows a week only from its Monday 07:00 KST
+  // (liveWeek), so a coming week waits until then and the week on show changes at once.
   const handlePublish = async (card: WeeklyCard) => {
     const name = card.title_ko || card.title_en || card.id;
-    const replacing = published && published.id !== card.id ? `\n\n지금 발행된 「${published.title_ko || published.title_en}」을 대신합니다.` : '';
-    if (!window.confirm(`「${name}」을 ${weekLabel(week)} 주간 큐레이션으로 발행할까요? 앱에 바로 반영됩니다.${replacing}`)) return;
+    const replacing = published && published.id !== card.id ? `\n\n지금 확정된 「${published.title_ko || published.title_en}」을 대신합니다.` : '';
+    const when = week > liveWeek() ? `${liveFromLabel(week)}에 앱에 공개됩니다.` : '앱에 바로 반영됩니다.';
+    if (!window.confirm(`「${name}」을 ${weekLabel(week)} 주간 전시로 확정할까요? ${when}${replacing}`)) return;
     try {
       setPublished(await publishWeekly(week, card, email ?? 'admin'));
-      toast.show(`발행했습니다: ${name}`);
+      toast.show(`확정했습니다: ${name}`);
     } catch (err) {
-      toast.show(`발행 실패: ${String(err)}`);
+      toast.show(`확정 실패: ${String(err)}`);
     }
   };
 
@@ -743,9 +745,9 @@ const AdminWeeklyPage: React.FC = () => {
               maxWidth: 680,
             }}
           >
-            매주 일요일 아침 다음 주 후보가 올라옵니다. 하나를 골라 주간 큐레이션으로 발행하면
-            그 주 월요일부터 앱의 이번 주 탭에 나옵니다(배포 필요 없음). 같은 주에 다른 카드를 발행하면
-            앞의 것을 대신합니다. 특집은 아직 터미널에서 발행합니다(버튼이 명령어를 복사합니다).
+            매주 목요일에 다음 주 후보가 올라옵니다. 하나를 골라 확정해 두면 그 주 월요일 오전 7시에
+            앱의 주간 전시에 저절로 나옵니다(배포 필요 없음). 공개 전에는 다른 카드로 바꿔 확정할 수 있고,
+            공개된 뒤에 바꾸면 바로 바뀝니다. 특집은 아직 터미널에서 발행합니다(버튼이 명령어를 복사합니다).
           </div>
         </div>
 
@@ -786,11 +788,11 @@ const AdminWeeklyPage: React.FC = () => {
             <span style={{ ...LABEL, fontSize: 10, color: COLOR_FG_LOW }}>상태</span>
             {published ? (
               <span style={{ ...BODY, fontSize: 12, color: COLOR_ACCENT_NEON }}>
-                발행됨 · {published.title_ko || published.title_en}
+                {week > liveWeek() ? `확정됨 · ${liveFromLabel(week)} 공개 예정` : '공개 중'} · {published.title_ko || published.title_en}
               </span>
             ) : (
               <span style={{ ...BODY, fontSize: 12, color: COLOR_FG_FAINT, fontStyle: 'italic' }}>
-                아직 발행 전
+                아직 확정 전
               </span>
             )}
           </div>

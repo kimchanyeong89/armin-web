@@ -38,3 +38,15 @@ export function weekLabel(week: string, ko = true): string {
   const month = ko ? `${thu.getUTCMonth() + 1}월` : thu.toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' });
   return ko ? `${month} ${nth}주차 (W${m[1]})` : `${month} week ${nth} (W${m[1]})`;
 }
+
+/** The week the app shows as "this week". It turns over on Monday 07:00 Korea time (Sunday 22:00 UTC),
+ *  so a curation confirmed ahead for a week goes on show by itself at that hour. */
+export function liveWeek(now: Date = new Date()): string {
+  return isoWeek(new Date(now.getTime() + 2 * 3600_000));
+}
+
+/** When a week goes on show, for people: "10/12(월) 오전 7시". */
+export function liveFromLabel(week: string): string {
+  const { start } = weekRange(week);
+  return `${start.getUTCMonth() + 1}/${start.getUTCDate()}(월) 오전 7시`;
+}

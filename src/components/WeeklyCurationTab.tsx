@@ -14,7 +14,7 @@ import {
   type SpecialEntry,
 } from "../lib/weekly";
 import { fetchProposal, fetchPublished } from "../lib/weeklyStore";
-import { isoWeek, weekLabel } from "../lib/iso-week";
+import { liveWeek, weekLabel } from "../lib/iso-week";
 import { artistPath } from "../redesign/artwork/WorkDetail";
 import { getArtistDisplayName, useArtistI18n } from "../i18n/artistLocalization";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
@@ -1186,7 +1186,7 @@ export default function WeeklyCurationTab({
       }
       loadCurrent();
       // Deep links to a past week or a special open it under its own tab.
-      if (weeklyParam && weeklyParam !== isoWeek(new Date())) {
+      if (weeklyParam && weeklyParam !== liveWeek()) {
         const file = await fetchPublished(weeklyParam);
         if (file) openPast(file, 'archive');
       }

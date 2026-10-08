@@ -1,5 +1,5 @@
 import type { WeeklyPublishedFile } from '../types/weekly';
-import { isoWeek } from './iso-week';
+import { liveWeek } from './iso-week';
 import { fetchPublished, listPublished } from './weeklyStore';
 
 /** Weeks published as files before /admin/weekly existed, to list among past weeks. The May weeks
@@ -7,11 +7,11 @@ import { fetchPublished, listPublished } from './weeklyStore';
 const PUBLISHED_FILE_WEEKS: string[] = [];
 
 /**
- * This week's curation, or null. Only the current ISO week counts: once a week is
+ * This week's curation, or null. Only the week on show counts (liveWeek: from Monday 07:00 KST): once a week is
  * over its curation belongs to the archive, never to "this week".
  */
 export async function fetchCurrentCuration(date: Date = new Date()): Promise<WeeklyPublishedFile | null> {
-  return fetchPublished(isoWeek(date));
+  return fetchPublished(liveWeek(date));
 }
 
 // ── Archive list ────────────────────────────────────────────────────────────
@@ -43,7 +43,7 @@ function summarizeAsEntry(file: WeeklyPublishedFile): ArchiveEntry {
 
 /** Past weekly curations (weeks before `date`'s week), newest first. */
 export async function fetchArchiveList(date: Date = new Date()): Promise<ArchiveEntry[]> {
-  const thisWeek = isoWeek(date);
+  const thisWeek = liveWeek(date);
   // Published from /admin/weekly (Firestore), joined by the file weeks; a week in both is the Firestore one.
   const fromStore = (await listPublished(thisWeek)).map(summarizeAsEntry);
   const seen = new Set(fromStore.map((e) => e.week));
