@@ -1,0 +1,12 @@
+- 사람 이름은 국립국어원 외래어 표기법에 따라 그 사람 모국어의 발음으로 적는다(프랑스인은 프랑스어, 독일인은 독일어, 네덜란드인은 네덜란드어 발음). 한국에서 널리 쓰이는 표기가 있으면 그 표기를 쓴다(예: Vincent van Gogh → 빈센트 반 고흐).
+- 서양 이름은 '이름 성' 순서로 적는다. 성이 앞에 온 값(Matisse Henri, Cameron, Julia Margaret, Матисс Анри)은 바로잡는다(앙리 마티스, 줄리아 마거릿 캐머런). 여러 사람이 적힌 값도 한 사람씩 그렇게 한다. 단, 한국·중국·일본·베트남 이름은 성을 앞에 둔다. 중국 이름은 중국어 발음(Zhou Xiaoguang → 저우샤오광, 林玉山 → 린위산), 일본 이름은 일본어 발음(Takahashi Shōhachirō → 다카하시 쇼하치로), 한국 이름은 한국 이름 그대로(Jang Jin-yung → 장진영) 적는다.
+- 이름에 붙은 국적·생몰년·직함·'mentioned on object' 같은 군더더기는 뺀다(Montague Flagg, American, 1842–1915 → 몬터규 플래그). 순서가 뒤섞인 값은 바로잡는다(dit) Jacques Villon (Gaston Duchamp → 자크 비용).
+- 'attributed to', 'Zugeschrieben', 'after', 'workshop of', 'circle of', 'school of' 같은 말은 뜻을 살린다: 줄리오 캄피(추정), 렘브란트 공방, 루벤스 화파, 라파엘로 모작.
+- 작가를 모르는 값(Unknown, Anonymous, anonyme, Anonym, Unbekannt, Unidentified, 佚名 …)은 '작가 미상'. 시대·지역이 붙어 있으면 괄호에 넣는다: 작가 미상(18세기 이탈리아).
+- 사람이 아닌 값은 뜻으로 옮긴다: Ancient Egyptian → 고대 이집트, Deccani school → 데칸 화파, Indian → 인도. 회사·공방·단체 이름은 소리대로 적는다: Britton & Patterson → 브리튼 앤드 패터슨.
+- 여러 사람이 적혀 있으면 쉼표로 나열한다.
+- 이름 머리글자는 로마자 그대로, 성 앞에 둔다(Subramanyan K. G. → K. G. 수브라마니안, Creswell K.a.c. → K. A. C. 크레스웰, Smith W. Eugene → W. 유진 스미스). 그 밖에는 로마자·한자·가나를 남기지 않는다.
+- Ltd, Co., Inc., Pty, GmbH 같은 회사 꼬리표는 뺀다. jun./Jr. 는 '주니어', sen./Sr. 는 '시니어'.
+- 일본 이름이 '이름 성' 순서로 적혀 있어도(Kokuta Suda) 성을 앞에 둔다(스다 고쿠타).
+- 이름이라고 볼 수 없는 값(문장 조각, 깨진 글자)은 ko 를 빈 문자열로 둔다. 설명을 덧붙이지 않는다.
+- 중간에 잘린 값은 온전히 읽히는 부분만 옮긴다(잘린 조각 'Gabrie', 'Thomas' 는 버린다). 광둥어·민난어 등으로 로마자화된 화교 이름(Tan Oe Pang)은 그 소리대로 적고 표준 중국어 발음으로 바꾸지 않는다.

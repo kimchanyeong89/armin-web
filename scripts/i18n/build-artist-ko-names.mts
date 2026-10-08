@@ -6,6 +6,8 @@
  *   npx tsx scripts/i18n/build-artist-ko-names.mts            # 남은 이름을 옮기고 파일을 쓴다(이어하기 가능)
  *   npx tsx scripts/i18n/build-artist-ko-names.mts --limit 300 # 시험 삼아 300명만
  *   npx tsx scripts/i18n/build-artist-ko-names.mts --write-only # 옮긴 결과로 파일만 다시 쓴다
+ *   … --export todo.json   남은 이름을 내보낸다(다른 도구에 맡길 때) / --import answers.json  {키: 한국어} 답을 받아 파일을 쓴다
+ * 옮기는 규칙은 scripts/i18n/artist-ko-names-rules.md 한 곳에 있다(어느 도구에 맡기든 같은 글을 준다).
  *
  * 결과(둘 다 artistFileKey 키, 표시 전용 — 한국어 검색은 위키데이터 이름표만 본다):
  * 손으로 확인한 이름은 scripts/i18n/artist-ko-overrides.json 에 적는다(모델 답보다 우선).
@@ -32,8 +34,12 @@ const BATCH = Number(arg('--batch') || 60);
 const PARALLEL = Number(arg('--parallel') || 8);
 const MIN_WORKS = Number(arg('--min-works') || 0);
 const OUT = arg('--out');
+const EXPORT = arg('--export'); // write the names still to do ([{key,n,m,works}]) for another engine, and stop
+const IMPORT = arg('--import'); // take another engine's answers ({key: Korean}) into the progress file
 const LIMIT = Number(arg('--limit') || 0);
 const WRITE_ONLY = process.argv.includes('--write-only');
+/** an answer is kept when it reads as Korean ('' = "not a name", kept so it is not asked again) */
+const acceptable = (ko: string) => ko === '' || (/[가-힣]/.test(ko) && ko.length <= 80 && !/[\u3040-\u30ff\u4e00-\u9fff]/.test(ko));
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const read = (p: string) => JSON.parse(readFileSync(p, 'utf8'));
 
@@ -81,20 +87,11 @@ Object.assign(done, read(join(ROOT, 'scripts/i18n/artist-ko-overrides.json')));
 const todo = [...artists.values()].filter((a) => !(a.key in done) && a.works >= MIN_WORKS).sort((a, b) => b.works - a.works);
 console.log(`artists without a Korean name: ${artists.size}, already done: ${[...artists.keys()].filter((k) => k in done).length}, to do in this run: ${todo.length}`);
 
+const RULES = readFileSync(join(ROOT, 'scripts/i18n/artist-ko-names-rules.md'), 'utf8').trim();
 const PROMPT = `미술관 소장품의 작가 이름 칸에 적힌 값을 한국어 표기로 옮긴다. 입력은 [{"i":번호,"n":이름,"m":소장 미술관(출신 언어를 짐작하는 단서)}] 이고, 출력은 같은 번호의 [{"i":번호,"ko":"한국어 표기"}] JSON 배열이다. 입력의 모든 번호를 빠짐없이 돌려준다.
 
 규칙:
-- 사람 이름은 국립국어원 외래어 표기법에 따라 그 사람 모국어의 발음으로 적는다(프랑스인은 프랑스어, 독일인은 독일어, 네덜란드인은 네덜란드어 발음). 한국에서 널리 쓰이는 표기가 있으면 그 표기를 쓴다(예: Vincent van Gogh → 빈센트 반 고흐).
-- 이름·성 순서는 입력 순서를 따른다. 단, 한국·중국·일본·베트남 이름은 성을 앞에 둔다. 중국 이름은 중국어 발음(Zhou Xiaoguang → 저우샤오광, 林玉山 → 린위산), 일본 이름은 일본어 발음(Takahashi Shōhachirō → 다카하시 쇼하치로), 한국 이름은 한국 이름 그대로(Jang Jin-yung → 장진영) 적는다.
-- 이름에 붙은 국적·생몰년·직함·'mentioned on object' 같은 군더더기는 뺀다(Montague Flagg, American, 1842–1915 → 몬터규 플래그). 순서가 뒤섞인 값은 바로잡는다(dit) Jacques Villon (Gaston Duchamp → 자크 비용).
-- 'attributed to', 'Zugeschrieben', 'after', 'workshop of', 'circle of', 'school of' 같은 말은 뜻을 살린다: 줄리오 캄피(추정), 렘브란트 공방, 루벤스 화파, 라파엘로 모작.
-- 작가를 모르는 값(Unknown, Anonymous, anonyme, Anonym, Unbekannt, Unidentified, 佚名 …)은 '작가 미상'. 시대·지역이 붙어 있으면 괄호에 넣는다: 작가 미상(18세기 이탈리아).
-- 사람이 아닌 값은 뜻으로 옮긴다: Ancient Egyptian → 고대 이집트, Deccani school → 데칸 화파, Indian → 인도. 회사·공방·단체 이름은 소리대로 적는다: Britton & Patterson → 브리튼 앤드 패터슨.
-- 여러 사람이 적혀 있으면 쉼표로 나열한다.
-- 이름 머리글자는 로마자 그대로, 성 앞에 둔다(Subramanyan K. G. → K. G. 수브라마니안, Creswell K.a.c. → K. A. C. 크레스웰, Smith W. Eugene → W. 유진 스미스). 그 밖에는 로마자·한자·가나를 남기지 않는다.
-- Ltd, Co., Inc., Pty, GmbH 같은 회사 꼬리표는 뺀다. jun./Jr. 는 '주니어', sen./Sr. 는 '시니어'.
-- 일본 이름이 '이름 성' 순서로 적혀 있어도(Kokuta Suda) 성을 앞에 둔다(스다 고쿠타).
-- 이름이라고 볼 수 없는 값(문장 조각, 깨진 글자)은 ko 를 빈 문자열로 둔다. 설명을 덧붙이지 않는다.`;
+${RULES}`;
 
 const KEY = (readFileSync(join(ROOT, '.env'), 'utf8').match(/^VITE_GEMINI_API_KEY=(.*)$/m) || [])[1]?.trim().replace(/^['"]|['"]$/g, '');
 
@@ -127,8 +124,7 @@ async function transliterate(batch: Artist[]): Promise<Map<number, string>> {
       const out = new Map<number, string>();
       for (const row of Array.isArray(rows) ? rows : []) {
         const ko = String(row?.ko ?? '').replace(/\s+/g, ' ').trim();
-        /* '' = "not a name": kept, so it is not asked again; anything else must read as Korean */
-        if (Number.isInteger(row?.i) && row.i >= 0 && row.i < batch.length && (ko === '' || (/[가-힣]/.test(ko) && ko.length <= 80 && !/[\u3040-\u30ff\u4e00-\u9fff]/.test(ko)))) out.set(row.i, ko);
+        if (Number.isInteger(row?.i) && row.i >= 0 && row.i < batch.length && acceptable(ko)) out.set(row.i, ko);
       }
       madeBy[model] = (madeBy[model] || 0) + out.size;
       return out;
@@ -137,7 +133,21 @@ async function transliterate(batch: Artist[]): Promise<Map<number, string>> {
   return new Map();
 }
 
-if (!WRITE_ONLY) {
+if (EXPORT) {
+  writeFileSync(EXPORT, JSON.stringify(todo.map((a) => ({ key: a.key, n: a.name, m: a.museum, works: a.works }))));
+  console.log(`exported ${todo.length} names to ${EXPORT}`);
+  process.exit(0);
+}
+if (IMPORT) {
+  let taken = 0, refused = 0;
+  for (const [key, value] of Object.entries<any>(read(IMPORT))) {
+    const ko = String(value ?? '').replace(/\s+/g, ' ').trim();
+    if (artists.has(key) && acceptable(ko)) { done[key] = ko; taken++; } else refused++;
+  }
+  writeFileSync(PROGRESS_FILE, JSON.stringify(done));
+  console.log(`imported ${taken} names, refused ${refused}`);
+}
+if (!WRITE_ONLY && !IMPORT) {
   if (!KEY) throw new Error('VITE_GEMINI_API_KEY is missing from .env');
   const queue = LIMIT ? todo.slice(0, LIMIT) : todo;
   const batches: Artist[][] = [];
@@ -157,6 +167,8 @@ if (!WRITE_ONLY) {
 }
 
 if (OUT) process.exit(0);
+
+Object.assign(done, read(join(ROOT, 'scripts/i18n/artist-ko-overrides.json')));
 
 /* ── the app's files: artists with a page of their own in one file, the long tail in shards ── */
 const hot: Record<string, string> = {};

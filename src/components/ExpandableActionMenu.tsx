@@ -10,6 +10,7 @@ interface ExpandableActionMenuProps {
   onToggleLike: (e: React.MouseEvent) => void;
   onOpenProduct?: (e: React.MouseEvent) => void;
   onOpenPlaylist?: (e: React.MouseEvent) => void;
+  onOpenAr?: (e: React.MouseEvent) => void;
   iconSize?: number;
   buttonSize?: number;
   buttonBg?: string;
@@ -22,6 +23,7 @@ export function ExpandableActionMenu({
   onToggleLike,
   onOpenProduct,
   onOpenPlaylist,
+  onOpenAr,
   iconSize = 13,
   buttonSize = 29,
   buttonBg = "rgba(0,0,0,0.58)",
@@ -85,6 +87,25 @@ export function ExpandableActionMenu({
                 title="Purchase Frame"
               >
                 <ShoppingBag size={iconSize} strokeWidth={2.1} />
+              </motion.button>
+            )}
+
+            {onOpenAr && (
+              <motion.button
+                key="ar"
+                initial={isMobile ? { opacity: 0, x: 35, scale: 0.8, zIndex: 2 } : { opacity: 1, x: 0, scale: 1, zIndex: 2 }}
+                animate={{ opacity: 1, x: 0, scale: 1, zIndex: 2 }}
+                exit={{ opacity: 0, x: 35, scale: 0.8, zIndex: 2 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenAr(e);
+                  if (isMobile) setExpanded(false);
+                }}
+                style={{ ...btnStyle, fontFamily: "'Space Mono', monospace", fontSize: Math.round(iconSize * 0.72), fontWeight: 700, letterSpacing: '0.04em' }}
+                title="AR"
+              >
+                AR
               </motion.button>
             )}
 
