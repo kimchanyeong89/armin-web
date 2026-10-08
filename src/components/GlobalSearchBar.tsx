@@ -2384,7 +2384,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 // must NOT wipe a list the full scan already filled — that was
                 // blanking the Artworks section and remounting every thumbnail.
                 const isWarmResult = String(e.data?.source || '') === 'warm';
-                if (looksNonEnglish(String(e.data?.query || ''))) {
+                /* a Latin spelling of a name filed in another script ("Lee Jung-seob") is in the same position:
+                   the works come from the server under the filed name, so they are merged, not replaced */
+                if (looksNonEnglish(String(e.data?.query || '')) || resolveLatinAlias(String(e.data?.query || ''))) {
                     // Non-Latin query (Korean/CJK/…): the local index is an
                     // English corpus, so the worker only incidentally matches
                     // works whose title was already localized (e.g. the single
@@ -3277,7 +3279,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         // accumulator must reset when the QUERY changes, or a
                         // previous query's works ("모네") stay pinned ahead of the
                         // new query's ("샤갈") and get sliced off at 50.
-                        if (looksNonEnglish(query) && augmentQueryRef.current !== query) {
+                        if ((looksNonEnglish(query) || latinAlias) && augmentQueryRef.current !== query) {
                             augmentQueryRef.current = query;
                             setFilteredArtworks([]);
                         }
