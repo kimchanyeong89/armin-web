@@ -136,20 +136,26 @@ function AppContent() {
   const { itemCount } = useCart();
   /* where the visitor is, asked once on the first visit and kept (utils/userLocation) */
   useEffect(() => { askLocationOnce(); }, []);
-  /* KO | EN belongs to the top of the page: it leaves as the page scrolls down
-     and comes back at the top, instead of riding over the content. Pages scroll
-     in their own boxes, so any scroll is heard (capture) and its box read. */
+  /* KO | EN at the top right steps aside while the page is moving and comes back when it rests
+     (10/8: "스크롤 내리면 사라지게 하되, 멈추면 생겼다가 다시 움직이면 사라지는"), so it never rides
+     over content being read past. Pages scroll in their own boxes, so any scroll is heard
+     (capture) and its box read. The same switch also sits on the tab bar (LangGrip), always. */
   const [langAway, setLangAway] = useState(false);
   useEffect(() => {
+    let rest: ReturnType<typeof setTimeout> | null = null;
     const onScroll = (event: Event) => {
       const box = event.target as Element | Document;
-      const top = box instanceof Element ? box.scrollTop : window.scrollY;
       /* small boxes (a sideways row, a list inside a card) do not count */
       if (box instanceof Element && box.clientHeight < window.innerHeight * 0.6) return;
-      setLangAway(top > 40);
+      setLangAway(true);
+      if (rest) clearTimeout(rest);
+      rest = setTimeout(() => setLangAway(false), 600);
     };
     document.addEventListener("scroll", onScroll, { capture: true, passive: true });
-    return () => document.removeEventListener("scroll", onScroll, { capture: true } as EventListenerOptions);
+    return () => {
+      if (rest) clearTimeout(rest);
+      document.removeEventListener("scroll", onScroll, { capture: true } as EventListenerOptions);
+    };
   }, []);
   useEffect(() => { setLangAway(false); }, [location.pathname]);
   const languageMorphScopeRef = useRef<HTMLDivElement | null>(null);
@@ -1021,8 +1027,7 @@ function AppContent() {
       {/* Floating language switch — reachable on every route, top right. Sits
           below the profile cluster (z 250012) and full-screen overlays so it
           never covers their close buttons, yet above page content. */}
-      {/* where the tab bar shows, the switch rides its top edge (LangGrip) and this one is not drawn */}
-      {!(isBottomNavVisible && !introAllowed) && <div
+      <div
         className={langAway ? "app-language-toggle is-away" : "app-language-toggle"}
         style={{
           position: 'fixed',
@@ -1034,7 +1039,7 @@ function AppContent() {
         {/* KO | EN stays (user, 10/1: "다시 살려줘" — it had been hidden on 9/30). The first
             language still follows the device (LanguageContext); the switch changes it. */}
         <LanguageToggle light={isLightTheme} />
-      </div>}
+      </div>
     </div>
   );
 }

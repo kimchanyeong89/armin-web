@@ -4,7 +4,8 @@ import "../features/wall/myWall.css";
 
 /* KO | EN on the tab bar's top edge, at its right: the bar is on every screen - over full-screen
    pages too, where the floating switch at the top right is covered - so the language can be
-   changed anywhere without a control laid over the page. Same glass tab as the wall's handle
+   changed anywhere without a control laid over the page. The top-right switch stays as well
+   (10/8: "둘 다 있게"); both read and set the one language in LanguageContext. Same glass tab as the wall's handle
    (.wall-grip--bar), narrower; one tap turns to the other language. */
 const SHAPE = "M0,24 C8,24 13.6,19.2 13.6,12 C13.6,4.8 18.4,0 25.6,0 L62.4,0 C69.6,0 74.4,4.8 74.4,12 C74.4,19.2 80,24 88,24";
 

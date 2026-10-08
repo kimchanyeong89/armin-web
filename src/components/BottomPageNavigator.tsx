@@ -3,6 +3,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import type { MobileChromeTweakId } from "./mobileChromeTweaks";
+import { NavIcon, readNavIconSet } from "./NavIcons";
 import "./BottomPageNavigator.css";
 
 export type MainTab = {
@@ -59,6 +60,8 @@ export default function BottomPageNavigator({
   lightMode = false,
   grip,
 }: BottomPageNavigatorProps) {
+  /* pictogram proposals, tried with ?navicons=a|b|c (NavIcons.tsx) */
+  const [iconSet] = useState(readNavIconSet);
   const { language } = useLanguage();
   const [viewportWidth, setViewportWidth] = useState(() =>
     typeof window !== "undefined" ? window.innerWidth : 1280,
@@ -121,11 +124,15 @@ export default function BottomPageNavigator({
                   className="bpn-mobile-active"
                 />
               )}
+              {iconSet ? (
+                <NavIcon set={iconSet} id={item.id} className="bpn-mobile-icon" size={isNarrow ? 14 : 15} strokeWidth={isActive ? 1.9 : 1.45} />
+              ) : (
               <item.Icon
                 className="bpn-mobile-icon"
                 size={isNarrow ? 14 : 15}
                 strokeWidth={isActive ? 2.5 : 1.75}
               />
+              )}
               <span className="bpn-mobile-label">{shortLabel}</span>
             </button>
           );
