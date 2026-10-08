@@ -95,6 +95,8 @@ function loadArtistMap(): Promise<ArtistI18nMap> {
  * 작가명을 표시용으로 변환. KO 모드에서 권위 번역이 있으면 한국어, 아니면 원문.
  * map은 useArtistI18n()이 제공한다(없으면 원문 폴백).
  */
+const NOT_A_NAME = "-";
+
 /** A value in the artist field that is no name at all: only numbers (a year, an id) or a web address. */
 export function isNotAName(name: string | undefined | null): boolean {
   const value = String(name || "").trim();
@@ -113,7 +115,10 @@ export function getArtistDisplayName(
   // EN mode (or KO before the map loads): still normalize the DISPLAY form so
   // surname-first / shouted variants ("Monet, Claude", "MATISSE Henri") render
   // as the unified "Given Surname". prettify keeps qualifiers ("after …") intact.
-  if (language === "en" || !map) return prettifyArtistName(value);
+  /* '-' in the names files marks a value judged to be no maker at all (a title, a date, a stock
+     number in the artist field): an unknown maker in either language */
+  const marked = () => { const k = artistFileKey(value); return k ? (koNames[k] || tailName(k)) === NOT_A_NAME : false; };
+  if (language === "en" || !map) return map && marked() ? "Unknown artist" : prettifyArtistName(value);
   // A name already written in Hangul is in the target language — never run it
   // through the foreign→KO map. The Wikidata pipeline mis-matched some Korean
   // painters to same-spelled celebrities ("김태"→"태연" the K-pop singer,
@@ -151,6 +156,7 @@ export function getArtistDisplayName(
   if (fromBio) return fromBio;
   // 5) Everyone else: the Korean spelling of the name (official usage where there is one, else its sound).
   const spelled = koNames[key] || (key ? tailName(key) : undefined);
+  if (spelled === NOT_A_NAME) return "작가 미상";
   if (spelled) return spelled;
   // No Korean name (yet) — fall back to the normalized English display
   // form (un-inverted) instead of the raw "Last, First" the corpus stored.

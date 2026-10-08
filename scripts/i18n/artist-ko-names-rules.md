@@ -10,3 +10,5 @@
 - 일본 이름이 '이름 성' 순서로 적혀 있어도(Kokuta Suda) 성을 앞에 둔다(스다 고쿠타).
 - 이름이라고 볼 수 없는 값(문장 조각, 깨진 글자)은 ko 를 빈 문자열로 둔다. 설명을 덧붙이지 않는다.
 - 중간에 잘린 값은 온전히 읽히는 부분만 옮긴다(잘린 조각 'Gabrie', 'Thomas' 는 버린다). 광둥어·민난어 등으로 로마자화된 화교 이름(Tan Oe Pang)은 그 소리대로 적고 표준 중국어 발음으로 바꾸지 않는다.
+- 귀속을 나타내는 말(Attributed to, ehemals zugeschrieben, Zuschreibung unsicher, Master of, Meister von, follower of, manner of, attribué à) 뒤의 이름이 중간에 잘려 있어도, 읽히는 데까지는 옮긴다(Attributed to Giovanni Battista della … → 조반니 바티스타 델라(추정), Zuschreibung unsicher: Caspar David Fr… → 카스파르 다비트 프리드리히(추정)). 사람·공방·기관 이름이 조금이라도 읽히면 비우지 않는다.
+- 비우는 것은 정말 만든 이가 아닌 값뿐이다: 연도·장소만 있는 값(1762 Paris, um 1510), 소장 번호(N°inv. 2122), 치수, 'Printed in Austria'·'author'·'Illegible'·'Credits' 같은 꼬리표, 뜻 없는 글자 조각, 작품 제목이나 문장.

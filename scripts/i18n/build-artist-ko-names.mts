@@ -189,10 +189,13 @@ if (OUT) process.exit(0);
 Object.assign(done, read(join(ROOT, 'scripts/i18n/artist-ko-overrides.json')));
 
 /* ── the app's files: artists with a page of their own in one file, the long tail in shards ── */
+const NOT_A_NAME = '-';
 const hot: Record<string, string> = {};
 const shards: Record<string, Record<string, string>> = {};
 for (const a of artists.values()) {
-  const ko = done[a.key];
+  /* '' = "this is no maker" (a title, a date, a stock number, a link left in the artist field): written
+     as '-' so the app can show an unknown maker in its place instead of the stray text */
+  const ko = done[a.key] === '' ? NOT_A_NAME : done[a.key];
   if (!ko) continue;
   if (a.works >= ARTIST_OWN_FILE_MIN) hot[a.key] = ko;
   else (shards[artistShardOf(a.key)] ??= {})[a.key] = ko;
