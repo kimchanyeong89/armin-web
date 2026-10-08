@@ -461,6 +461,11 @@ function extractArtworkData(item, museumName, exhibitionId, idx) {
                 .filter(Boolean)
                 .join(', ')
             : '') ||
+        /* author records ({ id, name, role }, MNK Kraków): their names. Without this every such work
+           was indexed as "Unknown", so its artists had no page and no place in search. */
+        (Array.isArray(item.authors)
+            ? item.authors.map((a) => (a && typeof a === 'object' ? a.name : a)).filter((n) => typeof n === 'string' && n.trim() && !/^unknown$/i.test(n.trim())).join(', ')
+            : '') ||
         'Unknown';
 
     // Helper to extract string from potential array or object
