@@ -9,7 +9,8 @@
       "lens": "dialogue",
       "published_at": "2026-05-22T02:40:43.255Z",
       "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/staedel-museum-collection/staedel-609-b0f8b222-imageUrl.webp",
-      "source_week": "2026-W21"
+      "source_week": "2026-W21",
+      "subtitle_chip": "선과 황금"
     },
     {
       "slug": "david-octavius-hill-gertrude-k-sebier",
@@ -19,7 +20,8 @@
       "lens": "dialogue",
       "published_at": "2026-05-22T02:40:44.352Z",
       "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/reina-sofia-collection/lady-ruthven-imageUrl.webp",
-      "source_week": "2026-W21"
+      "source_week": "2026-W21",
+      "subtitle_chip": "사진의 두 새벽"
     },
     {
       "slug": "henri-michaux",
@@ -29,7 +31,8 @@
       "lens": "biographical",
       "published_at": "2026-05-22T03:23:12.561Z",
       "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/moma-collection/479566-942c6bcf-imageUrl.webp",
-      "source_week": "2026-W21"
+      "source_week": "2026-W21",
+      "subtitle_chip": "기호와 떨림"
     },
     {
       "slug": "the-voyage-of-odysseus",
@@ -39,7 +42,8 @@
       "lens": "thematic",
       "published_at": "2026-10-07T06:17:16.403Z",
       "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cma-collection/156420-e97f3b5c-imageUrl.webp",
-      "source_week": "2026-W41"
+      "source_week": "2026-W41",
+      "subtitle_chip": "영화 「오디세이」"
     }
   ]
 }

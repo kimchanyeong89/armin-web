@@ -31,6 +31,11 @@ service cloud.firestore {
         && request.resource.data.week == week;
     }
 
+    // Weekly candidates the editor threw away (the admin page hides them).
+    match /weekly_dismissed/{id} {
+      allow read, write: if isWeeklyAdmin();
+    }
+
     // Allow public read of artworks collection (images and metadata) without auth
     match /artworks/{docId} {
       allow read: if true;

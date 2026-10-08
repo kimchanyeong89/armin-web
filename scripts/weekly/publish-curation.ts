@@ -29,6 +29,7 @@ export interface SpecialIndexEntry {
   published_at: string;
   hero_image_url: string;
   source_week: string;
+  subtitle_chip?: string;
 }
 
 export interface SpecialIndexFile {
@@ -136,6 +137,7 @@ export async function publishCuration(opts: PublishOpts): Promise<string> {
     published_at: publishedAt,
     hero_image_url: heroImageUrl(card),
     source_week: opts.week,
+    subtitle_chip: card.subtitle_chip,
   };
   // De-dup by slug; keep insertion order for existing entries (replace in place).
   const idx = index.entries.findIndex((e) => e.slug === slug);

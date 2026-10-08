@@ -11,14 +11,12 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalNav } from '../components/GlobalNav';
 import type {
-  WeeklyProposalFile,
-  WeeklyCard,
   WeeklyPublishedFile,
   PersonaId,
 } from '../types/weekly';
 import { liveFromLabel, liveWeek, weekLabel } from '../lib/iso-week';
 import { useIsAdmin, addAdminEmail, removeAdminEmail, BOOTSTRAP_ADMINS } from '../lib/admin';
-import { fetchProposal, fetchPublished, listProposalWeeks, publishWeekly } from '../lib/weeklyStore';
+import { dismissCard, fetchCandidates, fetchPublished, listProposalWeeks, publishWeekly, type PoolCard } from '../lib/weeklyStore';
 
 // ── Week index ────────────────────────────────────────────────────────────
 // V1: hardcoded. TODO: have generator script emit
@@ -78,12 +76,15 @@ function WeeklyProposalCardView({
   isPublished,
   onCopy,
   onPublish,
+  onDelete,
 }: {
-  card: WeeklyCard;
+  card: PoolCard;
+  /** the week whose pool the card is in (its preview and special command read that pool) */
   week: string;
   isPublished: boolean;
   onCopy: (text: string, label: string) => void;
-  onPublish: (card: WeeklyCard) => void;
+  onPublish: (card: PoolCard) => void;
+  onDelete: (card: PoolCard) => void;
 }) {
   const navigate = useNavigate();
   const [showSpecialForm, setShowSpecialForm] = useState(false);
@@ -335,6 +336,14 @@ function WeeklyProposalCardView({
           >
             특집으로 발행 {showSpecialForm ? '▲' : '▾'}
           </button>
+          {!isPublished && (
+            <button
+              onClick={() => onDelete(card)}
+              style={{ ...LABEL, fontSize: 10, padding: '8px 4px', background: 'transparent', color: COLOR_FG_FAINT, border: 'none', cursor: 'pointer' }}
+            >
+              삭제
+            </button>
+          )}
           <button
             onClick={() => setRawOpen((v) => !v)}
             style={{
@@ -596,7 +605,7 @@ const AdminWeeklyPage: React.FC = () => {
     });
     return () => { live = false; };
   }, [isAdmin]);
-  const [proposal, setProposal] = useState<WeeklyProposalFile | null>(null);
+  const [pool, setPool] = useState<Awaited<ReturnType<typeof fetchCandidates>> | null>(null);
   const [published, setPublished] = useState<WeeklyPublishedFile | null>(null);
   const [dataLoading, setDataLoading] = useState(false);
   const [dataError, setDataError] = useState<string | null>(null);
@@ -616,15 +625,15 @@ const AdminWeeklyPage: React.FC = () => {
     let cancelled = false;
     setDataLoading(true);
     setDataError(null);
-    setProposal(null);
+    setPool(null);
     setPublished(null);
 
     (async () => {
       try {
-        const [propJson, pubJson] = await Promise.all([fetchProposal(week), fetchPublished(week)]);
+        const [found, pubJson] = await Promise.all([fetchCandidates(week), fetchPublished(week)]);
         if (cancelled) return;
-        if (propJson) {
-          setProposal(propJson);
+        if (found.own.length + found.carried.length > 0) {
+          setPool(found);
         } else {
           setDataError(`${weekLabel(week)} 후보가 아직 없습니다`);
         }
@@ -653,7 +662,7 @@ const AdminWeeklyPage: React.FC = () => {
 
   // Confirming writes Firestore weekly_curations/{week}. The app shows a week only from its Monday 07:00 KST
   // (liveWeek), so a coming week waits until then and the week on show changes at once.
-  const handlePublish = async (card: WeeklyCard) => {
+  const handlePublish = async (card: PoolCard) => {
     const name = card.title_ko || card.title_en || card.id;
     const replacing = published && published.id !== card.id ? `\n\n지금 확정된 「${published.title_ko || published.title_en}」을 대신합니다.` : '';
     const when = week > liveWeek() ? `${liveFromLabel(week)}에 앱에 공개됩니다.` : '앱에 바로 반영됩니다.';
@@ -663,6 +672,19 @@ const AdminWeeklyPage: React.FC = () => {
       toast.show(`확정했습니다: ${name}`);
     } catch (err) {
       toast.show(`확정 실패: ${String(err)}`);
+    }
+  };
+
+  // Throwing a card away is for good (it never comes back in a later week), so it asks first.
+  const handleDelete = async (card: PoolCard) => {
+    const name = card.title_ko || card.title_en || card.id;
+    if (!window.confirm(`「${name}」 후보를 지울까요? 다음 주에도 다시 나오지 않습니다.`)) return;
+    try {
+      await dismissCard(card, email ?? 'admin');
+      setPool((p) => p && { ...p, own: p.own.filter((c) => c !== card), carried: p.carried.filter((c) => c !== card) });
+      toast.show(`지웠습니다: ${name}`);
+    } catch (err) {
+      toast.show(`삭제 실패: ${String(err)}`);
     }
   };
 
@@ -747,7 +769,7 @@ const AdminWeeklyPage: React.FC = () => {
           >
             매주 목요일에 다음 주 후보가 올라옵니다. 하나를 골라 확정해 두면 그 주 월요일 오전 7시에
             앱의 주간 전시에 저절로 나옵니다(배포 필요 없음). 공개 전에는 다른 카드로 바꿔 확정할 수 있고,
-            공개된 뒤에 바꾸면 바로 바뀝니다. 특집은 아직 터미널에서 발행합니다(버튼이 명령어를 복사합니다).
+            공개된 뒤에 바꾸면 바로 바뀝니다. 고르지 않은 후보는 다음 주에도 남아 있고, 필요 없는 것만 삭제로 지웁니다. 특집은 아직 터미널에서 발행합니다(버튼이 명령어를 복사합니다).
           </div>
         </div>
 
@@ -823,21 +845,30 @@ const AdminWeeklyPage: React.FC = () => {
           </div>
         )}
 
-        {!dataLoading && !dataError && proposal && (
+        {!dataLoading && !dataError && pool && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            <div style={{ ...LABEL, fontSize: 10, color: COLOR_FG_FAINT }}>
-              후보 {proposal.cards.length}장 · 생성{' '}
-              {new Date(proposal.generated_at).toLocaleString('ko-KR')}
-            </div>
-            {proposal.cards.map((card) => (
-              <WeeklyProposalCardView
-                key={card.id}
-                card={card}
-                week={week}
-                isPublished={published?.id === card.id}
-                onCopy={handleCopy}
-                onPublish={handlePublish}
-              />
+            {([['이번 주 후보', pool.own], ['지난 주에서 넘어온 후보', pool.carried]] as [string, PoolCard[]][]).map(([label, cards]) => cards.length > 0 && (
+              <React.Fragment key={label}>
+                <div style={{ ...LABEL, fontSize: 10, color: COLOR_FG_FAINT, marginTop: 8 }}>
+                  {label} {cards.length}장
+                  {cards === pool.own && pool.generatedAt ? ` · 생성 ${new Date(pool.generatedAt).toLocaleString('ko-KR')}` : ''}
+                </div>
+                {cards.map((card) => (
+                  <div key={`${card.poolWeek}_${card.id}`}>
+                    {card.poolWeek !== week && (
+                      <div style={{ ...BODY, fontSize: 11, color: COLOR_FG_LOW, marginBottom: 4 }}>{weekLabel(card.poolWeek)} 후보</div>
+                    )}
+                    <WeeklyProposalCardView
+                      card={card}
+                      week={card.poolWeek}
+                      isPublished={published?.id === card.id}
+                      onCopy={handleCopy}
+                      onPublish={handlePublish}
+                      onDelete={handleDelete}
+                    />
+                  </div>
+                ))}
+              </React.Fragment>
             ))}
           </div>
         )}

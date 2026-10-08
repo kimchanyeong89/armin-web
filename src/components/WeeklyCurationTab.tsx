@@ -336,6 +336,19 @@ function SectionRule({ label, divider }: { label?: string; divider: string }) {
   );
 }
 
+// ── Theme line ─────────────────────────────────────────────────────────────
+
+/** Why this exhibition: the news or season it answers (the card's chip), set above the title. */
+function ThemeLine({ edition, langKo, size, color }: { edition: WeeklyEdition; langKo: boolean; size: number; color: string }) {
+  if (!edition.themeKo) return null;
+  return (
+    <div style={{ ...BODY, fontSize: size, fontWeight: 600, color, marginBottom: size * 0.6, letterSpacing: '-0.01em' }}>
+      <span style={{ fontWeight: 400, opacity: 0.75 }}>{edition.special ? (langKo ? '테마' : 'Theme') : (langKo ? '이번 주 테마' : "This week's theme")} · </span>
+      {edition.themeKo}
+    </div>
+  );
+}
+
 // ── Edition header ─────────────────────────────────────────────────────────
 
 function EditionHeader({
@@ -375,6 +388,7 @@ function EditionHeader({
           <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
         </div>
 
+        <ThemeLine edition={edition} langKo={langKo} size={17} color={accentText} />
         <h1 style={{
           ...HEADING,
           fontSize: 'clamp(1.6rem,3.2vw,3rem)',
@@ -739,6 +753,7 @@ function MobileEditionHeader({
       </div>
 
       {/* Title */}
+      <ThemeLine edition={edition} langKo={langKo} size={14} color={accentText} />
       <h1 style={{ ...HEADING, fontSize: 22, color: fg, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: 4 }}>
         {langKo ? edition.titleKo : edition.title}
       </h1>
@@ -997,7 +1012,7 @@ function WeeklyTopNav({
 /** The tab's exhibitions, newest first, as small thumbnails to slide through: picture, name, week.
  *  `id` is a week for a weekly exhibition and a slug for a special. */
 function CurationStrip({ entries, activeId, langKo, onSelect, fg, fgFaint }: {
-  entries: { id: string; week: string; title_en: string; title_ko: string; hero_image_url: string }[];
+  entries: { id: string; week: string; title_en: string; title_ko: string; hero_image_url: string; subtitle_chip?: string }[];
   activeId: string;
   langKo: boolean;
   onSelect: (id: string) => void;
@@ -1033,6 +1048,9 @@ function CurationStrip({ entries, activeId, langKo, onSelect, fg, fgFaint }: {
             }}>
               {langKo ? entry.title_ko : entry.title_en}
             </div>
+            {entry.subtitle_chip && (
+              <div style={{ ...BODY, fontSize: 11, color: '#D4A547', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{entry.subtitle_chip}</div>
+            )}
             <div style={{ ...BODY, fontSize: 11, color: fgFaint, marginTop: 2 }}>{weekLabel(entry.week, langKo)}</div>
           </button>
         );
@@ -1355,7 +1373,7 @@ export default function WeeklyCurationTab({
         entries={mode === 'special'
           ? specialEntries.map((e) => ({ ...e, id: e.slug, week: e.source_week }))
           : [
-            ...(currentFile ? [{ id: currentFile.week, week: currentFile.week, title_en: currentFile.title_en, title_ko: currentFile.title_ko, hero_image_url: currentHero?.image_url ?? '' }] : []),
+            ...(currentFile ? [{ id: currentFile.week, week: currentFile.week, title_en: currentFile.title_en, title_ko: currentFile.title_ko, hero_image_url: currentHero?.image_url ?? '', subtitle_chip: currentFile.subtitle_chip }] : []),
             ...archiveEntries.map((e) => ({ ...e, id: e.week })),
           ]}
         activeId={mode === 'special' ? (pastPick?.file as unknown as { slug?: string } | undefined)?.slug ?? '' : edition?.weekId ?? ''}

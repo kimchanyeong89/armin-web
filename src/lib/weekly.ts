@@ -26,6 +26,8 @@ export interface ArchiveEntry {
   hero_image_url: string;
   works_count: number;
   published_at: string;
+  /** what prompted it (news, season) */
+  subtitle_chip?: string;
 }
 
 function summarizeAsEntry(file: WeeklyPublishedFile): ArchiveEntry {
@@ -38,6 +40,7 @@ function summarizeAsEntry(file: WeeklyPublishedFile): ArchiveEntry {
     hero_image_url: hero?.image_url ?? '',
     works_count: file.works.length,
     published_at: file.published_at,
+    subtitle_chip: file.subtitle_chip,
   };
 }
 
@@ -73,6 +76,7 @@ export interface SpecialEntry {
   published_at: string;
   hero_image_url: string;
   source_week: string;
+  subtitle_chip?: string;
 }
 
 interface SpecialIndexFile {
