@@ -15,7 +15,8 @@
       "icon": "./assets/icon.png",
       "bundleIdentifier": "com.armin.mobile",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "작품을 내 공간에 걸어 보고 사진으로 남기기 위해 카메라를 사용합니다."
       },
       "usesAppleSignIn": true
     },
@@ -24,7 +25,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#D4A547"
       },
-      "package": "com.armin.mobile"
+      "package": "com.armin.mobile",
+      "blockedPermissions": [
+        "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,7 +40,7 @@
         "projectId": "8ba3bf1e-5aa7-4f08-8e55-7edbdcd45ca9"
       }
     },
-    "runtimeVersion": "1.0.0",
+    "runtimeVersion": "1.1.0",
     "updates": {
       "url": "https://u.expo.dev/8ba3bf1e-5aa7-4f08-8e55-7edbdcd45ca9"
     },
@@ -51,6 +57,14 @@
           "backgroundColor": "#D4A547",
           "image": "./assets/splash-icon.png",
           "imageWidth": 140
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": false,
+          "savePhotosPermission": "촬영한 사진을 사진 앱에 저장합니다.",
+          "granularPermissions": []
         }
       ]
     ]

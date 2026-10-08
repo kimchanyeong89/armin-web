@@ -4,6 +4,8 @@ import * as WebBrowser from "expo-web-browser";
 import * as AppleAuthentication from "expo-apple-authentication";
 import * as Crypto from "expo-crypto";
 import * as SplashScreen from "expo-splash-screen";
+import { File, Paths } from "expo-file-system";
+import * as MediaLibrary from "expo-media-library/legacy";
 import { StatusBar } from "expo-status-bar";
 import { WebView } from "react-native-webview";
 import type { ShouldStartLoadRequest, WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
@@ -113,6 +115,10 @@ true;
 // Tells the web login page this build can do Apple sign-in natively (iOS only; older builds lack it).
 // Runs first: RESPONSIVE_INJECTION can throw at document start (document.head is still null).
 const NATIVE_APPLE_MARK = Platform.OS === "ios" ? "document.documentElement.setAttribute('data-native-apple', '1');\n" : "";
+
+// Tells the web app this build can open the camera in the page and save a photo (iOS only for now;
+// builds before 1.1.0 have no camera permission text, so they must not show the AR button).
+const NATIVE_AR_MARK = Platform.OS === "ios" ? "document.documentElement.setAttribute('data-native-ar', '1');\n" : "";
 
 export default function App() {
   const webViewRef = useRef<WebView>(null);
@@ -255,6 +261,26 @@ export default function App() {
     }
   };
 
+  // AR capture: the page sends the finished JPEG (base64); it goes to Photos with add-only access.
+  const savePhoto = async (base64: string) => {
+    let ok = false;
+    try {
+      const permission = await MediaLibrary.requestPermissionsAsync(true);
+      if (permission.granted) {
+        const file = new File(Paths.cache, `colly-ar-${Date.now()}.jpg`);
+        file.write(base64, { encoding: "base64" });
+        await MediaLibrary.saveToLibraryAsync(file.uri);
+        file.delete();
+        ok = true;
+      }
+    } catch (e) {
+      console.warn("[AR] save failed", e);
+    }
+    webViewRef.current?.injectJavaScript(
+      `window.dispatchEvent(new CustomEvent('ar:photo-saved', { detail: { ok: ${ok} } })); true;`,
+    );
+  };
+
   const handleWebMessage = (event: WebViewMessageEvent) => {
     const raw = String(event.nativeEvent.data || "").trim();
     if (!raw) return;
@@ -267,7 +293,13 @@ export default function App() {
         level?: string;
         message?: string;
         code?: string;
+        data?: string;
       };
+
+      if (payload.type === "SAVE_PHOTO" && payload.data) {
+        void savePhoto(payload.data);
+        return;
+      }
 
       if (payload.type === "DEBUG_BRIDGE") {
         console.log("[WV:" + (payload.level || "log") + "]", payload.message || "");
@@ -399,7 +431,7 @@ export default function App() {
           source={{ uri: webAppUrl }}
           style={styles.webView}
           userAgent={IOS_SAFARI_USER_AGENT}
-          injectedJavaScriptBeforeContentLoaded={NATIVE_APPLE_MARK + RESPONSIVE_INJECTION}
+          injectedJavaScriptBeforeContentLoaded={NATIVE_APPLE_MARK + NATIVE_AR_MARK + RESPONSIVE_INJECTION}
           onShouldStartLoadWithRequest={handleShouldStart}
           onMessage={handleWebMessage}
           onLoadStart={() => {
@@ -452,6 +484,11 @@ export default function App() {
             setIsLoading(false);
             hideSplash();
           }}
+          // AR capture: the camera plays inside the page (not the full-screen player), and the
+          // system's own camera prompt is the only one asked.
+          allowsInlineMediaPlayback
+          mediaPlaybackRequiresUserAction={false}
+          mediaCapturePermissionGrantType="grant"
           javaScriptEnabled
           javaScriptCanOpenWindowsAutomatically
           domStorageEnabled
