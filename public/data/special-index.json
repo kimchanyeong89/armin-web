@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-07T06:17:16.403Z",
+  "updated_at": "2026-10-08T13:18:12.769Z",
   "entries": [
     {
       "slug": "albrecht-d-rer-carlo-crivelli",
@@ -44,6 +44,17 @@
       "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cma-collection/156420-e97f3b5c-imageUrl.webp",
       "source_week": "2026-W41",
       "subtitle_chip": "영화 「오디세이」"
+    },
+    {
+      "slug": "moon-and-stars",
+      "title_en": "Moonlit Nights",
+      "title_ko": "달밤의 풍경",
+      "persona_id": "yuna-choi",
+      "lens": "thematic",
+      "published_at": "2026-10-08T13:18:12.769Z",
+      "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/bruecke-museum-collection/44D6TWP22FV4CTPTUGQALWO32WL5K3-b5303881-imageUrl.webp",
+      "source_week": "2026-W42",
+      "subtitle_chip": "누리호 5차 발사"
     }
   ]
 }
