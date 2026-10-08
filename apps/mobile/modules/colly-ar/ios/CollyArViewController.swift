@@ -201,7 +201,7 @@ final class CollyArViewController: UIViewController, ARSessionDelegate {
     guard ready, surface == nil, shot == nil else { return }
     if let result = surfaceHit(at: CGPoint(x: sceneView.bounds.midX, y: sceneView.bounds.midY)) {
       place(on: result)
-      setHint(text("놓을 곳을 누르거나 끌어서 옮기세요", "Touch or drag to move it"))
+      setHint(text("놓을 곳을 누르거나 끌어서 옮기세요\n왼쪽 아래 버튼으로 90°씩 돌립니다", "Touch or drag to move it\nThe button at lower left turns it 90°"))
     }
   }
 
@@ -227,8 +227,12 @@ final class CollyArViewController: UIViewController, ARSessionDelegate {
   }
 
   @objc private func turn() {
-    quarterTurns = (quarterTurns + 1) % 4
+    quarterTurns += 1
+    // Turned over a moment rather than swapped, so the quarter turn is seen happening.
+    SCNTransaction.begin()
+    SCNTransaction.animationDuration = 0.3
     applyTransform()
+    SCNTransaction.commit()
   }
 
   @objc private func close() {
@@ -342,8 +346,24 @@ final class CollyArViewController: UIViewController, ARSessionDelegate {
     closeButton.setImage(UIImage(systemName: "xmark", withConfiguration: symbols), for: .normal)
     closeButton.accessibilityLabel = text("닫기", "Close")
     closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-    turnButton.setImage(UIImage(systemName: "rotate.right", withConfiguration: symbols), for: .normal)
-    turnButton.accessibilityLabel = text("90도 돌리기", "Turn 90 degrees")
+    // The one control a first-time user would not guess, so it carries its name under the icon.
+    var turnConfig = UIButton.Configuration.plain()
+    turnConfig.image = UIImage(systemName: "rotate.right", withConfiguration: UIImage.SymbolConfiguration(pointSize: 28, weight: .medium))
+    turnConfig.title = text("90° 회전", "Turn 90°")
+    turnConfig.imagePlacement = .top
+    turnConfig.imagePadding = 5
+    turnConfig.contentInsets = NSDirectionalEdgeInsets(top: 6, leading: 6, bottom: 6, trailing: 6)
+    turnConfig.baseForegroundColor = .white
+    turnConfig.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+      var attributes = incoming
+      attributes.font = .systemFont(ofSize: 13, weight: .semibold)
+      return attributes
+    }
+    turnButton.configuration = turnConfig
+    turnButton.layer.shadowColor = UIColor.black.cgColor
+    turnButton.layer.shadowOpacity = 0.8
+    turnButton.layer.shadowRadius = 4
+    turnButton.layer.shadowOffset = .zero
     turnButton.addTarget(self, action: #selector(turn), for: .touchUpInside)
 
     shutterButton.backgroundColor = .white
@@ -357,7 +377,7 @@ final class CollyArViewController: UIViewController, ARSessionDelegate {
     retakeButton.addTarget(self, action: #selector(retake), for: .touchUpInside)
     saveButton.addTarget(self, action: #selector(save), for: .touchUpInside)
 
-    for button in [closeButton, turnButton, retakeButton, saveButton] {
+    for button in [closeButton, retakeButton, saveButton] {
       button.tintColor = .white
       button.setTitleColor(.white, for: .normal)
       button.titleLabel?.font = .systemFont(ofSize: 15)
@@ -380,9 +400,7 @@ final class CollyArViewController: UIViewController, ARSessionDelegate {
       shutterButton.heightAnchor.constraint(equalToConstant: 68),
 
       turnButton.centerYAnchor.constraint(equalTo: shutterButton.centerYAnchor),
-      turnButton.leadingAnchor.constraint(equalTo: safe.leadingAnchor, constant: 28),
-      turnButton.widthAnchor.constraint(equalToConstant: 44),
-      turnButton.heightAnchor.constraint(equalToConstant: 44),
+      turnButton.leadingAnchor.constraint(equalTo: safe.leadingAnchor, constant: 18),
 
       hintLabel.bottomAnchor.constraint(equalTo: shutterButton.topAnchor, constant: -16),
       hintLabel.leadingAnchor.constraint(equalTo: safe.leadingAnchor, constant: 28),
