@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState, useRef } from "react";
+import { ArtistName } from "./ArtistName";
 import { RankInfo } from "./RankInfo";
 import "./mypageRedesign.css";
 import { useAuth } from "../contexts/AuthContext";
@@ -2207,7 +2208,7 @@ const MyPage: React.FC = () => {
             tab's pairing: Paperlogy for the title, Wanted Sans under it */}
         <div className="mp-name-line">
           <b>{normalized.title}</b>
-          <small>{normalized.artist || normalized.museumName}</small>
+          <small>{normalized.artist ? <ArtistName name={normalized.artist} /> : normalized.museumName}</small>
         </div>
       </div>
     );

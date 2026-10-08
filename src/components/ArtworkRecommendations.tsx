@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { ArtistName } from './ArtistName';
 import type { Artwork } from '../types/Artwork';
 import { getWeservUrl } from '../utils/imageProxy';
 import { exhibitions } from '../data/exhibitions';
@@ -478,7 +479,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                 {year && <div style={{ fontSize: compact ? 9 : 11, color: subTextColor, marginBottom: compact ? 3 : 4 }}>{year}</div>}
 
                 {/* Artist */}
-                <div style={{ fontSize: compact ? 10 : 12, color: theme === 'dark' ? '#ddd' : '#333', fontWeight: 500, marginBottom: compact ? 1 : 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{artist}</div>
+                <div style={{ fontSize: compact ? 10 : 12, color: theme === 'dark' ? '#ddd' : '#333', fontWeight: 500, marginBottom: compact ? 1 : 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}><ArtistName name={artist} /></div>
 
                 {/* Museum & Country */}
                 {

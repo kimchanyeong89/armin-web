@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import BottomPageNavigator, { MAIN_TABS, resolveMainTabIndex } from "./components/BottomPageNavigator";
 import WallDrawer from "./features/wall/WallDrawer";
 import WallGrip from "./features/wall/WallGrip";
+import LangGrip from "./components/LangGrip";
 import LanguageToggle from "./components/LanguageToggle";
 import { askLocationOnce } from "./utils/userLocation";
 // LogOut is unused here and was already unused before this change; left in place.
@@ -1004,7 +1005,7 @@ function AppContent() {
           onChange={handleBottomNavChange}
           lightMode={isLightTheme}
           mobileChromeTweak={mobileChromeTweak}
-          grip={isAuthedUser ? <WallGrip ko={language === "ko"} /> : undefined}
+          grip={<>{isAuthedUser && <WallGrip ko={language === "ko"} />}<LangGrip /></>}
         />
       )}
 
@@ -1020,7 +1021,8 @@ function AppContent() {
       {/* Floating language switch — reachable on every route, top right. Sits
           below the profile cluster (z 250012) and full-screen overlays so it
           never covers their close buttons, yet above page content. */}
-      <div
+      {/* where the tab bar shows, the switch rides its top edge (LangGrip) and this one is not drawn */}
+      {!(isBottomNavVisible && !introAllowed) && <div
         className={langAway ? "app-language-toggle is-away" : "app-language-toggle"}
         style={{
           position: 'fixed',
@@ -1032,7 +1034,7 @@ function AppContent() {
         {/* KO | EN stays (user, 10/1: "다시 살려줘" — it had been hidden on 9/30). The first
             language still follows the device (LanguageContext); the switch changes it. */}
         <LanguageToggle light={isLightTheme} />
-      </div>
+      </div>}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, Suspense, lazy, useMemo, useCallback } from "react";
+import { ArtistName } from '../components/ArtistName';
 import { useSearchParams, useNavigate, useLocation, useParams } from "react-router-dom";
 
 // D3GeoGlobeSimplified disabled — Interactive Map is the default entry point
@@ -1721,7 +1722,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
                         marginBottom: 7,
                       }}>{title}</div>
                       <div style={{ fontSize: 12, color: isDark ? 'rgba(255,255,255,0.58)' : '#555', fontWeight: 500 }}>
-                        {artist}{date ? `, ${date}` : ''}
+                        <ArtistName name={artist} />{date ? `, ${date}` : ''}
                       </div>
                       {museum && (
                         <div style={{ fontSize: 9, color: fgDim, marginTop: 5, fontFamily: fontMono, letterSpacing: '0.07em', textTransform: 'uppercase' }}>

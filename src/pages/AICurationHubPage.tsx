@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
+import { ArtistName } from "../components/ArtistName";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -782,7 +783,7 @@ function CurationTab({
                     {ex.title}
                   </div>
                   <div style={{ marginTop: 4, fontSize: 11, color: fgMed, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {ex.artist || tr({ ko: '알 수 없는 작가', en: 'Unknown Artist' })}
+                    {ex.artist ? <ArtistName name={ex.artist} /> : tr({ ko: '알 수 없는 작가', en: 'Unknown Artist' })}
                   </div>
                 </div>
               </div>

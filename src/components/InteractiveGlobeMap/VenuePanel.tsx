@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { ArtistName } from "../ArtistName";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { CityMarker, Venue, Theme } from "./types";
 import { MiniCityMap } from "./MiniCityMap";
@@ -573,7 +574,7 @@ function ExhibitionModal({
                 <motion.div key={inspectedArt.title + inspectedArt.inventoryNo} initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.12 }}>
                   <div style={{ fontSize: "15px", color: fgHigh }}>{inspectedArt.title}</div>
                   <div className="flex items-center gap-3 mt-1.5">
-                    <span style={{ fontSize: "12px", color: fgMed }}>{inspectedArt.artist}</span>
+                    <span style={{ fontSize: "12px", color: fgMed }}><ArtistName name={inspectedArt.artist} /></span>
                     <span style={{ fontFamily: "'Space Mono', monospace", fontSize: "10px", color: fgLow }}>{inspectedArt.year}</span>
                   </div>
                   <div className="mt-3 grid grid-cols-3 gap-x-6 gap-y-2">
@@ -659,7 +660,7 @@ function ExhibitionModal({
                           {aw.title} <span style={{ color: fgMute }}>({aw.year})</span>
                         </div>
                         <div className="truncate mt-0.5" style={{ fontSize: "9px", color: fgMute }}>
-                          {aw.artist}
+                          <ArtistName name={aw.artist} />
                         </div>
                       </div>
                     </button>
@@ -696,7 +697,7 @@ function ExhibitionModal({
                             {filteredArtworks[activeArtwork].title}
                           </div>
                           <div className="mt-2.5" style={{ fontSize: "13px", color: fgMed }}>
-                            {filteredArtworks[activeArtwork].artist}
+                            <ArtistName name={filteredArtworks[activeArtwork].artist} />
                           </div>
                           <div className="mt-1" style={{ fontFamily: "'Space Mono', monospace", fontSize: "11px", color: fgLow }}>
                             {filteredArtworks[activeArtwork].year}

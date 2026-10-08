@@ -70,6 +70,17 @@
 .wall-grip:focus { outline: none; }
 .wall-grip:focus-visible i { width: 36px; }
 
+/* KO | EN: the same glass tab, narrower, at the bar's right end (components/LangGrip.tsx). A tap, not a pull. */
+.wall-grip.lang-grip { left: auto; right: 22px; transform: none; flex-direction: row; gap: 6px; width: 88px; cursor: pointer; touch-action: manipulation;
+  font-size: 9px; letter-spacing: .12em;
+  clip-path: path("M0,28 L0,24 C8,24 13.6,19.2 13.6,12 C13.6,4.8 18.4,0 25.6,0 L62.4,0 C69.6,0 74.4,4.8 74.4,12 C74.4,19.2 80,24 88,24 L88,28Z"); }
+.lang-grip .wall-grip__edge { width: 88px; }
+.lang-grip span, .lang-grip:hover span { opacity: .42; }
+.lang-grip span.is-on, .lang-grip:hover span.is-on { opacity: 1; color: var(--bpn-ink-strong, rgba(255,255,255,.92)); }
+.lang-grip em { width: 1px; height: 8px; background: currentColor; opacity: .35; }
+.lang-grip:hover span:not(.is-on) { opacity: .9; }
+@media (max-width: 767px) { .wall-grip.lang-grip { right: 12px; } }
+
 /* while the wall is out, pictures on the page are picked up by the wall, not
    by the browser's own drag or long-press menu */
 html.wall-open img { -webkit-user-drag: none; -webkit-touch-callout: none; }
