@@ -1,4 +1,5 @@
 import { buildFtsQuery, SEARCH_TEXT_SQL, SEARCH_TEXT_MAX_LIMIT } from './searchText';
+import { IMAGE_MEAN } from './imageMean';
 import {
     exhibitionPercents,
     kMeans,
@@ -249,10 +250,15 @@ async function putCachedVector(env: Env, text: string, vec: number[]): Promise<v
 // ─────────────────────────────────────────────────────────────
 const SEARCH_RESULT_TTL = 60 * 60 * 24 * 7;  // 7일
 
+/* Kept answers are stored under this prefix. Change it to drop every kept answer at once - needed when
+   the vectors' cards change underneath them: answers kept before 2026-10-09 held the blank cards of
+   86 collections whose vectors had no metadata, and went on being served after the cards were restored. */
+const SEARCH_RESULT_PREFIX = 'sres2:';
+
 async function getCachedSearchResults(env: Env, cacheKeyStr: string): Promise<any[] | null> {
     if (!env.TASTE_KV) return null;
     try {
-        const key = 'sres:' + (await sha256Hex(cacheKeyStr));
+        const key = SEARCH_RESULT_PREFIX + (await sha256Hex(cacheKeyStr));
         const raw = await env.TASTE_KV.get(key);
         if (!raw) return null;
         const arr = JSON.parse(raw);
@@ -265,7 +271,7 @@ async function getCachedSearchResults(env: Env, cacheKeyStr: string): Promise<an
 async function putCachedSearchResults(env: Env, cacheKeyStr: string, results: any[]): Promise<void> {
     if (!env.TASTE_KV) return;
     try {
-        const key = 'sres:' + (await sha256Hex(cacheKeyStr));
+        const key = SEARCH_RESULT_PREFIX + (await sha256Hex(cacheKeyStr));
         await env.TASTE_KV.put(key, JSON.stringify(results), { expirationTtl: SEARCH_RESULT_TTL });
     } catch (err) {
         console.warn('search-result cache put failed:', err);
@@ -989,66 +995,61 @@ function diversify(matches: VectorMatch[], limit: number, preSorted = false): Ve
 }
 
 // ============================================================
-// 벡터 쿼리 + 메타데이터 조회 (2-step)
+// 글자 벡터로 그림 찾기
 //
-// Vectorize 제한:
-//   returnMetadata=true  → topK 최대 50
-//   returnMetadata=false → topK 최대 100, 이후 getByIds로 메타데이터 조회
+// 글자 벡터와 그림 벡터는 같은 공간에서도 서로 다른 쪽에 모여 있다(그림끼리 코사인 약 0.5,
+// 글자와 그림은 약 0). Vectorize 는 질의와 가까운 구역만 뒤지는 근사 검색이라, 글자 벡터를
+// 그대로 넣으면 엉뚱한 구역을 뒤져 정답을 놓친다 — "sunflowers" 로 해바라기가 한 점도 안 나왔고
+// 고흐의 해바라기(실제 점수로는 10위 안)는 100개 안에도 없었다.
+//
+//   1. 글자 벡터를 그림 평균 쪽으로 옮긴 질의 여러 개로 후보를 모은다 (구역을 제대로 찾게)
+//   2. 후보를 원래 글자 벡터와의 실제 코사인으로 다시 줄 세운다 (옮긴 만큼의 치우침 제거)
+//   3. 맨 위 몇 점의 그림 벡터로 닮은 그림을 더 모아 같은 방식으로 줄 세운다 (그림→그림은 잘 찾는다)
 // ============================================================
+const TEXT_QUERY_SHIFTS = [0.25, 0.5, 1];
+const TEXT_QUERY_SEEDS = 5;
+
+function cosineToUnit(unit: Float32Array, v: number[]): number {
+    let dot = 0;
+    let sum = 0;
+    for (let i = 0; i < v.length; i++) {
+        dot += unit[i] * v[i];
+        sum += v[i] * v[i];
+    }
+    return dot / (Math.sqrt(sum) || 1);
+}
+
 async function queryWithMetadata(
     env: Env,
     vector: number[],
     topK: number
 ): Promise<Array<{ id: string; score: number; [key: string]: any }>> {
     const safeTopK = Math.min(topK, 100);
+    const text = normalize(Float32Array.from(vector));
+    const candidates = new Map<string, VectorRecord>();
 
-    if (safeTopK <= 50) {
-        // 50개 이하면 단일 쿼리로 메타데이터까지 한 번에 가져옴
-        const res = await env.VECTORIZE.query(vector, { topK: safeTopK, returnMetadata: true });
-        return res.matches.map(m => {
-            const md = m.metadata || {};
-            // metadata.o is the original ID for shortened-ID records;
-            // swap it back so the client never sees the internal vbz_ alias.
-            const original = typeof md.o === 'string' ? md.o : '';
-            const { o, ...rest } = md as any;
-            return {
-                id: original || m.id,
-                score: m.score,
-                ...rest,
-            };
-        });
-    }
+    // Runs the queries side by side and keeps every new match with its stored vector.
+    const collect = async (queries: Array<Float32Array | number[]>, perQuery: number) => {
+        const found = await Promise.all(queries.map((q) =>
+            env.VECTORIZE.query(Array.from(q), { topK: perQuery, returnMetadata: 'none' }).catch(() => ({ matches: [] as VectorMatch[] }))));
+        const ids = [...new Set(found.flatMap((r) => r.matches.map((m) => m.id)))].filter((id) => !candidates.has(id));
+        const batches: string[][] = [];
+        for (let i = 0; i < ids.length; i += VECTORIZE_GET_BATCH) batches.push(ids.slice(i, i + VECTORIZE_GET_BATCH));
+        const records = await Promise.all(batches.map((batch) => env.VECTORIZE.getByIds(batch).catch(() => [] as VectorRecord[])));
+        for (const r of records.flat()) if (r.values?.length === VECTOR_DIM) candidates.set(r.id, r);
+    };
+    const ranked = () => [...candidates.values()]
+        .map((record) => ({ record, score: cosineToUnit(text, record.values) }))
+        .sort((a, b) => b.score - a.score);
 
-    // 50개 초과: 2-step 쿼리
-    // 1단계: ID + score만 가져오기 (returnMetadata='none' 시 topK 100까지 허용)
-    const res = await env.VECTORIZE.query(vector, { topK: safeTopK, returnMetadata: 'none' });
-    if (!res.matches.length) return [];
+    await collect(TEXT_QUERY_SHIFTS.map((shift) => normalize(text.map((x, i) => x + shift * IMAGE_MEAN[i]))), 100);
+    await collect(ranked().slice(0, TEXT_QUERY_SEEDS).map(({ record }) => record.values), 50);
 
-    // 2단계: 해당 ID들의 메타데이터를 getByIds로 조회
-    const ids = res.matches.map(m => m.id);
-    const scoreMap = new Map<string, number>(res.matches.map(m => [m.id, m.score]));
-
-    // getByIds는 최대 20개씩 처리 가능하므로 배치로 분할
-    const BATCH = 20;
-    const metaRecords: VectorRecord[] = [];
-    for (let i = 0; i < ids.length; i += BATCH) {
-        const batch = await env.VECTORIZE.getByIds(ids.slice(i, i + BATCH));
-        metaRecords.push(...batch);
-    }
-
-    // score와 metadata 합산, 원래 score 순서 유지
-    const metaMap = new Map<string, Record<string, any>>(
-        metaRecords.map(r => [r.id, r.metadata || {}])
-    );
-    return ids.map(id => {
-        const md = metaMap.get(id) || {};
-        const original = typeof md.o === 'string' ? md.o : '';
-        const { o, ...rest } = md as any;
-        return {
-            id: original || id,
-            score: scoreMap.get(id) ?? 0,
-            ...rest,
-        };
+    return ranked().slice(0, safeTopK).map(({ record, score }) => {
+        // metadata.o is the original ID for shortened-ID records;
+        // swap it back so the client never sees the internal vbz_ alias.
+        const { o, ...rest } = (record.metadata || {}) as any;
+        return { id: (typeof o === 'string' && o) || record.id, score, ...rest };
     });
 }
 

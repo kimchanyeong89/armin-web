@@ -17,6 +17,7 @@
 //   --limit=N     — only process N records (debug/test)
 //   --ids=a,b,c   — refresh only these specific ids
 //   --collections=a,b — refresh only these collections (by collection id prefix)
+//   --from-index  — take each work's card from the search index instead of the raw collection JSONs
 //   --dry-run     — print the batches without sending them
 //
 // Also deletes the known debug entries (test-probe-123, test-id-1,
@@ -33,6 +34,7 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const sinceArg = args.find((a) => a.startsWith('--since-id='));
 const SINCE_ID = sinceArg ? sinceArg.split('=')[1] : null;
+const FROM_INDEX = args.includes('--from-index');
 const limitArg = args.find((a) => a.startsWith('--limit='));
 const LIMIT = limitArg ? Number(limitArg.split('=')[1]) : Infinity;
 const idsArg = args.find((a) => a.startsWith('--ids='));
@@ -135,6 +137,21 @@ async function postBatch(batch) {
   return { status: res.status, ...json };
 }
 
+// --from-index: the card as the search index holds it (n, a, m, i, e, d, c, u under the index's own id).
+// Some collections' raw JSONs carry ids the index does not use (AzW, NGA, Wallace, ZKM), so their
+// vectors could not be matched from the raw files; the index is what the app shows anyway.
+function loadIndexMap() {
+  const map = new Map();
+  for (const file of fs.readdirSync(DATA_DIR).filter((f) => /^search-index-part-\d+\.json$/.test(f))) {
+    for (const w of JSON.parse(fs.readFileSync(path.join(DATA_DIR, file), 'utf8'))) {
+      if (!w.i) continue;
+      const md = { n: String(w.n || '').slice(0, 200), a: String(w.a || '').slice(0, 120), m: String(w.m || ''), i: String(w.i), e: String(w.e || ''), d: String(w.d || ''), c: String(w.c || ''), u: String(w.u || '') };
+      map.set(String(w.id), md);
+    }
+  }
+  return map;
+}
+
 async function deleteTestEntries() {
   console.log(`Deleting ${TEST_IDS_TO_DELETE.length} test entries...`);
   const res = await fetch(`${WORKER}/delete-ids`, {
@@ -147,8 +164,8 @@ async function deleteTestEntries() {
 }
 
 async function main() {
-  console.log(`Building id → metadata map from ${DATA_DIR}...`);
-  const map = loadIdMap();
+  console.log(`Building id → metadata map from ${FROM_INDEX ? 'the search index' : DATA_DIR}...`);
+  const map = FROM_INDEX ? loadIndexMap() : loadIdMap();
   console.log(`Total IDs with images in JSON: ${map.size}`);
 
   // Filter / scope
