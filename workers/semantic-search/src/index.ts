@@ -2112,7 +2112,12 @@ export default {
                     }
                     const found = await env.VECTORIZE.getByIds(lookupIds);
                     const foundIds = found.map((f) => lookupToOriginal.get(f.id) || f.id);
-                    return Response.json({ count: found.length, foundIds }, { headers: corsHeaders });
+                    /* of those, the ones whose vector carries the work's card (an image address in its
+                       metadata). A vector without it is found by similarity and then dropped by the app,
+                       which is how 86 collections' recommendations went missing (2026-10-09). */
+                    const namedIds = found.filter((f) => typeof (f.metadata as any)?.i === 'string' && (f.metadata as any).i)
+                        .map((f) => lookupToOriginal.get(f.id) || f.id);
+                    return Response.json({ count: found.length, foundIds, namedIds }, { headers: corsHeaders });
                 } catch (err: any) {
                     return Response.json({ error: err.message }, { status: 500, headers: corsHeaders });
                 }

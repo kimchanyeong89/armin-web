@@ -16,6 +16,7 @@
 //   --since-id=X  — start from this id (resume after interruption)
 //   --limit=N     — only process N records (debug/test)
 //   --ids=a,b,c   — refresh only these specific ids
+//   --collections=a,b — refresh only these collections (by collection id prefix)
 //   --dry-run     — print the batches without sending them
 //
 // Also deletes the known debug entries (test-probe-123, test-id-1,
@@ -35,7 +36,13 @@ const SINCE_ID = sinceArg ? sinceArg.split('=')[1] : null;
 const limitArg = args.find((a) => a.startsWith('--limit='));
 const LIMIT = limitArg ? Number(limitArg.split('=')[1]) : Infinity;
 const idsArg = args.find((a) => a.startsWith('--ids='));
-const ID_FILTER = idsArg ? new Set(idsArg.split('=')[1].split(',')) : null;
+// --ids-file=<path> : the ids listed in a file, one a line (verify-vector-metadata.mjs writes one)
+const idsFileArg = args.find((a) => a.startsWith('--ids-file='));
+const ID_FILTER = idsFileArg ? new Set(fs.readFileSync(idsFileArg.split('=')[1], 'utf8').split('\n').map((l) => l.trim()).filter(Boolean))
+  : idsArg ? new Set(idsArg.split('=')[1].split(',')) : null;
+// --collections=a,b : only works whose collection id (metadata e) starts with one of these
+const colArg = args.find((a) => a.startsWith('--collections='));
+const COLLECTIONS = colArg ? colArg.split('=')[1].split(',').filter(Boolean) : null;
 
 const TEST_IDS_TO_DELETE = ['test-probe-123', 'test-id-1', 'test-short-id-debug-12345'];
 
@@ -51,7 +58,10 @@ for (const museum of exhibitions) {
   }
 }
 const BATCH_SIZE = 20; // Vectorize getByIds caps at 20 (HTTP 500 above 20)
-const CONCURRENCY = 12; // parallel batches sent to the worker
+// 12 at once drew VECTOR_UPSERT_ERROR 40041 'Too Many Requests' on a third of the batches (10/9);
+// 4 with a retry gets every batch through. --concurrency=N to change it.
+const concArg = args.find((a) => a.startsWith('--concurrency='));
+const CONCURRENCY = concArg ? Number(concArg.split('=')[1]) : 4;
 
 function pickFields(item, defaults) {
   return {
@@ -143,6 +153,10 @@ async function main() {
 
   // Filter / scope
   let entries = Array.from(map.entries());
+  if (COLLECTIONS) {
+    entries = entries.filter(([, md]) => COLLECTIONS.some((c) => String(md?.e || '').startsWith(c)));
+    console.log(`Filtered to --collections: ${entries.length}`);
+  }
   if (ID_FILTER) {
     entries = entries.filter(([id]) => ID_FILTER.has(id));
     console.log(`Filtered to --ids: ${entries.length}`);
@@ -187,7 +201,12 @@ async function main() {
     while (queue.length) {
       const { idx, batch } = queue.shift();
       try {
-        const r = await postBatch(batch);
+        /* a refused batch is asked again, a little later each time: dropping it left its vectors unnamed */
+        let r = await postBatch(batch);
+        for (let attempt = 1; r.status !== 200 && attempt <= 6; attempt += 1) {
+          await new Promise((done) => setTimeout(done, 1500 * attempt));
+          r = await postBatch(batch);
+        }
         if (r.status === 200) {
           updated += r.updated || 0;
           missing += r.missing || 0;
