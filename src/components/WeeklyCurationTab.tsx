@@ -14,7 +14,7 @@ import {
   type SpecialEntry,
 } from "../lib/weekly";
 import { fetchProposal, fetchPublished } from "../lib/weeklyStore";
-import { liveWeek, weekLabel } from "../lib/iso-week";
+import { liveWeek, weekLabel, weekRange } from "../lib/iso-week";
 import { artistPath } from "../redesign/artwork/WorkDetail";
 import { getArtistDisplayName, useArtistI18n } from "../i18n/artistLocalization";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
@@ -108,13 +108,17 @@ const PERSONA_NAMES: Record<PersonaId, { en: string; ko: string; role: string }>
   'anika-voss':    { en: 'Anika Voss',    ko: '아니카 보스', role: 'Contributing Editor, Colly' },
 };
 
-function formatPublishedDate(isoTimestamp: string, langKo: 'ko' | 'en'): string {
-  const d = new Date(isoTimestamp);
+/** The date an exhibition went on show: a week's exhibition on that week's Monday (whenever it was
+ *  confirmed), a special on the day it was published. */
+function shownDate(file: WeeklyPublishedFile, lang: 'ko' | 'en'): string {
+  const special = !!(file as unknown as { slug?: string }).slug;
+  const weekly = !special && /^\d{4}-W\d{2}$/.test(file.week ?? '');
+  // a week's Monday is a calendar date (read in UTC); a publishing time is read in the reader's own zone
+  const d = weekly ? weekRange(file.week).start : new Date(file.published_at);
   if (isNaN(d.getTime())) return '';
-  if (langKo === 'ko') {
-    return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
-  }
-  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  const [y, m, day] = weekly ? [d.getUTCFullYear(), d.getUTCMonth() + 1, d.getUTCDate()] : [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+  if (lang === 'ko') return `${y}년 ${m}월 ${day}일`;
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: weekly ? 'UTC' : undefined });
 }
 
 /** A curation's work in the shape the app's artwork detail reads. */
@@ -137,8 +141,8 @@ export function adaptPublishedToEdition(file: WeeklyPublishedFile): WeeklyEditio
     id: file.id,
     weekId: file.week ?? (file as unknown as { source_week?: string }).source_week ?? '',
     special: !!(file as unknown as { slug?: string }).slug,
-    date: formatPublishedDate(file.published_at, 'en'),
-    dateKo: formatPublishedDate(file.published_at, 'ko'),
+    date: shownDate(file, 'en'),
+    dateKo: shownDate(file, 'ko'),
     title: file.title_en,
     titleKo: file.title_ko,
     editorName: persona.en,
@@ -385,7 +389,7 @@ function EditionHeader({
             background: accent, color: '#000',
             padding: '3px 9px',
           }}>{edition.special ? (langKo ? '특집 전시' : 'Special Exhibition') : (langKo ? '주간 전시' : 'Weekly Exhibition')}</span>
-          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
+          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{langKo ? edition.dateKo : edition.date}</span>
         </div>
 
         <ThemeLine edition={edition} langKo={langKo} size={17} color={accentText} />
@@ -749,7 +753,7 @@ function MobileEditionHeader({
         <span style={{ ...LABEL, fontSize: 9, background: accent, color: '#0c0c0a', padding: '2px 8px' }}>
           {edition.special ? (langKo ? '특집 전시' : 'Special Exhibition') : (langKo ? '주간 전시' : 'Weekly Exhibition')}
         </span>
-        <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{edition.dateKo}</span>
+        <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{langKo ? edition.dateKo : edition.date}</span>
       </div>
 
       {/* Title */}
