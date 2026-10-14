@@ -426,7 +426,7 @@ export default function PolicyPage({ doc }: { doc: PolicyDocId }) {
           <a href="/terms" style={{ color: palette.textMute }}>{t({ ko: "이용약관", en: "Terms" })}</a>
           <a href="/support" style={{ color: palette.textMute }}>{t({ ko: "지원", en: "Support" })}</a>
           <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: palette.textMute }}>{CONTACT_EMAIL}</a>
-          <button type="button" onClick={() => openBugReport(user?.uid, language)}
+          <button type="button" onClick={() => openBugReport(user?.uid, language, user?.displayName)}
             style={{ color: palette.textMute, background: "none", border: 0, padding: 0, font: "inherit", textDecoration: "underline", cursor: "pointer" }}>
             {t({ ko: "버그 신고", en: "Report a bug" })}
           </button>

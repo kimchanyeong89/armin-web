@@ -886,7 +886,7 @@ function AppContent() {
                     label: t({ ko: '버그 신고', en: 'BUG' }),
                     title: t({ ko: '버그 신고', en: 'Report a bug' }),
                     danger: false,
-                    onPick: () => { setIsFloatingActionsOpen(false); openBugReport(user?.uid, language); },
+                    onPick: () => { setIsFloatingActionsOpen(false); openBugReport(user?.uid, language, user?.displayName); },
                     badge: null,
                   },
                   ...(!isDesktopQuickMenu ? [{
