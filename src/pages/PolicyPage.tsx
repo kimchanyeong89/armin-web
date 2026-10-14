@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { SHOW_PUBLIC_COLLECTIONS } from "../config/features";
+import { useAuth } from "../contexts/AuthContext";
+import { openBugReport } from "../utils/bugReport";
 
 // 개인정보처리방침·이용약관·지원. 스토어 심사가 요구하는 세 페이지라 껍데기는 같고 글만 다르다.
 // 앱 안에서도 열리므로 로그인 없이 보이고, 바깥 링크로 바로 들어와도 홈 인트로가 끼어들지 않는다.
@@ -327,7 +329,8 @@ const DOCS: Record<PolicyDocId, Doc> = {
 
 export default function PolicyPage({ doc }: { doc: PolicyDocId }) {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const { user } = useAuth();
   const [isLightTheme, setIsLightTheme] = useState<boolean>(() => {
     try {
       return localStorage.getItem("homeTheme") === "light";
@@ -423,6 +426,10 @@ export default function PolicyPage({ doc }: { doc: PolicyDocId }) {
           <a href="/terms" style={{ color: palette.textMute }}>{t({ ko: "이용약관", en: "Terms" })}</a>
           <a href="/support" style={{ color: palette.textMute }}>{t({ ko: "지원", en: "Support" })}</a>
           <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: palette.textMute }}>{CONTACT_EMAIL}</a>
+          <button type="button" onClick={() => openBugReport(user?.uid, language)}
+            style={{ color: palette.textMute, background: "none", border: 0, padding: 0, font: "inherit", textDecoration: "underline", cursor: "pointer" }}>
+            {t({ ko: "버그 신고", en: "Report a bug" })}
+          </button>
         </div>
       </div>
     </div>

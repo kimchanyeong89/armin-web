@@ -11,7 +11,7 @@ import type { ReactElement } from "react";
  * label in the menu, so the icon carries recognition and the word carries
  * meaning.
  */
-export type QuickIconName = "user" | "theme" | "logout" | "cart";
+export type QuickIconName = "user" | "theme" | "logout" | "cart" | "bug";
 
 const PATHS: Record<QuickIconName, ReactElement> = {
   // a head over the arc of a shoulder line
@@ -41,6 +41,15 @@ const PATHS: Record<QuickIconName, ReactElement> = {
       <path d="M2.7 3.7h2.1l2 8.7h8l1.5-6.1H5.5" />
       <circle cx="7.7" cy="15.5" r="1.2" />
       <circle cx="14.1" cy="15.5" r="1.2" />
+    </>
+  ),
+  // a beetle: shell split down the back, two antennae, legs either side
+  bug: (
+    <>
+      <ellipse cx="10" cy="11.6" rx="3.9" ry="4.9" />
+      <path d="M10 6.7v9.8" />
+      <path d="M8.2 6.9 6.6 4.4M11.8 6.9l1.6-2.5" />
+      <path d="M6.1 10H3.6M6.3 13.6H4M13.9 10h2.5M13.7 13.6H16" />
     </>
   ),
 };

@@ -32,6 +32,7 @@ import { auth } from "./firebase";
 import { ensureSharedSearchWorkerLoaded } from "./utils/searchWorkerRuntime";
 import { resolveMobileChromeTweak } from "./components/mobileChromeTweaks";
 import MobileChromeTweakSwitcher from "./components/MobileChromeTweakSwitcher";
+import { openBugReport } from "./utils/bugReport";
 
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -878,6 +879,14 @@ function AppContent() {
                     title: isLightTheme ? t({ ko: '다크 모드로 전환', en: 'Switch to dark mode' }) : t({ ko: '라이트 모드로 전환', en: 'Switch to light mode' }),
                     danger: false,
                     onPick: () => { toggleGlobalTheme(); setIsFloatingActionsOpen(false); },
+                    badge: null,
+                  },
+                  {
+                    key: 'bug', icon: 'bug' as const,
+                    label: t({ ko: '버그 신고', en: 'BUG' }),
+                    title: t({ ko: '버그 신고', en: 'Report a bug' }),
+                    danger: false,
+                    onPick: () => { setIsFloatingActionsOpen(false); openBugReport(user?.uid, language); },
                     badge: null,
                   },
                   ...(!isDesktopQuickMenu ? [{
