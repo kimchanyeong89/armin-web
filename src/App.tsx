@@ -939,7 +939,8 @@ function AppContent() {
             )}
           </AnimatePresence>
 
-          {/* 버그 신고 — 프로필 칩 바로 위에 늘 보이는 같은 모양의 칩. 메뉴를 펼치면 메뉴 안의 신고로 대신한다. */}
+          {/* 버그 신고 — 프로필 칩 바로 아래(데스크톱은 칩이 바닥에 붙어 있어 위)에 늘 보이는 같은 모양의 칩.
+              메뉴를 펼치면 그 자리에 메뉴 항목이 내려오므로 숨기고 메뉴 안의 신고로 대신한다. */}
           {!isFloatingActionsOpen && (
             <button
               type="button"
@@ -951,7 +952,7 @@ function AppContent() {
                 position: 'fixed',
                 ...floatingHorizontalStyle,
                 transition: floatingHorizontalTransition,
-                top: isDesktopQuickMenu ? 'auto' : floatingActionTop1,
+                top: isDesktopQuickMenu ? 'auto' : (_draggedY !== undefined ? `${_draggedY + floatingStep}px` : `calc(${floatingTopBase} + ${floatingStep * 3}px)`),
                 bottom: isDesktopQuickMenu ? `calc(${floatingBottomBase} + ${floatingStep}px)` : 'auto',
                 zIndex: 250011,
                 ...quickChip,
