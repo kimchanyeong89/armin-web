@@ -939,6 +939,29 @@ function AppContent() {
             )}
           </AnimatePresence>
 
+          {/* 버그 신고 — 프로필 칩 바로 위에 늘 보이는 같은 모양의 칩. 메뉴를 펼치면 메뉴 안의 신고로 대신한다. */}
+          {!isFloatingActionsOpen && (
+            <button
+              type="button"
+              className="quick-chip quick-chip--bug"
+              onClick={() => openBugReport(user?.uid, language, user?.displayName)}
+              aria-label={t({ ko: '버그 신고', en: 'Report a bug' })}
+              title={t({ ko: '버그 신고', en: 'Report a bug' })}
+              style={{
+                position: 'fixed',
+                ...floatingHorizontalStyle,
+                transition: floatingHorizontalTransition,
+                top: isDesktopQuickMenu ? 'auto' : floatingActionTop1,
+                bottom: isDesktopQuickMenu ? `calc(${floatingBottomBase} + ${floatingStep}px)` : 'auto',
+                zIndex: 250011,
+                ...quickChip,
+                ['--chip-ink' as string]: '#d4a547',
+              }}
+            >
+              <QuickIcon name="bug" size={isMobileShell ? 20 : 22} />
+            </button>
+          )}
+
           <motion.button
             ref={profileBtnRef}
             initial={{ opacity: 0, y: 8 }}
