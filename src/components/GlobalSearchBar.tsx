@@ -38,6 +38,7 @@ import { fetchTrending, reportSearchHit, type TrendingTerm } from '../utils/sear
 import CloseButton from './CloseButton';
 import { CollyLotusLoader } from './CollyMark';
 import ArButton from './ArButton';
+import SearchResultsStudy, { readResultsVariant, type ArtistHit, type ArtworkHit, type ExhibitionHit, type MuseumHit } from './SearchResultsStudy';
 
 
 export type SearchableArtwork = {
@@ -757,6 +758,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [playlistArtwork, setPlaylistArtwork] = useState<SearchableArtwork | null>(null);
     const [isMobile, setIsMobile] = useState(false);
     const [isArtistListExpanded, setIsArtistListExpanded] = useState(false);
+    // Search-results proposal picked with ?results=a|b|c (null = the current list).
+    const [resultsVariant] = useState(readResultsVariant);
     const inputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const queryRef = useRef(query);
@@ -3817,6 +3820,62 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const navItemHover    = drawingPalette?.itemHover ?? (isNavDark ? 'rgba(201,165,90,0.08)'     : 'rgba(180,155,100,0.1)');
     const drawingHumanFont = "'Courier Prime', 'Courier New', 'Lucida Console', monospace";
 
+    // Hits for SearchResultsStudy: the same data and handlers the current list uses, laid out there.
+    const thumbFill: CSSProperties = { width: '100%', height: '100%', objectFit: 'cover' };
+    const toArtistHit = ({ artist, count, image }: { artist: string; count: number; image?: string }): ArtistHit => {
+        const token = normalizeLookupText(artist);
+        const primary = normalizeKnownBrokenImageUrl(image)
+            || artistPreviewImageByName.get(token)
+            || artistPreviewImageAsyncByName[token]
+            || artistPreviewFallbackByName.get(token)
+            || '';
+        const fallback = artistPreviewFallbackByName.get(token) || artistPreviewImageAsyncByName[token] || '';
+        return {
+            key: artist,
+            raw: artist,
+            name: getArtistDisplayName(artist, language, artistMap),
+            count,
+            thumb: <ArtistChipThumb primaryUrl={primary} fallbackUrl={fallback} style={thumbFill} />,
+            onSelect: () => handleSelectArtist(artist),
+        };
+    };
+    const toArtworkHit = (art: SearchableArtwork): ArtworkHit => ({
+        key: art.id,
+        artistRaw: art.artist,
+        title: getArtworkTitle(art, language, titleMap),
+        artist: getArtistDisplayName(art.artist, language, artistMap),
+        year: formatArtworkYear(art.date) || '',
+        museum: art.museumName ? getMuseumDisplayName(museums.find((mm) => mm.name === art.museumName) ?? { name: art.museumName }, language) : '',
+        thumb: <ProgressiveThumb primaryUrl={art.image} style={thumbFill} loading="lazy" />,
+        onSelect: () => handleSelectArtwork(art),
+    });
+    const toMuseumHit = (museum: Museum): MuseumHit => ({
+        key: museum.id,
+        museumId: museum.id,
+        name: getMuseumDisplayName(museum, language),
+        place: localizeCountryName(museum.country || '', language),
+        onSelect: () => handleSelectMuseum(museum),
+    });
+    const toExhibitionHit = (item: (typeof matchedExhibitions)[number]): ExhibitionHit => {
+        const preview = exhibitionPreviewImageById.get(item.exhibitionId) || exhibitionPreviewImageAsyncById[item.exhibitionId];
+        const museumId = resolveMuseumId(item.museumName, item.country);
+        const museumBackup = museumId
+            ? (museumPreviewImageById.get(museumId)
+                || museumPreviewImageAsyncById[museumId]
+                || normalizeKnownBrokenImageUrl(museums.find((m) => m.id === museumId)?.representativeImage))
+            : '';
+        const collectionFallback = exhibitionPreviewFallbackById[item.exhibitionId] || '';
+        return {
+            key: item.exhibitionId,
+            title: item.exhibitionName,
+            venue: `${item.museumNameDisplay || item.museumName}${item.country ? ` · ${localizeCountryName(item.country, language)}` : ''}`,
+            thumb: preview
+                ? <ExhibitionThumb primaryUrl={preview} fallbackUrl={collectionFallback || undefined} backupUrl={museumBackup || undefined} exhibitionId={item.exhibitionId} style={thumbFill} />
+                : <ProgressiveThumb primaryUrl={museumBackup || undefined} style={thumbFill} loading="lazy" />,
+            onSelect: () => handleSelectExhibition(item.exhibitionId, item.exhibitionName),
+        };
+    };
+
     return (
         <>
             {lightboxArtwork && createPortal(
@@ -4714,6 +4773,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                                 {hasQuery && (
                                     <div style={{ padding: '8px 0 4px' }}>
+                                        {resultsVariant ? (
+                                            <SearchResultsStudy
+                                                variant={resultsVariant}
+                                                ko={language === 'ko'}
+                                                artists={showArtistsInSearchMode ? suggestedArtists.map(toArtistHit) : []}
+                                                museums={showMuseumsInSearchMode ? filteredMuseums.slice(0, 6).map(toMuseumHit) : []}
+                                                artworks={showArtworksInSearchMode ? filteredArtworks.slice(0, 50).map(toArtworkHit) : []}
+                                                exhibitions={showExhibitionsInSearchMode ? matchedExhibitions.map(toExhibitionHit) : []}
+                                                totals={{ museums: filteredMuseums.length, artworks: filteredArtworks.length }}
+                                            />
+                                        ) : (<>
                                         {showArtistsInSearchMode && suggestedArtists.length > 0 && (
                                             <div style={{ marginBottom: 12 }}>
                                                 {sectionLabel(t({ ko: '작가', en: 'Artists' }), suggestedArtists.length, isNavDark ? '#D4A547' : '#8A6B1F')}
@@ -5044,6 +5114,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                 </div>
                                             </div>
                                         )}
+                                        </>)}
 
                                         {showArtworksInSearchMode && showArtistsInSearchMode && showMuseumsInSearchMode && showExhibitionsInSearchMode &&
                                             filteredArtworks.length === 0 && suggestedArtists.length === 0 && filteredMuseums.length === 0 && matchedExhibitions.length === 0 && (
@@ -5084,7 +5155,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     <SearchWittyLoader dark={isNavDark} />
                                 )}
 
-                                {query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
+                                {resultsVariant && query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
+                                    <SearchResultsStudy variant={resultsVariant} ko={language === 'ko'} artworks={aiResults.map(toArtworkHit)} />
+                                )}
+
+                                {!resultsVariant && query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
                                     <div
                                         onWheel={(e) => e.stopPropagation()}
                                         onTouchMove={(e) => e.stopPropagation()}

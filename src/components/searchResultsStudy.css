@@ -1,0 +1,160 @@
+/* Search results proposals (SearchResultsStudy.tsx). Lives inside .sr, so the
+   page tokens (--ink, --acc, --num, --display, --rule) are already set. */
+
+.srr { padding: 4px 0 8px; }
+.srr-sec { margin-top: 26px; }
+.srr-sec:first-child { margin-top: 10px; }
+
+/* the section head repeats the genre drawer below: 01 작가 ——— 12 */
+.srr-head { display: grid; grid-template-columns: auto auto 1fr auto; align-items: baseline;
+  gap: 13px; padding: 0 2px 12px; }
+.srr-head em { font-family: var(--num); font-style: normal; font-size: 10px; letter-spacing: .06em; color: var(--acc); }
+.srr-head span { font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+.srr-head i { align-self: center; height: 1px; background: var(--rule); }
+.srr-head b { font-family: var(--num); font-size: 10.5px; font-weight: 500; letter-spacing: .06em; color: var(--ink-3); }
+
+.sr .srr-more { display: block; margin: 12px 2px 0; font-family: var(--num); font-size: 10px;
+  letter-spacing: .08em; color: var(--acc); opacity: .8; transition: opacity .16s ease; }
+.sr .srr-more:hover { opacity: 1; }
+
+.srr-face { display: block; flex: none; width: 30px; height: 30px; border-radius: 50%; overflow: hidden;
+  background: rgba(244,241,234,.06); filter: grayscale(1); transition: filter .25s ease; }
+.srr button:hover .srr-face { filter: none; }
+
+.srr-cap__title { display: block; margin-top: 8px; font-size: 12.5px; line-height: 1.35; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.srr-cap__sub { display: block; margin-top: 2px; font-size: 10.5px; color: var(--ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srr-cap__sub em { font-family: var(--num); font-style: normal; font-size: 9.5px; letter-spacing: .04em; }
+.srr button:hover .srr-cap__title { color: var(--acc); }
+.srr button { text-align: left; }
+
+/* ── A · 색인 ───────────────────────────────────────────── */
+.srr-a-artists { columns: 2; column-gap: 38px; }
+.srr-a-artists li { break-inside: avoid; }
+.sr .srr-a-artists button { display: flex; align-items: center; gap: 11px; width: 100%; padding: 6px 0;
+  color: var(--ink-2); transition: color .16s ease; }
+.sr .srr-a-artists button:hover { color: var(--ink); }
+.srr-a-name { flex: none; max-width: calc(100% - 100px); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srr-leader { flex: 1; min-width: 12px; height: 0; border-bottom: 1px dotted rgba(244,241,234,.22); transform: translateY(3px); }
+.srr-a-artists em { flex: none; font-family: var(--num); font-style: normal; font-size: 10px; font-weight: 700;
+  letter-spacing: .04em; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.srr-a-artists li:first-child em { color: var(--acc); }
+.sr .srr-a-artists button:hover .srr-leader { border-bottom-color: rgba(var(--acc-rgb),.5); }
+
+.srr-a-rows { border-top: 1px solid var(--rule); }
+.srr-a-rows > li { border-bottom: 1px solid var(--rule); }
+.sr .srr-a-work, .sr .srr-a-museum { display: grid; align-items: center; gap: 14px; width: 100%;
+  padding: 10px 2px; color: var(--ink-2); transition: color .16s ease; }
+.sr .srr-a-work { grid-template-columns: 56px minmax(0,1fr) auto; }
+.sr .srr-a-work--poster { grid-template-columns: 42px minmax(0,1fr) auto; }
+.srr-a-thumb { display: block; width: 56px; height: 56px; overflow: hidden; background: rgba(244,241,234,.05); }
+.srr-a-work--poster .srr-a-thumb { width: 42px; height: 56px; }
+.srr-a-text { min-width: 0; }
+.srr-a-title { display: block; font-size: 14px; color: var(--ink); white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; transition: color .16s ease; }
+.srr-a-sub { display: block; margin-top: 3px; font-size: 11.5px; color: var(--ink-3); white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.srr-a-work em, .srr-a-museum em { font-family: var(--num); font-style: normal; font-size: 10px;
+  letter-spacing: .05em; color: var(--ink-3); white-space: nowrap; }
+.sr .srr-a-work:hover .srr-a-title, .sr .srr-a-museum:hover .srr-a-title { color: var(--acc); }
+.sr .srr-a-museum { grid-template-columns: 56px minmax(0,1fr) auto; padding: 13px 2px; }
+.srr-a-logo { display: flex; align-items: center; justify-content: center; height: 22px; color: var(--ink-2); }
+.srr-a-logo:empty::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: rgba(var(--acc-rgb),.75); }
+
+/* ── B · 격자 ───────────────────────────────────────────── */
+.sr .srr-band { display: grid; grid-template-columns: auto minmax(0,1fr); align-items: center; gap: 22px;
+  width: 100%; padding: 6px 2px 20px; }
+.srr-face--lead { width: 92px; height: 92px; filter: none; }
+.srr-band__text { min-width: 0; }
+.srr-band__text strong { display: block; font-family: var(--display); font-weight: 700;
+  font-size: clamp(1.55rem, 4vw, 2.4rem); line-height: 1.1; letter-spacing: -0.04em; color: var(--ink);
+  overflow-wrap: anywhere; transition: color .16s ease; }
+.srr-band__text > span { display: flex; align-items: baseline; gap: 4px; margin-top: 8px; font-size: 12px; color: var(--ink-3); }
+.srr-band__text em { font-family: var(--num); font-style: normal; color: var(--acc); }
+.srr-band__text i { font-style: normal; margin: 0 6px; }
+.srr-band__text u { text-decoration: none; font-family: var(--num); font-size: 10.5px; letter-spacing: .06em; color: var(--ink-2); transition: color .16s ease; }
+.sr .srr-band:hover strong { color: var(--acc); }
+.sr .srr-band:hover u { color: var(--acc); }
+
+.sr .srr-b-faces { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 18px 10px;
+  padding-top: 18px; border-top: 1px solid var(--rule); }
+.sr .srr-b-faces button { display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; color: var(--ink-2); }
+.srr-b-faces .srr-face { width: 56px; height: 56px; }
+.srr-b-faces__name { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  margin-top: 8px; font-size: 12px; line-height: 1.3; transition: color .16s ease; }
+.srr-b-faces em { margin-top: 3px; font-family: var(--num); font-style: normal; font-size: 9.5px; color: var(--ink-3); }
+.sr .srr-b-faces button:hover .srr-b-faces__name { color: var(--acc); }
+
+.srr-b-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 22px 12px; }
+.sr .srr-b-grid button { display: block; width: 100%; }
+.srr-b-img { display: block; aspect-ratio: 1; overflow: hidden; background: rgba(244,241,234,.05); }
+.srr-b-img > div { transition: transform .5s var(--ease); }
+.srr button:hover .srr-b-img > div { transform: scale(1.04); }
+.srr-b-grid--posters { grid-template-columns: repeat(5, minmax(0,1fr)); }
+.srr-b-grid--posters .srr-b-img { aspect-ratio: 3 / 4; }
+
+.srr-b-tiles { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 22px 12px; }
+.sr .srr-b-tiles button { display: block; width: 100%; color: var(--ink-2); }
+/* a cut corner, not a frame: the tile is a faint field with its top-right corner taken off */
+.srr-b-tile { display: flex; align-items: center; justify-content: center; height: 104px; padding: 0 18px;
+  background: rgba(244,241,234,.035); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  transition: background .2s ease, color .2s ease; }
+.srr-b-tile:empty::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: rgba(var(--acc-rgb),.75); }
+.sr .srr-b-tiles button:hover .srr-b-tile { background: rgba(var(--acc-rgb),.08); color: var(--acc); }
+
+/* ── C · 무대 + 띠 ─────────────────────────────────────────── */
+.srr-stage { display: grid; grid-template-columns: 200px minmax(0,1fr); gap: 28px; align-items: start; }
+.sr .srr-stage__who { display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 2px; }
+.srr-face--stage { width: 120px; height: 120px; filter: none; }
+.srr-stage__who strong { margin-top: 16px; font-family: var(--display); font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.12; letter-spacing: -0.04em; color: var(--ink);
+  overflow-wrap: anywhere; transition: color .16s ease; }
+.srr-stage__who > span { margin-top: 8px; font-size: 12px; color: var(--ink-3); }
+.srr-stage__who > span em { font-family: var(--num); font-style: normal; color: var(--acc); }
+.srr-stage__who u { margin-top: 12px; text-decoration: none; font-family: var(--num); font-size: 10.5px;
+  letter-spacing: .06em; color: var(--ink-2); transition: color .16s ease; }
+.sr .srr-stage__who:hover strong, .sr .srr-stage__who:hover u { color: var(--acc); }
+
+.srr-strip { display: grid; grid-auto-flow: column; grid-auto-columns: 168px; gap: 14px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; padding-bottom: 4px; }
+.srr-strip::-webkit-scrollbar { display: none; }
+.srr-strip > li { scroll-snap-align: start; min-width: 0; }
+.sr .srr-strip button { display: block; width: 100%; }
+.srr-c-img { display: block; aspect-ratio: 4 / 5; overflow: hidden; background: rgba(244,241,234,.05); }
+.srr-strip--stage { grid-auto-columns: 132px; }
+.srr-strip--stage .srr-c-img { aspect-ratio: 1; }
+.srr-strip--posters .srr-c-img { aspect-ratio: 3 / 4; }
+.srr-strip.is-open { grid-auto-flow: row; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-auto-columns: auto; overflow: visible; gap: 22px 12px; }
+
+.srr-run { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; margin-top: 22px;
+  padding-top: 16px; border-top: 1px solid var(--rule); }
+.sr .srr-run > button:not(.srr-more) { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
+  color: var(--ink-2); transition: color .16s ease; }
+.srr-run sup { font-family: var(--num); font-size: 9px; letter-spacing: .04em; color: var(--ink-3); vertical-align: super; margin-left: 2px; }
+.sr .srr-run > button:hover { color: var(--acc); }
+.srr-run .srr-more { margin: 0; }
+.srr-run--museums { margin-top: 0; padding-top: 4px; border-top: 0; gap: 12px 26px; }
+
+@media (max-width: 760px) {
+  .srr-a-artists { columns: 1; }
+  .sr .srr-a-work { grid-template-columns: 52px minmax(0,1fr) auto; gap: 12px; }
+  .srr-a-thumb { width: 52px; height: 52px; }
+  .srr-face--lead { width: 72px; height: 72px; }
+  .sr .srr-band { gap: 16px; }
+  .sr .srr-b-faces { grid-template-columns: repeat(4, minmax(0,1fr)); gap: 16px 6px; }
+  .srr-b-faces .srr-face { width: 50px; height: 50px; }
+  .srr-b-grid { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px 8px; }
+  .srr-b-grid--posters { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .srr-b-tiles { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px 8px; }
+  .srr-b-tile { height: 84px; }
+  .srr-stage { grid-template-columns: 1fr; gap: 18px; }
+  .sr .srr-stage__who { display: grid; grid-template-columns: auto minmax(0,1fr); column-gap: 16px; align-items: center; }
+  .srr-face--stage { grid-row: span 3; width: 84px; height: 84px; }
+  .srr-stage__who strong { margin-top: 0; }
+  .srr-stage__who u { margin-top: 6px; }
+  .srr-strip { grid-auto-columns: 136px; gap: 10px; }
+  .srr-strip--stage { grid-auto-columns: 112px; }
+  .srr-strip.is-open { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
