@@ -3,7 +3,7 @@
     "name": "Colly",
     "slug": "armin-mobile",
     "scheme": "com.armin.mobile",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "platforms": [
