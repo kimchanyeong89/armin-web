@@ -306,3 +306,7 @@ html[data-museum-modal] .app-language-toggle { top: calc(env(safe-area-inset-top
 svg.lucide-bookmark-plus {
   transform: scale(1.25);
 }
+
+/* the search field's button (GlobalSearchBar): gold word, brighter on hover */
+.gsb-go { opacity: .82; transition: opacity .16s ease; }
+.gsb-go:hover, .gsb-go:focus-visible { opacity: 1; }

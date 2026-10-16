@@ -1,6 +1,5 @@
 import { Fragment, useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
 import { SaveIcon } from './like/SaveIcon';
-import { NavIcon } from './NavIcons';
 import { centuryLabel } from '../i18n/dateLocalization';
 import { createPortal } from 'react-dom';
 import { ShoppingBag, BookmarkPlus } from 'lucide-react';
@@ -4396,12 +4395,13 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 onClick={(e) => { e.stopPropagation(); submitSearch(); inputRef.current?.blur(); }}
                                 className="gsb-go"
                                 style={{
-                                    background: 'transparent', border: 'none', padding: 0, margin: '0 4px 0 2px', flexShrink: 0,
-                                    width: 30, height: 30, display: 'grid', placeItems: 'center', cursor: 'pointer',
-                                    color: isSearchPageMode ? (isNavDark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.7)') : (drawingSkin ? '#111111' : 'rgba(240,237,230,0.8)'),
+                                    /* a word, not a second magnifier beside the field's own; last in the row (order) */
+                                    order: 1, background: 'transparent', border: 'none', padding: '6px 2px 6px 10px', margin: 0, flexShrink: 0,
+                                    cursor: 'pointer', font: "700 12px/1 'Space Mono', ui-monospace, monospace", letterSpacing: '0.08em',
+                                    color: drawingSkin ? '#111111' : '#d4a547',
                                 }}
                             >
-                                <NavIcon id="search" size={20} />
+                                {t({ ko: '검색', en: 'SEARCH' })}
                             </button>
 
                             {hasTyped && (
