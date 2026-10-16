@@ -158,3 +158,105 @@
   .srr-strip--stage { grid-auto-columns: 112px; }
   .srr-strip.is-open { grid-template-columns: repeat(2, minmax(0,1fr)); }
 }
+
+/* whole-picture image used by D, E, F */
+.srr-noimg { display: block; width: 100%; height: 100%; min-height: 60px; background: rgba(244,241,234,.05); }
+
+/* ── D · 도록 ───────────────────────────────────────────── */
+.srr-d-names { margin: 0; font-family: var(--display); font-size: clamp(1.05rem, 2.2vw, 1.4rem); font-weight: 600;
+  line-height: 1.75; letter-spacing: -0.02em; color: var(--ink-2); }
+.srr-d-names > span { display: inline-block; white-space: nowrap; }
+.srr-d-names i { font-style: normal; margin: 0 .55em; color: var(--ink-3); font-weight: 400; }
+.sr .srr-d-names button { font: inherit; color: inherit; transition: color .16s ease; }
+.sr .srr-d-names button:hover { color: var(--acc); }
+.srr-d-names sup { margin-left: 3px; font-family: var(--num); font-size: 9.5px; font-weight: 400; letter-spacing: .04em; color: var(--acc); }
+.srr-d-names--museums { font-size: clamp(.95rem, 1.8vw, 1.15rem); }
+.srr-d-names--museums sup { color: var(--ink-3); }
+
+.srr-d-entries { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 34px; border-top: 1px solid var(--rule); }
+.srr-d-entries > li { border-bottom: 1px solid var(--rule); }
+.sr .srr-d-entries button { display: grid; grid-template-columns: 112px minmax(0,1fr); gap: 18px; align-items: start;
+  width: 100%; padding: 16px 2px; }
+.srr-d-plate { display: flex; align-items: center; justify-content: center; width: 112px; height: 112px;
+  background: rgba(244,241,234,.035); overflow: hidden; }
+.srr-d-plate img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+.srr-d-plate--poster { height: 150px; }
+.srr-d-plate--poster > * { width: 100%; height: 100%; }
+.srr-d-text { min-width: 0; display: flex; flex-direction: column; gap: 4px; padding-top: 2px; }
+.srr-d-text em { font-family: var(--num); font-style: normal; font-size: 9.5px; letter-spacing: .1em; color: var(--acc); }
+.srr-d-text strong { font-family: var(--display); font-weight: 600; font-size: 15px; line-height: 1.3; letter-spacing: -0.02em;
+  color: var(--ink); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color .16s ease; }
+.srr-d-text > span { font-size: 12.5px; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srr-d-text small { font-family: var(--num); font-size: 10px; letter-spacing: .03em; color: var(--ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr .srr-d-entries button:hover strong { color: var(--acc); }
+
+/* ── E · 일록식 ─────────────────────────────────────────── */
+.srr-e-answer { margin: 14px 2px 0; font-size: 13px; color: var(--ink-3); }
+.srr-e-answer span { color: var(--ink); font-weight: 600; }
+.srr-e-answer b { font-family: var(--num); font-weight: 700; font-size: 11.5px; letter-spacing: .02em; color: var(--acc); }
+.srr-e-eyebrow { margin: 0 2px 10px; font-family: var(--num); font-size: 9.5px; font-weight: 700; letter-spacing: .1em; color: var(--acc); }
+.srr-e-names { margin-top: 18px; }
+.srr-e-names__row { display: flex; gap: 22px; overflow-x: auto; scrollbar-width: none; padding: 2px 2px 6px; overscroll-behavior-x: contain; }
+.srr-e-names__row::-webkit-scrollbar { display: none; }
+.sr .srr-e-names__row button { flex: none; display: grid; grid-template-columns: auto auto; grid-template-rows: auto auto;
+  column-gap: 9px; align-items: center; color: var(--ink-2); }
+.srr-e-names__row .srr-face, .srr-e-logo { grid-row: span 2; }
+.srr-e-names__row b { font-size: 13px; font-weight: 600; white-space: nowrap; transition: color .16s ease; }
+.srr-e-names__row small { font-family: var(--num); font-size: 9.5px; color: var(--ink-3); }
+.sr .srr-e-names__row button:hover b { color: var(--acc); }
+.srr-e-logo { display: flex; align-items: center; justify-content: center; width: 44px; height: 30px; color: var(--ink-2); }
+.srr-e-logo:empty::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: rgba(var(--acc-rgb),.75); }
+.srr-sec--e { margin-top: 20px; }
+.srr-e-grid { display: grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap: 20px 12px; }
+.sr .srr-e-grid button { display: flex; flex-direction: column; width: 100%; }
+/* the whole picture on a dark mat: contain, never crop */
+.srr-e-frame { display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 5; padding: 8px;
+  background: rgba(244,241,234,.035); overflow: hidden; transition: background .2s ease; }
+.srr-e-frame img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; box-shadow: 0 6px 16px rgba(0,0,0,.45); }
+.srr-e-frame--poster { padding: 0; aspect-ratio: 3 / 4; }
+.srr-e-frame--poster > * { width: 100%; height: 100%; }
+.sr .srr-e-grid button:hover .srr-e-frame { background: rgba(var(--acc-rgb),.07); }
+/* two lines reserved, so a one-line title does not knock the row out of line */
+.srr-e-title { margin-top: 8px; font-size: 12.5px; font-weight: 600; line-height: 1.35; min-height: 2.7em; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; transition: color .16s ease; }
+.sr .srr-e-grid button:hover .srr-e-title { color: var(--acc); }
+.sr .srr-e-more { display: block; width: 100%; margin-top: 20px; padding: 13px 0; text-align: center;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  font-size: 12.5px; color: var(--ink-2); transition: color .16s ease; }
+.sr .srr-e-more:hover { color: var(--acc); }
+
+/* ── F · 살롱 벽 ─────────────────────────────────────────── */
+.srr-f-artists { display: flex; flex-wrap: wrap; gap: 10px 24px; }
+.sr .srr-f-artists button { display: inline-flex; align-items: center; gap: 9px; color: var(--ink-2); font-size: 13px; transition: color .16s ease; }
+.srr-f-artists em { font-family: var(--num); font-style: normal; font-size: 9.5px; color: var(--ink-3); }
+.sr .srr-f-artists button:hover { color: var(--acc); }
+.srr-f-wall { columns: 4; column-gap: 14px; }
+.srr-f-wall > li { break-inside: avoid; margin-bottom: 18px; }
+.sr .srr-f-wall button { display: block; width: 100%; }
+.srr-f-pic { display: block; overflow: hidden; background: rgba(244,241,234,.035); }
+.srr-f-pic img { display: block; width: 100%; height: auto; transition: transform .6s var(--ease); }
+.sr .srr-f-wall button:hover img { transform: scale(1.03); }
+/* the wall label: a small caption card's worth of type, no card */
+.srr-f-label { display: block; padding: 8px 0 0; }
+.srr-f-label b { display: block; font-size: 12px; font-weight: 600; line-height: 1.35; color: var(--ink); transition: color .16s ease;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.srr-f-label span { display: block; margin-top: 2px; font-size: 10.5px; color: var(--ink-3); }
+.srr-f-label em { font-family: var(--num); font-style: normal; font-size: 9.5px; }
+.sr .srr-f-wall button:hover b { color: var(--acc); }
+
+@media (max-width: 1000px) {
+  .srr-e-grid { grid-template-columns: repeat(4, minmax(0,1fr)); }
+}
+@media (max-width: 760px) {
+  .srr-d-entries { grid-template-columns: 1fr; }
+  .sr .srr-d-entries button { grid-template-columns: 88px minmax(0,1fr); gap: 14px; padding: 14px 2px; }
+  .srr-d-plate { width: 88px; height: 88px; }
+  .srr-d-plate--poster { height: 118px; }
+  .srr-e-grid { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px 8px; }
+  .srr-e-frame { padding: 5px; }
+  .srr-e-title { font-size: 11.5px; }
+  .srr-f-wall { columns: 2; column-gap: 10px; }
+}
+.srr-f-pic img:not([data-ready]) { aspect-ratio: 4 / 5; opacity: 0; }
+.srr-f-pic img { transition: opacity .3s ease, transform .6s var(--ease); }

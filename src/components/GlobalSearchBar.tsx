@@ -3842,6 +3842,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const toArtworkHit = (art: SearchableArtwork): ArtworkHit => ({
         key: art.id,
         artistRaw: art.artist,
+        image: normalizeKnownBrokenImageUrl(art.image) || undefined,
         title: getArtworkTitle(art, language, titleMap),
         artist: getArtistDisplayName(art.artist, language, artistMap),
         year: formatArtworkYear(art.date) || '',
@@ -4777,6 +4778,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             <SearchResultsStudy
                                                 variant={resultsVariant}
                                                 ko={language === 'ko'}
+                                                query={query.trim()}
                                                 artists={showArtistsInSearchMode ? suggestedArtists.map(toArtistHit) : []}
                                                 museums={showMuseumsInSearchMode ? filteredMuseums.slice(0, 6).map(toMuseumHit) : []}
                                                 artworks={showArtworksInSearchMode ? filteredArtworks.slice(0, 50).map(toArtworkHit) : []}
@@ -5156,7 +5158,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 )}
 
                                 {resultsVariant && query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
-                                    <SearchResultsStudy variant={resultsVariant} ko={language === 'ko'} artworks={aiResults.map(toArtworkHit)} />
+                                    <SearchResultsStudy variant={resultsVariant} ko={language === 'ko'} query={query.trim()} artworks={aiResults.map(toArtworkHit)} />
                                 )}
 
                                 {!resultsVariant && query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
