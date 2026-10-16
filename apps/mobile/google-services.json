@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "380952034390",
+    "project_id": "armin-web",
+    "storage_bucket": "armin-web.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:380952034390:android:3d972a95437500d0b14ff7",
+        "android_client_info": {
+          "package_name": "com.armin.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "380952034390-gl4fkh824mp9qcimd0m1kutmp5s0csk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFzyhsnfjx48qqFoqbeK5KkDLZ4DF0b50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "380952034390-gl4fkh824mp9qcimd0m1kutmp5s0csk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,8 @@ import * as WebBrowser from "expo-web-browser";
 import * as AppleAuthentication from "expo-apple-authentication";
 import * as Crypto from "expo-crypto";
 import * as SplashScreen from "expo-splash-screen";
+import * as Notifications from "expo-notifications";
+import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import { WebView } from "react-native-webview";
 import type { ShouldStartLoadRequest, WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
@@ -15,6 +17,11 @@ import CollyAr from "./modules/colly-ar";
 // so fade it out instead of cutting.
 SplashScreen.preventAutoHideAsync().catch(() => {});
 SplashScreen.setOptions({ fade: true, duration: 400 });
+
+// Show a notification that arrives while the app is open (the default drops it silently).
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({ shouldShowBanner: true, shouldShowList: true, shouldPlaySound: true, shouldSetBadge: false }),
+});
 
 const DEFAULT_WEB_URL = "https://armin-web.pages.dev";
 const DEV_WEB_URL = "http://localhost:5181";
@@ -121,6 +128,10 @@ const NATIVE_APPLE_MARK = Platform.OS === "ios" ? "document.documentElement.setA
 const AR_READY = !!CollyAr && (CollyAr.isAvailable ? CollyAr.isAvailable() : true);
 const NATIVE_AR_MARK = AR_READY ? "document.documentElement.setAttribute('data-native-ar', '2');\n" : "";
 
+// Tells the web app this build can deliver notifications. Android delivers through FCM
+// (google-services.json + the FCM V1 key uploaded to EAS).
+const NATIVE_PUSH_MARK = "document.documentElement.setAttribute('data-native-push', '1');\n";
+
 export default function App() {
   const webViewRef = useRef<WebView>(null);
   const authFlowInProgressRef = useRef(false);
@@ -167,6 +178,44 @@ export default function App() {
       return base;
     }
   }, []);
+
+  /* ── Notifications ──
+     Ask on first launch (iOS asks only once, so this is also "first launch after this update").
+     The token goes to the web, which files it under the signed-in user — the Firebase session
+     lives in the WebView, not here. The web also asks for it (PUSH_TOKEN) once it knows who is
+     signed in, because the prompt is usually answered before the page has loaded. */
+  const sendPushToken = useCallback(async (ask: boolean) => {
+    // Android 13+ shows the permission prompt only once the app has a notification channel.
+    if (Platform.OS === "android") await Notifications.setNotificationChannelAsync("default", {
+      name: "Colly", importance: Notifications.AndroidImportance.DEFAULT,
+    });
+    let perm = await Notifications.getPermissionsAsync();
+    if (!perm.granted && perm.canAskAgain && ask) perm = await Notifications.requestPermissionsAsync();
+    if (!perm.granted) return;
+    const projectId = Constants.expoConfig?.extra?.eas?.projectId as string | undefined;
+    const { data } = await Notifications.getExpoPushTokenAsync({ projectId });
+    webViewRef.current?.injectJavaScript(
+      `window.dispatchEvent(new CustomEvent('colly:push-token', { detail: ${JSON.stringify(data)} })); true;`,
+    );
+  }, []);
+  useEffect(() => { sendPushToken(true).catch(() => {}); }, [sendPushToken]);
+
+  // Tapping a notification opens the screen it is about (data.url, e.g. /ai?weekly=2026-W41),
+  // including when the tap is what launched the app. A fresh `n` makes the same link reopen.
+  const [pushUrl, setPushUrl] = useState<string | null>(null);
+  const openedPush = Notifications.useLastNotificationResponse();
+  useEffect(() => {
+    const target = openedPush?.notification.request.content.data?.url;
+    if (typeof target !== "string" || !target.startsWith("/")) return;
+    try {
+      const url = new URL(target, webAppUrl);
+      url.searchParams.set("mobileApp", "1");
+      url.searchParams.set("n", String(Date.now()));
+      setPushUrl(url.toString());
+    } catch {
+      // A malformed link just leaves the app where it is.
+    }
+  }, [openedPush, webAppUrl]);
 
   const webAppOrigin = useMemo(() => {
     try {
@@ -280,6 +329,12 @@ export default function App() {
 
       if (payload.type === "OPEN_AR" && Array.isArray(payload.images)) {
         void CollyAr?.present(payload.images.map(String), payload.korean !== false);
+        return;
+      }
+
+      // The web knows who is signed in now; hand it the token (no prompt — only if already allowed).
+      if (payload.type === "PUSH_TOKEN") {
+        sendPushToken(false).catch(() => {});
         return;
       }
 
@@ -410,10 +465,13 @@ export default function App() {
       <View style={styles.webContainer}>
         <WebView
           ref={webViewRef}
-          source={{ uri: webAppUrl }}
+          source={{ uri: pushUrl || webAppUrl }}
           style={styles.webView}
           userAgent={IOS_SAFARI_USER_AGENT}
-          injectedJavaScriptBeforeContentLoaded={NATIVE_APPLE_MARK + NATIVE_AR_MARK + RESPONSIVE_INJECTION}
+          injectedJavaScriptBeforeContentLoaded={NATIVE_APPLE_MARK + NATIVE_AR_MARK + NATIVE_PUSH_MARK + RESPONSIVE_INJECTION}
+          // Android runs the "before content" script from onPageStarted, which can miss the new page,
+          // so the AR/push marks never land and the web shows no AR button. Set them again once loaded.
+          injectedJavaScript={NATIVE_AR_MARK + NATIVE_PUSH_MARK + "true;"}
           onShouldStartLoadWithRequest={handleShouldStart}
           onMessage={handleWebMessage}
           onLoadStart={() => {

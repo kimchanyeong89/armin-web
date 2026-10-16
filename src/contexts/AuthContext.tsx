@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import type { User } from "firebase/auth";
 import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import { auth } from "../firebase";
+import { watchNativePush } from "../utils/nativePush";
 
 interface AuthContextProps {
   user: User | null;
@@ -38,6 +39,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
     return () => unsubscribe();
   }, [attemptedAnon, enableAnonAuth]);
+
+  // In the app, file this device's push token under the signed-in user (anonymous sessions get none).
+  const pushUid = user && !user.isAnonymous ? user.uid : "";
+  useEffect(() => (pushUid ? watchNativePush(pushUid) : undefined), [pushUid]);
 
   return (
     <AuthContext.Provider value={{ user, loading }}>

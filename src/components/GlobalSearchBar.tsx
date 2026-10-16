@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
 import { SaveIcon } from './like/SaveIcon';
+import { NavIcon } from './NavIcons';
 import { centuryLabel } from '../i18n/dateLocalization';
 import { createPortal } from 'react-dom';
 import { ShoppingBag, BookmarkPlus } from 'lucide-react';
@@ -581,6 +582,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     // intentionally exclude artistMap (it loads once and caches).
     const artistMapRef = useRef(artistMap);
     artistMapRef.current = artistMap;
+    const artistMapReady = artistMap !== null;
     // Tracks which non-English query the artwork list is currently accumulating
     // (worker + server results are merged per-query). Lets us reset the list when
     // the query itself changes so e.g. "모네" results don't linger under "샤갈".
@@ -603,6 +605,18 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     // and only settles it once the main thread is idle, so that scan effectively
     // runs "after typing pauses" instead of on every character → no input jank.
     const deferredQuery = useDeferredValue(query);
+    /* Search on submit (2026-10-16, as illog does): the letters being typed live in the input alone, and
+       `query` - which every search, chip and result list reads - changes only when the search is asked for:
+       Enter, the search button, or leaving the field with text in it. Typing used to rerun the search and
+       redraw this whole panel on every letter (and every Korean syllable being composed); now a keystroke
+       touches nothing but the field. Emptying the field clears the search at once. */
+    const [hasTyped, setHasTyped] = useState(() => query.length > 0);
+    const submitSearch = useCallback(() => {
+        const typed = String(inputRef.current?.value || '').trim();
+        if (!typed) { setQuery(''); return; }
+        if (typed.length >= 2) rememberSearchTermRef.current?.(typed);
+        setQuery(typed);
+    }, []);
     const [isExpanded, setIsExpanded] = useState(false);
     const [searchFilter, setSearchFilter] = useState<SearchFilterType>('all');
     const [filteredArtworks, setFilteredArtworks] = useState<SearchableArtwork[]>([]);
@@ -890,6 +904,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             .catch((err) => { console.error('[IMG-DEBUG] exhibition-previews.json fetch failed:', err); });
     }, []);
 
+    const rememberSearchTermRef = useRef<((raw: string) => void) | null>(null);
     const rememberSearchTerm = useCallback((raw: string) => {
         const keyword = String(raw || '').trim();
         if (!keyword) return;
@@ -924,6 +939,16 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             return next;
         });
     }, []);
+    rememberSearchTermRef.current = rememberSearchTerm;
+    /* a search set from outside the field (a keyword chip, a recent search, the nav's trigger, the restored
+       session) is written into the field, which no longer follows `query` by itself */
+    useEffect(() => {
+        const el = inputRef.current;
+        if (!el || el.value.trim() === query.trim()) return;
+        if (document.activeElement === el && query) return;
+        el.value = query;
+        setHasTyped(query.length > 0);
+    }, [query]);
 
     const clearRecentSearches = useCallback(() => {
         setRecentSearches([]);
@@ -3244,7 +3269,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 setIsClipLoading(false);
             }
         }
-    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork, knownArtistTokenSet, runWorkerLexicalFallback, ensureWorker]);
+    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork, knownArtistTokenSet, runWorkerLexicalFallback, ensureWorker, isPrecisionMode]);
 
     // Debounced search - artworks + museums
     useEffect(() => {
@@ -3393,7 +3418,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         // and never corrects itself. Re-firing on map-ready resolves it to
         // "Vincent van Gogh" and returns the full set. The debounce timer's
         // cleanup makes the extra run safe (no duplicate in-flight search).
-    }, [query, museums, isAIMode, performSemanticSearch, ensureWorker, artistMap]);
+        // Only the arrival counts: the map is replaced again each time a long-tail name
+        // shard lands, and depending on the object re-ran every search two or three times.
+    }, [query, museums, isAIMode, performSemanticSearch, ensureWorker, artistMapReady]);
 
     // videoEmbedIdsReady 변경시 검색 (중복 방지: query가 있고 AI모드일 때만)
     // 주의: 위 useEffect와 이중 실행 방지 위해 isAIMode && query 조건 엄격히
@@ -4312,16 +4339,21 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 name="globalSearch"
                                 type="text"
                                 autoComplete="off"
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
+                                defaultValue={query}
+                                enterKeyHint="search"
+                                onChange={(e) => {
+                                    const empty = !e.currentTarget.value.trim();
+                                    setHasTyped(!empty);
+                                    if (empty) setQuery('');
+                                }}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
-                                        const typed = String(e.currentTarget.value || '').trim();
-                                        if (typed.length >= 2) {
-                                            rememberSearchTerm(typed);
-                                        }
+                                        e.preventDefault();
+                                        /* a Korean syllable still being composed is committed by this Enter: read the field after it */
+                                        setTimeout(submitSearch, 0);
                                     }
                                 }}
+                                onBlur={() => { if (String(inputRef.current?.value || '').trim() !== query.trim()) submitSearch(); }}
                                 onFocus={() => {
                                     setIsExpanded(true);
                                     // Desktop tap-to-warm: spin up the SigLIP
@@ -4355,9 +4387,26 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 }}
                             />
 
-                            {query && (
+                            {/* the search button: the letters typed become the search only when asked */}
+                            <button
+                                type="button"
+                                aria-label={t({ ko: '검색', en: 'Search' })}
+                                title={t({ ko: '검색', en: 'Search' })}
+                                onMouseDown={(e) => e.preventDefault() /* keep the field from blurring first */}
+                                onClick={(e) => { e.stopPropagation(); submitSearch(); inputRef.current?.blur(); }}
+                                className="gsb-go"
+                                style={{
+                                    background: 'transparent', border: 'none', padding: 0, margin: '0 4px 0 2px', flexShrink: 0,
+                                    width: 30, height: 30, display: 'grid', placeItems: 'center', cursor: 'pointer',
+                                    color: isSearchPageMode ? (isNavDark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.7)') : (drawingSkin ? '#111111' : 'rgba(240,237,230,0.8)'),
+                                }}
+                            >
+                                <NavIcon id="search" size={20} />
+                            </button>
+
+                            {hasTyped && (
                                 <button
-                                    onClick={(e) => { e.stopPropagation(); setQuery(''); inputRef.current?.focus(); }}
+                                    onClick={(e) => { e.stopPropagation(); if (inputRef.current) inputRef.current.value = ''; setHasTyped(false); setQuery(''); inputRef.current?.focus(); }}
                                     style={isSearchPageMode ? {
                                         background: 'transparent',
                                         border: 'none',

@@ -26,7 +26,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#D4A547"
       },
-      "package": "com.armin.mobile"
+      "package": "com.armin.mobile",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -54,7 +55,8 @@
           "image": "./assets/splash-icon.png",
           "imageWidth": 140
         }
-      ]
+      ],
+      "expo-notifications"
     ]
   }
 }

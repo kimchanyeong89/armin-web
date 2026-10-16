@@ -49,6 +49,13 @@
         "track": "internal",
         "releaseStatus": "draft"
       }
+    },
+    "release": {
+      "android": {
+        "serviceAccountKeyPath": "../../firebase-service-account.json",
+        "track": "production",
+        "releaseStatus": "completed"
+      }
     }
   }
 }
