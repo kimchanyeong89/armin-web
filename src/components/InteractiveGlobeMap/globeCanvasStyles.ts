@@ -274,8 +274,7 @@ export function drawStyledLand(args: GlobeGeometryStyleArgs): void {
   path(geometry);
   ctx.fillStyle = `rgba(${palette.land},${fillAlpha})`;
   ctx.fill();
-  ctx.beginPath();
-  path(geometry);
+  // the same path serves the coastline: projecting the land twice a frame was pure repeat work
   ctx.strokeStyle = `rgba(${coastColor},${coastAlpha})`;
   ctx.lineWidth = coastWidth;
   ctx.lineJoin = "round";

@@ -313,7 +313,9 @@ export default function InteractiveGlobeMap({
   }, [selectedCity, beginExploring]);
   const [drilledContinent, setDrilledContinent] = useState<string | null>(null);
   const [drilledCountry, setDrilledCountry] = useState<string | null>(null);
-  const [rotation, setRotation] = useState<[number, number]>([0, 20]);
+  // The coordinate readout is written straight into the DOM: as React state it re-rendered the whole
+  // map screen ~10 times a second while the globe was dragged.
+  const coordsRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(1);
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
   
@@ -687,11 +689,7 @@ export default function InteractiveGlobeMap({
     }
 
     lastRotationUpdateRef.current = { lon: safeLon, lat: safeLat, ts: now };
-    setRotation((prev) => (
-      Math.abs(prev[0] - safeLon) < 0.0001 && Math.abs(prev[1] - safeLat) < 0.0001
-        ? prev
-        : [safeLon, safeLat]
-    ));
+    if (coordsRef.current) coordsRef.current.textContent = formatCoord(safeLat, safeLon);
   }, [selectedRealExhibition]);
 
   const handleZoomChange = useCallback((nextZoom: number) => {
@@ -1162,9 +1160,14 @@ export default function InteractiveGlobeMap({
 
       {/* ── Coordinates & zoom (bottom-right) ── */}
       <div className="ig-coords-box">
-        <div style={{ color: cFg15, fontFamily: "'Space Mono', monospace", fontSize: "10px", letterSpacing: "0.08em" }}>
-          {formatCoord(rotation[1], rotation[0])}
-        </div>
+        {/* no React child: handleRotationChange owns this text */}
+        <div
+          ref={(el) => {
+            coordsRef.current = el;
+            if (el && !el.textContent) el.textContent = formatCoord(lastRotationUpdateRef.current.lat, lastRotationUpdateRef.current.lon);
+          }}
+          style={{ color: cFg15, fontFamily: "'Space Mono', monospace", fontSize: "10px", letterSpacing: "0.08em" }}
+        />
         <div style={{ color: cFg10, fontFamily: "'Space Mono', monospace", fontSize: "10px", marginTop: "4px" }}>
           {zoom.toFixed(1)}&times;
         </div>

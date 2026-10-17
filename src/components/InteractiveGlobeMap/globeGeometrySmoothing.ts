@@ -11,7 +11,8 @@ type RoundingProfile = {
 const ROUNDING_PROFILES: Record<CollyGeometrySoftness, RoundingProfile> = {
   balanced: { fraction: 0.18, maxCut: 1.4, samples: 2 },
   soft: { fraction: 0.26, maxCut: 2.4, samples: 3 },
-  atlas: { fraction: 0.46, maxCut: 5.5, samples: 8 },
+  // 4 samples per corner: the arcs are a few pixels on a phone, and 8 made ~93k vertices to project per frame
+  atlas: { fraction: 0.46, maxCut: 5.5, samples: 4 },
 };
 
 export function getMainlandFeature(feature: any): any {

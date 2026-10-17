@@ -230,6 +230,8 @@ const CSS = [
   ]),
 ].join("") + `
 @keyframes colly-take{0%,33.33%{opacity:1}33.34%,100%{opacity:0}}
+/* held, not reset, while the globe is being turned (Globe.tsx sets the flag) — resumes where it stopped */
+html[data-globe-moving] .colly-mark *{animation-play-state:paused!important}
 @media (prefers-reduced-motion: reduce){
   .colly-nib,.colly-word,.colly-take,.colly-white,.colly-wash-fill{animation:none!important}
   .colly-nib{stroke-dashoffset:0!important}
@@ -296,7 +298,7 @@ export function CollyMark({ size = 48 }: { size?: number }) {
     </>
   );
   return (
-    <svg ref={ref} width={size} height={size} viewBox="0 0 100 100" role="img" aria-label="COLLY" style={{ display: "block" }}>
+    <svg ref={ref} className="colly-mark" width={size} height={size} viewBox="0 0 100 100" role="img" aria-label="COLLY" style={{ display: "block" }}>
       <defs>
         {TAKES.map((t, g) => (
           <filter key={g} id={`${uid}-ink${g}`} x="-14%" y="-14%" width="128%" height="128%">

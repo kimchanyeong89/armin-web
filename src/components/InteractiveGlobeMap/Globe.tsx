@@ -369,6 +369,16 @@ export function Globe({
   const citiesRef = useRef(cities);
   useEffect(() => { citiesRef.current = cities; wakeGlobeRef.current?.(); }, [cities]);
   const museumPointsRef = useRef<MuseumPoint[]>([]);
+  const canvasRectRef = useRef<DOMRect | null>(null);
+  // The technique layers' museum and country lists depend only on the loaded data, not on the
+  // rotation; rebuilt per frame they also defeated the renderer's centroid cache (new arrays).
+  const techniqueDataRef = useRef<{
+    points: MuseumPoint[];
+    countries: any[];
+    softness: unknown;
+    museums: CollyMapTechniqueRenderArgs["museums"];
+    countryFeatures: CollyMapTechniqueRenderArgs["countryFeatures"];
+  } | null>(null);
   useEffect(() => {
     const points: MuseumPoint[] = [];
 
@@ -587,7 +597,9 @@ export function Globe({
     if (!canvas || !container) return;
 
     const ctx = canvas.getContext("2d")!;
-    const dpr = window.devicePixelRatio || 1;
+    // Capped at 2: at a phone's 3x the full-screen canvas is ~3M pixels and the halo is repainted
+    // over it every frame; past 2x the difference does not show on a globe.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let w = 0, h = 0;
 
     const resize = () => {
@@ -596,6 +608,7 @@ export function Globe({
       // glass rim's arc throws inside draw(), and the loop never restarts.
       if (r.width === 0 || r.height === 0) return;
       w = r.width; h = r.height;
+      canvasRectRef.current = null;
       canvas.width = w * dpr;
       canvas.height = h * dpr;
       canvas.style.width = w + "px";
@@ -617,6 +630,16 @@ export function Globe({
     };
     const obs = new ResizeObserver(debouncedResize);
     obs.observe(container);
+    // a scroll moves the canvas without resizing it, so the cached position is measured again
+    const forgetCanvasRect = () => { canvasRectRef.current = null; };
+    window.addEventListener("scroll", forgetCanvasRect, { capture: true, passive: true });
+    let globeMoving = false;
+    const setGlobeMoving = (moving: boolean) => {
+      if (moving === globeMoving) return;
+      globeMoving = moving;
+      if (moving) document.documentElement.dataset.globeMoving = "1";
+      else delete document.documentElement.dataset.globeMoving;
+    };
 
     const sphere: d3.GeoPermissibleObjects = { type: "Sphere" };
     const regularGraticule = d3.geoGraticule10();
@@ -742,14 +765,43 @@ export function Globe({
         drillOpacity: dOp,
         density,
       };
-      const techniqueMuseums = museumPointsRef.current.map((museum) => ({
-        id: museum.key,
-        city: museum.city.city,
-        country: museum.country,
-        coordinates: museum.coordinates,
-        artworkCount: museum.artworkCount,
-        isMajor: museum.isMajor,
-      }));
+      const renderGeometry = (source: any) => {
+        if (!source) return source;
+        if (collyProfile?.geometrySoftness === "atlas") {
+          return source._roundedAtlas || source._roundedSoft || source._smoothed || source;
+        }
+        if (collyProfile?.geometrySoftness === "soft") {
+          return source._roundedSoft || source._smoothed || source;
+        }
+        return source._smoothed || source;
+      };
+      let techniqueData = techniqueDataRef.current;
+      if (
+        !techniqueData
+        || techniqueData.points !== museumPointsRef.current
+        || techniqueData.countries !== countriesRef.current
+        || techniqueData.softness !== collyProfile?.geometrySoftness
+      ) {
+        techniqueData = {
+          points: museumPointsRef.current,
+          countries: countriesRef.current,
+          softness: collyProfile?.geometrySoftness,
+          museums: museumPointsRef.current.map((museum) => ({
+            id: museum.key,
+            city: museum.city.city,
+            country: museum.country,
+            coordinates: museum.coordinates,
+            artworkCount: museum.artworkCount,
+            isMajor: museum.isMajor,
+          })),
+          countryFeatures: countriesRef.current.flatMap((feature) => {
+            const name = COUNTRY_NAMES[String(feature.id)];
+            return name ? [{ name, feature: renderGeometry(feature) }] : [];
+          }),
+        };
+        techniqueDataRef.current = techniqueData;
+      }
+      const techniqueMuseums = techniqueData.museums;
       const projectedMuseums = museumPointsRef.current.flatMap((museum) => {
         if (
           countryClusterMode
@@ -774,16 +826,6 @@ export function Globe({
       const focusedMuseumId = focusedCity
         ? museumPointsRef.current.find((museum) => museum.city === focusedCity)?.key ?? null
         : null;
-      const renderGeometry = (source: any) => {
-        if (!source) return source;
-        if (collyProfile?.geometrySoftness === "atlas") {
-          return source._roundedAtlas || source._roundedSoft || source._smoothed || source;
-        }
-        if (collyProfile?.geometrySoftness === "soft") {
-          return source._roundedSoft || source._smoothed || source;
-        }
-        return source._smoothed || source;
-      };
       const techniqueArgs: CollyMapTechniqueRenderArgs | null = collyProfile
         ? {
             ctx,
@@ -792,10 +834,7 @@ export function Globe({
             sphere,
             land: renderGeometry(landRef.current),
             borders: renderGeometry(bordersRef.current),
-            countryFeatures: countriesRef.current.flatMap((feature) => {
-              const name = COUNTRY_NAMES[String(feature.id)];
-              return name ? [{ name, feature: renderGeometry(feature) }] : [];
-            }),
+            countryFeatures: techniqueData.countryFeatures,
             palette: P,
             profile: collyProfile,
             museums: techniqueMuseums,
@@ -1375,6 +1414,18 @@ export function Globe({
         hoveredCountryRef.current !== null ||
         hoveredRef.current !== null;
 
+      // While the globe is turned by hand (or still coasting) the animated COLLY mark holds still:
+      // its 41 looping animations and turbulence filters cost more per frame than the globe itself
+      // on a phone. Hover alone does not count, so the mark keeps moving under a resting cursor.
+      setGlobeMoving(stillAnimating && (
+        isDraggingRef.current ||
+        pinchStateRef.current !== null ||
+        targetRotRef.current !== null ||
+        Math.abs(velocityRef.current[0]) > 0.003 ||
+        Math.abs(velocityRef.current[1]) > 0.003 ||
+        Math.abs(targetScaleRef.current - currentScaleRef.current) > 0.001
+      ));
+
       if (stillAnimating) {
         animFrameRef.current = requestAnimationFrame(animate);
       } else {
@@ -1400,6 +1451,7 @@ export function Globe({
       else {
         animRunningRef.current = false;
         cancelAnimationFrame(animFrameRef.current);
+        setGlobeMoving(false);
       }
     };
     document.addEventListener('visibilitychange', onVisibility);
@@ -1409,7 +1461,9 @@ export function Globe({
     return () => {
       animRunningRef.current = false;
       cancelAnimationFrame(animFrameRef.current);
+      setGlobeMoving(false);
       obs.disconnect();
+      window.removeEventListener("scroll", forgetCanvasRect, { capture: true });
       document.removeEventListener('visibilitychange', onVisibility);
       if (resizeTimeout !== null) window.clearTimeout(resizeTimeout);
       if (wakeGlobeRef.current === wake) wakeGlobeRef.current = null;
@@ -1473,13 +1527,16 @@ export function Globe({
     lastPosRef.current = { x: e.clientX, y: e.clientY };
     velocityRef.current = [0, 0];
     dragDistRef.current = 0;
+    canvasRectRef.current = canvasRef.current?.getBoundingClientRect() ?? null;
     wakeGlobeRef.current?.();
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const rect = canvas.getBoundingClientRect();
+    // Measured once per press (and after a resize), not on every move: reading layout on each
+    // touchmove forced a layout pass per event while dragging.
+    const rect = canvasRectRef.current ?? (canvasRectRef.current = canvas.getBoundingClientRect());
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
     mousePosRef.current = { x: mx, y: my };

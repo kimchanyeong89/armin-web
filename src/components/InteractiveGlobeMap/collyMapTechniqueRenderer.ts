@@ -86,7 +86,27 @@ function detailNumber(
   return typeof value === "number" && Number.isFinite(value) ? value : fallback;
 }
 
+// Centroids are fixed in longitude/latitude, so they do not change as the globe turns. The draw loop
+// asks for them every frame (geoContains + geoCentroid over ~90k smoothed vertices was ~25ms a frame
+// on a phone); computing them once per data set is enough.
+let featureCandidatesCache: {
+  museums: MuseumMapDatum[];
+  countryFeatures: Array<{ name: string; feature: any }>;
+  result: CountryFeatureCandidate[];
+} | null = null;
+
 function deriveCountryFeatureCandidates(
+  museums: MuseumMapDatum[],
+  countryFeatures: Array<{ name: string; feature: any }>,
+): CountryFeatureCandidate[] {
+  const cached = featureCandidatesCache;
+  if (cached && cached.museums === museums && cached.countryFeatures === countryFeatures) return cached.result;
+  const result = computeCountryFeatureCandidates(museums, countryFeatures);
+  featureCandidatesCache = { museums, countryFeatures, result };
+  return result;
+}
+
+function computeCountryFeatureCandidates(
   museums: MuseumMapDatum[],
   countryFeatures: Array<{ name: string; feature: any }>,
 ): CountryFeatureCandidate[] {
