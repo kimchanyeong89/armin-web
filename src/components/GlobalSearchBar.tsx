@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
 import { SaveIcon } from './like/SaveIcon';
 import { centuryLabel } from '../i18n/dateLocalization';
 import { createPortal } from 'react-dom';
@@ -6,6 +6,7 @@ import { ShoppingBag, BookmarkPlus } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus, looksNonEnglish, warmPreciseSearch } from '../utils/siglipSearch';
 import { searchTextServer } from '../utils/serverKeywordSearch';
+import { SEARCH_TEXT_MAX_LIMIT } from '../../workers/semantic-search/src/searchText';
 import { getSearchThumbnail, getLightboxImage, getOptimizedImageUrl, normalizeImageUrl } from '../utils/imageProxy';
 import { artistFileKey, normalizeLookupText } from '../utils/artistKey.js';
 import { shouldLimitNetwork, isLikelyMobileDevice } from '../utils/network';
@@ -38,7 +39,7 @@ import { fetchTrending, reportSearchHit, type TrendingTerm } from '../utils/sear
 import CloseButton from './CloseButton';
 import { CollyLotusLoader } from './CollyMark';
 import ArButton from './ArButton';
-import SearchResultsStudy, { readResultsVariant, type ArtistHit, type ArtworkHit, type ExhibitionHit, type MuseumHit } from './SearchResultsStudy';
+import SearchResultsWall, { type ArtistHit, type ArtworkHit, type ExhibitionHit, type MuseumHit } from './SearchResultsWall';
 
 
 export type SearchableArtwork = {
@@ -441,7 +442,26 @@ const normalizeKnownBrokenImageUrl = (value?: string): string => {
     return normalizeImageUrl(raw);
 };
 
-const getSafeImageUrl = (value?: string): string => normalizeKnownBrokenImageUrl(value) || FALLBACK_IMG;
+// Server rows (D1 keyword or semantic) → the artwork shape the lists use, without image-less rows and
+// the collections the app does not show. Shared by the first search and "더 보기".
+const mapServerRows = (rows: any[]): SearchableArtwork[] => rows.map((r: any) => ({
+    id: String(r.id || ''),
+    name: r.n || 'Untitled',
+    artist: r.a || 'Unknown',
+    image: r.i || '',
+    year: r.d || '',
+    museumName: r.m || '',
+    exhibitionId: r.e || '',
+    sourceUrl: r.u || '',
+}) as SearchableArtwork)
+    .filter((art) => {
+        if (!art.image) return false;
+        const museumName = (art.museumName || '').toLowerCase();
+        const exhibitionId = (art.exhibitionId || '').toLowerCase();
+        if (museumName.includes('serpentine gallery') || museumName.includes('british museum')) return false;
+        if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
+        return true;
+    });
 
 
 /**
@@ -757,9 +777,6 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [productArtwork, setProductArtwork] = useState<SearchableArtwork | null>(null);
     const [playlistArtwork, setPlaylistArtwork] = useState<SearchableArtwork | null>(null);
     const [isMobile, setIsMobile] = useState(false);
-    const [isArtistListExpanded, setIsArtistListExpanded] = useState(false);
-    // Search-results proposal picked with ?results=a|b|c (null = the current list).
-    const [resultsVariant] = useState(readResultsVariant);
     const inputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const queryRef = useRef(query);
@@ -1623,11 +1640,6 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const showMuseumsInSearchMode = searchFilter === 'all' || searchFilter === 'museum';
     const showArtworksInSearchMode = searchFilter === 'all' || searchFilter === 'artwork';
     const showExhibitionsInSearchMode = searchFilter === 'all' || searchFilter === 'exhibition';
-    const artistCollapsedCount = isMobile ? 8 : 10;
-
-    useEffect(() => {
-        setIsArtistListExpanded(false);
-    }, [query, searchFilter]);
 
     // 인코더 상태 구독 (모델 로딩 진행 UI)
     useEffect(() => {
@@ -2433,7 +2445,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 seen.add(id);
                                 out.push(item);
                             }
-                            return out.slice(0, 50);
+                            return out.slice(0, SEARCH_TEXT_MAX_LIMIT);
                         });
                     }
                 } else if (!(isWarmResult && preciseResults.length === 0)) {
@@ -2441,7 +2453,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     // returns a fresh random sample each search, so preserving
                     // the previous order would re-pin the same works and
                     // defeat the per-search variety.
-                    setFilteredArtworks(preciseResults.slice(0, 30));
+                    setFilteredArtworks(preciseResults);
                 }
                 setSuggestedArtists(
                     (artists || [])
@@ -3340,24 +3352,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 : await searchByText(serverQuery, 100, isPrecisionMode ? 'jina' : 'siglip');
                             if (!rows || rows.length === 0) return;
                             if ((queryRef.current || '').trim() !== startedQuery.trim()) return;
-                            const mapped = rows.map((r: any) => ({
-                                id: String(r.id || ''),
-                                name: r.n || 'Untitled',
-                                artist: r.a || 'Unknown',
-                                image: r.i || '',
-                                year: r.d || '',
-                                museumName: r.m || '',
-                                exhibitionId: r.e || '',
-                                sourceUrl: r.u || '',
-                            }) as SearchableArtwork)
-                              .filter((art) => {
-                                  if (!art.image) return false;
-                                  const museumName = (art.museumName || '').toLowerCase();
-                                  const exhibitionId = (art.exhibitionId || '').toLowerCase();
-                                  if (museumName.includes('serpentine gallery') || museumName.includes('british museum')) return false;
-                                  if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
-                                  return true;
-                              });
+                            const mapped = mapServerRows(rows);
                             if (mapped.length === 0) return;
                             // For keyword (FTS5) results: those are already
                             // ordered by relevance/rank — ALL of them are
@@ -3385,7 +3380,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         return out;
                                     })()
                                     : mergeMobileServerAugment(prev, mapped, startedQuery);
-                                return merged.slice(0, 50);
+                                return merged.slice(0, SEARCH_TEXT_MAX_LIMIT);
                             });
                         })();
                     }
@@ -3820,7 +3815,29 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const navItemHover    = drawingPalette?.itemHover ?? (isNavDark ? 'rgba(201,165,90,0.08)'     : 'rgba(180,155,100,0.1)');
     const drawingHumanFont = "'Courier Prime', 'Courier New', 'Lucida Console', monospace";
 
-    // Hits for SearchResultsStudy: the same data and handlers the current list uses, laid out there.
+    // "더 보기" once every work already listed is on screen: ask the keyword index for a bigger batch and
+    // add what is not listed yet. D1's order is fixed, so its first rows repeat what is already here.
+    const loadMoreArtworks = useCallback(async (): Promise<boolean> => {
+        const startedQuery = query.trim();
+        const have = filteredArtworks.length;
+        if (startedQuery.length < 2 || have >= SEARCH_TEXT_MAX_LIMIT) return false;
+        const serverQuery = resolveKoreanToEnglishArtist(startedQuery, artistMapRef.current)
+            || resolveLatinAlias(startedQuery)
+            || await resolveArtistAlias(startedQuery)
+            || startedQuery;
+        const rows = mapServerRows(await searchTextServer(serverQuery, Math.min(SEARCH_TEXT_MAX_LIMIT, have + 60)));
+        if ((queryRef.current || '').trim() !== startedQuery) return false;
+        const listed = new Set(filteredArtworks.map((a) => String(a.id)));
+        const fresh = rows.filter((a) => a.id && !listed.has(a.id));
+        if (fresh.length === 0) return false;
+        setFilteredArtworks((prev) => {
+            const seen = new Set(prev.map((a) => String(a.id)));
+            return [...prev, ...fresh.filter((a) => !seen.has(a.id))];
+        });
+        return true;
+    }, [query, filteredArtworks]);
+
+    // Hits for SearchResultsWall: the data and handlers stay here, the layout lives there.
     const thumbFill: CSSProperties = { width: '100%', height: '100%', objectFit: 'cover' };
     const toArtistHit = ({ artist, count, image }: { artist: string; count: number; image?: string }): ArtistHit => {
         const token = normalizeLookupText(artist);
@@ -3832,7 +3849,6 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         const fallback = artistPreviewFallbackByName.get(token) || artistPreviewImageAsyncByName[token] || '';
         return {
             key: artist,
-            raw: artist,
             name: getArtistDisplayName(artist, language, artistMap),
             count,
             thumb: <ArtistChipThumb primaryUrl={primary} fallbackUrl={fallback} style={thumbFill} />,
@@ -3841,13 +3857,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     };
     const toArtworkHit = (art: SearchableArtwork): ArtworkHit => ({
         key: art.id,
-        artistRaw: art.artist,
         image: normalizeKnownBrokenImageUrl(art.image) || undefined,
         title: getArtworkTitle(art, language, titleMap),
         artist: getArtistDisplayName(art.artist, language, artistMap),
         year: formatArtworkYear(art.date) || '',
-        museum: art.museumName ? getMuseumDisplayName(museums.find((mm) => mm.name === art.museumName) ?? { name: art.museumName }, language) : '',
-        thumb: <ProgressiveThumb primaryUrl={art.image} style={thumbFill} loading="lazy" />,
         onSelect: () => handleSelectArtwork(art),
     });
     const toMuseumHit = (museum: Museum): MuseumHit => ({
@@ -4638,21 +4651,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 >
                     {isExpanded && isSearchPageMode && !isAIMode && !isRecommendMode && (() => {
                         const hasQuery = query.trim().length > 0;
-                        const pageText = isNavDark ? 'rgba(255,255,255,0.94)' : 'rgba(0,0,0,0.90)';
                         const medText = isNavDark ? 'rgba(255,255,255,0.72)' : 'rgba(0,0,0,0.60)';
-                        const lowText = isNavDark ? 'rgba(255,255,255,0.58)' : 'rgba(0,0,0,0.48)';
                         const faintText = isNavDark ? 'rgba(255,255,255,0.40)' : 'rgba(0,0,0,0.32)';
                         const divider = isNavDark ? 'rgba(255,255,255,0.11)' : 'rgba(0,0,0,0.09)';
                         const chipBg = isNavDark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.06)';
-                        const cardBg = isNavDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)';
-
-                        const sectionLabel = (label: string, count: number, color?: string) => (
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 7, paddingTop: 2, paddingBottom: 8, marginTop: 6 }}>
-                                <div style={{ width: 3, height: 3, borderRadius: '50%', backgroundColor: color || faintText }} />
-                                <span style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: faintText }}>{label}</span>
-                                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: faintText }}>{count}</span>
-                            </div>
-                        );
 
                         return (
                             <div style={{ paddingBottom: 26 }}>
@@ -4774,349 +4776,16 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                                 {hasQuery && (
                                     <div style={{ padding: '8px 0 4px' }}>
-                                        {resultsVariant ? (
-                                            <SearchResultsStudy
-                                                variant={resultsVariant}
-                                                ko={language === 'ko'}
-                                                query={query.trim()}
-                                                artists={showArtistsInSearchMode ? suggestedArtists.map(toArtistHit) : []}
-                                                museums={showMuseumsInSearchMode ? filteredMuseums.slice(0, 6).map(toMuseumHit) : []}
-                                                artworks={showArtworksInSearchMode ? filteredArtworks.slice(0, 50).map(toArtworkHit) : []}
-                                                exhibitions={showExhibitionsInSearchMode ? matchedExhibitions.map(toExhibitionHit) : []}
-                                                totals={{ museums: filteredMuseums.length, artworks: filteredArtworks.length }}
-                                            />
-                                        ) : (<>
-                                        {showArtistsInSearchMode && suggestedArtists.length > 0 && (
-                                            <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel(t({ ko: '작가', en: 'Artists' }), suggestedArtists.length, isNavDark ? '#D4A547' : '#8A6B1F')}
-                                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-                                                    {suggestedArtists.slice(0, artistCollapsedCount).map(({ artist, count, image }, idx) => {
-                                                        const artistToken = normalizeLookupText(artist);
-                                                        const previewPrimary = normalizeKnownBrokenImageUrl(image)
-                                                            || artistPreviewImageByName.get(artistToken)
-                                                            || artistPreviewImageAsyncByName[artistToken]
-                                                            || artistPreviewFallbackByName.get(artistToken)
-                                                            || '';
-                                                        const previewFallback = artistPreviewFallbackByName.get(artistToken)
-                                                            || artistPreviewImageAsyncByName[artistToken]
-                                                            || '';
-                                                        return (
-                                                            <button
-                                                                key={artist}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleSelectArtist(artist);
-                                                                }}
-                                                                style={{
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    gap: isMobile ? 8 : 10,
-                                                                    padding: isMobile ? '7px 9px' : '8px 12px',
-                                                                    borderRadius: 999,
-                                                                    border: `1px solid ${divider}`,
-                                                                    cursor: 'pointer',
-                                                                    textAlign: 'left',
-                                                                    background: isNavDark
-                                                                        ? 'linear-gradient(140deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))'
-                                                                        : 'linear-gradient(140deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02))',
-                                                                    flex: isMobile ? '1 1 calc(50% - 4px)' : '1 1 calc(50% - 4px)',
-                                                                    minWidth: 0,
-                                                                    animation: `search-result-reveal 0.26s ease both`,
-                                                                    animationDelay: `${Math.min(220, idx * 24)}ms`,
-                                                                }}
-                                                            >
-                                                                <div style={{
-                                                                    width: isMobile ? 30 : 36,
-                                                                    height: isMobile ? 30 : 36,
-                                                                    borderRadius: '50%',
-                                                                    overflow: 'hidden',
-                                                                    flexShrink: 0,
-                                                                    border: `1.5px solid ${isNavDark ? 'rgba(212,165,71,0.25)' : 'rgba(138,107,31,0.25)'}`,
-                                                                    background: isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
-                                                                }}>
-                                                                    <ArtistChipThumb
-                                                                        primaryUrl={previewPrimary}
-                                                                        fallbackUrl={previewFallback}
-                                                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                                    />
-                                                                </div>
-                                                                <div style={{ flex: 1, minWidth: 0 }}>
-                                                                    <div style={{ fontSize: isMobile ? 10 : 11, color: pageText, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                        {getArtistDisplayName(artist, language, artistMap)}
-                                                                    </div>
-                                                                    <div style={{ fontSize: isMobile ? 8 : 9, color: faintText, marginTop: 1 }}>{count.toLocaleString()}{t({ ko: '점', en: ' works' })}</div>
-                                                                </div>
-                                                            </button>
-                                                        );
-                                                    })}
-                                                </div>
-
-                                                {suggestedArtists.length > artistCollapsedCount && (
-                                                    <>
-                                                        <div
-                                                            style={{
-                                                                maxHeight: isArtistListExpanded
-                                                                    ? `${Math.min(1200, suggestedArtists.length * (isMobile ? 56 : 68))}px`
-                                                                    : 0,
-                                                                opacity: isArtistListExpanded ? 1 : 0,
-                                                                transform: isArtistListExpanded ? 'translateY(0)' : 'translateY(-8px)',
-                                                                overflow: 'hidden',
-                                                                transition: 'max-height 360ms ease, opacity 260ms ease, transform 260ms ease',
-                                                            }}
-                                                        >
-                                                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, paddingTop: 7 }}>
-                                                                {suggestedArtists.slice(artistCollapsedCount).map(({ artist, count, image }, idx) => {
-                                                                    const artistToken = normalizeLookupText(artist);
-                                                                    const previewPrimary = normalizeKnownBrokenImageUrl(image)
-                                                                        || artistPreviewImageByName.get(artistToken)
-                                                                        || artistPreviewImageAsyncByName[artistToken]
-                                                                        || artistPreviewFallbackByName.get(artistToken)
-                                                                        || '';
-                                                                    const previewFallback = artistPreviewFallbackByName.get(artistToken)
-                                                                        || artistPreviewImageAsyncByName[artistToken]
-                                                                        || '';
-                                                                    return (
-                                                                        <button
-                                                                            key={artist}
-                                                                            onClick={(e) => {
-                                                                                e.stopPropagation();
-                                                                                handleSelectArtist(artist);
-                                                                            }}
-                                                                            style={{
-                                                                                display: 'flex',
-                                                                                alignItems: 'center',
-                                                                                gap: isMobile ? 8 : 10,
-                                                                                padding: isMobile ? '7px 9px' : '8px 12px',
-                                                                                borderRadius: 999,
-                                                                                border: `1px solid ${divider}`,
-                                                                                cursor: 'pointer',
-                                                                                textAlign: 'left',
-                                                                                background: isNavDark
-                                                                                    ? 'linear-gradient(140deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03))'
-                                                                                    : 'linear-gradient(140deg, rgba(0,0,0,0.06), rgba(0,0,0,0.02))',
-                                                                                flex: isMobile ? '1 1 calc(50% - 4px)' : '1 1 calc(50% - 4px)',
-                                                                                minWidth: 0,
-                                                                                animation: `search-result-reveal 0.26s ease both`,
-                                                                                animationDelay: `${Math.min(220, idx * 20)}ms`,
-                                                                            }}
-                                                                        >
-                                                                            <div style={{
-                                                                                width: isMobile ? 30 : 36,
-                                                                                height: isMobile ? 30 : 36,
-                                                                                borderRadius: '50%',
-                                                                                overflow: 'hidden',
-                                                                                flexShrink: 0,
-                                                                                border: `1.5px solid ${isNavDark ? 'rgba(212,165,71,0.25)' : 'rgba(138,107,31,0.25)'}`,
-                                                                                background: isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
-                                                                            }}>
-                                                                                <ArtistChipThumb
-                                                                                    primaryUrl={previewPrimary}
-                                                                                    fallbackUrl={previewFallback}
-                                                                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                                                />
-                                                                            </div>
-                                                                            <div style={{ flex: 1, minWidth: 0 }}>
-                                                                                <div style={{ fontSize: isMobile ? 10 : 11, color: pageText, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                                    {getArtistDisplayName(artist, language, artistMap)}
-                                                                                </div>
-                                                                                <div style={{ fontSize: isMobile ? 8 : 9, color: faintText, marginTop: 1 }}>{count.toLocaleString()}{t({ ko: '점', en: ' works' })}</div>
-                                                                            </div>
-                                                                        </button>
-                                                                    );
-                                                                })}
-                                                            </div>
-                                                        </div>
-
-                                                        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 8 }}>
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    setIsArtistListExpanded((prev) => !prev);
-                                                                }}
-                                                                style={{
-                                                                    display: 'inline-flex',
-                                                                    alignItems: 'center',
-                                                                    gap: 8,
-                                                                    padding: '7px 14px',
-                                                                    borderRadius: 999,
-                                                                    border: `1px solid ${divider}`,
-                                                                    background: isNavDark
-                                                                        ? 'rgba(255,255,255,0.06)'
-                                                                        : 'rgba(0,0,0,0.04)',
-                                                                    color: pageText,
-                                                                    fontSize: 11,
-                                                                    letterSpacing: '0.04em',
-                                                                    cursor: 'pointer',
-                                                                    transition: 'transform 180ms ease, background 180ms ease',
-                                                                }}
-                                                            >
-                                                                <span>{isArtistListExpanded ? '접기' : `더보기 +${Math.max(0, suggestedArtists.length - artistCollapsedCount)}`}</span>
-                                                                <span style={{
-                                                                    fontSize: 12,
-                                                                    transform: isArtistListExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
-                                                                    transition: 'transform 200ms ease',
-                                                                }}>⌄</span>
-                                                            </button>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </div>
-                                        )}
-
-                                        {showMuseumsInSearchMode && filteredMuseums.length > 0 && (
-                                            <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel(t({ ko: '미술관', en: 'Museums' }), filteredMuseums.length, '#6B9AFF')}
-                                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-                                                    {filteredMuseums.slice(0, 6).map((museum) => {
-                                                        return (
-                                                            <button
-                                                                key={museum.id}
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleSelectMuseum(museum);
-                                                                }}
-                                                                style={{
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    gap: 9,
-                                                                    padding: '7px 11px',
-                                                                    borderRadius: 999,
-                                                                    border: `1px solid ${divider}`,
-                                                                    cursor: 'pointer',
-                                                                    textAlign: 'left',
-                                                                    backgroundColor: cardBg,
-                                                                }}
-                                                            >
-                                                                <div style={{ flex: 1, minWidth: 0 }}>
-                                                                    <div style={{ fontSize: 11, color: pageText, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                        {getMuseumDisplayName(museum, language)}
-                                                                    </div>
-                                                                    <div style={{ fontSize: 9, color: faintText, marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                        {localizeCountryName(museum.country || '', language)}
-                                                                    </div>
-                                                                </div>
-                                                            </button>
-                                                        );
-                                                    })}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {showArtworksInSearchMode && filteredArtworks.length > 0 && (
-                                            <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel(t({ ko: '작품', en: 'Artworks' }), filteredArtworks.length)}
-                                                <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}>
-                                                    {filteredArtworks.slice(0, 50).map((art, idx) => (
-                                                        <Fragment key={art.id}>
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleSelectArtwork(art);
-                                                                }}
-                                                                style={{
-                                                                    width: '100%',
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    gap: 12,
-                                                                    padding: '10px 12px',
-                                                                    background: cardBg,
-                                                                    border: 'none',
-                                                                    cursor: 'pointer',
-                                                                    textAlign: 'left',
-                                                                    ...resultRevealStyle(idx),
-                                                                }}
-                                                            >
-                                                                <div style={{ width: 52, height: 52, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: chipBg }}>
-                                                                    <ProgressiveThumb
-                                                                        primaryUrl={art.image}
-                                                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                                        loading="lazy"
-                                                                    />
-                                                                </div>
-                                                                <div style={{ flex: 1, minWidth: 0 }}>
-                                                                    <div style={{ fontSize: 13, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtworkTitle(art, language, titleMap)}</div>
-                                                                    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-                                                                        <span style={{ fontSize: 11, color: lowText, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtistDisplayName(art.artist, language, artistMap)}</span>
-                                                                        {formatArtworkYear(art.date) && <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: faintText }}>{formatArtworkYear(art.date)}</span>}
-                                                                    </div>
-                                                                </div>
-                                                                <span style={{ fontSize: 12, color: faintText }}>ⓘ</span>
-                                                            </button>
-                                                            {idx < Math.min(filteredArtworks.length, 50) - 1 && <div style={{ height: 1, backgroundColor: divider }} />}
-                                                        </Fragment>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {showExhibitionsInSearchMode && matchedExhibitions.length > 0 && (
-                                            <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel(t({ ko: '전시', en: 'Exhibitions' }), matchedExhibitions.length)}
-                                                <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}>
-                                                    {matchedExhibitions.map((item, idx) => (
-                                                        <Fragment key={item.exhibitionId}>
-                                                            {(() => {
-                                                                const fromSync = exhibitionPreviewImageById.get(item.exhibitionId);
-                                                                const fromAsync = exhibitionPreviewImageAsyncById[item.exhibitionId];
-                                                                const previewImage = fromSync || fromAsync;
-                                                                const museumId = resolveMuseumId(item.museumName, item.country);
-                                                                const museumBackup = museumId
-                                                                    ? (
-                                                                        museumPreviewImageById.get(museumId)
-                                                                        || museumPreviewImageAsyncById[museumId]
-                                                                        || normalizeKnownBrokenImageUrl(museums.find((m) => m.id === museumId)?.representativeImage)
-                                                                    )
-                                                                    : '';
-                                                                const collectionFallback = exhibitionPreviewFallbackById[item.exhibitionId] || '';
-                                                                const _wsrvDbg = previewImage ? getSearchThumbnail(getSafeImageUrl(previewImage)) : '';
-                                                                console.log(`[IMG-DEBUG] Rendering "${item.exhibitionId}" | sync=${fromSync ? '✓' : '✗'} async=${fromAsync ? '✓' : '✗'} fb=${collectionFallback ? '✓' : '✗'} backup=${museumBackup ? '✓' : '✗'} | url=${previewImage || 'NONE'} | wsrv=${_wsrvDbg || 'NONE'}`);
-                                                                return (
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleSelectExhibition(item.exhibitionId, item.exhibitionName);
-                                                                }}
-                                                                style={{
-                                                                    width: '100%',
-                                                                    display: 'flex',
-                                                                    alignItems: 'center',
-                                                                    gap: 12,
-                                                                    padding: '10px 12px',
-                                                                    background: cardBg,
-                                                                    border: 'none',
-                                                                    cursor: 'pointer',
-                                                                    textAlign: 'left',
-                                                                }}
-                                                            >
-                                                                <div style={{ width: 52, height: 38, borderRadius: 5, overflow: 'hidden', flexShrink: 0, background: chipBg }}>
-                                                                        {previewImage ? (
-                                                                            <ExhibitionThumb
-                                                                                primaryUrl={previewImage}
-                                                                                fallbackUrl={collectionFallback || undefined}
-                                                                                backupUrl={museumBackup || undefined}
-                                                                                exhibitionId={item.exhibitionId}
-                                                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                                            />
-                                                                        ) : (
-                                                                            <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: faintText, fontSize: 10 }}>EXH</div>
-                                                                        )}
-                                                                </div>
-                                                                <div style={{ flex: 1, minWidth: 0 }}>
-                                                                    <div style={{ fontSize: 12, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.exhibitionName}</div>
-                                                                    <div style={{ fontSize: 10, color: lowText, marginTop: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                                        {item.museumNameDisplay || item.museumName}{item.country ? ` · ${localizeCountryName(item.country, language)}` : ''}
-                                                                    </div>
-                                                                </div>
-                                                            </button>
-                                                                );
-                                                            })()}
-                                                            {idx < matchedExhibitions.length - 1 && <div style={{ height: 1, backgroundColor: divider }} />}
-                                                        </Fragment>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                        </>)}
+                                        <SearchResultsWall
+                                            key={query.trim()}
+                                            ko={language === 'ko'}
+                                            artists={showArtistsInSearchMode ? suggestedArtists.map(toArtistHit) : []}
+                                            museums={showMuseumsInSearchMode ? filteredMuseums.slice(0, 6).map(toMuseumHit) : []}
+                                            artworks={showArtworksInSearchMode ? filteredArtworks.map(toArtworkHit) : []}
+                                            exhibitions={showExhibitionsInSearchMode ? matchedExhibitions.map(toExhibitionHit) : []}
+                                            totals={{ museums: filteredMuseums.length }}
+                                            onMoreArtworks={loadMoreArtworks}
+                                        />
 
                                         {showArtworksInSearchMode && showArtistsInSearchMode && showMuseumsInSearchMode && showExhibitionsInSearchMode &&
                                             filteredArtworks.length === 0 && suggestedArtists.length === 0 && filteredMuseums.length === 0 && matchedExhibitions.length === 0 && (
@@ -5133,11 +4802,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     })()}
 
                     {isExpanded && isSearchPageMode && isAIMode && !isRecommendMode && (() => {
-                        const pageText = isNavDark ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.88)';
                         const lowText = isNavDark ? 'rgba(255,255,255,0.36)' : 'rgba(0,0,0,0.36)';
                         const faintText = isNavDark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.18)';
-                        const divider = isNavDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.07)';
-                        const cardBg = isNavDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)';
 
                         return (
                             <div style={{ paddingBottom: 26 }}>
@@ -5157,66 +4823,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     <SearchWittyLoader dark={isNavDark} />
                                 )}
 
-                                {resultsVariant && query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
-                                    <SearchResultsStudy variant={resultsVariant} ko={language === 'ko'} query={query.trim()} artworks={aiResults.map(toArtworkHit)} />
-                                )}
-
-                                {!resultsVariant && query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
-                                    <div
-                                        onWheel={(e) => e.stopPropagation()}
-                                        onTouchMove={(e) => e.stopPropagation()}
-                                        style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}
-                                    >
-                                        {aiResults.map((art, idx) => (
-                                            <Fragment key={`ai-search-${art.id}`}>
-                                                <button
-                                                    className="search-result-item"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleSelectArtwork(art);
-                                                    }}
-                                                    style={{
-                                                        width: '100%',
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        gap: 12,
-                                                        padding: '10px 12px',
-                                                        border: 'none',
-                                                        background: cardBg,
-                                                        cursor: 'pointer',
-                                                        textAlign: 'left',
-                                                        ...resultRevealStyle(idx),
-                                                    }}
-                                                >
-                                                    <div style={{ width: 52, height: 52, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }}>
-                                                        <ProgressiveThumb
-                                                            primaryUrl={art.image}
-                                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                            loading="lazy"
-                                                        />
-                                                    </div>
-                                                    <div style={{ flex: 1, minWidth: 0 }}>
-                                                        <div style={{ fontSize: 13, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtworkTitle(art, language, titleMap)}</div>
-                                                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-                                                            <span style={{ fontSize: 11, color: lowText, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtistDisplayName(art.artist, language, artistMap)}</span>
-                                                            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: faintText }}>AI</span>
-                                                        </div>
-                                                        {art.museumName && (
-                                                            <div style={{ fontSize: 10, color: faintText, marginTop: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                                {getMuseumDisplayName(museums.find(mm => mm.name === art.museumName) ?? { name: art.museumName }, language)}
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={faintText} strokeWidth="1.8">
-                                                        <circle cx="12" cy="12" r="9" />
-                                                        <line x1="12" y1="10" x2="12" y2="16" />
-                                                        <circle cx="12" cy="7" r="1" fill={faintText} stroke="none" />
-                                                    </svg>
-                                                </button>
-                                                {idx < aiResults.length - 1 && <div style={{ height: 1, backgroundColor: divider }} />}
-                                            </Fragment>
-                                        ))}
-                                    </div>
+                                {query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
+                                    <SearchResultsWall key={query.trim()} ko={language === 'ko'} artworks={aiResults.map(toArtworkHit)} />
                                 )}
 
                                 {query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length === 0 && (

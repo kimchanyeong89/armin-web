@@ -1,0 +1,80 @@
+/* Search results (SearchResultsWall.tsx). Lives inside .sr, so the page tokens
+   (--ink, --acc, --num, --display, --rule) are already set. */
+
+.srr { padding: 4px 0 8px; }
+.srr-sec { margin-top: 30px; }
+.srr-sec:first-child { margin-top: 12px; }
+.srr button { text-align: left; }
+
+/* the section head repeats the genre drawer below: 01 작가 ——— 12 */
+.srr-head { display: grid; grid-template-columns: auto auto 1fr auto; align-items: baseline;
+  gap: 13px; padding: 0 2px 14px; }
+.srr-head em { font-family: var(--num); font-style: normal; font-size: 10px; letter-spacing: .06em; color: var(--acc); }
+.srr-head span { font-family: var(--display); font-size: 15px; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+.srr-head i { align-self: center; height: 1px; background: var(--rule); }
+.srr-head b { font-family: var(--num); font-size: 10.5px; font-weight: 500; letter-spacing: .06em; color: var(--ink-3); }
+
+.srr-face { display: block; flex: none; border-radius: 50%; overflow: hidden;
+  background: rgba(244,241,234,.06); filter: grayscale(1); transition: filter .25s ease; }
+.srr button:hover .srr-face { filter: none; }
+
+/* ── artists: a face and a name big enough to read as the answer ── */
+.srr-artists { display: flex; flex-wrap: wrap; gap: 16px 34px; }
+.sr .srr-artists button { display: inline-flex; align-items: center; gap: 14px; min-width: 0; max-width: 100%; }
+.srr-artists .srr-face { width: 60px; height: 60px; }
+.srr-artists__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.srr-artists__text b { font-family: var(--display); font-weight: 600; font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  line-height: 1.2; letter-spacing: -0.03em; color: var(--ink); overflow-wrap: anywhere; transition: color .16s ease; }
+.srr-artists__text em { font-family: var(--num); font-style: normal; font-size: 10.5px; letter-spacing: .04em; color: var(--acc); }
+.sr .srr-artists button:hover b { color: var(--acc); }
+
+/* ── works: hung at their own proportions, like a salon wall ── */
+.srr-wall { columns: 4; column-gap: 14px; }
+.srr-wall > li { break-inside: avoid; margin-bottom: 18px; }
+.sr .srr-wall button { display: block; width: 100%; }
+.srr-pic { display: block; overflow: hidden; background: rgba(244,241,234,.035); }
+.srr-pic img { display: block; width: 100%; height: auto; transition: opacity .3s ease, transform .6s var(--ease); }
+.srr-pic img:not([data-ready]) { aspect-ratio: 4 / 5; opacity: 0; }
+.sr .srr-wall button:hover img { transform: scale(1.03); }
+.srr-noimg { display: block; width: 100%; aspect-ratio: 4 / 5; background: rgba(244,241,234,.05); }
+/* the wall label: a caption's worth of type, no card */
+.srr-label { display: block; padding: 8px 0 0; }
+.srr-label b { font-size: 12px; font-weight: 600; line-height: 1.35; color: var(--ink); transition: color .16s ease;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.srr-label span { display: block; margin-top: 2px; font-size: 10.5px; color: var(--ink-3); }
+.srr-label em { font-family: var(--num); font-style: normal; font-size: 9.5px; }
+.sr .srr-wall button:hover b { color: var(--acc); }
+
+/* "더 보기": a line of type between two hairlines, never a pill */
+.sr .srr-more { display: block; width: 100%; margin-top: 8px; padding: 14px 0; text-align: center;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  font-size: 12.5px; color: var(--ink-2); transition: color .16s ease; }
+.sr .srr-more:hover { color: var(--acc); }
+.srr-loading { display: flex; justify-content: center; padding: 10px 0; }
+
+/* ── exhibitions: a strip of posters ── */
+.srr-strip { display: grid; grid-auto-flow: column; grid-auto-columns: 168px; gap: 14px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: none; padding-bottom: 4px; }
+.srr-strip::-webkit-scrollbar { display: none; }
+.srr-strip > li { scroll-snap-align: start; min-width: 0; }
+.sr .srr-strip button { display: block; width: 100%; }
+.srr-poster { display: block; aspect-ratio: 3 / 4; overflow: hidden; background: rgba(244,241,234,.05); }
+.srr-cap__title { display: block; margin-top: 8px; font-size: 12.5px; line-height: 1.35; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: color .16s ease; }
+.srr-cap__sub { display: block; margin-top: 2px; font-size: 10.5px; color: var(--ink-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.srr button:hover .srr-cap__title { color: var(--acc); }
+
+/* ── museums: one line of names with their marks ── */
+.srr-run { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px 26px; padding-top: 4px; }
+.sr .srr-run > button { display: inline-flex; align-items: center; gap: 8px; font-size: 13px;
+  color: var(--ink-2); transition: color .16s ease; }
+.srr-run sup { font-family: var(--num); font-size: 9px; letter-spacing: .04em; color: var(--ink-3); vertical-align: super; margin-left: 2px; }
+.sr .srr-run > button:hover { color: var(--acc); }
+
+@media (max-width: 760px) {
+  .srr-artists { gap: 14px 24px; }
+  .srr-artists .srr-face { width: 52px; height: 52px; }
+  .srr-wall { columns: 2; column-gap: 10px; }
+  .srr-strip { grid-auto-columns: 136px; gap: 10px; }
+}
