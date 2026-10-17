@@ -280,7 +280,9 @@ export function Globe({
   const bordersRef = useRef<any>(null);
   const countriesRef = useRef<any[]>([]);
 
-  const projectionRef = useRef(d3.geoOrthographic().precision(0.3).clipAngle(90));
+  // d3's default resampling (0.7px). 0.3 subdivided the already-rounded outlines again on every frame,
+  // which was most of the cost of turning a zoomed-in globe on a phone.
+  const projectionRef = useRef(d3.geoOrthographic().precision(0.7).clipAngle(90));
   const rotationRef = useRef<[number, number, number]>([0, -20, 0]);
   const targetScaleRef = useRef(1);
   const currentScaleRef = useRef(1);
@@ -849,6 +851,7 @@ export function Globe({
             center,
             radius,
             viewCenter: viewCenterFromRot(rot),
+            baseDrawsBorders: countryBoundaryStyle === "atlas-index",
           }
         : null;
 
@@ -886,6 +889,7 @@ export function Globe({
           isMobile: isMobileRef.current,
           boundaryStyle: countryBoundaryStyle,
           viewportWidth: w,
+          doubleStroke: Boolean(techniqueOverlayDrawn) && collyProfile?.technique === "atlas-index",
         });
       }
 

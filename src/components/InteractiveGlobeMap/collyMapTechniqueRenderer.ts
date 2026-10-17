@@ -56,6 +56,9 @@ export type CollyMapTechniqueRenderArgs = {
   center: readonly [number, number];
   radius: number;
   viewCenter: readonly [number, number];
+  // The base layer already strokes these borders in the same style (countryBoundaryStyle
+  // "atlas-index"); it then strokes them once at double strength instead of twice.
+  baseDrawsBorders?: boolean;
 };
 
 type TechniqueLayer = (args: CollyMapTechniqueRenderArgs) => void;
@@ -328,7 +331,7 @@ function drawStackedCountryLabel(
 
 function drawAtlasIndexBoundaries(args: CollyMapTechniqueRenderArgs): void {
   const { borders, ctx, palette, path, width } = args;
-  if (!borders) return;
+  if (!borders || args.baseDrawsBorders) return;
   const style = resolveAtlasBoundaryStyle(width);
 
   ctx.beginPath();

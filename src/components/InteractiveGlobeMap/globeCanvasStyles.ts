@@ -32,6 +32,8 @@ type GlobeGeometryStyleArgs = GlobeCanvasStyleArgs & {
   isMobile?: boolean;
   boundaryStyle?: CountryBoundaryStyle;
   viewportWidth?: number;
+  // the atlas-index overlay would have stroked the same lines again: one stroke at the strength of two
+  doubleStroke?: boolean;
 };
 
 const paperPatternCache = new WeakMap<CanvasRenderingContext2D, CanvasPattern>();
@@ -294,16 +296,18 @@ export function drawStyledBorders(args: GlobeGeometryStyleArgs): void {
     isMobile = false,
     boundaryStyle,
     viewportWidth = 0,
+    doubleStroke = false,
   } = args;
   if (!geometry) return;
 
   if (boundaryStyle === "atlas-index") {
     const style = resolveAtlasBoundaryStyle(viewportWidth);
+    const alpha = doubleStroke ? 1 - (1 - style.alpha) ** 2 : style.alpha;
     drawProjectedLine(
       ctx,
       path,
       geometry,
-      `rgba(${palette.label},${style.alpha})`,
+      `rgba(${palette.label},${alpha})`,
       style.width,
     );
     return;
