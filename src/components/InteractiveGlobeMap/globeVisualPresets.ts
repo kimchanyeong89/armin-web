@@ -129,7 +129,7 @@ const PRODUCTION_VISUALS: Record<Theme, GlobeVisualPalette> = {
     landOpacity: 1,
     borderOpacity: 1,
     borderWidth: 1,
-    labelFont: '"Space Grotesk", sans-serif',
+    labelFont: '"Space Grotesk", "Hana2", sans-serif',
     markerStyle: "bevel",
   },
   light: {
@@ -146,7 +146,7 @@ const PRODUCTION_VISUALS: Record<Theme, GlobeVisualPalette> = {
     landOpacity: 1,
     borderOpacity: 1,
     borderWidth: 1,
-    labelFont: '"Space Grotesk", sans-serif',
+    labelFont: '"Space Grotesk", "Hana2", sans-serif',
     markerStyle: "bevel",
   },
 };
@@ -217,7 +217,7 @@ export const GLOBE_VISUAL_PRESETS: Record<GlobeVisualPresetId, GlobeVisualPalett
     landOpacity: 1.15,
     borderOpacity: 1.15,
     borderWidth: 1,
-    labelFont: '"Space Grotesk", sans-serif',
+    labelFont: '"Space Grotesk", "Hana2", sans-serif',
     markerStyle: "bevel",
   },
   "accessible-atlas": {

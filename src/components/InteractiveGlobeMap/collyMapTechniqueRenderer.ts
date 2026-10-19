@@ -26,6 +26,8 @@ import {
 import type { GlobeVisualPalette } from "./globeVisualPresets";
 import { getMainlandFeature } from "./globeGeometrySmoothing";
 import { resolveAtlasBoundaryStyle } from "./globeCanvasStyles";
+import { localizeCityName, localizeCountryName } from "../../i18n/geoLocalization";
+import type { AppLanguage } from "../../contexts/LanguageContext";
 
 export { resolveAtlasBoundaryStyle } from "./globeCanvasStyles";
 
@@ -59,6 +61,7 @@ export type CollyMapTechniqueRenderArgs = {
   // The base layer already strokes these borders in the same style (countryBoundaryStyle
   // "atlas-index"); it then strokes them once at double strength instead of twice.
   baseDrawsBorders?: boolean;
+  language?: AppLanguage;
 };
 
 type TechniqueLayer = (args: CollyMapTechniqueRenderArgs) => void;
@@ -79,6 +82,13 @@ type CountryFeatureCandidate = CountryRenderCandidate & {
 };
 
 const noop: TechniqueLayer = () => undefined;
+
+// Country and city names arrive in English. In Korean the label shows the Korean name (capitals only
+// mean something in Latin script); in English it stays in the atlas's capitals.
+function placeName(name: string, kind: "country" | "city", language?: AppLanguage): string {
+  if (language === "ko") return kind === "country" ? localizeCountryName(name, "ko") : localizeCityName(name, "ko");
+  return name.toUpperCase();
+}
 
 function detailNumber(
   profile: CollyGlobeVariantProfile,
@@ -326,7 +336,7 @@ function drawStackedCountryLabel(
   ctx.fillText(String(count).padStart(2, "0"), position[0], position[1] - gap);
   ctx.font = `650 ${compact ? 8 : 9}px ${palette.labelFont}`;
   ctx.fillStyle = `rgba(${palette.label},${alpha})`;
-  ctx.fillText(label.toUpperCase(), position[0], position[1] + gap);
+  ctx.fillText(label, position[0], position[1] + gap);
 }
 
 function drawAtlasIndexBoundaries(args: CollyMapTechniqueRenderArgs): void {
@@ -375,7 +385,7 @@ const drawAtlasIndex: TechniqueLayer = (args) => {
       drawStackedCountryLabel(
         ctx,
         palette,
-        country.label,
+        placeName(country.label, "country", args.language),
         country.aggregate.museumCount,
         [country.anchorX, country.anchorY],
         width,
@@ -395,8 +405,16 @@ const drawAtlasIndex: TechniqueLayer = (args) => {
       width < 560 ? 64 : 96,
     );
     const fontSize = width < 560 ? 7 : 8;
+    const name = placeName(country.label, "country", args.language);
+    // Latin capitals keep the old per-letter estimate; a Hangul syllable is about twice as wide, so
+    // the Korean name is measured in the font it is drawn in.
+    let halfWidth = country.label.length * fontSize * 0.29;
+    if (args.language === "ko") {
+      ctx.font = `650 ${width < 560 ? 8 : 9}px ${palette.labelFont}`;
+      halfWidth = ctx.measureText(name).width / 2;
+    }
     const edgeTextCenter: [number, number] = [
-      endpoint[0] + direction * (5 + country.label.length * fontSize * 0.29),
+      endpoint[0] + direction * (5 + halfWidth),
       endpoint[1],
     ];
     const directPosition: [number, number] = [country.anchorX, country.anchorY];
@@ -424,7 +442,7 @@ const drawAtlasIndex: TechniqueLayer = (args) => {
     drawStackedCountryLabel(
       ctx,
       palette,
-      country.label,
+      name,
       country.aggregate.museumCount,
       labelPosition,
       width,
@@ -464,7 +482,7 @@ const drawMarginLedger: TechniqueLayer = (args) => {
     drawCompactAnchor(ctx, palette, label, direction, 0.78);
 
     configureLabelText(ctx, palette, direction < 0 ? "right" : "left", width, 0.72);
-    ctx.fillText(label.label.toUpperCase(), nameX, label.labelY);
+    ctx.fillText(placeName(label.label, "country", args.language), nameX, label.labelY);
     ctx.font = `500 ${width < 560 ? 7 : 8}px ${palette.labelFont}`;
     ctx.fillStyle = `rgba(${palette.accentRgb},0.72)`;
     ctx.textAlign = direction < 0 ? "left" : "right";
@@ -517,7 +535,7 @@ const drawRadialRegister: TechniqueLayer = (args) => {
     drawStackedCountryLabel(
       ctx,
       palette,
-      country.label,
+      placeName(country.label, "country", args.language),
       country.aggregate.museumCount,
       [label.labelX, label.labelY],
       width,
@@ -546,7 +564,7 @@ const drawRadialRegister: TechniqueLayer = (args) => {
     configureLabelText(ctx, palette, label.textAlign, width, 0.72);
     const offset = label.textAlign === "left" ? 4 : -4;
     ctx.fillText(
-      `${label.label.toUpperCase()}  ${String(country.aggregate.museumCount).padStart(2, "0")}`,
+      `${placeName(label.label, "country", args.language)}  ${String(country.aggregate.museumCount).padStart(2, "0")}`,
       label.labelX + offset,
       label.labelY,
     );
@@ -604,7 +622,7 @@ const drawCountryFolio: TechniqueLayer = (args) => {
 
     configureLabelText(ctx, palette, direction < 0 ? "right" : "left", width, 0.7);
     ctx.fillText(
-      `${label.label.toUpperCase()}  ${aggregate.museumCount}`,
+      `${placeName(label.label, "country", args.language)}  ${aggregate.museumCount}`,
       label.labelX + direction * 4,
       label.labelY,
     );
@@ -736,7 +754,7 @@ const drawCityGazetteer: TechniqueLayer = (args) => {
       0.74,
     );
     ctx.fillText(
-      `${String(rank).padStart(2, "0")}  ${aggregate.city.toUpperCase()}  / ${aggregate.museumCount}`,
+      `${String(rank).padStart(2, "0")}  ${placeName(aggregate.city, "city", args.language)}  / ${aggregate.museumCount}`,
       label.labelX,
       label.labelY,
     );

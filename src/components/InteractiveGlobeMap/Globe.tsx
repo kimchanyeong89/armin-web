@@ -852,6 +852,7 @@ export function Globe({
             radius,
             viewCenter: viewCenterFromRot(rot),
             baseDrawsBorders: countryBoundaryStyle === "atlas-index",
+            language: languageRef.current,
           }
         : null;
 
@@ -1459,6 +1460,10 @@ export function Globe({
       }
     };
     document.addEventListener('visibilitychange', onVisibility);
+    // Canvas text does not repaint when a web font arrives, and an idle globe draws nothing, so the
+    // Korean labels (Hana2) would stay in the fallback face until the next touch. Redraw once it lands.
+    let fontsAlive = true;
+    document.fonts?.load('600 9px "Hana2"', "가").then(() => { if (fontsAlive) wake(); }).catch(() => {});
 
     animRunningRef.current = true;
     animFrameRef.current = requestAnimationFrame(animate);
@@ -1469,6 +1474,7 @@ export function Globe({
       obs.disconnect();
       window.removeEventListener("scroll", forgetCanvasRect, { capture: true });
       document.removeEventListener('visibilitychange', onVisibility);
+      fontsAlive = false;
       if (resizeTimeout !== null) window.clearTimeout(resizeTimeout);
       if (wakeGlobeRef.current === wake) wakeGlobeRef.current = null;
     };
