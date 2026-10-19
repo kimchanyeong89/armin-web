@@ -41,6 +41,7 @@ import { getMediumKo } from "../../i18n/mediumGlossary";
 import { getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
 import RatingEmblems from "../Ratings/RatingEmblems";
 import MuseumLogo from "../MuseumLogo";
+import { CollyLotusLoader } from "../CollyMark";
 
 function typeColor(type: string, t: boolean): string {
   if (type === "current") return t ? "#8A6B1F" : "#D4A547";
@@ -992,6 +993,8 @@ export function InteractiveGlobeRealModal({
           return (isTextOrLetter(a) ? 1 : 0) - (isTextOrLetter(b) ? 1 : 0);
       });
   }, [realArtworks, recommendationFallbackPrefix, venueName, collectionSlug, exhibition, semanticOverrides]);
+  // nothing to show yet because the collection is still loading, not because the museum has no works
+  const awaitingWorks = isLoading && mappedArtworks.length === 0;
 
 
   // Variant B (Editorial) token palette — warm-white on near-black, no opacity for primary
@@ -1782,35 +1785,21 @@ export function InteractiveGlobeRealModal({
 
         {/* ── Info ── */}
         <div style={{ padding: `24px ${pad} 0`, maxWidth: '900px' }}>
-          {isLoading && mappedArtworks.length === 0 && (
-            <div
-              style={{
-                marginBottom: '16px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '8px 12px',
-                fontSize: '10px',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: fgLow,
-                background: t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.07)',
-                borderTop: `1px solid ${dividerColor}`,
-                borderRight: `1px solid ${dividerColor}`,
-                borderBottom: `1px solid ${dividerColor}`,
-                borderLeft: `1px solid ${dividerColor}`,
-              }}
-            >
-              <span>Loading Collection</span>
-              <span style={{ fontFamily: "'Space Mono', monospace" }}>...</span>
+          {/* While the collection file is on its way the counts below would read 0 and visitors left,
+              thinking the museum was empty: the lotus says it is still coming, and the counts wait. */}
+          {awaitingWorks && (
+            <div style={{ marginBottom: '16px' }} aria-label={L("작품 불러오는 중", "Loading artworks")} role="status">
+              <CollyLotusLoader size={44} />
             </div>
           )}
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
             <span style={{ fontSize: '11px', color: fgLow }}>{venueName}</span>
-            <span style={{ fontSize: '11px', color: fgFaint }}>&middot;</span>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: fgLow }}>
-              {mappedArtworks.length.toLocaleString()} works
-            </span>
+            {!awaitingWorks && (
+              <><span style={{ fontSize: '11px', color: fgFaint }}>&middot;</span>
+              <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', color: fgLow }}>
+                {mappedArtworks.length.toLocaleString()} works
+              </span></>
+            )}
             {exhibition.curator && (
               <><span style={{ fontSize: '11px', color: fgFaint }}>&middot;</span>
               <span style={{ fontSize: '11px', color: fgMute }}>Curated by {exhibition.curator}</span></>
@@ -1830,7 +1819,7 @@ export function InteractiveGlobeRealModal({
             <div style={{ width: '24px', height: '1px', backgroundColor: dividerColor }} />
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', fontWeight: 700, color: fgLow, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Featured Works</span>
             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', fontWeight: 700, color: fgMute }}>
-              {filterResultArtworks.length}{activeFilter ? ` / ${mappedArtworks.length}` : ""}
+              {awaitingWorks ? "" : <>{filterResultArtworks.length}{activeFilter ? ` / ${mappedArtworks.length}` : ""}</>}
             </span>
             <div style={{ flex: 1, height: '1px', backgroundColor: dividerColor }} />
           </div>
@@ -2174,7 +2163,7 @@ export function InteractiveGlobeRealModal({
                         />
                         <div style={{ position: 'absolute', inset: 0, transition: 'border 0.2s', borderTop: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderRight: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderBottom: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderLeft: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent' }} />
                         <div style={{ position: 'absolute', bottom: isMobile ? 6 : 8, right: isMobile ? 6 : 8, display: 'flex', alignItems: 'center', gap: isMobile ? 1 : 2, zIndex: 2, pointerEvents: 'auto' }}>
-                          <ArButton image={aw.image} style={actionButtonStyle} fontSize={isMobile ? 9 : 10} />
+                          {/* AR lives on the work's detail panel, not on every thumbnail */}
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -2454,10 +2443,12 @@ export function InteractiveGlobeRealModal({
           <div style={{ marginTop: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
               <span style={{ fontSize: '8px', color: fgFaint, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{venueName}</span>
-              <span style={{ fontSize: '9px', color: fgFaint }}>&middot;</span>
-              <span style={{ fontSize: '8px', color: fgFaint, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                {mappedArtworks.length.toLocaleString()} works
-              </span>
+              {!awaitingWorks && (
+                <><span style={{ fontSize: '9px', color: fgFaint }}>&middot;</span>
+                <span style={{ fontSize: '8px', color: fgFaint, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                  {mappedArtworks.length.toLocaleString()} works
+                </span></>
+              )}
               <span style={{ fontSize: '9px', color: fgFaint }}>&middot;</span>
               <span style={{ fontSize: '8px', color: fgFaint, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                 {getExhibitionTypeLabel(mappedType, language)}

@@ -77,7 +77,6 @@ import { readCommunityActivity, readPostCount, syncPublicProfile } from "../feat
 import { rankForScore, userActivityScore } from "../utils/communityRank";
 import type { ProfileImageCrop } from "../types/Profile";
 import { ensureSharedSearchWorkerLoaded } from "../utils/searchWorkerRuntime";
-import ArButton from "./ArButton";
 
 type ViewMode = "artworks" | "exhibitions" | "museums" | "artists" | "playlists" | "curations";
 const MYPAGE_RETURN_KEY = "mypage:return";
@@ -2192,7 +2191,6 @@ const MyPage: React.FC = () => {
             <BookmarkPlus size={12} strokeWidth={2.2} />
           </button>
 
-          {modeForItem === "artworks" && <ArButton image={normalized.image} />}
 
           {SHOW_SALES_UI && (
           <button
